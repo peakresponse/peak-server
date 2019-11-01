@@ -1,6 +1,5 @@
-# Full-Stack Starter
+# Tech to Protect Challenge: Contest 010 Server
 
-This repository contains a "starter" project for web application development in JavaScript.
 
 ## Getting Started
 
@@ -8,29 +7,9 @@ This repository contains a "starter" project for web application development in 
    into the directory.
 
    ```
-   $ git clone https://github.com/dev-mission/full-stack-starter.git
-   $ cd full-stack-starter
+   $ git clone https://github.com/dev-mission/t2p-server.git
+   $ cd t2p-server
    ```
-   
-   <!-- AFTER SETTING UP, DELETE FROM HERE... -->
-
-1. After cloning, your "local" repo (in this directory on your computer) will be linked to the "remote"
-   repo (as the "origin"). To track and save your own work on top of this code, rename the remote
-   to something else (in this example, to the name "upstream"):
-
-   ```
-   $ git remote rename origin upstream
-   ```
-
-1. Create your own new git repo for your work, then push up and link your local repo
-   to it as the new "origin" :
-
-   ```
-   $ git remote add origin <your new remote repository URL>
-   $ git push -u origin master
-   ```
-
-   <!-- ... TO HERE!!! -->
 
 2. There are some settings that must be configured to run the web application.
    They are set as "environment variables" which are loaded from a file called ```.env```.
@@ -89,9 +68,9 @@ This repository contains a "starter" project for web application development in 
    If it is successful, you will see something like this:
 
    ```
-   Killing full-stack-starter_db_1           ... done
-   Killing full-stack-starter_server_1       ... done
-   Killing full-stack-starter_mailcatcher_1  ... done
+   Killing t2p-server_db_1           ... done
+   Killing t2p-server_server_1       ... done
+   Killing t2p-server_mailcatcher_1  ... done
    ```
 
    If it is not successful, you may see something like this:
@@ -105,9 +84,9 @@ This repository contains a "starter" project for web application development in 
 
    ```
    $ docker-compose stop
-   Stopping full-stack-starter_db_1          ... done
-   Stopping full-stack-starter_server_1      ... done
-   Stopping full-stack-starter_mailcatcher_1 ... done
+   Stopping t2p-server_db_1          ... done
+   Stopping t2p-server_server_1      ... done
+   Stopping t2p-server_mailcatcher_1 ... done
    ```
 
 8. That's it! After all this setup is complete, the only command you need to run to get
@@ -116,7 +95,7 @@ started again is the ```docker-compose up``` command.
 ## Shell Command Quick Reference
 
  * Every directory and file on your computer has a *path* that describes its location in storage. Special path symbols include:
- 
+
    * The current *working directory* you are in: `.`
    * The *parent* of the current working directory: `..`
    * Your *home* directory: `~`
@@ -133,31 +112,31 @@ started again is the ```docker-compose up``` command.
        * For example, on Mac the same path as the previous example is: `~/Documents`
 
  * To *print the working directory* (i.e. to see the full path of the directory you are currently in):
- 
+
    ```
    $ pwd
    ```
 
  * To *list* the files in the working directory:
- 
+
    ```
    $ ls -l
    ```
 
  * To *change* the working directory:
- 
+
    ```
    $ cd path
    ```
 
  * To *make* a new directory inside the working directory:
- 
+
    ```
    $ mkdir newpath
    ```
 
  * To create a new *empty file* inside the working directory:
- 
+
    ```
    $ touch filename.ext
    ```
@@ -165,37 +144,37 @@ started again is the ```docker-compose up``` command.
 ## git Command Quick Reference
 
  * To check the *status* of the files in your local repo (i.e. what's been added or changed):
- 
+
    ```
    $ git status
    ```
-   
+
  * To *add all* the changed files to the next commit:
- 
+
    ```
    $ git add .
    ```
-   
+
    To *add specific file(s)* to the next commit:
-   
+
    ```
    $ git add path/to/file1.ext path/to/file2.ext path/with/wildcard/*
    ```
-   
+
  * To *commit* the added files with a message:
- 
+
    ```
    $ git commit -m "My description of what's changed"
    ```
-   
+
  * To *push* the commit to the remote repo:
- 
+
    ```
    $ git push
    ```
-   
+
  * To *pull* any new commits from the remote repo:
- 
+
    ```
    $ git pull
    ```
@@ -203,31 +182,31 @@ started again is the ```docker-compose up``` command.
 ## Docker Command Quick Reference
 
  * To start all the containers:
- 
+
    ```
    $ docker-compose up
    ```
-   
+
  * To log in to the running server container:
- 
+
    ```
    $ docker-compose exec server bash -l
    ```
-   
+
  * To stop all the containers, in case things didn't shutdown properly with CTRL-C:
- 
+
    ```
    $ docker-compose stop
    ```
 
  * To run the server container without starting everything using the up command:
- 
+
    ```
    $ docker-compose run --rm server bash -l
    ```
-   
+
  * To re-build the server container:
- 
+
    ```
    $ docker-compose build server
    ```
@@ -252,8 +231,8 @@ started again is the ```docker-compose up``` command.
 
 ## License
 
-Full-Stack Starter
-Copyright (C) 2019 <dev/Mission>
+Tech to Protect Challenge: Contest 010 Server
+Copyright (C) 2019 Francis Li
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
