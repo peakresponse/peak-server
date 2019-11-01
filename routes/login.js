@@ -65,20 +65,22 @@ router.get('/', function(req, res, next) {
 
 /* POST to submit login and password */
 router.post('/', function(req, res, next) {
+
+
   interceptors.passport.authenticate('local', function(err, user, info) {
     if (err) {
       return next(err);
     }
     if (!user) {
       let redirectURI = '/login';
-      if (req.body.redirectURI != '') {
+      if (req.body.redirectURI && req.body.redirectURI != '') {
         redirectURI = `${redirectURI}?redirectURI=${encodeURIComponent(req.body.redirectURI)}`;
       }
       req.flash('error', 'The email and/or password was incorrect.');
       return res.redirect(redirectURI);
     }
     req.logIn(user, function(err) {
-      if (req.body.redirectURI != '') {
+      if (req.body.redirectURI && req.body.redirectURI != '') {
         res.redirect(req.body.redirectURI);
       } else {
         res.redirect('/');

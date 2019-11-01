@@ -76,6 +76,9 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true
   });
   User.associate = function(models) {
+    User.hasMany(models.Patient, {as: 'createdPatients', foreignKey: 'createdById'});
+    User.hasMany(models.Patient, {as: 'updatedPatients', foreignKey: 'updatedById'});
+    User.hasMany(models.Observation, {as: 'observations', foreignKey: 'createdById'});
 
     User.prototype.hashPassword = function(password, object) {
       return bcrypt.hash(password, 10).then(hashedPassword => {
