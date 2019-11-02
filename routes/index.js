@@ -9,6 +9,14 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/pincodes', function(req, res, next) {
+  res.render('pincodes', {
+    Patient: models.Patient,
+    seed: req.query.seed || 1,
+    count: req.query.count || 20
+  });
+});
+
 router.get('/logout', function(req,res,next){
   req.logout();
   req.flash('info', 'You have been logged out.');

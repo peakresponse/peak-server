@@ -48,6 +48,7 @@ app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'node_module
 app.use('/libraries/cleave', express.static(path.join(__dirname, 'node_modules/cleave.js/dist')));
 app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/libraries/qrcode', express.static(path.join(__dirname, 'node_modules/qrcode/build')));
 
 i18n.configure({
   locales: ['en'],

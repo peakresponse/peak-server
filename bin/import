@@ -64,13 +64,7 @@ async function parseWorkbook() {
     server = 'http://localhost:3000';
   }
   let email = await readInput(rl, 'Email: ');
-  if (email == '') {
-    email = 'mail@francisli.com';
-  }
   let password = await readInput(rl, 'Password: ');
-  if (password == '') {
-    password = 'abcd1234';
-  }
 
   //// enumerate all the sheets in the workbook
   let i = 1;
@@ -150,11 +144,12 @@ async function importRows(server, email, password, sheet) {
   let i = 0;
   for (let row of rows) {
     //// get unique PIN for the patient
-    let pin = `${row[0] || ''}`;
-    if (pin == '') {
+    let pin = row[0];
+    if (!pin) {
       //// empty row marks end of input...
       break;
     }
+    pin = models.Patient.generatePIN(pin);
     console.log(`[${i}] PIN: ${pin}`);
     //// collect initial vitals and status
     let lastName = (row[1] || '').trim();

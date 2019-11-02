@@ -1,4 +1,7 @@
 'use strict';
+
+const seedrandom = require('seedrandom');
+
 module.exports = (sequelize, DataTypes) => {
   const Patient = sequelize.define('Patient', {
     pin: DataTypes.STRING,
@@ -54,6 +57,15 @@ module.exports = (sequelize, DataTypes) => {
     Patient.belongsTo(models.User, {as: 'updatedBy'});
     Patient.belongsTo(models.User, {as: 'createdBy'});
     Patient.hasMany(models.Observation, {as: 'observations'});
+
+    Patient.generatePIN = function(seed) {
+      const rng = seedrandom(seed);
+      let pin = '';
+      for (let i = 0; i < 6; i++) {
+        pin += Math.floor(rng() * 10);
+      }
+      return pin;
+    }
   };
   return Patient;
 };
