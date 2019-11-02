@@ -15,4 +15,22 @@ router.get('/', interceptors.requireLogin, function(req, res, next) {
   });
 });
 
+router.get('/:id', interceptors.requireAdmin, function(req, res, next) {
+  models.Patient.findByPk(req.params.id).then(function(record) {
+    if (record) {
+      res.json(record.toJSON());
+    } else {
+      models.Patient.findOne({where: {pin: req.params.id}}).then(function(record) {
+        if (record) {
+          res.json(record.toJSON());
+        } else {
+          res.sendStatus(404);
+        }
+      });
+    }
+  }).catch(function(error) {
+    res.sendStatus(500);
+  });
+});
+
 module.exports = router;
