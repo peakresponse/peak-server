@@ -10,7 +10,8 @@ const isDev                = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: {
-    admin: './client/admin.ts'
+    admin: './client/admin.ts',
+    dashboard: './client/dashboard.ts',
   },
 
   resolve: {
@@ -39,7 +40,10 @@ module.exports = {
           { loader: 'css-loader', options: { sourceMap: isDev } },
           { loader: 'sass-loader', options: { sourceMap: isDev } }
         ],
-        include: helpers.root('client', 'admin')
+        include: [
+          helpers.root('client', 'admin'),
+          helpers.root('client', 'dashboard')
+        ]
       }
     ]
   },

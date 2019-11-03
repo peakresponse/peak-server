@@ -70,6 +70,12 @@ export class ApiService {
     }
   }
 
+  patients = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/patients/', params);
+    },
+  };
+
   users = {
     me: (params?: HttpParams): Observable<any> => {
       return this.get('/api/users/me/', params);

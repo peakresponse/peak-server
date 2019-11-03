@@ -1,3 +1,14 @@
 <%- contentFor('title') %>Home
+<%- contentFor('head') %>
+<base href="/">
+<script type="text/javascript">
+window.env = {};
+window.env.ASSET_HOST = '<%= process.env.ASSET_HOST %>';
+</script>
 <%- contentFor('body') %>
-<h1>Hello Dynamic World!</h1>
+<app-dashboard>Loading...</app-dashboard>
+<% for (let entry of ['dashboard']) { %>
+  <% for (let chunk of webpackStats.chunks[entry]) { %>
+    <script type="application/javascript" src="<%= chunk.publicPath %>"></script>
+  <% } %>
+<% } %>

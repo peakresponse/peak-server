@@ -1,0 +1,10 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <app-shared-list #list class="row" type="patients">
+    <ng-template let-record="record">
+      <div class="col-md-2">
+        <app-dashboard-patient [patient]="record"></app-dashboard-patient>
+      </div>
+    </ng-template>
+  </app-shared-list>
+</div>
