@@ -1,5 +1,11 @@
-# Tech to Protect Challenge: Contest 010 Server
+# NaT
+## SALT(Na) Triage Intelligent Assistant
 
+This is the server repository for the NaT intelligent assistant. For the iOS
+mobile app repository, visit: https://github.com/francisli/t2p-ios
+
+NaT was developed as part of the 2019 Tech to Protect Challenge to create
+new technologies for emergency responders.
 
 ## Getting Started
 
@@ -7,7 +13,7 @@
    into the directory.
 
    ```
-   $ git clone https://github.com/dev-mission/t2p-server.git
+   $ git clone https://github.com/francisli/t2p-server.git
    $ cd t2p-server
    ```
 
@@ -231,7 +237,7 @@ started again is the ```docker-compose up``` command.
 
 ## License
 
-Tech to Protect Challenge: Contest 010 Server
+NaT: SALT(Na) Triage Intelligent Assistant
 Copyright (C) 2019 Francis Li
 
 This program is free software: you can redistribute it and/or modify
