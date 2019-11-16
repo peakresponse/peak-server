@@ -1,0 +1,27 @@
+version: '2.3'
+services:
+  db:
+    image: postgres:11
+  server:
+    build: .
+    image: francisli/t2p-server
+    command: bash -l -c "npm start"
+    environment:
+      - APP_NAME=${APP_NAME}
+      - ASSET_HOST=${ASSET_HOST}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_S3_BASE_URL=${AWS_S3_BASE_URL}
+      - AWS_S3_BUCKET=${AWS_S3_BUCKET}
+      - AWS_S3_BUCKET_REGION=${AWS_S3_BUCKET_REGION}
+      - BASE_HOST=${BASE_HOST}
+      - BASE_URL=${BASE_URL}
+      - DATABASE_URL=postgres://postgres@db/app
+      - NODE_ENV=production
+      - PORT=3000
+      - SESSION_SECRET=${SESSION_SECRET}
+      - SMTP_FROM_EMAIL_ADDRESS=${SMTP_FROM_EMAIL_ADDRESS}
+    ports:
+      - ${HOST_PORT:-3000}:3000
+    depends_on:
+      - db

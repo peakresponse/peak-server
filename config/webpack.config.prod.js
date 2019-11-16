@@ -51,8 +51,9 @@ module.exports = webpackMerge(commonConfig, {
   plugins: [
     new ngw.AngularCompilerPlugin({
       tsConfigPath: helpers.root('tsconfig.json'),
-      entryModule: [
-        helpers.root('client', 'admin', 'app.module#AppModule')
+      entryModules: [
+        helpers.root('client', 'admin', 'app.module#AdminAppModule'),
+        helpers.root('client', 'dashboard', 'app.module#DashboardAppModule')
       ]
     })
   ]

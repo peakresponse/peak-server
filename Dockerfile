@@ -19,4 +19,6 @@ RUN mkdir -p $APP_HOME
 ADD . $APP_HOME
 WORKDIR $APP_HOME
 
-RUN npm install
+RUN npm install && \
+    npm run build
+

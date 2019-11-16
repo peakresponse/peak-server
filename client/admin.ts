@@ -2,8 +2,11 @@ import 'core-js/es6';
 import 'core-js/es7/reflect';
 require('zone.js/dist/zone');
 
-if (process.env.ENV === 'production') {
+import { enableProdMode } from '@angular/core';
+
+if (process.env.NODE_ENV === 'production') {
     // Production
+    enableProdMode();
 } else {
     // Development and test
     Error['stackTraceLimit'] = Infinity;
@@ -11,6 +14,6 @@ if (process.env.ENV === 'production') {
 }
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './admin/app.module';
+import { AdminAppModule } from './admin/app.module';
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AdminAppModule);
