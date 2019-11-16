@@ -29,7 +29,7 @@ app.use(logger('dev'));
 app.use(fileUpload({
   useTempFiles: !process.env.AWS_S3_BUCKET
 }));
-app.use(bodyParser.raw({type: ['image/*'], limit: '10mb'}));
+app.use(bodyParser.raw({type: ['image/*', 'video/*', 'audio/*'], limit: '10mb'}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('trust proxy', 1);

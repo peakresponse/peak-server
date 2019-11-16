@@ -25,10 +25,12 @@ router.post('/', interceptors.requireLogin, function(req, res, next) {
       defaults: { version: 0, priority: data.priority, createdById: req.user.id, updatedById: req.user.id },
       transaction
     }).then(function([patient, created]) {
-      return helpers.handleUpload(patient, "portraitUrl", data.portraitUrl, 'observations/portrait');
+      return helpers.handleUpload(patient, 'portraitUrl', data.portraitUrl, 'observations/portrait');
+    }).then(function(patient) {
+      return helpers.handleUpload(patient, 'audioUrl', data.audioUrl, 'observations/audio');
     }).then(function(patient) {
       //// the upload handler writes directly to the patient record, so capture any changes back into the data object
-      for (let attr of ["portraitUrl"]) {
+      for (let attr of ['portraitUrl', 'audioUrl']) {
         if (updatedAttributes.indexOf(attr) >= 0) {
           data[attr] = patient[attr];
         }
