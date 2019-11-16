@@ -3,7 +3,7 @@
   <app-shared-list #list class="row" type="patients">
     <ng-template let-record="record">
       <div class="col-md-2">
-        <app-dashboard-patient [patient]="record"></app-dashboard-patient>
+        <app-dashboard-patient [patient]="record" [routerLink]="['/patients', record.id]"></app-dashboard-patient>
       </div>
     </ng-template>
   </app-shared-list>

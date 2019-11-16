@@ -6,12 +6,13 @@ import { SharedComponentsModule } from '../../shared/components';
 import { SharedPipesModule } from '../../shared/pipes';
 
 import { PatientsRoutingModule } from './patients-routing.module';
-import { ListPatientsComponent, PatientComponent } from '.';
+import { ListPatientsComponent, PatientComponent, ShowPatientComponent } from '.';
 
 @NgModule({
   declarations: [
     ListPatientsComponent,
-    PatientComponent
+    PatientComponent,
+    ShowPatientComponent
   ],
   imports: [
     CommonModule,

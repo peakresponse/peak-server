@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ListPatientsComponent } from '.';
+import { ListPatientsComponent, ShowPatientComponent } from '.';
 
 const appRoutes: Routes = [
   {
     path: 'patients',
     component: ListPatientsComponent,
+    children: [
+      {
+        path: ':id',
+        component: ShowPatientComponent
+      }
+    ]
   }
 ];
 

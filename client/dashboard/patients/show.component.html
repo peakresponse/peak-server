@@ -1,0 +1,58 @@
+<app-shared-form *ngIf="id" type="patients" [id]="id" [hideButtons]="true">
+  <ng-template let-record="record" let-error="error">
+    <div class="row">
+      <div class="col-md-3">
+        <app-dashboard-patient [patient]="record"></app-dashboard-patient>
+        <p>&nbsp;</p>
+        <h3>Observation</h3>
+        <p *ngIf="record.audioUrl"><audio controls [src]="record.audioUrl"></audio></p>
+        <p>{{record.text}}</p>
+      </div>
+      <div class="col-md-3">
+        <h4>Location</h4>
+        <dl>
+          <dt>Location</dt>
+          <dd>{{record.location}}&nbsp;</dd>
+        </dl>
+        <dl>
+          <dt>GPS</dt>
+          <dd><span *ngIf="record.lat && record.lng">{{record.lat}}, {{record.lng}}</span>&nbsp;</dd>
+        </dl>
+      </div>
+      <div class="col-md-3">
+        <h4>Info</h4>
+        <dl>
+          <dt>First name</dt>
+          <dd>{{record.firstName}}&nbsp;</dd>
+        </dl>
+        <dl>
+          <dt>Last name</dt>
+          <dd>{{record.lastName}}&nbsp;</dd>
+        </dl>
+        <dl>
+          <dt>Age</dt>
+          <dd>{{record.age}}&nbsp;</dd>
+        </dl>
+      </div>
+      <div class="col-md-3">
+        <h4>Vitals</h4>
+        <dl>
+          <dt>Respiratory Rate</dt>
+          <dd>{{record.respiratoryRate}}&nbsp;</dd>
+        </dl>
+        <dl>
+          <dt>Pulse</dt>
+          <dd>{{record.pulse}}&nbsp;</dd>
+        </dl>
+        <dl>
+          <dt>Capillary Refill</dt>
+          <dd>{{record.capillaryRefill}}&nbsp;</dd>
+        </dl>
+        <dl>
+          <dt>Blood Pressure</dt>
+          <dd>{{record.bloodPressure}}&nbsp;</dd>
+        </dl>
+      </div>
+    </div>
+  </ng-template>
+</app-shared-form>

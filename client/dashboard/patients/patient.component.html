@@ -1,4 +1,5 @@
 <div [class]="'patient patient--priority_' + patient.priority">
-  <div class="patient__portrait"></div>
+  <div class="patient__portrait" [style.background-image]="portraitUrl">
+  </div>
   {{patient.firstName}} {{patient.lastName}}
 </div>
