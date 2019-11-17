@@ -81,27 +81,27 @@ A demo deployment for contest evaluation is live at: https://natriage.org/
 
 
 10. To stop the server, press CONTROL-C in the window with the running server.
-   If it is successful, you will see something like this:
+    If it is successful, you will see something like this:
+    
+    ```
+    Killing t2p-server_db_1           ... done
+    Killing t2p-server_server_1       ... done
+    ```
 
-   ```
-   Killing t2p-server_db_1           ... done
-   Killing t2p-server_server_1       ... done
-   ```
+    If it is not successful, you may see something like this:
 
-   If it is not successful, you may see something like this:
+    ```
+    ERROR: Aborting.
+    ```
 
-   ```
-   ERROR: Aborting.
-   ```
+    If you get an error, the server may still be running on your computer. To force it to stop,
+    run the following command and wait for the output to report DONE:
 
-   If you get an error, the server may still be running on your computer. To force it to stop,
-   run the following command and wait for the output to report DONE:
-
-   ```
-   $ docker-compose stop
-   Stopping t2p-server_db_1          ... done
-   Stopping t2p-server_server_1      ... done
-   ```
+    ```
+    $ docker-compose stop
+    Stopping t2p-server_db_1          ... done
+    Stopping t2p-server_server_1      ... done
+    ```
 
 ## Development
 
