@@ -2,14 +2,23 @@
 ## SALT(Na) Triage Intelligent Assistant
 
 This is the server repository for the NaT intelligent assistant. For the iOS
-mobile app repository, visit: https://github.com/francisli/t2p-ios
+mobile app repository, visit:
+
+https://github.com/francisli/t2p-ios
 
 NaT was developed as part of the 2019 Tech to Protect Challenge to create
 new technologies for emergency responders.
 
 ## Getting Started
 
-1. Clone this git repo to a "local" directory (on your computer), then change
+A demo deployment for contest evaluation is live at: https://natriage.org/
+
+1. Install Docker Desktop: https://www.docker.com/products/docker-desktop
+
+   1. If you have Windows Home Edition, you will need to install Docker Toolbox instead.
+   See the troubleshooting notes below.
+
+2. Clone this git repo to a "local" directory (on your computer), then change
    into the directory.
 
    ```
@@ -17,7 +26,7 @@ new technologies for emergency responders.
    $ cd t2p-server
    ```
 
-2. There are some settings that must be configured to run the web application.
+3. There are some settings that must be configured to run the web application.
    They are set as "environment variables" which are loaded from a file called ```.env```.
    Copy the ```example.env``` file as a starting point:
 
@@ -25,30 +34,19 @@ new technologies for emergency responders.
    $ cp example.env .env
    ```
 
-3. Install Docker Desktop: https://www.docker.com/products/docker-desktop
-
-   1. If you have Windows Home Edition, you will need to install Docker Toolbox instead.
-   See the troubleshooting notes below.
-
-4. Open a command-line shell, change into your repo directory, and execute this command:
+4. Pull down pre-built deployment images:
 
    ```
-   $ docker-compose up
+   $ docker-compose -f docker-compose.deploy.yml pull
    ```
 
-   It will take a while the first time you run this command to build the "images" to
-   run the web application code in a Docker "container". When you see messages that look
-   like this, the server is running:
+5. Start the containers:
 
    ```
-   server_1       | 2:14:26 AM web.1     |  > app@0.0.0 start /opt/node/app
-   server_1       | 2:14:26 AM web.1     |  > nodemon -V --ignore ./client ./bin/www
-   server_1       | 2:14:26 AM web.1     |  [nodemon] 1.19.0
-   server_1       | 2:14:26 AM web.1     |  [nodemon] to restart at any time, enter `rs`
-   server_1       | 2:14:26 AM web.1     |  [nodemon] or send SIGHUP to 57 to restart
+   $ docker-compose -f docker-compose.deploy.yml up
    ```
 
-5. Open ANOTHER command-line shell, change into your repo directory, then execute
+6. Open ANOTHER command-line shell, change into your repo directory, then execute
    this command to log in to the running server container:
 
    ```
@@ -57,26 +55,37 @@ new technologies for emergency responders.
 
    Whenever the server container is running, you can execute this command to log in
    to the server- you will then be in a Linux "bash" command-line shell. Execute
-   the following two commands inside the server container to complete the setup:
+   the following two commands inside the server container to initialize the database:
 
    ```
    # sequelize db:create
    # sequelize db:migrate
-   # sequelize db:seed:all
    ```
 
-6. Now you should be able to open the web app in your browser at: http://localhost:3000/
+7. While still in the server container, you can create an initial bootstrap user:
+
+   ```
+   # node bin/create-admin.js Firstname Lastname email@address.com password
+   ```
+
+8. To populate some sample patient data from the contest 010 sample worksheet:
+
+   ```
+   # bin/import sample.xlsx
+   ```
+
+9. Log in with the bootstrap user credentials in a browser: http://localhost:3000/
 
    1. If you had to install Docker Toolbox, then replace "localhost" with the IP
    address of the Docker Virtual Machine.
 
-7. To stop the server, press CONTROL-C in the window with the running server.
+
+10. To stop the server, press CONTROL-C in the window with the running server.
    If it is successful, you will see something like this:
 
    ```
    Killing t2p-server_db_1           ... done
    Killing t2p-server_server_1       ... done
-   Killing t2p-server_mailcatcher_1  ... done
    ```
 
    If it is not successful, you may see something like this:
@@ -92,11 +101,31 @@ new technologies for emergency responders.
    $ docker-compose stop
    Stopping t2p-server_db_1          ... done
    Stopping t2p-server_server_1      ... done
-   Stopping t2p-server_mailcatcher_1 ... done
    ```
 
-8. That's it! After all this setup is complete, the only command you need to run to get
-started again is the ```docker-compose up``` command.
+## Development
+
+1. Open a command-line shell, change into your repo directory, and execute this command:
+
+   ```
+   $ docker-compose up
+   ```
+
+   When you see messages that look like this, the server is running:
+
+   ```
+   server_1       | 2:14:26 AM web.1     |  > app@0.0.0 start /opt/node/app
+   server_1       | 2:14:26 AM web.1     |  > nodemon -V --ignore ./client ./bin/www
+   server_1       | 2:14:26 AM web.1     |  [nodemon] 1.19.0
+   server_1       | 2:14:26 AM web.1     |  [nodemon] to restart at any time, enter `rs`
+   server_1       | 2:14:26 AM web.1     |  [nodemon] or send SIGHUP to 57 to restart
+   ```
+
+2. The default development docker-compose.yml configuration mounts the repository directory
+   inside the running container. Any edits saved to the server source files will be detected
+   by nodemon and the server restarted. Any edits saved to the web app client source files
+   will be detected by the webpack-development-server, triggering a browser refresh after
+   a rebuild.
 
 ## Shell Command Quick Reference
 
@@ -238,6 +267,7 @@ started again is the ```docker-compose up``` command.
 ## License
 
 NaT: SALT(Na) Triage Intelligent Assistant
+
 Copyright (C) 2019 Francis Li
 
 This program is free software: you can redistribute it and/or modify
