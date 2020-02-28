@@ -26,63 +26,39 @@ A demo deployment for contest evaluation is live at: https://natriage.org/
    $ cd t2p-server
    ```
 
-3. There are some settings that must be configured to run the web application.
-   They are set as "environment variables" which are loaded from a file called ```.env```.
-   Copy the ```example.env``` file as a starting point:
-
-   ```
-   $ cp example.env .env
-   ```
-
-4. Pull down pre-built deployment images:
+3. Open a command-line shell, change into your repo directory, and execute this command:
 
    ```
    $ docker-compose -f docker-compose.deploy.yml pull
    ```
 
-5. Start the containers:
+4. Start the containers:
 
    ```
    $ docker-compose -f docker-compose.deploy.yml up
    ```
 
-6. Open ANOTHER command-line shell, change into your repo directory, then execute
-   this command to log in to the running server container:
-
-   ```
-   $ docker-compose exec server bash -l
-   ```
-
-   Whenever the server container is running, you can execute this command to log in
-   to the server- you will then be in a Linux "bash" command-line shell. Execute
-   the following two commands inside the server container to initialize the database:
-
-   ```
-   # sequelize db:create
-   # sequelize db:migrate
-   ```
-
-7. While still in the server container, you can create an initial bootstrap user:
+5. While still in the server container, you can create an initial bootstrap user:
 
    ```
    # node bin/create-admin.js Firstname Lastname email@address.com password
    ```
 
-8. To populate some sample patient data from the contest 010 sample worksheet:
+6. To populate some sample patient data from the contest 010 sample worksheet:
 
    ```
    # bin/import sample.xlsx
    ```
 
-9. Log in with the bootstrap user credentials in a browser: http://localhost:3000/
+7. Log in with the bootstrap user credentials in a browser: http://localhost:3000/
 
    1. If you had to install Docker Toolbox, then replace "localhost" with the IP
    address of the Docker Virtual Machine.
 
 
-10. To stop the server, press CONTROL-C in the window with the running server.
+8. To stop the server, press CONTROL-C in the window with the running server.
     If it is successful, you will see something like this:
-    
+
     ```
     Killing t2p-server_db_1           ... done
     Killing t2p-server_server_1       ... done

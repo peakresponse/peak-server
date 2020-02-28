@@ -80,11 +80,19 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Patient, {as: 'updatedPatients', foreignKey: 'updatedById'});
     User.hasMany(models.Observation, {as: 'observations', foreignKey: 'createdById'});
 
+    User.isValidPassword = function(password) {
+      return password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) != null;
+    };
+
     User.prototype.hashPassword = function(password, object) {
       return bcrypt.hash(password, 10).then(hashedPassword => {
-        return this.update({hashedPassword: hashedPassword}, object);
+        return this.update({hashedPassword: hashedPassword, passwordResetTokenExpiresAt: new Date()}, object);
       });
-    }
+    };
+
+    User.prototype.fullNameAndEmail = function() {
+      return `${this.firstName} ${this.lastName} <${this.email}>`
+    };
 
     User.prototype.sendPasswordResetEmail = function() {
       return this.update({
@@ -94,12 +102,21 @@ module.exports = (sequelize, DataTypes) => {
         return mailer.send({
           template: 'password-reset',
           message: {
-            to: `${user.firstName} ${user.lastName} <${user.email}>`
+            to: `${this.fullNameAndEmail()}`
           },
           locals: {
-            url: `${process.env.BASE_URL}/login/reset-password/${user.passwordResetToken}`
+            url: `${process.env.BASE_URL}/passwords/reset/${user.passwordResetToken}`
           }
         });
+      });
+    };
+
+    User.prototype.sendWelcomeEmail = function() {
+      return mailer.send({
+        template: 'welcome',
+        message: {
+          to: `${this.fullNameAndEmail()}`
+        }
       });
     }
   };

@@ -42,7 +42,8 @@ module.exports = {
         ],
         include: [
           helpers.root('client', 'admin'),
-          helpers.root('client', 'dashboard')
+          helpers.root('client', 'dashboard'),
+          helpers.root('client', 'shared')
         ]
       }
     ]
