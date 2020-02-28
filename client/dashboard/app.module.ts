@@ -9,7 +9,8 @@ import { AppComponent } from './app.component';
 
 import { PatientsModule } from './patients/patients.module';
 
-import { ApiService, NavigationService, UserService } from '../shared/services';
+import { ApiService, NavigationService, UserService, WebSocketService }
+  from '../shared/services';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ApiService, NavigationService, UserService } from '../shared/services';
   providers: [
     ApiService,
     NavigationService,
-    UserService
+    UserService,
+    WebSocketService,
   ],
   bootstrap: [
     AppComponent

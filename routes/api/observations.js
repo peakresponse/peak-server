@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../../models');
+const wss = require('../../wss');
 const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 const _ = require('lodash');
@@ -19,6 +20,7 @@ router.post('/', interceptors.requireLogin, function(req, res, next) {
   const updatedAttributes = _.keys(req.body);
   _.pullAll(updatedAttributes, models.Observation.SYSTEM_ATTRIBUTES);
   const data = _.pick(req.body, updatedAttributes);
+  let updatedPatient = null;
   models.sequelize.transaction(function(transaction) {
     return models.Patient.findOrCreate({
       where: { pin: req.body.pin },
@@ -44,6 +46,7 @@ router.post('/', interceptors.requireLogin, function(req, res, next) {
         transaction
       });
     }).then(function(patient) {
+      updatedPatient = patient;
       return models.Observation.create(_.extend({
         patientId: patient.id,
         version: patient.version,
@@ -54,6 +57,10 @@ router.post('/', interceptors.requireLogin, function(req, res, next) {
     });
   }).then(function(record){
     res.json(record.toJSON());
+    let data = JSON.stringify([updatedPatient.toJSON()]);
+    wss.clients.forEach(function(ws) {
+      ws.send(data);
+    });
   }).catch(function(error) {
     console.log(error);
     if (error.name == 'SequelizeValidationError') {

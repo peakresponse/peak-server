@@ -8,7 +8,7 @@ import assign from 'lodash/assign';
 import clone from 'lodash/clone';
 import remove from 'lodash/remove';
 
-import { ApiService, NavigationService, UserService } from '..//services';
+import { ApiService, NavigationService, UserService } from '../services';
 
 @Component({
   selector: 'app-shared-list',

@@ -1,27 +1,27 @@
 require('dotenv').config();
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieSession = require('cookie-session');
-var logger = require('morgan');
-var expressLayouts = require('express-ejs-layouts');
-var flash = require('connect-flash');
-var passport = require('passport');
-var fileUpload = require('express-fileupload');
-var i18n = require('i18n');
-var bodyParser = require('body-parser');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieSession = require('cookie-session');
+const logger = require('morgan');
+const expressLayouts = require('express-ejs-layouts');
+const flash = require('connect-flash');
+const passport = require('passport');
+const fileUpload = require('express-fileupload');
+const i18n = require('i18n');
+const bodyParser = require('body-parser');
 
-var helpers = require('./routes/helpers');
-var interceptors = require('./routes/interceptors');
-var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
-var passwordsRouter = require('./routes/passwords');
-var registrationsRouter = require('./routes/registrations');
-var adminRouter = require('./routes/admin');
-var apiRouter = require('./routes/api');
+const helpers = require('./routes/helpers');
+const interceptors = require('./routes/interceptors');
+const indexRouter = require('./routes/index');
+const loginRouter = require('./routes/login');
+const passwordsRouter = require('./routes/passwords');
+const registrationsRouter = require('./routes/registrations');
+const adminRouter = require('./routes/admin');
+const apiRouter = require('./routes/api');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,11 +35,14 @@ app.use(bodyParser.raw({type: ['image/*', 'video/*', 'audio/*'], limit: '10mb'})
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('trust proxy', 1);
-app.use(cookieSession({
+
+// set up session handler with an app reference so can be used by websocket server
+app.sessionParser = cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
   secret: process.env.SESSION_SECRET,
   secure: process.env.NODE_ENV == 'production'
-}));
+});
+app.use(app.sessionParser);
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
