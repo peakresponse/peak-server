@@ -17,6 +17,7 @@ services:
       - BASE_HOST=${BASE_HOST}
       - BASE_URL=${BASE_URL}
       - DATABASE_URL=postgres://postgres@db/app
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
       - NODE_ENV=production
       - PORT=3000
       - SESSION_SECRET=${SESSION_SECRET}
