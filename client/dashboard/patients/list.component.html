@@ -1,8 +1,22 @@
 <router-outlet></router-outlet>
 <div [class.d-none]="route.firstChild">
   <div class="row">
-    <div *ngFor="let record of records; trackBy: trackById" class="col-md-2">
-      <app-dashboard-patient [patient]="record" [routerLink]="['/patients', record.id]"></app-dashboard-patient>
+    <div #mapContainer class="col-md-6">
+      <agm-map #map [style.height.px]="mapHeight">
+        <ng-container *ngFor="let record of records; trackBy: trackById">
+          <agm-marker *ngIf="record.lat && record.lng"
+                      [latitude]="record.lat"
+                      [longitude]="record.lng"
+                      [label]="(record.lastName+', '+record.firstName).trim()"></agm-marker>
+        </ng-container>
+      </agm-map>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div *ngFor="let record of records; trackBy: trackById" class="col-md-3">
+          <app-dashboard-patient [patient]="record" [routerLink]="['/patients', record.id]"></app-dashboard-patient>
+        </div>
+      </div>
     </div>
   </div>
 </div>

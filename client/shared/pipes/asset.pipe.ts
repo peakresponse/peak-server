@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-const ASSET_HOST = (window as any).env.ASSET_HOST;
+const ASSET_HOST = window['env'].ASSET_HOST;
 
 /**
  * Returns a complete asset url for a given asset path.
