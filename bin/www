@@ -37,7 +37,7 @@ server.on('listening', onListening);
 const wss = require('../wss');
 server.on('upgrade', function(request, socket, head) {
   app.sessionParser(request, {}, () => {
-    if (!request.session.passport.user) {
+    if (!request.session.passport || !request.session.passport.user) {
       socket.destroy();
       return;
     }

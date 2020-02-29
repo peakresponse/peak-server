@@ -26,7 +26,6 @@ module.exports = webpackMerge(commonConfig, {
         cache: true,
         parallel: true
       }),
-
       new OptimizeCSSAssetsPlugin({
         cssProcessor: cssnano,
         cssProcessorOptions: {
