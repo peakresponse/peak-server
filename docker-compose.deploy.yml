@@ -27,6 +27,4 @@ services:
     depends_on:
       - db
     volumes:
-      - uploads:/opt/node/app/public/uploads
-volumes:
-  uploads:
+      - ./public/uploads:/opt/node/app/public/uploads
