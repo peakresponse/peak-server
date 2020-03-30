@@ -6,15 +6,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title><%= title %> - <%= process.env.APP_NAME %></title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/libraries/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/libraries/fontawesome/css/all.css" />
     <link rel="stylesheet" href="/stylesheets/home.css" />
     <script type="application/javascript" src="/libraries/jquery/jquery.min.js"></script>
     <script type="application/javascript" src="/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
     <% if (locals.head) { %><%- head %><% } %>
   </head>
-  <body>
+  <body<% if (locals.bodyClass) { %> class="<%= bodyClass %>"<% } %>>
     <% if (flash.info || flash.error) { %>
-      <div style="position: absolute; top: 0; right: 0;">
+      <div class="toast-container">
         <% if (flash.info) { %>
         <div class="toast" role="main">
           <div class="toast-body">

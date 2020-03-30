@@ -5,7 +5,8 @@ import { UserService } from '../shared/services';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   constructor(public currentUser: UserService) {}

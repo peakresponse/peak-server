@@ -1,0 +1,102 @@
+html, body {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+.toast-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+body {
+  background-color: #E5E5E5;
+}
+
+body.signed-out {
+  background: linear-gradient(121.55deg, #C1DDD8 21.73%, #65B3DA 52.52%, #46A5DB 77.84%, #2F7EAA 97.61%) fixed;
+  min-height: 100%;
+  padding-bottom: 4rem;
+}
+
+body.signed-out .toast-container {
+  z-index: 1;
+  top: 40%;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+body.signed-out .toast-body {
+  font-size: 1.25rem;
+}
+
+body.signed-out .logo {
+  display: block;
+  width: 176px;
+  height: 176px;
+  margin: 54px auto 50px auto;
+  border-radius: 12px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+body.signed-out .card {
+  padding: 60px;
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 1.25rem;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #46A5DB;
+  text-align: center;
+  margin-bottom: 0.9375em;
+}
+
+a[href] {
+  color: #4F4F4F;
+  text-decoration: underline;
+}
+
+a[href]:hover {
+  color: #46A5DB;
+  cursor: pointer;
+}
+
+a[tabindex] {
+  cursor: pointer;
+}
+
+body.signed-out .card .form-group {
+  margin-bottom: 1.5rem;
+}
+
+body.signed-out .card .form-control {
+  font-size: 1.375rem;
+  background-color: #E5ECEF;
+  border: 0;
+  border-radius: 0;
+  color: #4F4F4F;
+  height: calc(1.5em + 3rem);
+  padding: 1.5rem .875rem;
+}
+
+body.signed-out .card .btn {
+  font-size: 1.75rem;
+  font-weight: 800;
+  height: calc(1.5em + 1.75rem);
+  padding: .875rem .875rem;
+  text-transform: uppercase;
+  border-radius: 500px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+body.signed-out .card .btn-primary {
+  background-color: #46A5DB;
+  border-color: #46A5DB;
+}

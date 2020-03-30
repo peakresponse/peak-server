@@ -50,6 +50,11 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'observations',
     underscored: true
   });
+  Observation.prototype.toJSON = function() {
+    let attributes = Object.assign({}, this.get());
+    delete attributes.PatientId;
+    return attributes;
+  };
   Observation.associate = function(models) {
     // attributes which should only be system modified
     Observation.SYSTEM_ATTRIBUTES = ['pin', 'patientId', 'version', 'updatedAt', 'updatedById', 'createdAt', 'createdById', 'updatedAttributes'];

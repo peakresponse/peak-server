@@ -8,6 +8,7 @@ import clone from 'lodash/clone';
 })
 export class PatientComponent {
   @Input() patient: any;
+  @Input() now: Date;
 
   get portraitUrl() {
     if (this.patient.portraitUrl) {

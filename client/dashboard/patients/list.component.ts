@@ -1,12 +1,15 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { AgmMap, LatLngBounds } from '@agm/core';
 import { Subscription } from 'rxjs';
 import assign from 'lodash/assign';
 import find from 'lodash/find';
-import sortBy from 'lodash/sortBy';
+import orderBy from 'lodash/orderBy';
+import filter from 'lodash/filter';
+import size from 'lodash/size';
 
+import { Patient } from './patient';
 import { WebSocketService } from '../../shared/services';
 
 declare var google: any;
@@ -16,14 +19,46 @@ declare var google: any;
   styleUrls: ['./list.component.scss']
 })
 export class ListPatientsComponent implements AfterViewInit, OnDestroy {
+  PRIORITY_ARRAY = Patient.PRIORITY_ARRAY;
+  SORT_ARRAY = [
+    'recent',
+    'longest',
+    'az',
+    'za',
+  ];
+  SORT_LABELS = {
+    recent: 'Recently Updated',
+    longest: 'Longest Since Update',
+    az: 'A-Z by Last Name',
+    za: 'Z-A by Last Name',
+  };
+  sort = 'recent';
+  view = 'sorted';
+  tab = 'immediate';
   records: any[] = [];
   subscription: Subscription;
+  now: Date;
+  interval: any;
   mapHeight = 0;
   mapInitialized = false;
   @ViewChild('map') map: AgmMap;
   @ViewChild('mapContainer') mapContainer: ElementRef;
+  @ViewChild('navbar') navbar: ElementRef;
 
-  constructor(public route: ActivatedRoute, private ws: WebSocketService) {}
+  constructor(public route: ActivatedRoute, private ws: WebSocketService) {
+    this.route.paramMap
+      .subscribe((params: ParamMap) => this.view = params.get('view'));
+    this.route.queryParams
+      .subscribe((params: Params) => {
+        this.sort = params['sort'] || 'recent';
+        this.resort();
+      });
+    this.route.fragment
+      .subscribe((fragment: string) => this.tab = fragment || 'immediate');
+
+    this.now = new Date();
+    this.interval = setInterval(() => this.now = new Date(), 1000);
+  }
 
   ngAfterViewInit() {
     this.map.mapReady.subscribe(() => {
@@ -40,12 +75,29 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
           assign(found, record);
         }
       }
-      this.records = sortBy(this.records, ['priority', 'updated_at']);
+      this.resort();
       if (recenter && this.mapInitialized) {
         this.recenterMap();
       }
     });
     setTimeout(() => this.onResize(), 0);
+  }
+
+  resort() {
+    switch (this.sort) {
+    case 'recent':
+      this.records = orderBy(this.records, ['priority', 'updatedAt'], ['asc', 'desc']);
+      break;
+    case 'longest':
+      this.records = orderBy(this.records, ['priority', 'updatedAt'], ['asc', 'asc']);
+      break;
+    case 'az':
+      this.records = orderBy(this.records, ['priority', 'lastName'], ['asc', 'asc']);
+      break;
+    case 'za':
+      this.records = orderBy(this.records, ['priority', 'lastName'], ['asc', 'desc']);
+      break;
+    }
   }
 
   recenterMap() {
@@ -63,14 +115,26 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   @HostListener('window:resize')
-  onResize(){
-   this.mapHeight = this.mapContainer.nativeElement.offsetWidth;
+  onResize() {
+   this.mapHeight = window.innerHeight - this.navbar.nativeElement.offsetHeight;
   }
 
   trackById(record: any, index: number): string {
     return record.id;
+  }
+
+  priorityCount(priority: string): number {
+    const index = this.PRIORITY_ARRAY.indexOf(priority);
+    return size(filter(this.records, r => r.priority == index));
+  }
+
+  priorityMatch(record: any): boolean {
+    return record.priority == Patient.PRIORITY_MAP[this.tab];
   }
 }

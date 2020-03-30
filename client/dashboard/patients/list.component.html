@@ -1,22 +1,56 @@
-<router-outlet></router-outlet>
-<div [class.d-none]="route.firstChild">
-  <div class="row">
-    <div #mapContainer class="col-md-6">
-      <agm-map #map [style.height.px]="mapHeight">
-        <ng-container *ngFor="let record of records; trackBy: trackById">
-          <agm-marker *ngIf="record.lat && record.lng"
-                      [latitude]="record.lat"
-                      [longitude]="record.lng"
-                      [label]="(record.lastName+', '+record.firstName).trim()"></agm-marker>
-        </ng-container>
-      </agm-map>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div *ngFor="let record of records; trackBy: trackById" class="col-md-3">
-          <app-dashboard-patient [patient]="record" [routerLink]="['/patients', record.id]"></app-dashboard-patient>
-        </div>
+<nav #navbar class="navbar">
+  <a class="navbar-brand"><img class="navbar-logo" src="/images/logo180.png" alt="NaT">&nbsp;&nbsp;<h1>Dashboard</h1></a>
+  <div class="navbar-nav flex-row">
+    <div *ngIf="view == 'sorted'" class="dropdown mr-5">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{SORT_LABELS[sort]}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a *ngFor="let sort of SORT_ARRAY" routerLink="/dashboard/sorted" preserveFragment [queryParams]="{sort: sort}" class="dropdown-item">{{SORT_LABELS[sort]}}</a>
       </div>
     </div>
+    <a routerLink="/dashboard/sorted" routerLinkActive="active" class="nav-item nav-link">
+      <i class="fas fa-layer-group"></i><br />
+      Sort View
+    </a>
+    <a routerLink="/dashboard/map" routerLinkActive="active" class="nav-item nav-link">
+      <i class="far fa-map"></i><br />
+      Map View
+    </a>
+    <a href="/logout" class="nav-item nav-link">
+      <i class="fas fa-sign-out-alt"></i><br />
+      Logout
+    </a>
+  </div>
+</nav>
+<div [class.d-none]="view != 'map'" class="row">
+  <div #mapContainer class="col">
+    <agm-map #map [style.height.px]="mapHeight">
+      <ng-container *ngFor="let record of records; trackBy: trackById">
+        <agm-overlay *ngIf="record.lat && record.lng" [latitude]="+record.lat" [longitude]="+record.lng">
+          <div [routerLink]="[{outlets: {modal: ['patients', record.id]}}]" class="marker" [style.background-image]="'url(/images/'+PRIORITY_ARRAY[record.priority]+'.png)'">
+            <div class="marker__portrait" [style.background-image]="record.portraitUrl | cssUrl"></div>
+          </div>
+        </agm-overlay>
+      </ng-container>
+    </agm-map>
   </div>
 </div>
+<div *ngIf="view == 'sorted'" [class]="'d-flex priority--' + tab">
+  <div class="tab-content">
+    <div class="row">
+      <ng-container *ngFor="let record of records; trackBy: trackById">
+        <div *ngIf="priorityMatch(record)" class="col-md-3">
+          <app-dashboard-patient [patient]="record" [now]="now" [routerLink]="[{outlets: {modal: ['patients', record.id]}}]" preserveFragment queryParamsHandling="preserve"></app-dashboard-patient>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="tabs nav flex-column">
+    <a *ngFor="let priority of PRIORITY_ARRAY" routerLink="/dashboard/sorted" [fragment]="priority" queryParamsHandling="preserve" [class.active]="tab == priority" [class]="'nav-link tab--' + priority" tabindex="0">
+      {{priority|titlecase}}<br />
+      <span>{{priorityCount(priority)}} p</span>
+    </a>
+  </div>
+</div>
+<router-outlet name="modal"></router-outlet>

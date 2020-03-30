@@ -1,5 +1,8 @@
 <div [class]="'patient patient--priority_' + patient.priority">
   <div class="patient__portrait" [style.background-image]="portraitUrl">
   </div>
-  {{patient.firstName}} {{patient.lastName}}
+  <div class="patient__data">
+    <div class="patient__name">{{patient.lastName}}, {{patient.firstName}}</div>
+    <div class="patient__updated">Last updated:<br/>{{patient.updatedAt | relativeDate:now}}</div>
+  </div>
 </div>

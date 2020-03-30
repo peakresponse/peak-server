@@ -1,58 +1,91 @@
 <app-shared-form *ngIf="id" type="patients" [id]="id" [hideButtons]="true">
   <ng-template let-record="record" let-error="error">
-    <div class="row">
-      <div class="col-md-3">
-        <app-dashboard-patient [patient]="record"></app-dashboard-patient>
-        <p>&nbsp;</p>
-        <h3>Observation</h3>
-        <p *ngIf="record.audioUrl"><audio controls [src]="record.audioUrl"></audio></p>
-        <p>{{record.text}}</p>
-      </div>
-      <div class="col-md-3">
-        <h4>Location</h4>
-        <dl>
-          <dt>Location</dt>
-          <dd>{{record.location}}&nbsp;</dd>
-        </dl>
-        <dl>
-          <dt>GPS</dt>
-          <dd><span *ngIf="record.lat && record.lng">{{record.lat}}, {{record.lng}}</span>&nbsp;</dd>
-        </dl>
-      </div>
-      <div class="col-md-3">
-        <h4>Info</h4>
-        <dl>
-          <dt>First name</dt>
-          <dd>{{record.firstName}}&nbsp;</dd>
-        </dl>
-        <dl>
-          <dt>Last name</dt>
-          <dd>{{record.lastName}}&nbsp;</dd>
-        </dl>
-        <dl>
-          <dt>Age</dt>
-          <dd>{{record.age}}&nbsp;</dd>
-        </dl>
-      </div>
-      <div class="col-md-3">
-        <h4>Vitals</h4>
-        <dl>
-          <dt>Respiratory Rate</dt>
-          <dd>{{record.respiratoryRate}}&nbsp;</dd>
-        </dl>
-        <dl>
-          <dt>Pulse</dt>
-          <dd>{{record.pulse}}&nbsp;</dd>
-        </dl>
-        <dl>
-          <dt>Capillary Refill</dt>
-          <dd>{{record.capillaryRefill}}&nbsp;</dd>
-        </dl>
-        <dl>
-          <dt>Blood Pressure</dt>
-          <dd>{{record.bloodPressure}}&nbsp;</dd>
-        </dl>
+    <div [class]="'modal d-block patient patient--' + PRIORITY_ARRAY[record.priority]" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+        <div class="close-container">
+          <button (click)="onClose()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="patient__portrait" [style.background-image]="record.portraitUrl | cssUrl">
+            </div>
+            <h1>{{PRIORITY_ARRAY[record.priority] | titlecase}}</h1>
+            <div class="patient__data">
+              <p><span class="patient__name">{{record.lastName}}, {{record.firstName}}</span><br />
+              Last updated: {{record.updatedAt | relativeDate}}</p>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-6 col-xl-5 offset-xl-1">
+                <div class="card">
+                  <div class="card-header">Location</div>
+                  <div class="card-body">
+                    <dl>
+                      <dt>Location</dt>
+                      <dd>{{record.location}}</dd>
+                      <dt>GPS</dt>
+                      <dd><span *ngIf="record.lat && record.lng">{{record.lat}}, {{record.lng}}</span></dd>
+                    </dl>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">Info</div>
+                  <div class="card-body">
+                    <dl>
+                      <dt>First name</dt>
+                      <dd>{{record.firstName}}</dd>
+                      <dt>Last name</dt>
+                      <dd>{{record.lastName}}</dd>
+                      <dt>Age</dt>
+                      <dd>{{record.age}}</dd>
+                    </dl>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">Vitals</div>
+                  <div class="card-body">
+                    <dl>
+                      <dt>Respiratory Rate</dt>
+                      <dd>{{record.respiratoryRate}}</dd>
+                      <dt>Pulse</dt>
+                      <dd>{{record.pulse}}</dd>
+                      <dt>Capillary Refill</dt>
+                      <dd>{{record.capillaryRefill}}</dd>
+                      <dt>Blood Pressure</dt>
+                      <dd>{{record.bloodPressure}}</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-xl-5">
+                <div class="card">
+                  <div class="card-header">Observations</div>
+                  <div class="card-body" *ngIf="observations(record?.observations) as observations">
+                    <ng-container>
+                      <div class="observation" *ngFor="let observation of observations; let i = index;">
+                        <div class="observation__header">
+                          Observation {{observations.length - i}}
+                          &nbsp;|&nbsp; {{observation.updatedAt|date:'shortTime'}}
+                          <span *ngIf="observation.audioUrl">&nbsp;|&nbsp;
+                            <audio #audio [id]="observation.id" [src]="observation.audioUrl"></audio>
+                            <span *ngIf="isPaused(i)">{{duration(i)}}<a class="observation__playpause" (click)="onPlay(i)" tabindex="0"><i class="fas fa-play"></i></a></span>
+                            <span *ngIf="!isPaused(i)">{{position(i)}}<a (click)="onPause(i)" class="observation__playpause" tabindex="0"><i class="fas fa-stop"></i></a></span>
+                          </span>
+                        </div>
+                        <div class="observation__text">{{observation.text}}</div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </ng-template>
 </app-shared-form>
+<div class="modal-backdrop"></div>

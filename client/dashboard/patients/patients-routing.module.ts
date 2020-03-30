@@ -5,15 +5,16 @@ import { ListPatientsComponent, ShowPatientComponent } from '.';
 
 const appRoutes: Routes = [
   {
-    path: 'patients',
+    path: 'dashboard/:view',
     component: ListPatientsComponent,
     children: [
       {
-        path: ':id',
-        component: ShowPatientComponent
-      }
+        path: 'patients/:id',
+        component: ShowPatientComponent,
+        outlet: 'modal'
+      },
     ]
-  }
+  },
 ];
 
 @NgModule({

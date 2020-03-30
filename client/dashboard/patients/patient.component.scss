@@ -1,37 +1,23 @@
 .patient {
-  text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 .patient__portrait {
-  margin: 1em auto;
-  width: 100px;
-  height: 100px;
-  border-style: solid;
+  flex: none;
+  margin: .75rem;
+  width: 8.125rem;
+  height: 8.125rem;
   border-radius: 50%;
-  border-width: 4px;
   background-size: cover;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
-.patient--priority_0 .patient__portrait {
-  border-color: red;
+.patient__data {
+  color: #4F4F4F;
 }
 
-.patient--priority_1 .patient__portrait {
-  border-color: yellow;
-}
-
-.patient--priority_2 .patient__portrait {
-  border-color: green;
-}
-
-.patient--priority_3 .patient__portrait {
-  border-color: gray;
-}
-
-.patient--priority_4 .patient__portrait {
-  border-color: black;
-}
-
-.patient--priority_5 .patient__portrait {
-  border-color: lightgray;
+.patient__name {
+  font-size: 1.125rem;
+  font-weight: 800;
 }

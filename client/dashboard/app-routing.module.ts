@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/patients',
+    redirectTo: '/dashboard/sorted',
     pathMatch: 'full'
   }
 ];

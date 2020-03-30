@@ -1,0 +1,173 @@
+.modal-backdrop {
+  background-color: #F5F7F9;
+  opacity: 0.8;
+}
+
+.close-container {
+  pointer-events: auto;
+  width: 100%;
+}
+
+.close {
+  right: 0;
+  font-size: 4rem;
+  color: #46A5DB;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+}
+
+.modal-content {
+  background-color: #E5ECEF;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: block;
+  border-radius: 0;
+  height: 11.125rem;
+}
+
+.modal-header h1 {
+  margin: -1rem;
+  padding-top: 2.25rem;
+  padding-left: 12.625rem;
+  height: 5.5rem;
+  font-size: 2.25rem;
+  text-align: left;
+}
+
+.patient__data {
+  padding-left: 12.625rem;
+  margin-left: -1em;
+  margin-top: 1.5em;
+  margin-right: -1em;
+  color: #4F4F4F;
+}
+
+.patient__name {
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+
+.patient--immediate {
+  .modal-header {
+    background-color: rgba(237, 114, 66, .5);
+    h1 {
+      background-color: #ED7542;
+      color: white;
+    }
+  }
+}
+
+.patient--delayed {
+  .modal-header {
+    background-color: #FBF8BD;
+    h1 {
+      background-color: #F3EC42;
+      color: #4F4F4F;
+    }
+  }
+}
+
+.patient--minimal {
+  .modal-header {
+    background-color: #C5F9D3;
+    h1 {
+      background-color: #42ED72;
+      color: #4F4F4F;
+    }
+  }
+}
+
+.patient--expectant {
+  .modal-header {
+    background-color: rgba(186, 191, 187, .5);
+    h1 {
+      background-color: #BABFBB;
+      color: #4F4F4F;
+    }
+  }
+}
+
+.patient--dead {
+  .modal-header {
+    background-color: rgba(71, 71, 71, .5);
+    h1 {
+      background-color: #474747;
+      color: white;
+    }
+  }
+}
+
+.patient__portrait {
+  position: absolute;
+  left: 3rem;
+  top: 1.5rem;
+  width: 8.125rem;
+  height: 8.125rem;
+  border: 5px solid white;
+  border-radius: 50%;
+  background-size: cover;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  border: 0;
+  border-radius: .3125rem;
+  margin-bottom: .5rem;
+}
+
+.card-header {
+  background-color: #F5F7F9;
+  border: 0;
+  border-top-left-radius: .3125rem;
+  border-top-right-radius: .3125rem;
+  color: #4F4F4F;
+  line-height: 1.375;
+  padding: 0.4375rem 1.375rem;
+}
+
+.card-body {
+  padding: 0.4375rem 1.375rem;
+  dl {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  dt, dd {
+    flex-basis: 50%;
+    padding: .1875rem 0;
+  }
+  dt {
+    font-weight: normal;
+    color: #BDBDBD
+  }
+  dd {
+    text-align: right;
+    color: #4F4F4F;
+    margin: 0;
+  }
+}
+
+.observation {
+  position: relative;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding: .5rem 1rem;
+  background-color: #F5F7F9;
+  color: #4F4F4F;
+  margin-bottom: .5rem;
+}
+
+.observation__header {
+  margin-bottom: 1rem;
+}
+
+.observation__playpause {
+  position: absolute;
+  right: 1rem;
+  font-size: 1.5rem;
+}

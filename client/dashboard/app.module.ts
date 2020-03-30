@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
+import { AgmOverlays } from 'agm-overlays';
 
 import { Config } from './config';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +21,7 @@ import { ApiService, NavigationService, UserService, WebSocketService }
   ],
   imports: [
     AgmCoreModule.forRoot(),
+    AgmOverlays,
     AppRoutingModule,
     BrowserModule,
     FormsModule,

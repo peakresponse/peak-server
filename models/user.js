@@ -102,7 +102,7 @@ module.exports = (sequelize, DataTypes) => {
         return mailer.send({
           template: 'password-reset',
           message: {
-            to: `${this.fullNameAndEmail()}`
+            to: `${user.fullNameAndEmail()}`
           },
           locals: {
             url: `${process.env.BASE_URL}/passwords/reset/${user.passwordResetToken}`
