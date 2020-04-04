@@ -47,7 +47,12 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
 
   constructor(public route: ActivatedRoute, private ws: WebSocketService) {
     this.route.paramMap
-      .subscribe((params: ParamMap) => this.view = params.get('view'));
+      .subscribe((params: ParamMap) => {
+        this.view = params.get('view');
+        if (this.view == 'map') {
+          this.recenterMap();
+        }
+      });
     this.route.queryParams
       .subscribe((params: Params) => {
         this.sort = params['sort'] || 'recent';
@@ -101,14 +106,16 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
   }
 
   recenterMap() {
-    const bounds: LatLngBounds = new window['google'].maps.LatLngBounds();
-    for (let record of this.records) {
-      if (record.lat && record.lng) {
-        bounds.extend(new window['google'].maps.LatLng(record.lat, record.lng));
+    if (window['google']) {
+      const bounds: LatLngBounds = new window['google'].maps.LatLngBounds();
+      for (let record of this.records) {
+        if (record.lat && record.lng) {
+          bounds.extend(new window['google'].maps.LatLng(record.lat, record.lng));
+        }
       }
+      this.map.fitBounds = bounds;
+      this.map.triggerResize();
     }
-    this.map.fitBounds = bounds;
-    this.map.triggerResize();
   }
 
   ngOnDestroy() {
