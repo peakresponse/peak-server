@@ -101,6 +101,13 @@ a.dropdown-item {
   border-radius: 50%;
 }
 
+@media(min-width: 1600px) {
+  .col-xxl-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
 app-dashboard-patient {
   cursor: pointer;
 }

@@ -40,7 +40,7 @@
   <div class="tab-content">
     <div class="row">
       <ng-container *ngFor="let record of records; trackBy: trackById">
-        <div *ngIf="priorityMatch(record)" class="col-md-3">
+        <div *ngIf="priorityMatch(record)" class="col-lg-6 col-xl-4 col-xxl-3">
           <app-dashboard-patient [patient]="record" [now]="now" [routerLink]="[{outlets: {modal: ['patients', record.id]}}]" preserveFragment queryParamsHandling="preserve"></app-dashboard-patient>
         </div>
       </ng-container>
