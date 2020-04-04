@@ -4,7 +4,7 @@
 This is the server repository for the NaT intelligent assistant. For the iOS
 mobile app repository, visit:
 
-https://github.com/francisli/t2p-ios
+https://github.com/natriage/nat-ios
 
 NaT was developed as part of the 2019 Tech to Protect Challenge to create
 new technologies for emergency responders.
@@ -22,8 +22,8 @@ A demo deployment for contest evaluation is live at: https://natriage.org/
    into the directory.
 
    ```
-   $ git clone https://github.com/francisli/t2p-server.git
-   $ cd t2p-server
+   $ git clone https://github.com/natriage/nat-server.git
+   $ cd nat-server
    ```
 
 3. Open a command-line shell, change into your repo directory, and execute this command:
@@ -60,8 +60,8 @@ A demo deployment for contest evaluation is live at: https://natriage.org/
     If it is successful, you will see something like this:
 
     ```
-    Killing t2p-server_db_1           ... done
-    Killing t2p-server_server_1       ... done
+    Killing nat-server_db_1           ... done
+    Killing nat-server_server_1       ... done
     ```
 
     If it is not successful, you may see something like this:
@@ -75,8 +75,8 @@ A demo deployment for contest evaluation is live at: https://natriage.org/
 
     ```
     $ docker-compose stop
-    Stopping t2p-server_db_1          ... done
-    Stopping t2p-server_server_1      ... done
+    Stopping nat-server_db_1          ... done
+    Stopping nat-server_server_1      ... done
     ```
 
 ## Development
