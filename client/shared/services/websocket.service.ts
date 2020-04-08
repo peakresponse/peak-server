@@ -1,12 +1,14 @@
 import { Injectable, OnDestroy, isDevMode } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay, map, retryWhen, switchMap } from 'rxjs/operators';
+import { delay, map, retryWhen, switchMap, tap } from 'rxjs/operators';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 @Injectable()
 export class WebSocketService implements OnDestroy {
   RETRY_SECONDS = 10;
+
   connection$: WebSocketSubject<any>;
+  isConnected = false;
 
   constructor() {}
 
@@ -19,9 +21,10 @@ export class WebSocketService implements OnDestroy {
         }
         return this.connection$;
       }),
-      retryWhen(errors => {
-        return errors.pipe(delay(this.RETRY_SECONDS));
-      })
+      retryWhen(errors => errors.pipe(
+        tap(err => this.isConnected = false),
+        delay(this.RETRY_SECONDS)
+      ))
     );
   }
 

@@ -75,31 +75,32 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
       this.mapInitialized = true;
       this.recenterMap()
     });
-    let isFirst = true;
-    this.subscription = this.ws.connect().subscribe(records => {
-      const recenter = this.records.length == 0;
-      for (let record of records) {
-        const found = find(this.records, {id: record.id});
-        if (!found) {
-          this.records.push(record);
-        } else {
-          assign(found, record);
-        }
-        if (!isFirst) {
-          /// first remove from any other tabs it may have been in
-          for (let priority of Patient.PRIORITY_ARRAY) {
-            this.updates[priority] = this.updates[priority].filter((id: string) => id != record.id);
+    this.subscription = this.ws.connect()
+      .subscribe(records => {
+        const recenter = this.records.length == 0;
+        for (let record of records) {
+          const found = find(this.records, {id: record.id});
+          if (!found) {
+            this.records.push(record);
+          } else {
+            assign(found, record);
           }
-          /// and add it to its current priority tab
-          this.updates[Patient.PRIORITY_ARRAY[record.priority]].push(record.id);
+          /// ignore the first connection updates
+          if (this.ws.isConnected) {
+            /// first remove from any other tabs it may have been in
+            for (let priority of Patient.PRIORITY_ARRAY) {
+              this.updates[priority] = this.updates[priority].filter((id: string) => id != record.id);
+            }
+            /// and add it to its current priority tab
+            this.updates[Patient.PRIORITY_ARRAY[record.priority]].push(record.id);
+          }
         }
-      }
-      this.resort();
-      if (recenter && this.mapInitialized) {
-        this.recenterMap();
-      }
-      isFirst = false;
-    });
+        this.resort();
+        if (recenter && this.mapInitialized) {
+          this.recenterMap();
+        }
+        this.ws.isConnected = true;
+      });
     setTimeout(() => this.onResize(), 0);
   }
 
