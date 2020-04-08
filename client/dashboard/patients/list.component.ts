@@ -6,8 +6,6 @@ import { Subscription } from 'rxjs';
 import assign from 'lodash/assign';
 import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
-import filter from 'lodash/filter';
-import size from 'lodash/size';
 
 import { Patient } from './patient';
 import { WebSocketService } from '../../shared/services';
@@ -36,6 +34,13 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
   view = 'sorted';
   tab = 'immediate';
   records: any[] = [];
+  updates: any = {
+    immediate: [],
+    delayed: [],
+    minimal: [],
+    expectant: [],
+    dead: [],
+  };
   subscription: Subscription;
   now: Date;
   interval: any;
@@ -70,6 +75,7 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
       this.mapInitialized = true;
       this.recenterMap()
     });
+    let isFirst = true;
     this.subscription = this.ws.connect().subscribe(records => {
       const recenter = this.records.length == 0;
       for (let record of records) {
@@ -79,11 +85,20 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
         } else {
           assign(found, record);
         }
+        if (!isFirst) {
+          /// first remove from any other tabs it may have been in
+          for (let priority of Patient.PRIORITY_ARRAY) {
+            this.updates[priority] = this.updates[priority].filter((id: string) => id != record.id);
+          }
+          /// and add it to its current priority tab
+          this.updates[Patient.PRIORITY_ARRAY[record.priority]].push(record.id);
+        }
       }
       this.resort();
       if (recenter && this.mapInitialized) {
         this.recenterMap();
       }
+      isFirst = false;
     });
     setTimeout(() => this.onResize(), 0);
   }
@@ -136,9 +151,14 @@ export class ListPatientsComponent implements AfterViewInit, OnDestroy {
     return record.id;
   }
 
+  onViewed(record: any) {
+    let priority = Patient.PRIORITY_ARRAY[record.priority];
+    this.updates[priority] = this.updates[priority].filter((id: string) => id != record.id);
+  }
+
   priorityCount(priority: string): number {
     const index = this.PRIORITY_ARRAY.indexOf(priority);
-    return size(filter(this.records, r => r.priority == index));
+    return this.records.filter(r => r.priority == index).length;
   }
 
   priorityMatch(record: any): boolean {

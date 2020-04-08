@@ -41,13 +41,14 @@
     <div class="row">
       <ng-container *ngFor="let record of records; trackBy: trackById">
         <div *ngIf="priorityMatch(record)" class="col-lg-6 col-xl-4 col-xxl-3">
-          <app-dashboard-patient [patient]="record" [now]="now" [routerLink]="[{outlets: {modal: ['patients', record.id]}}]" preserveFragment queryParamsHandling="preserve"></app-dashboard-patient>
+          <app-dashboard-patient (click)="onViewed(record)" [patient]="record" [now]="now" [routerLink]="[{outlets: {modal: ['patients', record.id]}}]" preserveFragment queryParamsHandling="preserve"></app-dashboard-patient>
         </div>
       </ng-container>
     </div>
   </div>
   <div class="tabs nav flex-column">
     <a *ngFor="let priority of PRIORITY_ARRAY" routerLink="/dashboard/sorted" [fragment]="priority" queryParamsHandling="preserve" [class.active]="tab == priority" [class]="'nav-link tab--' + priority" tabindex="0">
+      <div *ngIf="updates[priority].length > 0" class="badge"><span>{{updates[priority].length}}</span></div>
       {{priority|titlecase}}<br />
       <span>{{priorityCount(priority)}} p</span>
     </a>

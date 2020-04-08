@@ -147,11 +147,15 @@ app-dashboard-patient {
   }
 }
 
+.tab-content {
+  z-index: 1; /// just enough to cover the drop shadow from the tab itself
+}
+
 .tabs {
   width: 154px;
-  overflow: hidden;
 
   .nav-link {
+    position: relative;
     border-top: 10px;
     border-right: 10px;
     border-bottom: 10px;
@@ -165,6 +169,23 @@ app-dashboard-patient {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    .badge {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      top: -22px;
+      right: -22px;
+      background-color: #46A5DB;
+      border-radius: 50%;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      span {
+        position: relative;
+        top: 6px;
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+      }
+    }
     span {
       font-weight: normal;
     }
