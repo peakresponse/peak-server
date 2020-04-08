@@ -1,43 +1,44 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
+const HttpStatus = require('http-status-codes');
+const _ = require('lodash');
+
 const models = require('../../models');
 const wss = require('../../wss');
 const interceptors = require('../interceptors');
 const helpers = require('../helpers');
-const _ = require('lodash');
 
-router.get('/', interceptors.requireLogin, function(req, res, next) {
-  models.Observation.findAll({
+const router = express.Router();
+
+router.get('/', interceptors.requireLogin, helpers.async(async function(req, res, next) {
+  const records = await models.Observation.findAll({
     order: [['created_at', 'DESC']]
-  }).then(function(records) {
-    res.json(records.map(r => r.toJSON()));
   });
-});
+  res.json(records.map(r => r.toJSON()));
+}));
 
-router.post('/', interceptors.requireLogin, function(req, res, next) {
+router.post('/', interceptors.requireLogin, helpers.async(async function(req, res, next) {
   const updatedAttributes = _.keys(req.body);
   _.pullAll(updatedAttributes, models.Observation.SYSTEM_ATTRIBUTES);
   const data = _.pick(req.body, updatedAttributes);
-  let updatedPatient = null;
-  models.sequelize.transaction(function(transaction) {
-    return models.Patient.findOrCreate({
-      where: { pin: req.body.pin },
-      defaults: { version: 0, priority: data.priority, createdById: req.user.id, updatedById: req.user.id },
-      transaction
-    }).then(function([patient, created]) {
-      return helpers.handleUpload(patient, 'portraitUrl', data.portraitUrl, 'observations/portrait');
-    }).then(function(patient) {
-      return helpers.handleUpload(patient, 'audioUrl', data.audioUrl, 'observations/audio');
-    }).then(function(patient) {
+  try {
+    let patient, observation;
+    await models.sequelize.transaction(async function(transaction) {
+      [patient,] = await models.Patient.findOrCreate({
+        where: { pin: req.body.pin },
+        defaults: { version: 0, priority: data.priority, createdById: req.user.id, updatedById: req.user.id },
+        transaction
+      });
+      patient = await helpers.handleUpload(patient, 'portraitUrl', data.portraitUrl, 'observations/portrait');
+      patient = await helpers.handleUpload(patient, 'audioUrl', data.audioUrl, 'observations/audio');
       //// the upload handler writes directly to the patient record, so capture any changes back into the data object
       for (let attr of ['portraitUrl', 'audioUrl']) {
         if (updatedAttributes.indexOf(attr) >= 0) {
           data[attr] = patient[attr];
         }
       }
-      return patient.update(_.extend({
+      patient = await patient.update(_.extend({
         version: patient.version + 1,
         updatedById: req.user.id
       }, data), {
@@ -45,9 +46,7 @@ router.post('/', interceptors.requireLogin, function(req, res, next) {
         plain: true,
         transaction
       });
-    }).then(function(patient) {
-      updatedPatient = patient;
-      return models.Observation.create(_.extend({
+      observation = await models.Observation.create(_.extend({
         patientId: patient.id,
         version: patient.version,
         createdById: req.user.id,
@@ -55,23 +54,22 @@ router.post('/', interceptors.requireLogin, function(req, res, next) {
         updatedAttributes: updatedAttributes
       }, data), {transaction});
     });
-  }).then(function(record){
-    res.json(record.toJSON());
-    let data = JSON.stringify([updatedPatient.toJSON()]);
+    res.status(HttpStatus.CREATED).json(observation.toJSON());
+    const patientData = JSON.stringify([patient.toJSON()]);
     wss.clients.forEach(function(ws) {
-      ws.send(data);
+      ws.send(patientData);
     });
-  }).catch(function(error) {
+  } catch(error) {
     console.log(error);
     if (error.name == 'SequelizeValidationError') {
-      res.status(422).json({
-        status: 422,
+      res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
         messages: error.errors
       });
     } else {
-      res.sendStatus(500);
+      res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  });
-});
+  }
+}));
 
 module.exports = router;

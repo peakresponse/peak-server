@@ -1,0 +1,13 @@
+[
+  {
+    "model": "User",
+    "data": {
+      "id": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "johndoe@test.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": true
+    }
+  }
+]

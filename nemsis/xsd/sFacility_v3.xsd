@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd" />
+    <xs:complexType name="sFacility"  id="sFacilityLocationInformation">
+						<xs:sequence>
+							<xs:element name="sFacilityGroup" id="sFacility.sFacilityGroup" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Group Tag to hold info about a facility type and facilities.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="sFacility.01" id="sFacility.TypeofFacility" minOccurs="0" nillable="true">
+											<xs:annotation>
+												<xs:documentation>
+													<nemsisTacDoc>
+														<number>sFacility.01</number>
+														<name>Type of Facility</name>
+														<national>Yes</national>
+														<state>Yes</state>
+														<definition>The type of facility (healthcare or other) that the EMS agency transports patients to or from.</definition>
+														<comment>Used to populate dFacility.01 Type of Facility.</comment>
+														<v2Number>D04_15</v2Number>
+														<usage>Recommended</usage>
+													</nemsisTacDoc>
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="TypeOfFacility">
+														<xs:attribute name="NV" use="optional">
+															<xs:simpleType>
+																<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+															</xs:simpleType>
+														</xs:attribute>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="sFacility.FacilityGroup" id="sFacility.FacilityGroup" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Group Tag to hold info about a facility.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="sFacility.02" id="sFacility.FacilityName" minOccurs="0" nillable="true">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.02</number>
+																	<name>Facility Name</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The name of the facility.</definition>
+																	<comment>Used to populate dFacility.02 Facility Name</comment>
+																	<v2Number>D04_11</v2Number>
+																	<usage>Recommended</usage>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="FacilityName">
+																	<xs:attribute name="NV" use="optional">
+																		<xs:simpleType>
+																			<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+																		</xs:simpleType>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="sFacility.03" id="sFacility.FacilityCode" minOccurs="0" nillable="true">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.03</number>
+																	<name>Facility Location Code</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The code of the facility as assigned by the state.</definition>
+																	<comment>Used to populate dFacility.03 Facility Location Code.</comment>
+																	<v2Number>D04_12</v2Number>v2Number>
+																	<usage>Recommended</usage>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="FacilityCode">
+																	<xs:attribute name="NV" use="optional">
+																		<xs:simpleType>
+																			<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+																		</xs:simpleType>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="sFacility.04" id="sFacility.HospitalDesignation" minOccurs="0" maxOccurs="unbounded" nillable="true">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.04</number>
+																	<name>Hospital Designations</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The designation(s) associated with the hospital (e.g. Trauma, STEMI, Peds, etc).</definition>
+																	<comment>Used to populate dFacility.04 Hospital Designations.</comment>
+																	<v2Number/>
+																	<usage>Recommended</usage>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="HospitalDesignation">
+																	<xs:attribute name="NV" use="optional">
+																		<xs:simpleType>
+																			<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+																		</xs:simpleType>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="sFacility.05" type="NationalProviderIdentifier" id="sFacility.FacilityNationalProviderIdentifier" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.05</number>
+																	<name>Facility National Provider Identifier</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The facility National Provider Identifier(s) associated with National Provider System (NPS).</definition>
+																	<comment>Used to populate dFacility.05 Facility National Provider Identifier.</comment>
+																	<usage>Optional</usage>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sFacility.06" type="FacilityRoom" id="sFacility.FacilityRoomSuiteorApartment" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.06</number>
+																	<name>Facility Room, Suite, or Apartment</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The number of the specific room, suite, or apartment of the facility.</definition>
+																	<comment>Used to populate dFacility.06 Facility Room, Suite, or Apartment.</comment>
+																	<usage>Optional</usage>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sFacility.07" id="sFacility.FacilityStreetAddress" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.07</number>
+																	<name>Facility Street Address</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The street address where the facility is located.</definition>
+																	<usage>Optional</usage>
+																	<comment>Used to populate dFacility.07 Facility Street Address.</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="StreetAddress">
+																	<xs:attribute name="StreetAddress2" type="StreetAddress" use="optional"/>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="sFacility.08" type="CityGnisCode" id="sFacility.FacilityCity" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.08</number>
+																	<name>Facility City</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The city where the facility is located (physical address).</definition>
+																	<usage>Optional</usage>
+																	<comment>City codes are based on GNIS Feature Class. The primary Feature Class to use is "Civil" with "Populated Place" and "Military" code as additional options.
+																		&lt;br/>&lt;br/>
+																		Definitions for each GNIS City Feature Class can be found on the GNIS Codes website.
+																		&lt;br/>&lt;br/>
+																		GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a>
+																		&lt;br/>&lt;br/>
+																		Used to populate dFacility.08 Facility City.</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sFacility.09" id="sFacility.FacilityState" minOccurs="0" nillable="true">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.09</number>
+																	<name>Facility State</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The state where the facility is located.</definition>
+																	<usage>Recommended</usage>
+																	<comment>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a>
+																		&lt;br/>&lt;br/>
+																		Used to populate dFacility.09 Facility State.</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="ANSIStateCode">
+																	<xs:attribute name="NV" use="optional">
+																		<xs:simpleType>
+																			<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+																		</xs:simpleType>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="sFacility.10" id="sFacility.FacilityZIPCode" minOccurs="0" nillable="true">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.10</number>
+																	<name>Facility ZIP Code</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The zip code where the facility is located.</definition>
+																	<usage>Recommended</usage>
+																	<comment>ZIP Codes Product Website: &lt;a href="https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/">https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/&lt;/a>
+																		Product: USA - 5-digit ZIP Code Database, Commercial Edition
+																		&lt;br/>&lt;br/>
+																		Used to populate dFacility.10 Facility ZIP Code.</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="ZIP">
+																	<xs:attribute name="NV" use="optional">
+																		<xs:simpleType>
+																			<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+																		</xs:simpleType>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="sFacility.11" id="sFacility.FacilityCounty" minOccurs="0" nillable="true">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.11</number>
+																	<name>Facility County</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The county where the facility is located.</definition>
+																	<usage>Recommended</usage>
+																	<comment>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a>
+																		&lt;br/>&lt;br/>
+																		Used to populate dFacility.11 Facility County.</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="ANSICountyCode">
+																	<xs:attribute name="NV" use="optional">
+																		<xs:simpleType>
+																			<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+																		</xs:simpleType>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="sFacility.12" type="ANSICountryCodesCAMXUS" id="sFacility.FacilityCountry" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.12</number>
+																	<name>Facility Country</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The country where the facility is located.</definition>
+																	<usage>Optional</usage>
+																	<comment>ANSI Country Codes (ISO 3166) Website: &lt;a href="https://www.iso.org/iso-3166-country-codes.html">https://www.iso.org/iso-3166-country-codes.html&lt;/a>
+																		&lt;br/>&lt;br/>
+																		Used to populate dFacility.12 Facility Country.</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sFacility.13" type="GPSLocation" id="sFacility.FacilityGPSLocation" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.13</number>
+																	<name>Facility GPS Location</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The facility GPS Coordinates.</definition>
+																	<usage>Optional</usage>
+																	<comment>The pattern for GPS location is in the format "&lt;span style="font-style:italic">latitude&lt;/span>,&lt;span style="font-style:italic">longitude&lt;/span>" where:
+										  &lt;br/>- &lt;span style="font-style:italic">latitude&lt;/span> has a minimum of -90 and a maximum of 90 with up to 6 decimal places
+										  &lt;br/>- &lt;span style="font-style:italic">longitude&lt;/span> has a minimum of -180 and a maximum of 180 with up to 6 decimal places
+										  &lt;br/>&lt;br/>Used to populated dFacility.13 Facility GPS Location.
+						        								</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sFacility.14" type="USNG" id="sFacility.FacilityUSNationalGridCoordinates" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.14</number>
+																	<name>Facility US National Grid Coordinates</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The facility US National Grid Coordinates.</definition>
+																	<usage>Optional</usage>
+																	<comment>Standard found at &lt;a href="http://www.fgdc.gov/usng">http://www.fgdc.gov/usng&lt;/a>.
+																		&lt;br/>&lt;br/>Used to populate dFacility.14 Facility US National Grid Coordinates.</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sFacility.15" id="sFacility.FacilityPhoneNumber" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>
+																<nemsisTacDoc>
+																	<number>sFacility.15</number>
+																	<name>Facility Phone Number</name>
+																	<national>Yes</national>
+																	<state>Yes</state>
+																	<definition>The facility phone number(s).</definition>
+																	<usage>Optional</usage>
+																	<comment>This element contains an attribute to define what type of phone number is being documented (e.g., Fax, Home, Mobile, Pager, and Work).
+																	&lt;br/>&lt;br/>Used to populate dFacility.15 Facility Phone Number.</comment>
+																</nemsisTacDoc>
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="PhoneNumber">
+																	<xs:attribute name="PhoneNumberType" type="PhoneNumberType" use="optional"/>
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+				</xs:complexType>
+</xs:schema>

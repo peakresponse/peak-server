@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd"/>
+    <xs:complexType name="sState" id="sState.sStateHeaderInformation">
+        <xs:sequence>
+            <xs:element name="sState.01" type="ANSIStateCode" id="sConfiguration.StateAssociatedwiththeCertificationLicensureLevels">
+                <xs:annotation>
+                    <xs:documentation>
+                        <nemsisTacDoc>
+                            <number>sState.01</number>
+                            <name>State</name>
+                            <national>Yes</national>
+                            <state>Yes</state>
+                            <definition>The state associated with the state data set.</definition>
+                            <usage>Mandatory</usage>
+                            <comment>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a>
+                                &lt;br/>&lt;br/>Used to populate the following data elements:
+                                &lt;br/>dAgency.04 EMS Agency State
+                                &lt;br/>dConfiguration.01 State Associated with this Configuration.
+                            </comment>
+                        </nemsisTacDoc>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

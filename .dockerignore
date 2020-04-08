@@ -1,4 +1,5 @@
 /.env
 /.git
 /node_modules
+/target
 /*.dump

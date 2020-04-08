@@ -17,6 +17,7 @@ export class FormComponent {
   @Input() hideButtons = false;
   @Input() createLabel: string = "Create";
   @Input() updateLabel: string = "Update";
+  @Input() disabled = false;
   @Output() create = new EventEmitter<any>();
   @Output() update = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();

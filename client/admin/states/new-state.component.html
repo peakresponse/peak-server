@@ -1,0 +1,23 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">New State</h1>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <app-shared-form (create)="onCreate($event)" type="states" [disabled]="disabled">
+      <ng-template let-record="record" let-error="error">
+        <ngb-alert *ngIf="disabled" type="info" [dismissible]="false">
+          <div>{{status || 'Please wait...'}}</div>
+          <div class="text-centered"><app-shared-loader></app-shared-loader></div>
+        </ngb-alert>
+        <div class="form-group">
+          <label for="repo">State</label>
+          <input *ngIf="!repos" type="text" readonly class="form-control-plaintext" id="repo" value="Please wait, fetching available states from NEMSIS...">
+          <select *ngIf="repos" [ngModel]="record.repo" (ngModelChange)="onSelectRepo(record, $event)" [class.is-invalid]="error.messages|error:'repo'" id="repo" name="repo" class="form-control">
+            <option *ngFor="let repo of repos.values" [value]="repo.slug">{{repo.name}}</option>
+          </select>
+          <div *ngIf="error.messages|error:'repo' as error" class="invalid-feedback">{{error.message}}</div>
+        </div>
+      </ng-template>
+    </app-shared-form>
+  </div>
+</div>

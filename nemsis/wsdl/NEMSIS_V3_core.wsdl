@@ -1,0 +1,599 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-740-. --><wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.nemsis.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws.nemsis.org/">
+    <wsdl:types>
+        <xsd:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.nemsis.org/" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.nemsis.org/">
+            <xs:element name="SubmitDataRequest" type="tns:NemsisV3WsSubmitDataRequest" />
+            <xs:element name="SubmitDataResponse" type="tns:NemsisV3WsSubmitDataResponse" />
+            <xs:element name="RetrieveStatusRequest" type="tns:NemsisV3WsRetrieveStatusRequest" />
+            <xs:element name="RetrieveStatusResponse" type="tns:NemsisV3WsRetrieveStatusResponse" />
+            <xs:element name="QueryLimitRequest" type="tns:NemsisV3WsQueryLimitRequest" />
+            <xs:element name="QueryLimitResponse" type="tns:NemsisV3WsQueryLimitResponse" />
+            <xs:simpleType name="SubmitResponseCode">
+                <xs:union memberTypes="tns:CommonResponseCode tns:ResultPendingCode tns:SubmitDataProcessCodes" />
+            </xs:simpleType>
+            <xs:simpleType name="RetrieveResponseCode">
+                <xs:union memberTypes="tns:CommonResponseCode tns:ResultPendingCode tns:SubmitDataProcessCodes tns:RetrieveErrorCode">
+                </xs:union>
+            </xs:simpleType>
+            <xs:simpleType name="QueryLimitResponseCode">
+                <xs:union memberTypes="tns:PrivilegeErrorCodes tns:QueryLimitCodes" />
+            </xs:simpleType>
+            <xs:simpleType name="CommonResponseCode">
+                <xs:union memberTypes="tns:ServerErrorCodes tns:PrivilegeErrorCodes tns:ParameterErrorCodes tns:CustomErrorCodes tns:CustomSuccessCodes" />
+            </xs:simpleType>
+            <xs:simpleType name="PrivilegeErrorCodes">
+                <xs:annotation>
+                    <xs:documentation>Error codes of authentication/authorization for an attempted web service operation</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:enumeration value="-3">
+                        <xs:annotation>
+                            <xs:documentation>Permission denied to the client for that organization</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-2">
+                        <xs:annotation>
+                            <xs:documentation>Permission denied to the client for the operation</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-1">
+                        <xs:annotation>
+                            <xs:documentation>Invalid username and/or password</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="ParameterErrorCodes">
+                <xs:annotation>
+                    <xs:documentation>Generic error codes for an attempted web service operation</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:enumeration value="-4">
+                        <xs:annotation>
+                            <xs:documentation>Invalid parameter value</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-5">
+                        <xs:annotation>
+                            <xs:documentation>Invalid parameter combination</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+			<xs:simpleType name="ServerErrorCodes">
+                <xs:annotation>
+                    <xs:documentation>Error codes for web service server</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:enumeration value="-20">
+                        <xs:annotation>
+                            <xs:documentation>Generic server error</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-21">
+                        <xs:annotation>
+                            <xs:documentation>Server error, because of database connection/operation issue</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+					<xs:enumeration value="-22">
+                        <xs:annotation>
+                            <xs:documentation>Server error, because of file system/network/IO issue</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>					
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="ResultPendingCode">
+                <xs:annotation>
+                    <xs:documentation>Code to indicate the process is not finished on the server for an attempted web service operation</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0">
+                        <xs:annotation>
+                            <xs:documentation>The expected data processing is not yet complete</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="SubmitDataProcessCodes">
+                <xs:annotation>
+                    <xs:documentation>Codes to describe return codes for an attempted data submission web service operation</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:enumeration value="-11">
+                        <xs:annotation>
+                            <xs:documentation>Failed import of a file, because the same file is already on the server</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-12">
+                        <xs:annotation>
+                            <xs:documentation>Failed import of a file, because of failing XML validation</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-13">
+                        <xs:annotation>
+                            <xs:documentation>Failed import of a file, because of [FATAL] level Schematron rule violation</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-14">
+                        <xs:annotation>
+                            <xs:documentation>Failed import of a file, because of [ERROR] level Schematron rule violation</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-15">
+                        <xs:annotation>
+                            <xs:documentation>Failed import of a file, because of critical ETL rule violation</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-16">
+                        <xs:annotation>
+                            <xs:documentation>Failed import of a file, because of critical Business Intelligence rule violation</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+					<xs:enumeration value="-30">
+                        <xs:annotation>
+                            <xs:documentation>Failed import of a file, because the size of soap message exceeds the limit</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="1">
+                        <xs:annotation>
+                            <xs:documentation>Successful import of a file</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="2">
+                        <xs:annotation>
+                            <xs:documentation>Successful import of a file, with [ERROR] level Schematron rule violation reported</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="3">
+                        <xs:annotation>
+                            <xs:documentation>Successful import of a file, with [WARNING] level Schematron rule violation reported</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="4">
+                        <xs:annotation>
+                            <xs:documentation>Successful import of a file, with ETL rule warning</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="5">
+                        <xs:annotation>
+                            <xs:documentation>Successful import of a file, with Business Intelligence warning</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="6">
+                        <xs:annotation>
+                            <xs:documentation>Partially successful import of a file, with [ERROR] level Schematron rule violation reported</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="10">
+                        <xs:annotation>
+                            <xs:documentation>File has passed validation, processing is not yet complete</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="RetrieveErrorCode">
+                <xs:annotation>
+                    <xs:documentation>Code to indicate the error status for RetrieveStatus operation</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:enumeration value="-40">
+                        <xs:annotation>
+                            <xs:documentation>Status for the requested requestHandle is not available: it could be expired, or not in correct format, or never exist, or for
+						any other whatever reason.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-41">
+                        <xs:annotation>
+                            <xs:documentation>Status for the requested requestHandle is not available since it expires already</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-42">
+                        <xs:annotation>
+                            <xs:documentation>Invalid value of requestHandle (for example, not formatted properly)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-43">
+                        <xs:annotation>
+                            <xs:documentation>Never-used value of requestHandle</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="QueryLimitCodes">
+                <xs:annotation>
+                    <xs:documentation>Code to indicate the status for QueryLimit operation</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:enumeration value="51">
+                        <xs:annotation>
+                            <xs:documentation>Successful operation of QueryLimit</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-50">
+                        <xs:annotation>
+                            <xs:documentation>Server is too busy. The client should query later</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="-51">
+                        <xs:annotation>
+                            <xs:documentation>Failed operation of QueryLimit</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="CustomErrorCodes">
+                <xs:annotation>
+                    <xs:documentation>State or Vendor specific error returning code for web service request. It should be smaller than -100</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:maxExclusive value="-100" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="CustomSuccessCodes">
+                <xs:annotation>
+                    <xs:documentation>State or Vendor specific success returning code for web service request. It should be greater than 100</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:minExclusive value="100" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:group name="PrivilegeGroup">
+                <xs:sequence>
+                    <xs:element name="username">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1" />
+                                <xs:maxLength value="100" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="password">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1" />
+                                <xs:maxLength value="250" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="organization">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1" />
+                                <xs:maxLength value="100" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:group>
+            <xs:complexType name="NemsisV3WsRetrieveStatusRequest">
+                <xs:sequence>
+                    <xs:group ref="tns:PrivilegeGroup" />
+                    <xs:element name="requestType" type="xs:string" fixed="RetrieveStatus" />
+                    <xs:element name="requestHandle" type="xs:string" />
+                    <xs:element name="originalRequestType" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation> This element indicates the original request type: it could be either "SubmitData" or "Search", or some custom request
+						operation. When the server assigns unique identifiers (requestHandle) for all operations, this element is not necessary.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="additionalInfo" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="NemsisV3WsRetrieveStatusResponse">
+                <xs:sequence>
+                    <xs:element name="requestType" type="xs:string" fixed="RetrieveStatus" />
+                    <xs:element name="statusCode" type="tns:RetrieveResponseCode" />
+                    <xs:element name="requestHandle" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation> This requestHandle should echo the submit value of "requestHandle" in RetrieveStatus operation. The server doesn't need to
+						create a new handle for asynchronous request.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="originalRequestType" type="xs:string" minOccurs="0" />
+                    <xs:element name="retrieveResult" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice>
+                                <xs:element name="retrieveSubmitStatus" type="tns:SubmitDataReport" />
+                            </xs:choice>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="NemsisV3WsQueryLimitRequest">
+                <xs:sequence>
+                    <xs:group ref="tns:PrivilegeGroup" />
+                    <xs:element name="requestType" type="xs:string" fixed="QueryLimit" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="NemsisV3WsQueryLimitResponse">
+                <xs:sequence>
+                    <xs:element name="requestType" type="xs:string" fixed="QueryLimit" />
+                    <xs:element name="limit" type="xs:integer">
+                        <xs:annotation>
+                            <xs:documentation> The Web Service data submission size limit, expressed in KB (1024 Bytes). This should only apply to data payload, not on the
+						whole SOAP message. Positive value indicates success and negative value indicates error.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="statusCode" type="tns:QueryLimitResponseCode" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="NemsisV3WsSubmitDataRequest">
+                <xs:sequence>
+                    <xs:group ref="tns:PrivilegeGroup" />
+                    <xs:element name="requestType" type="xs:string" fixed="SubmitData" />
+                    <xs:element name="submitPayload" type="tns:DataPayload" />
+                    <xs:element name="requestDataSchema" type="tns:DataSchema" />
+                    <xs:element name="schemaVersion" type="xs:string" />
+                    <xs:element name="additionalInfo" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="NemsisV3WsSubmitDataResponse">
+                <xs:sequence>
+                    <xs:element name="requestType" type="xs:string" fixed="SubmitData" />
+                    <xs:element name="requestHandle" type="xs:string" />
+                    <xs:element name="statusCode" type="tns:SubmitResponseCode" />
+                    <xs:element name="reports" type="tns:SubmitDataReport" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SubmitDataReport">
+                <xs:sequence>
+					<xs:element name="serverErrorReport" type="tns:ServerErrorReport" minOccurs="0" />
+                    <xs:element name="xmlValidationErrorReport" type="tns:XmlValidationErrorReport" />
+                    <xs:element name="schematronReport" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="completeSchematronReport" type="tns:CompleteSchematronReport" minOccurs="0" maxOccurs="unbounded" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="customReport" type="tns:SingleCustomReport" maxOccurs="unbounded" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DataPayload">
+                <xs:annotation>
+                    <xs:documentation>For data submission and search result, DataPayload is used to include a "file" or root element of XML document.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:sequence>                                      
+                    <xs:element name="payloadOfXmlElement" type="tns:PayloadOfXmlElement" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="PayloadOfXmlElement">
+                <xs:sequence>
+                    <xs:any processContents="lax" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="DataSchema">
+                <xs:union memberTypes="tns:NemsisDataSchema tns:GeneralDataSchema" />
+            </xs:simpleType>
+            <xs:simpleType name="GeneralDataSchema">
+                <xs:annotation>
+                    <xs:documentation>A string to indicate the schema for the embedded data, not limit to NEMSIS</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="70" />
+                    <xs:maxInclusive value="90" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="NemsisDataSchema">
+                <xs:annotation>
+                    <xs:documentation>A string to indicate the NEMSIS schema for the embedded data</xs:documentation>
+                </xs:annotation>
+                <xs:restriction base="xs:integer">
+                    <xs:enumeration value="61">
+                        <xs:annotation>
+                            <xs:documentation>NEMSIS EMS Schema</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="62">
+                        <xs:annotation>
+                            <xs:documentation>NEMSIS Demographics Schema</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="63">
+                        <xs:annotation>
+                            <xs:documentation>NEMSIS CAD Schema</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="64">
+                        <xs:annotation>
+                            <xs:documentation>NEMSIS Medical Device Schema</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="65">
+                        <xs:annotation>
+                            <xs:documentation>NEMSIS State Data Set Schema</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>			
+			<xs:complexType name="ServerErrorReport">
+                <xs:annotation>
+                    <xs:documentation>The element contains a server error message</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="serverErrorMessage" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>The detail of servere error</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SingleCustomReport">
+                <xs:annotation>
+                    <xs:documentation>The element contains a list of customized reports</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="reportType" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Describe the customized report type</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="customReport" maxOccurs="unbounded" minOccurs="0" type="tns:DataPayload" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CompleteSchematronReport">
+                <xs:annotation>
+                    <xs:documentation>The element contains a list of full Schematron validation reports</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="completeReport" maxOccurs="unbounded" minOccurs="0" type="tns:DataPayload" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SchematronRuleDefinition">
+                <xs:annotation>
+                    <xs:documentation>Metadata for a Schematron rule. Some information might be redudant or overlap.</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="ruleFile" minOccurs="0" type="xs:string" />
+                    <xs:element name="ruleFileVersion" minOccurs="0" type="xs:string" />
+                    <xs:element name="ruleID" type="xs:string" />
+                    <xs:element name="ruleVersion" minOccurs="0" type="xs:string" />
+                    <xs:element name="ruleDesc" minOccurs="0" type="xs:string" />
+                    <xs:element name="location" minOccurs="0" type="xs:string" />
+                    <xs:element name="ruleContext" minOccurs="0" type="xs:string" />
+                    <xs:element name="ruleSyntax" minOccurs="0" type="xs:string" />
+                    <xs:element name="assertCondition" minOccurs="0" type="xs:string" />
+                    <xs:element name="severity" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="XmlValidationErrorReport">
+                <xs:annotation>
+                    <xs:documentation>There are several ways to report XML validation Errors: 1. list every violating elements; 2. aggregate elements with same error
+				type, then list all error types; 3. only report one or some errors
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="totalErrorCount" type="xs:integer">
+                        <xs:annotation>
+                            <xs:documentation>The count of total validation error found by validator. It is not necessary same as the count of errors inlcuded in this
+						report. Value of "zero" indicates no XML validation error.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="xmlError" type="tns:XmlValidationError" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="XmlValidationError">
+                <xs:sequence>
+                    <xs:element name="desc" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>XML Validation Error Message</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice>
+                        <xs:element name="xmlGeneralErrorList" type="tns:XmlGeneralErrorList" />
+                        <xs:element name="failedElementList" type="tns:XmlElementList" />
+                    </xs:choice>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="XmlGeneralErrorList">
+                <xs:sequence>
+                    <xs:element name="errorMessage" type="xs:string" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="XmlElementList">
+                <xs:sequence>
+                    <xs:element name="xmlElementInfo" maxOccurs="unbounded" type="tns:XmlElementInfo" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="XmlElementInfo">
+                <xs:annotation>
+                    <xs:documentation />
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="elementName" type="xs:string" />
+                    <xs:choice>
+                        <xs:element name="elementLocation" type="tns:XmlElementLocation" />
+                        <xs:element name="elementLocationUnknown" type="xs:string" fixed="Yes" />
+                    </xs:choice>
+                    <xs:element name="value" minOccurs="0" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="XmlElementLocation">
+                <xs:annotation>
+                    <xs:documentation>To locate an XML element, there are three ways: 1. find the line and column number in the XML file. 2. find the XPATH location in
+				parsed DOM tree. 3. by search the file using XML element name and its value. It is not required to report line/column AND xpath at the same time.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="line" minOccurs="0" type="xs:integer" />
+                    <xs:element name="column" minOccurs="0" type="xs:integer" />
+                    <xs:element name="xpathLocation" minOccurs="0" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="SubmitDataRequest">
+        <wsdl:part name="parameters" element="tns:SubmitDataRequest" />
+    </wsdl:message>
+    <wsdl:message name="SubmitDataResponse">
+        <wsdl:part name="parameters" element="tns:SubmitDataResponse" />
+    </wsdl:message>
+    <wsdl:message name="RetrieveStatusRequest">
+        <wsdl:part name="parameters" element="tns:RetrieveStatusRequest" />
+    </wsdl:message>
+    <wsdl:message name="RetrieveStatusResponse">
+        <wsdl:part name="parameters" element="tns:RetrieveStatusResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryLimitRequest">
+        <wsdl:part name="parameters" element="tns:QueryLimitRequest" />
+    </wsdl:message>
+    <wsdl:message name="QueryLimitResponse">
+        <wsdl:part name="parameters" element="tns:QueryLimitResponse" />
+    </wsdl:message>
+    <wsdl:portType name="NemsisWsPortType">
+        <wsdl:operation name="SubmitData">
+            <wsdl:input message="tns:SubmitDataRequest" />
+            <wsdl:output message="tns:SubmitDataResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="RetrieveStatus">
+            <wsdl:input message="tns:RetrieveStatusRequest" />
+            <wsdl:output message="tns:RetrieveStatusResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="QueryLimit">
+            <wsdl:input message="tns:QueryLimitRequest" />
+            <wsdl:output message="tns:QueryLimitResponse" />
+        </wsdl:operation>
+
+    </wsdl:portType>
+    <wsdl:binding name="NemsisWsPortBinding" type="tns:NemsisWsPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="SubmitData">
+            <soap:operation soapAction="http://ws.nemsis.org/SubmitData" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetrieveStatus">
+            <soap:operation soapAction="http://ws.nemsis.org/RetrieveStatus" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="QueryLimit">
+            <soap:operation soapAction="http://ws.nemsis.org/QueryLimit" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="NemsisWsService">
+        <wsdl:port name="NemsisWsPort" binding="tns:NemsisWsPortBinding">
+            <soap:address location="https://validator.nemsis.org/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

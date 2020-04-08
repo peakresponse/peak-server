@@ -70,12 +70,48 @@ export class ApiService {
     }
   }
 
+  agencies = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/agencies/', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/agencies/${id}`, params);
+    },
+  };
+
+  facilities = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/facilities/', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/facilities/${id}`, params);
+    },
+  };
+
   patients = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/patients/', params);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/patients/${id}`, params);
+    },
+  };
+
+  states = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/states/', params);
+    },
+    new: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/states/new', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/states/`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/states/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/states/${id}`, data);
     },
   };
 

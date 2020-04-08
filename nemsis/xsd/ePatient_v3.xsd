@@ -1,0 +1,768 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="ePatient" id="ePatient.Patient">
+		<xs:sequence>
+			<xs:element name="ePatient.01" type="PatientID" id="ePatient.EMSPatientID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.01</number>
+							<name>EMS Patient ID</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The unique ID for the patient within the Agency.</definition>
+							<usage>Optional</usage>
+							<comment>This has been inserted to allow each patient to be tracked across multiple PCRs within an EMS Agency.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ePatient.PatientNameGroup" id="ePatient.PatientNameGroup" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold patient's name</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ePatient.02" nillable="true" id="ePatient.LastName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>ePatient.02</number>
+										<name>Last Name</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The patient's last (family) name.</definition>
+										<v2Number>E06_01</v2Number>
+										<usage>Recommended</usage>
+										<comment>Pertinent negatives accepted with option of "Unable to Complete" or "Refused".</comment>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PersonLastName">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ePatient.03" nillable="true" id="ePatient.FirstName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>ePatient.03</number>
+										<name>First Name</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The patient's first (given) name.</definition>
+										<v2Number>E06_02</v2Number>
+										<usage>Recommended</usage>
+										<comment>Pertinent negatives accepted with option of "Unable to Complete" or "Refused".</comment>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PersonFirstName">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ePatient.04" type="PersonMiddleName" id="ePatient.MiddleInitialName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>ePatient.04</number>
+										<name>Middle Initial/Name</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The patient's middle name, if any.</definition>
+										<v2Number>E06_03</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.05" id="ePatient.PatientsHomeAddress" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.05</number>
+							<name>Patient's Home Address</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>Patient's address of residence.</definition>
+							<v2Number>E06_04</v2Number>
+							<usage>Optional</usage>
+							<comment>This is a CMS standard.  According to the Medicare Claims Processing Manual, Chapter 15 - Ambulance, Ambulance suppliers bill using CMS-1500 form or CMS-1450 form for institution-based ambulance providers.  This standard adheres to CMS-1500 and 1450.
+								&lt;br/>&lt;br/>This element allows for a two line documentation of the address.  For out of country addresses the second line should be used to document, city, country, postal code and any other pertinent information.
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="StreetAddress">
+							<xs:attribute name="StreetAddress2" type="StreetAddress" use="optional"/>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.UnableToComplete" />
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.06" id="ePatient.PatientsHomeCity" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.06</number>
+							<name>Patient's Home City</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The patient's primary city or township of residence.</definition>
+							<v2Number>E06_05</v2Number>
+							<usage>Optional</usage>
+							<comment>
+							City codes are based on GNIS Feature Class. The primary Feature Class to use is "Civil" with "Populated Place" and "Military" code as additional options. 
+  	&lt;br/>&lt;br/>Definitions for each GNIS City Feature Class can be found on the GNIS Codes website. 
+  	&lt;br/>&lt;br/>GNIS Codes Website: &lt;a>http://geonames.usgs.gov/domestic/download_data.htm&lt;/a>  	
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CityGnisCode">
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.UnableToComplete" />
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.07" nillable="true" id="ePatient.PatientsHomeCounty">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.07</number>
+							<name>Patient's Home County</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The patient's home county or parish of residence.</definition>
+							<v2Number>E06_06</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Based on the ANSI Code Single Choice based on the County Name but stored as the ANSI code (combined 5 digit State and County codes) Should be required if there is a patient associated with the event.
+							&lt;br/>&lt;br/>GNIS Codes Website: &lt;a>http://geonames.usgs.gov/domestic/download_data.htm&lt;/a></comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ANSICountyCode">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.08" nillable="true" id="ePatient.PatientsHomeState">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.08</number>
+							<name>Patient's Home State</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The state, territory, or province where the patient resides.</definition>
+							<v2Number>E06_07</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>The ANSI Code Selection by text but stored as ANSI code.&lt;br/>&lt;br/>GNIS Codes Website: &lt;a>http://geonames.usgs.gov/domestic/download_data.htm&lt;/a></comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ANSIStateCode">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.09" nillable="true" id="ePatient.PatientsHomeZIPCode">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.09</number>
+							<name>Patient's Home ZIP Code</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The patient's ZIP code of residence.</definition>
+							<v2Number>E06_08</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>ZIP Codes Product Website: &lt;a>https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/&lt;/a>
+&lt;br/>Product: USA - 5-digit ZIP Code Database, Commercial Edition</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ZIP">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.10" type="ANSICountryCode" id="ePatient.PatientsCountryOfResidence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.10</number>
+							<name>Patient's Country of Residence</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The country of residence of the patient.</definition>
+							<v2Number>E06_09</v2Number>
+							<usage>Optional</usage>
+							<comment>Based on the ISO Country Code.&lt;br/>&lt;br/>ANSI Country Codes (ISO 3166) Website: &lt;a>http://www.iso.org/iso/country_codes/iso_3166_code_lists.htm&lt;/a></comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ePatient.11" type="CensusTracts" id="ePatient.PatientHomeCensusTract" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.11</number>
+							<name>Patient Home Census Tract</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The census tract in which the patient lives.</definition>
+							<usage>Optional</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>
+										This data element was added to better document the service area of the EMS Agency. Each state listed is associated with the counties, census tracts, and ZIP codes within the EMS Agency Service Area for each state. 
+										&lt;br/>&lt;br/>The format of the census tract number must be an 11-digit number, based upon the 2010 census, using the pattern: 
+										&lt;br/>2-digit State Code 3-digit County Code 6-digit Census Tract Number (no decimal) 
+										&lt;br/>&lt;br/>Example: NEMSIS TAC office (UT, Salt Lake County, Census Tract - located at 295 Chipeta Way, Salt Lake City, UT) 
+										49035101400
+										&lt;br/>&lt;br/>Census Tract Data Website (files and descriptions): &lt;a href="http://www.census.gov/geo/maps-data/data/tract_rel_download.html" target="_blank">http://www.census.gov/geo/maps-data/data/tract_rel_download.html&lt;/a>																
+										</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ePatient.12" id="ePatient.SocialSecurityNumber" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.12</number>
+							<name>Social Security Number</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The patient's social security number.</definition>
+							<v2Number>E06_10</v2Number>
+							<usage>Optional</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="SocialSecurityNumber">
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.13" nillable="true" id="ePatient.Gender">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.13</number>
+							<name>Gender</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The patient's gender.</definition>
+							<v2Number>E06_11</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Code list referenced from: &lt;a href="https://www.healthit.gov/isa/sex-birth-sexual-orientation-and-gender-identity">https://www.healthit.gov/isa/sex-birth-sexual-orientation-and-gender-identity&lt;/a></comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="Gender">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.14" nillable="true" id="ePatient.Race" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.14</number>
+							<name>Race</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The patient's race as defined by the OMB (US Office of Management and Budget).</definition>
+							<v2Number>E06_12</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>OMB requirements are provided at: https://grants.nih.gov/grants/guide/notice-files/NOT-OD-15-089.html. Using single multiple choice question methodology to improve the completion of ethnicity information.&lt;br/>&lt;br/>Ethnicity (Version 2.2.1: E06_13) has been merged with this data element and retired.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="Race">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.AgeGroup" id="ePatient.AgeGroup">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold patient's age information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ePatient.15" nillable="true" id="ePatient.Age">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>ePatient.15</number>
+										<name>Age</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The patient's age (either calculated from date of birth or best approximation).</definition>
+										<v2Number>E06_14</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="Age">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ePatient.16" nillable="true" id="ePatient.AgeUnits">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>ePatient.16</number>
+										<name>Age Units</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The unit used to define the patient's age.</definition>
+										<v2Number>E06_15</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="AgeUnits">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.17" nillable="true" id="ePatient.DateofBirth" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.17</number>
+							<name>Date of Birth</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The patient's date of birth.</definition>
+							<v2Number>E06_16</v2Number>
+							<usage>Recommended</usage>
+							<PNNil>Yes</PNNil>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateOfBirth">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.18" id="ePatient.PatientsPhoneNumber" minOccurs="0" maxOccurs="unbounded" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.18</number>
+							<name>Patient's Phone Number</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The patient's phone number.</definition>
+							<v2Number>E06_17</v2Number>
+							<usage>Optional</usage>
+							<comment>This element contains an attribute to define what type of phone number is being documented (e.g., Fax, Home, Mobile, Pager, and Work).</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="PhoneNumber">
+							<xs:attribute name="PhoneNumberType" type="PhoneNumberType" use="optional"/>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.19" id="ePatient.PatientsEmailAddress" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.19</number>
+							<name>Patient's Email Address</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The email address of the patient.</definition>
+							<usage>Optional</usage>
+							<comment>Added to improve follow-up and billing communication.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EmailAddress">
+							<xs:attribute name="EmailAddressType" type="EmailAddressType" use="optional"/>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ePatient.20" type="ANSIStateCode" id="ePatient.StateIssuingDriversLicense" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.20</number>
+							<name>State Issuing Driver's License</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The state that issued the drivers license.</definition>
+							<v2Number>E06_18</v2Number>
+							<usage>Optional</usage>
+							<comment>Stored as the ANSI State Code. &lt;br/>&lt;br/>GNIS Codes Website: &lt;a>http://geonames.usgs.gov/domestic/download_data.htm&lt;/a></comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ePatient.21" type="DriversLicenseNumber" id="ePatient.DriversLicenseNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.21</number>
+							<name>Driver's License Number</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The patient's drivers license number.</definition>
+							<v2Number>E06_19</v2Number>
+							<usage>Optional</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ePatient.22" id="ePatient.AlternateHomeResidence" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>ePatient.22</number>
+							<name>Alternate Home Residence</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Documentation of the type of patient without a home ZIP/Postal Code.</definition>
+							<v2Number></v2Number>
+							<usage>Recommended</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="AlternateHomeResidence">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Age">
+		<xs:annotation>
+			<xs:documentation>The patient's age (either calculated from date of birth or best approximation)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="120"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AgeUnits">
+		<xs:annotation>
+			<xs:documentation>The units which the age is documented in (Hours, Days, Months, Years)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2516001">
+				<xs:annotation>
+					<xs:documentation>Days</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2516003">
+				<xs:annotation>
+					<xs:documentation>Hours</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2516005">
+				<xs:annotation>
+					<xs:documentation>Minutes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2516007">
+				<xs:annotation>
+					<xs:documentation>Months</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2516009">
+				<xs:annotation>
+					<xs:documentation>Years</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DriversLicenseNumber">
+		<xs:annotation>
+			<xs:documentation>The patient's drivers license number</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PatientID">
+		<xs:annotation>
+			<xs:documentation>The unique ID for the patient within the Agency</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Race">
+		<xs:annotation>
+			<xs:documentation>The patient's race as defined by the OMB (US Office of Management and Budget)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2514001">
+				<xs:annotation>
+					<xs:documentation>American Indian or Alaska Native</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2514003">
+				<xs:annotation>
+					<xs:documentation>Asian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2514005">
+				<xs:annotation>
+					<xs:documentation>Black or African American</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2514007">
+				<xs:annotation>
+					<xs:documentation>Hispanic or Latino</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2514009">
+				<xs:annotation>
+					<xs:documentation>Native Hawaiian or Other Pacific Islander</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2514011">
+				<xs:annotation>
+					<xs:documentation>White</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AlternateHomeResidence">
+		<xs:annotation>
+			<xs:documentation>Type of patient without a home ZIP/Postal code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2522001">
+				<xs:annotation>
+					<xs:documentation>Homeless</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2522003">
+				<xs:annotation>
+					<xs:documentation>Migrant Worker</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2522005">
+				<xs:annotation>
+					<xs:documentation>Foreign Visitor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

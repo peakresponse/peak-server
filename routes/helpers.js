@@ -9,16 +9,25 @@ const path = require('path');
 const querystring = require('querystring');
 
 
+module.exports.async = function(handler) {
+  return function(req, res, next) {
+    Promise.resolve(handler(req, res, next)).catch(err => {
+      console.log(err);
+      next(err);
+    });
+  };
+};
+
 module.exports.setPaginationHeaders = function(req, res, page, pages, total) {
   const baseURL = `${process.env.BASE_URL}${req.baseUrl}${req.path}?`;
   const query = _.clone(req.query);
   let link = '';
   page = parseInt(page);
-  if (page < (pages - 1)) {
+  if (page < pages) {
     query.page = page + 1;
     link += `<${baseURL}${querystring.stringify(query)}>; rel="next"`;
   }
-  if (page < (pages - 2)) {
+  if (page < (pages - 1)) {
     if (link.length > 0) {
       link += ',';
     }

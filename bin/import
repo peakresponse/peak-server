@@ -166,6 +166,16 @@ async function importRows(server, email, password, sheet) {
       exit(1);
     }
     let location = (row[10] || '').trim();
+    let portraitUrl = (row[19] || '').trim();
+    let portraitUrlPath = path.resolve(__dirname, '../public/uploads', portraitUrl)
+    if (fs.existsSync(portraitUrlPath)) {
+      mkdirp.sync(path.resolve(__dirname, '../tmp/uploads/observations/portrait'));
+      fs.copyFileSync(portraitUrlPath, path.resolve(__dirname, '../tmp/uploads', portraitUrl));
+    } else {
+      portraitUrl = null;
+    }
+    let lat = (`${row[20] || ''}` || '').trim();
+    let lng = (`${row[21] || ''}` || '').trim();
     //// TODO handle back-dating timestamp row[11] for demo purposes
     //// create initial patient/observation record
     let observation = await post(server, cookie, '/api/observations', {
@@ -179,7 +189,10 @@ async function importRows(server, email, password, sheet) {
       bloodPressure,
       text,
       priority,
-      location
+      location,
+      lat,
+      lng,
+      portraitUrl
     });
 
     //// create second observation
@@ -201,29 +214,6 @@ async function importRows(server, email, password, sheet) {
       payload['pin'] = pin;
       observation = await post(server, cookie, '/api/observations', payload);
     }
-
-    //// create third observation
-    payload = {};
-    //// find or create transport, add observation
-    let transportMethod = (row[16] || '').trim();
-    console.log(`     Transport method: ${transportMethod}`);
-    if (transportMethod != '') {
-      let transport = await post(server, cookie, '/api/transports', {name: transportMethod});
-      payload['transportMethodId'] = transport.id;
-    }
-    ///// find or create destination, add observation
-    let transportTo = (row[17] || '').trim();
-    console.log(`     Transport to: ${transportTo}`);
-    if (transportTo != '') {
-      let destination = await post(server, cookie, '/api/destinations', {name: transportTo});
-      payload['transportToId'] = destination.id;
-    }
-    //// TODO handle back-dating timestamp row[18] for demo purposes
-    if (!_.isEmpty(payload)) {
-      payload['pin'] = pin;
-      observation = await post(server, cookie, '/api/observations', payload);
-    }
-
     i += 1;
   }
 }

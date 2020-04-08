@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eOutcome" id="eOutcome.OutcomeAndLinkage">
+		<xs:sequence>
+			<xs:element name="eOutcome.01" nillable="true" id="eOutcome.EmergencyDepartmentDisposition">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOutcome.01</number>
+							<name>Emergency Department Disposition</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The known disposition of the patient from the Emergency Department (ED).</definition>
+							<v2Number>E22_01</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>The list of values and codes is based on and in compliance with the Medicare Claims Processing Manual Chapter 25 Completing and Processing the Form CMS-1450 Data Set, referencing the Uniform Bill - Form CMS-1450 (UB-04) 
+								and the FL 17 - Patient Discharge Status Required. 
+								(For all Part A inpatient, SNF, hospice, home health agency (HHA) and outpatient hospital services.) This code indicates the patient's status as of the "Through" date of the billing period (FL 6).
+								
+								&lt;br/>&lt;br/>&lt;a href="https://www.cms.gov/Regulations-and-Guidance/Guidance/Transmittals/downloads/R1104CP.pdf" target="_blank">https://www.cms.gov/Regulations-and-Guidance/Guidance/Transmittals/downloads/R1104CP.pdf&lt;/a>  Search for: "FL 17 – Patient Status"</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EmergencyDepartmentDisposition">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.02" nillable="true" id="eOutcome.HospitalDisposition">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOutcome.02</number>
+							<name>Hospital Disposition</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The known disposition of the patient from the hospital, if admitted.</definition>
+							<v2Number>E22_02</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>The list of values and codes is based on and in compliance with the Medicare Claims Processing Manual Chapter 25 Completing and Processing the Form CMS-1450 Data Set, referencing the Uniform Bill - Form CMS-1450 (UB-04) and the FL 17 - Patient Discharge Status Required.  
+								(For all Part A inpatient, SNF, hospice, home health agency (HHA) and outpatient hospital services.) This code indicates the patient's status as of the "Through" date of the billing period (FL 6). 
+							&lt;br/>&lt;br/>&lt;a href="https://www.cms.gov/transmittals/downloads/R1104CP.pdf">https://www.cms.gov/transmittals/downloads/R1104CP.pdf&lt;/a>  Page 35-36
+							&lt;br/>&lt;br/>Codes are available from Medicare contractors and the National Uniform Billing company (NUBC &lt;a href="http://www.nubc.org">http://www.nubc.org&lt;/a>) via the NUBC's Official UB-04 Data Specifications Manual.  
+							&lt;br/>&lt;br/>Contractor site, Knowledge Trek:  &lt;a href="http://www.ub04.net/downloads/Medicare_Pub_Ch_25.pdf">http://www.ub04.net/downloads/Medicare_Pub_Ch_25.pdf&lt;/a> Please reference the section "FL 17 - Patient Status" found on page 23-25 of 126.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="HospitalDisposition">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.ExternalDataGroup" id="eOutcome.ExternalDataGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold information about external report or record</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eOutcome.03" type="ExternalReportIDType" id="eOutcome.ExternalReportIDNumberType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOutcome.03</number>
+										<name>External Report ID/Number Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Type of External Report or Record associated with the Report/ID Number.</definition>
+										<usage>Optional</usage>
+										<comment>This data element is a merge based on the following Version 2.2.1 elements:  E22_03, E22_04, E22_05, and E22_06</comment>
+										<v3Changes>Added to allow documentation of external record and identification numbers.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOutcome.04" type="ExternalReportID" id="eOutcome.ExternalReportIDNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOutcome.04</number>
+										<name>External Report ID/Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The ID or Number of the external report or record in eOutcome.03.</definition>
+										<usage>Optional</usage>
+										<comment>This data element is a merge based on the following Version 2.2.1 elements:  E22_03, E22_04, E22_05, and E22_06</comment>
+										<v3Changes>Added to allow documentation of external record and identification numbers.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOutcome.05" type="OtherReportRegistryType" id="eOutcome.OtherReportRegistryType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOutcome.05</number>
+										<name>Other Report Registry Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The type of external report/registry that was documented as "other" in eOutcome.03</definition>
+										<usage>Optional</usage>
+										<comment>This element should be used only when other-report or other-registry is used eOutcome.03.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.EmergencyDepartmentProceduresGroup" id="eOutcome.EmergencyDepartmentProceduresGroup" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold information about emergency department procedures</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eOutcome.09" id="eOutcome.EmergencyDepartmentProcedures" nillable="true">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOutcome.09</number>
+										<name>Emergency Department Procedures</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The procedures performed on the patient during the emergency department visit.</definition>
+										<usage>Required</usage>
+										<comment>ICD-10-PCS has a seven character alphanumeric code structure. Each character contains up to 34 possible values. 
+										Each value represents a specific option for the general character definition (e.g., stomach is one of the values for the body part character). 
+										The ten digits 0-9 and the 24 letters A-H,J-N and P-Z may be used in each character. 
+										The letters O and I are not used in order to avoid confusion with the digits 0 and 1.
+										&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov">http://uts.nlm.nih.gov&lt;/a>
+										&lt;br/>Product - UMLS Metathesaurus</comment>
+										<v3Changes>Added to better evaluate EMS care.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="icd10CodeOutcomeProcedures">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eOutcome.19" nillable="true" id="eOutcome.DateTimeEmergencyDepartmentProcedurePerformed">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOutcome.19</number>
+										<name>Date/Time Emergency Department Procedure Performed</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The date/time the emergency department procedure was performed on the patient.</definition>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+											&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+											&lt;table border="1px" cellpadding="3px" cellspacing="0">
+											&lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+											&lt;/table> 
+											&lt;/td>&lt;/tr>&lt;/table>
+											&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+											&lt;table cellspacing="2">&lt;tr>&lt;td>	
+											&lt;table border="1px" cellpadding="3px" cellspacing="0">
+											&lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+											&lt;/table>
+											&lt;/td>&lt;/tr>&lt;/table></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DateTimeType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.10" id="eOutcome.EmergencyDepartmentDiagnosis" maxOccurs="unbounded" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOutcome.10</number>
+							<name>Emergency Department Diagnosis</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The practitioner's description of the condition or problem for which Emergency Department services were provided.</definition>
+							<usage>Required</usage>
+							<comment>Code list is represented in ICD-10-CM: Diagnosis Codes.
+								&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov">http://uts.nlm.nih.gov&lt;/a>
+							&lt;br/>Product - UMLS Metathesaurus</comment>
+							<v3Changes>Added to better evaluate EMS care.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="icd10Code">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.11" id="eOutcome.HospitalAdmissionDateTime" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOutcome.11</number>
+							<name>Date/Time of Hospital Admission</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The date and time the patient was admitted to the hospital.</definition>
+							<usage>Required</usage>
+							<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+							&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+							&lt;table border="1px" cellpadding="3px" cellspacing="0">
+							  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+							&lt;/table> 
+							&lt;/td>&lt;/tr>&lt;/table>
+							&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+							&lt;table cellspacing="2">&lt;tr>&lt;td>	
+							&lt;table border="1px" cellpadding="3px" cellspacing="0">
+							  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+							&lt;/table>
+							&lt;/td>&lt;/tr>&lt;/table></comment>
+							<v3Changes>Added to better evaluate EMS care.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateTimeType">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.HospitalProceduresGroup" id="eOutcome.HospitalProceduresGroup" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold information about hospital procedures</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eOutcome.12" id="eOutcome.HospitalProcedures" nillable="true">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOutcome.12</number>
+										<name>Hospital Procedures</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>Hospital Procedures performed on the patient during the hospital admission.</definition>
+										<usage>Required</usage>
+										<comment>ICD-10-PCS has a seven character alphanumeric code structure. Each character contains up to 34 possible values. 
+										Each value represents a specific option for the general character definition (e.g., stomach is one of the values for the body part character). 
+										The ten digits 0-9 and the 24 letters A-H,J-N and P-Z may be used in each character. 
+										The letters O and I are not used in order to avoid confusion with the digits 0 and 1.
+										&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov">http://uts.nlm.nih.gov&lt;/a>
+										&lt;br/>Product - UMLS Metathesaurus</comment>
+										<v3Changes>Added to better evaluate EMS care.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="icd10CodeOutcomeProcedures">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eOutcome.20" nillable="true" id="eOutcome.DateTimeHospitalProcedurePerformed">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOutcome.20</number>
+										<name>Date/Time Hospital Procedure Performed</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The date/time the hospital procedure was performed on the patient.</definition>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+											&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+											&lt;table border="1px" cellpadding="3px" cellspacing="0">
+											&lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+											&lt;/table> 
+											&lt;/td>&lt;/tr>&lt;/table>
+											&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+											&lt;table cellspacing="2">&lt;tr>&lt;td>	
+											&lt;table border="1px" cellpadding="3px" cellspacing="0">
+											&lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+											&lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+											&lt;/table>
+											&lt;/td>&lt;/tr>&lt;/table></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DateTimeType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.13" id="eOutcome.HospitalDiagnosis" maxOccurs="unbounded" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOutcome.13</number>
+							<name>Hospital Diagnosis</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The hospital diagnosis of the patient associated with the hospital admission.</definition>
+							<usage>Required</usage>
+							<comment>Code list is represented in ICD-10-CM: Diagnosis Codes.
+								&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov">http://uts.nlm.nih.gov&lt;/a>
+								&lt;br/>Product - UMLS Metathesaurus</comment>
+							<v3Changes>Added to better evaluate EMS care.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="icd10Code">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.16" id="eOutcome.HospitalDischargeDateTime" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOutcome.16</number>
+							<name>Date/Time of Hospital Discharge</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The date the patient was discharged from the hospital.</definition>
+							<usage>Required</usage>
+							<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+							&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+							&lt;table border="1px" cellpadding="3px" cellspacing="0">
+							  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+							&lt;/table> 
+							&lt;/td>&lt;/tr>&lt;/table>
+							&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+							&lt;table cellspacing="2">&lt;tr>&lt;td>	
+							&lt;table border="1px" cellpadding="3px" cellspacing="0">
+							  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+							  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+							&lt;/table>
+							&lt;/td>&lt;/tr>&lt;/table></comment>
+							<v3Changes>Added to better measure patient outcome.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateTimeType">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOutcome.18" id="eOutcome.EmergencyDepartmentAdmissionDateTime" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOutcome.18</number>
+							<name>Date/Time of Emergency Department Admission</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The date and time the patient was admitted to the emergency department.</definition>
+							<usage>Required</usage>
+							<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+								&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+								&lt;table border="1px" cellpadding="3px" cellspacing="0">
+								&lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+								&lt;/table> 
+								&lt;/td>&lt;/tr>&lt;/table>
+								&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+								&lt;table cellspacing="2">&lt;tr>&lt;td>	
+								&lt;table border="1px" cellpadding="3px" cellspacing="0">
+								&lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+								&lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+								&lt;/table>
+								&lt;/td>&lt;/tr>&lt;/table></comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateTimeType">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="OutcomeAtHospitalDischarge">
+		<xs:annotation>
+			<xs:documentation>The patient's functional status at time of hospital discharge.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4317001">
+				<xs:annotation>
+					<xs:documentation>No Symptoms At All</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4317003">
+				<xs:annotation>
+					<xs:documentation>No significant disability despite symptoms; able to carry out all usual duties and activities</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4317005">
+				<xs:annotation>
+					<xs:documentation>Slight disability; unable to carry out all previous activities, but able to look after own affairs without assistance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4317007">
+				<xs:annotation>
+					<xs:documentation>Moderate disability; requiring some help, but able to walk without assistance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4317009">
+				<xs:annotation>
+					<xs:documentation>Moderately severe disability; unable to walk without assistance and unable to attend to own bodily needs without assistance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4317011">
+				<xs:annotation>
+					<xs:documentation>Severe disability; bedridden, incontinent and requiring constant nursing care and attention</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4317013">
+				<xs:annotation>
+					<xs:documentation>Dead</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EDCauseOfInjury">
+		<xs:annotation>
+			<xs:documentation>The documented cause of injury from the emergency department record.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmergencyDepartmentChiefComplaint">
+		<xs:annotation>
+			<xs:documentation>The patient's reason for seeking care or attention, expressed in the terms as close as possible to those used by the patient or responsible informant.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmergencyDepartmentDiagnosis">
+		<xs:annotation>
+			<xs:documentation>The practitioner's description of the condition or problem for which Emergency Department services were provided.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmergencyDepartmentDisposition">
+		<xs:annotation>
+			<xs:documentation>The known disposition of the patient from the Emergency Department (ED)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Discharged to home or self care (routine discharge)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to another short term general hospital for inpatient care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a skilled nursing facility (SNF)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to an intermediate care facility (ICF)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to another type of institution not defined elsewhere in this code list</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to home under care of organized home health service organization in anticipation of covered skills care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Left against medical advice or discontinued care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation>Admitted as an inpatient to this hospital.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>Deceased/Expired (or did not recover - Religious Non Medical Health Care Patient)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to court/law enforcement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="30">
+				<xs:annotation>
+					<xs:documentation>Still a patient or expected to return for outpatient services.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a Federal Health Care Facility (e.g., VA or federal health care facility)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to Hospice - home.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="51">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to Hospice - medical facility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="61">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred within this institution to a hospital based Medicare approved swing bed.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="62">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a inpatient rehabilitation facility including distinct part units of a hospital.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="63">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to long term care hospitals</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="64">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a nursing facility certified under Medicaid but not certified under Medicare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="65">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a psychiatric hospital or psychiatric distinct part unit of a hospital.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="66">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a Critical Access Hospital (CAH).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="70">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to another type of health care institution not defined elsewhere in the code list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmergencyDepartmentProcedures">
+		<xs:annotation>
+			<xs:documentation>The procedures performed on the patient during the emergency department visit.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExternalReportID">
+		<xs:annotation>
+			<xs:documentation>The ID or Number of the external report or record</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExternalReportIDType">
+		<xs:annotation>
+			<xs:documentation>The Type of External Report or Record associated with the Report/ID Number.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4303001">
+				<xs:annotation>
+					<xs:documentation>Disaster Tag</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303003">
+				<xs:annotation>
+					<xs:documentation>Fire Incident Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303005">
+				<xs:annotation>
+					<xs:documentation>Hospital-Receiving</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303007">
+				<xs:annotation>
+					<xs:documentation>Hospital-Transferring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303009">
+				<xs:annotation>
+					<xs:documentation>Law Enforcement Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303011">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303013">
+				<xs:annotation>
+					<xs:documentation>Other Registry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303015">
+				<xs:annotation>
+					<xs:documentation>Other Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303017">
+				<xs:annotation>
+					<xs:documentation>Patient ID</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303019">
+				<xs:annotation>
+					<xs:documentation>Prior EMS Patient Care Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303021">
+				<xs:annotation>
+					<xs:documentation>STEMI Registry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303023">
+				<xs:annotation>
+					<xs:documentation>Stroke Registry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4303025">
+				<xs:annotation>
+					<xs:documentation>Trauma Registry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HospitalDiagnosis">
+		<xs:annotation>
+			<xs:documentation>The hospital diagnosis of the patient associated with the hospital admission.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HospitalDisposition">
+		<xs:annotation>
+			<xs:documentation>Indication of the patient's disposition from the hospital, if admitted.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Discharged to home or self care (routine discharge)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to another short term general hospital for inpatient care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a skilled nursing facility (SNF)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to an intermediate care facility (ICF)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to another type of institution not defined elsewhere in this code list</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to home under care of organized home health service organization in anticipation of covered skills care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Left against medical advice or discontinued care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>Deceased/Expired (or did not recover - Religious Non Medical Health Care Patient)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to court/law enforcement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="30">
+				<xs:annotation>
+					<xs:documentation>Still a patient or expected to return for outpatient services.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a Federal Health Care Facility (e.g., VA or federal health care facility)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to Hospice - home.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="51">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to Hospice - medical facility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="61">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred within this institution to a hospital based Medicare approved swing bed.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="62">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a inpatient rehabilitation facility including distinct part units of a hospital.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="63">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to long term care hospitals</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="64">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a nursing facility certified under Medicaid but not certified under Medicare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="65">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a psychiatric hospital or psychiatric distinct part unit of a hospital.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="66">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to a Critical Access Hospital (CAH).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="70">
+				<xs:annotation>
+					<xs:documentation>Discharged/transferred to another type of health care institution not defined elsewhere in the code list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HospitalProcedures">
+		<xs:annotation>
+			<xs:documentation>Hospital Procedures performed on the patient during the hospital admission.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LengthOfStay">
+		<xs:annotation>
+			<xs:documentation>The total number of patient days in any ICU (including all ICU episodes).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="400"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OtherReportRegistryType">
+		<xs:annotation>
+			<xs:documentation>The known disposition of the patient from the Emergency Department (ED)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TotalVentilatorDays">
+		<xs:annotation>
+			<xs:documentation>The total number of patient days spend on a mechanical ventilator (excluding time in the operating room).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="400"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

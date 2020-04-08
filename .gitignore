@@ -1,6 +1,8 @@
+*.dump
 .DS_Store
 .env
-tmp
 dist
 node_modules
+target
+tmp
 webpack-stats.json

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.nemsis.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="dCustom_v3.xsd"/>
+	<xs:include schemaLocation="dAgency_v3.xsd"/>
+	<xs:include schemaLocation="dContact_v3.xsd"/>
+	<xs:include schemaLocation="dConfiguration_v3.xsd"/>
+	<xs:include schemaLocation="dLocation_v3.xsd"/>
+	<xs:include schemaLocation="dVehicle_v3.xsd"/>
+	<xs:include schemaLocation="dPersonnel_v3.xsd"/>
+	<xs:include schemaLocation="dDevice_v3.xsd"/>
+	<xs:include schemaLocation="dFacility_v3.xsd"/>
+	<xs:element name="DEMDataSet">
+		<xs:annotation>
+			<xs:documentation>Root Tag For Demographic DataSet</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dCustomConfiguration" type="dCustomConfiguration" id="dCustomConfigurationSection" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Contains information for demographic custom elements.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DemographicReport" id="DemographicReportGroup" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Container Tag to hold each instance of a demographic record</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="dAgency" type="dAgency" id="dAgencySection">
+								<xs:annotation>
+									<xs:documentation>Agency Information</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dContact" type="dContact" id="dContactSection" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Contact Information</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dConfiguration" type="dConfiguration" id="dConfigurationSection">
+								<xs:annotation>
+									<xs:documentation>Configuration Information</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dLocation" type="dLocation" id="dLocationSection" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Location Information</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dVehicle" type="dVehicle" id="dVehicleSection" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Vehicle Information</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dPersonnel" type="dPersonnel" id="dPersonnelSection" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Personnel Information</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dDevice" type="dDevice" id="dDeviceSection" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Device Information</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dFacility" type="dFacility" id="dFacilitySection" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Facility Information</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dCustomResults" type="dCustomResults" id="dCustomResultsSection" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Custom Data Element Results</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="timeStamp" type="DateTimeType" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

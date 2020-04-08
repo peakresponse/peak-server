@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd" />
+    <xs:complexType name="sSoftware" id="sSoftwareInformation">
+        <xs:sequence>
+       <xs:element name="sSoftware.SoftwareGroup" id="sSoftware.SoftwareGroup">
+           <xs:annotation>
+               <xs:documentation>Group tag to hold information about the software used to generate this state data set.</xs:documentation>
+           </xs:annotation>
+           <xs:complexType>
+               <xs:sequence>
+                   <xs:element name="sSoftware.01" id="sSoftware.SoftwareCreator" nillable="true">
+                       <xs:annotation>
+                           <xs:documentation>
+                               <nemsisTacDoc>
+                                   <number>sSoftware.01</number>
+                                   <name>Software Creator</name>
+                                   <national>Yes</national>
+                                   <state>Yes</state>
+                                   <definition>The name of the vendor, manufacturer, and developer who designed the application that created this state data set record.</definition>
+                                   <usage>Required</usage>
+                               </nemsisTacDoc>                             
+                           </xs:documentation>
+                       </xs:annotation>
+                       <xs:complexType>
+                           <xs:simpleContent>
+                               <xs:extension base="SoftwareCreator">
+                                   <xs:attribute name="NV" use="optional">
+                                       <xs:simpleType>
+                                           <xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+                                       </xs:simpleType>
+                                   </xs:attribute>
+                               </xs:extension>
+                           </xs:simpleContent>
+                       </xs:complexType>
+                   </xs:element>
+                   <xs:element name="sSoftware.02" id="sSoftware.SoftwareName" nillable="true">
+                       <xs:annotation>
+                           <xs:documentation>
+                               <nemsisTacDoc>
+                                   <number>sSoftware.02</number>
+                                   <name>Software Name</name>
+                                   <national>Yes</national>
+                                   <state>Yes</state>
+                                   <definition>The name of the application used to create this state data set record.</definition>
+                                   <usage>Required</usage>
+                               </nemsisTacDoc>
+                           </xs:documentation>
+                       </xs:annotation>
+                       <xs:complexType>
+                           <xs:simpleContent>
+                               <xs:extension base="SoftwareName">
+                                   <xs:attribute name="NV" use="optional">
+                                       <xs:simpleType>
+                                           <xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+                                       </xs:simpleType>
+                                   </xs:attribute>
+                               </xs:extension>
+                           </xs:simpleContent>
+                       </xs:complexType>
+                   </xs:element>
+                   <xs:element name="sSoftware.03" id="sSoftware.SoftwareVersion" nillable="true">
+                       <xs:annotation>
+                           <xs:documentation>
+                               <nemsisTacDoc>
+                                   <number>sSoftware.03</number>
+                                   <name>Software Version</name>
+                                   <national>Yes</national>
+                                   <state>Yes</state>
+                                   <definition>The version of the application used to create this state data set record.</definition>
+                                   <usage>Required</usage>
+                               </nemsisTacDoc>
+                           </xs:documentation>
+                       </xs:annotation>
+                       <xs:complexType>
+                           <xs:simpleContent>
+                               <xs:extension base="SoftwareVersion">
+                                   <xs:attribute name="NV" use="optional">
+                                       <xs:simpleType>
+                                           <xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+                                       </xs:simpleType>
+                                   </xs:attribute>
+                               </xs:extension>
+                           </xs:simpleContent>
+                       </xs:complexType>
+                   </xs:element>
+               </xs:sequence>
+           </xs:complexType>
+       </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="dLocation" id="dLocation.AgencyStationInformation">
+		<xs:sequence>
+			<xs:element name="dLocation.LocationGroup" id="dLocation.LocationDataGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold info about Location defined information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dLocation.01" type="LocationType" id="dLocation.EMSLocationType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.01</number>
+										<name>EMS Location Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The type of EMS Location which could be a fixed station or a pre-determined staging area.</definition>
+										<usage>Optional</usage>
+										<comment>This is associated with the EMS Agency associated with the EMS Agency Number (dAgency.02).</comment>
+										<v3Changes>Added to allow multiple locations to be documented for an EMS Agency.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.02" type="StationName" id="dLocation.EMSLocationName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.02</number>
+										<name>EMS Location Name</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The name of the EMS Location.</definition>
+										<v2Number>D05_01</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.03" type="StationNumber" id="dLocation.EMSLocationNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.03</number>
+										<name>EMS Location Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The ID number of the EMS Location.</definition>
+										<v2Number>D05_02</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.04" type="GPSLocation" id="dLocation.EMSLocationGPS" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.04</number>
+										<name>EMS Location GPS</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The GPS coordinate of  the EMS location.</definition>
+										<v2Number>D05_04</v2Number>
+										<usage>Optional</usage>
+										<comment>The pattern for GPS location is in the format "&lt;span style="font-style:italic">latitude&lt;/span>,&lt;span style="font-style:italic">longitude&lt;/span>" where:
+										  &lt;br/>- &lt;span style="font-style:italic">latitude&lt;/span> has a minimum of -90 and a maximum of 90 with up to 6 decimal places
+										  &lt;br/>- &lt;span style="font-style:italic">longitude&lt;/span> has a minimum of -180 and a maximum of 180 with up to 6 decimal places						  
+										 </comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.05" type="USNG" id="dLocation.EMSLocationUSNationalGridCoordinates" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.05</number>
+										<name>EMS Location US National Grid Coordinates</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The US National Grid Coordinates of the EMS location.</definition>
+										<usage>Optional</usage>
+										<comment>For more information go to &lt;a href="www.fgdc.gov/usng">www.fgdc.gov/usng&lt;/a>.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.06" id="dLocation.EMSLocationAddress" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.06</number>
+										<name>EMS Location Address</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The address of the EMS Location.</definition>
+										<v2Number>D05_05</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="StreetAddress">
+										<xs:attribute name="StreetAddress2" type="StreetAddress" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dLocation.07" type="CityGnisCode" id="dLocation.EMSLocationCity" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.07</number>
+										<name>EMS Location City</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The city of the EMS location type (e.g., Fixed station, sub-station, staging area, etc.).</definition>
+										<v2Number>D05_06</v2Number>
+										<usage>Optional</usage>
+										<comment>
+City codes are based on GNIS Feature Class. The primary Feature Class to use is "Civil" with "Populated Place" and "Military" code as additional options. 
+ 	&lt;br/>&lt;br/>Definitions for each GNIS City Feature Class can be found on the GNIS Codes website. 
+ 	&lt;br/>&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm" target="_blank">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.08" type="ANSIStateCode" id="dLocation.EMSLocationState" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.08</number>
+										<name>EMS Location State</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The state of the EMS Location.</definition>
+										<v2Number>D05_07</v2Number>
+										<usage>Optional</usage>
+										<comment>Based on the ANSI State Code. &lt;br/>&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm" target="_blank">http://geonames.usgs.gov/domestic/download_data.htm &lt;/a></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.09" type="ZIP" id="dLocation.EMSStationorLocationZIPCode" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.09</number>
+										<name>EMS Station or Location ZIP Code</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The ZIP code of the EMS Location.</definition>
+										<v2Number>D05_08</v2Number>
+										<usage>Optional</usage>
+										<comment>Zip Codes Product Website: &lt;a href="https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/" target="_blank">https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/&lt;/a>
+&lt;br/>Product: USA - 5-digit ZIP Code Database, Commercial Edition</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.10" type="ANSICountyCode" id="dLocation.EMSLocationCounty" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.10</number>
+										<name>EMS Location County</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The county of the EMS Location.</definition>
+										<usage>Optional</usage>
+										<comment>Based on the ANSI Code Single Choice based on the County Name but stored as the ANSI code (combined 5 digit State and County codes). 
+										&lt;br/>
+										&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a>
+										</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.11" type="ANSICountryCodesCAMXUS" id="dLocation.EMSLocationCountry" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.11</number>
+										<name>EMS Location Country</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The country of the EMS location.</definition>
+										<usage>Optional</usage>
+										<comment>The International Organization for Standardization (ISO) ISO 3166-1-alpha-2 code element for the country.
+											&lt;br/>&lt;br/>ANSI Country Codes (ISO 3166) Website: &lt;a href="https://www.iso.org/iso-3166-country-codes.html" target="_blank">https://www.iso.org/iso-3166-country-codes.html&lt;/a></comment>
+										<v3Changes>Added to improve international implementations.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dLocation.12" id="dLocation.EMSLocationPhoneNumber" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dLocation.12</number>
+										<name>EMS Location Phone Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The phone number of the EMS Location.</definition>
+										<v2Number>D05_09</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PhoneNumber">
+										<xs:attribute name="PhoneNumberType" type="PhoneNumberType" use="optional"/>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+					<xs:attribute name="UUID" type="UUID" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LocationType">
+		<xs:annotation>
+			<xs:documentation>The type of EMS Location.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1301001">
+				<xs:annotation>
+					<xs:documentation>EMS Agency Headquarters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1301003">
+				<xs:annotation>
+					<xs:documentation>EMS Staging Area</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1301005">
+				<xs:annotation>
+					<xs:documentation>EMS Station</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1301007">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StationName">
+		<xs:annotation>
+			<xs:documentation>The Name of the station</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StationNumber">
+		<xs:annotation>
+			<xs:documentation>The Identifier for the station</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,27 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Agencies</h1>
+    <a routerLink="/agencies/new" class="btn btn-sm btn-outline-secondary">New Agency</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>State</th>
+          <th>State ID</th>
+        </tr>
+      </thead>
+      <app-shared-list type="agencies">
+        <ng-template let-record="record">
+          <tr>
+            <td><a [routerLink]="['/agencies', record.id]">{{record.name}}</a></td>
+            <td><a [routerLink]="['/agencies', record.id]">{{record.state.abbr}}</a></td>
+            <td><a [routerLink]="['/agencies', record.id]">{{record.stateNumber}}</a></td>
+          </tr>
+        </ng-template>
+      </app-shared-list>
+    </table>
+  </div>
+</div>

@@ -7,6 +7,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { AgenciesModule } from './agencies/agencies.module';
+import { FacilitiesModule } from './facilities/facilities.module';
+import { StatesModule } from './states/states.module';
 import { UsersModule } from './users/users.module';
 
 import { ApiService, NavigationService, UserService } from '../shared/services';
@@ -22,6 +25,9 @@ import { ApiService, NavigationService, UserService } from '../shared/services';
     FormsModule,
     HttpClientModule,
     NgbModule,
+    AgenciesModule,
+    FacilitiesModule,
+    StatesModule,
     UsersModule
   ],
   providers: [

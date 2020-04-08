@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd" />
+    <xs:complexType name="sElement" id="sElementInformation">
+            <xs:sequence>
+                <xs:element name="sElement.01" id="sElement.sStateCollectedElement" nillable="true" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <nemsisTacDoc>
+                                <number>sElement.01</number>
+                                <name>State Collected Element</name>
+                                <national>Yes</national>
+                                <state>Yes</state>
+                                <definition>The data elements that the state collects or requires.</definition>
+                                <usage>Required</usage>
+                                <comment>Used to configure the agency demographic and patient care report data elements that are to be collected and reported to the state by EMS agencies within the state.</comment>
+                            </nemsisTacDoc>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="StateRequiredElement">
+                                <xs:attribute name="NV" use="optional">
+                                    <xs:simpleType>
+                                        <xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+    </xs:complexType>
+</xs:schema>

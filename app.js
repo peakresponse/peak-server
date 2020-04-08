@@ -27,7 +27,9 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-app.use(logger('dev'));
+if (process.env.NODE_ENV != 'test') {
+  app.use(logger(process.env.EXPRESS_LOG_LEVEL));
+}
 app.use(fileUpload({
   useTempFiles: !process.env.AWS_S3_BUCKET
 }));
@@ -35,6 +37,14 @@ app.use(bodyParser.raw({type: ['image/*', 'video/*', 'audio/*'], limit: '10mb'})
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('trust proxy', 1);
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/client', express.static(path.join(__dirname, 'dist')));
+app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+app.use('/libraries/cleave', express.static(path.join(__dirname, 'node_modules/cleave.js/dist')));
+app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
+app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/libraries/qrcode', express.static(path.join(__dirname, 'node_modules/qrcode/build')));
 
 // set up session handler with an app reference so can be used by websocket server
 app.sessionParser = cookieSession({
@@ -46,14 +56,6 @@ app.use(app.sessionParser);
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/client', express.static(path.join(__dirname, 'dist')));
-app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
-app.use('/libraries/cleave', express.static(path.join(__dirname, 'node_modules/cleave.js/dist')));
-app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
-app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-app.use('/libraries/qrcode', express.static(path.join(__dirname, 'node_modules/qrcode/build')));
 
 i18n.configure({
   locales: ['en'],

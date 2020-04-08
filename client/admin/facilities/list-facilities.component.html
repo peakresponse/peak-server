@@ -1,0 +1,31 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Facilities</h1>
+    <a routerLink="/facilities/new" class="btn btn-sm btn-outline-secondary">New Facility</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Code</th>
+        </tr>
+      </thead>
+      <app-shared-list type="facilities">
+        <ng-template let-record="record">
+          <tr>
+            <td><a [routerLink]="['/facilities', record.id]">{{record.name}}</a></td>
+            <td><a [routerLink]="['/facilities', record.id]">{{record.address}}</a></td>
+            <td><a [routerLink]="['/facilities', record.id]">{{record.city}}</a></td>
+            <td><a [routerLink]="['/facilities', record.id]">{{record.state}}</a></td>
+            <td><a [routerLink]="['/facilities', record.id]">{{record.code}}</a></td>
+          </tr>
+        </ng-template>
+      </app-shared-list>
+    </table>
+  </div>
+</div>

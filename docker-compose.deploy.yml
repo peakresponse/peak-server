@@ -1,7 +1,7 @@
 version: '2.3'
 services:
   db:
-    image: postgres:11
+    image: postgis/postgis:11-3.0-alpine
   server:
     build: .
     image: natriage/nat-server

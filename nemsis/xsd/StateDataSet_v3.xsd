@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd" />
+    <xs:include schemaLocation="sState_v3.xsd" />
+    <xs:include schemaLocation="sdCustom_v3.xsd" />
+    <xs:include schemaLocation="sSoftware_v3.xsd" />
+    <xs:include schemaLocation="seCustom_v3.xsd" />
+    <xs:include schemaLocation="sFacility_v3.xsd" />
+    <xs:include schemaLocation="sElement_v3.xsd" />
+    <xs:include schemaLocation="sAgency_v3.xsd" />
+    <xs:include schemaLocation="sConfiguration_v3.xsd" />
+    
+    <xs:element name="StateDataSet">
+        <xs:annotation>
+            <xs:documentation>Root Tag for State Dataset</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sState" type="sState" id="sStateSection">
+                    <xs:annotation>
+                        <xs:documentation>State information for this State Dataset.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="seCustomConfiguration" type="seCustomConfiguration" id="seCustomConfigurationSection" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patient Care Report Custom Elements</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="sdCustomConfiguration" type="sdCustomConfiguration" id="sdCustomConfigurationSection" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Demographic Custom Elements</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="sSoftware" type="sSoftware" id="sSoftwareSection">
+                    <xs:annotation>
+                        <xs:documentation>Software Information</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="sElement" type="sElement" id="sElementSection">
+                    <xs:annotation>
+                        <xs:documentation>State Collected Elements</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="sConfiguration" type="sConfiguration" id="sConfigurationSection">
+                    <xs:annotation>
+                        <xs:documentation>Configuration Information</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="sAgency" type="sAgency" id="sAgencySection" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Agency Information</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="sFacility" type="sFacility" id="sFacilitySection" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Facility Information</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="timestamp" type="DateTimeType"/>
+            <xs:attribute name="effectiveDate" type="DateTimeType"/>
+        </xs:complexType> 
+    </xs:element>  
+</xs:schema>

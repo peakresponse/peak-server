@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd" />
+    <xs:complexType name="sAgency" id="sAgencyInformation">
+            <xs:sequence>
+                <xs:element name="sAgencyGroup"  id="sAgencyGroup" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:annotation>
+                            <xs:documentation>Group tag to hold information about an EMS agency.</xs:documentation>
+                        </xs:annotation>
+                        <xs:sequence>
+                            <xs:element name="sAgency.01" id="dAgency.EMSAgencyUniqueStateID" minOccurs="0" nillable="true">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sAgency.01</number>
+                                            <name>EMS Agency Unique State ID</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The unique ID assigned to the EMS Agency which is associated with all state licensure numbers and information.</definition>
+                                            <usage>Recommended</usage>
+                                            <performanceMeasuresGroup>
+                                                <performanceMeasure>Airway</performanceMeasure>
+                                                <performanceMeasure>Cardiac Arrest</performanceMeasure>
+                                                <performanceMeasure>Pediatric</performanceMeasure>
+                                                <performanceMeasure>Response</performanceMeasure>
+                                                <performanceMeasure>STEMI</performanceMeasure>
+                                                <performanceMeasure>Stroke</performanceMeasure>
+                                                <performanceMeasure>Trauma</performanceMeasure>
+                                            </performanceMeasuresGroup>
+                                            <comment>Used to populate dAgency.01 EMS Agency Unique State ID.</comment>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="EMSAgencyStateID">
+                                            <xs:attribute name="NV" use="optional">
+                                                <xs:simpleType>
+                                                    <xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="sAgency.02" id="sAgency.EMSAgencyNumber" minOccurs="0" nillable="true">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sAgency.02</number>
+                                            <name>EMS Agency Number</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The state-assigned provider number of the EMS agency.</definition>
+                                            <v2Number>D01_01</v2Number>
+                                            <usage>Recommended</usage>
+                                            <performanceMeasuresGroup>
+                                                <performanceMeasure>Airway</performanceMeasure>
+                                                <performanceMeasure>Cardiac Arrest</performanceMeasure>
+                                                <performanceMeasure>Pediatric</performanceMeasure>
+                                                <performanceMeasure>Response</performanceMeasure>
+                                                <performanceMeasure>STEMI</performanceMeasure>
+                                                <performanceMeasure>Stroke</performanceMeasure>
+                                                <performanceMeasure>Trauma</performanceMeasure>
+                                            </performanceMeasuresGroup>
+                                            <comment>This may be the EMS Agency Name or a unique number assigned by the state EMS office. This is required to document multiple license types and numbers associated with the same EMS agency.
+                                                &lt;br/>&lt;br/>
+                                                &lt;br/>Used to populate the following data elements:
+                                                &lt;br/>dAgency.02 EMS Agency Number
+                                                &lt;br/>eScene.03 Other EMS or Public Safety Agency ID Number
+                                                &lt;br/>eDisposition.02 Destination/Transferred To, Code (for transfer of EMS care)</comment>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="EMSAgencyNumber">
+                                            <xs:attribute name="NV" use="optional">
+                                                <xs:simpleType>
+                                                    <xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="sAgency.03" nillable="true" id="sAgency.EMSAgencyName" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sAgency.03</number>
+                                            <name>EMS Agency Name</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The formal name of the EMS agency.</definition>
+                                            <v2Number>D01_02</v2Number>
+                                            <usage>Recommended</usage>
+                                            <performanceMeasuresGroup>
+                                                <performanceMeasure>Airway</performanceMeasure>
+                                                <performanceMeasure>Cardiac Arrest</performanceMeasure>
+                                                <performanceMeasure>Pediatric</performanceMeasure>
+                                                <performanceMeasure>Response</performanceMeasure>
+                                                <performanceMeasure>STEMI</performanceMeasure>
+                                                <performanceMeasure>Stroke</performanceMeasure>
+                                                <performanceMeasure>Trauma</performanceMeasure>
+                                            </performanceMeasuresGroup>
+                                            <comment>An EMS agency can have more than one Agency Number within a state. This reflects the ability for an EMS agency to have a different number for each service type or location (based on state implementation).
+                                                &lt;br/>&lt;br/>
+                                                &lt;br/>Used to populate the following data elements:
+                                                &lt;br/>dAgency.03 EMS Agency Name
+                                                &lt;br/>eScene.02 - Other EMS or Public Safety Agencies at Scene
+                                                &lt;br/>eDisposition.01 - Destination/Transferred To, Name (for transfer of EMS care)</comment>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="EMSAgencyName">
+                                            <xs:attribute name="NV" use="optional">
+                                                <xs:simpleType>
+                                                    <xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+'use strict';
+
+/// disable output logging in db config before loading
+const config = require('../config/config');
+config[process.env.NODE_ENV || 'development'].logging = false;
+const models = require('../models');
+const Op = models.Sequelize.Op;
+
+async function geocode() {
+  let page = 1;
+  const paginate = 100;
+  while (true) {
+    const {docs, pages, total} = await models.Facility.paginate({
+      page,
+      paginate,
+      order: [['name', 'ASC']],
+      where: {
+        address: {[Op.not]: null},
+        city: {[Op.not]: null},
+        state: {[Op.not]: null},
+        lat: {[Op.is]: null},
+        lng: {[Op.is]: null},
+      }
+    });
+    for (let facility of docs) {
+      process.stdout.write('.');
+      await facility.geocode();
+      if (facility.lat && facility.lng) {
+        await facility.save();
+      }
+    }
+    page += 1;
+    if (page > pages) {
+      break;
+    }
+  }
+  console.log('\n');
+  console.log('Done!');
+}
+
+geocode().then(() => models.sequelize.close());

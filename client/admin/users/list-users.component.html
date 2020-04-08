@@ -3,26 +3,24 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <h1 class="h2">Users</h1>
   </div>
-  <app-shared-list type="users">
-    <div class="table-responsive">
-      <table class="table table-striped table-sm">
-        <thead>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <app-shared-list type="users">
+        <ng-template let-record="record">
           <tr>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Email</th>
+            <td><a [routerLink]="['/users', record.id]">{{record.lastName}}</a></td>
+            <td><a [routerLink]="['/users', record.id]">{{record.firstName}}</a></td>
+            <td><a [routerLink]="['/users', record.id]">{{record.email}}</a></td>
           </tr>
-        </thead>
-        <tbody>
-          <ng-template let-record="record">
-            <tr>
-              <td><a [routerLink]="['/users', record.id]">{{record.lastName}}</a></td>
-              <td><a [routerLink]="['/users', record.id]">{{record.firstName}}</a></td>
-              <td><a [routerLink]="['/users', record.id]">{{record.email}}</a></td>
-            </tr>
-          </ng-template>
-        </tbody>
-      </table>
-    </div>
-  </app-shared-list>
+        </ng-template>
+      </app-shared-list>
+    </table>
+  </div>
 </div>

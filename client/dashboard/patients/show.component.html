@@ -20,12 +20,25 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-lg-6 col-xl-5 offset-xl-1">
-                <div class="card">
+                <div *ngIf="record.transportAgencyId || record.transportFacilityId" class="card">
+                  <div class="card-header">Transport</div>
+                  <div class="card-body">
+                    <dl>
+                      <dt>Agency</dt>
+                      <dd>{{record.transportAgency?.name}}</dd>
+                      <div class="break"></div>
+                      <dt>Facility</dt>
+                      <dd>{{record.transportFacility?.name}}</dd>
+                    </dl>
+                  </div>
+                </div>
+                <div *ngIf="!record.transportAgencyId && !record.transportFacilityId" class="card">
                   <div class="card-header">Location</div>
                   <div class="card-body">
                     <dl>
                       <dt>Location</dt>
                       <dd>{{record.location}}</dd>
+                      <div class="break"></div>
                       <dt>GPS</dt>
                       <dd><span *ngIf="record.lat && record.lng">{{record.lat}}, {{record.lng}}</span></dd>
                     </dl>
@@ -37,8 +50,10 @@
                     <dl>
                       <dt>First name</dt>
                       <dd>{{record.firstName}}</dd>
+                      <div class="break"></div>
                       <dt>Last name</dt>
                       <dd>{{record.lastName}}</dd>
+                      <div class="break"></div>
                       <dt>Age</dt>
                       <dd>{{record.age}}</dd>
                     </dl>
@@ -50,10 +65,13 @@
                     <dl>
                       <dt>Respiratory Rate</dt>
                       <dd>{{record.respiratoryRate}}</dd>
+                      <div class="break"></div>
                       <dt>Pulse</dt>
                       <dd>{{record.pulse}}</dd>
+                      <div class="break"></div>
                       <dt>Capillary Refill</dt>
                       <dd>{{record.capillaryRefill}}</dd>
+                      <div class="break"></div>
                       <dt>Blood Pressure</dt>
                       <dd>{{record.bloodPressure}}</dd>
                     </dl>

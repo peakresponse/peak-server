@@ -1,0 +1,1878 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eVitals">
+		<xs:sequence>
+			<xs:element name="eVitals.VitalGroup" id="eVitals.VitalGroup" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold eVitals information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eVitals.01" nillable="true" id="eVitals.DateTimeVitalSignsTaken">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.01</number>
+										<name>Date/Time Vital Signs Taken</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The date/time vital signs were taken on the patient.</definition>
+										<v2Number>E14_01</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DateTimeType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.02" nillable="true" id="eVitals.ObtainedPriortothisUnitsEMSCare">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.02</number>
+										<name>Obtained Prior to this Unit's EMS Care</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>Indicates that the information which is documented was obtained prior to the documenting EMS units care.</definition>
+										<v2Number>E14_02</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>This is the NEMSIS Version 3 method to document prior aid.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="YesNoValues">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.CardiacRhythmGroup" id="eVitals.CardiacRhythmGroup">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold information of the type and method used for ECG interpretation associated with the cardiac rhythm.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eVitals.03" nillable="true" id="eVitals.CardiacRhythmandElectrocardiography" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.03</number>
+													<name>Cardiac Rhythm / Electrocardiography (ECG)</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The cardiac rhythm / ECG and other electrocardiography findings of the patient as interpreted by EMS personnel.</definition>
+													<v2Number>E14_03</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+													</performanceMeasuresGroup>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="CardiacRhythm">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.04" nillable="true" id="eVitals.ECGType">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.04</number>
+													<name>ECG Type</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The type of ECG associated with the cardiac rhythm.</definition>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>STEMI</performanceMeasure>
+													</performanceMeasuresGroup>
+													<v3Changes>Added to better document ECG results.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="ECGType">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.05" nillable="true" id="eVitals.MethodofECGInterpretation" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.05</number>
+													<name>Method of ECG Interpretation</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The method of ECG interpretation.</definition>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>STEMI</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>"Transmission with no interpretation" may be used by EMS Agency Personnel that are not trained to interpret cardiac rhythms.</comment>
+													<v3Changes>Added to better document ECG results.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="ECGMethod">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.BloodPressureGroup" id="eVitals.BloodPressureGroup">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold the details of patient's blood pressure.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eVitals.06" nillable="true" id="eVitals.SBPSystolicBloodPressure">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.06</number>
+													<name>SBP (Systolic Blood Pressure)</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The patient's systolic blood pressure.</definition>
+													<v2Number>E14_04</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Required for ACS-Field Triage and other patient scoring systems.</comment>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="SBP">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.07" nillable="true" id="eVitals.DBPDiastolicBloodPressure" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.07</number>
+													<name>DBP (Diastolic Blood Pressure)</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The patient's diastolic blood pressure.</definition>
+													<v2Number>E14_05</v2Number>
+													<usage>Recommended</usage>
+													<comment>Diastolic blood pressure pattern allows for the following values:&lt;br/>1) A number 0 through 500 &lt;br/>2) P&lt;br/>3) p</comment>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="DBP">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.08" nillable="true" id="eVitals.MethodofBloodPressureMeasurement" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.08</number>
+													<name>Method of Blood Pressure Measurement</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>Indication of method of blood pressure measurement.</definition>
+													<v2Number>E14_06</v2Number>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="BloodPressureMethod">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.09" type="MAP" id="eVitals.MeanArterialPressure" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.09</number>
+													<name>Mean Arterial Pressure</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The patient's mean arterial pressure.</definition>
+													<usage>Optional</usage>
+													<v3Changes>Added for additional patient monitoring capability.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.HeartRateGroup" id="eVitals.HeartRateGroup">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold the details of patient's heart rate.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eVitals.10" nillable="true" id="eVitals.HeartRate">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.10</number>
+													<name>Heart Rate</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The patient's heart rate expressed as a number per minute.</definition>
+													<v2Number>E14_07</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Pulse Rate and Electronic Monitor Rate have been merged with an additional data element for Method of Heart Rate Measurement.</comment>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="HeartRate">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.11" type="MethodMeasureHeartRate" id="eVitals.MethodofHeartRateMeasurement" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.11</number>
+													<name>Method of Heart Rate Measurement</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The method in which the Heart Rate was measured. Values include auscultated, palpated, electronic monitor.</definition>
+													<usage>Optional</usage>
+													<comment>This data element was added when Pulse Rate and Electronic Monitor Rate were merged as EVitals.10.</comment>
+													<v3Changes>This data element was added when Pulse Rate and Electronic Monitor Rate were merged as EVitals.10.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.12" nillable="true" id="eVitals.PulseOximetry">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.12</number>
+										<name>Pulse Oximetry</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The patient's oxygen saturation.</definition>
+										<v2Number>E14_09</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PulseOximetry">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.13" type="PulseRhythm" id="eVitals.PulseRhythm" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.13</number>
+										<name>Pulse Rhythm</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The clinical rhythm of the patient's pulse.</definition>
+										<v2Number>E14_10</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eVitals.14" nillable="true" id="eVitals.RespiratoryRate">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.14</number>
+										<name>Respiratory Rate</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The patient's respiratory rate expressed as a number per minute.</definition>
+										<v2Number>E14_11</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="RespiratoryRate">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.15" id="eVitals.RespiratoryEffort" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.15</number>
+										<name>Respiratory Effort</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The patient's respiratory effort.</definition>
+										<v2Number>E14_12</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="RespiratoryEffort"/>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.16" nillable="true" id="eVitals.EndTidalCarbonDioxideETCO2">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.16</number>
+										<name>End Tidal Carbon Dioxide (ETCO2)</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The numeric value of the patient's exhaled end tidal carbon dioxide (ETCO2) level measured as a unit of pressure in millimeters of mercury (mmHg), percentage or, kilopascal (kPa).</definition>
+										<v2Number>E14_13</v2Number>
+										<usage>Required</usage>
+										<comment/>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CO2">
+										<xs:attribute name="ETCO2Type" type="ETCO2Type" use="optional" />
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.17" nillable="true" id="eVitals.CarbonMonoxideCO" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.17</number>
+										<name>Carbon Monoxide (CO)</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The numeric value of the patient's carbon monoxide level measured as a percentage (%) of carboxyhemoglobin (COHb).</definition>
+										<usage>Recommended</usage>
+										<v3Changes>Added to allow use of new patient monitoring devices.</v3Changes>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CarbonMonoxideLevel">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.18" nillable="true" id="eVitals.BloodGlucoseLevel">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.18</number>
+										<name>Blood Glucose Level</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The patient's blood glucose level.</definition>
+										<v2Number>E14_14</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+										</performanceMeasuresGroup>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="BloodGlucoseLevel">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.GlasgowScoreGroup" id="eVitals.GlasgowScoreGroup">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold the details of patient's glasgow scale</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eVitals.19" nillable="true" id="eVitals.GlasgowComaScoreEye">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.19</number>
+													<name>Glasgow Coma Score-Eye</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The patient's Glasgow Coma Score Eye opening response.</definition>
+													<v2Number>E14_15</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Definitions now based on the National Trauma Data Standard (NTDS).</comment>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="GlasgowComaScoreEyes">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.20" nillable="true" id="eVitals.GlasgowComaScoreVerbal">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.20</number>
+													<name>Glasgow Coma Score-Verbal</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The patient's Glasgow Coma Score Verbal response.</definition>
+													<v2Number>E14_16</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Definitions now based on the National Trauma Data Standard (NTDS).</comment>
+													<v3Changes/>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="GlasgowComaScoreVerbal">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.21" nillable="true" id="eVitals.GlasgowComaScoreMotor">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.21</number>
+													<name>Glasgow Coma Score-Motor</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The patient's Glasgow Coma Score Motor response.</definition>
+													<v2Number>E14_17</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Definitions now based on the National Trauma Data Standard (NTDS).</comment>
+													<v3Changes/>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="GlasgowComaScoreMotor">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.22" nillable="true" id="eVitals.GlasgowComaScoreQualifier" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.22</number>
+													<name>Glasgow Coma Score-Qualifier</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>Documentation of factors which make the GCS score more meaningful.</definition>
+													<v2Number>E14_18</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Definitions now based on the National Trauma Data Standard (NTDS).</comment>
+													<v3Changes/>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="GCSScoreQualifier">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.23" nillable="true" id="eVitals.TotalGlasgowComaScore" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.23</number>
+													<name>Total Glasgow Coma Score</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The patient's total Glasgow Coma Score.</definition>
+													<v2Number>E14_19</v2Number>
+													<usage>Recommended</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Can be documented or calculated from EVitals.19 (GCS-Eye), EVitals.20 (GCS-Verbal), and EVitals.21 (GCS-Motor).</comment>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="TotalGCS">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.TemperatureGroup" id="eVitals.TemperatureGroup" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold information about patient's body temperature.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eVitals.24" nillable="true" id="eVitals.Temperature" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.24</number>
+													<name>Temperature</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The patient's body temperature in degrees Celsius/centigrade.</definition>
+													<v2Number>E14_20</v2Number>
+													<usage>Recommended</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Pediatric</performanceMeasure>
+													</performanceMeasuresGroup>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="BodyTemperature">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.25" type="MethodBodyTemp" id="eVitals.TemperatureMethod" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.25</number>
+													<name>Temperature Method</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The method used to obtain the patient's body temperature.</definition>
+													<v2Number>E14_21</v2Number>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.26" nillable="true" id="eVitals.LevelofResponsivenessAVPU">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.26</number>
+										<name>Level of Responsiveness (AVPU)</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The patient's highest level of responsiveness.</definition>
+										<v2Number>E14_22</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Definition changed to indicate highest level of responsiveness.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PatientsHighestLevelResponsiveness">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.PainScaleGroup" id="eVitals.PainScaleGroup">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold the scale of patient's pain and the type of pain scale used.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eVitals.27" nillable="true" id="eVitals.PainScore">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.27</number>
+													<name>Pain Scale Score</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The patient's indication of pain from a scale of 0-10.</definition>
+													<v2Number>E14_23</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>The Pain Score can be obtained from several pain measurement tools or pain scale types (eVitals.28). The pain scale type used should have a numeric value associated with each diagram as appropriate. If the pain scale type utilizes multiple indicators/categories the total should be calculated and entered for the pain score associated with the patient assessment.</comment>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="PainScale">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.28" nillable="true" id="eVitals.PainScaleType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.28</number>
+													<name>Pain Scale Type</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The type of pain scale used.</definition>
+													<usage>Recommended</usage>
+													<v3Changes>Added to better document the patient's pain level.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="TypeOfPainScale">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.StrokeScaleGroup" id="eVitals.StrokeScaleGroup">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold the results of patient's stroke scale and the type of stroke pain scale used.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eVitals.29" nillable="true" id="eVitals.StrokeScaleScore">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.29</number>
+													<name>Stroke Scale Score</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The findings or results of the Stroke Scale Type (eVitals.30) used to assess the patient exhibiting stroke-like symptoms.</definition>
+													<v2Number>E14_24</v2Number>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Stroke</performanceMeasure>
+													</performanceMeasuresGroup>
+													<PNNil>Yes</PNNil>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="StrokeScale">
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eVitals.30" nillable="true" id="eVitals.StrokeScaleType">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eVitals.30</number>
+													<name>Stroke Scale Type</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The type of stroke scale used.</definition>
+													<usage>Required</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Stroke</performanceMeasure>
+													</performanceMeasuresGroup>
+													<v3Changes>Added to include additional detail on the stroke scale used.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="TypeOfStrokeScale">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.31" nillable="true" id="eVitals.ReperfusionChecklist">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.31</number>
+										<name>Reperfusion Checklist</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The results of the patient's Reperfusion Checklist for potential Thrombolysis use.</definition>
+										<v2Number>E14_25</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Name changed from Thrombolytic Screen</comment>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ReperfusionChecklist">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.32" nillable="true" id="eVitals.APGAR" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.32</number>
+										<name>APGAR</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The patient's total APGAR score (0-10).</definition>
+										<v2Number>E14_26</v2Number>
+										<usage>Optional</usage>
+										<comment>Recommended to be taken at 1 and 5 minutes after the infants birth</comment>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="APGAR">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eVitals.33" nillable="true" id="eVitals.RevisedTraumaScore" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eVitals.33</number>
+										<name>Revised Trauma Score</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The patient's Revised Trauma Score.</definition>
+										<v2Number>E14_27</v2Number>
+										<usage>Optional</usage>
+										<comment>The Unweighted Revised Trauma Score is a physiological scoring system that is based on the first set of vital signs obtained from the patient, and consists of Glasgow Coma Scale, Systolic Blood Pressure and Respiratory Rate.</comment>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="RTS">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="APGAR">
+		<xs:annotation>
+			<xs:documentation>The patient's total APGAR score (0-10).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BloodGlucoseLevel">
+		<xs:annotation>
+			<xs:documentation>The Patient's Blood Glucose Level</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[2][0][0][0]|[1][0-9][0-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9]|[0-9]|High|Low"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BloodPressureMethod">
+		<xs:annotation>
+			<xs:documentation>Indication of method of blood pressure procedure.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3308001">
+				<xs:annotation>
+					<xs:documentation>Arterial Line</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3308003">
+				<xs:annotation>
+					<xs:documentation>Doppler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3308005">
+				<xs:annotation>
+					<xs:documentation>Cuff-Automated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3308007">
+				<xs:annotation>
+					<xs:documentation>Cuff-Manual Auscultated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3308009">
+				<xs:annotation>
+					<xs:documentation>Cuff-Manual Palpated Only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3308011">
+				<xs:annotation>
+					<xs:documentation>Venous Line</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BodyTemperature">
+		<xs:annotation>
+			<xs:documentation>The patient's body temperature in degrees Celsius/centigrade.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="3"/>
+			<xs:fractionDigits value="1"/>
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CarbonMonoxideLevel">
+		<xs:annotation>
+			<xs:documentation>The patient's carboxyhemoglobin level measured as a percentage of carboxyhemoglobin in the blood either from a blood sample or CO-oximeter.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="100"/>
+			<xs:totalDigits value="3"/>
+			<xs:fractionDigits value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CO2">
+		<xs:annotation>
+			<xs:documentation>The patient's end-tidal or other CO2 level.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="4"/>
+			<xs:fractionDigits value="1"/>
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="760"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PulseRhythm">
+		<xs:annotation>
+			<xs:documentation>The clinical rhythm of the patient's pulse (regular, irregular, etc.).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3313001">
+				<xs:annotation>
+					<xs:documentation>Irregularly Irregular</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3313003">
+				<xs:annotation>
+					<xs:documentation>Regular</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3313005">
+				<xs:annotation>
+					<xs:documentation>Regularly Irregular</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ECGMethod">
+		<xs:annotation>
+			<xs:documentation>The method of ECG interpretation.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3305001">
+				<xs:annotation>
+					<xs:documentation>Computer Interpretation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3305003">
+				<xs:annotation>
+					<xs:documentation>Manual Interpretation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3305005">
+				<xs:annotation>
+					<xs:documentation>Transmission with No Interpretation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3305007">
+				<xs:annotation>
+					<xs:documentation>Transmission with Remote Interpretation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ECGType">
+		<xs:annotation>
+			<xs:documentation>The type of ECG associated with the cardiac rhythm.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3304000">
+				<xs:annotation>
+					<xs:documentation>2 Lead ECG (pads or paddles)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304001">
+				<xs:annotation>
+					<xs:documentation>3 Lead</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304003">
+				<xs:annotation>
+					<xs:documentation>4 Lead</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304005">
+				<xs:annotation>
+					<xs:documentation>5 Lead</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304007">
+				<xs:annotation>
+					<xs:documentation>12 Lead-Left Sided (Normal)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304009">
+				<xs:annotation>
+					<xs:documentation>12 Lead-Right Sided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304011">
+				<xs:annotation>
+					<xs:documentation>15 Lead</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304013">
+				<xs:annotation>
+					<xs:documentation>18 Lead</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304015">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GlasgowComaScoreEyes">
+		<xs:annotation>
+			<xs:documentation>The patient's Glasgow Coma Score Eye opening.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>No eye movement when assessed (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Opens Eyes to painful stimulation (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Opens Eyes to verbal stimulation (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Opens Eyes spontaneously (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GlasgowComaScoreMotor">
+		<xs:annotation>
+			<xs:documentation>The patient's Glasgow Coma Score Motor.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>No Motor Response (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Extension to pain (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Flexion to pain (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Withdrawal from pain (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Localizing pain (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Obeys commands (>2Years); Appropriate response to stimulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GlasgowComaScoreVerbal">
+		<xs:annotation>
+			<xs:documentation>The patient's Glasgow Coma Score Verbal.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>No verbal/vocal response (All Age Groups)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Incomprehensible sounds (>2 Years); Inconsolable, agitated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Inappropriate words (>2 Years); Inconsistently consolable, moaning</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Confused (>2 Years); Cries but is consolable, inappropriate interactions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Oriented (>2 Years); Smiles, oriented to sounds, follows objects, interacts</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GCSScoreQualifier">
+		<xs:annotation>
+			<xs:documentation>Documentation of factors which make the GCS score more meaningful.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3322001">
+				<xs:annotation>
+					<xs:documentation>Eye Obstruction Prevents Eye Assessment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3322003">
+				<xs:annotation>
+					<xs:documentation>Initial GCS has legitimate values without interventions such as intubation and sedation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3322005">
+				<xs:annotation>
+					<xs:documentation>Patient Chemically Paralyzed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3322007">
+				<xs:annotation>
+					<xs:documentation>Patient Chemically Sedated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3322009">
+				<xs:annotation>
+					<xs:documentation>Patient Intubated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeartRate">
+		<xs:annotation>
+			<xs:documentation>The patient's heart rate expressed as a number per minute.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MAP">
+		<xs:annotation>
+			<xs:documentation>The patient's mean arterial pressure.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MethodBodyTemp">
+		<xs:annotation>
+			<xs:documentation>The method used to obtain the patient's body temperature.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3325001">
+				<xs:annotation>
+					<xs:documentation>Axillary</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3325003">
+				<xs:annotation>
+					<xs:documentation>Central (Venous or Arterial)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3325005">
+				<xs:annotation>
+					<xs:documentation>Esophageal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3325007">
+				<xs:annotation>
+					<xs:documentation>Oral</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3325009">
+				<xs:annotation>
+					<xs:documentation>Rectal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3325011">
+				<xs:annotation>
+					<xs:documentation>Temporal Artery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3325013">
+				<xs:annotation>
+					<xs:documentation>Tympanic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3325015">
+				<xs:annotation>
+					<xs:documentation>Urinary Catheter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3325017">
+				<xs:annotation>
+					<xs:documentation>Skin Probe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MethodMeasureHeartRate">
+		<xs:annotation>
+			<xs:documentation>The method in which the Heart Rate was measured. Values include auscultated, palpated, electronic monitor).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3311001">
+				<xs:annotation>
+					<xs:documentation>Auscultated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3311003">
+				<xs:annotation>
+					<xs:documentation>Doppler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3311005">
+				<xs:annotation>
+					<xs:documentation>Electronic Monitor - Cardiac</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3311007">
+				<xs:annotation>
+					<xs:documentation>Electronic Monitor - Pulse Oximeter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3311009">
+				<xs:annotation>
+					<xs:documentation>Electronic Monitor (Other)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3311011">
+				<xs:annotation>
+					<xs:documentation>Palpated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PainScale">
+		<xs:annotation>
+			<xs:documentation>The patient's indication of pain from a scale of 0-10.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PatientsHighestLevelResponsiveness">
+		<xs:annotation>
+			<xs:documentation>The patient's highest level of responsiveness.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3326001">
+				<xs:annotation>
+					<xs:documentation>Alert</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3326003">
+				<xs:annotation>
+					<xs:documentation>Verbal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3326005">
+				<xs:annotation>
+					<xs:documentation>Painful</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3326007">
+				<xs:annotation>
+					<xs:documentation>Unresponsive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PulseOximetry">
+		<xs:annotation>
+			<xs:documentation>The patient's oxygen saturation.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReperfusionChecklist">
+		<xs:annotation>
+			<xs:documentation>The results of the patient's Reperfusion Checklist for potential Thrombolysis use.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3331001">
+				<xs:annotation>
+					<xs:documentation>Definite Contraindications to Thrombolytic Use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3331003">
+				<xs:annotation>
+					<xs:documentation>No Contraindications to Thrombolytic Use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3331005">
+				<xs:annotation>
+					<xs:documentation>Possible Contraindications to Thrombolytic Use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RespiratoryEffort">
+		<xs:annotation>
+			<xs:documentation>The patient's respiratory effort</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3315001">
+				<xs:annotation>
+					<xs:documentation>Apneic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3315003">
+				<xs:annotation>
+					<xs:documentation>Labored</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3315005">
+				<xs:annotation>
+					<xs:documentation>Mechanically Assisted (BVM, CPAP, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3315007">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3315009">
+				<xs:annotation>
+					<xs:documentation>Rapid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3315011">
+				<xs:annotation>
+					<xs:documentation>Shallow</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3315013">
+				<xs:annotation>
+					<xs:documentation>Weak/Agonal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RespiratoryRate">
+		<xs:annotation>
+			<xs:documentation>The patient's respiratory rate expressed as a number per minute.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="300"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RTS">
+		<xs:annotation>
+			<xs:documentation>The patient's Revised Trauma Score.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StrokeScale">
+		<xs:annotation>
+			<xs:documentation>The patient's Stroke Scale Results.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3329001">
+				<xs:annotation>
+					<xs:documentation>Negative</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3329003">
+				<xs:annotation>
+					<xs:documentation>Non-Conclusive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3329005">
+				<xs:annotation>
+					<xs:documentation>Positive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TotalGCS">
+		<xs:annotation>
+			<xs:documentation>The patient's total Glasgow Coma Score. Can be documented or calculated from EVitals.19 (GCS-Eye), EVitals.20 (GCS-Verbal), and EVitals.21 (GCS-Motor).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="3"/>
+			<xs:maxInclusive value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeOfPainScale">
+		<xs:annotation>
+			<xs:documentation>The type of pain scale used.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3328001">
+				<xs:annotation>
+					<xs:documentation>FLACC (Face, Legs, Activity, Cry, Consolability)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3328003">
+				<xs:annotation>
+					<xs:documentation>Numeric (0-10)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3328005">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3328007">
+				<xs:annotation>
+					<xs:documentation>Wong-Baker (FACES)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeOfStrokeScale">
+		<xs:annotation>
+			<xs:documentation>The type of stroke pain scale used.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3330001">
+				<xs:annotation>
+					<xs:documentation>Cincinnati Prehospital Stroke Scale (CPSS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330004">
+				<xs:annotation>
+					<xs:documentation>Los Angeles Prehospital Stroke Screen (LAPSS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330005">
+				<xs:annotation>
+					<xs:documentation>Massachusetts Stroke Scale (MSS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330007">
+				<xs:annotation>
+					<xs:documentation>Miami Emergency Neurologic Deficit Exam (MEND)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330009">
+				<xs:annotation>
+					<xs:documentation>NIH Stroke Scale (NIHSS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330011">
+				<xs:annotation>
+					<xs:documentation>Other Stroke Scale Type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330013">
+				<xs:annotation>
+					<xs:documentation>FAST-ED</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330015">
+				<xs:annotation>
+					<xs:documentation>Boston Stroke Scale (BOSS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330017">
+				<xs:annotation>
+					<xs:documentation>Ontario Prehospital Stroke Scale (OPSS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330019">
+				<xs:annotation>
+					<xs:documentation>Melbourne Ambulance Stroke Screen (MASS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330021">
+				<xs:annotation>
+					<xs:documentation>Rapid Arterial oCclusion Evaluation (RACE)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3330023">
+				<xs:annotation>
+					<xs:documentation>Los Angeles Motor Score (LAMS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ETCO2Type">
+		<xs:annotation>
+			<xs:documentation>The type measurement for ETCO2.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3340001">
+				<xs:annotation>
+					<xs:documentation>mmHg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3340003">
+				<xs:annotation>
+					<xs:documentation>Percentage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3340005">
+				<xs:annotation>
+					<xs:documentation>kPa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,1304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eSituation" id="eSituation.Situation">
+		<xs:sequence>
+			<xs:element name="eSituation.01" nillable="true" id="eSituation.DateTimeofSymptomOnset">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.01</number>
+							<name>Date/Time of Symptom Onset</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The date and time the symptom began (or was discovered) as it relates to this EMS event. This is described or estimated by the patient, family, and/or healthcare professionals.</definition>
+							<v2Number>E05_01</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+							<v3Changes>Added to better define the EMS patient event.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateTimeType">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.UnableToComplete PN.Approximate"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.02" nillable="true" id="eSituation.PossibleInjury">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.02</number>
+							<name>Possible Injury</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indication whether or not there was an injury.</definition>
+							<v2Number>E09_04</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>This data element provides documentation to classify the EMS Reason for Encounter as either injury or non-injury related based on mechanism and not on actual injury. eSituation.02 (Possible Injury), eSituation.09 (Primary Symptom), eSituation.07 (Chief Complaint Anatomic Location), and eSituation.08 (Chief Complaint Organ System) are grouped together to form the EMS Reason for Encounter.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="YesNoUnkValues">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.PatientComplaintGroup" id="eSituation.PatientComplaintGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold information about patient's complaint</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eSituation.03" nillable="true" id="eSituation.ComplaintType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eSituation.03</number>
+										<name>Complaint Type</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The type of patient healthcare complaint being documented.</definition>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>This was added to group complaints in a more efficient manner</comment>
+										<v3Changes>Added to improve data integrity.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ComplaintType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eSituation.04" nillable="true" id="eSituation.Complaint" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eSituation.04</number>
+										<name>Complaint</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The statement of the problem by the patient or the history provider.</definition>
+										<v2Number>E09_05</v2Number>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="Complaint">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eSituation.05" nillable="true" id="eSituation.DurationofComplaint" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eSituation.05</number>
+										<name>Duration of Complaint</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The duration of the complaint.</definition>
+										<v2Number>E09_06</v2Number>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Associated with eSituation.06 (Time Units of Duration of the Complaint).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DurationComplaint">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eSituation.06" nillable="true" id="eSituation.TimeUnitsofDurationofComplaint" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eSituation.06</number>
+										<name>Time Units of Duration of Complaint</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The time units of the duration of the patient's complaint.</definition>
+										<v2Number>E09_07</v2Number>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Associated with eSituation.05 (Duration of the Complaint).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="TimeUnitsOfChiefComplaint">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.07" nillable="true" id="eSituation.ChiefComplaintAnatomicLocation">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.07</number>
+							<name>Chief Complaint Anatomic Location</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The primary anatomic location of the chief complaint as identified by EMS personnel.</definition>
+							<v2Number>E09_11</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>eSituation.02 (Possible Injury), eSituation.09 (Primary Symptom), eSituation.07 (Chief Complaint Anatomic Location), and eSituation.08 (Chief Complaint Organ System) are grouped together to form the EMS Reason for Encounter.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ComplaintAnatomicLocation">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.08" nillable="true" id="eSituation.ChiefComplaintOrganSystem">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.08</number>
+							<name>Chief Complaint Organ System</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The primary organ system of the patient injured or medically affected.</definition>
+							<v2Number>E09_12</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Altered to follow the anatomical organ systems as defined by general anatomy. Added Lymphatic/Immune; Merged Skin with Muscular-Skeletal. Changed OB/Gyn to Reproductive.&lt;br/>&lt;br/>Retained non-organ system designations for Global/General and Behavioral/Psychiatric.&lt;br/>&lt;br/>eSituation.02 (Possible Injury), eSituation.09 (Primary Symptom), eSituation.07 (Chief Complaint Anatomic Location), and eSituation.08 (Chief Complaint Organ System) are grouped together to form the EMS Reason for Encounter.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ComplaintOrganSystem">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.09" nillable="true" id="eSituation.PrimarySymptom">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.09</number>
+							<name>Primary Symptom</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The primary sign and symptom present in the patient or observed by EMS personnel.</definition>
+							<v2Number>E09_13</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>eSituation.02 (Possible Injury), eSituation.09 (Primary Symptom), eSituation.07 (Chief Complaint Anatomic Location), and eSituation.08 (Chief Complaint Organ System) are grouped together to form the EMS Reason for Encounter.
+								&lt;br/>&lt;br/>Code list is represented in ICD-10-CM Diagnosis Codes. Reference the NEMSIS Suggested Lists at: https://nemsis.org/technical-resources/version-3/version-3-resource-repository/						
+							&lt;br/>&lt;br/>ICD-10-CM
+							&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov" target="_blank">http://uts.nlm.nih.gov&lt;/a>
+							&lt;br/>Product - UMLS Metathesaurus							
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="AssociatedSymptoms">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.10" nillable="true" id="eSituation.OtherAssociatedSymptoms" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.10</number>
+							<name>Other Associated Symptoms</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Other symptoms identified by the patient or observed by EMS personnel.</definition>
+							<v2Number>E09_14</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Code list is represented in ICD-10-CM.  Reference the NEMSIS Suggested Lists at: https://nemsis.org/technical-resources/version-3/version-3-resource-repository/	
+							&lt;br/>&lt;br/>ICD-10-CM
+							&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov" target="_blank">http://uts.nlm.nih.gov&lt;/a>
+							&lt;br/>Product - UMLS Metathesaurus								
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="AssociatedSymptoms">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.SymptomNotPresent"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.11" nillable="true" id="eSituation.ProvidersPrimaryImpression">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.11</number>
+							<name>Provider's Primary Impression</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The EMS personnel's impression of the patient's primary problem or most significant condition which led to the management given to the patient (treatments, medications, or procedures).</definition>
+							<v2Number>E09_15</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Code list is represented in ICD-10-CM. Reference the NEMSIS Suggested Lists at: https://nemsis.org/technical-resources/version-3/version-3-resource-repository/											
+							&lt;br/>&lt;br/>ICD-10-CM
+							&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov" target="_blank">http://uts.nlm.nih.gov&lt;/a>
+							&lt;br/>Product - UMLS Metathesaurus	
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ProvidersImpression">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.12" nillable="true" id="eSituation.ProvidersSecondaryImpressions" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.12</number>
+							<name>Provider's Secondary Impressions</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The EMS personnel's impression of the patient's secondary problem or most significant condition which led to the management given to the patient (treatments, medications, or procedures).</definition>
+							<v2Number>E09_16</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Code list is represented in ICD-10-CM. Reference the NEMSIS Suggested Lists at: https://nemsis.org/technical-resources/version-3/version-3-resource-repository/	
+							&lt;br/>&lt;br/>ICD-10-CM
+							&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov" target="_blank">http://uts.nlm.nih.gov&lt;/a>
+							&lt;br/>Product - UMLS Metathesaurus											
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ProvidersImpression">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.13" nillable="true" id="eSituation.InitialPatientAcuity">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.13</number>
+							<name>Initial Patient Acuity</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The acuity of the patient's condition upon EMS arrival at the scene.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Definitions related to "Critical, Emergent, and Lower Acuity" can be found in the National EMS Core Content document from NHTSA EMS (DOT HS 809-898 July 2005) at 
+								&lt;br/>&lt;a href="http://www.nhtsa.gov/people/injury/ems/emscorecontent/images/EMSCoreContent.pdf">http://www.nhtsa.gov/people/injury/ems/emscorecontent/images/EMSCoreContent.pdf&lt;/a> 
+							&lt;br/>&lt;br/>Dead without Resuscitation Efforts would be appropriate if resuscitation was initiated by non-EMS personnel but discontinued immediately upon evaluation by first arriving EMS personnel.
+							&lt;br/>&lt;br/>"Non-Acute/Routine" added for use with patients with no clinical issues-such as refusal for a life assist-or for routine transfers.
+							</comment>
+							<v3Changes>With the release of V3.5.0 additional values were added to meet the needs of EMS.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="InitialPatientAcuity">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.WorkRelatedGroup" id="eSituation.WorkRelatedGroup" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold patient details if the illness or injury is work related</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eSituation.14" nillable="true" id="eSituation.WorkRelatedIllnessInjury" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eSituation.14</number>
+										<name>Work-Related Illness/Injury</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>Indication of whether or not the illness or injury is work related.</definition>
+										<v2Number>E07_15</v2Number>
+										<usage>Recommended</usage>
+										<comment>Moved from Version 2.2.1 E07_15 to allow more complete documentation of work related illness and injury.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="YesNoUnkValues">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eSituation.15" type="OccupationIndustry" id="eSituation.PatientsOccupationalIndustry" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eSituation.15</number>
+										<name>Patient's Occupational Industry</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The occupational industry of the patient's work.</definition>
+										<v2Number>E07_16</v2Number>
+										<usage>Optional</usage>
+										<comment>From the North American Industry Classification System (NAICS) from US Bureau of Labor Statistics &lt;br/>(http://www.census.gov/cgi-bin/sssd/naics/naicsrch?chart=2007).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eSituation.16" type="PatientsOccupation" id="eSituation.PatientsOccupation" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eSituation.16</number>
+										<name>Patient's Occupation</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The occupation of the patient.</definition>
+										<v2Number>E07_17</v2Number>
+										<usage>Optional</usage>
+										<comment>Based on the Standard Occupational Classification of the US Bureau of Labor Statistics &lt;br/>(https://www.bls.gov/soc/2018/soc_structure_2018.pdf)</comment>
+										<v3Changes>Added to better describe work related injury.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.17" nillable="true" id="eSituation.PatientActivity" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.17</number>
+							<name>Patient Activity</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The activity the patient was involved in at the time the patient experienced the onset of symptoms or experienced an injury.</definition>
+							<usage>Recommended</usage>
+							<comment>Code list is represented in ICD-10-CM. Reference the NEMSIS Suggested Lists at: https://nemsis.org/technical-resources/version-3/version-3-resource-repository/	
+										&lt;br/>&lt;br/>Code list is represented in ICD-10 Codes.
+&lt;br/>Website - http://uts.nlm.nih.gov  
+&lt;br/>Product - UMLS Metathesaurus</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="icd10Activity">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.18" id="eTimes.DateTimeLastKnownWell" minOccurs="1" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.18</number>
+							<name>Date/Time Last Known Well</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The estimated date and time the patient was last known to be well or in their usual state of health. This is described or estimated by the patient, family, and/or bystanders.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>For stroke related events, this is the date and time the patient was last seen normal. For cardiac or respiratory arrest related events, this is the date and time the patient was last known to have a pulse or when interaction was had with the patient. For drowning related events, this is the date and time the patient was last seen. For injury or trauma related events, this is the date and time the patient was injured.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateTimeType">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.19" id="eSituation.JustificationforTransferorEncounter" minOccurs="0" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.19</number>
+							<name>Justification for Transfer or Encounter</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The ordering physician or medical provider diagnosis or stated reason for a hospital-to-hospital transfer, other medical transport, or Mobile Integrated Healthcare encounter.</definition>
+							<usage>Recommended</usage>
+							<comment>This is the diagnosis or reason for transfer, or medical transport or Integrated Healthcare Encounter provided by the ordering physician or medical provider. Hospital-to-hospital transfers and medical transports are based on the ordering medical provider, and not the EMS provider's impression. The text of the reason or diagnosis would be entered here rather than using the patient complaint field (as the patient may still have complaints to document), eSituation.11 Provider's Primary Impression or eSituation.12 Provider's Secondary Impressions.
+							&lt;br/>&lt;br/>This element should only be documented when eResponse.05 Type of Service Requested is Hospital-to-Hospital Transfer, Hospital-to-Hospital Transfer (with Sending Hospital Staff), Hospital-to-Hospital Transfer (Critical or Specialty Care), Other Medical Needs Transport, Mobile Integrated Health Care Evaluation or Visit. A new national Schematron rule exists for this with v3.5.0.</comment>
+							<v3Changes>This element is being added with the release of v3.5.0</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="JustificationforTransferorEncounter">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eSituation.20" id="eSituation.ReasonforInterfacilityTransferMedicalTransport" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eSituation.20</number>
+							<name>Reason for Interfacility Transfer/Medical Transport</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The general categories of the reason for an interfacility transfer/medical transport.</definition>
+							<usage>Required</usage>
+							<comment>This supports and works in combination with eSituation.19 Justification for Transfer or Encounter to provide defined categories for an interfacility transfer or other medical transport. This documentation provides support for reimbursement and a means for regions and states to evaluate transfer patterns and types.</comment>
+							<v3Changes>Element added with the release of v3.5.0</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ReasonforInterfacilityTransfer">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="icd10Activity">
+		<xs:annotation>
+			<xs:documentation>The activity the patient was involved in at the time the patient experienced the onset of symptoms or experienced an injury.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="Y93\.[A-Za-z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Complaint">
+		<xs:annotation>
+			<xs:documentation>The statement of the problem by the patient or the history provider.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ComplaintAnatomicLocation">
+		<xs:annotation>
+			<xs:documentation>The primary anatomic location of the chief complaint as identified by EMS personnel</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2807001">
+				<xs:annotation>
+					<xs:documentation>Abdomen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2807003">
+				<xs:annotation>
+					<xs:documentation>Back</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2807005">
+				<xs:annotation>
+					<xs:documentation>Chest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2807007">
+				<xs:annotation>
+					<xs:documentation>Extremity-Lower</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2807009">
+				<xs:annotation>
+					<xs:documentation>Extremity-Upper</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2807011">
+				<xs:annotation>
+					<xs:documentation>General/Global</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2807013">
+				<xs:annotation>
+					<xs:documentation>Genitalia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2807015">
+				<xs:annotation>
+					<xs:documentation>Head</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2807017">
+				<xs:annotation>
+					<xs:documentation>Neck</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ComplaintOrganSystem">
+		<xs:annotation>
+			<xs:documentation>The primary organ system of the patient injured or medically affected. This is to be completed by EMS personnel with a minimum of an EMT-Paramedic level of credentialing</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2808001">
+				<xs:annotation>
+					<xs:documentation>Behavioral/Psychiatric</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808003">
+				<xs:annotation>
+					<xs:documentation>Cardiovascular</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808005">
+				<xs:annotation>
+					<xs:documentation>CNS/Neuro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808007">
+				<xs:annotation>
+					<xs:documentation>Endocrine/Metabolic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808009">
+				<xs:annotation>
+					<xs:documentation>GI</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808011">
+				<xs:annotation>
+					<xs:documentation>Global/General</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808013">
+				<xs:annotation>
+					<xs:documentation>Lymphatic/Immune</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808015">
+				<xs:annotation>
+					<xs:documentation>Musculoskeletal/Skin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808017">
+				<xs:annotation>
+					<xs:documentation>Reproductive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808019">
+				<xs:annotation>
+					<xs:documentation>Pulmonary</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2808021">
+				<xs:annotation>
+					<xs:documentation>Renal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ComplaintType">
+		<xs:annotation>
+			<xs:documentation>The type of patient healthcare complaint being documented.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2803001">
+				<xs:annotation>
+					<xs:documentation>Chief (Primary)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2803003">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2803005">
+				<xs:annotation>
+					<xs:documentation>Secondary</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DurationComplaint">
+		<xs:annotation>
+			<xs:documentation>The duration of the chief complaint</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="365"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OccupationIndustry">
+		<xs:annotation>
+			<xs:documentation>The occupational industry of the patient's work.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2815001">
+				<xs:annotation>
+					<xs:documentation>Accommodation and Food Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815003">
+				<xs:annotation>
+					<xs:documentation>Administrative and Support and Waste Management and Remediation Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815005">
+				<xs:annotation>
+					<xs:documentation>Agriculture, Forestry, Fishing and Hunting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815007">
+				<xs:annotation>
+					<xs:documentation>Arts, Entertainment, and Recreation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815009">
+				<xs:annotation>
+					<xs:documentation>Construction</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815011">
+				<xs:annotation>
+					<xs:documentation>Educational Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815013">
+				<xs:annotation>
+					<xs:documentation>Finance and Insurance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815015">
+				<xs:annotation>
+					<xs:documentation>Health Care and Social Assistance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815017">
+				<xs:annotation>
+					<xs:documentation>Information</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815019">
+				<xs:annotation>
+					<xs:documentation>Management of Companies and Enterprises</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815021">
+				<xs:annotation>
+					<xs:documentation>Manufacturing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815023">
+				<xs:annotation>
+					<xs:documentation>Mining, Quarrying, and Oil and Gas Extraction</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815025">
+				<xs:annotation>
+					<xs:documentation>Other Services (except Public Administration)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815027">
+				<xs:annotation>
+					<xs:documentation>Professional, Scientific, and Technical Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815029">
+				<xs:annotation>
+					<xs:documentation>Public Administration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815031">
+				<xs:annotation>
+					<xs:documentation>Real Estate and Rental and Leasing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815033">
+				<xs:annotation>
+					<xs:documentation>Retail Trade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815035">
+				<xs:annotation>
+					<xs:documentation>Transportation and Warehousing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815037">
+				<xs:annotation>
+					<xs:documentation>Utilities</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2815039">
+				<xs:annotation>
+					<xs:documentation>Wholesale Trade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InitialPatientAcuity">
+		<xs:annotation>
+			<xs:documentation>The condition of the patient on EMS arrival at the scene.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2813001">
+				<xs:annotation>
+					<xs:documentation>Critical (Red)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2813003">
+				<xs:annotation>
+					<xs:documentation>Emergent (Yellow)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2813005">
+				<xs:annotation>
+					<xs:documentation>Lower Acuity (Green)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2813007">
+				<xs:annotation>
+					<xs:documentation>Dead without Resuscitation Efforts (Black)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2813009">
+				<xs:annotation>
+					<xs:documentation>Non-Acute/Routine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PatientsOccupation">
+		<xs:annotation>
+			<xs:documentation>The occupation of the patient</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2816001">
+				<xs:annotation>
+					<xs:documentation>Architecture and Engineering Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816003">
+				<xs:annotation>
+					<xs:documentation>Arts, Design, Entertainment, Sports, and Media Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816005">
+				<xs:annotation>
+					<xs:documentation>Building and Grounds Cleaning and Maintenance Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816007">
+				<xs:annotation>
+					<xs:documentation>Business and Financial Operations Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816009">
+				<xs:annotation>
+					<xs:documentation>Community and Social Services Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816011">
+				<xs:annotation>
+					<xs:documentation>Computer and Mathematical Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816013">
+				<xs:annotation>
+					<xs:documentation>Construction and Extraction Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816015">
+				<xs:annotation>
+					<xs:documentation>Educational Instruction and Library Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816017">
+				<xs:annotation>
+					<xs:documentation>Farming, Fishing and Forestry Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816019">
+				<xs:annotation>
+					<xs:documentation>Food Preparation and Serving Related Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816021">
+				<xs:annotation>
+					<xs:documentation>Healthcare Practitioners and Technical Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816023">
+				<xs:annotation>
+					<xs:documentation>Healthcare Support Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816025">
+				<xs:annotation>
+					<xs:documentation>Installation, Maintenance, and Repair Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816027">
+				<xs:annotation>
+					<xs:documentation>Legal Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816029">
+				<xs:annotation>
+					<xs:documentation>Life, Physical, and Social Science Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816031">
+				<xs:annotation>
+					<xs:documentation>Management Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816033">
+				<xs:annotation>
+					<xs:documentation>Military Specific Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816035">
+				<xs:annotation>
+					<xs:documentation>Office and Administrative Support Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816037">
+				<xs:annotation>
+					<xs:documentation>Personal Care and Service Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816039">
+				<xs:annotation>
+					<xs:documentation>Production Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816041">
+				<xs:annotation>
+					<xs:documentation>Protective Service Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816043">
+				<xs:annotation>
+					<xs:documentation>Sales and Related Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2816045">
+				<xs:annotation>
+					<xs:documentation>Transportation and Material Moving Occupations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AssociatedSymptoms">
+		<xs:annotation>
+			<xs:documentation>The sign and symptom present in the patient or observed by EMS personnel</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(R[0-6][0-9](\.[0-9]{1,4})?|(R73\.9)|(R99))|([A-QSTZ][0-9][0-9A-Z])((\.[0-9A-Z]{1,4})?)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProvidersImpression">
+		<xs:annotation>
+			<xs:documentation>The EMS personnel's impression of the patient's primary problem or most significant condition which led to the management given to the patient (treatments, medications, or procedures).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(R[0-6][0-9](\.[0-9]{1,4})?|(R73\.9)|(R99))|([A-QSTZ][0-9][0-9A-Z])((\.[0-9A-Z]{1,4})?)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TimeUnitsOfChiefComplaint">
+		<xs:annotation>
+			<xs:documentation>The time units of the duration of the patient's chief complaint</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2806001">
+				<xs:annotation>
+					<xs:documentation>Seconds</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2806003">
+				<xs:annotation>
+					<xs:documentation>Minutes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2806005">
+				<xs:annotation>
+					<xs:documentation>Hours</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2806007">
+				<xs:annotation>
+					<xs:documentation>Days</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2806009">
+				<xs:annotation>
+					<xs:documentation>Weeks</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2806011">
+				<xs:annotation>
+					<xs:documentation>Months</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2806013">
+				<xs:annotation>
+					<xs:documentation>Years</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JustificationforTransferorEncounter">
+		<xs:annotation>
+			<xs:documentation>The ordering physician or medical provider diagnosis or stated reason for a hospital-to-hospital transfer, other medical transport, or Mobile Integrated Healthcare encounter.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReasonforInterfacilityTransfer">
+		<xs:annotation>
+			<xs:documentation>The general categories of the reason for an interfacility transfer/medical transport.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2820001">
+				<xs:annotation>
+					<xs:documentation>Cardiac Specialty</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820003">
+				<xs:annotation>
+					<xs:documentation>Convenience Transfer (Patient Request)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820005">
+				<xs:annotation>
+					<xs:documentation>Diagnostic Testing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820007">
+				<xs:annotation>
+					<xs:documentation>Dialysis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820009">
+				<xs:annotation>
+					<xs:documentation>Drug and/or Alcohol Rehabilitation Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820011">
+				<xs:annotation>
+					<xs:documentation>Extended Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820013">
+				<xs:annotation>
+					<xs:documentation>Maternal/Neonatal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820015">
+				<xs:annotation>
+					<xs:documentation>Medical Specialty Care (Other, Not Listed)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820017">
+				<xs:annotation>
+					<xs:documentation>Neurological Specialty Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820019">
+				<xs:annotation>
+					<xs:documentation>Palliative/Hospice Care (Home or Facility)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820021">
+				<xs:annotation>
+					<xs:documentation>Pediatric Specialty Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820023">
+				<xs:annotation>
+					<xs:documentation>Psychiatric/Behavioral Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820025">
+				<xs:annotation>
+					<xs:documentation>Physical Rehabilitation Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820027">
+				<xs:annotation>
+					<xs:documentation>Return to Home/Residence</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820029">
+				<xs:annotation>
+					<xs:documentation>Surgical Specialty Care (Other, Not Listed)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2820031">
+				<xs:annotation>
+					<xs:documentation>Trauma/Orthopedic Specialty Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

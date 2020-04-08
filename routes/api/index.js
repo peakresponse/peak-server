@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const destinationsRouter = require('./destinations');
+const agenciesRouter = require('./agencies');
+const facilitiesRouter = require('./facilities');
 const observationsRouter = require('./observations');
 const patientsRouter = require('./patients');
-const transportsRouter = require('./transports');
+const statesRouter = require('./states');
 const uploadsRouter = require('./uploads');
 const usersRouter = require('./users');
 
-router.use('/destinations', destinationsRouter);
+router.use('/agencies', agenciesRouter);
+router.use('/facilities', facilitiesRouter);
 router.use('/observations', observationsRouter);
 router.use('/patients', patientsRouter);
-router.use('/transports', transportsRouter);
+router.use('/states', statesRouter);
 router.use('/uploads', uploadsRouter);
 router.use('/users', usersRouter);
 

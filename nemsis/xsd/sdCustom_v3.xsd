@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd"/>
+    <xs:complexType name="sdCustomConfiguration" id="sdCustomConfigurationHeaderInformation">
+            <xs:sequence>
+                <xs:element name="sdCustomConfiguration.CustomGroup" id="sdCustomConfiguration.dCustomGroup" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Group tag to hold an agency demographic custom element configuration.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="sdCustomConfiguration.01" id="sdCustomConfiguration.dCustomDataElementTitle">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.01</number>
+                                            <name>Agency Demographic Custom Data Element Title</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>This is the title of the custom data element created to collect information that is not defined formally in NEMSIS Version 3.</definition>
+                                            <usage>Mandatory</usage>
+                                            <comment>Used to populate dCustomConfiguration.01 Custom Data Element Title.</comment>
+                                            <v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="CustomTitle">
+                                            <xs:attribute name="nemsisElement" type="xs:string" use="optional"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="sdCustomConfiguration.02" type="CustomDefinition" id="sdCustomConfiguration.dCustomDefinition">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.02</number>
+                                            <name>Agency Demographic Custom Definition</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The definition of the agency demographic custom data element and how it should be used.</definition>
+                                            <comment>Used to populate dCustomConfigration.02 Custom Definition.</comment>
+                                            <usage>Mandatory</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sdCustomConfiguration.03" type="CustomDataType" id="sdCustomConfiguration.dCustomDataType">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.03</number>
+                                            <name>Agency Demographic Custom Data Type</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The data type of the agency demographic custom element.</definition>
+                                            <comment>Used to populate dCustomConfiguration.03 Custom Data Type.</comment>
+                                            <usage>Mandatory</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sdCustomConfiguration.04" type="YesNoValues" id="sdCustomConfiguration.dCustomDataElementRecurrence">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.04</number>
+                                            <name>Agency Demographic Custom Data Element Recurrence</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>Indication if the agency demographic custom data element will accept multiple values.</definition>
+                                            <comment>Used to populate dCustomConfiguration.04 Custom Data Element Recurrence.</comment>
+                                            <usage>Mandatory</usage>
+                                            <v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sdCustomConfiguration.05" type="ElementUsage" id="sdCustomConfiguration.dCustomDataElementUsage">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.05</number>
+                                            <name>Agency Demographic Custom Data Element Usage</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The Usage (Mandatory, Required, Recommended, or Optional) for the agency demographic custom data element.</definition>
+                                            <usage>Mandatory</usage>
+                                            <comment>Mandatory = Must be completed and will not accept null values.
+                                                &lt;br/>Required = Must be completed but will accept null values.
+                                                &lt;br/>Recommended = Not required but if collected will accept null values.
+                                                &lt;br/>Optional = Not required but if collected, it cannot be a null value.
+                                                &lt;br/>&lt;br/>Used to populate dCustomConfiguration.05 Custom Data Element Usage.</comment>
+                                            <v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sdCustomConfiguration.06" id="sdCustomConfiguration.dCustomDataElementPotentialValues" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.06</number>
+                                            <name>Agency Demographic Custom Data Element Potential Values</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The values which are associated with the agency demographic custom data element. Values would be the choices provided to the user when they document the custom data element.</definition>
+                                            <comment>Used to populate dCustomConfiguration.06 Custom Data Element Potential Values.</comment>
+                                            <usage>Optional</usage>
+                                            <v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="CustomValue">
+                                            <xs:attribute name="nemsisCode" type="xs:string" use="optional"/>
+                                            <xs:attribute name="customValueDescription" type="xs:string" use="optional"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="sdCustomConfiguration.07" type="NV" id="sdCustomConfiguration.dCustomAcceptableNV" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.07</number>
+                                            <name>Agency Demographic Custom Data Element Potential NOT Values (NV)</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>NOT Values (NV) associated with the agency demographic custom element.</definition>
+                                            <comment>Used to populate dCustomConfiguration.07 Custom Data Element Potential NOT Values (NV).</comment>
+                                            <usage>Optional</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sdCustomConfiguration.08" type="PN" id="sdCustomConfiguration.dCustomAcceptablePN" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.08</number>
+                                            <name>Agency Demographic Custom Data Element Potential Pertinent Negative Values (PN)</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>Pertinent Negative Values (PN) associated with the agency demographic custom element.</definition>
+                                            <comment>Used to populate dCustomConfiguration.08 Custom Data Element Potential Pertinent Negative Values (PN).</comment>
+                                            <usage>Optional</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sdCustomConfiguration.09" type="CorrelationID" id="sdCustomConfiguration.CustomDataElementGroupingID" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sdCustomConfiguration.09</number>
+                                            <name>Agency Demographic Custom Data Element Grouping ID</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>ID for agency demographic custom element grouping.</definition>
+                                            <comment>Used to populate dCustomConfiguration.09 Custom Data Element Grouping ID.</comment>
+                                            <usage>Optional</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="CustomElementID" type="CorrelationID" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>   
+    </xs:complexType>
+</xs:schema>

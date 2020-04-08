@@ -1,5 +1,5 @@
 <form #form="ngForm" (submit)="onSubmit()">
-  <fieldset [disabled]="loading">
+  <fieldset [disabled]="loading || disabled">
     <div *ngIf="updated" class="alert alert-success">
       This record has been updated!
     </div>

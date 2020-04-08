@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eProtocols">
+		<xs:sequence>
+			<xs:element name="eProtocols.ProtocolGroup" id="eProtocols.ProtocolGroup" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold eProtocol information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eProtocols.01" nillable="true" id="eProtocols.ProtocolsUsed">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProtocols.01</number>
+										<name>Protocols Used</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The protocol used by EMS personnel to direct the clinical care of the patient.</definition>
+										<v2Number>E17_01</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Protocols are grouped into Airway, Cardiac, Environmental, Exposure, General, Injury, Medical, and OB/GYN. 
+										&lt;br/>&lt;br/> There is a new data element eProtocols.02 to indicate whether the protocol is Adult, Pediatric, or General (both).
+										&lt;br/>&lt;br/> State and local entities can add additional protocols to the list but the additional protocols must map to these uniform codes. The protocol code list should be derived from dConfiguration.05 and/or dConfiguration.10</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ProtocolsUsed">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProtocols.02" nillable="true" id="eProtocols.ProtocolAgeCategory" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProtocols.02</number>
+										<name>Protocol Age Category</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The age group the protocol is written to address.</definition>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Protocols are grouped into Airway, Environmental, Exposure, General, Injury, Medical, and OB/GYN.  -There is a new data element to indicate whether the protocol is Adult, Pediatric, or General (both).</comment>
+										<v3Changes>Added to better document protocol use.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ProtocolAgeCategory">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ProtocolAgeCategory">
+		<xs:annotation>
+			<xs:documentation>The age group the protocol is written to address</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3602001">
+				<xs:annotation>
+					<xs:documentation>Adult Only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3602003">
+				<xs:annotation>
+					<xs:documentation>General</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3602005">
+				<xs:annotation>
+					<xs:documentation>Pediatric Only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

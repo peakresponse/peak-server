@@ -60,8 +60,8 @@ module.exports = (sequelize, DataTypes) => {
     Observation.SYSTEM_ATTRIBUTES = ['pin', 'patientId', 'version', 'updatedAt', 'updatedById', 'createdAt', 'createdById', 'updatedAttributes'];
     // associations can be defined here
     Observation.belongsTo(models.Patient, {as: 'patient'});
-    Observation.belongsTo(models.Transport, {as: 'transportMethod', foreignKeyId: 'transportMethodId'});
-    Observation.belongsTo(models.Destination, {as: 'transportTo', foreignKeyId: 'transportToId'});
+    Observation.belongsTo(models.Agency, {as: 'transportAgency'});
+    Observation.belongsTo(models.Facility, {as: 'transportFacility'});
     Observation.belongsTo(models.User, {as: 'updatedBy'});
     Observation.belongsTo(models.User, {as: 'createdBy'});
   };

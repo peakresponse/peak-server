@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd"/>
+    <xs:complexType name="seCustomConfiguration" id="seCustomConfigurationHeaderInformation">
+        <xs:sequence>
+            <xs:element name="seCustomConfiguration.CustomGroup" id="seCustomConfiguration.eCustomGroup" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Group Tag to hold a patient care report custom element configuration</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="seCustomConfiguration.01" id="seCustomConfiguration.eCustomDataElementTitle">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.01</number>
+                                            <name>Patient Care Report Custom Data Element Title</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>This is the title of the patient care report custom data element created to collect information that is not defined formally in NEMSIS Version 3.</definition>
+                                            <usage>Mandatory</usage>
+                                            <comment>Used to populate eCustomConfiguration.01 Custom Data Element Title.</comment>
+                                            <v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="CustomTitle">
+                                            <xs:attribute name="nemsisElement" type="xs:string" use="optional"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="seCustomConfiguration.02" type="CustomDefinition" id="seCustomConfiguration.eCustomDefinition">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.02</number>
+                                            <name>Patient Care Report Custom Definition</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The definition of the patient care report custom data element and how it should be used.</definition>
+                                            <comment>Used to populate eCustomConfiguration.02 Custom Definition.</comment>
+                                            <usage>Mandatory</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="seCustomConfiguration.03" type="CustomDataType" id="seCustomConfiguration.eCustomDataType">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.03</number>
+                                            <name>Patient Care Report Custom Data Type</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The data type of the patient care report custom data element.</definition>
+                                            <comment>Used to populate eCustomConfiguration.03 Custom Data Type.</comment>
+                                            <usage>Mandatory</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="seCustomConfiguration.04" type="YesNoValues" id="seCustomConfiguration.eCustomDataElementRecurrence">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.04</number>
+                                            <name>Patient Care Report Custom Data Element Recurrence</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>Indication if the patient care report custom data element will accept multiple values.</definition>
+                                            <usage>Mandatory</usage>
+                                            <comment>Used to populate eCustomConfiguration.04 Custom Data Element Recurrence.</comment>
+                                            <v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="seCustomConfiguration.05" type="ElementUsage" id="seCustomConfiguration.eCustomDataElementUsage">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.05</number>
+                                            <name>Patient Care Report Custom Data Element Usage</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The state-level usage (Mandatory, Required, Recommended, or Optional) for the patient care report custom data element.</definition>
+                                            <usage>Mandatory</usage>
+                                            <comment>Mandatory = Must be completed and will not accept null values.
+                                                &lt;br/>Required = Must be completed but will accept null values.
+                                                &lt;br/>Recommended = Not required but if collected will accept null values.
+                                                &lt;br/>Optional = Not required but if collected, it cannot be a null value.
+                                                &lt;br/>&lt;br/>Used to populate eCustomConfiguration.05 Custom Data Element Usage.</comment>
+                                            <v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="seCustomConfiguration.06" id="seCustomConfiguration.eCustomDataElementPotentialValues" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.06</number>
+                                            <name>Patient Care Report Custom Data Element Potential Values</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The values which are associated with the patient care report custom data element. Values would be the choices provided to the user when they document the custom data element.</definition>
+                                            <usage>Optional</usage>
+                                            <comment>Used to populate eCustomConfiguration.06 Custom Data Element Potential Values.</comment>
+                                            <v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="CustomValue">
+                                            <xs:attribute name="nemsisCode" type="xs:string" use="optional"/>
+                                            <xs:attribute name="customValueDescription" type="xs:string" use="optional"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="seCustomConfiguration.07" type="NV" id="seCustomConfiguration.eCustomAcceptableNV" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.07</number>
+                                            <name>Patient Care Report Custom Data Element Potential NOT Values (NV)</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>NOT Values (NV) associated with the patient care report custom data element.</definition>
+                                            <comment>Used to populate eCustomConfiguration.07 Custom Data Element Potential NOT Values (NV).</comment>
+                                            <usage>Optional</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="seCustomConfiguration.08" type="PN" id="seCustomConfiguration.eCustomAcceptablePN" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.08</number>
+                                            <name>Patient Care Report Custom Data Element Potential Pertinent Negative Values (PN)</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>Pertinent Negative Values (PN) associated with the patient care report custom data element.</definition>
+                                            <comment>Used to populate eCustomConfiguration.08 Custom Data Element Potential Pertinent Negative Values (PN).</comment>
+                                            <usage>Optional</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="seCustomConfiguration.09" type="CorrelationID" id="seCustomConfiguration.CustomDataElementGroupingID" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>seCustomConfiguration.09</number>
+                                            <name>Patient Care Report Custom Data Element Grouping ID</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>ID for patient care report custom data element grouping.</definition>
+                                            <comment>Used to populate eCustomConfiguration.09 Custom Data Element Grouping ID.</comment>
+                                            <usage>Optional</usage>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="CustomElementID" type="CorrelationID" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>

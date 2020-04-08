@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="dDevice" id="dDevice.MedicalDeviceInformation">
+		<xs:sequence>
+			<xs:element name="dDevice.DeviceGroup" id="dDevice.AgencyDeviceGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold info about the Device</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dDevice.01" type="DeviceSerialNumber" id="dDevice.MedicalDeviceSerialNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dDevice.01</number>
+										<name>Medical Device Serial Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The unique manufacturer's serial number associated with a medical device.</definition>
+										<v2Number>D09_01</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dDevice.02" type="DeviceNameorID" id="dDevice.DeviceNameorID" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dDevice.02</number>
+										<name>Medical Device Name or ID</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The local number or configurable Name/ID of the medical device.</definition>
+										<v2Number>D09_02</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dDevice.03" id="dDevice.MedicalDeviceType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dDevice.03</number>
+										<name>Medical Device Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The type of medical device.</definition>
+										<usage>Optional</usage>
+										<comment>This is multiple choice to allow documentation of various multifunction device configurations.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="MedicalDeviceType">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dDevice.04" type="DeviceManufacturer" id="dDevice.DeviceManufacturer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dDevice.04</number>
+										<name>Medical Device Manufacturer</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The manufacturer of the medical device.</definition>
+										<v2Number>D09_03</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dDevice.05" type="ModelNumber" id="dDevice.ModelNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dDevice.05</number>
+										<name>Medical Device Model Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The specific manufacturer's model number associated with medical device.</definition>
+										<v2Number>D09_04</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dDevice.06" type="DateType" id="dDevice.DevicePurchaseDate" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dDevice.06</number>
+										<name>Medical Device Purchase Date</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date the device was purchased or placed in service by the EMS agency.</definition>
+										<v2Number>D09_05</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+					<xs:attribute name="UUID" type="UUID" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DeviceManufacturer">
+		<xs:annotation>
+			<xs:documentation>The manufacturer of the medical device.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeviceNameorID">
+		<xs:annotation>
+			<xs:documentation>The local number or configurable ID/Name of the medical device.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MedicalDeviceType">
+		<xs:annotation>
+			<xs:documentation>The type of medical device.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1603001">
+				<xs:annotation>
+					<xs:documentation>Capnography-Numeric</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603003">
+				<xs:annotation>
+					<xs:documentation>Capnography-Waveform</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603005">
+				<xs:annotation>
+					<xs:documentation>Chemistry Measurement-Blood or Serum</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603007">
+				<xs:annotation>
+					<xs:documentation>Chemistry Measurement-Glucometer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603009">
+				<xs:annotation>
+					<xs:documentation>Chemistry Measurement-Urine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603011">
+				<xs:annotation>
+					<xs:documentation>CPR-External Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603013">
+				<xs:annotation>
+					<xs:documentation>Defibrillator-Automated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603015">
+				<xs:annotation>
+					<xs:documentation>Defibrillator-Manual</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603017">
+				<xs:annotation>
+					<xs:documentation>ECG-12 Lead or Greater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603019">
+				<xs:annotation>
+					<xs:documentation>ECG-Less than 12 Lead (Cardiac Monitor)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603021">
+				<xs:annotation>
+					<xs:documentation>Medication Infusion Pump</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603023">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603025">
+				<xs:annotation>
+					<xs:documentation>Oximetry-Carbon Monoxide</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603027">
+				<xs:annotation>
+					<xs:documentation>Oximetry-Oxygen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603029">
+				<xs:annotation>
+					<xs:documentation>Pressure Monitors-Invasive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603031">
+				<xs:annotation>
+					<xs:documentation>Pressure Monitors-Non-Invasive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603033">
+				<xs:annotation>
+					<xs:documentation>Respirator (BLS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603035">
+				<xs:annotation>
+					<xs:documentation>Ventilator (ALS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603037">
+				<xs:annotation>
+					<xs:documentation>Ventilator Assistance-BiPAP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1603039">
+				<xs:annotation>
+					<xs:documentation>Ventilator Assistance-CPAP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ModelNumber">
+		<xs:annotation>
+			<xs:documentation>The specific manufacturer's model number associated with medical device.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

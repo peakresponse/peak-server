@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eCustomConfiguration" id="eCustomConfiguration.eCustomHeaderInformation">
+		<xs:sequence>
+			<xs:element name="eCustomConfiguration.CustomGroup" id="eCustomConfiguration.eCustomGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold custom information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eCustomConfiguration.01" id="eCustomConfiguration.eCustomDataElementTitle" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.01</number>
+										<name>Custom Data Element Title</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>This is the title of the custom data element created to collect information that is not defined formally in NEMSIS Version 3.</definition>
+										<usage>Mandatory</usage>
+										<comment>This is grouped with all data elements in this section and can have multiple instances.</comment>
+										<v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CustomTitle">
+										<xs:attribute name="nemsisElement" type="xs:string" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eCustomConfiguration.02" type="CustomDefinition" id="eCustomConfiguration.eCustomDefinition" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.02</number>
+										<name>Custom Definition</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The definition of the custom element and how it should be used.</definition>
+										<usage>Mandatory</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eCustomConfiguration.03" type="CustomDataType" id="eCustomConfiguration.eCustomDataType" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.03</number>
+										<name>Custom Data Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The data type of the custom element.</definition>
+										<usage>Mandatory</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eCustomConfiguration.04" type="YesNoValues" id="eCustomConfiguration.eCustomDataElementRecurrence" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.04</number>
+										<name>Custom Data Element Recurrence</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>Indication if the data element will accept multiple values.</definition>
+										<usage>Mandatory</usage>
+										<v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eCustomConfiguration.05" type="ElementUsage" id="eCustomConfiguration.eCustomDataElementUsage" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.05</number>
+										<name>Custom Data Element Usage</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Usage (Mandatory, Required, Recommended or Optional) for the Custom Data Element.</definition>
+										<usage>Mandatory</usage>
+										<comment>Mandatory = Must be completed and will not accept null values
+                    &lt;br/>Required = Must be completed but will accept null values
+                    &lt;br/>Recommended = Not required but if collected will accept null values
+                    &lt;br/>Optional = Not required but if collected, it cannot be a null value.</comment>
+										<v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eCustomConfiguration.06" id="eCustomConfiguration.eCustomDataElementPotentialValues" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.06</number>
+										<name>Custom Data Element Potential Values</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The values which are associated with the Custom Data Element. Values would be the choices provided to the user when they document the Custom Data Element.</definition>
+										<usage>Optional</usage>
+										<v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CustomValue">
+										<xs:attribute name="nemsisCode" type="xs:string" use="optional"/>
+										<xs:attribute name="customValueDescription" type="xs:string" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eCustomConfiguration.07" type="NV" id="eCustomConfiguration.eCustomAcceptableNV" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.07</number>
+										<name>Custom Data Element Potential NOT Values (NV)</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>NOT Values (NV) associated with the custom element.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eCustomConfiguration.08" type="PN" id="eCustomConfiguration.eCustomAcceptablePN" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.08</number>
+										<name>Custom Data Element Potential Pertinent Negative Values (PN)</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>Pertinent Negative Values (PN) associated with the custom element.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eCustomConfiguration.09" type="CorrelationID" id="eCustomConfiguration.CustomDataElementGroupingID" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomConfiguration.09</number>
+										<name>Custom Data Element Grouping ID</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>ID for custom element grouping.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CustomElementID" type="CorrelationID" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eCustomResults" id="eCustomConfiguration.eCustomResults">
+		<xs:sequence>
+			<xs:element name="eCustomResults.ResultsGroup" id="eCustomConfiguration.eResultsGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold custom results</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eCustomResults.01" nillable="true" id="eCustomConfiguration.eCustomDataElementResult" minOccurs="1" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomResults.01</number>
+										<name>Custom Data Element Result</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The actual value or values chosen (if values listed in eCustomConfiguration.06) or result (free text, Date/Time, or number) documented for the Custom Data Element.</definition>
+										<usage>Mandatory</usage>
+										<v3Changes>Added to allow customized data elements to be inserted and collected from within the NEMSIS Version 3 standard.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CustomResults">
+										<xs:attribute name="NV" type="NV" use="optional"/>
+										<xs:attribute name="PN" type="PN" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eCustomResults.02" type="CorrelationID" id="eCustomConfiguration.eCustomDataElementReference" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomResults.02</number>
+										<name>Custom Element ID Referenced</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>References the CustomElementID attribute for eCustomConfiguration.CustomGroup.</definition>
+										<usage>Mandatory</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eCustomResults.03" type="CorrelationID" id="eCustomConfiguration.eCustomCorrelationID" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eCustomResults.03</number>
+										<name>CorrelationID of PatientCareReport Element or Group</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>References the CorrelationID attribute of an element or group in the PatientCareReport section.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

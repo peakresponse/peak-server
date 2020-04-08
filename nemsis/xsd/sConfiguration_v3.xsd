@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="commonTypes_v3.xsd" />
+    <xs:complexType name="sConfiguration" id="sConfigurationInformation">
+            <xs:sequence>
+                <xs:element name="sConfiguration.01" id="sConfiguration.StateCertificationLicensureLevels" maxOccurs="unbounded" nillable="true">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <nemsisTacDoc>
+                                <number>sConfiguration.01</number>
+                                <name>State Certification/Licensure Levels</name>
+                                <national>Yes</national>
+                                <state>Yes</state>
+                                <definition>The levels of certification/licensure for EMS personnel recognized by the state.</definition>
+                                <v2Number>D04_01</v2Number>
+                                <usage>Required</usage>
+                                <comment>Used to populate EMS-related values in the following data elements (some data elements contain additional non-EMS-related values, such as "Student" or "Patient" that should be allowed unless specifically instructed otherwise by the state):
+                                    &lt;br/>dAgency.11 Level of Service
+                                    &lt;br/>dConfiguration.06 EMS Certification Levels Permitted to Perform Each Procedure
+                                    &lt;br/>dConfiguration.08 EMS Certification Levels Permitted to Administer Each Medication
+                                    &lt;br/>dVehicle.05 Crew State Certification/Licensure Levels
+                                    &lt;br/>dPersonnel.24 EMS Personnel's State EMS Certification Licensure Level
+                                    &lt;br/>dPersonnel.38 EMS Personnel's Practice Level
+                                    &lt;br/>ePayment.42 Specialty Care Transport Care Provider</comment>
+                            </nemsisTacDoc>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="StateCertificationLicensureLevels">
+                                <xs:attribute name="NV" use="optional">
+                                    <xs:simpleType>
+                                        <xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="sConfiguration.ProcedureGroup" id="sConfiguration.AgencyProcedureGroup" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Group tag to hold information about procedures permitted by the state for a certification/licensure level.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="sConfiguration.02" id="sConfiguration.EMSPersonnelLevelPermittedtoPerformtheProcedure" nillable="true">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sConfiguration.02</number>
+                                            <name>EMS Certification Levels Permitted to Perform Each Procedure</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The certification/licensure level that is permitted to perform the procedures listed in sConfiguration.03.</definition>
+                                            <v2Number>D04_05</v2Number>
+                                            <usage>Required</usage>
+                                            <performanceMeasuresGroup>
+                                                <performanceMeasure>Airway</performanceMeasure>
+                                                <performanceMeasure>Cardiac Arrest</performanceMeasure>
+                                                <performanceMeasure>Pediatric</performanceMeasure>
+                                                <performanceMeasure>Response</performanceMeasure>
+                                                <performanceMeasure>STEMI</performanceMeasure>
+                                                <performanceMeasure>Stroke</performanceMeasure>
+                                                <performanceMeasure>Trauma</performanceMeasure>
+                                            </performanceMeasuresGroup>
+                                            <comment>Used to populate dConfiguration.06 EMS Certification Levls Permitted to Perform Each Procedure.</comment>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="StateCertificationLicensureLevels">
+                                            <xs:attribute name="NV" use="optional">
+                                                <xs:simpleType>
+                                                    <xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="sConfiguration.03" nillable="true" id="sConfiguration.ProceduresPermittedbytheState" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sConfiguration.03</number>
+                                            <name>Procedures Permitted by the State</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>Procedures permitted by the state for the certification/licensure level listed in sConfiguration.02.</definition>
+                                            <comment>Used to populate dConfiguration.07 EMS Agency Procedures.</comment>
+                                            <usage>Required</usage>
+                                            <performanceMeasuresGroup>
+                                                <performanceMeasure>Airway</performanceMeasure>
+                                                <performanceMeasure>Cardiac Arrest</performanceMeasure>
+                                                <performanceMeasure>Pediatric</performanceMeasure>
+                                                <performanceMeasure>Response</performanceMeasure>
+                                                <performanceMeasure>STEMI</performanceMeasure>
+                                                <performanceMeasure>Stroke</performanceMeasure>
+                                                <performanceMeasure>Trauma</performanceMeasure>
+                                            </performanceMeasuresGroup>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="snomed">
+                                            <xs:attribute name="NV" use="optional">
+                                                <xs:simpleType>
+                                                    <xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="sConfiguration.MedicationGroup" id="sConfiguration.AgencyMedicationGroup" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Group tag to hold information about medications permitted by the state for a certification/licensure level.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="sConfiguration.04" id="sConfiguration.PersonnelLevelPermittedtoAdministertheMedication" nillable="true">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sConfiguration.04</number>
+                                            <name>EMS Certification Levels Permitted to Administer Each Medication</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>The certification/licensure level that is permitted to administer the medications listed in sConfiguration.05.</definition>
+                                            <v2Number>D04_07</v2Number>
+                                            <usage>Required</usage>
+                                            <performanceMeasuresGroup>
+                                                <performanceMeasure>Airway</performanceMeasure>
+                                                <performanceMeasure>Cardiac Arrest</performanceMeasure>
+                                                <performanceMeasure>Pediatric</performanceMeasure>
+                                                <performanceMeasure>Response</performanceMeasure>
+                                                <performanceMeasure>STEMI</performanceMeasure>
+                                                <performanceMeasure>Stroke</performanceMeasure>
+                                                <performanceMeasure>Trauma</performanceMeasure>
+                                            </performanceMeasuresGroup>
+                                            <comment>Used to populate dConfiguration.08 EMS Certification Levels Permitted to Administer Each Medication.</comment>
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="StateCertificationLicensureLevels">
+                                            <xs:attribute name="NV" use="optional">
+                                                <xs:simpleType>
+                                                    <xs:union memberTypes="NV.NotApplicable NV.NotRecorded" />
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="sConfiguration.05" nillable="true" id="sConfiguration.MedicationsPermittedbytheState" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        <nemsisTacDoc>
+                                            <number>sConfiguration.05</number>
+                                            <name>Medications Permitted by the State</name>
+                                            <national>Yes</national>
+                                            <state>Yes</state>
+                                            <definition>Medications permitted by the state for the certification/licensure level listed in sConfiguration.04.</definition>
+                                            <usage>Required</usage>
+                                            <performanceMeasuresGroup>
+                                                <performanceMeasure>Airway</performanceMeasure>
+                                                <performanceMeasure>Cardiac Arrest</performanceMeasure>
+                                                <performanceMeasure>Pediatric</performanceMeasure>
+                                                <performanceMeasure>Response</performanceMeasure>
+                                                <performanceMeasure>STEMI</performanceMeasure>
+                                                <performanceMeasure>Stroke</performanceMeasure>
+                                                <performanceMeasure>Trauma</performanceMeasure>
+                                            </performanceMeasuresGroup>
+                                            <comment>Used to populate dConfiguration.09 EMS Agency Medications 
+                                                &lt;br/>&lt;br/>List of medications based on RxNorm (RXCUI) code and SNOMED-CT codes for blood products..
+                                                List of medications based on RxNorm (RXCUI) code. 
+                                                &lt;br/>&lt;br/>Reference the NEMSIS Suggested Lists at: &lt;a href="https://nemsis.org/technical-resources/version-3/version-3-resources/">https://nemsis.org/technical-resources/version-3/version-3-resources/&lt;/a>
+                                                &lt;br/>&lt;br/>RxNorm 
+                                                &lt;br/>Website - &lt;a href="http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html">http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html&lt;/a>
+                                                &lt;br/>Product - RxNorm Full Monthly Release
+                                                &lt;br/>&lt;br/>SNOMED-CT 
+                                                &lt;br/>Website: &lt;a href="http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html">http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html&lt;/a>
+                                                &lt;br/>Product: Product - UMLS Metathesaurus.
+                                                
+                                                &lt;br/>&lt;br/>Allowable SNOMED-CT codes are:
+                                                &lt;br/>116762002 Administration of blood product
+                                                &lt;br/>116795008 Transfusion of cryoprecipitate
+                                                &lt;br/>116861002 Transfusion of fresh frozen plasma
+                                                &lt;br/>116865006 Administration of albumin
+                                                &lt;br/>180208003 Intravenous blood transfusion of platelets
+                                                &lt;br/>33389009 Transfusion of whole blood
+                                                &lt;br/>71493000 Transfusion of packed red blood cells</comment>													
+                                        </nemsisTacDoc>
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="Medication">
+                                            <xs:attribute name="NV" use="optional">
+                                                <xs:simpleType>
+                                                    <xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                            <xs:attribute name="CodeType" use="optional">
+                                                <xs:simpleType>
+                                                    <xs:union memberTypes="CodeType.RxNorm CodeType.SNOMED" />
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="sConfiguration.06" nillable="true" id="sConfiguration.ProtocolsPermittedbytheState" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <nemsisTacDoc>
+                                <number>sConfiguration.06</number>
+                                <name>Protocols Permitted by the State</name>
+                                <national>Yes</national>
+                                <state>Yes</state>
+                                <definition>Protocols permitted by the state.</definition>
+                                <usage>Required</usage>
+                                <performanceMeasuresGroup>
+                                    <performanceMeasure>Airway</performanceMeasure>
+                                    <performanceMeasure>Cardiac Arrest</performanceMeasure>
+                                    <performanceMeasure>Pediatric</performanceMeasure>
+                                    <performanceMeasure>Response</performanceMeasure>
+                                    <performanceMeasure>STEMI</performanceMeasure>
+                                    <performanceMeasure>Stroke</performanceMeasure>
+                                    <performanceMeasure>Trauma</performanceMeasure>
+                                </performanceMeasuresGroup>
+                                <comment>Used to populate dConfiguration.10 EMS Agency Protocols.</comment>
+                                <v3Changes>Added to better identify states with statewide protocols and define state EMS capability and care.</v3Changes>
+                            </nemsisTacDoc>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="ProtocolsUsed">
+                                <xs:attribute name="NV" use="optional">
+                                    <xs:simpleType>
+                                        <xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+    </xs:complexType>
+</xs:schema>

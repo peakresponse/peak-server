@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eLabs">
+		<xs:sequence>
+			<xs:element name="eLabs.LabGroup" id="eLabs.LabGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold Lab information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eLabs.01" type="DateTimeType" id="eLabs.DateTimeLaboratoryorImagingResult" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eLabs.01</number>
+										<name>Date/Time of Laboratory or Imaging Result</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The data and time for the specific laboratory result.</definition>
+										<usage>Optional</usage>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+										<v3Changes>Added to better document patient care.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eLabs.02" type="YesNoValues" id="eLabs.StudyResultPriortothisUnitsEMSCare" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eLabs.02</number>
+										<name>Study/Result Prior to this Unit's EMS Care</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>Indicates that the laboratory result occurred prior to this EMS units care.</definition>
+										<usage>Optional</usage>
+										<v3Changes>Added to better document EMS care.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eLabs.LabResultGroup" id="eLabs.LabResultGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold the type of laboratory value and its result.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eLabs.03" type="LaboratoryResultType" id="eLabs.LaboratoryResultType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eLabs.03</number>
+													<name>Laboratory Result Type</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The type of the laboratory value.</definition>
+													<usage>Optional</usage>
+													<v3Changes>Added to provide for the documentation of laboratory results obtained prior to or during and EMS patient encounter.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eLabs.04" type="LaboratoryResult" id="eLabs.LaboratoryResult" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eLabs.04</number>
+													<name>Laboratory Result</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The value or result of the laboratory test (Units may vary).</definition>
+													<usage>Optional</usage>
+													<v3Changes>Added to better document EMS care.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eLabs.LabImageGroup" id="eLabs.LabImageGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about imaging study or x-ray.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eLabs.05" type="ImagingStudyType" id="eLabs.ImagingStudyType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eLabs.05</number>
+													<name>Imaging Study Type</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The type of x-ray or imaging study.</definition>
+													<usage>Optional</usage>
+													<v3Changes>Added to better describe the EMS patient care.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eLabs.06" type="ImagingStudyResults" id="eLabs.ImagingStudyResults" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eLabs.06</number>
+													<name>Imaging Study Results</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The description or interpretation of the results of the imaging study.</definition>
+													<usage>Optional</usage>
+													<v3Changes>Added to better describe the EMS Patient Care</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eLabs.WaveformGraphicGroup" id="eLabs.WaveformGraphicGroup" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Tag to hold information about the imaging study to allow for the upload of the imaging results.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="eLabs.07" type="GraphicType" id="eLabs.WaveformGraphicType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>
+															<nemsisTacDoc>
+																<number>eLabs.07</number>
+																<name>Imaging Study File or Waveform Graphic Type</name>
+																<national>No</national>
+																<state>No</state>
+																<definition>The description of the image study file or waveform graphic stored in Imaging Study File or Waveform Graphic (eLabs.08).</definition>
+																<usage>Optional</usage>
+																<performanceMeasuresGroup>
+																	<performanceMeasure>Airway</performanceMeasure>
+																	<performanceMeasure>Cardiac Arrest</performanceMeasure>
+																	<performanceMeasure>STEMI</performanceMeasure>
+																</performanceMeasuresGroup>
+																<comment>The description is defined as the extension of the file type.  
+																	Examples of file name extensions include "doc", "jpeg", "tiff", etc.  For a list of additional extensions reference the following website(s):
+&lt;br/>
+&lt;table>&lt;tr>&lt;td width="10px">&lt;/td>&lt;td>
+&lt;table>
+&lt;tr>&lt;td>3D Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/3d_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Raster Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/raster_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Vector Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/vector_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>Video formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/video&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Audio formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/audio&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>Comparison of formats:&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Image: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Comparison_of_image_file_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Audio: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Audio_file_format&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Container: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Comparison_of_container_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>A general list of image formats: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Image_file_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Mime Types: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Internet_media_type&lt;/span>&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table>														
+																</comment>
+															</nemsisTacDoc>
+														</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="eLabs.08" type="WaveformGraphic" id="eLabs.WaveformGraphic" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>
+															<nemsisTacDoc>
+																<number>eLabs.08</number>
+																<name>Imaging Study File or Waveform Graphic</name>
+																<national>No</national>
+																<state>No</state>
+																<definition>The imaging study file.</definition>
+																<usage>Optional</usage>
+																<performanceMeasuresGroup>
+																	<performanceMeasure>Airway</performanceMeasure>
+																	<performanceMeasure>Cardiac Arrest</performanceMeasure>
+																	<performanceMeasure>STEMI</performanceMeasure>
+																</performanceMeasuresGroup>
+																<comment>Added to allow the imaging file to be uploaded and better document patient care.</comment>
+															</nemsisTacDoc>
+														</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LaboratoryResult">
+		<xs:annotation>
+			<xs:documentation>The value or result of the laboratory test (Units may vary).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LaboratoryResultType">
+		<xs:annotation>
+			<xs:documentation>The type of the laboratory value.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3403001">
+				<xs:annotation>
+					<xs:documentation>Alanine Transaminase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403003">
+				<xs:annotation>
+					<xs:documentation>Alcohol-Blood</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403005">
+				<xs:annotation>
+					<xs:documentation>Alcohol-Breath</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403007">
+				<xs:annotation>
+					<xs:documentation>Alkaline Phosphatase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403009">
+				<xs:annotation>
+					<xs:documentation>Amylase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403013">
+				<xs:annotation>
+					<xs:documentation>Aspartate Transaminase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403015">
+				<xs:annotation>
+					<xs:documentation>B-Type Natriuretic Peptide (BNP)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403017">
+				<xs:annotation>
+					<xs:documentation>Base Excess</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403019">
+				<xs:annotation>
+					<xs:documentation>Bilirubin-Direct</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403021">
+				<xs:annotation>
+					<xs:documentation>Bilirubin-Total</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403023">
+				<xs:annotation>
+					<xs:documentation>BUN</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403025">
+				<xs:annotation>
+					<xs:documentation>Calcium-Ionized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403027">
+				<xs:annotation>
+					<xs:documentation>Calcium-Serum</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403029">
+				<xs:annotation>
+					<xs:documentation>Carbon Dioxide-Partial Pressure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403033">
+				<xs:annotation>
+					<xs:documentation>Chloride</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403035">
+				<xs:annotation>
+					<xs:documentation>Creatine Kinase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403037">
+				<xs:annotation>
+					<xs:documentation>Creatine Kinase-MB</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403039">
+				<xs:annotation>
+					<xs:documentation>Creatinine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403041">
+				<xs:annotation>
+					<xs:documentation>Gamma Glutamyl Transpeptidase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403043">
+				<xs:annotation>
+					<xs:documentation>Glucose</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403045">
+				<xs:annotation>
+					<xs:documentation>Hematocrit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403047">
+				<xs:annotation>
+					<xs:documentation>Hemoglobin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403049">
+				<xs:annotation>
+					<xs:documentation>Human Chorionic Gonadotropin-Serum</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403051">
+				<xs:annotation>
+					<xs:documentation>Human Chorionic Gonadotropin-Urine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403053">
+				<xs:annotation>
+					<xs:documentation>International Normalized Ratio (INR)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403055">
+				<xs:annotation>
+					<xs:documentation>Lactate Dehydrogenase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403057">
+				<xs:annotation>
+					<xs:documentation>Lactate-Arterial</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403059">
+				<xs:annotation>
+					<xs:documentation>Lactate-Venous</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403061">
+				<xs:annotation>
+					<xs:documentation>Lipase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403063">
+				<xs:annotation>
+					<xs:documentation>Magnesium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403065">
+				<xs:annotation>
+					<xs:documentation>Oxygen-Partial Pressure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403067">
+				<xs:annotation>
+					<xs:documentation>Partial Thromboplastin Time</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403071">
+				<xs:annotation>
+					<xs:documentation>pH-ABG</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403073">
+				<xs:annotation>
+					<xs:documentation>pH-Venous</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403075">
+				<xs:annotation>
+					<xs:documentation>Platelets</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403077">
+				<xs:annotation>
+					<xs:documentation>Potassium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403079">
+				<xs:annotation>
+					<xs:documentation>Prothrombin Time</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403081">
+				<xs:annotation>
+					<xs:documentation>Red Blood Cells</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403083">
+				<xs:annotation>
+					<xs:documentation>Sodium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403085">
+				<xs:annotation>
+					<xs:documentation>Troponin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403087">
+				<xs:annotation>
+					<xs:documentation>White Blood Cells</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403089">
+				<xs:annotation>
+					<xs:documentation>Ammonia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403091">
+				<xs:annotation>
+					<xs:documentation>Bicarbonate (HCO3)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403093">
+				<xs:annotation>
+					<xs:documentation>Carboxyhemoglobin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403095">
+				<xs:annotation>
+					<xs:documentation>CO2, Total (Bicarbonate)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403097">
+				<xs:annotation>
+					<xs:documentation>CRP (C-Reactive Protein)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403099">
+				<xs:annotation>
+					<xs:documentation>Dilantin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403101">
+				<xs:annotation>
+					<xs:documentation>Leukocytes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403103">
+				<xs:annotation>
+					<xs:documentation>Nitrates</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403105">
+				<xs:annotation>
+					<xs:documentation>Phenobarbital</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403107">
+				<xs:annotation>
+					<xs:documentation>Protein</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403109">
+				<xs:annotation>
+					<xs:documentation>Salicylate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403111">
+				<xs:annotation>
+					<xs:documentation>Specific Gravity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403113">
+				<xs:annotation>
+					<xs:documentation>Tylenol</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403115">
+				<xs:annotation>
+					<xs:documentation>ACT Celite (ACTc)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403117">
+				<xs:annotation>
+					<xs:documentation>ACT Kaolin (ACTk)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403119">
+				<xs:annotation>
+					<xs:documentation>Bands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403121">
+				<xs:annotation>
+					<xs:documentation>Basophils</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403123">
+				<xs:annotation>
+					<xs:documentation>Creatine Phosphokinase (CK)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403125">
+				<xs:annotation>
+					<xs:documentation>Eosinophils</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403127">
+				<xs:annotation>
+					<xs:documentation>Erythrocyte Count</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403129">
+				<xs:annotation>
+					<xs:documentation>Erythrocyte Morphology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403131">
+				<xs:annotation>
+					<xs:documentation>Erythrocyte Sedimentation Rate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403133">
+				<xs:annotation>
+					<xs:documentation>High-Sensitivity C-reactive Protein (hs-CRP)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403135">
+				<xs:annotation>
+					<xs:documentation>Lymphocytes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403137">
+				<xs:annotation>
+					<xs:documentation>Mean Corpuscular Hemoglobin (MCH)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403139">
+				<xs:annotation>
+					<xs:documentation>Mean Corpuscular Hemoglobin Concentration (MCHC)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403141">
+				<xs:annotation>
+					<xs:documentation>Mean Corpuscular Volume (MCV)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403143">
+				<xs:annotation>
+					<xs:documentation>Monocytes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403145">
+				<xs:annotation>
+					<xs:documentation>Myoglobin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403147">
+				<xs:annotation>
+					<xs:documentation>Neutrophils</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403149">
+				<xs:annotation>
+					<xs:documentation>Oxygen Saturation (SaO2)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403151">
+				<xs:annotation>
+					<xs:documentation>Oxygen Volume/Content (SVO2)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403153">
+				<xs:annotation>
+					<xs:documentation>Phosphorus (PO4)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403155">
+				<xs:annotation>
+					<xs:documentation>Prothromblin test time (PT/INR)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403157">
+				<xs:annotation>
+					<xs:documentation>Red Cell Distribution Width (RDW)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403159">
+				<xs:annotation>
+					<xs:documentation>Reticulocyte Count</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3403161">
+				<xs:annotation>
+					<xs:documentation>Troporin T (cTnT)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImagingStudyResults">
+		<xs:annotation>
+			<xs:documentation>The results of the Imaging Study</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="5000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImagingStudyType">
+		<xs:annotation>
+			<xs:documentation>The type of x-ray or imaging study</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3405001">
+				<xs:annotation>
+					<xs:documentation>CAT Scan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3405003">
+				<xs:annotation>
+					<xs:documentation>Magnetic Resonance Imaging (MRI)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3405005">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3405007">
+				<xs:annotation>
+					<xs:documentation>PET Scan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3405009">
+				<xs:annotation>
+					<xs:documentation>Ultrasound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3405011">
+				<xs:annotation>
+					<xs:documentation>X-ray</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3405013">
+				<xs:annotation>
+					<xs:documentation>Angiography</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
