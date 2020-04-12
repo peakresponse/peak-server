@@ -17,10 +17,6 @@ services:
       - .:/opt/node/app
       - /opt/node/app/node_modules
     environment:
-      - SMTP_HOST=mailcatcher
-      - SMTP_PORT=1025
-      - SMTP_USERNAME=none
-      - SMTP_PASSWORD=none
       - PORT=3000
       - DATABASE_URL=postgres://postgres@db/app
       - DATABASE_TEST_URL=postgres://postgres@db/app_test

@@ -1,0 +1,15 @@
+<%- contentFor('title') %>Home
+<%- contentFor('head') %>
+<base href="/">
+<script type="text/javascript">
+window.env = {};
+window.env.ASSET_HOST = '<%= process.env.ASSET_HOST %>';
+window.env.GOOGLE_MAPS_API_KEY = '<%= process.env.GOOGLE_MAPS_API_KEY %>';
+</script>
+<%- contentFor('body') %>
+<app-dashboard>Loading...</app-dashboard>
+<% for (let entry of ['dashboard']) { %>
+  <% for (let chunk of webpackStats.chunks[entry]) { %>
+    <script type="application/javascript" src="<%= chunk.publicPath %>"></script>
+  <% } %>
+<% } %>
