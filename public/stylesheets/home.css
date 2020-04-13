@@ -192,11 +192,11 @@ form .btn-primary {
 .navbar.top {
   transition-duration: .2s;
   background-color: transparent;
-  height: 140px;
 }
 
 .navbar.top .container {
   align-items: flex-start;
+  padding-top: 2rem;
 }
 
 .navbar.top .navbar-brand img {
@@ -209,21 +209,36 @@ form .btn-primary {
   flex-grow: 0
 }
 
+.navbar-nav {
+  align-items: center;
+}
+
 .navbar-nav .nav-link {
   color: #F5F7F9;
+  border-bottom: 4px solid transparent;
 }
 
 .navbar-nav .nav-link.active {
   border-bottom: 4px solid #46A5DB;
 }
 
-.navbar-expand-md .navbar-nav .nav-link {
+.navbar-nav .nav-link {
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 0;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
   margin-bottom: 0.5rem;
+}
+
+.navbar-expand-md .navbar-nav .nav-link {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.navbar-toggler {
+  border-color: #F5F7F9;
+  color: #F5F7F9;
 }
 
 section {
@@ -335,4 +350,11 @@ img[src*="home5-"] {
   width: 100%;
   max-width: 215px;
   height: auto;
+}
+
+@media(max-width: 992px) {
+  img[src*="home5-"] {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

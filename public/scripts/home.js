@@ -11,6 +11,7 @@ $(document).ready(function() {
   onResize();
 
   const $nav = $('nav.navbar');
+  const $navMenu = $('#navbarCollapse');
   const $navLinks = $('#navbarCollapse .nav-link');
   const $navLinksRev = $('#navbarCollapse .nav-link').get().reverse().map(nl => $(nl));
   const onScroll = function(event) {
@@ -33,6 +34,7 @@ $(document).ready(function() {
 
   $('a[href^="#"]').on('click', function(event) {
     event.preventDefault();
+    $navMenu.removeClass('show');
     const hash = $(event.target).closest('a').attr('href');
     window.scrollTo({
       top: $(hash).offset().top,

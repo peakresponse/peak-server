@@ -45,6 +45,7 @@ app.use('/libraries/cleave', express.static(path.join(__dirname, 'node_modules/c
 app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 app.use('/libraries/qrcode', express.static(path.join(__dirname, 'node_modules/qrcode/build')));
+app.use('/libraries/smoothscroll', express.static(path.join(__dirname, 'node_modules/smoothscroll-polyfill/dist')));
 
 // set up session handler with an app reference so can be used by websocket server
 app.sessionParser = cookieSession({
