@@ -11,7 +11,7 @@ new technologies for emergency responders.
 
 ## Getting Started
 
-A demo deployment for contest evaluation is live at: https://natriage.org/
+A demo deployment for contest evaluation is live at: https://natriage.org/dashboard
 
 1. Install Docker Desktop: https://www.docker.com/products/docker-desktop
 
