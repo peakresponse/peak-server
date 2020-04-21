@@ -4,10 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
   {
+    path: 'dashboard',
+    redirectTo: '/dashboard/sorted',
+    pathMatch: 'full'
+  },
+  {
     path: '',
     redirectTo: '/dashboard/sorted',
     pathMatch: 'full'
-  }
+  },
 ];
 
 @NgModule({
