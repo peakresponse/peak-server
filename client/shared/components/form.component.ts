@@ -31,18 +31,25 @@ export class FormComponent {
 
   ngOnInit() {
     if (this.id) {
-      this.loading = true;
-      this.api[this.type].get(this.id)
-        .pipe(catchError((response: HttpErrorResponse) => {
-          this.error = response.error;
-          this.loading = false;
-          return empty();
-        }))
-        .subscribe((response: HttpResponse<any>) => {
-          this.loading = false;
-          this.record = response.body;
-        });
+      this.refresh();
     }
+  }
+
+  refresh(callback?: any) {
+    this.loading = true;
+    this.api[this.type].get(this.id)
+      .pipe(catchError((response: HttpErrorResponse) => {
+        this.error = response.error;
+        this.loading = false;
+        return empty();
+      }))
+      .subscribe((response: HttpResponse<any>) => {
+        this.loading = false;
+        this.record = response.body;
+        if (callback) {
+          callback();
+        }
+      });
   }
 
   onSubmit() {

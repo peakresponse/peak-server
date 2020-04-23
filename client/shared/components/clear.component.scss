@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+a {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #BDBDBD;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #4F4F4F;
+}

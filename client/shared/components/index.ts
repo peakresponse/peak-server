@@ -1,5 +1,6 @@
 export * from './array.component';
 export * from './autoload.directive';
+export * from './clear.component';
 export * from './error.component';
 export * from './form.component';
 export * from './list.component';

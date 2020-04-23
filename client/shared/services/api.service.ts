@@ -88,6 +88,12 @@ export class ApiService {
     },
   };
 
+  observations = {
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/observations/`, data);
+    },
+  };
+
   patients = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/patients/', params);
