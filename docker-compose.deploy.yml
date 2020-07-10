@@ -4,7 +4,7 @@ services:
     image: postgis/postgis:11-3.0-alpine
   server:
     build: .
-    image: natriage/nat-server
+    image: peakresponse/peak-server
     command: bash -l -c "npm start"
     env_file:
       - .env

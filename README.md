@@ -1,17 +1,14 @@
-# NaT
-## SALT(Na) Triage Intelligent Assistant
+# Peak Response Server
 
-This is the server repository for the NaT intelligent assistant. For the iOS
+This is the server repository for Peak Response. For the iOS
 mobile app repository, visit:
 
-https://github.com/natriage/nat-ios
+https://github.com/peakresponse/peak-ios
 
-NaT was developed as part of the 2019 Tech to Protect Challenge to create
-new technologies for emergency responders.
+Peak Response (formerly NaTriage) was developed as part of the 2019 Tech to
+Protect Challenge to create new technologies for emergency responders.
 
 ## Getting Started
-
-A demo deployment for contest evaluation is live at: https://natriage.org/dashboard
 
 1. Install Docker Desktop: https://www.docker.com/products/docker-desktop
 
@@ -22,8 +19,8 @@ A demo deployment for contest evaluation is live at: https://natriage.org/dashbo
    into the directory.
 
    ```
-   $ git clone https://github.com/natriage/nat-server.git
-   $ cd nat-server
+   $ git clone https://github.com/peakresponse/peak-server.git
+   $ cd peak-server
    ```
 
 3. Open a command-line shell, change into your repo directory, and execute this command:
@@ -41,7 +38,7 @@ A demo deployment for contest evaluation is live at: https://natriage.org/dashbo
 5. While still in the server container, you can create an initial bootstrap user:
 
    ```
-   # node bin/create-admin.js Firstname Lastname email@address.com password
+   # bin/create-admin Firstname Lastname email@address.com password
    ```
 
 6. To populate some sample patient data from the contest 010 sample worksheet:
@@ -75,8 +72,8 @@ A demo deployment for contest evaluation is live at: https://natriage.org/dashbo
 
     ```
     $ docker-compose stop
-    Stopping nat-server_db_1          ... done
-    Stopping nat-server_server_1      ... done
+    Stopping peak-server_db_1          ... done
+    Stopping peak-server_server_1      ... done
     ```
 
 ## Development
@@ -242,9 +239,8 @@ A demo deployment for contest evaluation is live at: https://natriage.org/dashbo
 
 ## License
 
-NaT: SALT(Na) Triage Intelligent Assistant
-
-Copyright (C) 2019 Francis Li
+Peak Response
+Copyright (C) 2019-2020 Peak Response Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as

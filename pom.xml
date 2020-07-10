@@ -1,7 +1,7 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.natriage</groupId>
-  <artifactId>NaT</artifactId>
+  <groupId>net.peakresponse</groupId>
+  <artifactId>PeakResponse</artifactId>
   <version>1</version>
   <dependencies>
     <!-- https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE -->

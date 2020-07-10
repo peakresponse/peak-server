@@ -3,10 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>NaT - SALT (Na) Triage Intelligent Assistant</title>
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,900&display=swap" rel="stylesheet">
+    <meta name="description" content="Peak Response is an MCI management system for EMS professionals.">
+    <meta name="author" content="Peak Response">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>Peak Response</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/libraries/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="/libraries/fontawesome/css/all.css" />
     <link rel="stylesheet" href="/stylesheets/home.css" />
@@ -20,7 +24,7 @@
       <nav class="navbar navbar-expand-md fixed-top top">
         <div class="container">
           <a class="navbar-brand" href="#home"><img src="/images/logo.png" alt="NaT" /></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="ncavbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -47,8 +51,8 @@
         <div class="container">
           <div id="home__valprop">
             <h1>Your calling is saving lives, we want to help you do it.</h1>
-            <p>NaT aims to improve the accuracy and efficiency of triage management during mass casualty incidents.</p>
-            <a class="btn btn-primary" href="#solution"><span id="home__cta">Our Solution <i class="fas fa-chevron-right"></span></i></a>
+            <p>Peak Response aims to improve the accuracy and efficiency of triage management during mass casualty incidents.</p>
+            <a class="btn btn-outline-primary" href="#solution"><span id="home__cta"><i class="fas fa-chevron-right invisible"></i>Our Solution<i class="fas fa-chevron-right"></i></span></a>
           </div>
         </div>
         <div id="home__credit">Photo credit: Ilka Cole | VIRIN: 170928-F-GY014-009.JPG</div>
@@ -56,102 +60,141 @@
       <section id="solution">
         <div class="container">
           <h2>Our Solution</h2>
+          <h3>Peak Response is a MCI management system for EMS professionals.</h3>
           <div class="row">
-            <div class="col-lg-5">
-              <h3>NaT is a MCI management system for EMS professionals.</h3>
-              <p>NaT is able to provide EMS professionals with simple patient data capture, efficient patient sorting, and standardized data transfer for continued care.</p>
-              <p>The mobile app allows for hands-free data capture and in-field updates while the web-based dashboard is dedicated to giving incident commanders a bird's-eye view of the entire scene.</p>
+            <div class="col-lg-8 order-lg-2">
+              <img src="/images/home1.jpg" alt="Peak Response mobile app and web dashboard">
             </div>
-            <div class="col-lg-6 offset-lg-1">
-              <img src="/images/home1.jpg" alt="NaT mobile app and web dashboard">
+            <div class="col-lg-4 order-lg-1">
+              <p>Peak Response is an open source software system that provides EMS professionals with simple documentation, powerful sorting, and streamlined analysis capabilities that fit into the workflow of complex MCIs.</p>
+              <p>As first responders collect patient data across a scene, each new piece of information is automatically uploaded to provide a live bird’s-eye view for the incident commander and others managing the scene strategy. Peak Response also allows for easy data transfer to recieiving hospitals, creating a foundation for improved continuation of care.</p>
             </div>
           </div>
-          <h3>Hands-Free Data Capture</h3>
-          <div class="row">
-            <div class="col-lg-4">
-              <img src="/images/home2-1.jpg" alt="NaT mobile app QR code scanner">
-              <p class="caption">New patient entered through quick scan of QR code on tag</p>
-            </div>
-            <div class="col-lg-4">
-              <img src="/images/home2-2.png" alt="NaT mobile app entry form">
-              <p class="caption">Simple form pops-up based on tag scan</>
-            </div>
-            <div class="col-lg-4">
-              <img src="/images/home2-3.png" alt="NaT mobile app voice recorder">
-              <p class="caption">Observations can be recorded and form will fill using speech-to-text</p>
+        </div>
+        <div class="solution__screenshot bg-alternate">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 order-lg-2">
+                <img src="/images/home2.jpg" alt="Peak Response scene overview">
+              </div>
+              <div class="col-lg-6 order-lg-1">
+                <h3>Scene Overview</h3>
+                <p>First responders approaching or just arriving on scene are able to access an overview that helps them understand what to expect.</p>
+              </div>
             </div>
           </div>
-          <h3>Efficient Patient Sorting</h3>
-          <div class="row">
-            <div class="col-lg-6">
-              <img src="/images/home3-1.jpg" alt="NaT web dashboard sort view">
-              <p class="caption">Sort patients based on triage tag and get notified when new patients are added or when the status of an existing patient is updated</p>
-            </div>
-            <div class="col-lg-6">
-              <img src="/images/home3-2.jpg" alt="NaT web dashboard map view">
-              <p class="caption">View patients on map to identify highly impacted areas and direct resources accordingly</p>
+        </div>
+        <div class="solution__screenshot">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6">
+                <img src="/images/home3.jpg" alt="Peak Response mobile app hands-free interface">
+              </div>
+              <div class="col-lg-6">
+                <h3>Hands-Free Documentation</h3>
+                <p>First responders are able to document patient information and triage status using our hands-free voice-to-text capability.  After observations are recorded verbally, Peak Response pulls information from the audio and auto fills the patient form.</p>
+              </div>
             </div>
           </div>
-          <h3>Simplified Patient Data Management</h3>
-          <div class="row">
-            <div class="col-lg-4 offset-lg-2">
-              <img src="/images/home4-1.jpg" alt="NaT mobile app patient view">
-              <p class="caption">View patient data in user-friendly form</p>
+        </div>
+        <div class="solution__screenshot bg-alternate">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 order-lg-2">
+                <img src="/images/home4.jpg" alt="Peak Response patient sorting options">
+              </div>
+              <div class="col-lg-6 order-lg-1">
+                <h3>Powerful Patient Sorting</h3>
+                <p>Patients in the system can be easily sorted based on a variety of criteria for more effective scene management and patient prioritization. Patients and first responders can also be viewed on a map to identify highly impacted areas and direct resources accordingly.</p>
+              </div>
             </div>
-            <div class="col-lg-4">
-              <img src="/images/home4-2.jpg" alt="NaT mobile app transport form">
-              <p class="caption">Archive transported patients and send their data for continued care</p>
+          </div>
+        </div>
+        <div class="solution__screenshot">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6">
+                <img src="/images/home5.jpg" alt="Peak Response mobile app user friendly UI">
+              </div>
+              <div class="col-lg-6">
+                <h3>Simple to Update</h3>
+                <p>Patient documentation can be continuously updated as a scene progresses.  Once a patient is ready to leave the scene, they will be marked as transported and their information can be transported to the receiving hospital.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      <section id="story">
+      <section id="story" class="bg-alternate">
         <div class="container">
           <h2>Our Story</h2>
           <h3>Dedicated to providing life saving efficiency.</h3>
-          <p>NaT was initially conceptualized in 2019 as part of the Tech to Protect Challenge, sponsored by NIST PSCR, aimed at fostering technological innovation for emergency responders.  The solution came out of a focus on a common pain point: time spent documenting injuries and incidents at the scene of mass casualty incidents.  These incidents are chaotic, high-pressure environments where time spent documenting can mean the difference between life and death.  The quick tag scan and speech-to-text form filling were the first features, but the solution quickly expanded to include a variety of powerful sorting and data export options to improve efficiency, both at the point of contact with the patient and also for the incident commander monitoring the entire scene.</p>
+          <p>Peak Response (originally NaTriage) was initially conceptualized in 2019 as part of the Tech to Protect Challenge, sponsored by NIST PSCR, aimed at fostering technological innovation for emergency responders. The solution came out of a focus on a common pain point: time spent documenting injuries and incidents at the scene of mass casualty incidents. These incidents are chaotic, high-pressure environments where time spent documenting can mean the difference between life and death. The quick tag scan and speech-to-text form filling were the first features, but the solution quickly expanded to include a variety of powerful sorting and data export options to improve efficiency, both at the point of contact with the patient and also for the incident commander monitoring the entire scene.</p>
+          <p>We are working to release an improved and expanded version of the software in the fall of 2020 that will include improved feature set and designs.</p>
           <div id="story__bios" class="row">
             <div class="col-lg-3">
-              <img src="/images/home5-1.jpg" alt="Portrait of Francis Li">
+              <img src="/images/bio-francis.jpg" alt="Portrait of Francis Li">
             </div>
             <div class="col-lg-9">
-              <h4>Francis Li<span> | Software Architect</span></h4>
-              <p>Francis Li is the original creator of NaT and a full-stack software architect and interaction designer based in San Francisco. As a member of the volunteer <a href="https://codeforsanfrancisco.org">Code for San Francisco</a> brigade and on the Board of Directors for <a href="https://devmission.org">Dev/Mission</a> he advocates for community-based civic technology projects. <a href="https://www.linkedin.com/in/francisli/">LinkedIn Profile</a></p>
+              <h4>Francis Li<span>&nbsp;&nbsp;|&nbsp;&nbsp;Co-Founder/CTO</span>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/francisli/"><i class="fab fa-linkedin"></i></a></h4>
+              <p>Francis Li is the original creator of Peak Response. He is a full-stack software architect and interaction designer based in San Francisco. He is also a strong advocate for for community-based civic technology projects as a member of the volunteer <a href="https://codeforsanfrancisco.org">Code for San Francisco</a> brigade and as part of the Board of Directors for <a href="https://devmission.org">Dev/Mission</a>.</p>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-3">
-              <img src="/images/home5-2.jpg" alt="Portrait of Britt Jensen">
+              <img src="/images/bio-britt.jpg" alt="Portrait of Britt Jensen">
             </div>
             <div class="col-lg-9">
-              <h4>Britt Jensen<span> | Designer & Researcher</span></h4>
-              <p>Britt Jensen joined the team in early 2020 to bring human-centred design and research to the product definition process.  She has years of experience working in design consulting and loves improving the user experience of products that will be used in high-stress, high stakes situations. <a href="https://www.linkedin.com/in/britt-jensen-10957164/">LinkedIn Profile</a></p>
+              <h4>Britt Jensen<span>&nbsp;&nbsp;|&nbsp;&nbsp;Co-Founder/CEO</span>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/britt-jensen-10957164/"><i class="fab fa-linkedin"></i></a></h4>
+              <p>Britt Jensen joined Francis shortly after the original prototype was created.  She is a user experience, designer, research, and strategist who is passionate about bringing user-centered products to industries that aren’t traditionally design-focued.  She believes everyone, no matter how highly trained, is able to do their work more effectively with well-designed products.</p>
             </div>
           </div>
-          <h3>Free. Open Source. Standards Based.</h3>
-          <p>NaT is being developed in the open as free software licensed under the GNU General Public License. Browse our <a href="https://github.com/natriage/">source code repositories</a> on GitHub.</p>
+        </div>
+        <div class="solution__screenshot bg-white">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 order-lg-2">
+                <img src="/images/home6.png" alt="GPL and AGPL logos">
+              </div>
+              <div class="col-lg-6 order-lg-1">
+                <h3>Free. Open Source. Standards Based.</h3>
+                <p>Peak Response is being developed in the open as free software licensed under the GNU General Public License. Browse our <a href="https://github.com/peakresponse/">source code repositories</a> on GitHub.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-      <section id="contact">
+      <section id="contact" class="bg-alternate">
         <div class="container">
           <h2>Contact us</h2>
-          <h3>We would love to hear from you!</h3>
-          <p>We’re in the early stages of developing this product and are always looking for feedback from users.  If you’re interested in testing out the product or are just looking for more info, we would love to connect with you.</p>
+          <h3>We would love to hear from you.</h3>
+          <p>We’re in the early stages of developing this product and are always looking for feedback from users.  If you’re interested in testing out the product or are just looking for more info, please leave your information and we’ll connect with you.</p>
           <form class="row" method="post" action="/contact-us">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-group col-md-6 col-lg-5 offset-lg-1">
-              <input required type="text" class="form-control" name="firstName" placeholder="First Name" />
+              <div class="form-field">
+                <label for="firstName">First Name</label>
+                <input required type="text" class="form-control" id="firstName" name="firstName" />
+              </div>
             </div>
             <div class="form-group col-md-6 col-lg-5">
-              <input required type="text" class="form-control" name="lastName" placeholder="Last Name" />
+              <div class="form-field">
+                <label for="lastName">Last Name</label>
+                <input required type="text" class="form-control" id="lastName" name="lastName"/>
+              </div>
             </div>
             <div class="form-group col-lg-10 offset-lg-1">
-              <input required type="email" class="form-control" name="email" placeholder="Email" />
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input required type="email" class="form-control" id="email" name="email" />
+              </div>
             </div>
             <div class="form-group col-lg-10 offset-lg-1">
-              <textarea required class="form-control" name="message" placeholder="Message" rows="4"></textarea>
+              <div class="form-field">
+                <label for="message">Message</label>
+                <textarea required class="form-control" id="message" name="message" rows="4"></textarea>
+              </div>
             </div>
-            <div class="form-group col-lg-10 offset-lg-1">
+            <div class="form-group col-lg-7 offset-lg-1">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="feedback" name="feedback" value="yes">
                 <label for="feedback" class="form-check-label">&nbsp;I'm interested in providing feedback on the product.</label>
@@ -161,12 +204,12 @@
                 <label for="pilot" class="form-check-label">&nbsp;I'm interested in being part of a pilot program.</label>
               </div>
             </div>
-            <div class="form-group col-lg-10 offset-lg-1">
-              <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group col-lg-3">
+              <button type="submit" class="btn btn-block btn-outline-primary">Submit</button>
             </div>
           </form>
         </div>
-      </section><!-- /.container -->
+      </section>
       <!-- FOOTER -->
       <footer>
         <div class="container">
@@ -180,12 +223,31 @@
               </ul>
             </div>
             <div class="text-md-left col-md-4 order-md-1">
-              <img src="/images/logo.png" />
-              <div>Copyright &copy; 2020 NaT. All rights reserved.</div>
+              <img src="/images/logo.png" alt="Peak Response Logo" />
+            </div>
+            <div id="footer__copyright" class="text-md-right col-md-12 order-md-3">
+              Copyright &copy; 2020 Peak Response Inc. All rights reserved.
             </div>
           </div>
         </div>
       </footer>
     </main>
+    <div class="modal fade" id="redirect" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img src="/images/logo-dark.png" alt="Peak Response Logo" />
+            <p>NaTriage is now Peak Response.<br />Please make note of our new web address:<br/>https://peakresponse.net</p>
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Got it!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      if (window.location.hash == '#redirect') {
+        window.location.replace("#home");
+        $('#redirect').modal('show');
+      };
+    </script>
   </body>
 </html>

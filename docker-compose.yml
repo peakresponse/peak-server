@@ -11,7 +11,7 @@ services:
       - 1025:1025
   server:
     build: .
-    image: natriage/nat-server
+    image: peakresponse/peak-server
     command: bash -l -c "bin/init; nf start -j Procfile.dev"
     volumes:
       - .:/opt/node/app
