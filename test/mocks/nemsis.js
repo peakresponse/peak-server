@@ -104,9 +104,6 @@ const mockCaliforniaDownloads = function() {
       .get(`/stash/projects/NES/repos/california/raw/${filePath}`)
       .replyWithFile(200, path.resolve(__dirname, 'nemsis/california', filePath));
   }
-  nock('https://emsa.ca.gov:443', {"encodedQueryParams":true})
-    .get('/wp-content/uploads/sites/71/2020/01/201_CEMSIS_Provider_Agency_List-01.03.2020.xlsx')
-    .replyWithFile(200, path.resolve(__dirname, 'nemsis/california/201_CEMSIS_Provider_Agency_List-01.03.2020.xlsx'));
 }
 
 module.exports = {

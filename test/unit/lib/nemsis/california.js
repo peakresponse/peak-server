@@ -24,8 +24,8 @@ describe('lib', function() {
             const dataSet = await nemsis.parseStateDataSet(path.resolve(tmpDir.name, filePath));
             const agencies = await nemsisStates.california.appendAgenciesFromSpreadsheet(dataSet);
             assert(agencies.sAgencyGroup);
-            assert.equal(agencies.sAgencyGroup.length, 602);
-            assert.equal(dataSet.json.StateDataSet.sAgency.sAgencyGroup.length, 1399);
+            assert.equal(agencies.sAgencyGroup.length, 618);
+            assert.equal(dataSet.json.StateDataSet.sAgency.sAgencyGroup.length, 1415);
             break;
           }
         }
