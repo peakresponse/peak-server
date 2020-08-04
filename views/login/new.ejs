@@ -1,29 +1,48 @@
-<%- contentFor('title') %>Login
-<%- contentFor('bodyClass') %>signed-out
+<%- contentFor('title') %><%= __('login.new.title') %>
+<%- contentFor('bodyClass') %>unauthenticated
 <%- contentFor('body') %>
 <div class="container">
   <div class="row justify-content-center" role="main">
-    <div class="col col-sm-10 col-md-8 col-lg-6">
-      <img class="logo" src="/images/logo352.png">
-      <div class="card">
-        <h1>Login</h1>
-        <form method="post" action="/login">
-          <input type="hidden" name="redirectURI" value="<%= redirectURI %>" />
-          <div class="form-group">
-            <input type="text" class="form-control" name="email" placeholder="Email"/>
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder="Password"/>
-            <div class="form-text text-right"><a href="/passwords/forgot">Forgot password?</a></div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit">Submit</button>
-          </div>
-          <div class="text-center">
-            <a href="/register?redirectURI=<%= encodeURIComponent(redirectURI || '/') %>">Create an Account</a>
-          </div>
-        </form>
+    <div class="col">
+      <div class="logo my-5 pt-4">
+        <img class="img-fluid" src="/images/logo-dark.png" alt="<%= __('peakresponse.logo') %>">
       </div>
+      <form method="post" action="/login">
+        <input type="hidden" name="redirectURI" value="<%= redirectURI %>" />
+        <div class="form-group">
+          <div class="form-field<%= hasError('email') ? ' is-invalid' : '' %>">
+            <label for="email"><%= __('models.user.email') %></label>
+            <input type="text" class="form-control" id="email" name="email" value="<%= locals.email ? locals.email : '' %>"/>
+            <%- renderErrorMessages('email', ['d-none', 'd-md-block']) %>
+          </div>
+          <%- renderErrorMessages('email', ['d-md-none']) %>
+        </div>
+        <div class="form-group mb-4">
+          <div class="form-field<%= hasError('password') ? ' is-invalid' : '' %>">
+            <label for="password"><%= __('models.user.password') %></label>
+            <input type="password" class="form-control" id="password" name="password" />
+            <%- renderErrorMessages('password', ['d-none', 'd-md-block']) %>
+          </div>
+          <%- renderErrorMessages('password', ['d-md-none']) %>
+          <div class="d-md-none text-right mt-2">          
+            <a class="text-s-bold" href="/passwords/forgot"><%= __('login.new.forgotPassword') %>?</a>
+          </div>
+      </div>
+        <div class="row justify-content-center">
+          <div class="col-10">
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" type="submit"><%= __('login.new.signIn') %></button>
+            </div>
+            <div class="form-group text-center">
+              <a class="d-md-none btn-link" href="/sign-up %>"><%= __('login.new.createNewAccount') %></a>
+              <a class="d-none d-md-block text-center btn btn-outline-primary btn-block" href="/sign-up"><%= __('login.new.createAccount') %></a>
+            </div>
+            <div class="d-none d-md-block text-center">          
+              <a class="btn-link" href="/passwords/forgot"><%= __('login.new.forgotPassword') %></a>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

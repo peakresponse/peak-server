@@ -1,0 +1,27 @@
+app-dashboard-header {
+  z-index: 1;
+}
+
+agm-map {
+  height: 100%;
+}
+
+.marker {
+  cursor: pointer;
+  position: relative;
+  left: -45px;
+  top: -115px;
+  background-size: contain;
+  width: 90px;
+  height: 122px;
+}
+
+.marker__portrait {
+  position: relative;
+  top: 10px;
+  left: 13.5px;
+  background-size: cover;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}

@@ -1,7 +1,9 @@
 'use strict';
 
+const autoprefixer         = require('autoprefixer');
 const CleanWebpackPlugin   = require('clean-webpack-plugin');
 const HtmlWebpackPlugin    = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleTracker        = require('webpack-bundle-tracker')
 const webpack              = require('webpack');
 
@@ -11,7 +13,9 @@ const isDev                = process.env.NODE_ENV !== 'production';
 module.exports = {
   entry: {
     admin: './client/admin.ts',
+    assets: './client/assets.ts',
     dashboard: './client/dashboard.ts',
+    onboarding: './client/onboarding.ts'
   },
 
   resolve: {
@@ -25,10 +29,25 @@ module.exports = {
         loader: 'html-loader'
       },
       {
+        test: /\.font\.js/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'webfonts-loader'
+        ],
+        include: helpers.root('client', 'assets')
+      },
+      {
         test: /\.(scss|sass)$/,
         use: [
-          { loader: 'style-loader', options: { sourceMap: isDev } },
+          MiniCssExtractPlugin.loader,
           { loader: 'css-loader', options: { sourceMap: isDev } },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer()]
+            }
+          },
           { loader: 'sass-loader', options: { sourceMap: isDev } }
         ],
         include: helpers.root('client', 'assets')
@@ -38,11 +57,18 @@ module.exports = {
         use: [
           'to-string-loader',
           { loader: 'css-loader', options: { sourceMap: isDev } },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer()]
+            }
+          },
           { loader: 'sass-loader', options: { sourceMap: isDev } }
         ],
         include: [
           helpers.root('client', 'admin'),
           helpers.root('client', 'dashboard'),
+          helpers.root('client', 'onboarding'),
           helpers.root('client', 'shared')
         ]
       }
@@ -59,6 +85,9 @@ module.exports = {
     ),
     new CleanWebpackPlugin(
       helpers.root('dist'), { root: helpers.root(), verbose: true }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+    }),
     new BundleTracker({filename: './client/webpack-stats.json'})
   ]
 };

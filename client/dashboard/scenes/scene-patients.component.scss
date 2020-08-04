@@ -1,0 +1,283 @@
+@import '../../assets/css/variables';
+
+.tabs {
+  position: absolute;
+  bottom: 0;
+  padding-left: 3.75rem;
+  margin-left: -.75rem;
+  margin-right: -.75rem;
+  flex-wrap: nowrap;
+}
+
+.tab {
+  background: $bgBackground;
+  border-top-left-radius: .3125rem;
+  border-top-right-radius: .3125rem;
+  border-bottom-width: .5rem;
+  border-bottom-style: solid;
+
+  margin: 0 .75rem;
+  width: 10rem;
+  height: 4.75rem;
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;  
+
+  @include copy-l-bold;
+  color: $mainGrey;
+
+  cursor: pointer;
+}
+
+.tab__total {
+  @include copy-l-regular;
+}
+
+.tab--active, .tab:hover {
+  padding-top: .375rem;
+  border-top-width: .125rem;
+  border-top-style: solid;
+  border-left-width: .125rem;
+  border-left-style: solid;
+  border-right-width: .125rem;
+  border-right-style: solid;
+}
+
+.tab--0 {
+  border-color: $darkPeakBlue;
+  &.tab--active, &:hover {
+    background: $lightPeakBlue;
+  }
+}
+
+.tab--1 {
+  border-color: $immediateRed;
+  &.tab--active, &:hover {
+    background: $lightImmediateRed;
+  }
+}
+
+.tab--2 {
+  border-color: $delayedYellow;
+  &.tab--active, &:hover {
+    background: $lightDelayedYellow;
+  }
+}
+
+.tab--3 {
+  border-color: $minimalGreen;
+  &.tab--active, &:hover {
+    background: $lightMinimalGreen;
+  }
+}
+
+.tab--4 {
+  border-color: $expectGrey;
+  &.tab--active, &:hover {
+    background: $lightExpectGrey;
+  }
+}
+
+.tab--5 {
+  border-color: $deadBlack;
+  &.tab--active, &:hover {
+    background: $lightExpectGrey;
+  }
+}
+
+.tab--6 {
+  border-color: $peakBlue;
+  &.tab--active, &:hover {
+    background: $lightPeakBlue;
+  }
+}
+
+.tab-bar {
+  flex-shrink: 0;
+  z-index: 1;
+  width: 100%;
+  height: 1.625rem;
+}
+
+.tab-bar--0 {
+  background: $darkPeakBlue;
+}
+
+.tab-bar--1 {
+  background: $immediateRed;
+}
+
+.tab-bar--2 {
+  background: $delayedYellow;
+}
+
+.tab-bar--3 {
+  background: $minimalGreen;
+}
+
+.tab-bar--4 {
+  background: $expectGrey;
+}
+
+.tab-bar--5 {
+  background: $deadBlack;
+}
+
+.tab-bar--6 {
+  background: $peakBlue;
+}
+
+.toolbar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 1.125rem;
+}
+
+.toolbar-item {
+  margin: 0 1.875rem;
+}
+
+.toolbar-item--sort {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-item--search {
+  width: 28rem;
+}
+
+.toolbar-item__label {
+  @include copy-m-bold;
+  color: $lowPriorityGrey;
+  margin-right: 1.5rem;
+  margin-bottom: 0;
+}
+
+.patients {
+  flex-grow: 1;
+  margin-top: 1rem;
+  padding-bottom: 2rem;
+  overflow-y: auto;
+}
+
+.patient {
+  @include copy-m-regular;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  background: white;
+  border-radius: .3125rem;
+  box-shadow: 0px 6px 20px rgba(118, 140, 151, 0.1);
+  color: $mainGrey;
+  cursor: pointer;
+  height: 5.375rem;
+  margin: 0 3rem 1rem;
+  overflow: hidden;
+}
+
+.patient__photo {
+  border-radius: 2.3125rem;
+  width: 4.625rem;
+  height: 4.625rem;
+  color: white;
+  overflow: hidden;
+  text-align: center;
+  margin: 0 3rem 0 1rem;
+  background-size: cover;
+  background-position: center center;
+  .peakicon-user {
+    position: relative;
+    top: .75rem;
+    font-size: 3.5rem;
+  }
+}
+
+.patient__status {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  width: 21.75rem;
+}
+
+.patient__priority, .patient__name {
+  @include copy-m-bold;
+}
+
+.patient__updated {
+  @include copy-s-regular;
+}
+
+.patient__name {
+  flex-grow: 1;
+  padding: 0 4rem 0 2rem;
+}
+
+.patient__gender {
+  padding: 0 2rem;
+  width: 8rem;
+}
+
+.patient__age {
+  padding: 0 2rem;
+  width: 8rem;
+}
+
+.patient__location {
+  padding: 0 2rem;
+  width: 15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.patient__injury {
+  flex-grow: 1;
+  padding: 0 2rem;
+}
+
+.patient--0 {
+  .patient__photo {
+    background-color: $immediateRed;
+  }
+  .patient__status {
+    background: $lightImmediateRed;
+  }
+}
+
+.patient--1 {
+  .patient__photo {
+    background-color: $delayedYellow;
+  }
+  .patient__status {
+    background: $lightDelayedYellow;
+  }
+}
+
+.patient--2 {
+  .patient__photo {
+    background-color: $minimalGreen;
+  }
+  .patient__status {
+    background: $lightMinimalGreen;
+  }
+}
+
+.patient--3 {
+  .patient__photo {
+    background-color: $expectGrey;
+  }
+  .patient__status {
+    background: $lightExpectGrey;
+  }
+}
+
+.patient--4 {
+  .patient__photo {
+    background-color: $deadBlack;
+  }
+  .patient__status {
+    background: $lightDeadBlack;
+  }
+}

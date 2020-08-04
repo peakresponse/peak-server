@@ -1,0 +1,331 @@
+@import '../../assets/css/variables';
+
+html, body {
+  background: white;
+}
+
+.wizard__header {
+  background-color: $bgBackground;
+  padding-top: 1rem;
+
+  .container-fluid {
+    padding: 0 1.25rem;
+  }
+
+  img.logo {
+    width: 370px;
+    height: auto;
+  }
+
+  img.logo-square {
+    width: 54px;
+    height: auto;
+  }
+
+  h1 {
+    @include copy-m-bold;
+    color: $greyPeakBlue;
+    margin-top: 2rem;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    background: $lightPeakGradient;
+    height: 3px;
+    margin: .5rem 0 1rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .wizard__header {
+    padding-top: 2rem;
+
+    .container-fluid {
+      padding: 0 4rem;
+    }
+
+    h1, p {
+      text-align: center;
+    }
+
+    h1 {
+      @include copy-xl-bold;
+      margin-top: 4rem;
+    }
+    &::after {
+      height: 5px;
+      margin: 2rem 0;
+    }
+  }
+}
+
+.wizard__body-wrapper {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@include media-breakpoint-up(md) {
+  .wizard__body-wrapper {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.wizard__body {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 0 10rem;
+
+  .row {
+    margin-left: -.5rem;
+    margin-right: -.5rem;
+  }
+
+  .col, [class^="col-"] {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+
+  p {
+    @include copy-s-regular; 
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    position: relative;
+  }
+
+  .custom-select {
+    @include copy-s-bold;
+    background: $bgBackground;
+    border-radius: 0;
+    border: 1px solid $middlePeakBlue;
+    color: $mainGrey;
+    padding: 1.125rem 1rem;
+    height: calc(1.0625rem + 2.25rem);
+  }
+
+  .custom-select:focus, input.form-control:focus {
+    box-shadow: $cardShadow;
+  }
+
+  input.form-control, textarea.form-control {
+    -webkit-appearance: none;
+    background: $bgBackground;
+    border-radius: 0;
+    border: 1px solid $middlePeakBlue;
+    color: $mainGrey;
+    padding: 1.125rem 1rem;
+    &.is-invalid {
+      border-color: $danger;
+      outline: 2px solid $danger;
+    }
+  }
+
+  input.form-control {
+    @include copy-s-bold;
+    height: calc(1.0625rem + 2.25rem);
+  }
+
+  textarea.form-control {
+    @include copy-s-regular;
+  }
+
+  input.form-control-plaintext {
+    @include copy-s-bold;
+    color: $mainGrey;
+    padding: 1.125rem 0;
+    height: calc(1.0625rem + 2.25rem);
+  }
+
+  .form-field {
+    position: relative;
+    background: $bgBackground;
+    box-shadow: none;
+    border: 1px solid $middlePeakBlue;
+    padding: .5rem .625rem;
+
+    label {
+      @include copy-s-bold;
+      color: $lowPriorityGrey;
+    }
+
+    label + input.form-control, label + textarea.form-control {
+      border: 0;
+      padding: 0;
+    }
+
+    label + input.form-control {
+      @include copy-l-bold;
+      height: 2.6875rem;
+    }
+
+    input.form-control:focus, textarea.form-control:focus {
+      box-shadow: none;
+    }
+  }
+
+  .form-text {
+    @include copy-s-bold;
+    color: $greyPeakBlue;
+  }
+
+  ngb-typeahead-window {
+    @include copy-s-regular;
+    background: #F1F5F8;
+    border-radius: 0;
+    border: 0;
+    box-shadow: $cardSelectedShadow;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    .dropdown-item {
+      padding: 1.125rem 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .dropdown-item.active {
+      background-color: $lightPeakBlue;
+      color: $mainGrey;
+    }
+  }
+
+  .form-group .peakicon {
+    position: absolute;
+    background: rgba($bgBackground, 0.5);
+    top: 1.25rem;
+    right: 1rem;
+    font-size: 1rem;
+    line-height: 1.0625rem;  
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .wizard__body {
+    .row.narrow {
+      max-width: 1150px;
+      margin-left: auto;
+      margin-right: auto;  
+    }
+
+    p {
+      @include copy-l-regular; 
+      text-align: center;
+    }
+
+    .custom-select {
+      @include copy-xl-bold;
+      border: 0;
+      padding: 1.875rem 2rem;
+      height: calc(2.6875rem + 3.75rem);
+    }
+
+    input.form-control, textarea.form-control {
+      border: 0;
+      padding: 1.875rem 2rem;
+      &.is-invalid {
+        outline: 5px solid $danger;
+      }
+    }
+  
+    input.form-control {
+      @include copy-xl-bold;
+      height: calc(2.6875rem + 3.75rem);
+    }
+
+    ngb-typeahead-window {
+      @include copy-xl-regular;  
+      .dropdown-item {
+        padding: 1.5rem 1.5rem;
+      }
+    }
+ 
+    input.form-control-plaintext {
+      @include copy-xl-bold;
+      padding: 1.875rem 0;
+      height: calc(2.6875rem + 3.75rem);
+    }
+  
+    textarea.form-control {
+      @include copy-l-regular;
+    }
+
+    .form-group .peakicon {
+      top: 1.875rem;
+      right: 2rem;
+      font-size: 2rem;
+      line-height: 2.6875rem;
+    }
+
+    .form-field {
+      border: 0;
+      padding: 1rem .875rem;
+  
+      label {
+        @include copy-l-bold;
+      }
+  
+      label + input.form-control {
+        height: 2.6875rem;
+      }
+    }
+
+    .form-text {
+      @include copy-m-bold;
+    }
+  }
+}
+
+.wizard__footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) -42.11%, rgba(255, 255, 255, 0.7) 86.84%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem .5rem;
+
+  a {
+    @include copy-s-bold;
+    cursor: pointer;
+    color: $greyPeakBlue;
+    margin-left: .75rem;
+    margin-right: .75rem;
+  }
+
+  .btn {
+    margin-left: .75rem;
+    margin-right: .75rem;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .btn {
+    @include btn-xs;
+  }
+}
+
+@include media-breakpoint-between(md, lg) {
+  .btn {
+    @include btn-sm;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .wizard__footer {
+    padding: 1rem 3rem 2rem;
+
+    a {
+      @include copy-l-bold;
+      border-bottom: 2px solid $greyPeakBlue;
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+  }
+}

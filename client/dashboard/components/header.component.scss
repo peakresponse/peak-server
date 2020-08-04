@@ -1,0 +1,33 @@
+@import '../../assets/css/variables';
+
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 128px;
+  padding-left: 128px;
+}
+
+header {
+  position: relative;
+  background: white;
+  height: 128px;
+  box-shadow: $cardSelectedShadow;
+}
+
+.scene {
+  position: absolute;
+  color: $lowPriorityGrey;
+  left: 3.75rem;
+  top: 1rem;
+}
+
+.scene__name {
+  @include copy-l-bold;
+}
+
+.scene__elapsed-time {
+  @include copy-m-regular;
+  margin-left: 1.5rem;
+}

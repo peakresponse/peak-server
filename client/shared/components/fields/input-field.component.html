@@ -1,0 +1,10 @@
+<div [class.form-field--editing]="isEditing" [class.form-field--focused]="isFocused"
+  (click)="onClick($event)" class="form-field">
+  <label [for]="derivedId">{{label}}</label>
+  <input [id]="derivedId" [name]="derivedName" [type]="type"
+    [class.form-control]="isFocusable && isEditing"
+    [class.form-control-plaintext]="!isFocusable || !isEditing"
+    [readonly]="!isFocusable || !isEditing"
+    (focus)="onFocus($event)" (blur)="onBlur($event)"
+    [(ngModel)]="value" />
+</div>

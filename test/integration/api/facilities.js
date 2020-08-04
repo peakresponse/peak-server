@@ -15,7 +15,7 @@ describe('/api/facilities', function() {
     await helpers.loadFixtures(['facilities', 'users']);
     testSession = session(app);
     await testSession.post('/login')
-      .send({email: 'johndoe@test.com', password: 'abcd1234'})
+      .send({email: 'admin@peakresponse.net', password: 'abcd1234'})
       .expect(200)
   });
 
@@ -24,7 +24,7 @@ describe('/api/facilities', function() {
       const response = await testSession.get('/api/facilities/')
         .expect(200)
         .expect('X-Total-Count', '216')
-        .expect('Link', '<http://localhost:3000/api/facilities/?page=2>; rel="next",<http://localhost:3000/api/facilities/?page=9>; rel="last"')
+        .expect('Link', '<http://lvh.me:3000/api/facilities/?page=2>; rel="next",<http://lvh.me:3000/api/facilities/?page=9>; rel="last"')
       assert.equal(response.body.length, 25);
     });
 
@@ -33,7 +33,7 @@ describe('/api/facilities', function() {
         .query({type: '1701005'})
         .expect(200)
         .expect('X-Total-Count', '41')
-        .expect('Link', '<http://localhost:3000/api/facilities/?type=1701005&page=2>; rel="next"')
+        .expect('Link', '<http://lvh.me:3000/api/facilities/?type=1701005&page=2>; rel="next"')
       assert.equal(response.body.length, 25);
     });
 
@@ -42,7 +42,7 @@ describe('/api/facilities', function() {
         .query({lat: '37.7873437', lng: '-122.4536086'})
         .expect(200)
         .expect('X-Total-Count', '216')
-        .expect('Link', '<http://localhost:3000/api/facilities/?lat=37.7873437&lng=-122.4536086&page=2>; rel="next",<http://localhost:3000/api/facilities/?lat=37.7873437&lng=-122.4536086&page=9>; rel="last"')
+        .expect('Link', '<http://lvh.me:3000/api/facilities/?lat=37.7873437&lng=-122.4536086&page=2>; rel="next",<http://lvh.me:3000/api/facilities/?lat=37.7873437&lng=-122.4536086&page=9>; rel="last"')
       assert.equal(response.body.length, 25);
       assert.equal(response.body[0].name, 'CPMC - 3801 Sacramento Street');
     });

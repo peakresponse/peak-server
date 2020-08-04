@@ -1,10 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const City = sequelize.define('City', {
-    featureId: {
-      type: DataTypes.STRING,
-      field: 'feature_id'
-    },
     featureName: {
       type: DataTypes.STRING,
       field: 'feature_name'

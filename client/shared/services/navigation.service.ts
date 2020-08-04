@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, PRIMARY_OUTLET, Router } from '@angular/router';
 
+import isEmpty from 'lodash/isEmpty';
 import { Observable } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
@@ -18,6 +19,7 @@ export class NavigationService {
       .subscribe((event: NavigationEnd) => {
         this.previousUrl = this.currentUrl;
         this.currentUrl = event.url;
+        // console.log('prev', this.previousUrl, 'current', this.currentUrl);
       });
     //// update Title from route data
     router.events
@@ -43,34 +45,52 @@ export class NavigationService {
   }
 
   setTitle(title: string) {
-    this.title.setTitle(`${title} - Hanuman Webtool`);
+    this.title.setTitle(`${title} - Peak Response`);
+  }
+
+  getPath(url: string): string {
+    let index: number;
+    index = url?.indexOf('?');
+    if (index >= 0) {
+      return url.substring(0, index);
+    }
+    index = url?.indexOf('#');
+    if (index >= 0) {
+      return url.substring(0, index);
+    }
+    return url;
+  }
+
+  getCurrentPath(): string {
+    return this.getPath(this.currentUrl);
   }
 
   getCurrentUrl(): string {
     return this.currentUrl;
   }
 
+  getPreviousPath(): string {
+    return this.getPath(this.previousUrl);
+  }
+
   getPreviousUrl(): string {
     return this.previousUrl;
   }
 
-  goTo(url: string, queryParams: any) {
-    if (queryParams) {
-      this.router.navigate([url], {queryParams: queryParams});
-    } else {
-      this.router.navigate([url]);
-    }
+  goTo(url: string, queryParams: any = null, fragment: string = null, replaceUrl: boolean = false) {
+    this.router.navigate([url], {queryParams, fragment, replaceUrl});
+  }
+
+  replaceWith(url: any, queryParams: any = null, fragment: string = null) {
+    this.goTo(url, queryParams, fragment, true);
   }
 
   backTo(url: string) {
     if (this.previousUrl == url) {
       this.location.back();
     } else {
-      this.router.navigate([url]);
+      const urlComponents = this.router.parseUrl(url);
+      this.router.navigate([`/${urlComponents.root.children[PRIMARY_OUTLET].toString()}`], {queryParams: urlComponents.queryParams, fragment: urlComponents.fragment});
     }
-  }
-
-  replaceWith(url: any) {
-    this.router.navigate([url], {replaceUrl: true});
   }
 }

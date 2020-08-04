@@ -1,0 +1,36 @@
+[
+  {
+    "model": "DemAgency",
+    "data": {
+      "id": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "agencyId": "2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d",
+      "subdomain": "bmacc",
+      "stateUniqueId": "S07-50120",
+      "number": "S07-50120",
+      "name": "Bay Medic Ambulance - Contra Costa",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "stateId": "06",
+      "data": {"dAgency.01": {"_text": "S07-50120"}, "dAgency.02": {"_text": "S07-50120"}, "dAgency.03": {"_text": "Bay Medic Ambulance - Contra Costa"}, "dAgency.04": {"_text": "06"}}
+    }
+  },
+  {
+    "model": "DemAgency",
+    "data": {
+      "id": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "agencyId": "83aa05df-35d2-4902-b479-221ea2d2ae1e",
+      "subdomain": "bayshoreambulance",
+      "stateUniqueId": "S38-50121",
+      "number": "S38-50121",
+      "name": "Bayshore Ambulance",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "stateId": "06",
+      "data": {"dAgency.01": {"_text": "S38-50121"}, "dAgency.02": {"_text": "S38-50121"}, "dAgency.03": {"_text": "Bayshore Ambulance"}, "dAgency.04": {"_text": "06"}}
+    }
+  }
+]

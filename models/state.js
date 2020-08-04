@@ -4,14 +4,14 @@ const StateCodes = require('../lib/codes/state');
 
 module.exports = (sequelize, DataTypes) => {
   const State = sequelize.define('State', {
-    code: DataTypes.STRING,
     name: DataTypes.STRING,
     abbr: {
-      type: DataTypes.VIRTUAL,
+      type: DataTypes.VIRTUAL(DataTypes.STRING),
       get() {
-        return StateCodes.codeMapping[this.code].abbr;
+        return StateCodes.codeMapping[this.id].abbr;
       },
     },
+    isConfigured: DataTypes.BOOLEAN,
     dataSet: {
       type: DataTypes.JSONB,
       field: 'data_set'
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   State.associate = function(models) {
     // associations can be defined here
-    State.hasMany(models.Agency, {as: 'agencies'});
+    State.hasMany(models.Agency, {as: 'agencies', foreignKey: 'stateId'});
   };
   State.prototype.toJSON = function() {
     let attributes = Object.assign({}, this.get());

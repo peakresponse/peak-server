@@ -49,6 +49,26 @@ function unzip(filePath, tmpDir) {
   });
 }
 
+async function parseStates(filePath) {
+  let lines = fs.readFileSync(filePath).toString().split('\n');
+  let isFirst = true;
+  for (let line of lines) {
+    if (isFirst) {
+      isFirst = false;
+      continue;
+    }
+    const parts = line.trim().split('|');
+    if (parts.length < 4) {
+      break;
+    }
+    process.stdout.write('.');
+    const [id, , name] = parts;
+    const [state,] = await models.State.findOrBuild({where: {id}});
+    state.name = name;
+    await state.save();
+  }
+}
+
 async function parseCounties(filePath) {
   let lines = fs.readFileSync(filePath).toString().split('\n');
   for (let line of lines) {
@@ -80,7 +100,7 @@ function parseCities(filePath) {
       }
       const parts = line.split('|');
       if (parts.length > 1) {
-        const [featureId, featureName, featureClass, censusCode, censusClassCode,
+        const [id, featureName, featureClass, censusCode, censusClassCode,
           gsaCode, opmCode, stateNumeric, stateAlpha, countySequence, countyNumeric,
           countyName, primaryLatitude, primaryLongitude, dateCreated, dateEdited] = parts;
         if (!['Civil', 'Populated Place', 'Military', 'Census'].includes(featureClass)) {
@@ -88,7 +108,7 @@ function parseCities(filePath) {
         }
         reader.pause();
         process.stdout.write('.');
-        models.City.findOrBuild({where: {featureId}}).then(([city, _]) => {
+        models.City.findOrBuild({where: {id}}).then(([city, _]) => {
           city.featureName = featureName;
           city.featureClass = featureClass;
           city.censusCode = censusCode,
@@ -116,6 +136,12 @@ function parseCities(filePath) {
 async function seed() {
   const tmpDir = tmp.dirSync();
   try {
+    /// parse and insert all the states
+    const statePath = path.resolve(__dirname, '../lib/codes/state.txt');
+    console.log('Parsing and saving state data...')
+    await parseStates(statePath);
+    console.log('\n');
+
     /// download and seed county data
     const countyPath = path.resolve(tmpDir.name, 'county.txt');
     console.log('Downloading county data...');

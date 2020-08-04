@@ -1,0 +1,55 @@
+<app-shared-wizard [isLoading]="isLoading" [isBackVisible]="false" [isCancelVisible]="false" [isNextVisible]="false"
+  [isSubmitVisible]="true" [isSubmitEnabled]="isValid" (submit)="onNext()"
+  [isSkipVisible]="true" (skip)="onSkip()">
+  <ng-container class="wizard__header">
+    <h1 i18n>Send invitations to your team to create their own accounts:</h1>
+  </ng-container>
+  <form #form="ngForm" (submit)="onNext()" class="wizard__body">
+    <div class="row narrow">
+      <div class="col">
+        <div class="form-group">
+          <div class="form-field" [class.is-invalid]="errors|error:'message'">
+            <label for="message">Message</label>
+            <textarea #firstEl [(ngModel)]="data.message" required id="message" name="message" type="text" class="form-control" rows="4"></textarea>
+            <div *ngIf="errors|error:'message'; let error" class="invalid-feedback">{{error.message}}</div>
+          </div>
+        </div>
+        <div class="form-group d-md-none">
+          <div class="form-field" [class.is-invalid]="errors|error:'emails'">
+            <label for="emails">Emails</label>
+            <textarea #firstEl [(ngModel)]="emails" (input)="onInputEmails()" required id="emails" name="emails" type="text" class="form-control" rows="4"
+              i18n-placeholder placeholder="Type emails here, with a comma between each email."></textarea>
+            <div *ngIf="errors|error:'emails'; let error" class="invalid-feedback">{{error.message}}</div>
+          </div>
+        </div>
+        <div class="form-group d-md-none text-right">
+          <a (click)="onSkip()" class="skip">Skip this step...</a>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let row of data.rows; let i = index;" class="row narrow d-none d-md-flex">
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="form-field">
+            <label [for]="'fullName_' + i">Name</label>
+            <input [(ngModel)]="row.fullName" required [id]="'fullName_' + i" [name]="'fullName_' + i" type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="form-field" [class.is-invalid]="row.fullName != '' && row.email == ''">
+            <label [for]="'email_' + i">Email</label>
+            <input [(ngModel)]="row.email" required [id]="'email_' + i" [name]="'email_' + i" type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row narrow d-none d-md-flex">
+      <div class="col">
+        <button (click)="onMore()" class="btn btn-sm btn-outline-primary" type="button"><i class="peakicon peakicon-add"></i> Add More</button>
+      </div>
+    </div>
+    <input type="submit" class="d-none" value="Next" />
+  </form>
+</app-shared-wizard>

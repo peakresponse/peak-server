@@ -1,7 +1,45 @@
 <div class="row">
   <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
-      <ul *ngIf="currentUser.isAdmin" class="nav flex-column">
+      <ul *ngIf="currentAgency.id" class="nav flex-column">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Demographics</span>
+        </h6>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/demographics/agency']">
+            Agency <i *ngIf="!currentAgency.isValid" class="fas fa-exclamation-triangle text-warning"></i>
+          </a>
+          <a class="nav-link" [routerLink]="['/demographics/contacts']">
+            Contacts
+          </a>
+          <a class="nav-link" [routerLink]="['/demographics/configuration']">
+            Configuration
+          </a>
+          <a class="nav-link" [routerLink]="['/demographics/devices']">
+            Devices
+          </a>
+          <a class="nav-link" [routerLink]="['/demographics/facilities']">
+            Facilities
+          </a>
+          <a class="nav-link" [routerLink]="['/demographics/locations']">
+            Locations
+          </a>
+          <a class="nav-link" [routerLink]="['/demographics/personnel']">
+            Personnel
+          </a>
+          <a class="nav-link" [routerLink]="['/demographics/vehicles']">
+            Vehicles
+          </a>
+          <!-- <hr />
+          <a class="nav-link" [routerLink]="['/demographics/custom-configuration']">
+            Custom Configuration
+          </a>
+          <a class="nav-link" [routerLink]="['/demographics/custom-results']">
+            Custom Results
+          </a> -->
+        </li>
+      </ul>
+      <ul *ngIf="!currentAgency.id && currentUser.isAdmin" class="nav flex-column">
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>Admin</span>
         </h6>

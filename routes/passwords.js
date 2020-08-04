@@ -1,9 +1,10 @@
 'use strict'
 
 const express = require('express');
+const HttpStatus = require('http-status-codes');
 const router = express.Router();
 const models = require('../models');
-const interceptors = require('./interceptors');
+const helpers = require('./helpers');
 
 /* GET the forgot password form */
 router.get('/forgot', function(req, res, next) {
@@ -11,48 +12,62 @@ router.get('/forgot', function(req, res, next) {
 });
 
 /* POST email to forgot password for reset */
-router.post('/forgot', function(req, res, next) {
-  models.User.findOne({where: {email: req.body.email}}).then(function(user) {
-    if (user) {
-      user.sendPasswordResetEmail().then(function() {
-        req.flash('info', 'Please check your email in a few moments for a password reset link.');
-        res.redirect('/login');
-      })
-    } else {
-      req.flash('error', 'The email you entered is not registered.');
-      res.redirect('/passwords/forgot');
-    }
-  });
-});
+router.post('/forgot', helpers.async(async function(req, res, next) {
+  const user = await models.User.findOne({where: {email: req.body.email}});
+  if (user) {
+    await user.sendPasswordResetEmail(req.agency);
+    res.render('passwords/forgot', {isSent: true});
+  } else {
+    res.locals.errors = [{path: 'email', message: res.__('passwords.forgot.notFound')}];
+    res.status(HttpStatus.NOT_FOUND).render('passwords/forgot');
+  }
+}));
 
 /* GET the reset password form */
-router.get('/reset/:token', function(req, res, next) {
-  models.User.findOne({where: {passwordResetToken: req.params.token}}).then(function(user) {
-    if (user) {
-      res.render('passwords/reset', {
-        token: req.params.token,
-        isExpired: user.passwordResetTokenExpiresAt.getTime() < Date.now()
-      });
-    } else {
-      req.flash('error', 'The password reset link you entered is invalid.');
-      res.redirect('/login');
-    }
-  });
-});
+router.get('/reset/:token', helpers.async(async function(req, res, next) {
+  const user = await models.User.findOne({where: {passwordResetToken: req.params.token}});
+  if (user) {
+    res.render('passwords/reset', {
+      token: req.params.token,
+      isExpired: user.passwordResetTokenExpiresAt.getTime() < Date.now()
+    });
+  } else {
+    res.render('passwords/reset', {
+      isInvalid: true
+    });
+  }
+}));
 
 /* POST the new password */
-router.post('/reset/:token', function(req, res, next) {
-  models.User.findOne({where: {passwordResetToken: req.params.token}}).then(function(user) {
+router.post('/reset/:token', helpers.async(async function(req, res, next) {
+  try {
+    const user = await models.User.findOne({where: {passwordResetToken: req.params.token}});
     if (user) {
-      user.hashPassword(req.body.password).then(function() {
-        req.flash('info', 'Your new password has been saved!');
-        res.redirect('/login');
-      });
+      /// check token expiration
+      if (user.passwordResetTokenExpiresAt.getTime() < Date.now()) {
+        return res.status(HttpStatus.GONE).end();
+      }
+      /// update password
+      try {
+        await user.update({password: req.body.password});
+        res.render('passwords/reset', {
+          isSaved: true
+        });
+      } catch (err) {
+        res.locals.errors = err.errors;
+        res.status(HttpStatus.UNPROCESSABLE_ENTITY).render('passwords/reset', {
+          token: req.params.token,
+          isExpired: user.passwordResetTokenExpiresAt.getTime() < Date.now()
+        });
+      }
     } else {
-      req.flash('error', 'The password reset link you entered is invalid.');
-      res.redirect('/login');
+      throw new Error();
     }
-  });
-});
+  } catch (err) {
+    res.status(HttpStatus.NOT_FOUND).render('passwords/reset', {
+      isInvalid: true
+    });
+  }
+}));
 
 module.exports = router;

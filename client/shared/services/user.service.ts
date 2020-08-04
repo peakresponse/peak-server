@@ -1,17 +1,35 @@
 import { Injectable } from '@angular/core';
+import {
+  Router, Resolve,
+  RouterStateSnapshot,
+  ActivatedRouteSnapshot
+} from '@angular/router';
+
+import { Observable, of, EMPTY }  from 'rxjs';
+import { catchError, mergeMap, take } from 'rxjs/operators';
 
 import { ApiService } from './api.service';
 
 @Injectable()
-export class UserService {
+export class UserService implements Resolve<any> {
   private user: any = null;
 
-  constructor(private api: ApiService) {
-    this.refresh();
-  }
+  constructor(private api: ApiService) { }
 
-  refresh() {
-    this.api.users.me().subscribe(response => this.user = response.body);
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+    if (this.user) {
+      return of(this.user);
+    }
+    return this.api.users.me().pipe(
+      catchError(error => {
+        console.log(error);
+        return EMPTY;
+      }),
+      mergeMap(response => {
+        this.user = response.body;
+        return of(this.user);
+      })
+    );
   }
 
   get id() {

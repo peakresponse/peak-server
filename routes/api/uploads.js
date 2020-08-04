@@ -5,15 +5,15 @@ const router = express.Router();
 
 const AWS = require('aws-sdk');
 const fs = require('fs');
+const HttpStatus = require('http-status-codes');
 const mime = require('mime-types');
 const mkdirp = require('mkdirp');
 const path = require('path');
 const uuid = require('uuid/v4');
 
-const models = require('../../models');
 const interceptors = require('../interceptors');
 
-router.post('/', interceptors.requireAdmin, function(req, res, next) {
+router.post('/', interceptors.requireAdmin(), function(req, res, next) {
   const id = uuid();
   let response = req.body.blob;
   response.id = id;
@@ -51,14 +51,14 @@ router.post('/', interceptors.requireAdmin, function(req, res, next) {
   res.json(response);
 });
 
-router.put('/:id', interceptors.requireAdmin, function(req, res, next) {
+router.put('/:id', interceptors.requireAdmin(), function(req, res, next) {
   const tmpDir = path.resolve(__dirname, '../../tmp/uploads');
   mkdirp.sync(tmpDir);
   fs.writeFile(path.resolve(tmpDir, `${req.params.id}.${mime.extension(req.get('Content-Type'))}`), req.body, function(err) {
     if (err) {
-      res.sendStatus(500);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     } else {
-      res.sendStatus(200);
+      res.status(HttpStatus.OK).end();
     }
   });
 });

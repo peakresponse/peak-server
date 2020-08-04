@@ -1,13 +1,16 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
-const models = require('../../models');
-const interceptors = require('../interceptors');
-const helpers = require('../helpers');
+const HttpStatus = require('http-status-codes');
 const _ = require('lodash');
 
-router.get('/', interceptors.requireLogin, helpers.async(async function(req, res, next) {
+const models = require('../../models');
+const helpers = require('../helpers');
+const interceptors = require('../interceptors');
+
+const router = express.Router();
+
+router.get('/', interceptors.requireLogin(), helpers.async(async function(req, res, next) {
   const records = await models.Patient.findAll({
     order: [['priority', 'ASC'], ['updated_at', 'ASC']],
     include: [
@@ -38,7 +41,7 @@ router.get('/', interceptors.requireLogin, helpers.async(async function(req, res
   }));
 }));
 
-router.get('/:id', interceptors.requireAdmin, helpers.async(async function(req, res, next) {
+router.get('/:id', interceptors.requireLogin(), helpers.async(async function(req, res, next) {
   let record = await models.Patient.findByPk(req.params.id, {
     include: [
       {model: models.Agency, as: 'transportAgency'},
@@ -61,7 +64,7 @@ router.get('/:id', interceptors.requireAdmin, helpers.async(async function(req, 
     json.observations = record.observations.map(o => o.toJSON());
     res.json(json);
   } else {
-    res.sendStatus(404);
+    res.status(HttpStatus.NOT_FOUND).end();
   }
 }));
 

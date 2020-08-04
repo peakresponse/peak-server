@@ -1,0 +1,31 @@
+<app-shared-wizard [isNextEnabled]="isValid" (back)="onBack()" (cancel)="onCancel()" (next)="onNext()">
+  <ng-container class="wizard__header">
+    <h1 i18n>Choose a URL for your agency</h1>
+  </ng-container>
+  <form (submit)="onNext()" class="wizard__body">
+    <div class="row narrow">
+      <div class="col">
+        <p i18n>This URL will be the place where your team goes to log in to Peak Response. We’ve put in a generated URL as a suggestion, but you’re welcome to change it.</p>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6 offset-lg-1 col-lg-5">
+              <input #subdomainEl #subdomainModel="ngModel" [(ngModel)]="subdomain" [class.is-invalid]="!isLoading && !isValid" type="text" class="form-control" name="subdomain" />
+            </div>
+            <div class="col-md-6 col-lg-5">
+              <input type="text" readonly tabindex="-1" class="form-control-plaintext" value=".peakresponse.net" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 offset-lg-1 col-lg-10">
+            <div *ngIf="isLoading" class="form-text"><app-shared-loader></app-shared-loader> Please wait, checking availability...</div>
+            <div *ngIf="!isLoading && isValid" class="form-text">This URL is available!</div>
+            <div *ngIf="!isLoading && errorStatus == 409" class="form-text text-danger">This URL is not available.</div>
+            <div *ngIf="!isLoading && errorStatus == 422" class="form-text text-danger">This is not a valid URL.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input class="d-none" type="submit" value="Next" />
+  </form>
+</app-shared-wizard>

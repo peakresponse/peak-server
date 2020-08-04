@@ -1,3 +1,12 @@
 <%- include('../layout/_header.html.ejs') %>
-<p>This is a confirmation that you have signed up for an account.</p>
+<h1>Welcome to Peak Response</h1>
+<p>Welcome <%= firstName %>,</p>
+<p>Thanks for joining Peak Response! You’re all signed up as part of the <%= agencyName %> Peak Response Team <% if (isOwner) { %>and have been automatically made the owner<% } %>.  We’re excited to have you join our community of first responders looking to bring order to the chaos!</p>
+<h2>Getting Started is Easy</h2>
+<p>You can access your account on the web at:</p>
+<p><a href="<%= agencyUrl %>"><%= agencyUrl %></a></p>
+<p>And you can download the mobile app for iPhone on the App Store.</p>
+<p>Cheers,<br />
+The Peak Response Team</p>
+<p><small>If you don't recognize this account, let us know above and we'll look into it.</small></p>
 <%- include('../layout/_footer.html.ejs') %>

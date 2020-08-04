@@ -13,9 +13,15 @@ module.exports = webpackMerge(commonConfig, {
   devServer: {
     host: '0.0.0.0',
     port: 8080,
+    disableHostCheck: true,
     publicPath: `http://${process.env.BASE_HOST}:8080/dist/`,
     historyApiFallback: true,
-    stats: 'normal'
+    stats: 'normal',
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
   },
 
   output: {

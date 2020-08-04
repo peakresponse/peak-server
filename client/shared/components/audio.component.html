@@ -1,0 +1,5 @@
+<audio *ngIf="src" #audio [src]="src"></audio>
+<a (click)="onClick()">
+  <i *ngIf="isPaused" class="fas fa-play"></i>
+  <i *ngIf="!isPaused" class="fas fa-stop"></i>
+</a>

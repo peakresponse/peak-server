@@ -1,13 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AssetPipe, CssUrlPipe, ErrorPipe, PhonePipe, RelativeDatePipe } from '.';
+import { AssetPipe, CssUrlPipe, ErrorPipe, GetPipe, InflectionPipe, PhonePipe,
+  RelativeDatePipe } from '.';
 
 @NgModule({
   declarations: [
     AssetPipe,
     CssUrlPipe,
     ErrorPipe,
+    GetPipe,
+    InflectionPipe,
     PhonePipe,
     RelativeDatePipe,
   ],
@@ -15,6 +18,8 @@ import { AssetPipe, CssUrlPipe, ErrorPipe, PhonePipe, RelativeDatePipe } from '.
     AssetPipe,
     CssUrlPipe,
     ErrorPipe,
+    GetPipe,
+    InflectionPipe,
     PhonePipe,
     RelativeDatePipe,
   ],

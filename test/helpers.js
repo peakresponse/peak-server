@@ -5,6 +5,7 @@ process.env.NODE_ENV = 'test';
 
 const fixtures = require('sequelize-fixtures');
 const nock = require('nock');
+const nodemailerMock = require('nodemailer-mock');
 const path = require('path');
 
 const models = require('../models');
@@ -21,6 +22,9 @@ const recordNetworkRequests = function() {
 const resetDatabase = async function() {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
+    DELETE FROM demographics.contacts;
+    DELETE FROM demographics.employments;
+    DELETE FROM demographics.agencies;
     DELETE FROM observations;
     DELETE FROM patients;
     DELETE FROM facilities;
@@ -36,6 +40,7 @@ const sleep = function(ms) {
 
 beforeEach(async function() {
   await resetDatabase();
+  nodemailerMock.mock.reset();
 });
 
 after(async function() {

@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const createError = require('http-errors');
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const cookieSession = require('cookie-session');
 const logger = require('morgan');
@@ -13,13 +14,7 @@ const i18n = require('i18n');
 const bodyParser = require('body-parser');
 
 const helpers = require('./routes/helpers');
-const interceptors = require('./routes/interceptors');
-const indexRouter = require('./routes/index');
-const loginRouter = require('./routes/login');
-const passwordsRouter = require('./routes/passwords');
-const registrationsRouter = require('./routes/registrations');
-const adminRouter = require('./routes/admin');
-const apiRouter = require('./routes/api');
+const routes = require('./routes');
 
 const app = express();
 
@@ -46,6 +41,7 @@ app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modu
 app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 app.use('/libraries/qrcode', express.static(path.join(__dirname, 'node_modules/qrcode/build')));
 app.use('/libraries/smoothscroll', express.static(path.join(__dirname, 'node_modules/smoothscroll-polyfill/dist')));
+app.use('/nemsis', express.static(path.join(__dirname, 'nemsis')));
 
 // set up session handler with an app reference so can be used by websocket server
 app.sessionParser = cookieSession({
@@ -60,25 +56,20 @@ app.use(passport.session());
 
 i18n.configure({
   locales: ['en'],
+  objectNotation: true,
   directory: path.join(__dirname, 'locales')
 });
 
-app.use(helpers.assetHelpers);
+app.use(helpers.register);
 app.use(i18n.init);
 app.use(function(req, res, next) {
+  res.locals.webpackStats = JSON.parse(fs.readFileSync(path.join(__dirname, 'client/webpack-stats.json')));
   res.locals.flash = req.flash();
   res.locals.currentUser = req.user;
   next();
 });
 
-app.use('/login', loginRouter);
-app.use('/passwords', passwordsRouter);
-app.use('/register', registrationsRouter);
-app.use('/admin', interceptors.requireAdmin);
-app.use('/admin', adminRouter);
-app.use('/api', interceptors.requireLogin);
-app.use('/api', apiRouter);
-app.use('/', indexRouter);
+app.use(routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

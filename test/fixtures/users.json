@@ -3,11 +3,60 @@
     "model": "User",
     "data": {
       "id": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-      "firstName": "John",
-      "lastName": "Doe",
-      "email": "johndoe@test.com",
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin@peakresponse.net",
+      "position": "Founder",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "firstName": "Regular",
+      "lastName": "User",
+      "email": "regular@peakresponse.net",
+      "position": "Paramedic",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "d12d1c45-baa7-4dfa-be2d-e08aed80d3a3",
+      "firstName": "Pending",
+      "lastName": "User",
+      "email": "pending@peakresponse.net",
+      "position": "Ambulance Driver",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "73644f3e-5fc6-459d-9dad-020869c93658",
+      "firstName": "Another",
+      "lastName": "User",
+      "position": "EMT",
+      "email": "another@peakresponse.net",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "99b0ce13-138a-40db-9f05-da6475b8b4eb",
+      "firstName": "Ended",
+      "lastName": "User",
+      "position": "EMT",
+      "email": "ended@peakresponse.net",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
     }
   }
 ]

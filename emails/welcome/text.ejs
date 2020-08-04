@@ -1,5 +1,18 @@
 <%- include('../layout/_header.text.ejs') %>
 
-This is a confirmation that you have signed up for an account.
+Welcome <%= firstName %>,
+Thanks for joining Peak Response! You're all signed up as part of the <%= agencyName %> Peak Response Team <% if (isOwner) { %>and have been automatically made the owner<% } %>.  We're excited to have you join our community of first responders looking to bring order to the chaos!
+
+Getting Started is Easy 
+You can access your account on the web at:
+
+<%= agencyUrl %>
+
+And you can download the mobile app for iPhone from the App Store.
+
+Cheers, 
+The Peak Response Team
+
+If you don't recognize this account, let us know above and we'll look into it. 
 
 <%- include('../layout/_footer.text.ejs') %>

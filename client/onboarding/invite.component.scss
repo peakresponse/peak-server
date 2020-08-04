@@ -1,0 +1,7 @@
+@import '../assets/css/variables';
+
+.skip {
+  @include copy-s-bold;
+  color: $greyPeakBlue;
+  cursor: pointer;
+}

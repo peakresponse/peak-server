@@ -10,7 +10,8 @@ import { Config } from './config';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { PatientsModule } from './patients/patients.module';
+import { PatientsModule } from './scenes/patients/patients.module';
+import { ScenesModule } from './scenes/scenes.module';
 
 import { ApiService, NavigationService, UserService, WebSocketService }
   from '../shared/services';
@@ -27,7 +28,8 @@ import { ApiService, NavigationService, UserService, WebSocketService }
     FormsModule,
     HttpClientModule,
     NgbModule,
-    PatientsModule
+    PatientsModule,
+    ScenesModule
   ],
   providers: [
     ApiService,

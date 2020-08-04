@@ -1,6 +1,12 @@
 <%- contentFor('title') %>Home
 <%- contentFor('head') %>
 <base href="/">
+<style type="text/css">
+  html, body {
+    height: 100%;
+    min-height: 100%;
+  }
+</style>
 <script type="text/javascript">
 window.env = {};
 window.env.ASSET_HOST = '<%= process.env.ASSET_HOST %>';

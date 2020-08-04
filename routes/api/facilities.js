@@ -1,13 +1,16 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
+const HttpStatus = require('http-status-codes');
+
+const helpers = require('../helpers');
+const interceptors = require('../interceptors');
 const models = require('../../models');
 const Op = models.Sequelize.Op;
-const interceptors = require('../interceptors');
-const helpers = require('../helpers');
 
-router.get('/', interceptors.requireLogin, helpers.async(async function(req, res, next) {
+const router = express.Router();
+
+router.get('/', interceptors.requireLogin(), helpers.async(async function(req, res, next) {
   const page = req.query.page || 1;
   const options = {
     page,
@@ -31,12 +34,12 @@ router.get('/', interceptors.requireLogin, helpers.async(async function(req, res
   res.json(docs.map(d => d.toJSON()));
 }));
 
-router.get('/:id', interceptors.requireAdmin, helpers.async(async function(req, res, next) {
+router.get('/:id', interceptors.requireLogin(), helpers.async(async function(req, res, next) {
   const record = await models.Facility.findByPk(req.params.id)
   if (record) {
     res.json(record.toJSON());
   } else {
-    res.sendStatus(404);
+    res.status(HttpStatus.NOT_FOUND).end();
   }
 }));
 

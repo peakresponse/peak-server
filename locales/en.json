@@ -1,10 +1,55 @@
 {
-  "ants": "Ants",
-  "bedbugs": "Bed bugs",
-  "cockroaches": "Cockroaches",
-  "fleas": "Fleas",
-  "flies": "Flies",
-  "rodents": "Mice/Rats",
-  "mosquitos": "Mosquitos",
-  "other": "Other..."
+	"button": {
+		"submit": "Submit"
+	},
+	"common": {
+		"pleaseWait": "Please wait..."
+	},
+	"login": {
+		"new": {
+			"title": "Log In",
+			"signIn": "Log In",
+			"createAccount": "Create Account",
+			"createNewAccount": "Create New Account",
+			"forgotPassword": "Forgot Password",
+			"invalid": "Email and/or Password was incorrect",
+			"forbidden": "You are not allowed to log in"
+		}
+	},
+	"models": {
+		"demographics": {
+			"agency": {
+				"invitationMessage": "Please join the {{name}} Peak Response account. We’ll be using this new software to help organize and document MCIs."
+			}
+		},
+		"user": {
+			"email": "Email",
+			"password": "Password",
+			"newPassword": "New Password"
+		}
+	},
+	"onboarding": {
+		"title": "Sign Up"
+	},
+	"passwords": {
+		"forgot": {
+			"title": "Forgot Password",
+			"prompt": "Enter the email address you registered with to receive a reset password link.",
+			"backToSignIn": "Log In",
+			"notFound": "Email not found",
+			"success": "Please check your email in a few moments for a password reset link."
+		},
+		"reset": {
+			"title": "Reset Password",
+			"prompt": "New password must be between 8 and 30 characters. Must include at least one uppercase letter, one lowercase letter, one number and one symbol.",
+			"expired": "Sorry, this password reset link has expired.",
+			"tryAgain": "Request another?",
+			"invalid": "The password reset link you used is invalid.",
+			"success": "Your new password has been saved!",
+			"backToSignIn": "Log In"
+		}
+	},
+	"peakresponse": {
+		"logo": "Peak Response Logo"
+	}
 }

@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require('express');
-const fetch = require('node-fetch');
 const fs = require('fs');
 const HttpStatus = require('http-status-codes');
 const path = require('path');
@@ -10,11 +9,12 @@ const models = require('../../models');
 const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 const nemsis = require('../../lib/nemsis');
+const nemsisStates = require('../../lib/nemsis/states');
 const {City, State} = require('../../lib/codes');
 
 const router = express.Router();
 
-router.get('/', interceptors.requireLogin, function(req, res, next) {
+router.get('/', function(req, res, next) {
   models.State.findAll({
     order: [['name', 'ASC']]
   }).then(function(records) {
@@ -22,38 +22,38 @@ router.get('/', interceptors.requireLogin, function(req, res, next) {
   });
 });
 
-router.get('/new', interceptors.requireAdmin, function(req, res, next) {
+router.get('/new', interceptors.requireAdmin(), function(req, res, next) {
   /// fetch the list of repos from the NEMSIS states project
   nemsis.getStateRepos()
     .then(json => res.json(json));
 });
 
-router.post('/', interceptors.requireAdmin, helpers.async(async function(req, res, next) {
+router.post('/', interceptors.requireAdmin(), helpers.async(async function(req, res, next) {
   const repo = req.body.repo;
   const name = req.body.name;
-  const code = State.nameMapping[name] ? State.nameMapping[name].code : null;
-  if (!code) {
-    return res.sendStatus(500);
+  const id = State.nameMapping[name] ? State.nameMapping[name].code : null;
+  if (!id) {
+    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
   }
   let state = null;
   await models.sequelize.transaction(async transaction => {
     /// check if already exists
-    state = await models.State.findOne({where: {code}, transaction});
+    state = await models.State.findByPk(id, {transaction});
     /// if not, create, store everything...
     if (!state) {
       /// create State record
       state = await models.State.create({
+        id,
         name,
-        code,
         dataSet: {status: 'Downloading state data from NEMSIS...'}
       }, {transaction});
       /// send back ACCEPTED state while processing continues in background
-      res.status(202).json(state);
+      res.status(HttpStatus.ACCEPTED).json(state);
     } else {
       /// already exists!
       state = null;
-      res.status(422).json({
-        status: 422,
+      res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
         messages: [{path: 'repo', message: 'This State has already been added.'}]
       });
     }
@@ -68,12 +68,9 @@ router.post('/', interceptors.requireAdmin, helpers.async(async function(req, re
     await state.update({dataSet: {status: 'Processing downloaded state data...'}});
     let dataSet = null;
     let schematronXml = null;
-    let facilitySpreadsheet = null;
     for (let filePath of files.values) {
       if (filePath.startsWith('Resources') && filePath.endsWith('StateDataSet.xml')) {
         dataSet = await nemsis.parseStateDataSet(path.resolve(tmpDir.name, filePath));
-      } else if (filePath.startsWith('Resources') && filePath.endsWith('Facilities.xlsx')) {
-        facilitySpreadsheet = await nemsis.parseSpreadsheet(path.resolve(tmpDir.name, filePath));
       } else if (filePath.startsWith('Schematron') && filePath.endsWith('EMSDataSet.sch.xml')) {
         schematronXml = fs.readFileSync(path.resolve(tmpDir.name, filePath));
       }
@@ -83,10 +80,9 @@ router.post('/', interceptors.requireAdmin, helpers.async(async function(req, re
       await state.save();
       return;
     }
-    /// special-case handling for california which has an Excel spreadsheet for their facilities
-    if (repo == 'california' && facilitySpreadsheet) {
-        /// convert to sFacility records and add
-        dataSet.json.StateDataSet.sFacility = await nemsis.california.parseFacilitySpreadsheet(facilitySpreadsheet);
+    /// special-case handling for states
+    if (nemsisStates[repo] && nemsisStates[repo].processStateRepoFiles) {
+      await nemsisStates[repo].processStateRepoFiles(tmpDir, files.values, dataSet);
     }
     /// add associated Agencies
     await state.update({dataSet: {status: 'Populating state agencies...'}});
@@ -95,14 +91,16 @@ router.post('/', interceptors.requireAdmin, helpers.async(async function(req, re
         for (let sAgency of dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
           const [agency, ] = await models.Agency.findOrBuild({
             where: {
-              stateId: state.id,
-              stateNumber: sAgency['sAgency.01']._text
+              stateUniqueId: sAgency['sAgency.01']._text,
+              number: sAgency['sAgency.02']._text,
+              stateId: state.id
             },
             transaction
           });
-          agency.number = sAgency['sAgency.02']._text;
           agency.name = sAgency['sAgency.03']._text;
-          agency.dataSet = sAgency;
+          agency.data = sAgency;
+          agency.createdById = req.user.id;
+          agency.updatedById = req.user.id;
           await agency.save({transaction});
         }
       });
@@ -146,6 +144,7 @@ router.post('/', interceptors.requireAdmin, helpers.async(async function(req, re
         }
       });
     }
+    state.isConfigured = true;
     state.dataSet = dataSet.json;
     state.dataSetXml = dataSet.xml;
     state.schematronXml = schematronXml;
@@ -163,12 +162,12 @@ router.get('/:id', helpers.async(async function(req, res, next) {
   const id = req.params.id;
   const state = await models.State.unscoped().findOne({where: {id}, attributes: {exclude: ['dataSetXml', 'schematronXml']}});
   if (state) {
-    if (state.dataSet.status) {
+    if (req.user?.isAdmin && state.dataSet.status) {
       res.setHeader('X-Status', state.dataSet.status);
     }
-    res.status(state.dataSet.status ? HttpStatus.ACCEPTED : HttpStatus.OK).json(state);
+    res.status(state.dataSet.status ? HttpStatus.ACCEPTED : HttpStatus.OK).json(state.toJSON());
   } else {
-    res.sendStatus(HttpStatus.NOT_FOUND);
+    res.status(HttpStatus.NOT_FOUND).end();
   }
 }));
 

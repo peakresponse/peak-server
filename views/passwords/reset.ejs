@@ -1,26 +1,41 @@
-<%- contentFor('title') %>Reset Password
-<%- contentFor('bodyClass') %>signed-out
+<%- contentFor('title') %><%= __('passwords.reset.title') %>
+<%- contentFor('bodyClass') %>unauthenticated
 <%- contentFor('body') %>
 <div class="container">
   <div class="row justify-content-center" role="main">
-    <div class="col col-sm-10 col-md-8 col-lg-6">
-      <img class="logo" src="/images/logo352.png">
-      <div class="card">
-        <h1>Reset</h1>
-        <% if (isExpired) { %>
-          <p>Sorry, this password reset link has expired. <a href="/passwords/forgot">Request another?</a></p>
-        <% } else { %>
-          <p>Enter a new password for your account.</p>
-          <form method="post" action="/passwords/reset/<%= token %>">
-            <div class="form-group">
-              <input type="password" class="form-control" name="password" placeholder="New password"/>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary btn-block" type="submit">Submit</button>
-            </div>
-          </form>
-        <% } %>
+    <div class="col">
+      <div class="logo my-5 pt-4">
+        <img class="img-fluid" src="/images/logo-dark.png" alt="<%= __('peakresponse.logo') %>">
       </div>
+      <% if (locals.isSaved) { %>
+        <p><%= __('passwords.reset.success') %></p>
+        <p><a class="btn-link" href="/login"><%= __('passwords.reset.backToSignIn') %></a></p>
+      <% } else if (locals.isInvalid) { %>
+        <p><%= __('passwords.reset.invalid') %></p>
+        <p><a class="btn-link" href="/passwords/forgot"><%= __('passwords.reset.tryAgain') %></a></p>
+      <% } else if (isExpired) { %>
+        <p><%= __('passwords.reset.expired') %></p>
+        <p><a class="btn-link" href="/passwords/forgot"><%= __('passwords.reset.tryAgain') %></a></p>
+      <% } else { %>
+        <p><%= __('passwords.reset.prompt') %></p>
+        <form method="post" action="/passwords/reset/<%= token %>">
+          <div class="form-group">
+            <div class="form-field<%= hasError('password') ? ' is-invalid' : '' %>">
+              <label for="password"><%= __('models.user.newPassword') %></label>
+              <input type="password" class="form-control" id="password" name="password"/>
+              <%- renderErrorMessages('password', ['d-none', 'd-md-block']) %>
+            </div>
+            <%- renderErrorMessages('password', ['d-md-none']) %>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-10">
+              <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit"><%= __('button.submit') %></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      <% } %>
     </div>
   </div>
 </div>

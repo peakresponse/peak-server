@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable, isDevMode, Optional } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
@@ -72,16 +72,146 @@ export class ApiService {
 
   agencies = {
     index: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/agencies/', params);
+      return this.get('/api/agencies', params);
+    },
+    me: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/agencies/me', params);
+    },
+    demographic: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/agencies/${id}/demographic`, params);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/agencies/${id}`, params);
     },
   };
 
+  home = {
+    contact: (data: any): Observable<any> => {
+      return this.post('/contact-us', data);
+    }
+  };
+
+  demographics = {
+    validate: (subdomain: string): Observable<any> => {
+      return this.get(`/api/demographics/validate`, new HttpParams().set('subdomain', subdomain));
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/demographics`, data);
+    },
+    agency: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/agency`, params);
+      },
+      update: (data: any): Observable<any> => {
+        return this.put(`/api/demographics/agency`, data);
+      }
+    },
+    configuration: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/configurations`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/configurations`, data);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/configurations/${id}`, data);
+      },
+    },
+    contacts: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/contacts`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/contacts`, data);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/contacts/${id}`, data);
+      },
+    },
+    customConfiguration: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/custom-configuration`, params);
+      }
+    },
+    customResults: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/custom-results`, params);
+      }
+    },
+    devices: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/devices`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/devices`, data);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/devices/${id}`, data);
+      },
+    },
+    facilities: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/facilities`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/facilities`, data);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/facilities/${id}`, data);
+      }
+    },
+    locations: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/locations`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/locations`, data);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/locations/${id}`, data);
+      }
+    },
+    personnel: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/personnel`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/personnel`, data);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/personnel/${id}`, data);
+      },
+      invite: (data: any, subdomain?: string): Observable<any> => {
+        const options = {headers: new HttpHeaders()};
+        if (subdomain) {
+          options.headers = options.headers.set('X-Agency-Subdomain', subdomain);
+        }
+        return this.post(`/api/demographics/personnel/invite`, data, options);
+      },
+      accept: (data: any, subdomain?: string): Observable<any> => {
+        const options = {headers: new HttpHeaders()};
+        if (subdomain) {
+          options.headers = options.headers.set('X-Agency-Subdomain', subdomain);
+        }
+        return this.post(`/api/demographics/personnel/accept`, data, options);
+      }
+    },
+    vehicles: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/vehicles`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/vehicles`, data);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/vehicles/${id}`, data);
+      }
+    },
+  };
+
   facilities = {
     index: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/facilities/', params);
+      return this.get('/api/facilities', params);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/facilities/${id}`, params);
@@ -90,13 +220,13 @@ export class ApiService {
 
   observations = {
     create: (data: any): Observable<any> => {
-      return this.post(`/api/observations/`, data);
+      return this.post(`/api/observations`, data);
     },
   };
 
   patients = {
     index: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/patients/', params);
+      return this.get('/api/patients', params);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/patients/${id}`, params);
@@ -105,13 +235,13 @@ export class ApiService {
 
   states = {
     index: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/states/', params);
+      return this.get('/api/states', params);
     },
     new: (params?: HttpParams): Observable<any> => {
       return this.get('/api/states/new', params);
     },
     create: (data: any): Observable<any> => {
-      return this.post(`/api/states/`, data);
+      return this.post(`/api/states`, data);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/states/${id}`, params);
@@ -123,10 +253,10 @@ export class ApiService {
 
   users = {
     me: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/users/me/', params);
+      return this.get('/api/users/me', params);
     },
     index: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/users/', params);
+      return this.get('/api/users', params);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/users/${id}`, params);

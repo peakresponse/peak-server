@@ -1,0 +1,27 @@
+@import '../assets/css/variables';
+
+.wizard__body {
+  .narrow {
+    max-width: 1000px;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .wizard__body {
+    input.form-control {
+      @include copy-m-bold;
+      padding: 1.125rem 1rem;
+      height: calc(1.5rem + 2.25rem);
+    }
+
+    .form-control-plaintext {
+      @include copy-m-bold;
+      text-align: right;
+    }
+
+    .form-text {
+      @include copy-s-bold;
+      text-align: center;
+    }
+  }
+}

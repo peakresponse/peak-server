@@ -1,0 +1,8 @@
+@import '../assets/css/variables';
+
+.form-group {
+  @include copy-l-regular;
+  &>label {
+    @include copy-l-bold;
+  }
+}

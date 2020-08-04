@@ -1,0 +1,160 @@
+/// Main Blues
+$peakBlue: #46A5DB;
+$lightPeakBlue: #D0E9F7;
+$middlePeakBlue: #ADD7EF;
+$darkPeakBlue: #105E8A;
+$greyPeakBlue: #6894B5;
+
+/// Backgrounds
+$bgBackground: #F1F5F8;
+$orangeAccent: #EE924F;
+
+/// Text & Icons
+$mainGrey: #3D5058;
+$lowPriorityGrey: #94A6AD;
+
+/// Triage States
+$minimalGreen: #6AE18B;
+$lightMinimalGreen: #C5F9D3;
+$delayedYellow: #F3D742;
+$lightDelayedYellow: #FBF8BD;
+$immediateRed: #ED7542;
+$lightImmediateRed: #FFDECF;
+$expectGrey: #BABFBB;
+$lightExpectGrey: #ECECEC;
+$deadBlack: #474747;
+$lightDeadBlack: #BEBEBE;
+
+/// Gradients
+
+$peakGradient: linear-gradient(106.75deg, #155184 5.1%, #3194C6 33.49%, #7FC4D2 81.54%, #A5DEEA 109.93%);
+$lightPeakGradient: linear-gradient(106.75deg, #40A2D9 5.1%, #A1CEE7 49.87%, #A4DDEF 81.54%, #B7E5EE 109.93%);
+$darkPeakGradient: linear-gradient(106.75deg, #155184 5.1%, #3194C6 66.25%, #7FC4D2 106.65%);
+
+/// Shadows
+
+$cardShadow: 0px .375rem .625rem rgba(118, 140, 151, 0.15);
+$cardSelectedShadow: 0px 10px 40px rgba(118, 140, 151, 0.4);
+$tabShadow: 0px -4px 10px rgba(118, 140, 151, 0.15);
+$tabSelectedShadow: 0px -6px 15px rgba(118, 140, 151, 0.2);
+$buttonShadow: 0px 2px 4px rgba(84, 133, 156, 0.04), 0px 1px 10px rgba(0, 0, 0, 0.05), 0px 4px 5px rgba(0, 0, 0, 0.06);
+$searchShadow: 0px 1px 1.48098px rgba(84, 133, 156, 0.1), 0px -2px 3.70246px rgba(104, 148, 181, 0.05), 0px 1px 2.96197px rgba(104, 148, 181, 0.1);
+$underShadow: 0px 3px 6px rgba(98, 99, 99, 0.1);
+$minimalShadow: 2px 3px 54px rgba(118, 140, 151, 0.1);
+
+/// Text
+
+@mixin copy-xs-regular {
+  font-weight: normal;
+  font-size: .625rem;
+  line-height: .75rem;
+}
+
+@mixin copy-xs-bold {
+  font-weight: 600;
+  font-size: .625rem;
+  line-height: .75rem;
+}
+
+@mixin copy-s-regular {
+  font-weight: normal;
+  font-size: .875rem;
+  line-height: 1.0625rem;
+}
+
+@mixin copy-s-bold {
+  font-weight: 600;
+  font-size: .875rem;
+  line-height: 1.0625rem;  
+}
+
+@mixin copy-m-regular {
+  font-weight: normal;
+  font-size: 1.25rem;
+  line-height: 1.5rem;  
+}
+
+@mixin copy-m-bold {
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.5rem;  
+}
+
+@mixin copy-l-regular {
+  font-weight: normal;
+  font-size: 1.5rem;
+  line-height: 1.8125rem;
+}
+
+@mixin copy-l-bold {
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.8125rem;
+}
+
+@mixin copy-xl-regular {
+  font-weight: normal;
+  font-size: 2.25rem;
+  line-height: 2.6875rem;
+}
+
+@mixin copy-xl-bold {
+  font-weight: 600;
+  font-size: 2.25rem;
+  line-height: 2.6875rem;
+}
+
+@mixin copy-peakicons {
+  font-family: peakicons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  vertical-align: top;
+}
+
+/// Buttons
+
+@mixin btn-xs {
+  @include copy-s-bold;
+  border-radius: 4rem;
+  padding: .6875rem 1rem .75rem;
+  min-width: 10rem;
+}
+
+@mixin btn-sm {
+  @include copy-m-bold;
+  border-radius: 4rem;
+  padding: 1rem 2rem 1.0625rem;
+  min-width: 12.5rem;
+}
+
+@mixin btn-md {
+  @include copy-l-bold;
+  border-radius: 4rem;
+  padding: 1.875rem 2rem 2rem;
+  min-width: 20rem;
+}
+
+@mixin btn-lg {
+  @include copy-xl-bold;
+  border-radius: 4rem;
+  padding: 1.375rem 5rem 1.625rem;
+  min-width: 26rem;
+}
+
+@mixin btn-xl {
+  @include copy-xl-bold;
+  border-radius: 4rem;
+  padding: 1.375rem 2rem 1.625rem;
+  min-width: 32rem;
+}
+
+/// Bootstrap Overrides
+
+$primary: $greyPeakBlue;
+$danger: $orangeAccent;
+$body-color: $deadBlack;
+$font-family-sans-serif: "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";

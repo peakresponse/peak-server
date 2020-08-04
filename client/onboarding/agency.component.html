@@ -1,0 +1,16 @@
+<app-shared-wizard [isLoading]="isLoading" [isNextEnabled]="agency != null && agency != ''" (back)="onBack()" (cancel)="onCancel()" (next)="onNext()">
+  <ng-container class="wizard__header">
+    <h1 i18n>Which agency are you signing up?</h1>
+  </ng-container>
+  <form (submit)="onNext()" class="wizard__body">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+        <div class="form-group">
+          <ng-template #rt let-r="result" let-t="term">{{r.name}}</ng-template>
+          <i class="peakicon peakicon-search"></i>
+          <input #agencyEl [(ngModel)]="agency" [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter" type="text" class="form-control" name="agency" placeholder="Search for Agency" />
+        </div>
+      </div>
+    </div>
+  </form>
+</app-shared-wizard>

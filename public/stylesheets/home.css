@@ -1,226 +1,8 @@
-/* GLOBAL STYLES
--------------------------------------------------- */
-
-body {
-  position: relative;
-  font-family: 'Barlow', sans-serif;
-  color: #2F7EAA;
-}
-
-footer {
-  background-image: url('/images/footer.jpg');
-  background-size: cover;
-  background-position: top center;
-  color: white;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  padding: 3em 0;
-  font-size: .625rem;
-  font-weight: 600;
-  line-height: .75rem;
-  text-align: center;
-}
-
-footer img {
-  width: 243px;
-  height: 67px;
-  margin-bottom: 1rem;
-}
-
-footer ul {
-  list-style-type: none;
-  padding: 0;
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.4rem;
-  color: white;
-}
-
-footer ul li {
-  margin-bottom: 1em;
-}
-
-footer a {
-  color: white;
-}
-
-footer a:hover {
-  color: #46A5DB;
-}
-
-
-a {
-  color: #46A5DB;
-}
-a:hover {
-  color: #1C5D82;
-}
-
-h2 {
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.4rem;
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  color: #6894B5;
-}
-
-h3 {
-  font-weight: 600;
-  font-size: 2.25rem;
-  line-height: 2.6875rem;
-  margin-bottom: 2rem;
-  color: #474747;
-}
-
-h4 {
-  color: #3D5058;
-  font-weight: bold;
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.4rem;
-}
-
-h4 span {
-  font-weight: normal;
-}
-
-p {
-  font-size: .875rem;
-  line-height: 1.0625rem;
-  margin-bottom: 1rem;
-  color: #474747;
-}
-
-p.caption {
-  font-size: 1rem;
-  line-height: 1.375rem;
-  text-align: center;
-  margin: 0 auto 2rem;
-}
-
-.btn {
-  border-radius: 2rem;
-  font-weight: 600;
-  font-size: 1.5rem;
-  line-height: 1.8125rem;  
-  padding: 1rem 2rem;
-}
-
-.btn-primary {
-  background-color: #6894B5;
-  border-color: #6894B5;
-  color: #FFFFFF;
-}
-
-.btn-primary:hover {
-  background-color: #1C5D82;
-  border-color: #1C5D82;
-}
-
-.btn-outline-primary {
-  border-color: #6894B5;
-  color: #6894B5;
-  border-width: 3px;
-}
-
-.btn-outline-primary:hover {
-  background-color: #6894B5;
-  border-color: #6894B5;
-}
-
-form {
-  margin-top: 2rem;
-}
-
-form .btn-primary {
-  color: white;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-.form-field {
+html, body {
   background-color: white;
-  padding: .5rem .625rem;
-  box-shadow: 0px .375rem .625rem rgba(118, 140, 151, 0.15);
 }
 
-.form-field label {
-  font-size: .875rem;
-  line-height: 1.0625rem;
-  font-weight: 600;
-  color: #94A6AD;
-  margin-bottom: 0.25rem;
-}
-
-.form-field .form-control {
-  border-radius: 0;
-  border: 0;
-  font-size: 1.5rem;
-  line-height: 1.8125rem;
-  font-weight: 600;
-  color: #3D5058;
-  padding: 0;
-}
-
-.form-field input.form-control {
-  height: calc(1.8125rem + .5625rem);
-}
-
-.form-field .form-control:focus {
-  box-shadow: none;
-}
-
-.form-check {
-  margin-bottom: .5rem;
-  padding-left: 1.75rem;
-}
-
-.form-check-input {
-  display: inline-block;
-  opacity: 0;
-  width: 22px;
-}
-
-.form-check-label {
-  display: inline-block;
-  position: relative;
-  font-size: .875rem;
-  line-height: 1.5rem;
-  color: #3D5058;
-}
-
-.form-check-label:before, .form-check-label::after {
-  position: absolute;
-  display: inline-block;
-  left: -1.75rem;
-  top: 0;
-}
-
-.form-check-label::before {
-  content: "";
-
-  top: 2px;
-  height: 22px;
-  width: 22px;
-  background-color: white;
-
-  border: 2px solid #6894B5;
-  border-radius: 2px;
-}
-
-.form-check-input + .form-check-label::after {
-  content: none;
-}
-.form-check-input:checked + .form-check-label::after {
-  content: "\f00c";
-  font-family: 'Font Awesome 5 Free';
-  font-size: 1.125rem;
-  font-weight: 900;  
-  color: #6894B5;
-  left: -1.625rem;
-}
+/* Navbar */
 
 .navbar-brand {
   position: relative;
@@ -283,6 +65,19 @@ form .btn-primary {
   margin-bottom: 0.5rem;
 }
 
+.navbar-nav .btn-outline-primary {
+  background: #46A5DB;
+  color: #F1F5F8;
+  border-color: #F1F5F8;
+  margin: 0 1.5rem;
+  min-width: 7.5rem;
+}
+
+.navbar-nav .btn-outline-primary:hover {
+  background: #F1F5F8;
+  color: #46A5DB;
+}
+
 .navbar-expand-md .navbar-nav .nav-link {
   padding-left: 0;
   padding-right: 0;
@@ -291,6 +86,87 @@ form .btn-primary {
 .navbar-toggler {
   border-color: #F5F7F9;
   color: #F5F7F9;
+}
+
+/* Footer */
+
+footer {
+  background-image: url('/images/footer.jpg');
+  background-size: cover;
+  background-position: top center;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 3em 0;
+  font-size: .625rem;
+  font-weight: 600;
+  line-height: .75rem;
+  text-align: center;
+}
+
+footer img {
+  width: 243px;
+  height: 67px;
+  margin-bottom: 1rem;
+}
+
+footer ul {
+  list-style-type: none;  
+  padding: 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.4rem;
+  color: white;
+}
+
+footer ul li {
+  margin-bottom: 1em;
+}
+
+footer a {
+  color: white;
+}
+
+footer a:hover {
+  color: #46A5DB;
+}
+
+/* NaTriage redirect content */
+
+#redirect .modal-content {
+  background-color: #F1F5F8;
+  text-align: center;
+}
+
+#redirect .modal-content .modal-body {
+  margin: 4rem 0;
+}
+
+#redirect .modal-content p {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
+#redirect img[src$="logo-dark.png"] {
+  width: 100%;
+  max-width: 508px;
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+/* Home content */
+
+form {
+  margin-top: 2rem;
+}
+
+p.caption {
+  font-size: 1rem;
+  line-height: 1.375rem;
+  text-align: center;
+  margin: 0 auto 2rem;
 }
 
 section {
@@ -350,6 +226,7 @@ section .row {
 #home__valprop .btn-outline-primary {
   border-color: #F1F5F8;
   color: #F1F5F8;
+  width: min-content;
 }
 
 #home__valprop .btn-outline-primary:hover {
@@ -465,26 +342,4 @@ img[src*="bio-"] {
     margin-left: auto;
     margin-right: auto;
   }
-}
-
-#redirect .modal-content {
-  background-color: #F1F5F8;
-  text-align: center;
-}
-
-#redirect .modal-content .modal-body {
-  margin: 4rem 0;
-}
-
-#redirect .modal-content p {
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-}
-
-#redirect img[src$="logo-dark.png"] {
-  width: 100%;
-  max-width: 508px;
-  height: auto;
-  margin-bottom: 2rem;
 }

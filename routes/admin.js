@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 
+const interceptors = require('./interceptors');
+
 /* GET admin SPA index file */
-router.get('/*', function(req, res, next) {
-  const webpackStats = JSON.parse(fs.readFileSync('./client/webpack-stats.json'));
+router.get('/*', interceptors.requireLogin(), function(req, res, next) {
   res.render('admin/index', {
-    webpackStats: webpackStats,
     layout: 'admin/layout'
   });
 });

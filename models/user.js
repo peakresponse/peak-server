@@ -1,12 +1,108 @@
 'use strict';
 
 const bcrypt = require('bcrypt');
+const _ = require('lodash');
+const Sequelize = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate')
 const uuid = require('uuid/v4');
+
 const mailer = require('../emails/mailer');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  class User extends Sequelize.Model {
+    static associate(models) {
+      User.hasMany(models.Employment, {as: 'employments'});
+      User.hasMany(models.Patient, {as: 'createdPatients', foreignKey: 'createdById'});
+      User.hasMany(models.Patient, {as: 'updatedPatients', foreignKey: 'updatedById'});
+      User.hasMany(models.Observation, {as: 'observations', foreignKey: 'createdById'});
+    }
+
+    static async register(values, options) {
+      /// sanitize values
+      const sanitizedValues = _.mapValues(_.pick(values, ['firstName', 'lastName', 'email', 'position', 'password']), v => v ? v.trim() : '');
+      const user = User.build(sanitizedValues);
+      const errors = [];
+      /// first check if user with email already exists
+      const existingUser = await User.findOne({
+          where: {email: {[Sequelize.Op.iLike]: sanitizedValues.email}}
+        }, {transaction: options?.transaction});
+      if (existingUser) {
+        /// add error message
+        errors.push(new Sequelize.ValidationErrorItem('Email already registered', 'Validation error', 'email', sanitizedValues.email));
+      }
+      /// let Sequelize perform attribute validations
+      try {
+        await user.validate();
+      } catch (error) {
+        /// add in the Sequelize validation errors
+        errors.push(...error.errors);
+      }
+      /// if we've collected errors, throw
+      if (errors.length > 0) {
+        throw new Sequelize.ValidationError('Validation Error', errors);
+      }
+      /// otherwise, create the user and return
+      await user.save({transaction: options?.transaction});
+      /// done! return user object
+      return user;
+    }
+
+    async authenticate(password) {
+      return await bcrypt.compare(password, this.hashedPassword);
+    }
+
+    async sendPasswordResetEmail(agency, options) {
+      if (agency) {
+        /// check if there's a corresponding Employment record
+        const employment = await sequelize.models.Employment.findOne({where: {userId: this.id, agencyId: agency.id}, transaction: options?.transaction});
+        if (!employment) {
+          throw new Error();
+        }
+      }
+      let baseUrl = agency ? agency.baseUrl : process.env.BASE_URL;
+      await this.update({passwordResetToken: uuid(), passwordResetTokenExpiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)})
+      await mailer.send({
+        template: 'password-reset',
+        message: {
+          to: `${this.fullNameAndEmail}`
+        },
+        locals: {
+          url: `${baseUrl}/passwords/reset/${this.passwordResetToken}`
+        }
+      });
+    };
+
+    async sendWelcomeEmail(agency, options) {
+      const employment = await sequelize.models.Employment.findOne({where: {userId: this.id, agencyId: agency.id}, transaction: options?.transaction});
+      if (employment.isPending) {
+        await mailer.send({
+          template: 'pending',
+          message: {
+            to: `${this.fullNameAndEmail}`
+          },
+          locals: {
+            firstName: this.firstName,
+            agencyName: agency.name
+          }
+        });
+      } else {
+        await mailer.send({
+          template: 'welcome',
+          message: {
+            to: `${this.fullNameAndEmail}`
+          },
+          locals: {
+            firstName: this.firstName,
+            isOwner: employment.isOwner,
+            agencyName: agency.name,
+            agencyUrl: agency.baseUrl
+          }
+        });
+      }
+    }
+  };
+
+  User.init({
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -34,7 +130,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.CITEXT,
       allowNull: false,
       validate: {
         notNull: {
@@ -42,12 +138,57 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: 'Email cannot be blank'
+        },
+        isValid: function(value) {
+          if (value && value.trim() != '' && value.match(/^\S+@\S+\.\S+$/) == null) {
+            throw new Error('Invalid Email');
+          }
         }
+      }
+    },
+    position: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Position cannot be blank'
+        },
+        notEmpty: {
+          msg: 'Position cannot be blank'
+        }
+      }
+    },
+    fullName: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.firstName} ${this.lastName}`;
+      },
+      set() {
+        throw new Error('Do not try to set the `fullName` value!');
+      }
+    },
+    fullNameAndEmail: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.fullName} <${this.email}>`;
+      },
+      set() {
+        throw new Error('Do not try to set the `fullNameAndEmail` value!');
       }
     },
     iconUrl: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    password: {
+      type: DataTypes.VIRTUAL,
+      validate: {
+        isStrong: function(value) {
+          if (value.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/) == null) {
+            throw new Error('Password not secure enough');
+          }
+        }
+      }
     },
     hashedPassword: {
       type: DataTypes.STRING,
@@ -72,54 +213,22 @@ module.exports = (sequelize, DataTypes) => {
       field: 'password_reset_token_expires_at',
     }
   }, {
+    sequelize,
+    modelName: 'User',
     tableName: 'users',
     underscored: true
   });
-  User.associate = function(models) {
-    User.hasMany(models.Patient, {as: 'createdPatients', foreignKey: 'createdById'});
-    User.hasMany(models.Patient, {as: 'updatedPatients', foreignKey: 'updatedById'});
-    User.hasMany(models.Observation, {as: 'observations', foreignKey: 'createdById'});
 
-    User.isValidPassword = function(password) {
-      return password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) != null;
-    };
+  User.beforeSave(function(user, options) {
+    if (!user.changed('password')) return;
+    return bcrypt.hash(user.password, 12).then(function(hashedPassword) {
+      user.password = null;
+      user.hashedPassword = hashedPassword;
+      user.passwordResetToken = null;
+      user.passwordResetTokenExpiresAt = null;
+    });
+  });
 
-    User.prototype.hashPassword = function(password, object) {
-      return bcrypt.hash(password, 10).then(hashedPassword => {
-        return this.update({hashedPassword: hashedPassword, passwordResetTokenExpiresAt: new Date()}, object);
-      });
-    };
-
-    User.prototype.fullNameAndEmail = function() {
-      return `${this.firstName} ${this.lastName} <${this.email}>`
-    };
-
-    User.prototype.sendPasswordResetEmail = function() {
-      return this.update({
-        passwordResetToken: uuid(),
-        passwordResetTokenExpiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
-      }).then(function(user) {
-        return mailer.send({
-          template: 'password-reset',
-          message: {
-            to: `${user.fullNameAndEmail()}`
-          },
-          locals: {
-            url: `${process.env.BASE_URL}/passwords/reset/${user.passwordResetToken}`
-          }
-        });
-      });
-    };
-
-    User.prototype.sendWelcomeEmail = function() {
-      return mailer.send({
-        template: 'welcome',
-        message: {
-          to: `${this.fullNameAndEmail()}`
-        }
-      });
-    }
-  };
   sequelizePaginate.paginate(User)
   return User;
 };

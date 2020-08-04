@@ -8,14 +8,14 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th class="col-1">Code</th>
+          <th class="col-1">Id</th>
           <th>Name</th>
         </tr>
       </thead>
       <app-shared-list type="states">
         <ng-template let-record="record">
           <tr>
-            <td><a [routerLink]="['/states', record.id]">{{record.code}}</a></td>
+            <td><a [routerLink]="['/states', record.id]">{{record.id}}</a></td>
             <td><a [routerLink]="['/states', record.id]">{{record.name}}</a></td>
           </tr>
         </ng-template>

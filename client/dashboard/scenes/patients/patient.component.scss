@@ -1,0 +1,270 @@
+@import '../../../assets/css/variables';
+
+.modal {
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__navigation {
+  display: flex;
+  align-items: center;
+  height: 4.5rem;
+  padding: 0 1.5rem;
+}
+
+.modal__bar {
+  @include copy-l-regular;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: .3125rem;
+  border-top-right-radius: .3125rem;
+  padding: 0 3.5rem;
+  color: white;
+  height: 3.5rem;
+
+  a {
+    cursor: pointer;
+  }
+}
+
+.modal__action {
+  font-weight: 600;
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 3.5rem;
+  height: 13.75rem;
+}
+
+.modal__body {
+  background-color: $bgBackground;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.5rem 3.5rem;
+}
+
+.scene__name {
+  @include copy-l-bold;
+  color: $lowPriorityGrey;
+}
+
+.scene__elapsed-time {
+  @include copy-m-regular;
+}
+
+.patient__priority {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  z-index: 0;
+  padding-left: calc(3.5rem + 8rem + 1.25rem - .5rem);
+}
+
+.peakicon-remove {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.btn-priority {
+  border-radius: .5rem;
+  margin: 0 .5rem;
+  min-width: 10rem;
+  padding: 1.375rem 2rem 1.4325rem
+}
+
+.btn-priority--selected {
+  transform: scale(1.25);
+  box-shadow: $cardSelectedShadow;
+}
+
+.btn-priority--0 {
+  background-color: $immediateRed;
+  color: white;
+}
+
+.btn-priority--1 {
+  background-color: $delayedYellow;
+  color: $mainGrey;
+}
+
+.btn-priority--2 {
+  background-color: $minimalGreen;
+  color: $mainGrey;
+}
+
+.btn-priority--3 {
+  background-color: $expectGrey;
+  color: $mainGrey;
+}
+
+.btn-priority--4 {
+  background-color: $deadBlack;
+  color: white;
+}
+
+.btn-priority--5 {
+  background-color: $peakBlue;
+  color: white;
+}
+
+.btn-record {
+  background-color: $peakBlue;
+  border-color: $peakBlue;
+  box-shadow: $buttonShadow;
+  color: white;
+  min-width: 21.875rem;
+  position: relative;
+
+  &:hover {
+    background-color: $darkPeakBlue;
+    border-color: $darkPeakBlue;
+  }
+}
+
+.peakicon-record {
+  position: absolute;
+  left: 3rem;
+  font-size: 2rem;
+}
+
+.patient__updated {
+  position: absolute;
+  top: 1rem;
+  right: 3.5rem;
+
+  span {
+    font-weight: 600;
+  }
+}
+
+.patient__photo {
+  width: 8rem;
+  height: 8rem;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 4rem;
+  color: white;
+  margin-right: 1.25rem;
+  overflow: hidden;
+  text-align: center;
+  z-index: 1;
+
+  .peakicon-user {
+    position: relative;
+    top: .75rem;
+    font-size: 3.5rem;
+  }
+}
+
+.patient__name {
+  @include copy-xl-bold;
+  color: $mainGrey;
+  margin-bottom: .5rem;
+  text-transform: none;
+}
+
+.patient__actions {
+  display: flex;
+  justify-content: space-between;
+
+  .btn-outline-primary {
+    margin-right: .75rem;
+  }
+}
+
+.patient--0 {
+  .modal__bar, .patient__photo {
+    background-color: $immediateRed;
+  }
+  .modal__header {
+    background-color: $lightImmediateRed;
+  }
+}
+
+.patient--1 {
+  .modal__bar, .patient__photo {
+    background-color: $delayedYellow;
+  }
+  .modal__header {
+    background-color: $lightDelayedYellow;
+  }
+}
+
+.patient--2 {
+  .modal__bar, .patient__photo {
+    background-color: $minimalGreen;
+  }
+  .modal__header {
+    background-color: $lightMinimalGreen;
+  }
+}
+
+.patient--3 {
+  .modal__bar, .patient__photo {
+    background-color: $expectGrey;
+  }
+  .modal__header {
+    background-color: $lightExpectGrey;
+  }
+}
+
+.patient--4 {
+  .modal__bar, .patient__photo {
+    background-color: $deadBlack;
+  }
+  .modal__header {
+    background-color: $lightDeadBlack;
+  }
+}
+
+.patient--5 {
+  .modal__bar, .patient__photo {
+    background-color: $peakBlue;
+  }
+  .modal__header {
+    background-color: $lightPeakBlue;
+  }
+}
+
+.observation {
+  background: white;
+  border-radius: .3125rem;
+  box-shadow: $cardShadow;
+  padding: .5rem .75rem 1rem;
+  margin-bottom: .5rem;
+}
+
+.observation__header {
+  @include copy-xs-bold;
+  color: $lowPriorityGrey;
+  display: flex;
+  align-items: center;
+  margin-bottom: .625rem;;
+}
+
+shared-audio {
+  margin-right: .5rem;
+}
+
+.observation__timestamps {
+  @include copy-s-regular;
+  color: $greyPeakBlue;
+}
+
+.observation__text {
+  @include copy-s-bold;
+  color: $mainGrey;
+}

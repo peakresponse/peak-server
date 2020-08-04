@@ -1,0 +1,4 @@
+<header>
+  <div *ngIf="scene" class="scene"><span class="scene__name">{{scene.name}}</span> <span class="scene__elapsed-time">{{scene.elapsedTime$|async}}</span></div>
+  <ng-content></ng-content>
+</header>

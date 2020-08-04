@@ -1,2 +1,2 @@
 #!/bin/sh
-pg_dump -Fc -f /opt/node/app/latest.dump $DATABASE_URL
+pg_dump -Fc -f /opt/node/app/latest.dump $1

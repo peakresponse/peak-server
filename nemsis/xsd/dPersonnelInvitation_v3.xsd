@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="dPersonnel" id="dPersonnel.GeneralPersonnelInformation">
+		<xs:sequence>
+			<xs:element name="dPersonnel.PersonnelGroup" id="dPersonnel.PersonnelGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group tag to hold info about the personnel</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dPersonnel.NameGroup" id="dPersonnel.NameGroup" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Group tag to hold info about the personnel's name</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dPersonnel.01" id="dPersonnel.EMSPersonnelsLastName" minOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.01</number>
+													<name>EMS Personnel's Last Name</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The last name of the personnel.</definition>
+													<v2Number>D08_01</v2Number>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="PersonLastName">
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dPersonnel.02" id="dPersonnel.EMSPersonnelsFirstName" minOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.02</number>
+													<name>EMS Personnel's First Name</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The first name of the personnel.</definition>
+													<v2Number>D08_03</v2Number>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="PersonFirstName">
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dPersonnel.03" nillable="true" id="dPersonnel.EMSPersonnelsMiddleNameInitial" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.03</number>
+													<name>EMS Personnel's Middle Name/Initial</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The middle name or initial of the personnel.</definition>
+													<v2Number>D08_02</v2Number>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="PersonMiddleName">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.10" id="dPersonnel.EMSPersonnelsEmailAddress" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.10</number>
+										<name>EMS Personnel's Email Address</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The primary email address of the personnel.</definition>
+										<v2Number>D08_10</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EmailAddress">
+										<xs:attribute name="EmailAddressType" type="EmailAddressType" use="optional"/>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.31" nillable="true" id="dPersonnel.EMSPersonnelsEmploymentStatus" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.31</number>
+										<name>EMS Personnel's Employment Status</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The personnel's primary employment status for this agency.</definition>
+										<v2Number>D07_03</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EmploymentStatus">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.33" type="DateType" id="dPersonnel.EMSPersonnelsHireDate" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.33</number>
+										<name>EMS Personnel's Hire Date</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date the employee was hired by the EMS agency for this current job.</definition>
+										<usage>Optional</usage>
+										<comment>This is intended to collect information based on the current employment/job.  If the EMS personnel has a come and go status, this should reflect the most recent employment/job.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.34" nillable="true" id="dPersonnel.EMSPersonnelsPrimaryEMSJobRole" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.34</number>
+										<name>EMS Personnel's Primary EMS Job Role</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The individuals primary/main EMS role at the EMS agency. This is the function which is performed the majority of the time for the EMS personnel.</definition>
+										<usage>Recommended</usage>
+										<comment>This is a single choice data element which should reflect the EMS Personnel's primary/main job role for which he/she functions. It is understood that most EMS personnel perform more than one role as a part of their position. Other roles should be documented in dPersonnel.35 (EMS Personnel's Other Job Responsibilities).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="JobResponsibilities">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+					<xs:attribute name="UUID" type="UUID" use="required"></xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EmploymentStatus">
+		<xs:annotation>
+			<xs:documentation>Personnel's Employment Status for this Agency.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1531001">
+				<xs:annotation>
+					<xs:documentation>Full Time Paid Employee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1531003">
+				<xs:annotation>
+					<xs:documentation>Part Time Paid Employee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1531005">
+				<xs:annotation>
+					<xs:documentation>Volunteer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1531007">
+				<xs:annotation>
+					<xs:documentation>Neither an Employee Nor a Volunteer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobResponsibilities">
+		<xs:annotation>
+			<xs:documentation>The individuals primary/main EMS role at the EMS Agency. This is the function which is performed the majority of the time for the EMS professional.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1534001">
+				<xs:annotation>
+					<xs:documentation>Administrator/Manager</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534003">
+				<xs:annotation>
+					<xs:documentation>Driver/Pilot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534005">
+				<xs:annotation>
+					<xs:documentation>Educator/Preceptor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534007">
+				<xs:annotation>
+					<xs:documentation>Fire Suppression</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534009">
+				<xs:annotation>
+					<xs:documentation>First-Line Supervisor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534011">
+				<xs:annotation>
+					<xs:documentation>Law Enforcement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534013">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534015">
+				<xs:annotation>
+					<xs:documentation>Patient Care Provider</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534017">
+				<xs:annotation>
+					<xs:documentation>Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

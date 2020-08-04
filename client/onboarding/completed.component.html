@@ -1,0 +1,15 @@
+<app-shared-wizard [isBackVisible]="false" [isCancelVisible]="false" [isNextVisible]="false">
+  <ng-container class="wizard__header">
+    <h1 i18n>You’re all signed up!</h1>
+  </ng-container>
+  <div class="wizard__body">
+    <div class="row narrow">
+      <div class="col">
+        <p i18n>Click on your unique agency link below to sign in to start using Peak Response.</p>
+        <p i18n>You can also get our mobile app by following the link in your account confirmation email or by looking up Peak Response on the App Store.</p>
+        <p>&nbsp;</p>
+        <p class="text-center"><a class="btn btn-lg btn-primary" [href]="safeUrl">{{url}}</a></p>
+      </div>
+    </div>
+  </div>
+</app-shared-wizard>

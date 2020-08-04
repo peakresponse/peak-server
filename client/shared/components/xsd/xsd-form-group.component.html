@@ -1,0 +1,36 @@
+<div class="form-group">
+  <ng-container *ngIf="isGroup">
+    <label>{{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small></label>
+    <div *ngFor="let selectedValue of values; index as i" class="form-group-nested">
+      <hr />
+      <button *ngIf="i > 0 || !isRequired" (click)="remValue(selectedValue)" class="btn btn-sm btn-danger form-group-nested--remove" type="button">&times;</button>
+      <app-shared-xsd-form-group *ngFor="let nestedElement of groupElements"
+        [element]="nestedElement" [data]="selectedValue" [error]="error"></app-shared-xsd-form-group>
+    </div>
+    <ng-container *ngIf="isMulti || values?.length === 0 || !values">
+      <div *ngIf="values?.length > 0" class="form-group form-group-nested">
+        <hr />
+        <button (click)="addValue({})" class="btn btn-sm btn-outline-secondary" type="button">Add another {{displayName|inflection:'singularize'}}</button>
+      </div>
+      <div *ngIf="values?.length == 0 || !values" class="form-group">
+        <button (click)="addValue({})" class="btn btn-sm btn-outline-secondary" type="button">Add {{displayName|inflection:'singularize'}}</button>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="!isGroup">
+    <label [for]="formName" [class.text-danger]="isInvalid">
+      {{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small>
+    </label>
+    <ng-container *ngIf="!isMulti">
+      <app-shared-xsd-element [element]="element" [data]="data" [error]="error"></app-shared-xsd-element>
+      <small class="form-text" [class.text-muted]="!isInvalid" [class.text-danger]="isInvalid">{{displayText}}</small>
+    </ng-container>
+    <ng-container *ngIf="isMulti">
+      <div *ngFor="let selectedValue of values; index as i" class="mb-1">
+        <app-shared-xsd-element [element]="element" [data]="data" [error]="error" [index]="i" [selectedValue]="selectedValue"></app-shared-xsd-element>
+      </div>
+      <small class="form-text mt-0 mb-2" [class.text-muted]="!isInvalid" [class.text-danger]="isInvalid">{{displayText}}</small>
+      <div><button (click)="addValue({})" class="btn btn-sm btn-outline-secondary" type="button">Add</button></div>
+    </ng-container>
+  </ng-container>
+</div>

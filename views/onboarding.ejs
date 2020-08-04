@@ -1,0 +1,14 @@
+<%- contentFor('title') %><%= __('onboarding.title') %>
+<%- contentFor('head') %>
+<base href="/sign-up">
+<script type="text/javascript">
+  window.env = {};
+  window.env.ASSET_HOST = '<%= process.env.ASSET_HOST %>';
+</script>
+<%- contentFor('body') %>
+<app-onboarding><%= __('common.pleaseWait') %></app-onboarding>
+<% for (let entry of ['onboarding']) { %>
+  <% for (let chunk of webpackStats.chunks[entry]) { %>
+    <script type="application/javascript" src="<%= chunk.publicPath %>"></script>
+  <% } %>
+<% } %>

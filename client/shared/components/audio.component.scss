@@ -1,0 +1,29 @@
+@import '../../assets/css/variables';
+
+:host {
+  display: block;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: $peakBlue;
+  border-radius: 1rem;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: normal;
+
+  &:hover {
+    background-color: $darkPeakBlue;
+    color: white;
+  }
+}
+
+.fa-play {
+  position: relative;
+  left: .0625rem;
+}

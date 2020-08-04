@@ -1,0 +1,10 @@
+<%- include('../layout/_header.html.ejs') %>
+<h1>You're Invited to Peak Response</h1>
+<p>You've been invited by <%= senderName %> to join the <%= agencyName %> on Peak Response.</p>
+<p>To accept your invitation, click on the link below.</p>
+<%- include('../layout/_button.html.ejs', {
+  label: 'Join Peak Response',
+  url: url
+}) %>
+<p><a href="<%= url %>"><%= url %></a></p>
+<%- include('../layout/_footer.html.ejs') %>

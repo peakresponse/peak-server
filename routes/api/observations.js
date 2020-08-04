@@ -11,14 +11,14 @@ const helpers = require('../helpers');
 
 const router = express.Router();
 
-router.get('/', interceptors.requireLogin, helpers.async(async function(req, res, next) {
+router.get('/', interceptors.requireLogin(), helpers.async(async function(req, res, next) {
   const records = await models.Observation.findAll({
     order: [['created_at', 'DESC']]
   });
   res.json(records.map(r => r.toJSON()));
 }));
 
-router.post('/', interceptors.requireLogin, helpers.async(async function(req, res, next) {
+router.post('/', interceptors.requireLogin(), helpers.async(async function(req, res, next) {
   const updatedAttributes = _.keys(req.body);
   _.pullAll(updatedAttributes, models.Observation.SYSTEM_ATTRIBUTES);
   const data = _.pick(req.body, updatedAttributes);
@@ -67,7 +67,7 @@ router.post('/', interceptors.requireLogin, helpers.async(async function(req, re
         messages: error.errors
       });
     } else {
-      res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     }
   }
 }));

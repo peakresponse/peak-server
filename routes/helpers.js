@@ -2,6 +2,7 @@
 
 const AWS = require('aws-sdk');
 const fs = require('fs-extra');
+const HttpStatus = require('http-status-codes');
 const inflection = require('inflection');
 const _ = require('lodash');
 const mime = require('mime-types');
@@ -11,9 +12,20 @@ const querystring = require('querystring');
 
 module.exports.async = function(handler) {
   return function(req, res, next) {
-    Promise.resolve(handler(req, res, next)).catch(err => {
-      console.log(err);
-      next(err);
+    Promise.resolve(handler(req, res, next)).catch(error => {
+      console.log(error);
+      if (error.name == 'SequelizeValidationError') {
+        /// if we've got a schema validation error, extract the individual errors
+        if (error.errors.length == 1 && error.errors[0].path == 'schema') {
+          error = error.errors[0].original;
+        }
+        res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          messages: error.errors.map(e => _.pick(e, ['path', 'message', 'value']))
+        });
+      } else {
+        next(error);
+      }
     });
   };
 };
@@ -55,28 +67,29 @@ module.exports.setPaginationHeaders = function(req, res, page, pages, total) {
   res.set(headers);
 }
 
-module.exports.register = function(res, errors) {
+module.exports.register = function(req, res, next) {
   res.locals.inflection = inflection;
 
   const hasError = function(name) {
-    return _.find(errors, e => e.path == name) !== undefined;
+    return _.find(res.locals.errors, e => e.path == name) !== undefined;
   };
   res.locals.hasError = hasError;
 
   const errorMessages = function(name) {
-    return _.uniq(_.map(_.filter(errors, e => e.path == name), e => e.message));
+    return _.uniq(_.compact(_.map(_.filter(res.locals.errors, e => e.path == name), e => e.message)));
   };
   res.locals.errorMessages = errorMessages;
 
-  res.locals.renderErrorMessages = function(name) {
-    if (hasError(name)) {
-      return `<div class="invalid-feedback d-block">${inflection.capitalize(errorMessages(name).join(', '))}.</div>`
+  res.locals.renderErrorMessages = function(name, classes) {
+    const messages = errorMessages(name);
+    if (messages.length > 0) {      
+      classes = classes || [];
+      classes.unshift('invalid-feedback');
+      return `<div class="${classes.join(' ')}">${inflection.capitalize(messages.join(', '))}.</div>`
     }
     return '';
   }
-}
 
-module.exports.assetHelpers = function(req, res, next) {
   res.locals.assetUrl = function(urlPath) {
     return `${process.env.ASSET_HOST}${urlPath}`;
   };

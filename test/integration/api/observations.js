@@ -15,7 +15,7 @@ describe('/api/observations', function() {
     await helpers.loadFixtures(['states', 'agencies', 'facilities', 'users']);
     testSession = session(app);
     await testSession.post('/login')
-      .send({email: 'johndoe@test.com', password: 'abcd1234'})
+      .send({email: 'admin@peakresponse.net', password: 'abcd1234'})
       .expect(200)
   });
 

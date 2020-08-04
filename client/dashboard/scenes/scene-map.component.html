@@ -1,0 +1,14 @@
+<app-dashboard-nav [scene]="scene"></app-dashboard-nav>
+<app-dashboard-header [scene]="scene"></app-dashboard-header>
+<app-dashboard-main>
+  <agm-map #map>
+    <ng-container *ngFor="let patient of scene.patients$|async; trackBy: trackById">
+      <agm-overlay *ngIf="patient.lat && patient.lng" [latitude]="+patient.lat" [longitude]="+patient.lng">
+        <div [routerLink]="[{outlets: {modal: ['patients', patient.id]}}]" class="marker" [style.background-image]="pinUrl(patient)|cssUrl">
+          <div class="marker__portrait" [style.background-image]="patient.portraitUrl|cssUrl"></div>
+        </div>
+      </agm-overlay>
+    </ng-container>
+  </agm-map>
+</app-dashboard-main>
+<router-outlet name="modal"></router-outlet>
