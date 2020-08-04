@@ -78,7 +78,8 @@ async function parseCounties(filePath) {
     }
     process.stdout.write('.');
     const [stateAbbr, stateCode, countyCode, name, classCode] = parts;
-    const [county,] = await models.County.findOrBuild({where: {stateCode, countyCode}});
+    const id = `${stateCode}${countyCode}`;
+    const [county,] = await models.County.findOrBuild({where: {id, stateCode, countyCode}});
     county.stateAbbr = stateAbbr;
     county.name = name;
     county.classCode = classCode;
