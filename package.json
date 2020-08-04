@@ -7,7 +7,7 @@
     "webpack-prod": "cross-env NODE_ENV=production webpack --mode production",
     "build": "npm run build:prod",
     "build:dev": "webpack-dev-server",
-    "build:prod": "npm run build:clean && ngc && npm run webpack-prod && npm run build:clean",
+    "build:prod": "npm run build:clean && npm run webpack-prod && npm run build:clean",
     "build:clean": "del-cli 'client/**/*.js' 'client/**/*.js.map' 'client/**/*.ngsummary.json' 'client/**/*.metadata.json' 'client/**/**/*.ngfactory.ts' 'client/**/*.ngstyle.ts' 'client/**/*.shim.ts'",
     "start": "nodemon -V --ignore ./client --ignore ./nemsis ./bin/www",
     "test": "mocha --recursive test/unit test/integration"

@@ -16,13 +16,13 @@ import { Patient} from './patient';
 })
 export class PatientComponent implements OnDestroy {
   private id: string = null;
-  private now = new Date();
   private intervalId: any;
   private subscription = new Subscription();
 
-  private patient: Patient;
-  private observation: Patient;
-  private isEditingPriority = false;
+  now = new Date();
+  patient: Patient;
+  observation: Patient;
+  isEditingPriority = false;
 
   private isSaving = false;
   private newVersion: number = null;

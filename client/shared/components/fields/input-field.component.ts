@@ -17,7 +17,7 @@ export class InputFieldComponent {
   @Input() propertyName: string;
   @Input() isFocusable: boolean = true;
 
-  private isFocused = false;
+  isFocused = false;
 
   get isEditing(): boolean {
     return this.target != null;

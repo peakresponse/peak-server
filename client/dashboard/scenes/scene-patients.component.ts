@@ -11,13 +11,14 @@ import { Patient } from './patients';
   styleUrls: ['./scene-patients.component.scss']
 })
 export class ScenePatientsComponent implements OnDestroy {
-  private tabIndex = 0;
-  private now = new Date();
+  tabIndex = 0;
+  now = new Date();
+
   private intervalId: any;
   private querySubscription: Subscription;
   private fragmentSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private scene: SceneService) {
+  constructor(private route: ActivatedRoute, private router: Router, public scene: SceneService) {
     this.intervalId = setInterval(() => this.now = new Date(), 1000);
     this.querySubscription = this.route.queryParams
       .subscribe((params: Params) => {

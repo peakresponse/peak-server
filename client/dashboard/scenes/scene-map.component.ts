@@ -12,7 +12,7 @@ import { Patient } from './patients';
 export class SceneMapComponent implements AfterViewInit {
   @ViewChild('map') private map: AgmMap;
 
-  constructor(private scene: SceneService) {}
+  constructor(public scene: SceneService) {}
 
   ngAfterViewInit() {
     this.map.mapReady.subscribe(() => {
@@ -31,6 +31,10 @@ export class SceneMapComponent implements AfterViewInit {
       this.map.fitBounds = bounds;
       this.map.triggerResize();
     }
+  }
+
+  trackById(patient: any, index: number): string {
+    return patient.id;
   }
 
   pinUrl(patient: any) {

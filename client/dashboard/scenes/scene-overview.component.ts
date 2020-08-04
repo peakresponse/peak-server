@@ -6,5 +6,5 @@ import { SceneService } from './scene.service';
   templateUrl: './scene-overview.component.html'
 })
 export class SceneOverviewComponent {
-  constructor(private scene: SceneService) {}
+  constructor(public scene: SceneService) {}
 }

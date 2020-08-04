@@ -1,7 +1,7 @@
 <app-dashboard-nav [scene]="scene"></app-dashboard-nav>
 <app-dashboard-header [scene]="scene">
   <nav class="nav tabs">
-    <a *ngFor="let tab of scene.stats; index as i" (click)="filter(i)" [class]="'nav-link tab tab--' + i" [class.tab--active]="i==tabIndex">
+    <a *ngFor="let tab of scene.stats$|async; index as i" (click)="filter(i)" [class]="'nav-link tab tab--' + i" [class.tab--active]="i==tabIndex">
       <span *ngIf="i==0" i18n>ALL</span>
       <span *ngIf="i==1" i18n>Immediate</span>
       <span *ngIf="i==2" i18n>Delayed</span>
