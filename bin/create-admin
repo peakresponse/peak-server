@@ -7,18 +7,16 @@ if (process.argv.length != 6) {
   return;
 }
 
-const bcrypt = require('bcrypt');
 const models = require('../models');
 
-bcrypt.hash(process.argv[5], 10).then(hashedPassword => {
-  models.User.create({
-    firstName: process.argv[2],
-    lastName: process.argv[3],
-    email: process.argv[4],
-    hashedPassword: hashedPassword,
-    isAdmin: true
-  }).then(user => {
-    console.log('Admin user created!');
-    models.sequelize.close();
-  });
+models.User.create({
+  firstName: process.argv[2],
+  lastName: process.argv[3],
+  email: process.argv[4],
+  password: process.argv[5],
+  position: 'Superuser',
+  isAdmin: true
+}).then(user => {
+  console.log('Admin user created!');
+  models.sequelize.close();
 });
