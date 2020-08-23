@@ -40,7 +40,7 @@ module.exports.passport = passport;
 module.exports.loadAgency = async function(req, res, next) {
   /// load demographic, if on subdomain
   let agency;
-  if (req.subdomains.length > 0) {
+  if (req.subdomains.length > (process.env.BASE_HOST.split('.').length - 2)) {
     agency = req.subdomains[0].trim();
   } else if (req.header('X-Agency-Subdomain')) {
     agency = req.header('X-Agency-Subdomain').trim();

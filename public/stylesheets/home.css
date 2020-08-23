@@ -30,8 +30,8 @@ html, body {
 
 .navbar.top .navbar-brand img {
   position: absolute;
-  width: 243px;
-  height: 67px;
+  width: 231px;
+  height: 61px;
   top: -9px;
 }
 
@@ -105,8 +105,8 @@ footer {
 }
 
 footer img {
-  width: 243px;
-  height: 67px;
+  width: 231px;
+  height: 61px;
   margin-bottom: 1rem;
 }
 
@@ -130,6 +130,31 @@ footer a {
 
 footer a:hover {
   color: #46A5DB;
+}
+
+#footer_icons {
+  margin-top: 2rem;
+}
+
+#footer_icons li {
+  display: inline-block;
+  margin: 0 .875rem;
+}
+
+#footer_icons img {
+  width: 45px;
+  height: 45px;
+}
+
+@media(max-width: 576px) {
+  #footer_icons li {
+    margin: 0 .5rem;
+  }
+
+  #footer_icons img {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 /* NaTriage redirect content */

@@ -53,8 +53,7 @@ if (process.env.MARKETING_ENABLED) {
   }));
 
   router.get('/', function(req, res, next) {
-    if (req.subdomains.length > 0) {
-      console.log('going next?');
+    if (req.subdomains.length > (process.env.BASE_HOST.split('.').length - 2)) {
       next();
     } else {
       res.render('index', {layout: false});
