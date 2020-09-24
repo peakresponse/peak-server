@@ -1,10 +1,22 @@
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 
-import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModal,
+  NgbModalRef,
+  ModalDismissReasons,
+} from '@ng-bootstrap/ng-bootstrap';
+import { extend } from 'lodash';
 
 @Component({
   selector: 'app-shared-modal',
-  templateUrl: './modal.component.html'
+  templateUrl: './modal.component.html',
 })
 export class ModalComponent {
   @Input() confirmLabel: string = null;
@@ -19,14 +31,17 @@ export class ModalComponent {
 
   constructor(private modal: NgbModal) {}
 
-  show(data: any) {
+  show(data: any, options?: any) {
     this.data = data;
-    this.open(this.content);
+    this.open(options);
     return false;
   }
 
-  open(content: any) {
-    this.modalRef = this.modal.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  open(options?: any) {
+    this.modalRef = this.modal.open(
+      this.content,
+      extend({ ariaLabelledBy: 'modal-basic-title' }, options)
+    );
   }
 
   onConfirm() {

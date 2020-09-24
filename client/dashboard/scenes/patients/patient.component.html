@@ -1,138 +1,139 @@
-<ng-container *ngIf="patient">
-  <div [class]="'modal patient patient--' + priority">
-    <div class="modal__navigation">
-      <div *ngIf="scene.isActive" class="scene">
-        <h1 class="scene__name">{{scene.name}} <span class="scene__elapsed-time">{{scene.elapsedTime$|async}}</span></h1>
-      </div>
+<div [class]="'modal patient patient--' + priority">
+  <div class="modal__navigation">
+    <div *ngIf="scene.isActive" class="scene">
+      <h1 class="scene__name">{{(scene.attributes$|async).name}} <span class="scene__elapsed-time">{{scene.elapsedTime$|async}}</span></h1>
     </div>
-    <div class="modal__bar">
-      <a (click)="onCancel()" *ngIf="!observation" i18n>Close</a>
-      <a (click)="onCancel()" *ngIf="observation" i18n>Cancel</a>
-      <a (click)="onEdit()" *ngIf="!observation" class="modal__action" i18n>Edit</a>
-      <a (click)="onSave()" *ngIf="observation" class="modal__action" i18n>Save</a>
+    <div *ngIf="!scene.isActive" (click)="onCancel()" class="back">
+      <i class="peakicon peakicon-back"></i> <span i18n>Back to Scene Summary</span>
     </div>
-    <div class="modal__header">
-      <div *ngIf="isEditingPriority" class="patient__priority">
-        <i (click)="isEditingPriority=false" class="peakicon peakicon-remove"></i>
-        <button *ngFor="let i of [0,0,0,0,0,0]; let p = index" type="button" (click)="onPriority(p)"
-          [class]="'btn btn-sm btn-priority btn-priority--' + p" [class.btn-priority--selected]="p == priority">
-          <span *ngIf="p==0">Immediate</span>
-          <span *ngIf="p==1">Delayed</span>
-          <span *ngIf="p==2">Minimal</span>
-          <span *ngIf="p==3">Expectant</span>
-          <span *ngIf="p==4">Dead</span>
-          <span *ngIf="p==5">Transported</span>
-        </button>
-      </div>
-      <div class="patient__updated"><span i18n>Last Update:</span> {{patient.updatedAt|relativeDate:now}}</div>
-      <div class="patient__photo" [style.background-image]="patient.portraitUrl|cssUrl">
-        <i *ngIf="!patient.portraitUrl" class="peakicon peakicon-user"></i>
-      </div>
-      <div class="flex-grow-1">
-        <h2 class="patient__name">{{patient.firstName}} {{patient.lastName}}</h2>
-        <div class="patient__actions" [class.invisible]="isEditingPriority" >
-          <div>
-            <button class="btn btn-sm btn-outline-primary" type="button" i18n>Transport</button>
-            <button (click)="isEditingPriority=true" class="btn btn-sm btn-outline-primary" type="button" i18n>Update Status</button>
-          </div>
-          <button class="btn btn-sm btn-record" type="button" i18n>
-            <i class="peakicon peakicon-record"></i> Record
-          </button>
-        </div>
-      </div>
+  </div>
+  <div class="modal__bar">
+    <a (click)="onCancel()" *ngIf="!observation" i18n>Close</a>
+    <a (click)="onCancel()" *ngIf="observation" i18n>Cancel</a>
+    <a (click)="onEdit()" *ngIf="!observation" class="modal__action" i18n>Edit</a>
+    <a (click)="onSave()" *ngIf="observation" class="modal__action" i18n>Save</a>
+  </div>
+  <div class="modal__header">
+    <div *ngIf="isEditingPriority" class="patient__priority">
+      <i (click)="isEditingPriority=false" class="peakicon peakicon-remove"></i>
+      <button *ngFor="let i of [0,0,0,0,0,0]; let p = index" type="button" (click)="onPriority(p)"
+        [class]="'btn btn-sm btn-priority btn-priority--' + p" [class.btn-priority--selected]="p == priority">
+        <span *ngIf="p==0">Immediate</span>
+        <span *ngIf="p==1">Delayed</span>
+        <span *ngIf="p==2">Minimal</span>
+        <span *ngIf="p==3">Expectant</span>
+        <span *ngIf="p==4">Dead</span>
+        <span *ngIf="p==5">Transported</span>
+      </button>
     </div>
-    <div class="modal__body">
-      <div class="row">
-        <div class="col-md-6 col-xl-4">
-          <fieldset>
-            <legend i18n>Patient Info</legend>
-            <div class="form-group">
-              <shared-field-input i18n-label label="First name" id="firstName" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-            <div class="form-group">
-              <shared-field-input i18n-label label="Last name" id="lastName" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-            <div class="form-group">
-              <shared-field-input i18n-label label="Age" id="age" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-          </fieldset>
-          <fieldset *ngIf="patient.transportAgencyId || patient.transportFacilityId">
-            <legend i18n>Transport</legend>
-            <div class="form-group">
-              <div class="form-field">
-                <label for="transportAgency">Agency</label>
-                <input type="text" readonly class="form-control-plaintext" tabindex="-1" [value]="patient.transportAgency?.name" />
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-field">
-                <label for="transportFacility">Facility</label>
-                <input type="text" readonly class="form-control-plaintext" tabindex="-1" [value]="patient.transportFacility?.name" />
-              </div>
-            </div>
-          </fieldset>
-          <fieldset *ngIf="!patient.transportAgencyId && !patient.transportFacilityId">
-            <legend i18n>Location</legend>
-            <div class="form-group">
-              <shared-field-input i18n-label label="Location" id="location" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-            <div class="form-group">
-              <shared-field-input i18n-label label="GPS" id="gps" [isFocusable]="false" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-          </fieldset>
+    <div *ngIf="patient?.updatedAt" class="patient__updated"><span i18n>Last Update:</span> {{patient?.updatedAt|relativeDate:now}}</div>
+    <div class="patient__photo" [style.background-image]="patient?.portraitUrl|cssUrl">
+      <i *ngIf="!patient?.portraitUrl" class="peakicon peakicon-user"></i>
+    </div>
+    <div class="flex-grow-1">
+      <h2 class="patient__name">{{observation ? observation.firstName : patient?.firstName}}&nbsp;{{observation ? observation.lastName : patient?.lastName}}</h2>
+      <div class="patient__actions" [class.invisible]="isEditingPriority" >
+        <div>
+          <button class="btn btn-sm btn-outline-primary" type="button" i18n>Transport</button>
+          <button (click)="isEditingPriority=true" class="btn btn-sm btn-outline-primary" type="button" i18n>Update Status</button>
         </div>
-        <div class="col-md-6 col-xl-4">
-          <fieldset>
-            <legend i18n>Vitals</legend>
-            <div class="form-group">
-              <shared-field-input i18n-label label="Respiratory Rate" id="respiratoryRate" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-            <div class="form-group">
-              <shared-field-input i18n-label label="Pulse" id="pulse" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-            <div class="form-group">
-              <shared-field-input i18n-label label="Capillary Refill" id="capillaryRefill" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-            <div class="form-group">
-              <shared-field-input i18n-label label="Blood Pressure" id="bloodPressure" [source]="patient" [target]="observation"></shared-field-input>
-            </div>
-          </fieldset>
-          <!-- <fieldset>
-            <legend i18n>Photos</legend>
-          </fieldset> -->
-        </div>
-        <div class="col-md-6 col-xl-4">
-          <fieldset>
-            <legend i18n>Observations</legend>
-            <ng-container *ngIf="observations(patient) as observations">
-              <div class="observation" *ngFor="let observation of observations; let i = index;">
-                <div class="observation__header">
-                  <shared-audio #audio [src]="observation.audioUrl"></shared-audio>
-                  <div>
-                    <span i18n>Observation</span> {{observations.length - i}}
-                    <div class="observation__timestamps">
-                      <span *ngIf="observation.audioUrl">
-                        <span *ngIf="audio.isPaused">{{audio.duration}}</span>
-                        <span *ngIf="!audio.isPaused">{{audio.currentTime$|async}}</span>
-                        &nbsp;|&nbsp; 
-                      </span>
-                      {{observation.updatedAt|date:'shortTime'}}
-                    </div>
-                  </div>
-                </div>
-                <div class="observation__text">{{observation.text}}</div>
-              </div>
-            </ng-container>
-          </fieldset>
-          <!-- <fieldset>
-            <legend i18n>Timeline</legend>
-            <ng-container *ngIf="observations(patient) as observations">
-              <div class="observation" *ngFor="let observation of observations; let i = index;">
-              </div>
-            </ng-container>
-          </fieldset> -->
-        </div>
+        <!-- <button class="btn btn-sm btn-record" type="button" i18n>
+          <i class="peakicon peakicon-record"></i> Record
+        </button> -->
       </div>
     </div>
   </div>
-</ng-container>
+  <div class="modal__body">
+    <div class="row">
+      <div class="col-md-6 col-xl-4">
+        <fieldset class="form-field-group">
+          <legend i18n>Patient Info</legend>
+          <div class="form-group">
+            <shared-field-input i18n-label label="First name" id="firstName" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+          <div class="form-group">
+            <shared-field-input i18n-label label="Last name" id="lastName" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+          <div class="form-group">
+            <shared-field-input i18n-label label="Age" id="age" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+        </fieldset>
+        <fieldset *ngIf="patient?.transportAgencyId || patient?.transportFacilityId" class="form-field-group">
+          <legend i18n>Transport</legend>
+          <div class="form-group">
+            <div class="form-field">
+              <label for="transportAgency">Agency</label>
+              <input type="text" readonly class="form-control-plaintext" tabindex="-1" [value]="patient?.transportAgency?.name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-field">
+              <label for="transportFacility">Facility</label>
+              <input type="text" readonly class="form-control-plaintext" tabindex="-1" [value]="patient?.transportFacility?.name" />
+            </div>
+          </div>
+        </fieldset>
+        <fieldset *ngIf="!patient?.transportAgencyId && !patient?.transportFacilityId" class="form-field-group">
+          <legend i18n>Location</legend>
+          <div class="form-group">
+            <shared-field-input i18n-label label="Location" id="location" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+          <div class="form-group">
+            <shared-field-input i18n-label label="GPS" id="gps" [isFocusable]="false" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+        </fieldset>
+      </div>
+      <div class="col-md-6 col-xl-4">
+        <fieldset class="form-field-group">
+          <legend i18n>Vitals</legend>
+          <div class="form-group">
+            <shared-field-input i18n-label label="Respiratory Rate" id="respiratoryRate" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+          <div class="form-group">
+            <shared-field-input i18n-label label="Pulse" id="pulse" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+          <div class="form-group">
+            <shared-field-input i18n-label label="Capillary Refill" id="capillaryRefill" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+          <div class="form-group">
+            <shared-field-input i18n-label label="Blood Pressure" id="bloodPressure" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+        </fieldset>
+        <!-- <fieldset>
+          <legend i18n>Photos</legend>
+        </fieldset> -->
+      </div>
+      <div class="col-md-6 col-xl-4">
+        <fieldset class="form-field-group">
+          <legend i18n>Observations</legend>
+          <ng-container *ngIf="observations(patient) as observations">
+            <div class="observation" *ngFor="let observation of observations; let i = index;">
+              <div class="observation__header">
+                <shared-audio #audio [src]="observation.audioUrl"></shared-audio>
+                <div>
+                  <span i18n>Observation</span> {{observations.length - i}}
+                  <div class="observation__timestamps">
+                    <span *ngIf="observation.audioUrl">
+                      <span *ngIf="audio.isPaused">{{audio.duration}}</span>
+                      <span *ngIf="!audio.isPaused">{{audio.currentTime$|async}}</span>
+                      &nbsp;|&nbsp; 
+                    </span>
+                    {{observation.updatedAt|date:'shortTime'}}
+                  </div>
+                </div>
+              </div>
+              <div class="observation__text">{{observation.text}}</div>
+            </div>
+          </ng-container>
+        </fieldset>
+        <!-- <fieldset>
+          <legend i18n>Timeline</legend>
+          <ng-container *ngIf="observations(patient) as observations">
+            <div class="observation" *ngFor="let observation of observations; let i = index;">
+            </div>
+          </ng-container>
+        </fieldset> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,4 @@
-'use strict';
-
+/* eslint-disable global-require */
 require('dotenv').config();
 
 const environment = (process.env.NODE_ENV || 'development').trim();

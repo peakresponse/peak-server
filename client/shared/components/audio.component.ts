@@ -1,4 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 
 import { Subscriber, Observable } from 'rxjs';
 import numeral from 'numeral';
@@ -6,7 +15,7 @@ import numeral from 'numeral';
 @Component({
   selector: 'shared-audio',
   templateUrl: './audio.component.html',
-  styleUrls: ['./audio.component.scss']
+  styleUrls: ['./audio.component.scss'],
 })
 export class AudioComponent implements AfterViewInit, OnDestroy {
   @Input() src: any;
@@ -20,11 +29,17 @@ export class AudioComponent implements AfterViewInit, OnDestroy {
         subscriber.next(this.currentTime);
       }
     };
-    this.audio?.nativeElement?.addEventListener('timeupdate', this.eventListener);
+    this.audio?.nativeElement?.addEventListener(
+      'timeupdate',
+      this.eventListener
+    );
   }
 
   ngOnDestroy() {
-    this.audio?.nativeElement?.removeEventListener('timeupdate', this.eventListener);
+    this.audio?.nativeElement?.removeEventListener(
+      'timeupdate',
+      this.eventListener
+    );
     this.eventListener = null;
   }
 
@@ -39,7 +54,7 @@ export class AudioComponent implements AfterViewInit, OnDestroy {
   }
 
   get currentTime$(): Observable<string> {
-    return new Observable<string>(subscriber => {
+    return new Observable<string>((subscriber) => {
       subscriber.next(this.currentTime);
       this.subscribers.push(subscriber);
       return () => {

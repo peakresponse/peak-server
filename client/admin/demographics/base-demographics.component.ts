@@ -8,12 +8,17 @@ import { Subscription, combineLatest, empty } from 'rxjs';
 import { filter, map, catchError } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 
-import { ApiService, AgencyService, NavigationService, SchemaService,
-  UserService } from '../../shared/services';
+import {
+  ApiService,
+  AgencyService,
+  NavigationService,
+  SchemaService,
+  UserService,
+} from '../../shared/services';
 
 @Component({
   templateUrl: './base-demographics.component.html',
-  styleUrls: ['./base-demographics.component.scss']
+  styleUrls: ['./base-demographics.component.scss'],
 })
 export class BaseDemographicsComponent {
   protected section: string;
@@ -32,18 +37,23 @@ export class BaseDemographicsComponent {
   isLoading = false;
   error: any = null;
 
-  constructor(private route: ActivatedRoute, private api: ApiService,
-    private agency: AgencyService, private navigation: NavigationService,
-    private schema: SchemaService, private user: UserService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private agency: AgencyService,
+    private navigation: NavigationService,
+    private schema: SchemaService,
+    private user: UserService
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.schema.get(this.sectionSchemaPath)
-      .subscribe(schema => {
-        this.sectionSchema = schema;
-        this.subscribeToRouteParams();
-      });
-    this.api.demographics[this.section].index()
+    this.schema.get(this.sectionSchemaPath).subscribe((schema) => {
+      this.sectionSchema = schema;
+      this.subscribeToRouteParams();
+    });
+    this.api.demographics[this.section]
+      .index()
       .subscribe((response: HttpResponse<any>) => {
         this.sectionData = response.body || {};
         this.subscribeToRouteParams();
@@ -55,7 +65,9 @@ export class BaseDemographicsComponent {
     const fragment = this.route.snapshot.fragment;
     /// if both id and fragment, replace with just id
     if (id && fragment) {
-      return this.navigation.replaceWith(this.navigation.getCurrentPath(), {id});
+      return this.navigation.replaceWith(this.navigation.getCurrentPath(), {
+        id,
+      });
     }
     this.isEditing = (id || fragment) != null;
     this.isNewRecord = this.isEditing && fragment != null;
@@ -76,11 +88,13 @@ export class BaseDemographicsComponent {
   }
 
   newRecord() {
-    return {_attributes: {UUID: uuid()}};
+    return { _attributes: { UUID: uuid() } };
   }
 
   findRecord(id: string) {
-    return find(this.data[this.groupElementName], {_attributes: {UUID: id} as any});
+    return find(this.data[this.groupElementName], {
+      _attributes: { UUID: id } as any,
+    });
   }
 
   subscribeToRouteParams() {
@@ -89,13 +103,15 @@ export class BaseDemographicsComponent {
       /// handle route params in initial navigation to component
       this.handleRouteParams();
       /// subscribe for any internal navigation between query/fragment paths
-      this.routerSubscription = this.navigation.getRouter().events
-        .pipe(filter((event: any) => event instanceof NavigationEnd))
+      this.routerSubscription = this.navigation
+        .getRouter()
+        .events.pipe(filter((event: any) => event instanceof NavigationEnd))
         .subscribe((event: NavigationEnd) => {
           const prevUrl = this.navigation.getPreviousUrl();
           if (prevUrl.endsWith('#new')) {
             this.sectionData = undefined;
-            this.api.demographics[this.section].index()
+            this.api.demographics[this.section]
+              .index()
               .subscribe((response: HttpResponse<any>) => {
                 this.sectionData = response.body || {};
               });
@@ -110,13 +126,16 @@ export class BaseDemographicsComponent {
   }
 
   get data(): any {
-    this.sectionData[this.rootElementName] = this.sectionData[this.rootElementName] || {};
+    this.sectionData[this.rootElementName] =
+      this.sectionData[this.rootElementName] || {};
     return this.sectionData[this.rootElementName];
   }
 
   get rootElementName(): string {
     if (!this.sectionSchemaRootElementName) {
-      this.sectionSchemaRootElementName = this.sectionSchema?.['xs:schema']?.['xs:complexType']?._attributes?.name;
+      this.sectionSchemaRootElementName = this.sectionSchema?.['xs:schema']?.[
+        'xs:complexType'
+      ]?._attributes?.name;
     }
     return this.sectionSchemaRootElementName;
   }
@@ -124,7 +143,9 @@ export class BaseDemographicsComponent {
   get rootChildElements(): any[] {
     let complexType = this.sectionSchema?.['xs:schema']?.['xs:complexType'];
     if (Array.isArray(complexType)) {
-      complexType = find(complexType, {_attributes: {name: this.rootElementName} as any});
+      complexType = find(complexType, {
+        _attributes: { name: this.rootElementName } as any,
+      });
     }
     return complexType?.['xs:sequence']?.['xs:element'];
   }
@@ -140,7 +161,9 @@ export class BaseDemographicsComponent {
   get childElements(): any[] {
     let childElements = this.rootChildElements;
     if (childElements?.length == 1) {
-      return childElements[0]?.['xs:complexType']?.['xs:sequence']?.['xs:element'];
+      return childElements[0]?.['xs:complexType']?.['xs:sequence']?.[
+        'xs:element'
+      ];
     }
     return childElements;
   }
@@ -152,7 +175,7 @@ export class BaseDemographicsComponent {
   onSelect(record: any) {
     const id = record._attributes?.UUID;
     if (id) {
-      this.navigation.goTo(this.navigation.getCurrentUrl(), {id});
+      this.navigation.goTo(this.navigation.getCurrentUrl(), { id });
     }
   }
 
@@ -179,15 +202,17 @@ export class BaseDemographicsComponent {
     }
     this.isLoading = true;
     this.error = null;
-    request.pipe(
+    request
+      .pipe(
         catchError((response: HttpErrorResponse) => {
           this.isLoading = false;
           this.error = response.error;
-          window.scrollTo({top: 0, behavior: 'smooth'});
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           set(this.record, ['_attributes', 'pr:isValid'], false);
           return empty();
         })
-      ).subscribe(() => {
+      )
+      .subscribe(() => {
         this.isLoading = false;
         set(this.record, ['_attributes', 'pr:isValid'], true);
         if (this.isNewRecord) {

@@ -11,27 +11,23 @@ const appRoutes: Routes = [
     component: ListStatesComponent,
     resolve: {
       agency: AgencyService,
-      user: UserService
+      user: UserService,
     },
     children: [
       {
         path: 'new',
-        component: NewStateComponent
+        component: NewStateComponent,
       },
       {
         path: ':id',
-        component: EditStateComponent
-      }
-    ]
-  }
+        component: EditStateComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class StatesRoutingModule {}

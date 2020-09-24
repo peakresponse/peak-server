@@ -12,15 +12,23 @@ import { PatientsModule } from './patients/patients.module';
 import { SceneService } from './scene.service';
 import { ScenesRoutingModule } from './scenes-routing.module';
 
-import { ListScenesComponent, SceneMapComponent, SceneOverviewComponent, ScenePatientsComponent, SceneSummaryComponent } from '.';
+import {
+  ListScenesComponent,
+  NewSceneComponent,
+  SceneMapComponent,
+  SceneOverviewComponent,
+  ScenePatientsComponent,
+  SceneSummaryComponent,
+} from '.';
 
 @NgModule({
   declarations: [
     ListScenesComponent,
+    NewSceneComponent,
     SceneMapComponent,
     SceneOverviewComponent,
     ScenePatientsComponent,
-    SceneSummaryComponent
+    SceneSummaryComponent,
   ],
   imports: [
     AgmCoreModule,
@@ -31,10 +39,8 @@ import { ListScenesComponent, SceneMapComponent, SceneOverviewComponent, ScenePa
     PatientsModule,
     SharedComponentsModule,
     SharedPipesModule,
-    ScenesRoutingModule
+    ScenesRoutingModule,
   ],
-  providers: [
-    SceneService
-  ]
+  providers: [SceneService],
 })
 export class ScenesModule {}

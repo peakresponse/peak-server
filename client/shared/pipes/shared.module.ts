@@ -1,8 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AssetPipe, CssUrlPipe, ErrorPipe, GetPipe, InflectionPipe, PhonePipe,
-  RelativeDatePipe } from '.';
+import {
+  AssetPipe,
+  CssUrlPipe,
+  ErrorPipe,
+  GetPipe,
+  InflectionPipe,
+  PhonePipe,
+  RelativeDatePipe,
+} from '.';
 
 @NgModule({
   declarations: [
@@ -23,9 +30,7 @@ import { AssetPipe, CssUrlPipe, ErrorPipe, GetPipe, InflectionPipe, PhonePipe,
     PhonePipe,
     RelativeDatePipe,
   ],
-  imports: [
-    CommonModule,
-  ],
-  providers: []
+  imports: [CommonModule],
+  providers: [],
 })
 export class SharedPipesModule {}

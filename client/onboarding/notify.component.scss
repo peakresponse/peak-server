@@ -2,7 +2,7 @@
 
 .form-group {
   @include copy-l-regular;
-  &>label {
+  & > label {
     @include copy-l-bold;
   }
 }

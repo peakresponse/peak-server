@@ -15,42 +15,42 @@ import { WelcomeComponent } from './welcome.component';
 const appRoutes: Routes = [
   {
     path: 'account',
-    component: AccountComponent
+    component: AccountComponent,
   },
   {
     path: 'agency',
-    component: AgencyComponent
+    component: AgencyComponent,
   },
   {
     path: 'done',
-    component: CompletedComponent
+    component: CompletedComponent,
   },
   {
     path: 'exists',
     component: AccountComponent,
     data: {
-      exists: true
-    }
+      exists: true,
+    },
   },
   {
     path: 'invite',
-    component: InviteComponent
+    component: InviteComponent,
   },
   {
     path: 'notify',
-    component: NotifyComponent
+    component: NotifyComponent,
   },
   {
     path: 'state',
-    component: StateComponent
+    component: StateComponent,
   },
   {
     path: 'welcome',
-    component: WelcomeComponent
+    component: WelcomeComponent,
   },
   {
     path: 'url',
-    component: UrlComponent
+    component: UrlComponent,
   },
   {
     path: '',
@@ -58,18 +58,13 @@ const appRoutes: Routes = [
     canActivate: [AppGuard],
     component: AccountComponent,
     data: {
-      exists: true
-    }
-  }
+      exists: true,
+    },
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
 })
-
 export class AppRoutingModule {}

@@ -7,12 +7,19 @@ import { SharedComponentsModule } from '../../shared/components';
 import { SharedPipesModule } from '../../shared/pipes';
 
 import { DemographicsRoutingModule } from './demographics-routing.module';
-import { AgencyDemographicsComponent, BaseDemographicsComponent,
+import {
+  AgencyDemographicsComponent,
+  BaseDemographicsComponent,
   ConfigurationDemographicsComponent,
-  ContactDemographicsComponent, CustomConfigurationDemographicsComponent,
-  CustomResultsDemographicsComponent, DeviceDemographicsComponent,
-  FacilityDemographicsComponent, LocationDemographicsComponent,
-  PersonnelDemographicsComponent, VehicleDemographicsComponent } from '.';
+  ContactDemographicsComponent,
+  CustomConfigurationDemographicsComponent,
+  CustomResultsDemographicsComponent,
+  DeviceDemographicsComponent,
+  FacilityDemographicsComponent,
+  LocationDemographicsComponent,
+  PersonnelDemographicsComponent,
+  VehicleDemographicsComponent,
+} from '.';
 
 @NgModule({
   declarations: [
@@ -26,7 +33,7 @@ import { AgencyDemographicsComponent, BaseDemographicsComponent,
     FacilityDemographicsComponent,
     LocationDemographicsComponent,
     PersonnelDemographicsComponent,
-    VehicleDemographicsComponent
+    VehicleDemographicsComponent,
   ],
   imports: [
     CommonModule,
@@ -34,8 +41,8 @@ import { AgencyDemographicsComponent, BaseDemographicsComponent,
     NgbModule,
     SharedComponentsModule,
     SharedPipesModule,
-    DemographicsRoutingModule
+    DemographicsRoutingModule,
   ],
-  providers: []
+  providers: [],
 })
 export class DemographicsModule {}

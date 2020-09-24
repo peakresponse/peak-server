@@ -1,4 +1,15 @@
 <header>
-  <div *ngIf="scene" class="scene"><span class="scene__name">{{scene.name}}</span> <span class="scene__elapsed-time">{{scene.elapsedTime$|async}}</span></div>
+  <div *ngIf="scene" class="scene"><span class="scene__name">{{(scene.attributes$|async).name}}</span> <span class="scene__elapsed-time">{{scene.elapsedTime$|async}}</span></div>
   <ng-content></ng-content>
+  <div *ngIf="backLink" [routerLink]="backLink" class="back"><i class="peakicon peakicon-back"></i> {{backLabel}}</div>
+  <div *ngIf="(agency?.activeScenes$|async)?.length === 0" class="banner" i18n>No Active Scenes</div>
+  <div class="user">
+    <div>
+      <div class="user__name">{{(user.attributes$|async)?.firstName}} {{(user.attributes$|async)?.lastName}}</div>
+      <div class="user__agency">{{(user.agency$|async)?.name}}</div>
+    </div>
+    <div class="user__photo" [style.background-image]="(user.attributes$|async)?.iconUrl|cssUrl">
+      <i *ngIf="!(user.attributes$|async)?.iconUrl" class="peakicon peakicon-user"></i>
+    </div>
+  </div>
 </header>

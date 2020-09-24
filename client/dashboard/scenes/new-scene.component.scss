@@ -1,0 +1,33 @@
+@import '../../assets/css/variables';
+
+header {
+  background-color: white;
+  height: 8rem;
+  box-shadow: $underShadow;
+
+  h1 {
+    @include copy-xl-bold;
+    color: $orangeAccent;
+    margin-bottom: 0;
+  }
+  p {
+    @include copy-m-bold;
+    color: $mainGrey;
+  }
+}
+
+.col-md-6 {
+  padding-right: 0.625rem;
+
+  & + .col-md-6 {
+    padding-left: 0.625rem;
+  }
+}
+
+.location {
+  @include copy-m-regular;
+
+  span {
+    font-weight: 600;
+  }
+}

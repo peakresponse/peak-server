@@ -1,44 +1,64 @@
 /// Main Blues
-$peakBlue: #46A5DB;
-$lightPeakBlue: #D0E9F7;
-$middlePeakBlue: #ADD7EF;
-$darkPeakBlue: #105E8A;
-$greyPeakBlue: #6894B5;
+$peakBlue: #46a5db;
+$lightPeakBlue: #d0e9f7;
+$middlePeakBlue: #add7ef;
+$darkPeakBlue: #105e8a;
+$greyPeakBlue: #6894b5;
 
 /// Backgrounds
-$bgBackground: #F1F5F8;
-$orangeAccent: #EE924F;
+$bgBackground: #f1f5f8;
+$orangeAccent: #ee924f;
 
 /// Text & Icons
-$mainGrey: #3D5058;
-$lowPriorityGrey: #94A6AD;
+$mainGrey: #3d5058;
+$lowPriorityGrey: #94a6ad;
 
 /// Triage States
-$minimalGreen: #6AE18B;
-$lightMinimalGreen: #C5F9D3;
-$delayedYellow: #F3D742;
-$lightDelayedYellow: #FBF8BD;
-$immediateRed: #ED7542;
-$lightImmediateRed: #FFDECF;
-$expectGrey: #BABFBB;
-$lightExpectGrey: #ECECEC;
+$minimalGreen: #6ae18b;
+$lightMinimalGreen: #c5f9d3;
+$delayedYellow: #f3d742;
+$lightDelayedYellow: #fbf8bd;
+$immediateRed: #ed7542;
+$lightImmediateRed: #ffdecf;
+$expectGrey: #babfbb;
+$lightExpectGrey: #ececec;
 $deadBlack: #474747;
-$lightDeadBlack: #BEBEBE;
+$lightDeadBlack: #bebebe;
 
 /// Gradients
 
-$peakGradient: linear-gradient(106.75deg, #155184 5.1%, #3194C6 33.49%, #7FC4D2 81.54%, #A5DEEA 109.93%);
-$lightPeakGradient: linear-gradient(106.75deg, #40A2D9 5.1%, #A1CEE7 49.87%, #A4DDEF 81.54%, #B7E5EE 109.93%);
-$darkPeakGradient: linear-gradient(106.75deg, #155184 5.1%, #3194C6 66.25%, #7FC4D2 106.65%);
+$peakGradient: linear-gradient(
+  106.75deg,
+  #155184 5.1%,
+  #3194c6 33.49%,
+  #7fc4d2 81.54%,
+  #a5deea 109.93%
+);
+$lightPeakGradient: linear-gradient(
+  106.75deg,
+  #40a2d9 5.1%,
+  #a1cee7 49.87%,
+  #a4ddef 81.54%,
+  #b7e5ee 109.93%
+);
+$darkPeakGradient: linear-gradient(
+  106.75deg,
+  #155184 5.1%,
+  #3194c6 66.25%,
+  #7fc4d2 106.65%
+);
 
 /// Shadows
 
-$cardShadow: 0px .375rem .625rem rgba(118, 140, 151, 0.15);
+$cardShadow: 0px 0.375rem 0.625rem rgba(118, 140, 151, 0.15);
 $cardSelectedShadow: 0px 10px 40px rgba(118, 140, 151, 0.4);
 $tabShadow: 0px -4px 10px rgba(118, 140, 151, 0.15);
 $tabSelectedShadow: 0px -6px 15px rgba(118, 140, 151, 0.2);
-$buttonShadow: 0px 2px 4px rgba(84, 133, 156, 0.04), 0px 1px 10px rgba(0, 0, 0, 0.05), 0px 4px 5px rgba(0, 0, 0, 0.06);
-$searchShadow: 0px 1px 1.48098px rgba(84, 133, 156, 0.1), 0px -2px 3.70246px rgba(104, 148, 181, 0.05), 0px 1px 2.96197px rgba(104, 148, 181, 0.1);
+$buttonShadow: 0px 2px 4px rgba(84, 133, 156, 0.04),
+  0px 1px 10px rgba(0, 0, 0, 0.05), 0px 4px 5px rgba(0, 0, 0, 0.06);
+$searchShadow: 0px 1px 1.48098px rgba(84, 133, 156, 0.1),
+  0px -2px 3.70246px rgba(104, 148, 181, 0.05),
+  0px 1px 2.96197px rgba(104, 148, 181, 0.1);
 $underShadow: 0px 3px 6px rgba(98, 99, 99, 0.1);
 $minimalShadow: 2px 3px 54px rgba(118, 140, 151, 0.1);
 
@@ -46,38 +66,38 @@ $minimalShadow: 2px 3px 54px rgba(118, 140, 151, 0.1);
 
 @mixin copy-xs-regular {
   font-weight: normal;
-  font-size: .625rem;
-  line-height: .75rem;
+  font-size: 0.625rem;
+  line-height: 0.75rem;
 }
 
 @mixin copy-xs-bold {
   font-weight: 600;
-  font-size: .625rem;
-  line-height: .75rem;
+  font-size: 0.625rem;
+  line-height: 0.75rem;
 }
 
 @mixin copy-s-regular {
   font-weight: normal;
-  font-size: .875rem;
+  font-size: 0.875rem;
   line-height: 1.0625rem;
 }
 
 @mixin copy-s-bold {
   font-weight: 600;
-  font-size: .875rem;
-  line-height: 1.0625rem;  
+  font-size: 0.875rem;
+  line-height: 1.0625rem;
 }
 
 @mixin copy-m-regular {
   font-weight: normal;
   font-size: 1.25rem;
-  line-height: 1.5rem;  
+  line-height: 1.5rem;
 }
 
 @mixin copy-m-bold {
   font-weight: 600;
   font-size: 1.25rem;
-  line-height: 1.5rem;  
+  line-height: 1.5rem;
 }
 
 @mixin copy-l-regular {
@@ -104,6 +124,18 @@ $minimalShadow: 2px 3px 54px rgba(118, 140, 151, 0.1);
   line-height: 2.6875rem;
 }
 
+@mixin copy-xxl-regular {
+  font-weight: normal;
+  font-size: 3rem;
+  line-height: 3.625rem;
+}
+
+@mixin copy-xxl-bold {
+  font-weight: 600;
+  font-size: 3rem;
+  line-height: 3.625rem;
+}
+
 @mixin copy-peakicons {
   font-family: peakicons !important;
   font-style: normal;
@@ -116,7 +148,7 @@ $minimalShadow: 2px 3px 54px rgba(118, 140, 151, 0.1);
 @mixin btn-xs {
   @include copy-s-bold;
   border-radius: 4rem;
-  padding: .6875rem 1rem .75rem;
+  padding: 0.6875rem 1rem 0.75rem;
   min-width: 10rem;
 }
 
@@ -153,8 +185,10 @@ $minimalShadow: 2px 3px 54px rgba(118, 140, 151, 0.1);
 $primary: $greyPeakBlue;
 $danger: $orangeAccent;
 $body-color: $deadBlack;
-$font-family-sans-serif: "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
 
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';

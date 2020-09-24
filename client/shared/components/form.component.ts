@@ -1,4 +1,11 @@
-import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ApiService, UserService } from '../services';
 
@@ -8,15 +15,15 @@ import clone from 'lodash/clone';
 
 @Component({
   selector: 'app-shared-form',
-  templateUrl: './form.component.html'
+  templateUrl: './form.component.html',
 })
 export class FormComponent {
   @Input() id: string = null;
   @Input() type: string;
   @Input() record: any = {};
   @Input() hideButtons = false;
-  @Input() createLabel: string = "Create";
-  @Input() updateLabel: string = "Update";
+  @Input() createLabel: string = 'Create';
+  @Input() updateLabel: string = 'Update';
   @Input() disabled = false;
   @Output() create = new EventEmitter<any>();
   @Output() update = new EventEmitter<any>();
@@ -27,7 +34,7 @@ export class FormComponent {
   updated = false;
   error = false;
 
-  constructor(protected api: ApiService, protected currentUser: UserService) { }
+  constructor(protected api: ApiService, protected currentUser: UserService) {}
 
   ngOnInit() {
     if (this.id) {
@@ -37,12 +44,15 @@ export class FormComponent {
 
   refresh(callback?: any) {
     this.loading = true;
-    this.api[this.type].get(this.id)
-      .pipe(catchError((response: HttpErrorResponse) => {
-        this.error = response.error;
-        this.loading = false;
-        return empty();
-      }))
+    this.api[this.type]
+      .get(this.id)
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          this.error = response.error;
+          this.loading = false;
+          return empty();
+        })
+      )
       .subscribe((response: HttpResponse<any>) => {
         this.loading = false;
         this.record = response.body;
@@ -55,14 +65,17 @@ export class FormComponent {
   onSubmit() {
     this.loading = true;
     this.updated = false;
-    this.error = false
+    this.error = false;
     if (this.id) {
-      this.api[this.type].update(this.id, this.record)
-        .pipe(catchError((response: HttpErrorResponse) => {
-          this.error = response.error;
-          this.loading = false;
-          return empty();
-        }))
+      this.api[this.type]
+        .update(this.id, this.record)
+        .pipe(
+          catchError((response: HttpErrorResponse) => {
+            this.error = response.error;
+            this.loading = false;
+            return empty();
+          })
+        )
         .subscribe((response: HttpResponse<any>) => {
           this.loading = false;
           this.updated = true;
@@ -70,12 +83,15 @@ export class FormComponent {
           this.update.emit(response.body);
         });
     } else {
-      this.api[this.type].create(this.record)
-        .pipe(catchError((response: HttpErrorResponse) => {
-          this.error = response.error;
-          this.loading = false;
-          return empty();
-        }))
+      this.api[this.type]
+        .create(this.record)
+        .pipe(
+          catchError((response: HttpErrorResponse) => {
+            this.error = response.error;
+            this.loading = false;
+            return empty();
+          })
+        )
         .subscribe((response: HttpResponse<any>) => {
           this.loading = false;
           this.create.emit(response.body);
@@ -87,12 +103,15 @@ export class FormComponent {
   onDelete() {
     this.loading = true;
     this.error = false;
-    this.api[this.type].delete(this.id)
-      .pipe(catchError((response: HttpErrorResponse) => {
-        this.error = response.error;
-        this.loading = false;
-        return empty();
-      }))
+    this.api[this.type]
+      .delete(this.id)
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          this.error = response.error;
+          this.loading = false;
+          return empty();
+        })
+      )
       .subscribe((response: HttpResponse<any>) => {
         this.loading = false;
         this.delete.emit(response.body);

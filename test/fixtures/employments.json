@@ -1,0 +1,119 @@
+[
+  {
+    "model": "Employment",
+    "data": {
+      "id": "8abdb57e-cebf-455c-8148-2ef16d383d55",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "userId": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "hiredAt": "2020-04-06T21:22:10.158Z",
+      "startedAt": "2020-04-06T21:22:10.158Z",
+      "endedAt": null,
+      "isOwner": true,
+      "roles": [],
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
+  },
+  {
+    "model": "Employment",
+    "data": {
+      "id": "5e5f2383-b25b-4cee-91a7-792ec9ca2848",
+      "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "userId": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
+      "hiredAt": "2020-04-06T21:22:10.158Z",
+      "startedAt": "2020-04-06T21:22:10.158Z",
+      "endedAt": null,
+      "isOwner": true,
+      "roles": [],
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
+      "createdById": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f"
+    }
+  },
+  {
+    "model": "Employment",
+    "data": {
+      "id": "7cbb1b90-ca89-4892-9a57-0e3c3447aca1",
+      "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "userId": "6f4a1b45-b465-4ec9-8127-292d87d7952b",
+      "hiredAt": "2020-04-06T21:22:10.158Z",
+      "startedAt": "2020-04-06T21:22:10.158Z",
+      "endedAt": null,
+      "isOwner": false,
+      "roles": [],
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "6f4a1b45-b465-4ec9-8127-292d87d7952b",
+      "createdById": "6f4a1b45-b465-4ec9-8127-292d87d7952b"
+    }
+  },
+  {
+    "model": "Employment",
+    "data": {
+      "id": "0544b426-2969-4f98-a458-e090cd3487e2",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "userId": "d12d1c45-baa7-4dfa-be2d-e08aed80d3a3",
+      "isPending": true,
+      "roles": [],
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
+  },
+  {
+    "model": "Employment",
+    "data": {
+      "id": "b0c2b79e-5905-417f-a790-ba77c1134d92",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "userId": "99b0ce13-138a-40db-9f05-da6475b8b4eb",
+      "endedAt": "2020-04-07T21:22:10.158Z",
+      "roles": [],
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
+  },
+  {
+    "model": "Employment",
+    "saveOptions": { "hooks": false },
+    "ignoreSet": true,
+    "data": {
+      "id": "50c06caf-9706-4305-bc3a-5462a7d20b6f",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "invitationCode": "eb9f6468-df4e-45d2-801f-c8e45d2fedea",
+      "invitationAt": "2020-04-06T21:22:10.158Z",
+      "firstName": "Invited",
+      "lastName": "Member",
+      "email": "invited.member@peakresponse.net",
+      "userId": null,
+      "hiredAt": null,
+      "startedAt": null,
+      "endedAt": null,
+      "isOwner": false,
+      "roles": [],
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "data": {
+        "_attributes": {
+          "UUID": "50c06caf-9706-4305-bc3a-5462a7d20b6f",
+          "pr:isValid": true
+        },
+        "dPersonnel.10": {
+          "_text": "invited.member@peakresponse.net"
+        },
+        "dPersonnel.NameGroup": {
+          "dPersonnel.01": { "_text": "Member" },
+          "dPersonnel.02": { "_text": "Invited" },
+          "dPersonnel.03": { "_text": null }
+        }
+      }
+    }
+  }
+]

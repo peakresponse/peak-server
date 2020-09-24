@@ -1,4 +1,4 @@
-'use strict'
+/* eslint-disable mocha/no-top-level-hooks, mocha/no-hooks-for-single-case, mocha/no-exports */
 
 /// MUST BE FIRST! set the NODE_ENV to test to disable logging, switch to test db
 process.env.NODE_ENV = 'test';
@@ -10,40 +10,47 @@ const path = require('path');
 
 const models = require('../models');
 
-const loadFixtures = async function(files) {
-  files = files.map(f => path.resolve(__dirname, `fixtures/${f}.json`));
-  await fixtures.loadFiles(files, models);
+const loadFixtures = async (files) => {
+  const filePaths = files.map((f) =>
+    path.resolve(__dirname, `fixtures/${f}.json`)
+  );
+  await fixtures.loadFiles(filePaths, models);
 };
 
-const recordNetworkRequests = function() {
+const recordNetworkRequests = () => {
   nock.recorder.rec();
-}
+};
 
-const resetDatabase = async function() {
+const resetDatabase = async () => {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
-    DELETE FROM demographics.contacts;
-    DELETE FROM demographics.employments;
-    DELETE FROM demographics.agencies;
-    DELETE FROM observations;
+    DELETE FROM patient_observations;
     DELETE FROM patients;
+    DELETE FROM responders;
+    DELETE FROM scene_observations;
+    DELETE FROM scenes;
+    DELETE FROM contacts;
+    DELETE FROM employments;
+    DELETE FROM agencies;
     DELETE FROM facilities;
     DELETE FROM agencies;
     DELETE FROM users;
     DELETE FROM states;
+    DELETE FROM counties;
+    DELETE FROM cities;
   `);
 };
 
-const sleep = function(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
-beforeEach(async function() {
+beforeEach(async () => {
   await resetDatabase();
   nodemailerMock.mock.reset();
 });
 
-after(async function() {
+after(async () => {
   /// close all db connections
   await models.sequelize.close();
 });
@@ -52,5 +59,5 @@ module.exports = {
   loadFixtures,
   recordNetworkRequests,
   resetDatabase,
-  sleep
+  sleep,
 };

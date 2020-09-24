@@ -26,6 +26,30 @@
   {
     "model": "User",
     "data": {
+      "id": "6f4a1b45-b465-4ec9-8127-292d87d7952b",
+      "firstName": "Third",
+      "lastName": "User",
+      "email": "third@peakresponse.net",
+      "position": "EMT",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
+      "firstName": "Bayshore",
+      "lastName": "User",
+      "email": "bayshore@peakresponse.net",
+      "position": "Paramedic",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
       "id": "d12d1c45-baa7-4dfa-be2d-e08aed80d3a3",
       "firstName": "Pending",
       "lastName": "User",
@@ -42,7 +66,7 @@
       "firstName": "Another",
       "lastName": "User",
       "position": "EMT",
-      "email": "another@peakresponse.net",
+      "email": "noemployments@peakresponse.net",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": false
     }

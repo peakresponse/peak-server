@@ -1,0 +1,110 @@
+@import '../../assets/css/variables';
+
+:host {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.backdrop {
+  padding-left: 8rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.backdrop--overlay {
+  background: rgba(61, 80, 88, 0.3);
+  backdrop-filter: blur(4px);
+  pointer-events: initial;
+}
+
+.scenes {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 26.25rem;
+}
+
+.scene {
+  background-color: $orangeAccent;
+  color: white;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  position: relative;
+  cursor: pointer;
+  pointer-events: initial;
+  &:hover {
+    background-color: $lowPriorityGrey;
+  }
+}
+
+.maximized-scene {
+  background-color: white;
+  width: 47rem;
+  margin: 1rem 1rem 0;
+  box-shadow: $cardSelectedShadow;
+  border-top-left-radius: 0.3125rem;
+  border-top-right-radius: 0.3125rem;
+
+  .scene {
+    border-top-left-radius: 0.3125rem;
+    border-top-right-radius: 0.3125rem;
+  }
+}
+
+.scene__icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+}
+
+.scene__name {
+  @include copy-xl-bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.scene__desc {
+  @include copy-m-bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.scene-map {
+  width: 752px;
+  height: 290px;
+  background-size: cover;
+  background-position: center center;
+  box-shadow: $cardShadow;
+}
+
+.scene-details {
+  padding: 1rem;
+  color: $mainGrey;
+  @include copy-m-regular;
+}
+
+.scene-details__timestamp {
+  @include copy-l-bold;
+  color: $greyPeakBlue;
+  margin-bottom: 1rem;
+}
+
+.scene-details__patients,
+.scene-details__transported {
+  margin-bottom: 0.5rem;
+}
+
+button {
+  pointer-events: initial;
+}

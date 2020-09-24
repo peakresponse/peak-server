@@ -1,147 +1,251 @@
-[{
-  "model": "Agency",
-  "data": {
-    "id": "e705f64b-1399-436e-a428-18c8378b3444",
-    "stateUniqueId": "S01-50120",
-    "number": "S01-50120",
-    "name": "Bay Medic Ambulance - Alameda",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:10.102Z",
-    "updatedAt": "2020-04-06T21:22:10.102Z",
-    "stateId": "06",
-    "data": {"sAgency.01": {"_text": "S01-50120"}, "sAgency.02": {"_text": "S01-50120"}, "sAgency.03": {"_text": "Bay Medic Ambulance - Alameda"}}
+[
+  {
+    "model": "Agency",
+    "data": {
+      "id": "e705f64b-1399-436e-a428-18c8378b3444",
+      "stateUniqueId": "S01-50120",
+      "number": "S01-50120",
+      "name": "Bay Medic Ambulance - Alameda",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z",
+      "stateId": "06",
+      "data": {
+        "sAgency.01": {
+          "_text": "S01-50120"
+        },
+        "sAgency.02": {
+          "_text": "S01-50120"
+        },
+        "sAgency.03": {
+          "_text": "Bay Medic Ambulance - Alameda"
+        }
+      }
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d",
+      "stateUniqueId": "S07-50120",
+      "number": "S07-50120",
+      "name": "Bay Medic Ambulance - Contra Costa",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "stateId": "06",
+      "data": {
+        "sAgency.01": {
+          "_text": "S07-50120"
+        },
+        "sAgency.02": {
+          "_text": "S07-50120"
+        },
+        "sAgency.03": {
+          "_text": "Bay Medic Ambulance - Contra Costa"
+        }
+      }
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "68865c35-e899-4e00-84bf-ae31bdff06a5",
+      "stateUniqueId": "S09-51789",
+      "number": "S09-51789",
+      "name": "Meeks Bay Fire Protection District",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:10.288Z",
+      "updatedAt": "2020-04-06T21:22:10.288Z",
+      "stateId": "06"
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "b331707a-3833-450c-9995-c61fbc794ab3",
+      "stateUniqueId": "S34-50120",
+      "number": "S34-50120",
+      "name": "Bay Medic Transportation - SAC",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:11.213Z",
+      "updatedAt": "2020-04-06T21:22:11.213Z",
+      "stateId": "06"
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "83aa05df-35d2-4902-b479-221ea2d2ae1e",
+      "stateUniqueId": "S38-50121",
+      "number": "S38-50121",
+      "name": "Bayshore Ambulance",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:11.434Z",
+      "updatedAt": "2020-04-06T21:22:11.434Z",
+      "stateId": "06"
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "38e62714-8d29-415d-abe4-3cd5f25f8b66",
+      "stateUniqueId": "S40-51099",
+      "number": "S40-51099",
+      "name": "Morro Bay City Fire Department",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:11.562Z",
+      "updatedAt": "2020-04-06T21:22:11.562Z",
+      "stateId": "06"
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "c672ed49-fe0d-401c-b49f-7878ffeae6fd",
+      "stateUniqueId": "S43-50121",
+      "number": "S43-50121",
+      "name": "Bayshore Ambulance Service",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:11.690Z",
+      "updatedAt": "2020-04-06T21:22:11.690Z",
+      "stateId": "06"
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "543482c0-3d8b-4324-823f-8f5bc10a84ec",
+      "stateUniqueId": "S48-50120",
+      "number": "S48-50120",
+      "name": "Bay Medic Ambulance - Solano",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:11.797Z",
+      "updatedAt": "2020-04-06T21:22:11.797Z",
+      "stateId": "06"
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "6b7ceef6-0be4-4791-848d-f115e8f15182",
+      "stateUniqueId": "S63-51643",
+      "number": "S63-51643",
+      "name": "Humboldt Bay Fire",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:12.357Z",
+      "updatedAt": "2020-04-06T21:22:12.357Z",
+      "stateId": "06"
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "7acca61d-8cca-494f-86b3-ee9fa6f5371c",
+      "stateUniqueId": "S65-50120",
+      "number": "S65-50120",
+      "name": "Bay Medic Ambulance - SSV",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:12.499Z",
+      "updatedAt": "2020-04-06T21:22:12.499Z",
+      "stateId": "06"
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "5de082f2-3242-43be-bc2b-6e9396815b4f",
+      "stateUniqueId": "S66-50146",
+      "number": "S66-50146",
+      "name": "Bodega Bay Fire Protection District",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:12.726Z",
+      "updatedAt": "2020-04-06T21:22:12.726Z",
+      "stateId": "06",
+      "data": {
+        "sAgency.01": {
+          "_text": "S66-50146"
+        },
+        "sAgency.02": {
+          "_text": "S66-50146"
+        },
+        "sAgency.03": {
+          "_text": "Bodega Bay Fire Protection District"
+        }
+      }
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "canonicalAgencyId": "2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d",
+      "subdomain": "bmacc",
+      "stateUniqueId": "S07-50120",
+      "number": "S07-50120",
+      "name": "Bay Medic Ambulance - Contra Costa",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "stateId": "06",
+      "data": {
+        "dAgency.01": {
+          "_text": "S07-50120"
+        },
+        "dAgency.02": {
+          "_text": "S07-50120"
+        },
+        "dAgency.03": {
+          "_text": "Bay Medic Ambulance - Contra Costa"
+        },
+        "dAgency.04": {
+          "_text": "06"
+        }
+      }
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "canonicalAgencyId": "83aa05df-35d2-4902-b479-221ea2d2ae1e",
+      "subdomain": "bayshoreambulance",
+      "stateUniqueId": "S38-50121",
+      "number": "S38-50121",
+      "name": "Bayshore Ambulance",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "stateId": "06",
+      "data": {
+        "dAgency.01": {
+          "_text": "S38-50121"
+        },
+        "dAgency.02": {
+          "_text": "S38-50121"
+        },
+        "dAgency.03": {
+          "_text": "Bayshore Ambulance"
+        },
+        "dAgency.04": {
+          "_text": "06"
+        }
+      }
+    }
   }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d",
-    "stateUniqueId": "S07-50120",
-    "number": "S07-50120",
-    "name": "Bay Medic Ambulance - Contra Costa",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:10.158Z",
-    "updatedAt": "2020-04-06T21:22:10.158Z",
-    "stateId": "06",
-    "data": {"sAgency.01": {"_text": "S07-50120"}, "sAgency.02": {"_text": "S07-50120"}, "sAgency.03": {"_text": "Bay Medic Ambulance - Contra Costa"}}
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "68865c35-e899-4e00-84bf-ae31bdff06a5",
-    "stateUniqueId": "S09-51789",
-    "number": "S09-51789",
-    "name": "Meeks Bay Fire Protection District",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:10.288Z",
-    "updatedAt": "2020-04-06T21:22:10.288Z",
-    "stateId": "06"
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "b331707a-3833-450c-9995-c61fbc794ab3",
-    "stateUniqueId": "S34-50120",
-    "number": "S34-50120",
-    "name": "Bay Medic Transportation - SAC",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:11.213Z",
-    "updatedAt": "2020-04-06T21:22:11.213Z",
-    "stateId": "06"
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "83aa05df-35d2-4902-b479-221ea2d2ae1e",
-    "stateUniqueId": "S38-50121",
-    "number": "S38-50121",
-    "name": "Bayshore Ambulance",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:11.434Z",
-    "updatedAt": "2020-04-06T21:22:11.434Z",
-    "stateId": "06"
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "38e62714-8d29-415d-abe4-3cd5f25f8b66",
-    "stateUniqueId": "S40-51099",
-    "number": "S40-51099",
-    "name": "Morro Bay City Fire Department",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:11.562Z",
-    "updatedAt": "2020-04-06T21:22:11.562Z",
-    "stateId": "06"
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "c672ed49-fe0d-401c-b49f-7878ffeae6fd",
-    "stateUniqueId": "S43-50121",
-    "number": "S43-50121",
-    "name": "Bayshore Ambulance Service",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:11.690Z",
-    "updatedAt": "2020-04-06T21:22:11.690Z",
-    "stateId": "06"
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "543482c0-3d8b-4324-823f-8f5bc10a84ec",
-    "stateUniqueId": "S48-50120",
-    "number": "S48-50120",
-    "name": "Bay Medic Ambulance - Solano",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:11.797Z",
-    "updatedAt": "2020-04-06T21:22:11.797Z",
-    "stateId": "06"
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "6b7ceef6-0be4-4791-848d-f115e8f15182",
-    "stateUniqueId": "S63-51643",
-    "number": "S63-51643",
-    "name": "Humboldt Bay Fire",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:12.357Z",
-    "updatedAt": "2020-04-06T21:22:12.357Z",
-    "stateId": "06"
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "7acca61d-8cca-494f-86b3-ee9fa6f5371c",
-    "stateUniqueId": "S65-50120",
-    "number": "S65-50120",
-    "name": "Bay Medic Ambulance - SSV",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:12.499Z",
-    "updatedAt": "2020-04-06T21:22:12.499Z",
-    "stateId": "06"
-  }
-}, {
-  "model": "Agency",
-  "data": {
-    "id": "5de082f2-3242-43be-bc2b-6e9396815b4f",
-    "stateUniqueId": "S66-50146",
-    "number": "S66-50146",
-    "name": "Bodega Bay Fire Protection District",
-    "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
-    "createdAt": "2020-04-06T21:22:12.726Z",
-    "updatedAt": "2020-04-06T21:22:12.726Z",
-    "stateId": "06",
-    "data": {"sAgency.01": {"_text": "S66-50146"}, "sAgency.02": {"_text": "S66-50146"}, "sAgency.03": {"_text": "Bodega Bay Fire Protection District"}}
-  }
-}]
+]

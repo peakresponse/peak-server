@@ -6,16 +6,34 @@ import { SortablejsModule } from 'angular-sortablejs';
 
 import { SharedPipesModule } from '../pipes';
 
-import { ArrayComponent, AudioComponent, AutoloadDirective, ClearComponent, ErrorComponent,
-  FormComponent, ListComponent, LoaderComponent, MaxValidatorDirective,
-  MinValidatorDirective, ModalComponent, UploaderComponent, WizardComponent } from '.';
+import {
+  ArrayComponent,
+  AudioComponent,
+  AutoloadDirective,
+  ClearComponent,
+  ErrorComponent,
+  FormComponent,
+  ListComponent,
+  LoaderComponent,
+  MaxValidatorDirective,
+  MinValidatorDirective,
+  ModalComponent,
+  UploaderComponent,
+  WizardComponent,
+} from '.';
 
 import { InputFieldComponent } from './fields';
 
-import { XsdBaseComponent, XsdDateTimeComponent, XsdElementComponent,
+import {
+  XsdBaseComponent,
+  XsdDateTimeComponent,
+  XsdElementComponent,
   XsdElementWrapperComponent,
-  XsdFormGroupComponent, XsdInputComponent, XsdSelectComponent,
-  XsdSelectStateComponent } from './xsd';
+  XsdFormGroupComponent,
+  XsdInputComponent,
+  XsdSelectComponent,
+  XsdSelectStateComponent,
+} from './xsd';
 
 @NgModule({
   declarations: [
@@ -43,7 +61,7 @@ import { XsdBaseComponent, XsdDateTimeComponent, XsdElementComponent,
     XsdFormGroupComponent,
     XsdInputComponent,
     XsdSelectComponent,
-    XsdSelectStateComponent
+    XsdSelectStateComponent,
   ],
   exports: [
     ArrayComponent,
@@ -68,15 +86,15 @@ import { XsdBaseComponent, XsdDateTimeComponent, XsdElementComponent,
     XsdFormGroupComponent,
     XsdInputComponent,
     XsdSelectComponent,
-    XsdSelectStateComponent
+    XsdSelectStateComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
     SortablejsModule,
-    SharedPipesModule
+    SharedPipesModule,
   ],
-  providers: []
+  providers: [],
 })
 export class SharedComponentsModule {}

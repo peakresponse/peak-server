@@ -1,9 +1,7 @@
-'use strict';
-
 const webpackMerge = require('webpack-merge');
 
 const commonConfig = require('./webpack.config.common');
-const helpers      = require('./helpers');
+const helpers = require('./helpers');
 
 module.exports = webpackMerge(commonConfig, {
   mode: 'development',
@@ -18,21 +16,22 @@ module.exports = webpackMerge(commonConfig, {
     historyApiFallback: true,
     stats: 'normal',
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-    }
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers':
+        'X-Requested-With, content-type, Authorization',
+    },
   },
 
   output: {
     path: helpers.root('../dist/'),
     publicPath: `http://${process.env.BASE_HOST}:8080/dist/`,
     filename: '[name].[hash].bundle.js',
-    chunkFilename: '[id].[hash].chunk.js'
+    chunkFilename: '[id].[hash].chunk.js',
   },
 
   optimization: {
-    noEmitOnErrors: true
+    noEmitOnErrors: true,
   },
 
   module: {
@@ -43,14 +42,14 @@ module.exports = webpackMerge(commonConfig, {
           {
             loader: 'awesome-typescript-loader',
             options: {
-              configFileName: helpers.root('tsconfig.json')
-            }
+              configFileName: helpers.root('tsconfig.json'),
+            },
           },
           'angular2-template-loader',
-          'angular-router-loader'
+          'angular-router-loader',
         ],
-        exclude: [/node_modules/]
-      }
-    ]
-  }
+        exclude: [/node_modules/],
+      },
+    ],
+  },
 });

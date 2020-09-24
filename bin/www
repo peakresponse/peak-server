@@ -7,6 +7,7 @@
 const app = require('../app');
 const debug = require('debug')('app:server');
 const http = require('http');
+const url = require('url');
 
 /**
  * Get port from environment and store in Express.
@@ -34,18 +35,8 @@ server.on('listening', onListening);
  * Create WebSocket server, handle session authentication on upgrade/connection
  */
 
-const wss = require('../wss');
-server.on('upgrade', function(request, socket, head) {
-  app.sessionParser(request, {}, () => {
-    if (!request.session.passport || !request.session.passport.user) {
-      socket.destroy();
-      return;
-    }
-    wss.handleUpgrade(request, socket, head, function(ws) {
-      wss.emit('connection', ws, request);
-    });
-  });
-});
+const {configure} = require('../wss');
+configure(server, app);
 
 /**
  * Normalize a port into a number, string, or false.

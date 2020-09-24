@@ -13,16 +13,11 @@ const appRoutes: Routes = [
       agency: AgencyService,
       user: UserService,
     },
-  }
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
 })
-
 export class AppRoutingModule {}

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-shared-clear',
   templateUrl: './clear.component.html',
-  styleUrls: ['./clear.component.scss']
+  styleUrls: ['./clear.component.scss'],
 })
 export class ClearComponent {
   @Input() object: any;

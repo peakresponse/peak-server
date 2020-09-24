@@ -1,13 +1,11 @@
-'use strict';
-
-const webpackMerge            = require('webpack-merge');
-const ngw                     = require('@ngtools/webpack');
-const UglifyJsPlugin          = require('uglifyjs-webpack-plugin');
+const webpackMerge = require('webpack-merge');
+const ngw = require('@ngtools/webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const cssnano                 = require('cssnano');
+const cssnano = require('cssnano');
 
-const commonConfig            = require('./webpack.config.common');
-const helpers                 = require('./helpers');
+const commonConfig = require('./webpack.config.common');
+const helpers = require('./helpers');
 
 module.exports = webpackMerge(commonConfig, {
   mode: 'production',
@@ -16,7 +14,7 @@ module.exports = webpackMerge(commonConfig, {
     path: helpers.root('dist'),
     publicPath: '/client/',
     filename: '[name].[hash].js',
-    chunkFilename: '[id].[hash].chunk.js'
+    chunkFilename: '[id].[hash].chunk.js',
   },
 
   optimization: {
@@ -24,27 +22,27 @@ module.exports = webpackMerge(commonConfig, {
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
-        parallel: true
+        parallel: true,
       }),
       new OptimizeCSSAssetsPlugin({
         cssProcessor: cssnano,
         cssProcessorOptions: {
           discardComments: {
-            removeAll: true
-          }
+            removeAll: true,
+          },
         },
-        canPrint: false
-      })
-    ]
+        canPrint: false,
+      }),
+    ],
   },
 
   module: {
     rules: [
       {
         test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
-        loader: '@ngtools/webpack'
-      }
-    ]
+        loader: '@ngtools/webpack',
+      },
+    ],
   },
 
   plugins: [
@@ -53,8 +51,8 @@ module.exports = webpackMerge(commonConfig, {
       entryModules: [
         helpers.root('client', 'admin', 'app.module#AdminAppModule'),
         helpers.root('client', 'dashboard', 'app.module#DashboardAppModule'),
-        helpers.root('client', 'onboarding', 'app.module#OnboardingAppModule')
-      ]
-    })
-  ]
+        helpers.root('client', 'onboarding', 'app.module#OnboardingAppModule'),
+      ],
+    }),
+  ],
 });

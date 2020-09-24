@@ -1,17 +1,65 @@
-[{
-  "model": "State",
-  "data": {
-    "id": "06",
-    "name": "California",
-    "createdAt": "2020-04-06T21:21:25.531Z",
-    "updatedAt": "2020-04-06T21:22:29.410Z"
+[
+  {
+    "model": "State",
+    "data": {
+      "id": "01",
+      "name": "Alabama",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "06",
+      "name": "California",
+      "createdAt": "2020-04-06T21:21:25.531Z",
+      "updatedAt": "2020-04-06T21:22:29.410Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "12",
+      "name": "Florida",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "13",
+      "name": "Georgia",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "28",
+      "name": "Mississippi",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "37",
+      "name": "North Carolina",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "47",
+      "name": "Tennessee",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
   }
-}, {
-  "model": "State",
-  "data": {
-    "id": "01",
-    "name": "Alabama",
-    "createdAt": "2020-04-06T21:25:03.495Z",
-    "updatedAt": "2020-04-06T21:25:11.116Z"
-  }
-}]
+]

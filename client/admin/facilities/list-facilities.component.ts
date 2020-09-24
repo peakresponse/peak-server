@@ -4,9 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list-facilities.component.html',
-  styleUrls: ['./list-facilities.component.scss']
+  styleUrls: ['./list-facilities.component.scss'],
 })
 export class ListFacilitiesComponent {
-  constructor(public route: ActivatedRoute) {
-  }
+  constructor(public route: ActivatedRoute) {}
 }

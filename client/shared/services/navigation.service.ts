@@ -1,7 +1,12 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, PRIMARY_OUTLET, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  PRIMARY_OUTLET,
+  Router,
+} from '@angular/router';
 
 import isEmpty from 'lodash/isEmpty';
 import { Observable } from 'rxjs';
@@ -12,10 +17,15 @@ export class NavigationService {
   private currentUrl: string;
   private previousUrl: string;
 
-  constructor(private location: Location, private router: Router, private route: ActivatedRoute, private title: Title) {
+  constructor(
+    private location: Location,
+    private router: Router,
+    private route: ActivatedRoute,
+    private title: Title
+  ) {
     //// keep track of the current and previous url
     router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.previousUrl = this.currentUrl;
         this.currentUrl = event.url;
@@ -24,7 +34,7 @@ export class NavigationService {
     //// update Title from route data
     router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         map(() => this.route),
         map((route) => {
           while (route.firstChild) route = route.firstChild;
@@ -77,8 +87,13 @@ export class NavigationService {
     return this.previousUrl;
   }
 
-  goTo(url: string, queryParams: any = null, fragment: string = null, replaceUrl: boolean = false) {
-    this.router.navigate([url], {queryParams, fragment, replaceUrl});
+  goTo(
+    url: string,
+    queryParams: any = null,
+    fragment: string = null,
+    replaceUrl: boolean = false
+  ) {
+    this.router.navigate([url], { queryParams, fragment, replaceUrl });
   }
 
   replaceWith(url: any, queryParams: any = null, fragment: string = null) {
@@ -90,7 +105,13 @@ export class NavigationService {
       this.location.back();
     } else {
       const urlComponents = this.router.parseUrl(url);
-      this.router.navigate([`/${urlComponents.root.children[PRIMARY_OUTLET].toString()}`], {queryParams: urlComponents.queryParams, fragment: urlComponents.fragment});
+      this.router.navigate(
+        [`/${urlComponents.root.children[PRIMARY_OUTLET].toString()}`],
+        {
+          queryParams: urlComponents.queryParams,
+          fragment: urlComponents.fragment,
+        }
+      );
     }
   }
 }

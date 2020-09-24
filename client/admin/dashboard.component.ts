@@ -6,6 +6,5 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  constructor(public route: ActivatedRoute) {
-  }
+  constructor(public route: ActivatedRoute) {}
 }

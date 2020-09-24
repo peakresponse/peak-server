@@ -1,13 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AgencyService, SchemaService, UserService } from '../../shared/services';
+import {
+  AgencyService,
+  SchemaService,
+  UserService,
+} from '../../shared/services';
 
-import { AgencyDemographicsComponent, ConfigurationDemographicsComponent,
-  ContactDemographicsComponent, CustomConfigurationDemographicsComponent,
-  CustomResultsDemographicsComponent, DeviceDemographicsComponent,
-  FacilityDemographicsComponent, LocationDemographicsComponent,
-  PersonnelDemographicsComponent, VehicleDemographicsComponent } from '.';
+import {
+  AgencyDemographicsComponent,
+  ConfigurationDemographicsComponent,
+  ContactDemographicsComponent,
+  CustomConfigurationDemographicsComponent,
+  CustomResultsDemographicsComponent,
+  DeviceDemographicsComponent,
+  FacilityDemographicsComponent,
+  LocationDemographicsComponent,
+  PersonnelDemographicsComponent,
+  VehicleDemographicsComponent,
+} from '.';
 
 const appRoutes: Routes = [
   {
@@ -20,54 +31,50 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'agency',
-        component: AgencyDemographicsComponent
+        component: AgencyDemographicsComponent,
       },
       {
         path: 'configuration',
-        component: ConfigurationDemographicsComponent
+        component: ConfigurationDemographicsComponent,
       },
       {
         path: 'contacts',
-        component: ContactDemographicsComponent
+        component: ContactDemographicsComponent,
       },
       {
         path: 'custom-configuration',
-        component: CustomConfigurationDemographicsComponent
+        component: CustomConfigurationDemographicsComponent,
       },
       {
         path: 'custom-results',
-        component: CustomResultsDemographicsComponent
+        component: CustomResultsDemographicsComponent,
       },
       {
         path: 'devices',
-        component: DeviceDemographicsComponent
+        component: DeviceDemographicsComponent,
       },
       {
         path: 'facilities',
-        component: FacilityDemographicsComponent
+        component: FacilityDemographicsComponent,
       },
       {
         path: 'locations',
-        component: LocationDemographicsComponent
+        component: LocationDemographicsComponent,
       },
       {
         path: 'personnel',
-        component: PersonnelDemographicsComponent
+        component: PersonnelDemographicsComponent,
       },
       {
         path: 'vehicles',
-        component: VehicleDemographicsComponent
+        component: VehicleDemographicsComponent,
       },
-    ]
+    ],
   },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class DemographicsRoutingModule {}

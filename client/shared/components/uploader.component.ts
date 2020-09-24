@@ -1,13 +1,19 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { empty } from 'rxjs';
 import { DirectUpload } from 'activestorage';
 
 import { ApiService, UserService } from '../services';
 
-
 class Uploader {
   file: File;
-  progress = "0%";
+  progress = '0%';
   error: any = null;
   upload: DirectUpload;
   callback: Function;
@@ -29,18 +35,20 @@ class Uploader {
   }
 
   directUploadWillStoreFileWithXHR(request: any) {
-    request.upload.addEventListener('progress', (event: any) => this.directUploadDidProgress(event))
+    request.upload.addEventListener('progress', (event: any) =>
+      this.directUploadDidProgress(event)
+    );
   }
 
   directUploadDidProgress(event: any) {
     // Use event.loaded and event.total to update the progress bar
-    this.progress = `${100 * event.loaded / event.total}%`;
+    this.progress = `${(100 * event.loaded) / event.total}%`;
   }
 }
 
 @Component({
   selector: 'app-shared-uploader',
-  templateUrl: './uploader.component.html'
+  templateUrl: './uploader.component.html',
 })
 export class UploaderComponent {
   @Input() record: any = null;
@@ -50,30 +58,34 @@ export class UploaderComponent {
   @ViewChild('fileInput') fileInput: ElementRef;
   uploaders: any[] = [];
 
-  constructor(protected api: ApiService, protected currentUser: UserService) { }
+  constructor(protected api: ApiService, protected currentUser: UserService) {}
 
   onChange(event: any) {
     for (let file of event.target.files) {
-      let uploader = new Uploader(file, this.directUploadURL, (uploader: Uploader, blob: any) => {
-        this.uploaders.splice(this.uploaders.indexOf(uploader), 1);
-        let upload: any = {
-          name: blob.filename,
-          href: blob.signed_id,
-          mediaType: blob.content_type,
-          file: file,
-          dataURL: null
-        };
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-          upload.dataURL = reader.result;
-          if (this.record) {
-            this.record[this.property] = this.record[this.property] || [];
-            this.record[this.property].push(upload);
-          }
-          this.onUploaded.emit(upload);
-        });
-        reader.readAsDataURL(upload.file);
-      });
+      let uploader = new Uploader(
+        file,
+        this.directUploadURL,
+        (uploader: Uploader, blob: any) => {
+          this.uploaders.splice(this.uploaders.indexOf(uploader), 1);
+          let upload: any = {
+            name: blob.filename,
+            href: blob.signed_id,
+            mediaType: blob.content_type,
+            file: file,
+            dataURL: null,
+          };
+          const reader = new FileReader();
+          reader.addEventListener('load', () => {
+            upload.dataURL = reader.result;
+            if (this.record) {
+              this.record[this.property] = this.record[this.property] || [];
+              this.record[this.property].push(upload);
+            }
+            this.onUploaded.emit(upload);
+          });
+          reader.readAsDataURL(upload.file);
+        }
+      );
       this.uploaders.push(uploader);
       uploader.start();
     }

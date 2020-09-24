@@ -1,15 +1,23 @@
 require('dotenv').config();
 
+if (!process.env.DATABASE_TEST_URL) {
+  process.env.DATABASE_TEST_URL = `${process.env.DATABASE_URL}_test`;
+}
+
 module.exports = {
   development: {
-    use_env_variable: 'DATABASE_URL'
+    // logging: false,
+    use_env_variable: 'DATABASE_URL',
   },
   test: {
     logging: false,
-    use_env_variable: 'DATABASE_TEST_URL'
+    use_env_variable: 'DATABASE_TEST_URL',
+    pool: {
+      max: 1,
+    },
   },
   production: {
     logging: false,
-    use_env_variable: 'DATABASE_URL'
-  }
+    use_env_variable: 'DATABASE_URL',
+  },
 };

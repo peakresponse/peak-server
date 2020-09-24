@@ -5,8 +5,11 @@ import { AgencyService, UserService } from '../shared/services';
 
 @Component({
   selector: 'app-admin',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
-  constructor(public currentAgency: AgencyService, public currentUser: UserService) {}
+  constructor(
+    public currentAgency: AgencyService,
+    public currentUser: UserService
+  ) {}
 }

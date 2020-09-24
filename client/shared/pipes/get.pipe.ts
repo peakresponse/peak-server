@@ -6,7 +6,7 @@ import get from 'lodash/get';
  * Searches for an error with the given path.
  */
 @Pipe({
-  name: 'get'
+  name: 'get',
 })
 export class GetPipe implements PipeTransform {
   transform(obj: any, path: string[]): any {

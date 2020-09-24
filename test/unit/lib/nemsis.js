@@ -1,17 +1,16 @@
-'use strict'
-
+/* eslint-disable func-names, no-await-in-loop */
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const helpers = require('../../helpers');
+require('../../helpers');
 const nemsis = require('../../../lib/nemsis');
 const nemsisMocks = require('../../mocks/nemsis');
 
-describe('lib', function() {
-  describe('nemsis', function() {
-    describe('getStateRepos()', function() {
-      it('should retrieve a list of all the state repositories', async function() {
+describe('lib', () => {
+  describe('nemsis', () => {
+    describe('getStateRepos()', () => {
+      it('should retrieve a list of all the state repositories', async () => {
         nemsisMocks.mockReposRequest();
 
         const data = await nemsis.getStateRepos();
@@ -21,8 +20,8 @@ describe('lib', function() {
       });
     });
 
-    describe('getStateRepoFiles()', function() {
-      it('should retrieve a list of files in the specified repository', async function() {
+    describe('getStateRepoFiles()', () => {
+      it('should retrieve a list of files in the specified repository', async () => {
         nemsisMocks.mockCaliforniaFilesRequest();
 
         const data = await nemsis.getStateRepoFiles('california');
@@ -32,16 +31,19 @@ describe('lib', function() {
       });
     });
 
-    describe('downloadStateRepoFiles()', function() {
-      it('should download all supported files in the specified repository into a tmp path', async function() {
+    describe('downloadStateRepoFiles()', () => {
+      it('should download all supported files in the specified repository into a tmp path', async () => {
         nemsisMocks.mockCaliforniaFilesRequest();
         nemsisMocks.mockCaliforniaDownloads();
 
         const data = await nemsis.getStateRepoFiles('california');
-        const tmpDir = await nemsis.downloadRepoFiles('california', data.values);
+        const tmpDir = await nemsis.downloadRepoFiles(
+          'california',
+          data.values
+        );
         assert(tmpDir.name);
         assert(tmpDir.removeCallback);
-        for (let filePath of data.values) {
+        for (const filePath of data.values) {
           if (['.xml', '.xlsx'].includes(path.extname(filePath))) {
             assert(fs.existsSync(path.resolve(tmpDir.name, filePath)));
           }
@@ -50,18 +52,30 @@ describe('lib', function() {
       });
     });
 
-    describe('parseStateDataSet()', function() {
-      it('should return the xml as a string and the parsed result as a js object', async function() {
+    describe('parseStateDataSet()', () => {
+      it('should return the xml as a string and the parsed result as a js object', async function () {
         this.timeout(4000);
         nemsisMocks.mockCaliforniaFilesRequest();
         nemsisMocks.mockCaliforniaDownloads();
 
         const data = await nemsis.getStateRepoFiles('california');
-        const tmpDir = await nemsis.downloadRepoFiles('california', data.values);
-        for (let filePath of data.values) {
-          if (filePath.startsWith('Resources') && filePath.endsWith('StateDataSet.xml')) {
-            const result = await nemsis.parseStateDataSet(path.resolve(tmpDir.name, filePath));
-            assert(result.json.StateDataSet._attributes['xsi:schemaLocation'].indexOf('3.5.0') >= 0);
+        const tmpDir = await nemsis.downloadRepoFiles(
+          'california',
+          data.values
+        );
+        for (const filePath of data.values) {
+          if (
+            filePath.startsWith('Resources') &&
+            filePath.endsWith('StateDataSet.xml')
+          ) {
+            const result = await nemsis.parseStateDataSet(
+              path.resolve(tmpDir.name, filePath)
+            );
+            assert(
+              result.json.StateDataSet._attributes[
+                'xsi:schemaLocation'
+              ].indexOf('3.5.0') >= 0
+            );
             break;
           }
         }

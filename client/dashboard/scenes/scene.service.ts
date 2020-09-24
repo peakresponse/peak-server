@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
-import { Observable, of, EMPTY, Subscriber, Subscription }  from 'rxjs';
-import { catchError, mergeMap, take } from 'rxjs/operators';
+import { Observable, of, Subscription, ReplaySubject } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 
 import assign from 'lodash/assign';
 import find from 'lodash/find';
@@ -9,36 +9,60 @@ import orderBy from 'lodash/orderBy';
 import moment from 'moment';
 
 import { ApiService, WebSocketService } from '../../shared/services';
+import { Scene } from './scene';
 
 @Injectable()
 export class SceneService implements OnDestroy {
-  private subscription: Subscription = null;
-  private scene: any = null;
+  private scene: any = {};
+  private sceneSubscription: Subscription = null;
+  private sceneSubject = new ReplaySubject<any>(1);
+  private isSceneInitialized = false;
 
-  private _patients: any[] = [];
   private _filter: string = null;
   private _sort = 'priority';
-  private patientsSubscribers: Subscriber<any[]>[] = [];
 
-  private stats: any[] = Array(7).fill(null).map(() => ({total: 0, updates: []}));
-  private statsSubscribers: Subscriber<any[]>[] = [];
+  private elapsedTimeIntervalId: any = null;
+  private elapsedTimeSubject = new ReplaySubject<string>(1);
+
+  private patients: any[] = [];
+  private patientsSubject = new ReplaySubject<any[]>(1);
+
+  private responders: any[] = [];
+  private respondersSubject = new ReplaySubject<any[]>(1);
+
+  private stats: any[] = Array(7)
+    .fill(null)
+    .map(() => ({ total: 0, updates: [] }));
+  private statsSubject = new ReplaySubject<any[]>(1);
 
   private patientSubscribers: any = {};
 
+  constructor(private api: ApiService, private ws: WebSocketService) {
+    this.elapsedTimeIntervalId = setInterval(
+      () => this.elapsedTimeSubject.next(this.elapsedTime),
+      1000
+    );
+  }
+
   ngOnDestroy() {
-    this.subscription?.unsubscribe();
+    clearInterval(this.elapsedTimeIntervalId);
+    this.sceneSubscription?.unsubscribe();
   }
 
   get id(): string {
     return this.scene?.id;
   }
 
-  get name(): string {
-    return this.scene?.name;
-  }
-
   get isActive(): boolean {
     return this.scene?.isActive;
+  }
+
+  get attributes(): any {
+    return this.scene;
+  }
+
+  get attributes$(): Observable<any> {
+    return this.sceneSubject;
   }
 
   get filter(): string {
@@ -55,146 +79,198 @@ export class SceneService implements OnDestroy {
 
   set sort(sort: string) {
     this._sort = sort;
-    this.resort();
+    this.resortAndDispatch();
   }
 
   get elapsedTime(): string {
     if (this.scene) {
-      return moment.utc(moment().diff(moment(this.scene.createdAt))).format('HH:mm:ss');
+      return moment
+        .utc(moment().diff(moment(this.scene.createdAt)))
+        .format('HH:mm:ss');
     }
     return '--:--:--';
   }
 
   get elapsedTime$(): Observable<string> {
-    return new Observable<string>(subscriber => {
-      subscriber.next(this.elapsedTime);
-      const intervalId = setInterval(() => subscriber.next(this.elapsedTime), 1000);
-      return () => clearInterval(intervalId);
-    });
-  }
-
-  get patients(): any[] {
-    return this._patients;
+    return this.elapsedTimeSubject;
   }
 
   get patients$(): Observable<any[]> {
-    return new Observable<any[]>(subscriber => {
-      this.patientsSubscribers.push(subscriber);
-      subscriber.next(this._patients);
-      return () => {
-        const index = this.patientsSubscribers.indexOf(subscriber);
-        this.patientsSubscribers.splice(index, 1);
-      };
-    });
+    return this.patientsSubject;
+  }
+
+  get responders$(): Observable<any[]> {
+    return this.respondersSubject;
   }
 
   get stats$(): Observable<any[]> {
-    return new Observable<any[]>(subscriber => {
-      this.statsSubscribers.push(subscriber);
-      subscriber.next(this.stats);
-      return () => {
-        const index = this.statsSubscribers.indexOf(subscriber);
-        this.statsSubscribers.splice(index, 1);
-      };
-    });
+    return this.statsSubject;
   }
 
-  constructor(private api: ApiService, private ws: WebSocketService) { }
+  private reset() {
+    this.scene = {};
+    this._filter = null;
+    this._sort = 'priority';
 
-  load(id: string): Observable<any> {
-    this.subscription?.unsubscribe();
-    /// TODO fetch scene
-    this.scene = {id: 'demo', name: 'Demo Scene', isActive: true, createdAt: new Date()};
-    this.subscription = this.ws.connect()
-      .subscribe(records => {
-        /// process new records
-        for (let record of records) {
-          const found = find(this._patients, {id: record.id});
-          if (!found) {
-            this._patients.push(record);
-          } else {
-            assign(found, record);
-            this.fetchPatient(record.id);
-          }
-          /// ignore the first connection updates
-          if (this.ws.isConnected) {
-            /// add to ALL updates list
-            if (!found && !this.stats[0].updates.includes(record.id)) {
-              this.stats[0].updates.push(record.id);
-            }
-            /// then remove from any other tabs it may have been in
-            for (let i = 1; i < 7; i++) {
-              this.stats[i].updates = this.stats[i].updates.filter((id: string) => id != record.id);
-            }
-            /// and add it to its current priority tab
-            this.stats[record.priority + 1].updates.push(record.id);
-          }
-        }
-        /// reset and update stats
-        for (let stat of this.stats) {
-          stat.total = 0;
-        }
-        for (let patient of this._patients) {
-          /// increment total
-          this.stats[0].total += 1;
-          /// increment priority total
-          this.stats[patient.priority + 1].total += 1;
-        }
-        /// deliver to subscribers
-        for (let subscriber of this.statsSubscribers) {
-          subscriber.next(this.stats);
-        }
-        /// sort 
-        this.resort();
-        this.ws.isConnected = true;
+    this.patients = [];
+    this.responders = [];
+    this.stats = Array(7)
+      .fill(null)
+      .map(() => ({ total: 0, updates: [] }));
+
+    this.sceneSubject.next(this.scene);
+    this.patientsSubject.next(this.patients);
+    this.respondersSubject.next(this.responders);
+    this.statsSubject.next(this.stats);
+  }
+
+  connect(id: string): Observable<boolean> {
+    this.sceneSubscription?.unsubscribe();
+    this.reset();
+    if (id == 'demo') {
+      this.scene = new Scene({
+        id: 'demo',
+        name: 'Demo Scene',
+        isActive: true,
+        createdAt: new Date(),
       });
-    return of(this.scene);
+      return of(true);
+    } else {
+      return this.api.scenes.get(id).pipe(
+        catchError(() => of(false)),
+        tap((res) => {
+          this.scene = new Scene(res.body);
+          this.sceneSubject.next(this.scene);
+          this.subscribe(id);
+        }),
+        map(() => true)
+      );
+    }
+  }
+
+  close(): Observable<any> {
+    return this.api.scenes.close(this.id);
+  }
+
+  leave(): Observable<any> {
+    return this.api.scenes.leave(this.id);
+  }
+
+  disconnect() {
+    this.sceneSubscription?.unsubscribe();
+    this.sceneSubscription = null;
+    this.ws.close();
+  }
+
+  private subscribe(id: string) {
+    this.disconnect();
+    this.sceneSubscription = this.ws
+      .connect(`/scene?id=${id}`)
+      .subscribe((data) => {
+        if (data.scene) {
+          this.scene = new Scene(data.scene);
+          this.sceneSubject.next(this.scene);
+        }
+        if (data.responders) {
+          for (let responder of data.responders) {
+            const found = find(this.responders, {
+              user: { id: responder.user.id },
+            });
+            if (!found) {
+              this.responders.push(responder);
+            } else {
+              assign(found, responder);
+            }
+          }
+          this.respondersSubject.next(this.responders);
+        }
+        if (data.patients) {
+          /// process new records
+          for (let record of data.patients) {
+            const found = find(this.patients, { id: record.id });
+            if (!found) {
+              this.patients.push(record);
+            } else {
+              assign(found, record);
+            }
+            if (this.isSceneInitialized) {
+              /// add to ALL updates list
+              if (!found && !this.stats[0].updates.includes(record.id)) {
+                this.stats[0].updates.push(record.id);
+              }
+              /// then remove from any other tabs it may have been in
+              for (let i = 1; i < 7; i++) {
+                this.stats[i].updates = this.stats[i].updates.filter(
+                  (id: string) => id != record.id
+                );
+              }
+              /// and add it to its current priority tab
+              this.stats[record.priority + 1].updates.push(record.id);
+            }
+            if (this.patientSubscribers[record.id]?.length > 0) {
+              for (let subscriber of this.patientSubscribers[record.id]) {
+                subscriber.next(record);
+              }
+            }
+          }
+          this.isSceneInitialized = true;
+          /// reset and update stats
+          for (let stat of this.stats) {
+            stat.total = 0;
+          }
+          for (let patient of this.patients) {
+            /// increment total
+            this.stats[0].total += 1;
+            /// increment priority total
+            this.stats[patient.priority + 1].total += 1;
+          }
+          /// dispatch stats to subscribers
+          this.statsSubject.next(this.stats);
+          /// sort and dispatch updates
+          this.resortAndDispatch();
+        }
+      });
   }
 
   patient$(id: string): Observable<any> {
-    return new Observable<any[]>(subscriber => {
+    return new Observable<any[]>((subscriber) => {
       this.patientSubscribers[id] = this.patientSubscribers[id] || [];
       this.patientSubscribers[id].push(subscriber);
-      this.fetchPatient(id);
+      for (let patient of this.patients) {
+        if (patient.id == id) {
+          subscriber.next(patient);
+          break;
+        }
+      }
       return () => {
         const index = this.patientSubscribers[id].indexOf(subscriber);
         this.patientSubscribers[id].splice(index, 1);
+        if (this.patientSubscribers[id].length == 0) {
+          delete this.patientSubscribers[id];
+        }
       };
     });
   }
 
-  private fetchPatient(id: string) {
-    if (this.patientSubscribers[id]?.length > 0) {
-      this.api.patients.get(id).subscribe(res => {
-        const patient = res.body;
-        for (let subscriber of this.patientSubscribers[id]) {
-          subscriber.next(patient);
-        }
-      });
-    }
-  }
-
-  private resort() {
+  private resortAndDispatch() {
     switch (this._sort) {
-    case 'priority':
-      this._patients = orderBy(this._patients, ['priority'], ['asc']);
-      break;
-    case 'recent':
-      this._patients = orderBy(this._patients, ['updatedAt'], ['desc']);
-      break;
-    case 'longest':
-      this._patients = orderBy(this._patients, ['updatedAt'], ['asc']);
-      break;
-    case 'az':
-      this._patients = orderBy(this._patients, ['firstName'], ['asc']);
-      break;
-    case 'za':
-      this._patients = orderBy(this._patients, ['firstName'], ['desc']);
-      break;
+      case 'priority':
+        this.patients = orderBy(this.patients, ['priority'], ['asc']);
+        break;
+      case 'recent':
+        this.patients = orderBy(this.patients, ['updatedAt'], ['desc']);
+        break;
+      case 'longest':
+        this.patients = orderBy(this.patients, ['updatedAt'], ['asc']);
+        break;
+      case 'az':
+        this.patients = orderBy(this.patients, ['firstName'], ['asc']);
+        break;
+      case 'za':
+        this.patients = orderBy(this.patients, ['firstName'], ['desc']);
+        break;
     }
-    /// deliver to subscribers
-    for (let subscriber of this.patientsSubscribers) {
-      subscriber.next(this._patients);
-    }
+    /// dispatch to subscribers
+    this.patientsSubject.next(this.patients);
   }
 }

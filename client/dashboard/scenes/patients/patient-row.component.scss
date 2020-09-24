@@ -1,0 +1,122 @@
+@import '../../../assets/css/variables';
+
+.patient {
+  @include copy-m-regular;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  background: white;
+  border-radius: 0.3125rem;
+  box-shadow: 0px 6px 20px rgba(118, 140, 151, 0.1);
+  color: $mainGrey;
+  cursor: pointer;
+  height: 5.375rem;
+  margin: 0 0 1rem;
+  overflow: hidden;
+}
+
+.patient__photo {
+  border-radius: 2.3125rem;
+  width: 4.625rem;
+  height: 4.625rem;
+  color: white;
+  overflow: hidden;
+  text-align: center;
+  margin: 0 3rem 0 1rem;
+  background-size: cover;
+  background-position: center center;
+  .peakicon-user {
+    position: relative;
+    top: 0.75rem;
+    font-size: 3.5rem;
+  }
+}
+
+.patient__status {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  width: 21.75rem;
+}
+
+.patient__priority,
+.patient__name {
+  @include copy-m-bold;
+}
+
+.patient__updated {
+  @include copy-s-regular;
+}
+
+.patient__name {
+  flex-grow: 1;
+  padding: 0 4rem 0 2rem;
+}
+
+.patient__gender {
+  padding: 0 2rem;
+  width: 8rem;
+}
+
+.patient__age {
+  padding: 0 2rem;
+  width: 8rem;
+}
+
+.patient__location {
+  padding: 0 2rem;
+  width: 15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.patient__injury {
+  flex-grow: 1;
+  padding: 0 2rem;
+}
+
+.patient--0 {
+  .patient__photo {
+    background-color: $immediateRed;
+  }
+  .patient__status {
+    background: $lightImmediateRed;
+  }
+}
+
+.patient--1 {
+  .patient__photo {
+    background-color: $delayedYellow;
+  }
+  .patient__status {
+    background: $lightDelayedYellow;
+  }
+}
+
+.patient--2 {
+  .patient__photo {
+    background-color: $minimalGreen;
+  }
+  .patient__status {
+    background: $lightMinimalGreen;
+  }
+}
+
+.patient--3 {
+  .patient__photo {
+    background-color: $expectGrey;
+  }
+  .patient__status {
+    background: $lightExpectGrey;
+  }
+}
+
+.patient--4 {
+  .patient__photo {
+    background-color: $deadBlack;
+  }
+  .patient__status {
+    background: $lightDeadBlack;
+  }
+}

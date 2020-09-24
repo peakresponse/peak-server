@@ -10,19 +10,15 @@ import { StatesRoutingModule } from './states-routing.module';
 import { EditStateComponent, ListStatesComponent, NewStateComponent } from '.';
 
 @NgModule({
-  declarations: [
-    EditStateComponent,
-    ListStatesComponent,
-    NewStateComponent,
-  ],
+  declarations: [EditStateComponent, ListStatesComponent, NewStateComponent],
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
     SharedComponentsModule,
     SharedPipesModule,
-    StatesRoutingModule
+    StatesRoutingModule,
   ],
-  providers: []
+  providers: [],
 })
 export class StatesModule {}

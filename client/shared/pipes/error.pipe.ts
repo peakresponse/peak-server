@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  * Searches for an error with the given path.
  */
 @Pipe({
-  name: 'error'
+  name: 'error',
 })
 export class ErrorPipe implements PipeTransform {
   transform(errors: any[], path: string): string {

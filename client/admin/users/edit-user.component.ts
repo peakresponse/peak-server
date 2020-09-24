@@ -4,13 +4,16 @@ import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '../../shared/services';
 
 @Component({
-  templateUrl: './edit-user.component.html'
+  templateUrl: './edit-user.component.html',
 })
 export class EditUserComponent {
   id: string = null;
   icon: any = null;
 
-  constructor(private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private navigation: NavigationService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

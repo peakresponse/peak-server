@@ -4,7 +4,7 @@ import { BaseDemographicsComponent } from './base-demographics.component';
 
 @Component({
   templateUrl: './facility-demographics.component.html',
-  styleUrls: ['./base-demographics.component.scss']
+  styleUrls: ['./base-demographics.component.scss'],
 })
 export class FacilityDemographicsComponent extends BaseDemographicsComponent {
   ngOnInit() {
@@ -12,16 +12,20 @@ export class FacilityDemographicsComponent extends BaseDemographicsComponent {
     this.sectionHeader = 'Facilities';
     this.sectionSchemaPath = '/nemsis/xsd/dFacility_v3.json';
     this.sectionColumns = [
-      {name: 'Type', attr: ['dFacility.01'], class: 'col-5'},
-      {name: 'Name', attr: ['dFacility.FacilityGroup', 'dFacility.02'], class: 'col-5'}
-    ]
+      { name: 'Type', attr: ['dFacility.01'], class: 'col-5' },
+      {
+        name: 'Name',
+        attr: ['dFacility.FacilityGroup', 'dFacility.02'],
+        class: 'col-5',
+      },
+    ];
     super.ngOnInit();
   }
 
   newRecord() {
     const record = super.newRecord();
     record['dFacility.FacilityGroup'] = {
-      _attributes: record._attributes
+      _attributes: record._attributes,
     };
     return record;
   }

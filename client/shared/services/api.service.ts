@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-
 @Injectable()
 export class ApiService {
   constructor(private http: HttpClient) {}
@@ -26,12 +25,12 @@ export class ApiService {
     return this.http.delete(url, options);
   }
 
-  post(url: string, body: any|null, options?: any): Observable<any> {
+  post(url: string, body: any | null, options?: any): Observable<any> {
     options = this.prepareOptions(options);
     return this.http.post(url, body, options);
   }
 
-  put(url: string, body: any|null, options?: any): Observable<any> {
+  put(url: string, body: any | null, options?: any): Observable<any> {
     options = this.prepareOptions(options);
     return this.http.put(url, body, options);
   }
@@ -46,7 +45,7 @@ export class ApiService {
     options.observe = 'response';
     options.headers = options.headers || new HttpHeaders();
     options.headers = options.headers.set('Accept', 'application/json');
-    return options
+    return options;
   }
 
   parsePaginationLink(link?: string): any {
@@ -77,34 +76,28 @@ export class ApiService {
     me: (params?: HttpParams): Observable<any> => {
       return this.get('/api/agencies/me', params);
     },
-    demographic: (id: string, params?: HttpParams): Observable<any> => {
-      return this.get(`/api/agencies/${id}/demographic`, params);
+    validate: (subdomain: string): Observable<any> => {
+      return this.get(
+        `/api/agencies/validate`,
+        new HttpParams().set('subdomain', subdomain)
+      );
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/agencies/${id}`, params);
     },
-  };
-
-  home = {
-    contact: (data: any): Observable<any> => {
-      return this.post('/contact-us', data);
-    }
+    claim: (id: string, data: any): Observable<any> => {
+      return this.post(`/api/agencies/${id}/claim`, data);
+    },
   };
 
   demographics = {
-    validate: (subdomain: string): Observable<any> => {
-      return this.get(`/api/demographics/validate`, new HttpParams().set('subdomain', subdomain));
-    },
-    create: (data: any): Observable<any> => {
-      return this.post(`/api/demographics`, data);
-    },
     agency: {
       index: (params?: HttpParams): Observable<any> => {
         return this.get(`/api/demographics/agency`, params);
       },
       update: (data: any): Observable<any> => {
         return this.put(`/api/demographics/agency`, data);
-      }
+      },
     },
     configuration: {
       index: (params?: HttpParams): Observable<any> => {
@@ -131,12 +124,12 @@ export class ApiService {
     customConfiguration: {
       index: (params?: HttpParams): Observable<any> => {
         return this.get(`/api/demographics/custom-configuration`, params);
-      }
+      },
     },
     customResults: {
       index: (params?: HttpParams): Observable<any> => {
         return this.get(`/api/demographics/custom-results`, params);
-      }
+      },
     },
     devices: {
       index: (params?: HttpParams): Observable<any> => {
@@ -158,7 +151,7 @@ export class ApiService {
       },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/facilities/${id}`, data);
-      }
+      },
     },
     locations: {
       index: (params?: HttpParams): Observable<any> => {
@@ -169,7 +162,7 @@ export class ApiService {
       },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/locations/${id}`, data);
-      }
+      },
     },
     personnel: {
       index: (params?: HttpParams): Observable<any> => {
@@ -182,19 +175,25 @@ export class ApiService {
         return this.put(`/api/demographics/personnel/${id}`, data);
       },
       invite: (data: any, subdomain?: string): Observable<any> => {
-        const options = {headers: new HttpHeaders()};
+        const options = { headers: new HttpHeaders() };
         if (subdomain) {
-          options.headers = options.headers.set('X-Agency-Subdomain', subdomain);
+          options.headers = options.headers.set(
+            'X-Agency-Subdomain',
+            subdomain
+          );
         }
         return this.post(`/api/demographics/personnel/invite`, data, options);
       },
       accept: (data: any, subdomain?: string): Observable<any> => {
-        const options = {headers: new HttpHeaders()};
+        const options = { headers: new HttpHeaders() };
         if (subdomain) {
-          options.headers = options.headers.set('X-Agency-Subdomain', subdomain);
+          options.headers = options.headers.set(
+            'X-Agency-Subdomain',
+            subdomain
+          );
         }
         return this.post(`/api/demographics/personnel/accept`, data, options);
-      }
+      },
     },
     vehicles: {
       index: (params?: HttpParams): Observable<any> => {
@@ -205,7 +204,13 @@ export class ApiService {
       },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/vehicles/${id}`, data);
-      }
+      },
+    },
+  };
+
+  employments = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/employments', params);
     },
   };
 
@@ -218,9 +223,9 @@ export class ApiService {
     },
   };
 
-  observations = {
-    create: (data: any): Observable<any> => {
-      return this.post(`/api/observations`, data);
+  home = {
+    contact: (data: any): Observable<any> => {
+      return this.post('/contact-us', data);
     },
   };
 
@@ -230,6 +235,41 @@ export class ApiService {
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/patients/${id}`, params);
+    },
+    createOrUpdate: (data: any): Observable<any> => {
+      return this.post(`/api/patients`, data);
+    },
+  };
+
+  responders = {
+    index: (sceneId: string, params?: HttpParams): Observable<any> => {
+      params = params || new HttpParams();
+      params = params.set('sceneId', sceneId);
+      return this.get('/api/responders', params);
+    },
+  };
+
+  scenes = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/scenes', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/scenes`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/scenes/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/scenes/${id}`, data);
+    },
+    close: (id: string): Observable<any> => {
+      return this.patch(`/api/scenes/${id}/close`);
+    },
+    join: (id: string): Observable<any> => {
+      return this.patch(`/api/scenes/${id}/join`);
+    },
+    leave: (id: string): Observable<any> => {
+      return this.patch(`/api/scenes/${id}/leave`);
     },
   };
 
@@ -263,6 +303,14 @@ export class ApiService {
     },
     update: (id: string, data: any): Observable<any> => {
       return this.patch(`/api/users/${id}`, data);
+    },
+  };
+
+  utils = {
+    geocode: (lat: string, lng: string): Observable<any> => {
+      let params = new HttpParams();
+      params = params.set('lat', lat).set('lng', lng);
+      return this.get(`/api/utils/geocode`, params);
     },
   };
 }

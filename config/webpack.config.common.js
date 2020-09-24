@@ -1,41 +1,35 @@
-'use strict';
-
-const autoprefixer         = require('autoprefixer');
-const CleanWebpackPlugin   = require('clean-webpack-plugin');
-const HtmlWebpackPlugin    = require('html-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const BundleTracker        = require('webpack-bundle-tracker')
-const webpack              = require('webpack');
+const BundleTracker = require('webpack-bundle-tracker');
+const webpack = require('webpack');
 
-const helpers              = require('./helpers');
-const isDev                = process.env.NODE_ENV !== 'production';
+const helpers = require('./helpers');
+
+const isDev = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: {
     admin: './client/admin.ts',
     assets: './client/assets.ts',
     dashboard: './client/dashboard.ts',
-    onboarding: './client/onboarding.ts'
+    onboarding: './client/onboarding.ts',
   },
 
   resolve: {
-    extensions: ['.ts', '.js', '.scss']
+    extensions: ['.ts', '.js', '.scss'],
   },
 
   module: {
     rules: [
       {
         test: /\.html$/,
-        loader: 'html-loader'
+        loader: 'html-loader',
       },
       {
         test: /\.font\.js/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'webfonts-loader'
-        ],
-        include: helpers.root('client', 'assets')
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'webfonts-loader'],
+        include: helpers.root('client', 'assets'),
       },
       {
         test: /\.(scss|sass)$/,
@@ -45,12 +39,12 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => [autoprefixer()]
-            }
+              plugins: () => [autoprefixer()],
+            },
           },
-          { loader: 'sass-loader', options: { sourceMap: isDev } }
+          { loader: 'sass-loader', options: { sourceMap: isDev } },
         ],
-        include: helpers.root('client', 'assets')
+        include: helpers.root('client', 'assets'),
       },
       {
         test: /\.(scss|sass)$/,
@@ -60,34 +54,36 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => [autoprefixer()]
-            }
+              plugins: () => [autoprefixer()],
+            },
           },
-          { loader: 'sass-loader', options: { sourceMap: isDev } }
+          { loader: 'sass-loader', options: { sourceMap: isDev } },
         ],
         include: [
           helpers.root('client', 'admin'),
           helpers.root('client', 'dashboard'),
           helpers.root('client', 'onboarding'),
-          helpers.root('client', 'shared')
-        ]
-      }
-    ]
+          helpers.root('client', 'shared'),
+        ],
+      },
+    ],
   },
 
   plugins: [
-    //// fix "the request of a dependency is an expression" warning
-    //// https://github.com/angular/angular/issues/20357
+    /// fix "the request of a dependency is an expression" warning
+    /// https://github.com/angular/angular/issues/20357
     new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
-      /\@angular(\\|\/)core(\\|\/)fesm5/,
+      /@angular(\\|\/)core(\\|\/)fesm5/,
       helpers.root('src')
     ),
-    new CleanWebpackPlugin(
-      helpers.root('dist'), { root: helpers.root(), verbose: true }),
+    new CleanWebpackPlugin(helpers.root('dist'), {
+      root: helpers.root(),
+      verbose: true,
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
     }),
-    new BundleTracker({filename: './client/webpack-stats.json'})
-  ]
+    new BundleTracker({ filename: './client/webpack-stats.json' }),
+  ],
 };

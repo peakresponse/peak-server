@@ -8,23 +8,19 @@ export class WebSocketService implements OnDestroy {
   RETRY_SECONDS = 10;
 
   connection$: WebSocketSubject<any>;
-  isConnected = false;
 
   constructor() {}
 
-  connect(): Observable<any> {
+  connect(path: string): Observable<any> {
     return of(window.location.origin).pipe(
-      map(url => url.replace(/^http/, 'ws')),
-      switchMap(url => {
+      map((url) => `${url.replace(/^http/, 'ws')}${path}`),
+      switchMap((url) => {
         if (!this.connection$) {
           this.connection$ = webSocket(url);
         }
         return this.connection$;
       }),
-      retryWhen(errors => errors.pipe(
-        tap(err => this.isConnected = false),
-        delay(this.RETRY_SECONDS)
-      ))
+      retryWhen((errors) => errors.pipe(delay(this.RETRY_SECONDS)))
     );
   }
 

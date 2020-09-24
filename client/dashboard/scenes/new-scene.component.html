@@ -1,0 +1,76 @@
+<header class="d-flex flex-column justify-content-end">
+  <div class="container">
+    <h1 i18n>New Scene Set Up</h1>
+    <p>You can start the scene without filling anything in. You can always update this information later.</p>
+  </div>
+</header>
+<app-shared-form type="scenes" (create)="onCreate($event)" [record]="data" [hideButtons]="true">
+  <ng-template let-record="record" let-error="error">
+    <div class="container mt-5">
+      <div class="row location">
+        <div class="col-lg-4 location__gps">
+          <div class="form-group">
+            <span i18n>GPS Location:</span> {{data.lat|number:'1.0-4'}}<span *ngIf="data.lat">, </span>{{data.lng|number:'1.0-4'}}
+          </div>
+        </div>
+        <div class="col-lg-3 location__city">
+          <div class="form-group">
+            <span i18n>City:</span> {{data.city}}
+          </div>
+        </div>
+        <div class="col-lg-3 location__state">
+          <div class="form-group">
+            <span i18n>State:</span> {{data.state}}
+          </div>
+        </div>
+        <div class="col-lg-2 location__zip">
+          <div class="form-group">
+            <span i18n>Zipcode:</span> {{data.zip}}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-field">
+              <label for="name" i18n>Incident Name</label>
+              <input [(ngModel)]="record.name" type="text" class="form-control" />
+            </div>
+          </div>    
+          <div class="form-group">
+            <div class="form-field">
+              <label for="desc" i18n>Description</label>
+              <textarea [(ngModel)]="record.desc" rows="4" class="form-control"></textarea>                
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-field">
+              <label for="approxPatients" i18n>Approximate Number of Patients</label>
+              <input [(ngModel)]="record.approxPatients" type="number" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-field">
+              <label for="urgency" i18n>Description of Patient Urgency</label>
+              <textarea [(ngModel)]="record.urgency" rows="4" class="form-control"></textarea>                
+            </div>
+          </div>
+        </div>
+        <div class="col d-sm-none my-3">
+          <button type="submit" class="btn btn-sm btn-block btn-warning" i18n>Start Scene</button>
+          <button (click)="onCancel()" type="button" class="btn btn-sm btn-block btn-outline-primary" i18n>Cancel</button>
+        </div>
+        <div class="col-sm-12 d-none d-sm-flex d-lg-none justify-content-between mt-5">
+          <button (click)="onCancel()" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel</button>
+          <button type="submit" class="btn btn-sm btn-warning" i18n>Start Scene</button>
+        </div>
+        <div class="col-lg-12 d-none d-lg-flex justify-content-between mt-5">
+          <button (click)="onCancel()" type="button" class="btn btn-lg btn-outline-primary" i18n>Cancel</button>
+          <button type="submit" class="btn btn-lg btn-warning" i18n>Start Scene</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</app-shared-form>

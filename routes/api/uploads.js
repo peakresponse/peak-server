@@ -1,9 +1,5 @@
-'use strict';
-
-const express = require('express');
-const router = express.Router();
-
 const AWS = require('aws-sdk');
+const express = require('express');
 const fs = require('fs');
 const HttpStatus = require('http-status-codes');
 const mime = require('mime-types');
@@ -13,54 +9,63 @@ const uuid = require('uuid/v4');
 
 const interceptors = require('../interceptors');
 
-router.post('/', interceptors.requireAdmin(), function(req, res, next) {
+const router = express.Router();
+
+router.post('/', interceptors.requireLogin(), (req, res) => {
   const id = uuid();
-  let response = req.body.blob;
+  const response = req.body.blob;
   response.id = id;
   response.key = id;
   response.metadata = {};
   response.created_at = new Date();
   response.signed_id = `${id}.${mime.extension(response.content_type)}`;
   if (process.env.AWS_S3_BUCKET) {
-    //// store in S3, in tmp uploads dir
+    /// store in S3, in tmp uploads dir
     const s3 = new AWS.S3({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_S3_BUCKET_REGION
+      region: process.env.AWS_S3_BUCKET_REGION,
     });
     const params = {
       Bucket: process.env.AWS_S3_BUCKET,
       Key: `uploads/${id}.${mime.extension(response.content_type)}`,
-      ContentType: response.content_type
+      ContentType: response.content_type,
     };
     const url = s3.getSignedUrl('putObject', params);
     response.direct_upload = {
-      url: url,
+      url,
       headers: {
-        'Content-Type': response.content_type
-      }
+        'Content-Type': response.content_type,
+      },
     };
   } else {
     response.direct_upload = {
       url: `/api/uploads/${id}`,
       headers: {
-        'Content-Type': response.content_type
-      }
+        'Content-Type': response.content_type,
+      },
     };
   }
   res.json(response);
 });
 
-router.put('/:id', interceptors.requireAdmin(), function(req, res, next) {
+router.put('/:id', interceptors.requireLogin(), (req, res) => {
   const tmpDir = path.resolve(__dirname, '../../tmp/uploads');
   mkdirp.sync(tmpDir);
-  fs.writeFile(path.resolve(tmpDir, `${req.params.id}.${mime.extension(req.get('Content-Type'))}`), req.body, function(err) {
-    if (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
-    } else {
-      res.status(HttpStatus.OK).end();
+  fs.writeFile(
+    path.resolve(
+      tmpDir,
+      `${req.params.id}.${mime.extension(req.get('Content-Type'))}`
+    ),
+    req.body,
+    (err) => {
+      if (err) {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+      } else {
+        res.status(HttpStatus.OK).end();
+      }
     }
-  });
+  );
 });
 
 module.exports = router;

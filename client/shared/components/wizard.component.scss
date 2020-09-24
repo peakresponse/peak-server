@@ -1,6 +1,7 @@
 @import '../../assets/css/variables';
 
-html, body {
+html,
+body {
   background: white;
 }
 
@@ -33,7 +34,7 @@ html, body {
     display: block;
     background: $lightPeakGradient;
     height: 3px;
-    margin: .5rem 0 1rem;
+    margin: 0.5rem 0 1rem;
   }
 }
 
@@ -45,7 +46,8 @@ html, body {
       padding: 0 4rem;
     }
 
-    h1, p {
+    h1,
+    p {
       text-align: center;
     }
 
@@ -78,17 +80,18 @@ html, body {
   padding: 0 0 10rem;
 
   .row {
-    margin-left: -.5rem;
-    margin-right: -.5rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
   }
 
-  .col, [class^="col-"] {
-    padding-left: .5rem;
-    padding-right: .5rem;
+  .col,
+  [class^='col-'] {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   p {
-    @include copy-s-regular; 
+    @include copy-s-regular;
     margin-bottom: 1rem;
   }
 
@@ -106,11 +109,13 @@ html, body {
     height: calc(1.0625rem + 2.25rem);
   }
 
-  .custom-select:focus, input.form-control:focus {
+  .custom-select:focus,
+  input.form-control:focus {
     box-shadow: $cardShadow;
   }
 
-  input.form-control, textarea.form-control {
+  input.form-control,
+  textarea.form-control {
     -webkit-appearance: none;
     background: $bgBackground;
     border-radius: 0;
@@ -144,14 +149,15 @@ html, body {
     background: $bgBackground;
     box-shadow: none;
     border: 1px solid $middlePeakBlue;
-    padding: .5rem .625rem;
+    padding: 0.5rem 0.625rem;
 
     label {
       @include copy-s-bold;
       color: $lowPriorityGrey;
     }
 
-    label + input.form-control, label + textarea.form-control {
+    label + input.form-control,
+    label + textarea.form-control {
       border: 0;
       padding: 0;
     }
@@ -161,7 +167,8 @@ html, body {
       height: 2.6875rem;
     }
 
-    input.form-control:focus, textarea.form-control:focus {
+    input.form-control:focus,
+    textarea.form-control:focus {
       box-shadow: none;
     }
   }
@@ -173,7 +180,7 @@ html, body {
 
   ngb-typeahead-window {
     @include copy-s-regular;
-    background: #F1F5F8;
+    background: #f1f5f8;
     border-radius: 0;
     border: 0;
     box-shadow: $cardSelectedShadow;
@@ -200,7 +207,7 @@ html, body {
     top: 1.25rem;
     right: 1rem;
     font-size: 1rem;
-    line-height: 1.0625rem;  
+    line-height: 1.0625rem;
   }
 }
 
@@ -209,11 +216,11 @@ html, body {
     .row.narrow {
       max-width: 1150px;
       margin-left: auto;
-      margin-right: auto;  
+      margin-right: auto;
     }
 
     p {
-      @include copy-l-regular; 
+      @include copy-l-regular;
       text-align: center;
     }
 
@@ -224,32 +231,33 @@ html, body {
       height: calc(2.6875rem + 3.75rem);
     }
 
-    input.form-control, textarea.form-control {
+    input.form-control,
+    textarea.form-control {
       border: 0;
       padding: 1.875rem 2rem;
       &.is-invalid {
         outline: 5px solid $danger;
       }
     }
-  
+
     input.form-control {
       @include copy-xl-bold;
       height: calc(2.6875rem + 3.75rem);
     }
 
     ngb-typeahead-window {
-      @include copy-xl-regular;  
+      @include copy-xl-regular;
       .dropdown-item {
         padding: 1.5rem 1.5rem;
       }
     }
- 
+
     input.form-control-plaintext {
       @include copy-xl-bold;
       padding: 1.875rem 0;
       height: calc(2.6875rem + 3.75rem);
     }
-  
+
     textarea.form-control {
       @include copy-l-regular;
     }
@@ -263,12 +271,12 @@ html, body {
 
     .form-field {
       border: 0;
-      padding: 1rem .875rem;
-  
+      padding: 1rem 0.875rem;
+
       label {
         @include copy-l-bold;
       }
-  
+
       label + input.form-control {
         height: 2.6875rem;
       }
@@ -285,23 +293,27 @@ html, body {
   left: 0;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) -42.11%, rgba(255, 255, 255, 0.7) 86.84%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) -42.11%,
+    rgba(255, 255, 255, 0.7) 86.84%
+  );
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem .5rem;
+  padding: 1rem 0.5rem;
 
   a {
     @include copy-s-bold;
     cursor: pointer;
     color: $greyPeakBlue;
-    margin-left: .75rem;
-    margin-right: .75rem;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
   }
 
   .btn {
-    margin-left: .75rem;
-    margin-right: .75rem;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
   }
 }
 

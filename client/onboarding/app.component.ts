@@ -5,7 +5,7 @@ import { UserService } from '../shared/services';
 
 @Component({
   selector: 'app-onboarding',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   constructor(public currentUser: UserService) {}

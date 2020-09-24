@@ -9,7 +9,7 @@ import { AppService } from './app.service';
 
 @Component({
   templateUrl: './notify.component.html',
-  styleUrls: ['./notify.component.scss']
+  styleUrls: ['./notify.component.scss'],
 })
 export class NotifyComponent {
   @ViewChild('firstEl') firstEl: ElementRef;
@@ -23,23 +23,33 @@ export class NotifyComponent {
     firstName: '',
     lastName: '',
     email: '',
-    message: ''
-  };  
+    message: '',
+  };
 
-  constructor(private app: AppService, private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {
+  constructor(
+    private app: AppService,
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute
+  ) {
     this.reason = this.route.snapshot.queryParamMap.get('reason');
     this.agency = this.route.snapshot.queryParamMap.get('agency');
     this.state = this.route.snapshot.queryParamMap.get('state');
   }
 
   get isValid() {
-    return this.data.firstName != '' &&
+    return (
+      this.data.firstName != '' &&
       this.data.lastName != '' &&
-      this.data.email != '';
+      this.data.email != ''
+    );
   }
 
   ngOnInit() {
-    setTimeout(() => this.firstEl ? this.firstEl.nativeElement.focus() : null, 100);
+    setTimeout(
+      () => (this.firstEl ? this.firstEl.nativeElement.focus() : null),
+      100
+    );
   }
 
   onBack() {
@@ -58,22 +68,23 @@ export class NotifyComponent {
 
   onSubmit() {
     if (this.isValid && !this.isLoading) {
-      this.isLoading = true;      
+      this.isLoading = true;
       this.data.message = `Sign-up Flow\n\nState: ${this.state}\n`;
       if (this.agency) {
         this.data.message = `${this.data.message}Agency: ${this.agency}\n`;
       }
-      this.api.home.contact(this.data)
+      this.api.home
+        .contact(this.data)
         .pipe(
-          catchError(res => {
+          catchError((res) => {
             this.isLoading = false;
             return empty();
           })
         )
-        .subscribe(res => {
+        .subscribe((res) => {
           this.isLoading = false;
           this.isDone = true;
-        });      
+        });
     }
     return false;
   }

@@ -4,7 +4,7 @@ import { BaseDemographicsComponent } from './base-demographics.component';
 
 @Component({
   templateUrl: './personnel-demographics.component.html',
-  styleUrls: ['./base-demographics.component.scss']
+  styleUrls: ['./base-demographics.component.scss'],
 })
 export class PersonnelDemographicsComponent extends BaseDemographicsComponent {
   ngOnInit() {
@@ -12,11 +12,23 @@ export class PersonnelDemographicsComponent extends BaseDemographicsComponent {
     this.sectionHeader = 'Personnel';
     this.sectionSchemaPath = '/nemsis/xsd/dPersonnelInvitation_v3.json';
     this.sectionColumns = [
-      {name: 'Last Name', attr: ['dPersonnel.NameGroup', 'dPersonnel.01'], class: 'col-3'},
-      {name: 'First Name', attr: ['dPersonnel.NameGroup', 'dPersonnel.02'], class: 'col-3'},
-      {name: 'Middle Name/Initial', attr: ['dPersonnel.NameGroup', 'dPersonnel.03'], class: 'col-2'},
-      {name: 'Email', attr: ['dPersonnel.10'], class: 'col-3'}
-    ]
+      {
+        name: 'Last Name',
+        attr: ['dPersonnel.NameGroup', 'dPersonnel.01'],
+        class: 'col-3',
+      },
+      {
+        name: 'First Name',
+        attr: ['dPersonnel.NameGroup', 'dPersonnel.02'],
+        class: 'col-3',
+      },
+      {
+        name: 'Middle Name/Initial',
+        attr: ['dPersonnel.NameGroup', 'dPersonnel.03'],
+        class: 'col-2',
+      },
+      { name: 'Email', attr: ['dPersonnel.10'], class: 'col-3' },
+    ];
     super.ngOnInit();
   }
 

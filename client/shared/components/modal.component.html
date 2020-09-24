@@ -1,14 +1,18 @@
 <ng-template #content>
-  <div class="modal-header">
+  <div class="modal-header">                      
     <ng-content select=".modal-title"></ng-content>
     <button type="button" class="close" aria-label="Close" (click)="onDismiss()">
-      <span aria-hidden="true">&times;</span>
+      <i class="peakicon peakicon-remove"></i>
     </button>
   </div>
   <ng-content select=".modal-body"></ng-content>
   <div class="modal-footer">
-    <button *ngIf="dismissLabel" type="button" class="btn btn-outline-secondary" (click)="onDismiss()">{{dismissLabel}}</button>
-    <button *ngIf="dangerLabel" type="button" class="btn btn-outline-danger" (click)="onDanger()">{{dangerLabel}}</button>
-    <button *ngIf="confirmLabel" type="button" class="btn btn-outline-primary" (click)="onConfirm()">{{confirmLabel}}</button>
+    <div>
+      <button *ngIf="dismissLabel" ngbAutofocus type="button" class="btn btn-sm btn-outline-primary" (click)="onDismiss()">{{dismissLabel}}</button>
+    </div>
+    <div>
+      <button *ngIf="dangerLabel" ngbAutofocus type="button" class="btn btn-sm btn-primary" (click)="onDanger()">{{dangerLabel}}</button>
+      <button *ngIf="confirmLabel" ngbAutofocus type="button" class="btn btn-sm btn-primary" (click)="onConfirm()">{{confirmLabel}}</button>
+    </div>
   </div>
 </ng-template>

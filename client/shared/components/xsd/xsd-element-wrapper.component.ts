@@ -8,7 +8,6 @@ import { XsdBaseComponent } from './xsd-base.component';
 @Component({
   selector: 'app-shared-xsd-element-wrapper',
   templateUrl: './xsd-element-wrapper.component.html',
-  styleUrls: ['./xsd-element-wrapper.component.scss']
+  styleUrls: ['./xsd-element-wrapper.component.scss'],
 })
-export class XsdElementWrapperComponent extends XsdBaseComponent {
-}
+export class XsdElementWrapperComponent extends XsdBaseComponent {}

@@ -1,7 +1,14 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Directive({
-  selector: '[app-shared-autoload]'
+  selector: '[app-shared-autoload]',
 })
 export class AutoloadDirective {
   @Input('app-shared-autoload') paginationLink: string;
@@ -30,7 +37,7 @@ export class AutoloadDirective {
   @HostListener('window:scroll', ['$event'])
   private onWindowScroll($event: any) {
     if (this.paginationLink) {
-      if (window.scrollY >= (this.offsetTop() - 1.25 * window.innerHeight)) {
+      if (window.scrollY >= this.offsetTop() - 1.25 * window.innerHeight) {
         this.onLoadMore.emit(this.paginationLink);
       }
     }

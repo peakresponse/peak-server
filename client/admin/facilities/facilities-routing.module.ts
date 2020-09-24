@@ -3,7 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AgencyService, UserService } from '../../shared/services';
 
-import { EditFacilityComponent, ListFacilitiesComponent, NewFacilityComponent } from '.';
+import {
+  EditFacilityComponent,
+  ListFacilitiesComponent,
+  NewFacilityComponent,
+} from '.';
 
 const appRoutes: Routes = [
   {
@@ -11,27 +15,23 @@ const appRoutes: Routes = [
     component: ListFacilitiesComponent,
     resolve: {
       agency: AgencyService,
-      user: UserService
+      user: UserService,
     },
     children: [
       {
         path: 'new',
-        component: NewFacilityComponent
+        component: NewFacilityComponent,
       },
       {
         path: ':id',
-        component: EditFacilityComponent
-      }
-    ]
-  }
+        component: EditFacilityComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class FacilitiesRoutingModule {}

@@ -1,0 +1,18 @@
+version: '2'
+services:
+  db:
+    image: postgis/postgis:11-3.0-alpine
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  server:
+    build: .
+    image: peakresponse/peak-server
+    command: bash -l -c "npm test"
+    env_file:
+      - example.env
+    environment:
+      - CI=true
+      - DATABASE_URL=postgres://postgres@db/app
+      - PORT=3000
+    depends_on:
+      - db

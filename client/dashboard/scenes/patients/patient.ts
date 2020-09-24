@@ -22,7 +22,7 @@ export class Patient {
   constructor(data: any) {
     this.data = data;
     return new Proxy(this, {
-      get: function(target, prop) {
+      get: (target, prop) => {
         return target[prop] ?? target.data?.[prop];
       },
       set(obj, prop, value) {
@@ -32,7 +32,7 @@ export class Patient {
           obj.data[prop] = value;
         }
         return true;
-      }
+      },
     });
   }
 
@@ -53,4 +53,4 @@ export class Patient {
   cloneDeep() {
     return new Patient(cloneDeep(this.data));
   }
-};
+}

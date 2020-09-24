@@ -1,0 +1,16 @@
+[
+  {
+    "model": "County",
+    "data": {
+      "fullCode": "06075",
+      "id": "06075",
+      "stateAbbr": "CA",
+      "stateCode": "06",
+      "countyCode": "075",
+      "name": "San Francisco County",
+      "classCode": "H6",
+      "createdAt": "2020-04-07T19:53:42.434Z",
+      "updatedAt": "2020-04-07T19:53:42.434Z"
+    }
+  }
+]

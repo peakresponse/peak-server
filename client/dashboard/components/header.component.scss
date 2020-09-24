@@ -14,6 +14,32 @@ header {
   background: white;
   height: 128px;
   box-shadow: $cardSelectedShadow;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.back {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  @include copy-l-bold;
+  color: $mainGrey;
+  cursor: pointer;
+  .peakicon {
+    font-size: 2.5rem;
+    margin: 0 0.5rem 0 2rem;
+  }
+}
+
+.banner {
+  background-color: $peakBlue;
+  @include copy-m-bold;
+  color: white;
+  height: 2.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .scene {
@@ -30,4 +56,44 @@ header {
 .scene__elapsed-time {
   @include copy-m-regular;
   margin-left: 1.5rem;
+}
+
+.user {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.user__name {
+  @include copy-m-bold;
+  text-align: right;
+}
+
+.user__agency {
+  @include copy-s-regular;
+  text-align: right;
+}
+
+.user__photo {
+  width: 3.75rem;
+  height: 3.75rem;
+  flex-shrink: 0;
+  border-radius: 1.875rem;
+  border-width: 0.125rem;
+  border-style: solid;
+  border-color: $greyPeakBlue;
+  overflow: hidden;
+  text-align: center;
+  background-size: cover;
+  background-position: center center;
+  background-color: $lowPriorityGrey;
+  margin-left: 0.875rem;
+  .peakicon-user {
+    position: relative;
+    top: 0.75rem;
+    font-size: 3rem;
+    color: white;
+  }
 }

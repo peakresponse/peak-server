@@ -3,13 +3,18 @@ import { NgModel } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { empty, Subscription } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+} from 'rxjs/operators';
 
 import { ApiService, NavigationService } from '../shared/services';
 
 @Component({
   templateUrl: './url.component.html',
-  styleUrls: ['./url.component.scss']
+  styleUrls: ['./url.component.scss'],
 })
 export class UrlComponent {
   @ViewChild('subdomainEl') subdomainEl: ElementRef;
@@ -19,19 +24,24 @@ export class UrlComponent {
   agencyId: string = null;
   isLoading = true;
   isCreated = false;
-  subdomain: string = "";
+  subdomain: string = '';
   subdomainChanges: Subscription;
   errorStatus: number = null;
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
+  constructor(
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private navigation: NavigationService
+  ) {
     this.stateId = this.route.snapshot.queryParamMap.get('stateId');
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
   }
 
   ngOnInit() {
-    this.api.agencies.demographic(this.agencyId)
+    this.api.agencies
+      .get(this.agencyId)
       .pipe(
-        catchError(res => {
+        catchError((res) => {
           this.isLoading = false;
           if (res.status == 404) {
             this.subdomain = res.error.subdomain;
@@ -41,26 +51,30 @@ export class UrlComponent {
           return empty();
         })
       )
-      .subscribe(res => {
+      .subscribe((res) => {
         this.isLoading = false;
         this.isCreated = true;
         this.subdomain = res.body.subdomain;
       });
-    setTimeout(() => this.subdomainEl ? this.subdomainEl.nativeElement.focus() : null, 100);
+    setTimeout(
+      () => (this.subdomainEl ? this.subdomainEl.nativeElement.focus() : null),
+      100
+    );
   }
 
   ngAfterViewInit() {
     this.subdomainChanges = this.subdomainModel.valueChanges
       .pipe(
-        tap(() => this.isLoading = true),
+        tap(() => (this.isLoading = true)),
         debounceTime(300),
         distinctUntilChanged()
       )
       .subscribe((value: string) => {
         this.errorStatus = null;
-        this.api.demographics.validate(value)
+        this.api.agencies
+          .validate(value)
           .pipe(
-            catchError(res => {
+            catchError((res) => {
               if (this.subdomain == value) {
                 console.log('ERROR', res);
                 this.isLoading = false;
@@ -82,11 +96,11 @@ export class UrlComponent {
   }
 
   ngOnDestroy() {
-   this.subdomainChanges?.unsubscribe(); 
+    this.subdomainChanges?.unsubscribe();
   }
 
   onBack() {
-    this.navigation.backTo(`/agency?stateId=${this.stateId}`)
+    this.navigation.backTo(`/agency?stateId=${this.stateId}`);
   }
 
   onCancel() {
@@ -94,8 +108,12 @@ export class UrlComponent {
   }
 
   onNext() {
-    if (this.subdomain != "") {
-      this.navigation.goTo('/account', {stateId: this.stateId, agencyId: this.agencyId, subdomain: this.subdomain});
+    if (this.subdomain != '') {
+      this.navigation.goTo('/account', {
+        stateId: this.stateId,
+        agencyId: this.agencyId,
+        subdomain: this.subdomain,
+      });
     }
   }
 }

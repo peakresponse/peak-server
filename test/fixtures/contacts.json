@@ -1,0 +1,84 @@
+[
+  {
+    "model": "Contact",
+    "data": {
+      "id": "00db69da-a738-4103-8c25-dc287ed6717b",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "type": "1101009",
+      "lastName": "Fixture",
+      "firstName": "Mister",
+      "middleName": "I",
+      "primaryPhone": "415-555-1234",
+      "primaryEmail": "mr@fixture.com",
+      "data": {
+        "_attributes": {
+          "UUID": "00db69da-a738-4103-8c25-dc287ed6717b"
+        },
+        "dContact.01": {
+          "_text": "1101009"
+        },
+        "dContact.02": {
+          "_text": "Fixture"
+        },
+        "dContact.03": {
+          "_text": "Mister"
+        },
+        "dContact.04": {
+          "_text": "I"
+        },
+        "dContact.10": {
+          "_text": "415-555-1234"
+        },
+        "dContact.11": [
+          {
+            "_text": "mr@fixture.com"
+          },
+          {
+            "_text": "mrifixture@gmail.com"
+          }
+        ]
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z"
+    }
+  },
+  {
+    "model": "Contact",
+    "data": {
+      "id": "f77a0e3b-3f09-4891-bd89-924e6d36481d",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "type": "1101001",
+      "lastName": "Assistant",
+      "firstName": "Administrative",
+      "middleName": null,
+      "primaryPhone": "415-555-4321",
+      "primaryEmail": "admin@assistant.com",
+      "data": {
+        "_attributes": {
+          "UUID": "f77a0e3b-3f09-4891-bd89-924e6d36481d"
+        },
+        "dContact.01": {
+          "_text": "1101001"
+        },
+        "dContact.02": {
+          "_text": "Assistant"
+        },
+        "dContact.03": {
+          "_text": "Administrative"
+        },
+        "dContact.10": {
+          "_text": "415-555-4321"
+        },
+        "dContact.11": {
+          "_text": "admin@assistant.com"
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z"
+    }
+  }
+]

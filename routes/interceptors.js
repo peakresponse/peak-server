@@ -1,53 +1,59 @@
-'use strict';
-
 const createError = require('http-errors');
 const HttpStatus = require('http-status-codes');
 const passport = require('passport');
 const passportLocal = require('passport-local');
 const models = require('../models');
-const Op = models.Sequelize.Op;
+
+const { Op } = models.Sequelize;
 
 passport.use(
-  new passportLocal.Strategy({
-    usernameField: 'email',
-  },
-  async function(email, password, done) {
-    try {
-      const user = await models.User.findOne({where: {email: email}});
-      const result = await user.authenticate(password);
-      if (result) {
-        return done(null, user);
+  new passportLocal.Strategy(
+    {
+      usernameField: 'email',
+    },
+    async (email, password, done) => {
+      try {
+        const user = await models.User.findOne({ where: { email } });
+        const result = await user.authenticate(password);
+        if (result) {
+          return done(null, user);
+        }
+        return done(null, false, { message: 'Invalid password' });
+      } catch (err) {
+        return done(null, false, err);
       }
-      return done(null, false, { message: 'Invalid password' });
-    } catch (err) {
-      return done(null, false, err);
     }
-  }
-));
+  )
+);
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  models.User.findByPk(id).then(function(user) {
+passport.deserializeUser((id, done) => {
+  models.User.findByPk(id).then((user) => {
     done(null, user);
   });
 });
 
 module.exports.passport = passport;
 
-module.exports.loadAgency = async function(req, res, next) {
-  /// load demographic, if on subdomain
-  let agency;
-  if (req.subdomains.length > (process.env.BASE_HOST.split('.').length - 2)) {
-    agency = req.subdomains[0].trim();
-  } else if (req.header('X-Agency-Subdomain')) {
-    agency = req.header('X-Agency-Subdomain').trim();
+function getAgencySubdomain(req) {
+  if (req.subdomains.length > process.env.BASE_HOST.split('.').length - 2) {
+    return req.subdomains[0].trim();
   }
-  if (agency) {
-    req.agency = await models.DemAgency.findOne({
-      where: {subdomain: {[Op.iLike]: agency}}
+  if (req.header('X-Agency-Subdomain')) {
+    return req.header('X-Agency-Subdomain').trim();
+  }
+  return null;
+}
+
+module.exports.loadAgency = async (req, res, next) => {
+  /// load demographic, if on subdomain
+  const subdomain = getAgencySubdomain(req);
+  if (subdomain) {
+    req.agency = await models.Agency.findOne({
+      where: { subdomain: { [Op.iLike]: subdomain } },
     });
     if (!req.agency) {
       if (req.accepts('html')) {
@@ -62,7 +68,7 @@ module.exports.loadAgency = async function(req, res, next) {
 
 function sendErrorUnauthorized(req, res) {
   if (req.accepts('html')) {
-    req.flash("error", "You must log in to view the page you visited.");
+    req.flash('error', 'You must log in to view the page you visited.');
     res.redirect(`/login?redirectURI=${encodeURIComponent(req.originalUrl)}`);
   } else {
     res.status(HttpStatus.UNAUTHORIZED).end();
@@ -71,7 +77,7 @@ function sendErrorUnauthorized(req, res) {
 
 function sendErrorForbidden(req, res) {
   if (req.accepts('html')) {
-    req.flash("error", "You are not allowed to view the page you visited.");
+    req.flash('error', 'You are not allowed to view the page you visited.');
     res.redirect(`/`);
   } else {
     res.status(HttpStatus.FORBIDDEN).end();
@@ -85,7 +91,7 @@ async function requireLogin(req, res, next, role) {
     if (!isAllowed && req.agency) {
       /// check for active employment
       const employment = await models.Employment.findOne({
-        where: {userId: req.user.id, agencyId: req.agency.id}
+        where: { userId: req.user.id, agencyId: req.agency.id },
       });
       isAllowed = employment && employment.isActive;
       /// check for role, if any
@@ -103,32 +109,35 @@ async function requireLogin(req, res, next, role) {
   }
 }
 
-module.exports.requireLogin = function() {
-  return async function(req, res, next) { 
+module.exports.requireLogin = () => {
+  return async (req, res, next) => {
     await requireLogin(req, res, next);
   };
 };
 
-module.exports.requireAgency = function(role) {
-  return async function(req, res, next) {
+module.exports.requireAgency = (role) => {
+  return async (req, res, next) => {
     /// require that this request be on an agency subdomain...
     if (!req.agency) {
-      return sendErrorForbidden(req, res);
+      sendErrorForbidden(req, res);
+      return;
     }
     /// ...by an active employed user
     await requireLogin(req, res, next, role);
   };
-}
+};
 
-module.exports.requireAdmin = function() {
-  return async function(req, res, next) {
+module.exports.requireAdmin = () => {
+  return async (req, res, next) => {
     /// only allow site admins to continue
     if (req.user) {
       if (req.user.isAdmin) {
-        return next();
+        next();
+      } else {
+        sendErrorForbidden(req, res);
       }
-      return sendErrorForbidden(req, res);
+      return;
     }
     sendErrorUnauthorized(req, res);
   };
-}
+};

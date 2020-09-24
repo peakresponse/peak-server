@@ -9,7 +9,7 @@ let STATES: any[];
 
 @Component({
   selector: 'app-shared-xsd-select-state',
-  templateUrl: './xsd-select-state.component.html'
+  templateUrl: './xsd-select-state.component.html',
 })
 export class XsdSelectStateComponent extends XsdBaseComponent {
   STATES: any[];
@@ -18,7 +18,7 @@ export class XsdSelectStateComponent extends XsdBaseComponent {
     if (STATES) {
       this.STATES = STATES;
     } else {
-      this.api.states.index().subscribe(res => {
+      this.api.states.index().subscribe((res) => {
         STATES = res.body;
         this.STATES = STATES;
       });

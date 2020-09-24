@@ -1,0 +1,34 @@
+<app-dashboard-nav></app-dashboard-nav>
+<app-dashboard-header [agency]="agency"></app-dashboard-header>
+<app-dashboard-main>
+  <div class="row">
+    <div class="col-md-6">      
+      <h3 i18n>Current Users</h3>
+      <app-shared-list basePath="/users" [params]="currentParams" type="employments" class="users">
+        <ng-template let-record="record">
+          <div class="user">
+            <div class="user__photo" [style.background-image]="record.user?.iconUrl|cssUrl">
+              <i *ngIf="!record.user?.iconUrl" class="peakicon peakicon-user"></i>
+            </div>
+            <div class="user__details">
+              <div class="user__name">{{record.firstName}} {{record.lastName}}</div>
+              <div class="user__position">{{record.user?.position}}</div>
+            </div>
+            <div *ngIf="!record.user && record.invitedAt" class="user__invited" i18n>Invited on {{record.invitedAt|date:'h:mma - MMM d yyyy'}}</div>
+          </div>
+        </ng-template>
+      </app-shared-list>
+    </div>
+    <div class="col-md-6">      
+      <h3 i18n>Pending Users</h3>
+      <app-shared-list basePath="/users" [params]="pendingParams" type="employments" class="users">
+        <ng-template let-record="record">
+          <div class="user">
+            {{record.firstName}} {{record.lastName}}
+          </div>
+        </ng-template>
+      </app-shared-list>
+    </div>
+  </div>
+</app-dashboard-main>
+<app-dashboard-active-scenes></app-dashboard-active-scenes>

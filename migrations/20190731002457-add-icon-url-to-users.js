@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -11,7 +9,7 @@ module.exports = {
     */
     return queryInterface.addColumn('users', 'icon_url', Sequelize.STRING, {
       allowNull: true,
-      defaultValue: null
+      defaultValue: null,
     });
   },
 
@@ -24,5 +22,5 @@ module.exports = {
       return queryInterface.dropTable('users');
     */
     return queryInterface.removeColumn('users', 'icon_url');
-  }
+  },
 };

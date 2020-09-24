@@ -1,4 +1,91 @@
 <app-dashboard-nav [scene]="scene"></app-dashboard-nav>
 <app-dashboard-header [scene]="scene"></app-dashboard-header>
 <app-dashboard-main>
+  <div class="overview">
+    <div class="overview__details">
+      <h1>{{(scene.attributes$|async).name}}</h1>
+      <p class="overview__desc">{{(scene.attributes$|async).desc}}</p>
+      <!-- <button type="button" class="btn btn-sm btn-primary mr-3" i18n>Transfer Command</button> -->
+      <button *ngIf="(scene.attributes$|async).incidentCommanderId == user.id" (click)="closeConfirmation.open({centered: true, size: 'lg'})" type="button" class="btn btn-sm btn-warning" i18n>Close Scene</button>
+      <button *ngIf="(scene.attributes$|async).incidentCommanderId != user.id" (click)="leaveConfirmation.open({centered: true, size: 'lg'})" type="button" class="btn btn-sm btn-warning" i18n>Leave Scene</button>
+      <hr />
+      <h3 i18n>Initial Observations from IC</h3>
+      <p>Approx # Patients: {{(scene.attributes$|async).approxPatients}}</p>
+      <p *ngIf="(scene.attributes$|async).urgency">{{(scene.attributes$|async).urgency}}</p>
+      <hr />
+      <h3 i18n># Patients Recorded</h3>
+      <p class="overview__patients-recorded">{{(scene.stats$|async)[0].total}}</p>
+      <hr />
+      <h3 i18n>Recorded Patient States</h3>
+      <div class="priorities">
+        <ng-container *ngFor="let tab of scene.stats$|async; index as i">
+          <div *ngIf="i!=0" [class]="'priority priority-' + i">
+            <div *ngIf="i==1" i18n>Immediate</div>
+            <div *ngIf="i==2" i18n>Delayed</div>
+            <div *ngIf="i==3" i18n>Minimal</div>
+            <div *ngIf="i==4" i18n>Expectant</div>
+            <div *ngIf="i==5" i18n>Dead</div>
+            <div *ngIf="i==6" i18n>Transported</div>
+            {{tab.total > 0 ? tab.total : '-'}}
+          </div>
+        </ng-container>
+      </div>
+      <hr />
+      <div class="notes">
+        <button type="button" class="btn btn-sm btn-outline-primary btn-add" i18n><i class="peakicon peakicon-note"></i>Add Note</button>
+      </div>
+      <hr />
+      <div class="photos">
+        <button type="button" class="btn btn-sm btn-outline-primary btn-add" i18n><i class="peakicon peakicon-camera"></i>Add Photo</button>
+      </div>
+    </div>
+    <div class="overview__responders">
+      <h2>{{(scene.responders$|async).length}} First Responders on Scene</h2>
+      <!-- <div class="toolbar">
+        <div class="toolbar-item toolbar-item--search">
+          <input id="search" name="search" i18n-placeholder placeholder="Search" type="text" class="form-control form-control--search" />
+        </div>
+        <div class="toolbar-item toolbar-item--sort">
+          <select id="sort" name="sort" class="custom-select">
+            <option value="az" i18n>Alphabetically</option>
+            <option value="arrivedAt" i18n>Time on Scene</option>
+          </select>
+        </div>
+      </div> -->
+      <ul class="responders">
+        <li *ngFor="let responder of scene.responders$|async;" class="responder">
+          <div class="responder__photo" [style.background-image]="responder.user.iconUrl|cssUrl">
+            <i *ngIf="!responder.user.portraitUrl" class="peakicon peakicon-user"></i>
+          </div>
+          <div class="responder__details">
+            <div class="responder__name">{{responder.user.firstName}} {{responder.user.lastName}}</div>
+            <div class="row">
+              <div class="col-sm-6">
+                {{responder.user.email}}
+              </div>
+              <div class="col-sm-6">
+                <div><span i18n>Time of Arrival:</span> {{responder.arrivedAt|date:'shortTime'}}</div>
+                <div *ngIf="responder.departedAt"><span i18n>Time of Departure:</span> {{responder.departedAt|date:'shortTime'}}</div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-xs btn-outline-primary" i18n>Transfer Command</button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </app-dashboard-main>
+<router-outlet name="modal"></router-outlet>
+<app-shared-modal #closeConfirmation
+  i18n-confirmLabel confirmLabel="Close" i18n-dismissLabel dismissLabel="Cancel" (confirm)="onClose()">
+  <h4 class="modal-title" i18n>Are you sure you want to close the {{(scene.attributes$|async).name}} scene?</h4>
+  <div class="modal-body" i18n>After you close the scene you will still be able to edit scene details and patient information, but will not have access to the same live updates and coordination of first responders on scene.</div>
+</app-shared-modal>
+<app-shared-modal #leaveConfirmation
+  i18n-confirmLabel confirmLabel="Leave" i18n-dismissLabel dismissLabel="Cancel" (confirm)="onLeave()">
+  <h4 class="modal-title" i18n>Are you sure you want to leave the {{(scene.attributes$|async).name}} scene?</h4>
+  <div class="modal-body" i18n>
+    <p i18n>You can join again later if your plans change.</p>
+    <p i18n>You may also be asked to fill out more information after the scene is closed.</p>
+  </div>
+</app-shared-modal>

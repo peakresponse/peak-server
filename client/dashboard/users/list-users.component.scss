@@ -1,0 +1,50 @@
+@import '../../assets/css/variables';
+
+h3 {
+  @include copy-m-bold;
+}
+
+.row {
+  margin: 0 2.5rem;
+}
+
+.col-md-6 {
+  padding: 3rem 1.5rem;
+}
+
+.user {
+  background-color: white;
+  margin-bottom: 1rem;
+  border-radius: 0.3125rem;
+  box-shadow: $cardShadow;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.user__photo {
+  flex-shrink: 0;
+  border-radius: 2.1875rem;
+  width: 4.375rem;
+  height: 4.375rem;
+  margin-right: 1.75rem;
+  overflow: hidden;
+  text-align: center;
+  background-size: cover;
+  background-position: center center;
+  background-color: $lowPriorityGrey;
+  .peakicon-user {
+    position: relative;
+    top: 0.75rem;
+    font-size: 3.5rem;
+    color: white;
+  }
+}
+
+.user__name {
+  @include copy-m-bold;
+}
+
+.user__position {
+  @include copy-s-regular;
+}

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
+  Router,
+  Resolve,
   RouterStateSnapshot,
-  ActivatedRouteSnapshot
+  ActivatedRouteSnapshot,
 } from '@angular/router';
 
-import { Observable, of, EMPTY }  from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 
 import { ApiService } from './api.service';
@@ -15,18 +16,21 @@ export class SchemaService implements Resolve<any> {
   private commonTypes: any = null;
   private schemaCache: any = {};
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<any> {
     if (this.commonTypes) {
       return of(this.commonTypes);
     }
     return this.api.get('/nemsis/xsd/commonTypes_v3.json').pipe(
-      catchError(error => {
+      catchError((error) => {
         console.log(error);
         return EMPTY;
       }),
-      mergeMap(response => {
+      mergeMap((response) => {
         const commonTypes = {};
         for (let simpleType of response.body['xs:schema']['xs:simpleType']) {
           commonTypes[simpleType._attributes.name] = simpleType;
@@ -49,7 +53,7 @@ export class SchemaService implements Resolve<any> {
       return of(this.schemaCache[schemaPath]);
     }
     return this.api.get(schemaPath).pipe(
-      mergeMap(response => {
+      mergeMap((response) => {
         /// normalize schema response structure a bit
         const schema = response.body;
         let complexTypes = schema['xs:schema']['xs:complexType'];
@@ -58,7 +62,9 @@ export class SchemaService implements Resolve<any> {
         }
         for (let complexType of complexTypes) {
           if (!Array.isArray(complexType['xs:sequence']['xs:element'])) {
-            complexType['xs:sequence']['xs:element'] = [complexType['xs:sequence']['xs:element']];
+            complexType['xs:sequence']['xs:element'] = [
+              complexType['xs:sequence']['xs:element'],
+            ];
           }
         }
         this.schemaCache[schemaPath] = schema;

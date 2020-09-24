@@ -7,7 +7,11 @@ import { SharedComponentsModule } from '../../shared/components';
 import { SharedPipesModule } from '../../shared/pipes';
 
 import { FacilitiesRoutingModule } from './facilities-routing.module';
-import { EditFacilityComponent, ListFacilitiesComponent, NewFacilityComponent } from '.';
+import {
+  EditFacilityComponent,
+  ListFacilitiesComponent,
+  NewFacilityComponent,
+} from '.';
 
 @NgModule({
   declarations: [
@@ -21,8 +25,8 @@ import { EditFacilityComponent, ListFacilitiesComponent, NewFacilityComponent } 
     NgbModule,
     SharedComponentsModule,
     SharedPipesModule,
-    FacilitiesRoutingModule
+    FacilitiesRoutingModule,
   ],
-  providers: []
+  providers: [],
 })
 export class FacilitiesModule {}

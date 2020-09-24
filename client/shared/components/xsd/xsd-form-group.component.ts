@@ -8,8 +8,6 @@ import { XsdBaseComponent } from './xsd-base.component';
 @Component({
   selector: 'app-shared-xsd-form-group',
   templateUrl: './xsd-form-group.component.html',
-  styleUrls: ['./xsd-form-group.component.scss']
+  styleUrls: ['./xsd-form-group.component.scss'],
 })
-export class XsdFormGroupComponent extends XsdBaseComponent {
-
-}
+export class XsdFormGroupComponent extends XsdBaseComponent {}

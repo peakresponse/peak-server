@@ -4,25 +4,25 @@
   position: absolute;
   bottom: 0;
   padding-left: 3.75rem;
-  margin-left: -.75rem;
-  margin-right: -.75rem;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
   flex-wrap: nowrap;
 }
 
 .tab {
   background: $bgBackground;
-  border-top-left-radius: .3125rem;
-  border-top-right-radius: .3125rem;
-  border-bottom-width: .5rem;
+  border-top-left-radius: 0.3125rem;
+  border-top-right-radius: 0.3125rem;
+  border-bottom-width: 0.5rem;
   border-bottom-style: solid;
 
-  margin: 0 .75rem;
+  margin: 0 0.75rem;
   width: 10rem;
   height: 4.75rem;
   display: flex;
 
   flex-direction: column;
-  align-items: center;  
+  align-items: center;
 
   @include copy-l-bold;
   color: $mainGrey;
@@ -34,61 +34,69 @@
   @include copy-l-regular;
 }
 
-.tab--active, .tab:hover {
-  padding-top: .375rem;
-  border-top-width: .125rem;
+.tab--active,
+.tab:hover {
+  padding-top: 0.375rem;
+  border-top-width: 0.125rem;
   border-top-style: solid;
-  border-left-width: .125rem;
+  border-left-width: 0.125rem;
   border-left-style: solid;
-  border-right-width: .125rem;
+  border-right-width: 0.125rem;
   border-right-style: solid;
 }
 
 .tab--0 {
   border-color: $darkPeakBlue;
-  &.tab--active, &:hover {
+  &.tab--active,
+  &:hover {
     background: $lightPeakBlue;
   }
 }
 
 .tab--1 {
   border-color: $immediateRed;
-  &.tab--active, &:hover {
+  &.tab--active,
+  &:hover {
     background: $lightImmediateRed;
   }
 }
 
 .tab--2 {
   border-color: $delayedYellow;
-  &.tab--active, &:hover {
+  &.tab--active,
+  &:hover {
     background: $lightDelayedYellow;
   }
 }
 
 .tab--3 {
   border-color: $minimalGreen;
-  &.tab--active, &:hover {
+  &.tab--active,
+  &:hover {
     background: $lightMinimalGreen;
   }
 }
 
 .tab--4 {
   border-color: $expectGrey;
-  &.tab--active, &:hover {
+  &.tab--active,
+  &:hover {
     background: $lightExpectGrey;
   }
 }
 
 .tab--5 {
   border-color: $deadBlack;
-  &.tab--active, &:hover {
+  &.tab--active,
+  &:hover {
     background: $lightExpectGrey;
   }
 }
 
 .tab--6 {
   border-color: $peakBlue;
-  &.tab--active, &:hover {
+  &.tab--active,
+  &:hover {
     background: $lightPeakBlue;
   }
 }
@@ -129,14 +137,18 @@
 }
 
 .toolbar {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: flex-end;
   margin: 1rem 1.125rem;
 }
 
 .toolbar-item {
   margin: 0 1.875rem;
+}
+
+.toolbar-item__label {
+  @include copy-m-bold;
+  color: $lowPriorityGrey;
+  margin-right: 1.5rem;
+  margin-bottom: 0;
 }
 
 .toolbar-item--sort {
@@ -146,13 +158,6 @@
 
 .toolbar-item--search {
   width: 28rem;
-}
-
-.toolbar-item__label {
-  @include copy-m-bold;
-  color: $lowPriorityGrey;
-  margin-right: 1.5rem;
-  margin-bottom: 0;
 }
 
 .patients {
@@ -168,7 +173,7 @@
   flex-wrap: nowrap;
   align-items: center;
   background: white;
-  border-radius: .3125rem;
+  border-radius: 0.3125rem;
   box-shadow: 0px 6px 20px rgba(118, 140, 151, 0.1);
   color: $mainGrey;
   cursor: pointer;
@@ -189,7 +194,7 @@
   background-position: center center;
   .peakicon-user {
     position: relative;
-    top: .75rem;
+    top: 0.75rem;
     font-size: 3.5rem;
   }
 }
@@ -201,7 +206,8 @@
   width: 21.75rem;
 }
 
-.patient__priority, .patient__name {
+.patient__priority,
+.patient__name {
   @include copy-m-bold;
 }
 

@@ -1,5 +1,7 @@
 # Start with the latest Node.js LTS release
-FROM node:14
+# NOTE PINNED TO 14.8 until copyFile permission issues resolved
+# https://discuss.circleci.com/t/docker-build-fails-with-nonsensical-eperm-operation-not-permitted-copyfile/37364/12
+FROM node:14.8 
 
 # Set an env variable for the location of the app files
 ENV APP_HOME=/opt/node/app

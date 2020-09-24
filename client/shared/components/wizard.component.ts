@@ -1,12 +1,18 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 
 @Component({
   selector: 'app-shared-wizard',
   templateUrl: './wizard.component.html',
   styleUrls: ['./wizard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
-export class WizardComponent {  
+export class WizardComponent {
   @Input() isLoading = false;
 
   @Input() isCancelEnabled = true;

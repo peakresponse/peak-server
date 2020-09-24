@@ -10,16 +10,18 @@ import { Config } from './config';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { PatientsModule } from './scenes/patients/patients.module';
 import { ScenesModule } from './scenes/scenes.module';
+import { UsersModule } from './users/users.module';
 
-import { ApiService, NavigationService, UserService, WebSocketService }
-  from '../shared/services';
+import {
+  ApiService,
+  NavigationService,
+  UserService,
+  WebSocketService,
+} from '../shared/services';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     AgmCoreModule.forRoot(),
     AgmOverlays,
@@ -28,8 +30,8 @@ import { ApiService, NavigationService, UserService, WebSocketService }
     FormsModule,
     HttpClientModule,
     NgbModule,
-    PatientsModule,
-    ScenesModule
+    ScenesModule,
+    UsersModule,
   ],
   providers: [
     ApiService,
@@ -38,11 +40,9 @@ import { ApiService, NavigationService, UserService, WebSocketService }
     WebSocketService,
     {
       provide: LAZY_MAPS_API_CONFIG,
-      useClass: Config
-    }
+      useClass: Config,
+    },
   ],
-  bootstrap: [
-    AppComponent
-  ]
+  bootstrap: [AppComponent],
 })
 export class DashboardAppModule {}

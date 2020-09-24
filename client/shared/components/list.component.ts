@@ -1,20 +1,35 @@
-import { Component, ContentChild, ElementRef, Injectable, Input, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
-import { HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
+import {
+  Component,
+  ContentChild,
+  ElementRef,
+  Injectable,
+  Input,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import {
+  HttpErrorResponse,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { Observable, Subscription, empty } from 'rxjs';
 import { catchError, filter } from 'rxjs/operators';
 import assign from 'lodash/assign';
 import clone from 'lodash/clone';
+import get from 'lodash/get';
 import remove from 'lodash/remove';
 
 import { ApiService, NavigationService, UserService } from '../services';
 
 @Component({
   selector: 'app-shared-list',
-  templateUrl: './list.component.html'
+  templateUrl: './list.component.html',
 })
 export class ListComponent {
+  @Input() cls: any = null;
   @Input() type: string = null;
   @Input() basePath: string = null;
   @Input() params: HttpParams = null;
@@ -29,21 +44,29 @@ export class ListComponent {
   apiSubscription: Subscription;
   routerSubscription: Subscription;
 
-  constructor(protected api: ApiService, protected currentUser: UserService, protected navigation: NavigationService, protected route: ActivatedRoute) { }
+  constructor(
+    protected api: ApiService,
+    protected currentUser: UserService,
+    protected navigation: NavigationService,
+    protected route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     if (!this.basePath) {
       this.basePath = `/${this.type}`;
     }
-    this.routerSubscription = this.navigation.getRouter().events
-      .pipe(filter(event => event instanceof NavigationEnd))
+    this.routerSubscription = this.navigation
+      .getRouter()
+      .events.pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         if (event.url.endsWith(this.basePath)) {
           let prevUrl = this.navigation.getPreviousUrl();
-          let match = prevUrl.match(`${this.basePath.replace('/', '\/')}\/([^\/]+)`);
+          let match = prevUrl.match(
+            `${this.basePath.replace('/', '/')}\/([^\/]+)`
+          );
           if (match) {
             let id = match[1];
-            if (id == 'new' || id =='publish') {
+            if (id == 'new' || id == 'publish') {
               this.refresh();
             } else if (id.match(/\d+/)) {
               this.refreshRecord(id);
@@ -74,27 +97,36 @@ export class ListComponent {
     let params = this.params;
     if (this.query != null) {
       if (params == null) {
-        params = new HttpParams()
+        params = new HttpParams();
       }
-      params = params.set('search', this.query)
+      params = params.set('search', this.query);
     }
-    this.apiSubscription = this.api[this.type].index(params).subscribe((response: HttpResponse<any>) => this.handleResponse(response));
+    this.apiSubscription = get(this.api, this.type)
+      .index(params)
+      .subscribe((response: HttpResponse<any>) =>
+        this.handleResponse(response)
+      );
   }
 
   refreshRecord(id: string) {
     if (this.apiSubscription) {
       this.apiSubscription.unsubscribe();
     }
-    this.apiSubscription = this.api[this.type].get(id)
-      .pipe(catchError((response: HttpErrorResponse) => {
-        if (response.status == 404) {
-          //// deleted, remove from list
-          let records = clone(this.records);
-          remove(records, function(r) { return r.id == id; });
-          this.records = records;
-        }
-        return empty();
-      }))
+    this.apiSubscription = get(this.api, this.type)
+      .get(id)
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          if (response.status == 404) {
+            //// deleted, remove from list
+            let records = clone(this.records);
+            remove(records, (r) => {
+              return r.id == id;
+            });
+            this.records = records;
+          }
+          return empty();
+        })
+      )
       .subscribe((response: HttpResponse<any>) => {
         let found = false;
         for (let record of this.records) {
@@ -112,12 +144,18 @@ export class ListComponent {
 
   private handleResponse(response: HttpResponse<any>) {
     this.isLoading = false;
-    if (this.records == null) {
-      this.records = response.body;
-    } else {
-      this.records = this.records.concat(response.body);
+    let records = response.body;
+    if (this.cls) {
+      records = records.map((r: any) => new this.cls(r));
     }
-    this.paginationLink = this.api.parsePaginationLink(response.headers.get('Link')).next;
+    if (this.records == null) {
+      this.records = records;
+    } else {
+      this.records = this.records.concat(records);
+    }
+    this.paginationLink = this.api.parsePaginationLink(
+      response.headers.get('Link')
+    ).next;
   }
 
   trackById(record: any, index: number): string {
@@ -127,6 +165,8 @@ export class ListComponent {
   private onLoadMore(paginationLink: string) {
     this.isLoading = true;
     this.paginationLink = null;
-    this.api.get(paginationLink).subscribe(response => this.handleResponse(response));
+    this.api
+      .get(paginationLink)
+      .subscribe((response) => this.handleResponse(response));
   }
 }

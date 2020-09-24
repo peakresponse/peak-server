@@ -6,7 +6,7 @@ const ASSET_HOST = window['env'].ASSET_HOST;
  * Returns a complete asset url for a given asset path.
  */
 @Pipe({
-  name: 'asset'
+  name: 'asset',
 })
 export class AssetPipe implements PipeTransform {
   transform(path: string): string {

@@ -11,23 +11,19 @@ const appRoutes: Routes = [
     component: ListUsersComponent,
     resolve: {
       agency: AgencyService,
-      user: UserService
+      user: UserService,
     },
     children: [
       {
         path: ':id',
-        component: EditUserComponent
-      }
-    ]
-  }
+        component: EditUserComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class UsersRoutingModule {}

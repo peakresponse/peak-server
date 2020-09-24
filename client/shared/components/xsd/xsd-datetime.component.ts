@@ -7,8 +7,6 @@ import { XsdBaseComponent } from './xsd-base.component';
 
 @Component({
   selector: 'app-shared-xsd-datetime',
-  templateUrl: './xsd-datetime.component.html'
+  templateUrl: './xsd-datetime.component.html',
 })
-export class XsdDateTimeComponent extends XsdBaseComponent {
-
-}
+export class XsdDateTimeComponent extends XsdBaseComponent {}

@@ -1,0 +1,40 @@
+[
+  {
+    "model": "Scene",
+    "data": {
+      "id": "7b8ddcc3-63e6-4e6e-a47e-d553289912d1",
+      "name": "Closed Scene",
+      "approxPatients": 0,
+      "patientsCount": 0,
+      "priorityPatientsCounts": [0, 0, 0, 0, 0, 0],
+      "respondersCount": 2,
+      "incidentCommanderId": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "incidentCommanderAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedAt": "2020-04-06T21:22:10.102Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "closedAt": "2020-04-06T22:22:10.102Z"
+    }
+  },
+  {
+    "model": "Scene",
+    "data": {
+      "id": "25db9094-03a5-4267-8314-bead229eff9d",
+      "name": "Active Scene",
+      "patientsCount": 7,
+      "priorityPatientsCounts": [5, 1, 0, 0, 1, 0],
+      "respondersCount": 2,
+      "incidentCommanderId": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "incidentCommanderAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedAt": "2020-04-06T21:22:10.102Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444"
+    }
+  }
+]

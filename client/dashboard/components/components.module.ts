@@ -3,26 +3,32 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { HeaderComponent, MainComponent, NavComponent, ParentComponent } from '.';
+import { SharedPipesModule } from '../../shared/pipes';
+
+import {
+  ActiveScenesComponent,
+  HeaderComponent,
+  MainComponent,
+  NavComponent,
+  ParentComponent,
+} from '.';
 
 @NgModule({
   declarations: [
+    ActiveScenesComponent,
     HeaderComponent,
     MainComponent,
     NavComponent,
-    ParentComponent
+    ParentComponent,
   ],
   exports: [
+    ActiveScenesComponent,
     HeaderComponent,
     MainComponent,
     NavComponent,
-    ParentComponent
+    ParentComponent,
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ],
-  providers: []
+  imports: [CommonModule, FormsModule, RouterModule, SharedPipesModule],
+  providers: [],
 })
 export class ComponentsModule {}

@@ -5,7 +5,7 @@ import moment from 'moment';
  * Returns a complete asset url for a given asset path.
  */
 @Pipe({
-  name: 'relativeDate'
+  name: 'relativeDate',
 })
 export class RelativeDatePipe implements PipeTransform {
   transform(date: string, from: any): string {

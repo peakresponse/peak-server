@@ -9,17 +9,14 @@ import { UsersRoutingModule } from './users-routing.module';
 import { EditUserComponent, ListUsersComponent } from '.';
 
 @NgModule({
-  declarations: [
-    EditUserComponent,
-    ListUsersComponent
-  ],
+  declarations: [EditUserComponent, ListUsersComponent],
   imports: [
     CommonModule,
     FormsModule,
     SharedComponentsModule,
     SharedPipesModule,
-    UsersRoutingModule
+    UsersRoutingModule,
   ],
-  providers: []
+  providers: [],
 })
 export class UsersModule {}

@@ -11,7 +11,7 @@ import { AppService } from './app.service';
 
 @Component({
   templateUrl: './invite.component.html',
-  styleUrls: ['./invite.component.scss']
+  styleUrls: ['./invite.component.scss'],
 })
 export class InviteComponent {
   @ViewChild('firstEl') firstEl: ElementRef;
@@ -23,19 +23,24 @@ export class InviteComponent {
   data = {
     message: '',
     rows: [
-      {fullName: '', email: ''},
-      {fullName: '', email: ''}
-    ]
+      { fullName: '', email: '' },
+      { fullName: '', email: '' },
+    ],
   };
   emails = '';
   isLoading = false;
   errors: any = null;
 
-  constructor(private app: AppService, private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
+  constructor(
+    private app: AppService,
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private navigation: NavigationService
+  ) {
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
     if (!this.app.agency) {
       this.isLoading = true;
-      this.api.agencies.demographic(this.agencyId).subscribe(res => {
+      this.api.agencies.get(this.agencyId).subscribe((res) => {
         this.isLoading = false;
         this.app.agency = res.body;
         this.initData();
@@ -52,18 +57,24 @@ export class InviteComponent {
   }
 
   ngOnInit() {
-    setTimeout(() => this.firstEl ? this.firstEl.nativeElement.focus() : null, 100);
+    setTimeout(
+      () => (this.firstEl ? this.firstEl.nativeElement.focus() : null),
+      100
+    );
   }
 
   onInputEmails() {
     this.data.rows = this.emails
       .split(',')
-      .map(e => ({fullName: '', email: e.trim()}))
-      .filter(row => row.email != '')
+      .map((e) => ({ fullName: '', email: e.trim() }))
+      .filter((row) => row.email != '');
   }
 
   onMore() {
-    this.data.rows.push({fullName: '', email: ''}, {fullName: '', email: ''});
+    this.data.rows.push(
+      { fullName: '', email: '' },
+      { fullName: '', email: '' }
+    );
   }
 
   get rows() {
@@ -77,28 +88,27 @@ export class InviteComponent {
   }
 
   get isValid() {
-    return !this.isLoading &&
-      this.data.message != '' &&
-      this.rows.length > 0;
+    return !this.isLoading && this.data.message != '' && this.rows.length > 0;
   }
 
   onSkip() {
-    this.navigation.goTo(`/done`, {agencyId: this.agencyId});
+    this.navigation.goTo(`/done`, { agencyId: this.agencyId });
   }
 
   onNext() {
     if (!this.isLoading) {
       this.isLoading = true;
       this.errors = null;
-      this.api.demographics.personnel.invite({...this.data, rows: this.rows}, this.subdomain)
+      this.api.demographics.personnel
+        .invite({ ...this.data, rows: this.rows }, this.subdomain)
         .pipe(
-          catchError(res => {
+          catchError((res) => {
             this.isLoading = false;
             this.errors = res.error.messages;
             return empty();
           })
         )
-        .subscribe(res => {
+        .subscribe((res) => {
           this.isLoading = false;
           this.onSkip();
         });

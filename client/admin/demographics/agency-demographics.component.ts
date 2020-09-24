@@ -4,7 +4,7 @@ import { BaseDemographicsComponent } from './base-demographics.component';
 
 @Component({
   templateUrl: './base-demographics.component.html',
-  styleUrls: ['./base-demographics.component.scss']
+  styleUrls: ['./base-demographics.component.scss'],
 })
 export class AgencyDemographicsComponent extends BaseDemographicsComponent {
   ngOnInit() {

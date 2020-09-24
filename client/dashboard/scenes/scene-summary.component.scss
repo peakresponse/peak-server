@@ -1,0 +1,45 @@
+@import '../../assets/css/variables';
+
+.summary {
+  padding: 1.5rem 2.25rem;
+  background-color: white;
+  color: $mainGrey;
+  box-shadow: $cardShadow;
+}
+
+.summary__name {
+  @include copy-xl-bold;
+  margin-bottom: 0.25rem;
+}
+
+.summary__desc,
+.summary__date {
+  @include copy-m-bold;
+}
+
+h2 {
+  @include copy-l-bold;
+  color: $mainGrey;
+  text-transform: none;
+}
+
+.patients,
+.scene {
+  margin: 2.25rem;
+}
+
+.scene__map {
+  border: 0.25rem solid white;
+  max-width: 640px;
+  height: 400px;
+  background-size: 640px 480px;
+  background-position: center center;
+}
+
+.row {
+  margin: 0 -2.25rem;
+}
+
+.col-lg-4 {
+  padding: 0 2.25rem;
+}

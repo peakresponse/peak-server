@@ -1,0 +1,47 @@
+[
+  {
+    "model": "SceneObservation",
+    "data": {
+      "id": "3c29ec1b-b15e-4ef3-8eb3-c802a96c24a3",
+      "sceneId": "7b8ddcc3-63e6-4e6e-a47e-d553289912d1",
+      "name": "Closed Scene",
+      "updatedAttributes": ["name"],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "SceneObservation",
+    "data": {
+      "id": "354b7cb9-5207-4578-ba29-2d5df50e6e9a",
+      "sceneId": "7b8ddcc3-63e6-4e6e-a47e-d553289912d1",
+      "closedAt": "2020-04-06T22:22:10.102Z",
+      "updatedAttributes": ["closedAt"],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T22:22:10.102Z",
+      "updatedAt": "2020-04-06T22:22:10.102Z"
+    }
+  },
+  {
+    "model": "SceneObservation",
+    "data": {
+      "id": "a3486aa2-fc71-41c8-9db8-a28f30c48b2a",
+      "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
+      "name": "Active Scene",
+      "updatedAttributes": ["name"],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

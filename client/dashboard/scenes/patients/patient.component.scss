@@ -1,62 +1,5 @@
 @import '../../../assets/css/variables';
 
-.modal {
-  background: white;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal__navigation {
-  display: flex;
-  align-items: center;
-  height: 4.5rem;
-  padding: 0 1.5rem;
-}
-
-.modal__bar {
-  @include copy-l-regular;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top-left-radius: .3125rem;
-  border-top-right-radius: .3125rem;
-  padding: 0 3.5rem;
-  color: white;
-  height: 3.5rem;
-
-  a {
-    cursor: pointer;
-  }
-}
-
-.modal__action {
-  font-weight: 600;
-}
-
-.modal__header {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 0 3.5rem;
-  height: 13.75rem;
-}
-
-.modal__body {
-  background-color: $bgBackground;
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 1.5rem 3.5rem;
-}
-
-.scene__name {
-  @include copy-l-bold;
-  color: $lowPriorityGrey;
-}
-
-.scene__elapsed-time {
-  @include copy-m-regular;
-}
-
 .patient__priority {
   position: absolute;
   top: 50%;
@@ -67,7 +10,7 @@
   display: flex;
   align-items: center;
   z-index: 0;
-  padding-left: calc(3.5rem + 8rem + 1.25rem - .5rem);
+  padding-left: calc(3.5rem + 8rem + 1.25rem - 0.5rem);
 }
 
 .peakicon-remove {
@@ -79,10 +22,10 @@
 }
 
 .btn-priority {
-  border-radius: .5rem;
-  margin: 0 .5rem;
+  border-radius: 0.5rem;
+  margin: 0 0.5rem;
   min-width: 10rem;
-  padding: 1.375rem 2rem 1.4325rem
+  padding: 1.375rem 2rem 1.4325rem;
 }
 
 .btn-priority--selected {
@@ -156,6 +99,7 @@
   background-size: cover;
   background-position: center center;
   border-radius: 4rem;
+  background-color: $greyPeakBlue;
   color: white;
   margin-right: 1.25rem;
   overflow: hidden;
@@ -164,15 +108,15 @@
 
   .peakicon-user {
     position: relative;
-    top: .75rem;
-    font-size: 3.5rem;
+    top: 1.5rem;
+    font-size: 6rem;
   }
 }
 
 .patient__name {
   @include copy-xl-bold;
   color: $mainGrey;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   text-transform: none;
 }
 
@@ -181,12 +125,13 @@
   justify-content: space-between;
 
   .btn-outline-primary {
-    margin-right: .75rem;
+    margin-right: 0.75rem;
   }
 }
 
 .patient--0 {
-  .modal__bar, .patient__photo {
+  .modal__bar,
+  .patient__photo {
     background-color: $immediateRed;
   }
   .modal__header {
@@ -195,7 +140,8 @@
 }
 
 .patient--1 {
-  .modal__bar, .patient__photo {
+  .modal__bar,
+  .patient__photo {
     background-color: $delayedYellow;
   }
   .modal__header {
@@ -204,7 +150,8 @@
 }
 
 .patient--2 {
-  .modal__bar, .patient__photo {
+  .modal__bar,
+  .patient__photo {
     background-color: $minimalGreen;
   }
   .modal__header {
@@ -213,7 +160,8 @@
 }
 
 .patient--3 {
-  .modal__bar, .patient__photo {
+  .modal__bar,
+  .patient__photo {
     background-color: $expectGrey;
   }
   .modal__header {
@@ -222,7 +170,8 @@
 }
 
 .patient--4 {
-  .modal__bar, .patient__photo {
+  .modal__bar,
+  .patient__photo {
     background-color: $deadBlack;
   }
   .modal__header {
@@ -231,7 +180,8 @@
 }
 
 .patient--5 {
-  .modal__bar, .patient__photo {
+  .modal__bar,
+  .patient__photo {
     background-color: $peakBlue;
   }
   .modal__header {
@@ -241,10 +191,10 @@
 
 .observation {
   background: white;
-  border-radius: .3125rem;
+  border-radius: 0.3125rem;
   box-shadow: $cardShadow;
-  padding: .5rem .75rem 1rem;
-  margin-bottom: .5rem;
+  padding: 0.5rem 0.75rem 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .observation__header {
@@ -252,11 +202,11 @@
   color: $lowPriorityGrey;
   display: flex;
   align-items: center;
-  margin-bottom: .625rem;;
+  margin-bottom: 0.625rem;
 }
 
 shared-audio {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .observation__timestamps {

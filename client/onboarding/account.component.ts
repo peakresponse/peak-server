@@ -11,7 +11,7 @@ import { AppService } from './app.service';
 
 @Component({
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent {
   @ViewChild('firstNameEl') firstNameEl: ElementRef;
@@ -29,27 +29,33 @@ export class AccountComponent {
     email: '',
     position: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   };
   isDone = false;
   isPending = false;
-  isLoading = false;  
+  isLoading = false;
   errors: any = null;
 
-  constructor(private app: AppService, private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
+  constructor(
+    private app: AppService,
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private navigation: NavigationService
+  ) {
     this.exists = this.route.snapshot.data.exists;
     this.stateId = this.route.snapshot.queryParamMap.get('stateId');
     this.data.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
-    this.data.invitationCode = this.route.snapshot.queryParamMap.get('invitationCode');
+    this.data.invitationCode = this.route.snapshot.queryParamMap.get(
+      'invitationCode'
+    );
     if (this.exists) {
       this.agency = this.app.agency;
       if (!this.agency) {
         this.isLoading = true;
-        this.api.agencies.demographic(this.data.agencyId)
-          .subscribe(res => {
-            this.isLoading = false;
-            this.agency = res.body;
-          });
+        this.api.agencies.get(this.data.agencyId).subscribe((res) => {
+          this.isLoading = false;
+          this.agency = res.body;
+        });
       }
     } else {
       this.data.subdomain = this.route.snapshot.queryParamMap.get('subdomain');
@@ -60,7 +66,10 @@ export class AccountComponent {
   }
 
   ngOnInit() {
-    setTimeout(() => this.firstNameEl ? this.firstNameEl.nativeElement.focus() : null, 100);
+    setTimeout(
+      () => (this.firstNameEl ? this.firstNameEl.nativeElement.focus() : null),
+      100
+    );
   }
 
   get isFirstStep() {
@@ -68,28 +77,42 @@ export class AccountComponent {
   }
 
   get isValid() {
-    if (this.form && !this.isLoading) {      
-      return this.data.password != '' && this.data.confirmPassword != '' &&
-        this.form.valid && this.isPasswordSecure && this.isPasswordConfirmed;
+    if (this.form && !this.isLoading) {
+      return (
+        this.data.password != '' &&
+        this.data.confirmPassword != '' &&
+        this.form.valid &&
+        this.isPasswordSecure &&
+        this.isPasswordConfirmed
+      );
     }
     return false;
   }
 
   get isPasswordSecure() {
-    return this.data.password == '' ||
-      this.data.password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/) != null;
+    return (
+      this.data.password == '' ||
+      this.data.password.match(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/
+      ) != null
+    );
   }
 
   get isPasswordConfirmed() {
-    return this.data.password == '' || this.data.confirmPassword == '' ||
-      this.data.password == this.data.confirmPassword;
+    return (
+      this.data.password == '' ||
+      this.data.confirmPassword == '' ||
+      this.data.password == this.data.confirmPassword
+    );
   }
 
   onBack() {
     if (this.exists) {
       this.navigation.backTo(`/agency?stateId=${this.stateId}`);
     } else {
-      this.navigation.backTo(`/url?stateId=${this.stateId}&agencyId=${this.data.agencyId}`);
+      this.navigation.backTo(
+        `/url?stateId=${this.stateId}&agencyId=${this.data.agencyId}`
+      );
     }
   }
 
@@ -102,32 +125,34 @@ export class AccountComponent {
       this.isLoading = true;
       this.errors = null;
       if (this.exists) {
-        this.api.demographics.personnel.accept(this.data, this.agency.subdomain)
+        this.api.demographics.personnel
+          .accept(this.data, this.agency.subdomain)
           .pipe(
-            catchError(res => {
+            catchError((res) => {
               this.isLoading = false;
               this.errors = res.error?.messages;
               return empty();
             })
           )
-          .subscribe(res => {
+          .subscribe((res) => {
             this.isLoading = false;
             this.isDone = true;
             this.isPending = res.status == 202;
           });
-    } else {
-        this.api.demographics.create(this.data)
+      } else {
+        this.api.agencies
+          .claim(this.data.agencyId, this.data)
           .pipe(
-            catchError(res => {
+            catchError((res) => {
               this.isLoading = false;
               this.errors = res.error.messages;
               return empty();
             })
           )
-          .subscribe(res => {
+          .subscribe((res) => {
             this.isLoading = false;
             this.app.agency = res.body;
-            this.navigation.goTo(`/invite`, {agencyId: this.data.agencyId});
+            this.navigation.goTo(`/invite`, { agencyId: this.data.agencyId });
           });
       }
     }

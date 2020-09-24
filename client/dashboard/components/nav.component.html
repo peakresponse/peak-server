@@ -5,15 +5,15 @@
       <i class="peakicon peakicon-scenes"></i>
       <span i18n>Previous Scenes</span>
     </a>
-    <a>
+    <a *ngIf="user.hasRole('CONFIGURATION') || user.hasRole('REPORTING')">
       <i class="peakicon peakicon-agency"></i>
       <span i18n>Agency Info</span>
     </a>
-    <a>
+    <a *ngIf="user.hasRole('PERSONNEL')" routerLink="/users" routerLinkActive="active">
       <i class="peakicon peakicon-users"></i>
       <span i18n>Users</span>
     </a>
-    <a>
+    <a *ngIf="user.hasRole('REPORTING')">
       <img class="nemsis-logo" src="/images/nemsis-logo-square.png" />
       <span i18n>NEMSIS<br/>Submission</span>
     </a>
@@ -33,11 +33,11 @@
     </a>
   </ng-container>
 </nav>
-<a *ngIf="!scene">
+<a *ngIf="!scene" routerLink="/scenes/new">
   <img class="new-scene" src="/images/new-scene.png" />
   <span i18n>Start New<br/>Scene</span>
 </a>
-<a *ngIf="scene">
+<a *ngIf="scene" [routerLink]="[{outlets: {modal: ['patients', 'scan']}}]" [preserveFragment]="true" queryParamsHandling="preserve">
   <img class="scan" src="/images/scan.png" />
   <span i18n>Scan Patient</span>
 </a>

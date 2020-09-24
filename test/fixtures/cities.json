@@ -1,0 +1,25 @@
+[
+  {
+    "model": "City",
+    "data": {
+      "id": "2411786",
+      "featureName": "City of San Francisco",
+      "featureClass": "Civil",
+      "censusCode": "67000",
+      "censusClassCode": "C1",
+      "gsaCode": "",
+      "opmCode": "",
+      "stateNumeric": "06",
+      "stateAlpha": "CA",
+      "countySequence": "1",
+      "countyNumeric": "075",
+      "countyName": "San Francisco",
+      "primaryLatitude": "37.7782251",
+      "primaryLongitude": "-122.4424955",
+      "dateCreated": "03/11/2008",
+      "dateEdited": "03/24/2019",
+      "createdAt": "2020-04-07T19:59:21.446Z",
+      "updatedAt": "2020-04-07T19:59:21.446Z"
+    }
+  }
+]

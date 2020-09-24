@@ -1,0 +1,22 @@
+<a (click)="onClick()" [class]="'patient patient--' + patient.priority">
+  <div class="patient__status">
+    <div class="patient__photo" [style.background-image]="patient.portraitUrl|cssUrl">
+      <i *ngIf="!patient.portraitUrl" class="peakicon peakicon-user"></i>
+    </div>
+    <div>
+      <div class="patient__priority">
+        <span *ngIf="patient.priority==0">Immediate</span>
+        <span *ngIf="patient.priority==1">Delayed</span>
+        <span *ngIf="patient.priority==2">Minimal</span>
+        <span *ngIf="patient.priority==3">Expectant</span>
+        <span *ngIf="patient.priority==4">Dead</span>
+      </div>
+      <div class="patient__updated"><span i18n>Last Update:</span> {{patient.updatedAt|relativeDate:now}}</div>
+    </div>
+  </div>
+  <div class="patient__name">{{patient.firstName}} {{patient.lastName}}</div>
+  <div class="patient__gender">{{patient.gender}}</div>
+  <div class="patient__age">{{patient.age}}</div>
+  <div class="patient__location">{{patient.location}}</div>
+  <div class="patient__injury">{{patient.injury}}</div>
+</a>

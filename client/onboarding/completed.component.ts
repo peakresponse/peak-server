@@ -6,16 +6,23 @@ import { AppService } from './app.service';
 import { ApiService } from '../shared/services';
 
 @Component({
-  templateUrl: './completed.component.html'
+  templateUrl: './completed.component.html',
 })
 export class CompletedComponent {
   agencyId: string = null;
   subdomain: string = null;
 
-  constructor(private app: AppService, private api: ApiService, private route: ActivatedRoute, private sanitizer: DomSanitizer ) {
+  constructor(
+    private app: AppService,
+    private api: ApiService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
+  ) {
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
     if (!this.app.agency) {
-      this.api.agencies.demographic(this.agencyId).subscribe(res => this.subdomain = res.body.subdomain);
+      this.api.agencies
+        .get(this.agencyId)
+        .subscribe((res) => (this.subdomain = res.body.subdomain));
     } else {
       this.subdomain = this.app.agency.subdomain;
     }
@@ -26,6 +33,8 @@ export class CompletedComponent {
   }
 
   get safeUrl() {
-    return this.sanitizer.bypassSecurityTrustUrl(`${window.location.protocol}//${this.url}`);
+    return this.sanitizer.bypassSecurityTrustUrl(
+      `${window.location.protocol}//${this.url}`
+    );
   }
 }
