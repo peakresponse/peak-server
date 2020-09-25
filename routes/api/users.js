@@ -32,6 +32,8 @@ router.get(
     const data = {
       user: req.user.toJSON(),
     };
+    /// add additional privilege info
+    data.user.isAdmin = req.user.isAdmin;
     /// add any active scenes the user may be a part of
     data.user.activeScenes = (await req.user.getActiveScenes()).map((s) =>
       s.toJSON()

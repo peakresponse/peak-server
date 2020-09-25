@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AgencyService, UserService } from '../../shared/services';
 
-import { EditStateComponent, ListStatesComponent, NewStateComponent } from '.';
+import { EditStateComponent, ListStatesComponent } from '.';
 
 const appRoutes: Routes = [
   {
@@ -14,10 +14,6 @@ const appRoutes: Routes = [
       user: UserService,
     },
     children: [
-      {
-        path: 'new',
-        component: NewStateComponent,
-      },
       {
         path: ':id',
         component: EditStateComponent,

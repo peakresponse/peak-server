@@ -14,7 +14,7 @@ describe('lib', function () {
   describe('nemsisStates.california', () => {
     // eslint-disable-next-line func-names
     beforeEach(async function () {
-      await helpers.loadFixtures(['counties']);
+      await helpers.loadFixtures(['cities', 'counties']);
     });
 
     describe('appendAgenciesFromSpreadsheet()', () => {
@@ -75,6 +75,19 @@ describe('lib', function () {
             );
             assert(facilities.sFacilityGroup);
             assert.deepStrictEqual(facilities.sFacilityGroup.length, 7);
+
+            const facility =
+              facilities.sFacilityGroup[0]['sFacility.FacilityGroup'][0];
+            assert.deepStrictEqual(facility, {
+              'sFacility.02': { _text: 'Coventry Place' },
+              'sFacility.03': { _text: '64673' },
+              'sFacility.07': { _text: '1550 Sutter St' },
+              'sFacility.12': { _text: 'US' },
+              'sFacility.09': { _text: '06' },
+              'sFacility.11': { _text: '06075' },
+              'sFacility.08': { _text: '2411786' },
+              'sFacility.10': { _text: '94109' },
+            });
             break;
           }
         }

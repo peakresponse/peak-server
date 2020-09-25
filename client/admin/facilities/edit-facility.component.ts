@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { NavigationService } from '../../shared/services';
+import { FormComponent } from '../../shared/components';
+import { ApiService, NavigationService } from '../../shared/services';
 
 @Component({
   templateUrl: './edit-facility.component.html',
 })
 export class EditFacilityComponent {
   id: string = null;
+  @ViewChild('form') form: FormComponent;
 
   constructor(
+    private api: ApiService,
     private navigation: NavigationService,
     private route: ActivatedRoute
   ) {}
@@ -20,5 +23,11 @@ export class EditFacilityComponent {
 
   onDelete() {
     this.navigation.backTo(`/facilities`);
+  }
+
+  onGeocode() {
+    this.api.facilities.geocode(this.id).subscribe(() => {
+      this.form.refresh();
+    });
   }
 }

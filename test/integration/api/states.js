@@ -12,7 +12,7 @@ describe('/api/states', function () {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'counties', 'states']);
+    await helpers.loadFixtures(['users', 'cities', 'counties', 'states']);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -30,65 +30,22 @@ describe('/api/states', function () {
     });
   });
 
-  describe('POST /', () => {
-    it('should create a new State record and associated Agency and Facility records', async function () {
+  describe('POST /:id/configure', () => {
+    it('should configure a State record and associated Agency and Facility records', async function () {
       if (!process.env.CI) {
         this.skip();
       }
       this.timeout(120000);
-      nemsisMocks.mockAlabamaFilesRequest();
-      nemsisMocks.mockAlabamaDownloads();
-
-      let response = await testSession
-        .post('/api/states/')
-        .send({
-          repo: 'alabama',
-          name: 'Alabama',
-        })
-        .expect(HttpStatus.ACCEPTED);
-      const data = response.body;
-      assert(data.id);
-      /// start polling for completion
-      for (;;) {
-        response = await testSession.get(`/api/states/${data.id}`);
-        if (response.accepted) {
-          assert(response.header['x-status']);
-          await helpers.sleep(1000);
-        } else {
-          assert(response.status, HttpStatus.OK);
-          break;
-        }
-      }
-      const state = await models.State.findOne({ where: { id: data.id } });
-      assert(state);
-      assert.deepStrictEqual(state.name, 'Alabama');
-      const agencies = await state.getAgencies();
-      assert.deepStrictEqual(agencies.length, 307);
-      const facilities = await models.Facility.findAll();
-      assert.deepStrictEqual(facilities.length, 1263);
-    });
-
-    it('should handle CA facility spreadsheet', async function () {
-      if (!process.env.CI) {
-        this.skip();
-      }
-      this.timeout(120000);
-
+      nemsisMocks.mockReposRequest();
       nemsisMocks.mockCaliforniaFilesRequest();
       nemsisMocks.mockCaliforniaDownloads();
 
       let response = await testSession
-        .post('/api/states/')
-        .send({
-          repo: 'california',
-          name: 'California',
-        })
+        .post('/api/states/06/configure')
         .expect(HttpStatus.ACCEPTED);
-      const data = response.body;
-      assert(data.id);
       /// start polling for completion
       for (;;) {
-        response = await testSession.get(`/api/states/${data.id}`);
+        response = await testSession.get(`/api/states/06`);
         if (response.accepted) {
           await helpers.sleep(1000);
         } else {
@@ -96,33 +53,21 @@ describe('/api/states', function () {
           break;
         }
       }
-      const state = await models.State.findOne({ where: { id: data.id } });
+      const state = await models.State.findOne({ where: { id: '06' } });
       assert(state);
       assert.deepStrictEqual(state.name, 'California');
-      const agencies = await state.getAgencies();
-      assert.deepStrictEqual(agencies.length, 1411);
-      const facilities = await models.Facility.findAll();
-      assert.deepStrictEqual(facilities.length, 119);
-    });
-
-    it('should return an error if the State has already been created', async () => {
-      nemsisMocks.mockAlabamaFilesRequest();
-      nemsisMocks.mockAlabamaDownloads();
-
-      await models.State.update(
-        { isConfigured: true },
-        { where: { id: '01' } }
-      );
-      const response = await testSession
-        .post('/api/states/')
-        .send({
-          repo: 'alabama',
-          name: 'Alabama',
-        })
-        .expect(422);
-      const data = response.body;
-      assert(data.messages);
-      assert.deepStrictEqual(data.messages[0].path, 'repo');
+      assert.deepStrictEqual(await state.countAgencies(), 1411);
+      assert.deepStrictEqual(await models.Facility.count(), 119);
+      const facility = await models.Facility.findOne({
+        where: { stateId: '06', locationCode: '20046' },
+        rejectOnEmpty: true,
+      });
+      assert.deepStrictEqual(facility.name, 'Sutter Health CPMC');
+      assert.deepStrictEqual(facility.type, '1701005');
+      assert.deepStrictEqual(facility.address, '3698 Sacramento Street');
+      assert.deepStrictEqual(facility.cityId, '2411786');
+      assert.deepStrictEqual(facility.countyId, '06075');
+      assert.deepStrictEqual(facility.zip, '94118');
     });
   });
 

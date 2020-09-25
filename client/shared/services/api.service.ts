@@ -221,6 +221,9 @@ export class ApiService {
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/facilities/${id}`, params);
     },
+    geocode: (id: string): Observable<any> => {
+      return this.post(`/api/facilities/${id}/geocode`, null);
+    },
   };
 
   home = {
@@ -282,6 +285,9 @@ export class ApiService {
     },
     create: (data: any): Observable<any> => {
       return this.post(`/api/states`, data);
+    },
+    configure: (id: string, params?: HttpParams): Observable<any> => {
+      return this.post(`/api/states/${id}/configure`, params);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/states/${id}`, params);

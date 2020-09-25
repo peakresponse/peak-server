@@ -56,4 +56,19 @@ router.get(
   })
 );
 
+router.post(
+  '/:id/geocode',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    const record = await models.Facility.findByPk(req.params.id);
+    if (record) {
+      await record.geocode();
+      await record.save();
+      res.json(record.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
 module.exports = router;

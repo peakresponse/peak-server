@@ -2,6 +2,7 @@
 const express = require('express');
 const fs = require('fs');
 const HttpStatus = require('http-status-codes');
+const _ = require('lodash');
 const path = require('path');
 
 const models = require('../../models');
@@ -27,54 +28,28 @@ router.get('/new', interceptors.requireAdmin(), (req, res) => {
 });
 
 router.post(
-  '/',
+  '/:id/configure',
   interceptors.requireAdmin(),
   helpers.async(async (req, res) => {
-    const { repo } = req.body;
-    const { name } = req.body;
-    const id = State.nameMapping[name] ? State.nameMapping[name].code : null;
-    if (!id) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
-      return;
-    }
-    let state = null;
-    await models.sequelize.transaction(async (transaction) => {
-      /// check if already exists
-      state = await models.State.findByPk(id, { transaction });
-      /// if not, create, store everything...
-      if (!state) {
-        /// create State record
-        state = await models.State.create(
-          {
-            id,
-            name,
-            dataSet: { status: 'Downloading state data from NEMSIS...' },
-          },
-          { transaction }
-        );
-      } else if (state.isConfigured) {
-        state = null;
-        res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
-          status: HttpStatus.UNPROCESSABLE_ENTITY,
-          messages: [
-            { path: 'repo', message: 'This State has already been added.' },
-          ],
-        });
-      } else {
-        await state.update(
-          { dataSet: { status: 'Downloading state data from NEMSIS...' } },
-          { transaction }
-        );
-      }
-    });
+    const state = await models.State.findByPk(req.params.id);
     if (!state) {
+      res.status(HttpStatus.NOT_FOUND).end();
       return;
     }
+    await state.update({
+      dataSet: { status: 'Downloading state data from NEMSIS...' },
+    });
     /// send back ACCEPTED state while processing continues in background
     res.status(HttpStatus.ACCEPTED).json(state);
     /// now start processing NEMSIS data in background...
-    const files = await nemsis.getStateRepoFiles(repo);
-    const tmpDir = await nemsis.downloadRepoFiles(repo, files.values);
+    const repos = await nemsis.getStateRepos();
+    const repo = _.find(repos.values, { name: state.name });
+    if (!repo) {
+      res.status(HttpStatus.NOT_FOUND).end();
+      return;
+    }
+    const files = await nemsis.getStateRepoFiles(repo.slug);
+    const tmpDir = await nemsis.downloadRepoFiles(repo.slug, files.values);
     try {
       await state.update({
         dataSet: { status: 'Processing downloaded state data...' },
@@ -102,8 +77,11 @@ router.post(
         return;
       }
       /// special-case handling for states
-      if (nemsisStates[repo] && nemsisStates[repo].processStateRepoFiles) {
-        await nemsisStates[repo].processStateRepoFiles(
+      if (
+        nemsisStates[repo.slug] &&
+        nemsisStates[repo.slug].processStateRepoFiles
+      ) {
+        await nemsisStates[repo.slug].processStateRepoFiles(
           tmpDir,
           files.values,
           dataSet
@@ -164,24 +142,21 @@ router.post(
                   transaction,
                 });
                 facility.type = type;
-                facility.name = sFacility['sFacility.02']._text;
-                facility.unit = sFacility['sFacility.06']
-                  ? sFacility['sFacility.06']._text
-                  : null;
-                facility.address = sFacility['sFacility.07']
-                  ? sFacility['sFacility.07']._text
-                  : null;
-                facility.city = sFacility['sFacility.08']
-                  ? await City.getName(sFacility['sFacility.08']._text, {
-                      transaction,
-                    })
-                  : null;
-                facility.state = sFacility['sFacility.09']
-                  ? State.codeMapping[sFacility['sFacility.09']._text].abbr
-                  : null;
-                facility.zip = sFacility['sFacility.10']
-                  ? sFacility['sFacility.10']._text
-                  : null;
+                facility.name = sFacility['sFacility.02']?._text;
+                facility.unit = sFacility['sFacility.06']?._text;
+                facility.address = sFacility['sFacility.07']?._text;
+                facility.cityId = sFacility['sFacility.08']?._text;
+                facility.cityName = await City.getName(
+                  sFacility['sFacility.08']?._text,
+                  {
+                    transaction,
+                  }
+                );
+                facility.stateId = sFacility['sFacility.09']?._text;
+                facility.stateName =
+                  State.codeMapping[sFacility['sFacility.09']?._text]?.name;
+                facility.zip = sFacility['sFacility.10']?._text;
+                facility.countyId = sFacility['sFacility.11']?._text;
                 if (sFacility['sFacility.13']) {
                   const m = sFacility['sFacility.13']._text.match(
                     /([-\d.]+),([-\d.]+)/
@@ -191,7 +166,7 @@ router.post(
                   }
                 } else if (process.env.NODE_ENV !== 'test') {
                   /// don't perform in test, so we don't exceed request quotas
-                  facility.geocode();
+                  await facility.geocode();
                 }
                 facility.dataSet = sFacility;
                 await facility.save({ transaction });
@@ -206,6 +181,7 @@ router.post(
       state.schematronXml = schematronXml;
       await state.save();
     } catch (error) {
+      // console.log(error);
       state.dataSet = {};
       await state.save();
     } finally {

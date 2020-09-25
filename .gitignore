@@ -7,3 +7,4 @@ target
 tmp
 webpack-stats.json
 nemsis/xsd/*.json
+\~\$*.xlsx

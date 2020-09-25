@@ -7,10 +7,10 @@ import { SharedComponentsModule } from '../../shared/components';
 import { SharedPipesModule } from '../../shared/pipes';
 
 import { StatesRoutingModule } from './states-routing.module';
-import { EditStateComponent, ListStatesComponent, NewStateComponent } from '.';
+import { EditStateComponent, ListStatesComponent } from '.';
 
 @NgModule({
-  declarations: [EditStateComponent, ListStatesComponent, NewStateComponent],
+  declarations: [EditStateComponent, ListStatesComponent],
   imports: [
     CommonModule,
     FormsModule,
