@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         const response = await client.geocode({
           params: {
             address: `${this.address}, ${this.cityName}, ${this.stateName}`,
-            key: process.env.GOOGLE_MAPS_API_KEY,
+            key: process.env.GOOGLE_MAPS_SERVER_API_KEY,
           },
         });
         if (
