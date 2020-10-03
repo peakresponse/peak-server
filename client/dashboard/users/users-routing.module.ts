@@ -3,21 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ParentComponent } from '../components';
 import { AgencyGuard } from '../agencies/agency.guard';
-import { ListUsersComponent } from '.';
+import { InviteUsersComponent, ListUsersComponent } from '.';
 import { UserGuard } from './user.guard';
 
 const appRoutes: Routes = [
   {
     path: 'users',
-    canActivateChild: [UserGuard],
-    component: ParentComponent,
+    canActivate: [UserGuard, AgencyGuard],
+    canDeactivate: [AgencyGuard],
+    component: ListUsersComponent,
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        component: ListUsersComponent,
-        canActivate: [AgencyGuard],
-        canDeactivate: [AgencyGuard],
+        path: 'invite',
+        outlet: 'modal',
+        component: InviteUsersComponent,
       },
     ],
   },

@@ -1,0 +1,58 @@
+<div class="modal d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="onClose()" type="button" class="close" aria-label="Close">
+          <span aria-hidden="true"><i class="peakicon peakicon-remove"></i></span>
+        </button>
+      </div>
+      <form #form="ngForm" (submit)="onSubmit()">
+        <fieldset [disabled]="isLoading">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <div class="form-field" [class.is-invalid]="errors|error:'message'">
+                    <label for="message">Message</label>
+                    <textarea #firstEl [(ngModel)]="data.message" required id="message" name="message" type="text" class="form-control" rows="4"></textarea>
+                    <div *ngIf="errors|error:'message'; let error" class="invalid-feedback">{{error.message}}</div>
+                  </div>
+                </div>
+                <div class="form-group d-lg-none">
+                  <div class="form-field" [class.is-invalid]="errors|error:'emails'">
+                    <label for="emails">Emails</label>
+                    <textarea #firstEl [(ngModel)]="emails" (input)="onInputEmails()" required id="emails" name="emails" type="text" class="form-control" rows="4"
+                      i18n-placeholder placeholder="Type emails here, with a comma between each email."></textarea>
+                    <div *ngIf="errors|error:'emails'; let error" class="invalid-feedback">{{error.message}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngFor="let row of data.rows; let i = index;" class="row d-none d-lg-flex">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <div class="form-field">
+                    <label [for]="'fullName_' + i">Name</label>
+                    <input [(ngModel)]="row.fullName" required [id]="'fullName_' + i" [name]="'fullName_' + i" type="text" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <div class="form-field" [class.is-invalid]="row.fullName != '' && row.email == ''">
+                    <label [for]="'email_' + i">Email</label>
+                    <input [(ngModel)]="row.email" required [id]="'email_' + i" [name]="'email_' + i" type="text" class="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button [disabled]="isLoading" (click)="onMore()" class="btn btn-sm btn-outline-primary d-none d-lg-flex" type="button"><i class="peakicon peakicon-add"></i> Add More</button>
+            <button [disabled]="isLoading || !isValid" type="submit" class="btn btn-md btn-primary" i18n>Invite</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

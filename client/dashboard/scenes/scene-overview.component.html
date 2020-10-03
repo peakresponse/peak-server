@@ -61,15 +61,22 @@
             <div class="responder__name">{{responder.user.firstName}} {{responder.user.lastName}}</div>
             <div class="row">
               <div class="col-sm-6">
-                {{responder.user.email}}
+                <div class="responder__position">{{responder.user.position}}</div>
+                <div class="responder__agency">{{responder.agency.name}}</div>
               </div>
               <div class="col-sm-6">
-                <div><span i18n>Time of Arrival:</span> {{responder.arrivedAt|date:'shortTime'}}</div>
-                <div *ngIf="responder.departedAt"><span i18n>Time of Departure:</span> {{responder.departedAt|date:'shortTime'}}</div>
+                <div><span i18n>Time of Arrival:</span><br />{{responder.arrivedAt|date:'shortTime'}}</div>
+                <div *ngIf="responder.departedAt"><span i18n>Time of Departure:</span><br />{{responder.departedAt|date:'shortTime'}}</div>
               </div>
             </div>
           </div>
-          <button type="button" class="btn btn-xs btn-outline-primary" i18n>Transfer Command</button>
+          <div class="responder__actions">
+            <ng-container *ngIf="(scene.attributes$|async).incidentCommanderId; let incidentCommanderId">
+              <button *ngIf="incidentCommanderId == user.id && incidentCommanderId != responder.user.id" 
+                      (click)="transferConfirmation.show(responder, {centered: true, size: 'lg'})"
+                      type="button" class="btn btn-xs btn-outline-primary" i18n>Transfer Command</button>
+            </ng-container>
+          </div>
         </li>
       </ul>
     </div>
@@ -87,5 +94,12 @@
   <div class="modal-body" i18n>
     <p i18n>You can join again later if your plans change.</p>
     <p i18n>You may also be asked to fill out more information after the scene is closed.</p>
+  </div>
+</app-shared-modal>
+<app-shared-modal #transferConfirmation
+  i18n-confirmLabel confirmLabel="Transfer" i18n-dismissLabel dismissLabel="Cancel" (confirm)="onTransfer(transferConfirmation.data)">
+  <h4 class="modal-title" i18n>Are you sure you want to transfer command to {{transferConfirmation.data?.user.firstName}} {{transferConfirmation.data?.user.lastName}}?</h4>
+  <div class="modal-body" i18n>
+    <p i18n>Once you transfer, you will no longer be able to edit the scene overview or close the scene.</p>
   </div>
 </app-shared-modal>

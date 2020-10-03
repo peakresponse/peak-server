@@ -274,6 +274,13 @@ export class ApiService {
     leave: (id: string): Observable<any> => {
       return this.patch(`/api/scenes/${id}/leave`);
     },
+    transfer: (
+      id: string,
+      userId: string,
+      agencyId: string
+    ): Observable<any> => {
+      return this.patch(`/api/scenes/${id}/transfer`, { userId, agencyId });
+    },
   };
 
   states = {

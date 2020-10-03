@@ -156,6 +156,10 @@ export class SceneService implements OnDestroy {
     return this.api.scenes.leave(this.id);
   }
 
+  transfer(userId: string, agencyId: string): Observable<any> {
+    return this.api.scenes.transfer(this.id, userId, agencyId);
+  }
+
   disconnect() {
     this.sceneSubscription?.unsubscribe();
     this.sceneSubscription = null;

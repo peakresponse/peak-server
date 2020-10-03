@@ -1,3 +1,4 @@
+const i18n = require('i18n');
 const querystring = require('querystring');
 const url = require('url');
 const WebSocket = require('ws');
@@ -9,8 +10,10 @@ agencyServer.on('connection', async (ws, req) => {
   // eslint-disable-next-line no-param-reassign
   ws.info = { userId: req.user.id, agencyId: req.agency.id };
   const scenes = await req.agency.getActiveScenes();
+  const agency = req.agency.toJSON();
+  agency.message = req.agency.getLocalizedInvitationMessage(req);
   const data = JSON.stringify({
-    agency: req.agency.toJSON(),
+    agency,
     scenes: scenes.map((s) => s.toJSON()),
   });
   ws.send(data);
@@ -104,6 +107,7 @@ const dispatchPatientUpdate = async (patientId) => {
 
 const configure = (server, app) => {
   server.on('upgrade', (req, socket, head) => {
+    i18n.init(req);
     app.sessionParser(req, {}, async () => {
       const query = querystring.parse(url.parse(req.url).query);
       /// ensure agency specified

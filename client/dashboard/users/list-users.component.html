@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-6">      
       <h3 i18n>Current Users</h3>
-      <app-shared-list basePath="/users" [params]="currentParams" type="employments" class="users">
+      <app-shared-list #currentList basePath="/users" [params]="currentParams" type="employments" class="users">
         <ng-template let-record="record">
           <div class="user">
             <div class="user__photo" [style.background-image]="record.user?.iconUrl|cssUrl">
@@ -14,7 +14,7 @@
               <div class="user__name">{{record.firstName}} {{record.lastName}}</div>
               <div class="user__position">{{record.user?.position}}</div>
             </div>
-            <div *ngIf="!record.user && record.invitedAt" class="user__invited" i18n>Invited on {{record.invitedAt|date:'h:mma - MMM d yyyy'}}</div>
+            <div *ngIf="!record.user && record.invitationAt" class="user__invited" i18n>Invited at {{record.invitationAt|date:'h:mma - MMM d yyyy'}}</div>
           </div>
         </ng-template>
       </app-shared-list>
@@ -31,4 +31,8 @@
     </div>
   </div>
 </app-dashboard-main>
+<div class="invite">
+  <button [routerLink]="[{ outlets: { modal: ['invite'] } }]" type="button" class="btn btn-md btn-primary" i18n>Invite New Users</button>
+</div>
 <app-dashboard-active-scenes></app-dashboard-active-scenes>
+<router-outlet name="modal"></router-outlet>

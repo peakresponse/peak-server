@@ -8,10 +8,10 @@ import { SharedPipesModule } from '../../shared/pipes';
 import { ComponentsModule } from '../components/components.module';
 import { UsersRoutingModule } from './users-routing.module';
 
-import { ListUsersComponent } from '.';
+import { InviteUsersComponent, ListUsersComponent } from '.';
 
 @NgModule({
-  declarations: [ListUsersComponent],
+  declarations: [InviteUsersComponent, ListUsersComponent],
   imports: [
     CommonModule,
     ComponentsModule,

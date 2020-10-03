@@ -12,6 +12,12 @@ h3 {
   padding: 3rem 1.5rem;
 }
 
+.invite {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+}
+
 .user {
   background-color: white;
   margin-bottom: 1rem;
@@ -19,6 +25,7 @@ h3 {
   box-shadow: $cardShadow;
   padding: 0.5rem 0.75rem;
   display: flex;
+  position: relative;
   align-items: center;
 }
 
@@ -47,4 +54,12 @@ h3 {
 
 .user__position {
   @include copy-s-regular;
+}
+
+.user__invited {
+  @include copy-s-bold;
+  color: $lowPriorityGrey;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
 }

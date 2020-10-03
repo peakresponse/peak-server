@@ -37,7 +37,9 @@ router.get('/me', (req, res) => {
   if (!req.agency) {
     res.status(HttpStatus.NOT_FOUND).end();
   } else {
-    res.json(req.agency.toJSON());
+    const data = req.agency.toJSON();
+    data.message = req.agency.getLocalizedInvitationMessage(res);
+    res.json(data);
   }
 });
 

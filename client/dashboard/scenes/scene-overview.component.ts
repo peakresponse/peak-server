@@ -37,4 +37,8 @@ export class SceneOverviewComponent {
       this.navigation.backTo('/scenes');
     });
   }
+
+  onTransfer(responder: any) {
+    this.scene.transfer(responder.user.id, responder.agency.id).subscribe();
+  }
 }

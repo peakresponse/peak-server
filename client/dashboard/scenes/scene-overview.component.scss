@@ -173,3 +173,14 @@ h3 {
   @include copy-m-bold;
   margin-bottom: 1rem;
 }
+
+.responder__agency,
+.responder__position {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.responder__actions {
+  min-width: 10rem;
+}
