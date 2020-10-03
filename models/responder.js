@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -13,10 +14,30 @@ module.exports = (sequelize, DataTypes) => {
       Responder.belongsTo(models.Agency, { as: 'createdByAgency' });
     }
 
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'sceneId',
+        'userId',
+        'agencyId',
+        'arrivedAt',
+        'departedAt',
+        'createdAt',
+        'createdById',
+        'createdByAgencyId',
+        'updatedAt',
+        'updatedById',
+        'updatedByAgencyId',
+      ]);
+    }
+
     async toFullJSON(options) {
       const json = this.toJSON();
       json.user = (this.user || (await this.getUser(options)))?.toJSON();
-      json.agency = (this.agency || (await this.getAgency(options)))?.toJSON();
+      json.agency = (
+        this.agency || (await this.getAgency(options))
+      )?.toPublicJSON();
       return json;
     }
   }
@@ -50,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
     where: { departedAt: null },
   });
 
-  Responder.addScope('latest', {
+  Responder.addScope('latest', () => ({
     attributes: [
       sequelize.literal('DISTINCT ON("Responder".user_id) 1'),
     ].concat(Object.keys(Responder.rawAttributes)),
@@ -58,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
       ['user_id', 'ASC'],
       ['arrived_at', 'DESC'],
     ],
-  });
+  }));
 
   return Responder;
 };

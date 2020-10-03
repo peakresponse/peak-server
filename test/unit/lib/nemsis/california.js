@@ -39,10 +39,10 @@ describe('lib', function () {
               dataSet
             );
             assert(agencies.sAgencyGroup);
-            assert.deepStrictEqual(agencies.sAgencyGroup.length, 618);
+            assert.deepStrictEqual(agencies.sAgencyGroup.length, 646);
             assert.deepStrictEqual(
               dataSet.json.StateDataSet.sAgency.sAgencyGroup.length,
-              1415
+              1443
             );
             break;
           }

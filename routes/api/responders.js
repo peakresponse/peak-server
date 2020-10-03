@@ -23,7 +23,8 @@ router.get(
         { model: models.Agency, as: 'agency' },
       ],
     });
-    res.json(await Promise.all(records.map((r) => r.toFullJSON())));
+    const data = await Promise.all(records.map((r) => r.toFullJSON()));
+    res.json(data);
   })
 );
 

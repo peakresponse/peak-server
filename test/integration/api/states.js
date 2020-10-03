@@ -56,7 +56,7 @@ describe('/api/states', function () {
       const state = await models.State.findOne({ where: { id: '06' } });
       assert(state);
       assert.deepStrictEqual(state.name, 'California');
-      assert.deepStrictEqual(await state.countAgencies(), 1411);
+      assert.deepStrictEqual(await state.countAgencies(), 1439);
       assert.deepStrictEqual(await models.Facility.count(), 119);
       const facility = await models.Facility.findOne({
         where: { stateId: '06', locationCode: '20046' },

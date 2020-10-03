@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const sequelizePaginate = require('sequelize-paginate');
 const url = require('url');
 const uuid = require('uuid');
@@ -109,9 +110,33 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      /// by default, don't return the large attributes
-      delete attributes.data;
-      return attributes;
+      return _.pick(attributes, [
+        'id',
+        'canonicalAgencyId',
+        'stateId',
+        'subdomain',
+        'baseUrl',
+        'stateUniqueId',
+        'number',
+        'name',
+        'isValid',
+        'createdAt',
+        'createdById',
+        'createdByAgencyId',
+        'updatedAt',
+        'updatedById',
+      ]);
+    }
+
+    toPublicJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'stateId',
+        'stateUniqueId',
+        'number',
+        'name',
+      ]);
     }
   }
 
