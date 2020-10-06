@@ -199,11 +199,11 @@ router.get(
       attributes: { exclude: ['dataSetXml', 'schematronXml'] },
     });
     if (state) {
-      if (req.user?.isAdmin && state.dataSet.status) {
+      if (req.user?.isAdmin && state.dataSet?.status) {
         res.setHeader('X-Status', state.dataSet.status);
       }
       res
-        .status(state.dataSet.status ? HttpStatus.ACCEPTED : HttpStatus.OK)
+        .status(state.dataSet?.status ? HttpStatus.ACCEPTED : HttpStatus.OK)
         .json(state.toJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();

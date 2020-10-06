@@ -238,7 +238,9 @@ input.form-control.form-control--search {
   margin-bottom: 0.25rem;
 }
 
-.form-field .form-control {
+.form-field .form-control,
+.form-field .form-control-plaintext {
+  background-color: transparent;
   border-radius: 0;
   border: 0;
   box-shadow: none;
@@ -246,6 +248,7 @@ input.form-control.form-control--search {
   line-height: 1.8125rem;
   font-weight: 600;
   color: $mainGrey;
+  opacity: 1;
   padding: 0;
 }
 
@@ -285,6 +288,17 @@ input.form-control.form-control--search {
 
 input.form-control.is-invalid {
   outline: none;
+}
+
+/// Custom dropdown Select
+
+.form-field .custom-select {
+  height: calc(1.8125rem + 0.5625rem);
+
+  &.form-control-plaintext {
+    background-image: none;
+    height: inherit;
+  }
 }
 
 /// Checkboxes

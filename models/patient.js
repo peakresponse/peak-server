@@ -132,8 +132,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: 'first_name',
       },
+      gender: DataTypes.STRING,
       age: DataTypes.INTEGER,
+      ageUnits: {
+        type: DataTypes.STRING,
+        field: 'age_units',
+      },
       dob: DataTypes.DATEONLY,
+      complaint: DataTypes.STRING,
       respiratoryRate: {
         type: DataTypes.INTEGER,
         field: 'respiratory_rate',
@@ -143,9 +149,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         field: 'capillary_refill',
       },
-      bloodPressure: {
-        type: DataTypes.STRING,
-        field: 'blood_pressure',
+      bpSystolic: {
+        type: DataTypes.INTEGER,
+        field: 'bp_systolic',
+      },
+      bpDiastolic: {
+        type: DataTypes.INTEGER,
+        field: 'bp_diastolic',
+      },
+      gcsTotal: {
+        type: DataTypes.INTEGER,
+        field: 'gcs_total',
       },
       text: DataTypes.TEXT,
       priority: DataTypes.INTEGER,

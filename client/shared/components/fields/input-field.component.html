@@ -1,10 +1,13 @@
 <div [class.form-field--editing]="isEditing" [class.form-field--empty]="!value || value == ''" [class.form-field--focused]="isFocused"
   (click)="onClick($event)" class="form-field">
   <label [for]="derivedId">{{label}}</label>
-  <input [id]="derivedId" [name]="derivedName" [type]="type"
-    [class.form-control]="isFocusable && isEditing"
-    [class.form-control-plaintext]="!isFocusable || !isEditing"
-    [readonly]="!isFocusable || !isEditing"
-    (focus)="onFocus($event)" (blur)="onBlur($event)"
-    [(ngModel)]="value" />
+  <div class="d-flex">
+    <input [id]="derivedId" [name]="derivedName" [type]="type"
+      [class.form-control]="isFocusable && isEditing"
+      [class.form-control-plaintext]="!isFocusable || !isEditing"
+      [readonly]="!isFocusable || !isEditing"
+      (focus)="onFocus($event)" (blur)="onBlur($event)"
+      [(ngModel)]="value" />
+    <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{isEditing: isEditing, isFocusable: isFocusable, isFocused: isFocused, source: source, target: target}"></ng-template>
+  </div>
 </div>

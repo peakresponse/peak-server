@@ -1,16 +1,9 @@
 @import '../../../assets/css/variables';
 
 .patient__priority {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: white;
   display: flex;
   align-items: center;
   z-index: 0;
-  padding-left: calc(3.5rem + 8rem + 1.25rem - 0.5rem);
 }
 
 .peakicon-remove {
@@ -22,10 +15,23 @@
 }
 
 .btn-priority {
+  flex: 1;
   border-radius: 0.5rem;
   margin: 0 0.5rem;
   min-width: 10rem;
   padding: 1.375rem 2rem 1.4325rem;
+}
+
+.patient__priority--noneditable .btn-priority {
+  margin-left: 0;
+  flex: 1;
+}
+
+.patient__actions {
+  flex: 5;
+  .btn-outline-primary {
+    margin: 0 0.5rem;
+  }
 }
 
 .btn-priority--selected {
@@ -36,6 +42,7 @@
 .btn-priority--0 {
   background-color: $immediateRed;
   color: white;
+  margin-left: 0;
 }
 
 .btn-priority--1 {
@@ -61,6 +68,7 @@
 .btn-priority--5 {
   background-color: $peakBlue;
   color: white;
+  margin-right: 0;
 }
 
 .btn-record {
@@ -83,25 +91,25 @@
   font-size: 2rem;
 }
 
-.patient__updated {
-  position: absolute;
-  top: 1rem;
-  right: 3.5rem;
+.patient__pin {
+  @include copy-xl-bold;
+  color: $mainGrey;
+}
 
-  span {
-    font-weight: 600;
-  }
+.patient__updated {
+  color: $lowPriorityGrey;
 }
 
 .patient__photo {
-  width: 8rem;
-  height: 8rem;
+  flex-shrink: 0;
+  width: 7.5rem;
+  height: 7.5rem;
   background-size: cover;
   background-position: center center;
   border-radius: 4rem;
   background-color: $greyPeakBlue;
   color: white;
-  margin-right: 1.25rem;
+  margin-right: 2.25rem;
   overflow: hidden;
   text-align: center;
   z-index: 1;
@@ -111,6 +119,28 @@
     top: 1.5rem;
     font-size: 6rem;
   }
+}
+
+.patient__age {
+  flex: 2;
+  margin-right: 0.625rem;
+}
+
+.patient__gender {
+  flex: 2;
+  margin-left: 0.625rem;
+  margin-right: 0.625rem;
+}
+
+.patient__firstName {
+  flex: 4;
+  margin-left: 0.625rem;
+  margin-right: 0.625rem;
+}
+
+.patient__lastName {
+  flex: 4;
+  margin-left: 0.625rem;
 }
 
 .patient__name {

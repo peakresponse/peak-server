@@ -2,7 +2,6 @@ import {
   Component,
   ContentChild,
   ElementRef,
-  Injectable,
   Input,
   SimpleChanges,
   TemplateRef,
@@ -15,7 +14,7 @@ import {
 } from '@angular/common/http';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 
-import { Observable, Subscription, empty } from 'rxjs';
+import { Subscription, empty } from 'rxjs';
 import { catchError, filter } from 'rxjs/operators';
 import assign from 'lodash/assign';
 import clone from 'lodash/clone';

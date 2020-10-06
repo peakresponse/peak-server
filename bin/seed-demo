@@ -156,10 +156,18 @@ async function importRows(server, email, password, sheet) {
     const lastName = (row[1] || '').trim();
     const firstName = (row[2] || '').trim();
     const age = row[3];
+    const ageUnits = '2516009';
     const respiratoryRate = row[4];
     const pulse = row[5];
     const capillaryRefill = row[6];
+    let bpSystolic = null;
+    let bpDiastolic = null;
     const bloodPressure = (row[7] || '').trim();
+    let m = bloodPressure.match(/(\d+)\/(\d+)/);
+    if (m) {
+      bpSystolic = parseInt(m[2]);
+      bpDiastolic = parseInt(m[1]);
+    }
     let text = (row[8] || '').trim();
     let priority = PRIORITIES.indexOf((row[9] || '').trim());
     if (priority < 0 || priority >= PRIORITIES.length) {
@@ -185,6 +193,14 @@ async function importRows(server, email, password, sheet) {
     }
     const lat = (`${row[20] || ''}` || '').trim();
     const lng = (`${row[21] || ''}` || '').trim();
+    let gender = (row[22] || '').trim();
+    if (gender == 'Male') {
+      gender = '9906003';
+    } else if (gender == 'Female') {
+      gender = '9906001';
+    } else {
+      gender = null;
+    }
     /// TODO handle back-dating timestamp row[11] for demo purposes
     /// create initial patient/observation record
     await post(server, subdomain, cookie, '/api/patients', {
@@ -192,11 +208,14 @@ async function importRows(server, email, password, sheet) {
       pin,
       lastName,
       firstName,
+      gender,
       age,
+      ageUnits,
       respiratoryRate,
       pulse,
       capillaryRefill,
-      bloodPressure,
+      bpSystolic,
+      bpDiastolic,
       text,
       priority,
       location,
