@@ -5,18 +5,31 @@
     </div>
     <div>
       <div class="patient__priority">
-        <span *ngIf="patient.priority==0">Immediate</span>
-        <span *ngIf="patient.priority==1">Delayed</span>
-        <span *ngIf="patient.priority==2">Minimal</span>
-        <span *ngIf="patient.priority==3">Expectant</span>
-        <span *ngIf="patient.priority==4">Dead</span>
+        <span *ngIf="patient.priority==0" i18n>Immediate</span>
+        <span *ngIf="patient.priority==1" i18n>Delayed</span>
+        <span *ngIf="patient.priority==2" i18n>Minimal</span>
+        <span *ngIf="patient.priority==3" i18n>Expectant</span>
+        <span *ngIf="patient.priority==4" i18n>Dead</span>
       </div>
       <div class="patient__updated"><span i18n>Last Update:</span> {{patient.updatedAt|relativeDate:now}}</div>
     </div>
   </div>
-  <div class="patient__name">{{patient.firstName}} {{patient.lastName}}</div>
-  <div class="patient__gender">{{patient.gender}}</div>
-  <div class="patient__age">{{patient.age}}</div>
-  <div class="patient__location">{{patient.location}}</div>
-  <div class="patient__injury">{{patient.injury}}</div>
+  <div class="patient__pin"><b i18n>Tag #:</b> {{patient.pin}}</div>
+  <div class="patient__gender"><b i18n>Gender:</b> 
+    <span *ngIf="patient.gender=='9906001'" i18n>F</span>
+    <span *ngIf="patient.gender=='9906003'" i18n>M</span>
+    <span *ngIf="patient.gender=='9906007'" i18n>TM</span>
+    <span *ngIf="patient.gender=='9906009'" i18n>TF</span>
+    <span *ngIf="patient.gender=='9906011'" i18n>Oth</span>
+    <span *ngIf="patient.gender=='9906005'" i18n>Unk</span>
+  </div>
+  <div class="patient__age"><b i18n>Age:</b> {{patient.age}}
+    <span *ngIf="patient.ageUnits=='2516009'" i18n>y</span>
+    <span *ngIf="patient.ageUnits=='2516007'" i18n>mo</span>
+    <span *ngIf="patient.ageUnits=='2516001'" i18n>d</span>
+    <span *ngIf="patient.ageUnits=='2516003'" i18n>h</span>
+    <span *ngIf="patient.ageUnits=='2516005'" i18n>min</span>
+  </div>
+  <div class="patient__complaint"><b i18n>C/O:</b> {{patient.complaint}}</div>
+  <div class="patient__name"><b i18n>Name:</b> {{patient.firstName}} {{patient.lastName}}</div>
 </a>

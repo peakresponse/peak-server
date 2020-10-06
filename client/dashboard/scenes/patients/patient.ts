@@ -1,5 +1,22 @@
 import { cloneDeep } from 'lodash';
 
+export class PatientAgeUnits {
+  static YEARS = '2516009';
+  static MONTHS = '2516007';
+  static DAYS = '2516001';
+  static HOURS = '2516003';
+  static MINUTES = '2516005';
+}
+
+export class PatientGender {
+  static FEMALE = '9906001';
+  static MALE = '9906003';
+  static TRANS_MALE = '9906007';
+  static TRANS_FEMALE = '9906009';
+  static OTHER = '9906011';
+  static UNKNOWN = '9906005';
+}
+
 export class Patient {
   static PRIORITY_IMMEDIATE = 'immediate';
   static PRIORITY_DELAYED = 'delayed';
