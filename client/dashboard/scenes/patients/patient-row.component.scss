@@ -129,3 +129,12 @@
     background: $lightDeadBlack;
   }
 }
+
+.patient--5 {
+  .patient__photo {
+    background-color: $peakBlue;
+  }
+  .patient__status {
+    background: $lightPeakBlue;
+  }
+}

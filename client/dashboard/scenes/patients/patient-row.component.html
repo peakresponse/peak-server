@@ -10,6 +10,7 @@
         <span *ngIf="patient.priority==2" i18n>Minimal</span>
         <span *ngIf="patient.priority==3" i18n>Expectant</span>
         <span *ngIf="patient.priority==4" i18n>Dead</span>
+        <span *ngIf="patient.priority==5" i18n>Transported</span>
       </div>
       <div class="patient__updated"><span i18n>Last Update:</span> {{patient.updatedAt|relativeDate:now}}</div>
     </div>
