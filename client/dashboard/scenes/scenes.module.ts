@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { AgmOverlays } from 'agm-overlays';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedComponentsModule } from '../../shared/components';
 import { SharedPipesModule } from '../../shared/pipes';
@@ -36,6 +37,7 @@ import {
     CommonModule,
     ComponentsModule,
     FormsModule,
+    NgbModule,
     PatientsModule,
     SharedComponentsModule,
     SharedPipesModule,

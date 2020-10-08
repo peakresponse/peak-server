@@ -4,6 +4,7 @@ const session = require('supertest-session');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
+const models = require('../../../models');
 
 describe('/api/responders', () => {
   let testSession;
@@ -39,6 +40,20 @@ describe('/api/responders', () => {
       assert.deepStrictEqual(responders.length, 2);
       assert.deepStrictEqual(responders[0].user.firstName, 'Bayshore');
       assert.deepStrictEqual(responders[0].user.lastName, 'User');
+    });
+  });
+
+  describe('PATCH /:id/assign', () => {
+    it('assigns a Role to a Responder', async () => {
+      await testSession
+        .patch(`/api/responders/5d0b9f69-7bd4-4674-a2ef-9e0afdc14705/assign`)
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({ role: models.Responder.Roles.TREATMENT })
+        .expect(HttpStatus.NO_CONTENT);
+      const responder = await models.Responder.findByPk(
+        '5d0b9f69-7bd4-4674-a2ef-9e0afdc14705'
+      );
+      assert.deepStrictEqual(responder.role, models.Responder.Roles.TREATMENT);
     });
   });
 });

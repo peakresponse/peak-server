@@ -250,6 +250,9 @@ export class ApiService {
       params = params.set('sceneId', sceneId);
       return this.get('/api/responders', params);
     },
+    assign: (id: string, role: string): Observable<any> => {
+      return this.patch(`/api/responders/${id}/assign`, { role });
+    },
   };
 
   scenes = {

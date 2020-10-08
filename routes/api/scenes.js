@@ -7,7 +7,7 @@ const interceptors = require('../interceptors');
 const models = require('../../models');
 const {
   dispatchSceneUpdate,
-  dispatchSceneResponderUpdate,
+  dispatchSceneRespondersUpdate,
 } = require('../../wss');
 
 const { Op } = models.Sequelize;
@@ -96,7 +96,7 @@ router.patch(
       responder = await scene.join(req.user, req.agency, { transaction });
       res.status(HttpStatus.OK).json(responder.toJSON());
     });
-    await dispatchSceneResponderUpdate(responder.id);
+    await dispatchSceneRespondersUpdate([responder.id]);
   })
 );
 
@@ -113,7 +113,7 @@ router.patch(
       responder = await scene.leave(req.user, req.agency, { transaction });
       res.status(HttpStatus.OK).json(responder.toJSON());
     });
-    await dispatchSceneResponderUpdate(responder.id);
+    await dispatchSceneRespondersUpdate([responder.id]);
   })
 );
 

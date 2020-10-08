@@ -72,9 +72,51 @@
           </div>
           <div class="responder__actions">
             <ng-container *ngIf="(scene.attributes$|async).incidentCommanderId; let incidentCommanderId">
-              <button *ngIf="incidentCommanderId == user.id && incidentCommanderId != responder.user.id" 
-                      (click)="transferConfirmation.show(responder, {centered: true, size: 'lg'})"
-                      type="button" class="btn btn-xs btn-outline-primary" i18n>Transfer Command</button>
+              <button *ngIf="incidentCommanderId == responder.user.id"
+                      type="button" class="btn btn-xs btn-role btn-role--mgs" disabled>
+                <i class="peakicon peakicon-star"></i><span i18n>Medical Group<br />Supervisor</span>
+              </button>
+              <div *ngIf="incidentCommanderId != responder.user.id" ngbDropdown container="body" display="dynamic" placement="bottom-left">
+                <button *ngIf="responder.role" [disabled]="incidentCommanderId != user.id" ngbDropdownToggle
+                        type="button" [class]="'btn btn-xs btn-role btn-role--highlighted btn-role--' + responder.role.toLowerCase()">
+                  <ng-container *ngIf="responder.role == 'STAGING'"><i class="peakicon peakicon-pause"></i><span i18n>Staging Officer</span></ng-container>
+                  <ng-container *ngIf="responder.role == 'TRANSPORT'"><i class="peakicon peakicon-transport"></i><span i18n>Transport Officer</span></ng-container>
+                  <ng-container *ngIf="responder.role == 'TREATMENT'"><i class="peakicon peakicon-heart"></i><span i18n>Treatment Officer</span></ng-container>
+                  <ng-container *ngIf="responder.role == 'TRIAGE'"><i class="peakicon peakicon-check-circle"></i><span i18n>Triage Officer</span></ng-container>
+                </button>
+                <button *ngIf="incidentCommanderId == user.id && !responder.role" ngbDropdownToggle
+                        type="button" class="btn btn-xs btn-outline-primary">
+                  <span i18n>Assign Role</span>
+                </button>
+                <div *ngIf="incidentCommanderId == user.id" ngbDropdownMenu [class]="'dropdown-menu btn-role-dropdown' + (responder.role ? ' btn-role--' + responder.role.toLowerCase() : '')">
+                  <div class="btn-role-dropdown__bg">
+                    <div class="d-flex align-items-center">
+                      <button *ngIf="responder.role == 'TRIAGE'" (click)="onToggle(responder, null)" ngbDropdownItem type="button" class="btn-role--remove"><i class="peakicon peakicon-remove"></i></button>
+                      <button ngbDropdownItem (click)="onToggle(responder, 'TRIAGE')" type="button" class="btn btn-xs btn-role btn-role--triage" [class.btn-role--highlighted]="responder.role == 'TRIAGE'">
+                        <i class="peakicon peakicon-check-circle"></i><span i18n>Triage<br />Officer</span>
+                      </button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <button *ngIf="responder.role == 'TREATMENT'" (click)="onToggle(responder, null)" ngbDropdownItem type="button" class="btn-role--remove"><i class="peakicon peakicon-remove"></i></button>
+                      <button ngbDropdownItem (click)="onToggle(responder, 'TREATMENT')" type="button" class="btn btn-xs btn-role btn-role--treatment" [class.btn-role--highlighted]="responder.role == 'TREATMENT'">
+                        <i class="peakicon peakicon-heart"></i><span i18n>Treatment<br />Officer</span>
+                      </button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <button *ngIf="responder.role == 'STAGING'" (click)="onToggle(responder, null)" ngbDropdownItem type="button" class="btn-role--remove"><i class="peakicon peakicon-remove"></i></button>
+                      <button ngbDropdownItem (click)="onToggle(responder, 'STAGING')" type="button" class="btn btn-xs btn-role btn-role--staging" [class.btn-role--highlighted]="responder.role == 'STAGING'">
+                        <i class="peakicon peakicon-pause"></i><span i18n>Staging<br />Officer</span>
+                      </button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <button *ngIf="responder.role == 'TRANSPORT'" (click)="onToggle(responder, null)" ngbDropdownItem type="button" class="btn-role--remove"><i class="peakicon peakicon-remove"></i></button>
+                      <button ngbDropdownItem (click)="onToggle(responder, 'TRANSPORT')" type="button" class="btn btn-xs btn-role btn-role--transport" [class.btn-role--highlighted]="responder.role == 'TRANSPORT'">
+                        <i class="peakicon peakicon-transport"></i><span i18n>Transport<br />Officer</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </ng-container>
           </div>
         </li>

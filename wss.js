@@ -69,18 +69,25 @@ const dispatchSceneUpdate = async (sceneId) => {
   }
 };
 
-const dispatchSceneResponderUpdate = async (responderId) => {
-  const responder = await models.Responder.findByPk(responderId, {
+const dispatchSceneRespondersUpdate = async (responderIds) => {
+  const responders = await models.Responder.findAll({
+    where: {
+      id: responderIds,
+    },
     include: [
       { model: models.User, as: 'user' },
       { model: models.Agency, as: 'agency' },
     ],
   });
+  if (responders.length === 0) {
+    return;
+  }
+  const [{ sceneId }] = responders;
   const data = JSON.stringify({
-    responders: [await responder.toFullJSON()],
+    responders: await Promise.all(responders.map((r) => r.toFullJSON())),
   });
   for (const ws of sceneServer.clients) {
-    if (ws.info.sceneId === responder.sceneId) {
+    if (ws.info.sceneId === sceneId) {
       ws.send(data);
     }
   }
@@ -181,6 +188,6 @@ const configure = (server, app) => {
 module.exports = {
   configure,
   dispatchSceneUpdate,
-  dispatchSceneResponderUpdate,
+  dispatchSceneRespondersUpdate,
   dispatchPatientUpdate,
 };

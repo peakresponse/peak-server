@@ -3,6 +3,15 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Responder extends Model {
+    static get Roles() {
+      return {
+        STAGING: 'STAGING',
+        TRANSPORT: 'TRANSPORT',
+        TREATMENT: 'TREATMENT',
+        TRIAGE: 'TRIAGE',
+      };
+    }
+
     static associate(models) {
       Responder.belongsTo(models.Scene, { as: 'scene' });
       Responder.belongsTo(models.User, { as: 'user' });
@@ -23,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         'agencyId',
         'arrivedAt',
         'departedAt',
+        'role',
         'createdAt',
         'createdById',
         'createdByAgencyId',
@@ -39,6 +49,46 @@ module.exports = (sequelize, DataTypes) => {
         this.agency || (await this.getAgency(options))
       )?.toPublicJSON();
       return json;
+    }
+
+    async assign(user, agency, role, options) {
+      let ids = [];
+      /// if already has the role, just return
+      if (this.role === role) {
+        return ids;
+      }
+      await sequelize.transaction(
+        { transaction: options?.transaction },
+        async (transaction) => {
+          /// remove any other existing Responder with this role
+          if (role !== null) {
+            [, ids] = await Responder.update(
+              { role: null },
+              {
+                where: {
+                  role,
+                  departedAt: null,
+                },
+                raw: true,
+                returning: ['id'],
+                transaction,
+              }
+            );
+          }
+          /// assign and save to this Responder
+          await this.update(
+            {
+              role,
+              updatedById: user.id,
+              updatedByAgencyId: agency.id,
+            },
+            { transaction }
+          );
+          /// include this record in the list of modified ids
+          ids.push({ id: this.id });
+        }
+      );
+      return ids.map((obj) => obj.id);
     }
   }
 
@@ -57,6 +107,9 @@ module.exports = (sequelize, DataTypes) => {
       departedAt: {
         type: DataTypes.DATE,
         field: 'departed_at',
+      },
+      role: {
+        type: DataTypes.ENUM('STAGING', 'TRANSPORT', 'TRIAGE', 'TREATMENT'),
       },
     },
     {

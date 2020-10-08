@@ -17,6 +17,7 @@ export class SceneOverviewComponent {
   private patientPriorities = Patient.PRIORITIES;
 
   constructor(
+    private api: ApiService,
     private navigation: NavigationService,
     public scene: SceneService,
     public user: UserService
@@ -40,5 +41,13 @@ export class SceneOverviewComponent {
 
   onTransfer(responder: any) {
     this.scene.transfer(responder.user.id, responder.agency.id).subscribe();
+  }
+
+  onToggle(responder: any, role: string) {
+    if (responder.role == role) {
+      this.api.responders.assign(responder.id, null).subscribe();
+    } else {
+      this.api.responders.assign(responder.id, role).subscribe();
+    }
   }
 }
