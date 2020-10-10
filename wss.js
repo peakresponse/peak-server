@@ -83,7 +83,9 @@ const dispatchSceneRespondersUpdate = async (responderIds) => {
     return;
   }
   const [{ sceneId }] = responders;
+  const scene = await models.Scene.findByPk(sceneId);
   const data = JSON.stringify({
+    scene: scene.toJSON(),
     responders: await Promise.all(responders.map((r) => r.toFullJSON())),
   });
   for (const ws of sceneServer.clients) {

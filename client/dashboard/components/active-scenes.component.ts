@@ -60,4 +60,8 @@ export class ActiveScenesComponent implements OnDestroy {
       this.navigation.goTo(`/scenes/${scene['id']}`);
     });
   }
+
+  onView(scene: Scene) {
+    this.navigation.goTo(`/scenes/${scene['id']}`);
+  }
 }

@@ -87,7 +87,7 @@
             <span *ngIf="patient.priority==5">Transported</span>
           </button>
           <div class="patient__actions">
-            <button (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Update Status</button>
+            <button *ngIf="scene.isOnScene(user.id)" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Update Status</button>
           </div>
         </div>
       </div>

@@ -9,14 +9,17 @@
       </div>
       <div *ngIf="scene.isMaximized && scene.gps" class="scene-map" [style.background-image]="scene.mapUrl(752, 290)|cssUrl"></div>
       <div *ngIf="scene.isMaximized" class="scene-details">
-        <div class="scene-details__timestamp">{{scene.createdAt|date:'h:mma - MMM d yyyy'}}</div>
         <div class="d-flex">
           <div class="flex-grow-1">
+            <div class="scene-details__timestamp">{{scene.createdAt|date:'h:mma - MMM d yyyy'}}</div>
             <div class="scene-details__patients"><b>{{scene.patientsCount}}</b>&nbsp;<span i18n>Patients on Scene</span></div>
             <div class="scene-details__transported"><b>{{scene.priorityPatientsCounts[5]}}</b>&nbsp;<span i18n>Patients Transported</span></div>
             <div class="scene-details__responders"><b>{{scene.respondersCount}}</b>&nbsp;<span i18n>First responders on Scene</span></div>
           </div>
-          <button (click)="onJoin(scene)" type="button" class="btn btn-lg btn-primary" i18n>Join Scene</button>
+          <div class="scene-actions d-flex flex-column">
+            <button (click)="onView(scene)" type="button" class="btn btn-sm btn-outline-primary mb-3" i18n>View Scene</button>
+            <button (click)="onJoin(scene)" type="button" class="btn btn-sm btn-primary" i18n>Join Scene</button>
+          </div>
         </div>
       </div>
     </div>

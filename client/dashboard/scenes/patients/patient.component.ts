@@ -13,7 +13,7 @@ import numeral from 'numeral';
 import uuid from 'uuid';
 
 import { AudioComponent } from '../../../shared/components';
-import { ApiService } from '../../../shared/services';
+import { ApiService, UserService } from '../../../shared/services';
 import { SceneService } from '../scene.service';
 import { Patient } from './patient';
 
@@ -44,7 +44,8 @@ export class PatientComponent implements OnDestroy {
     private api: ApiService,
     public scene: SceneService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public user: UserService
   ) {
     this.intervalId = setInterval(() => (this.now = new Date()), 1000);
 

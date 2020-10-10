@@ -148,8 +148,17 @@ export class SceneService implements OnDestroy {
     }
   }
 
+  isOnScene(userId: string): boolean {
+    const found = find(this.responders, { user: { id: userId } } as any);
+    return found && !found.departedAt;
+  }
+
   close(): Observable<any> {
     return this.api.scenes.close(this.id);
+  }
+
+  join(): Observable<any> {
+    return this.api.scenes.join(this.id);
   }
 
   leave(): Observable<any> {

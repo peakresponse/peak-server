@@ -7,7 +7,9 @@
       <p class="overview__desc">{{(scene.attributes$|async).desc}}</p>
       <!-- <button type="button" class="btn btn-sm btn-primary mr-3" i18n>Transfer Command</button> -->
       <button *ngIf="(scene.attributes$|async).incidentCommanderId == user.id" (click)="closeConfirmation.open({centered: true, size: 'lg'})" type="button" class="btn btn-sm btn-warning" i18n>Close Scene</button>
-      <button *ngIf="(scene.attributes$|async).incidentCommanderId != user.id" (click)="leaveConfirmation.open({centered: true, size: 'lg'})" type="button" class="btn btn-sm btn-warning" i18n>Leave Scene</button>
+      <button *ngIf="(scene.attributes$|async).incidentCommanderId != user.id && scene.isOnScene(user.id)" (click)="leaveConfirmation.open({centered: true, size: 'lg'})" type="button" class="btn btn-sm btn-warning" i18n>Leave Scene</button>
+      <button *ngIf="(scene.attributes$|async).incidentCommanderId != user.id && !scene.isOnScene(user.id)" routerLink="/scenes" type="button" class="btn btn-sm btn-warning mr-3" i18n>Exit Scene</button>
+      <button *ngIf="(scene.attributes$|async).incidentCommanderId != user.id && !scene.isOnScene(user.id)" (click)="scene.join().subscribe()" type="button" class="btn btn-sm btn-primary" i18n>Join Scene</button>
       <hr />
       <h3 i18n>Initial Observations from IC</h3>
       <p>Approx # Patients: {{(scene.attributes$|async).approxPatients}}</p>
@@ -65,8 +67,8 @@
                 <div class="responder__agency">{{responder.agency.name}}</div>
               </div>
               <div class="col-sm-6">
-                <div><span i18n>Time of Arrival:</span><br />{{responder.arrivedAt|date:'shortTime'}}</div>
-                <div *ngIf="responder.departedAt"><span i18n>Time of Departure:</span><br />{{responder.departedAt|date:'shortTime'}}</div>
+                <div><span i18n>Arrival:</span><br />{{responder.arrivedAt|date:'shortTime'}}</div>
+                <div *ngIf="responder.departedAt"><span i18n>Departure:</span><br />{{responder.departedAt|date:'shortTime'}}</div>
               </div>
             </div>
           </div>
@@ -117,6 +119,11 @@
                   </div>
                 </div>
               </div>
+              <button *ngIf="incidentCommanderId == user.id && !responder.role && responder.user.id != incidentCommanderId"
+                      (click)="onTransfer(responder)"
+                      type="button" class="btn btn-xs btn-primary mt-2">
+                <span i18n>Transfer MGS Role</span>
+              </button>
             </ng-container>
           </div>
         </li>
