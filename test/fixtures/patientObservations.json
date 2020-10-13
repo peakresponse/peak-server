@@ -235,17 +235,7 @@
       "portraitUrl": "/uploads/patient-observations/portrait/man3.jpg",
       "photoUrl": null,
       "audioUrl": null,
-      "updatedAttributes": [
-        "lastName",
-        "firstName",
-        "age",
-        "text",
-        "priority",
-        "location",
-        "lat",
-        "lng",
-        "portraitUrl"
-      ],
+      "updatedAttributes": ["lastName", "firstName", "age", "text", "priority", "location", "lat", "lng", "portraitUrl"],
       "createdAt": "2020-04-07T20:00:24.768Z",
       "updatedAt": "2020-04-07T20:00:24.768Z",
       "transportAgencyId": null,

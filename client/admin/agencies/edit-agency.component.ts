@@ -9,10 +9,7 @@ import { NavigationService } from '../../shared/services';
 export class EditAgencyComponent {
   id: string = null;
 
-  constructor(
-    private navigation: NavigationService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private navigation: NavigationService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

@@ -17,9 +17,7 @@ module.exports.async = (handler) => {
         }
         res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
           status: HttpStatus.UNPROCESSABLE_ENTITY,
-          messages: originalError.errors.map((e) =>
-            _.pick(e, ['path', 'message', 'value'])
-          ),
+          messages: originalError.errors.map((e) => _.pick(e, ['path', 'message', 'value'])),
         });
       } else {
         next(error);
@@ -90,9 +88,7 @@ module.exports.register = (req, res, next) => {
     if (messages.length > 0) {
       const cls = classes || [];
       cls.unshift('invalid-feedback');
-      return `<div class="${cls.join(' ')}">${inflection.capitalize(
-        messages.join(', ')
-      )}.</div>`;
+      return `<div class="${cls.join(' ')}">${inflection.capitalize(messages.join(', '))}.</div>`;
     }
     return '';
   };
@@ -119,12 +115,7 @@ module.exports.handleUpload = (record, paramName, newValue, destDir) => {
       if (newValue) {
         /// move out of tmp
         const params = {
-          CopySource: path.join(
-            '/',
-            process.env.AWS_S3_BUCKET,
-            'uploads',
-            newValue
-          ),
+          CopySource: path.join('/', process.env.AWS_S3_BUCKET, 'uploads', newValue),
           Bucket: process.env.AWS_S3_BUCKET,
           Key: path.join(destDir, newValue),
           ACL: 'public-read',
@@ -169,12 +160,7 @@ module.exports.handleUpload = (record, paramName, newValue, destDir) => {
       }
     } else if (newValue) {
       const tmpPath = path.resolve(__dirname, '../tmp/uploads', newValue);
-      const destPath = path.resolve(
-        __dirname,
-        '../public/uploads',
-        destDir,
-        newValue
-      );
+      const destPath = path.resolve(__dirname, '../public/uploads', destDir, newValue);
       fs.move(tmpPath, destPath, { overwrite: true }, (err) => {
         if (err) {
           reject(err);

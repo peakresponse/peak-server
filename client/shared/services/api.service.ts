@@ -77,10 +77,7 @@ export class ApiService {
       return this.get('/api/agencies/me', params);
     },
     validate: (subdomain: string): Observable<any> => {
-      return this.get(
-        `/api/agencies/validate`,
-        new HttpParams().set('subdomain', subdomain)
-      );
+      return this.get(`/api/agencies/validate`, new HttpParams().set('subdomain', subdomain));
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/agencies/${id}`, params);
@@ -177,20 +174,14 @@ export class ApiService {
       invite: (data: any, subdomain?: string): Observable<any> => {
         const options = { headers: new HttpHeaders() };
         if (subdomain) {
-          options.headers = options.headers.set(
-            'X-Agency-Subdomain',
-            subdomain
-          );
+          options.headers = options.headers.set('X-Agency-Subdomain', subdomain);
         }
         return this.post(`/api/demographics/personnel/invite`, data, options);
       },
       accept: (data: any, subdomain?: string): Observable<any> => {
         const options = { headers: new HttpHeaders() };
         if (subdomain) {
-          options.headers = options.headers.set(
-            'X-Agency-Subdomain',
-            subdomain
-          );
+          options.headers = options.headers.set('X-Agency-Subdomain', subdomain);
         }
         return this.post(`/api/demographics/personnel/accept`, data, options);
       },
@@ -277,12 +268,14 @@ export class ApiService {
     leave: (id: string): Observable<any> => {
       return this.patch(`/api/scenes/${id}/leave`);
     },
-    transfer: (
-      id: string,
-      userId: string,
-      agencyId: string
-    ): Observable<any> => {
+    transfer: (id: string, userId: string, agencyId: string): Observable<any> => {
       return this.patch(`/api/scenes/${id}/transfer`, { userId, agencyId });
+    },
+    addPin: (id: string, pin: any): Observable<any> => {
+      return this.post(`/api/scenes/${id}/pins`, pin);
+    },
+    removePin: (id: string, pinId: string): Observable<any> => {
+      return this.delete(`/api/scenes/${id}/pins/${pinId}`);
     },
   };
 

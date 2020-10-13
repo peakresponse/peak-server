@@ -66,16 +66,8 @@ router.post(
       const scene = await models.Scene.findByPk(req.body.sceneId, {
         transaction,
       });
-      [patient, created] = await models.Patient.createOrUpdate(
-        req.user,
-        req.agency,
-        scene,
-        req.body,
-        { transaction }
-      );
-      res
-        .status(created ? HttpStatus.CREATED : HttpStatus.OK)
-        .json(await patient.toFullJSON({ transaction }));
+      [patient, created] = await models.Patient.createOrUpdate(req.user, req.agency, scene, req.body, { transaction });
+      res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(await patient.toFullJSON({ transaction }));
     });
     await dispatchPatientUpdate(patient.id);
   })

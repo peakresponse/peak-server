@@ -26,22 +26,14 @@ export class InviteUsersComponent implements OnInit {
   isLoading = false;
   errors: any = null;
 
-  constructor(
-    private agency: AgencyService,
-    private api: ApiService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor(private agency: AgencyService, private api: ApiService, private route: ActivatedRoute, private router: Router) {
     this.agency.attributes$.pipe(take(1)).subscribe((agency: any) => {
       this.data.message = agency.message;
     });
   }
 
   ngOnInit() {
-    setTimeout(
-      () => (this.firstEl ? this.firstEl.nativeElement.focus() : null),
-      100
-    );
+    setTimeout(() => (this.firstEl ? this.firstEl.nativeElement.focus() : null), 100);
   }
 
   onInputEmails() {
@@ -52,10 +44,7 @@ export class InviteUsersComponent implements OnInit {
   }
 
   onMore() {
-    this.data.rows.push(
-      { fullName: '', email: '' },
-      { fullName: '', email: '' }
-    );
+    this.data.rows.push({ fullName: '', email: '' }, { fullName: '', email: '' });
   }
 
   get rows() {

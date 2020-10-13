@@ -23,14 +23,7 @@ class Base extends Model {
         // TODO
       } else {
         if (prevFile) {
-          fs.removeSync(
-            pathPrefix.resolve(
-              __dirname,
-              '../public/uploads',
-              pathPrefix,
-              prevFile
-            )
-          );
+          fs.removeSync(pathPrefix.resolve(__dirname, '../public/uploads', pathPrefix, prevFile));
         }
         if (newFile) {
           fs.moveSync(

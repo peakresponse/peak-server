@@ -14,13 +14,7 @@ import { FacilitiesModule } from './facilities/facilities.module';
 import { StatesModule } from './states/states.module';
 import { UsersModule } from './users/users.module';
 
-import {
-  ApiService,
-  AgencyService,
-  NavigationService,
-  SchemaService,
-  UserService,
-} from '../shared/services';
+import { ApiService, AgencyService, NavigationService, SchemaService, UserService } from '../shared/services';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
@@ -36,13 +30,7 @@ import {
     StatesModule,
     UsersModule,
   ],
-  providers: [
-    ApiService,
-    AgencyService,
-    NavigationService,
-    SchemaService,
-    UserService,
-  ],
+  providers: [ApiService, AgencyService, NavigationService, SchemaService, UserService],
   bootstrap: [AppComponent],
 })
 export class AdminAppModule {}

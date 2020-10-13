@@ -37,10 +37,7 @@ describe('lib', () => {
         nemsisMocks.mockCaliforniaDownloads();
 
         const data = await nemsis.getStateRepoFiles('california');
-        const tmpDir = await nemsis.downloadRepoFiles(
-          'california',
-          data.values
-        );
+        const tmpDir = await nemsis.downloadRepoFiles('california', data.values);
         assert(tmpDir.name);
         assert(tmpDir.removeCallback);
         for (const filePath of data.values) {
@@ -59,23 +56,11 @@ describe('lib', () => {
         nemsisMocks.mockCaliforniaDownloads();
 
         const data = await nemsis.getStateRepoFiles('california');
-        const tmpDir = await nemsis.downloadRepoFiles(
-          'california',
-          data.values
-        );
+        const tmpDir = await nemsis.downloadRepoFiles('california', data.values);
         for (const filePath of data.values) {
-          if (
-            filePath.startsWith('Resources') &&
-            filePath.endsWith('StateDataSet.xml')
-          ) {
-            const result = await nemsis.parseStateDataSet(
-              path.resolve(tmpDir.name, filePath)
-            );
-            assert(
-              result.json.StateDataSet._attributes[
-                'xsi:schemaLocation'
-              ].indexOf('3.5.0') >= 0
-            );
+          if (filePath.startsWith('Resources') && filePath.endsWith('StateDataSet.xml')) {
+            const result = await nemsis.parseStateDataSet(path.resolve(tmpDir.name, filePath));
+            assert(result.json.StateDataSet._attributes['xsi:schemaLocation'].indexOf('3.5.0') >= 0);
             break;
           }
         }

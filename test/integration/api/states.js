@@ -14,10 +14,7 @@ describe('/api/states', function () {
   beforeEach(async () => {
     await helpers.loadFixtures(['users', 'cities', 'counties', 'states']);
     testSession = session(app);
-    await testSession
-      .post('/login')
-      .send({ email: 'admin@peakresponse.net', password: 'abcd1234' })
-      .expect(200);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(200);
   });
 
   describe('GET /', () => {
@@ -40,9 +37,7 @@ describe('/api/states', function () {
       nemsisMocks.mockCaliforniaFilesRequest();
       nemsisMocks.mockCaliforniaDownloads();
 
-      let response = await testSession
-        .post('/api/states/06/configure')
-        .expect(HttpStatus.ACCEPTED);
+      let response = await testSession.post('/api/states/06/configure').expect(HttpStatus.ACCEPTED);
       /// start polling for completion
       for (;;) {
         response = await testSession.get(`/api/states/06`);
@@ -79,10 +74,7 @@ describe('/api/states', function () {
         },
         { where: { id: '01' } }
       );
-      await testSession
-        .get(`/api/states/01`)
-        .expect(HttpStatus.ACCEPTED)
-        .expect('X-Status', 'Processing');
+      await testSession.get(`/api/states/01`).expect(HttpStatus.ACCEPTED).expect('X-Status', 'Processing');
     });
 
     it('should return ok for a record done processing', async () => {

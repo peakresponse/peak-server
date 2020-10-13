@@ -7,26 +7,11 @@ import { SharedComponentsModule } from '../../shared/components';
 import { SharedPipesModule } from '../../shared/pipes';
 
 import { AgenciesRoutingModule } from './agencies-routing.module';
-import {
-  EditAgencyComponent,
-  ListAgenciesComponent,
-  NewAgencyComponent,
-} from '.';
+import { EditAgencyComponent, ListAgenciesComponent, NewAgencyComponent } from '.';
 
 @NgModule({
-  declarations: [
-    EditAgencyComponent,
-    ListAgenciesComponent,
-    NewAgencyComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModule,
-    SharedComponentsModule,
-    SharedPipesModule,
-    AgenciesRoutingModule,
-  ],
+  declarations: [EditAgencyComponent, ListAgenciesComponent, NewAgencyComponent],
+  imports: [CommonModule, FormsModule, NgbModule, SharedComponentsModule, SharedPipesModule, AgenciesRoutingModule],
   providers: [],
 })
 export class AgenciesModule {}

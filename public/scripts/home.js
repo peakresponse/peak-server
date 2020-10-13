@@ -59,9 +59,7 @@ $(() => {
       })
       .fail(() => {
         // eslint-disable-next-line no-alert
-        alert(
-          "I'm sorry, but your message could not be sent at this time. Please try again later."
-        );
+        alert("I'm sorry, but your message could not be sent at this time. Please try again later.");
       });
   });
 });

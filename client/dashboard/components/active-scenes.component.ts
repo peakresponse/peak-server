@@ -15,11 +15,7 @@ export class ActiveScenesComponent implements OnDestroy {
   maximizedScene: Scene;
   scenesSubscription: Subscription;
 
-  constructor(
-    private agency: AgencyService,
-    private api: ApiService,
-    private navigation: NavigationService
-  ) {
+  constructor(private agency: AgencyService, private api: ApiService, private navigation: NavigationService) {
     this.scenesSubscription = this.agency.activeScenes$.subscribe((scenes) => {
       this.scenes = scenes;
       if (scenes.length == 1) {

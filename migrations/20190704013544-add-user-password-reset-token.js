@@ -22,16 +22,11 @@ module.exports = {
           });
         })
         .then(() => {
-          return queryInterface.addColumn(
-            'users',
-            'password_reset_token_expires_at',
-            Sequelize.DATE,
-            {
-              allowNull: true,
-              defaultValue: null,
-              transaction,
-            }
-          );
+          return queryInterface.addColumn('users', 'password_reset_token_expires_at', Sequelize.DATE, {
+            allowNull: true,
+            defaultValue: null,
+            transaction,
+          });
         });
     });
   },
@@ -45,15 +40,9 @@ module.exports = {
       return queryInterface.dropTable('users');
     */
     return queryInterface.sequelize.transaction((transaction) => {
-      return queryInterface
-        .removeColumn('users', 'password_reset_token', { transaction })
-        .then(() => {
-          return queryInterface.removeColumn(
-            'users',
-            'password_reset_token_expires_at',
-            { transaction }
-          );
-        });
+      return queryInterface.removeColumn('users', 'password_reset_token', { transaction }).then(() => {
+        return queryInterface.removeColumn('users', 'password_reset_token_expires_at', { transaction });
+      });
     });
   },
 };

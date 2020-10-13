@@ -1,18 +1,9 @@
 import { Directive, Input, SimpleChanges } from '@angular/core';
-import {
-  AbstractControl,
-  NG_VALIDATORS,
-  ValidationErrors,
-  Validator,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 
 @Directive({
   selector: '[max][formControlName],[max][formControl],[max][ngModel]',
-  providers: [
-    { provide: NG_VALIDATORS, useExisting: MaxValidatorDirective, multi: true },
-  ],
+  providers: [{ provide: NG_VALIDATORS, useExisting: MaxValidatorDirective, multi: true }],
   host: { '[attr.max]': 'max ? max : null' },
 })
 export class MaxValidatorDirective implements Validator {
@@ -37,8 +28,6 @@ export class MaxValidatorDirective implements Validator {
   }
 
   private _createValidator(): void {
-    this._validator = Validators.max(
-      typeof this.max === 'number' ? this.max : parseInt(this.max, 10)
-    );
+    this._validator = Validators.max(typeof this.max === 'number' ? this.max : parseInt(this.max, 10));
   }
 }

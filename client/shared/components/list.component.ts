@@ -1,17 +1,5 @@
-import {
-  Component,
-  ContentChild,
-  ElementRef,
-  Input,
-  SimpleChanges,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
-import {
-  HttpErrorResponse,
-  HttpParams,
-  HttpResponse,
-} from '@angular/common/http';
+import { Component, ContentChild, ElementRef, Input, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { Subscription, empty } from 'rxjs';
@@ -60,9 +48,7 @@ export class ListComponent {
       .subscribe((event: NavigationEnd) => {
         if (event.url.endsWith(this.basePath)) {
           let prevUrl = this.navigation.getPreviousUrl();
-          let match = prevUrl.match(
-            `${this.basePath.replace('/', '/')}\/([^\/]+)`
-          );
+          let match = prevUrl.match(`${this.basePath.replace('/', '/')}\/([^\/]+)`);
           if (match) {
             let id = match[1];
             if (id == 'new' || id == 'publish') {
@@ -102,9 +88,7 @@ export class ListComponent {
     }
     this.apiSubscription = get(this.api, this.type)
       .index(params)
-      .subscribe((response: HttpResponse<any>) =>
-        this.handleResponse(response)
-      );
+      .subscribe((response: HttpResponse<any>) => this.handleResponse(response));
   }
 
   refreshRecord(id: string) {
@@ -152,9 +136,7 @@ export class ListComponent {
     } else {
       this.records = this.records.concat(records);
     }
-    this.paginationLink = this.api.parsePaginationLink(
-      response.headers.get('Link')
-    ).next;
+    this.paginationLink = this.api.parsePaginationLink(response.headers.get('Link')).next;
   }
 
   trackById(record: any, index: number): string {
@@ -164,8 +146,6 @@ export class ListComponent {
   private onLoadMore(paginationLink: string) {
     this.isLoading = true;
     this.paginationLink = null;
-    this.api
-      .get(paginationLink)
-      .subscribe((response) => this.handleResponse(response));
+    this.api.get(paginationLink).subscribe((response) => this.handleResponse(response));
   }
 }

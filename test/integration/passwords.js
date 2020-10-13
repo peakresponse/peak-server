@@ -38,10 +38,7 @@ describe('/passwords', () => {
       const emails = nodemailerMock.mock.getSentMail();
       assert.strictEqual(emails.length, 1);
       assert.strictEqual(emails[0].subject, 'Reset your Password');
-      assert.strictEqual(
-        emails[0].to,
-        'Regular User <regular@peakresponse.net>'
-      );
+      assert.strictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
       /// the reset link url should be on the agency subdomain
       const resetUrl = `${agency.baseUrl}/passwords/reset/${user.passwordResetToken}`;
       assert(emails[0].html.includes(resetUrl));
@@ -96,18 +93,14 @@ describe('/passwords', () => {
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
         .expect(HttpStatus.NOT_FOUND);
-      assert(
-        response.text.includes('The password reset link you used is invalid.')
-      );
+      assert(response.text.includes('The password reset link you used is invalid.'));
 
       response = await testSession
         .post(`/passwords/reset/asdfasdfasdf`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
         .expect(HttpStatus.NOT_FOUND);
-      assert(
-        response.text.includes('The password reset link you used is invalid.')
-      );
+      assert(response.text.includes('The password reset link you used is invalid.'));
     });
 
     it('returns gone for an expired code', async () => {

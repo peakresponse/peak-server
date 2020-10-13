@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -27,12 +21,7 @@ export class ScanPatientComponent implements OnDestroy {
   isLoading = false;
   pin: string = null;
 
-  constructor(
-    private api: ApiService,
-    public scene: SceneService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private api: ApiService, public scene: SceneService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnDestroy() {}
 
@@ -60,14 +49,11 @@ export class ScanPatientComponent implements OnDestroy {
 
   onSubmit() {
     this.isLoading = true;
-    this.router.navigate(
-      [{ outlets: { modal: ['patients', 'new', { pin: this.pin }] } }],
-      {
-        preserveFragment: true,
-        queryParamsHandling: 'preserve',
-        relativeTo: this.route.parent,
-        replaceUrl: true,
-      }
-    );
+    this.router.navigate([{ outlets: { modal: ['patients', 'new', { pin: this.pin }] } }], {
+      preserveFragment: true,
+      queryParamsHandling: 'preserve',
+      relativeTo: this.route.parent,
+      replaceUrl: true,
+    });
   }
 }

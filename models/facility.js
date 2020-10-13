@@ -27,9 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static findNear(lat, lng, options = {}) {
-      options.order = sequelize.literal(
-        `"Facility".geog <-> ST_MakePoint(${lng}, ${lat})::geography`
-      );
+      options.order = sequelize.literal(`"Facility".geog <-> ST_MakePoint(${lng}, ${lat})::geography`);
       return Facility.paginate(options);
     }
 
@@ -50,11 +48,7 @@ module.exports = (sequelize, DataTypes) => {
             key: process.env.GOOGLE_MAPS_SERVER_API_KEY,
           },
         });
-        if (
-          response.data &&
-          response.data.results &&
-          response.data.results.length > 0
-        ) {
+        if (response.data && response.data.results && response.data.results.length > 0) {
           /// take the (usually only) first result
           const result = response.data.results[0];
           if (result.geometry && result.geometry.location) {
@@ -118,12 +112,7 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       validate: {
         async schema() {
-          this.validationError = await nemsis.validateSchema(
-            'dFacility_v3.xsd',
-            'dFacility',
-            'dFacilityGroup',
-            this.data
-          );
+          this.validationError = await nemsis.validateSchema('dFacility_v3.xsd', 'dFacility', 'dFacilityGroup', this.data);
         },
       },
     }
@@ -135,66 +124,19 @@ module.exports = (sequelize, DataTypes) => {
         record.setDataValue('id', record.data?._attributes?.UUID);
       }
       record.setDataValue('type', record.data?.['dFacility.01']?._text);
-      record.setDataValue(
-        'name',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.02']?._text
-      );
-      record.setDataValue(
-        'locationCode',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.03']?._text
-      );
-      record.setDataValue(
-        'primaryDesignation',
-        Base.firstValueOf(
-          record.data?.['dFacility.FacilityGroup']?.['dFacility.04']
-        )
-      );
-      record.setDataValue(
-        'primaryNationalProviderId',
-        Base.firstValueOf(
-          record.data?.['dFacility.FacilityGroup']?.['dFacility.05']
-        )
-      );
-      record.setDataValue(
-        'unit',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.06']?._text
-      );
-      record.setDataValue(
-        'address',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.07']?._text
-      );
-      record.setDataValue(
-        'cityId',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.08']?._text
-      );
-      record.setDataValue(
-        'stateId',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.09']?._text
-      );
-      record.setDataValue(
-        'zip',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.10']?._text
-      );
-      record.setDataValue(
-        'countyId',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.11']?._text
-      );
-      record.setDataValue(
-        'country',
-        record.data?.['dFacility.FacilityGroup']?.['dFacility.12']?._text
-      );
-      record.setDataValue(
-        'geog',
-        Base.geometryFor(
-          record.data?.['dFacility.FacilityGroup']?.['dFacility.13']?._text
-        )
-      );
-      record.setDataValue(
-        'primaryPhone',
-        Base.firstValueOf(
-          record.data?.['dFacility.FacilityGroup']?.['dFacility.15']
-        )
-      );
+      record.setDataValue('name', record.data?.['dFacility.FacilityGroup']?.['dFacility.02']?._text);
+      record.setDataValue('locationCode', record.data?.['dFacility.FacilityGroup']?.['dFacility.03']?._text);
+      record.setDataValue('primaryDesignation', Base.firstValueOf(record.data?.['dFacility.FacilityGroup']?.['dFacility.04']));
+      record.setDataValue('primaryNationalProviderId', Base.firstValueOf(record.data?.['dFacility.FacilityGroup']?.['dFacility.05']));
+      record.setDataValue('unit', record.data?.['dFacility.FacilityGroup']?.['dFacility.06']?._text);
+      record.setDataValue('address', record.data?.['dFacility.FacilityGroup']?.['dFacility.07']?._text);
+      record.setDataValue('cityId', record.data?.['dFacility.FacilityGroup']?.['dFacility.08']?._text);
+      record.setDataValue('stateId', record.data?.['dFacility.FacilityGroup']?.['dFacility.09']?._text);
+      record.setDataValue('zip', record.data?.['dFacility.FacilityGroup']?.['dFacility.10']?._text);
+      record.setDataValue('countyId', record.data?.['dFacility.FacilityGroup']?.['dFacility.11']?._text);
+      record.setDataValue('country', record.data?.['dFacility.FacilityGroup']?.['dFacility.12']?._text);
+      record.setDataValue('geog', Base.geometryFor(record.data?.['dFacility.FacilityGroup']?.['dFacility.13']?._text));
+      record.setDataValue('primaryPhone', Base.firstValueOf(record.data?.['dFacility.FacilityGroup']?.['dFacility.15']));
       record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
     } else {
       // eslint-disable-next-line no-lonely-if

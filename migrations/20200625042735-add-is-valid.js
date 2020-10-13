@@ -53,46 +53,14 @@ module.exports = {
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.transaction(async (transaction) => {
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'vehicles' },
-        'is_valid',
-        { transaction }
-      );
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'locations' },
-        'is_valid',
-        { transaction }
-      );
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'facilities' },
-        'is_valid',
-        { transaction }
-      );
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'employments' },
-        'is_valid',
-        { transaction }
-      );
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'devices' },
-        'is_valid',
-        { transaction }
-      );
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'contacts' },
-        'is_valid',
-        { transaction }
-      );
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'configurations' },
-        'is_valid',
-        { transaction }
-      );
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'agencies' },
-        'is_valid',
-        { transaction }
-      );
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'vehicles' }, 'is_valid', { transaction });
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'locations' }, 'is_valid', { transaction });
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'facilities' }, 'is_valid', { transaction });
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'employments' }, 'is_valid', { transaction });
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'devices' }, 'is_valid', { transaction });
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'contacts' }, 'is_valid', { transaction });
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'configurations' }, 'is_valid', { transaction });
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'agencies' }, 'is_valid', { transaction });
     });
   },
 };

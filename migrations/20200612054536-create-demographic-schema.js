@@ -119,16 +119,8 @@ module.exports = {
       );
 
       /// move/adapt the employments table to refer to this new agency table
-      await queryInterface.sequelize.query(
-        `ALTER TABLE employments SET SCHEMA demographics`,
-        { transaction }
-      );
-      await queryInterface.addColumn(
-        { schema: 'demographics', tableName: 'employments' },
-        'agency_id',
-        Sequelize.UUID,
-        { transaction }
-      );
+      await queryInterface.sequelize.query(`ALTER TABLE employments SET SCHEMA demographics`, { transaction });
+      await queryInterface.addColumn({ schema: 'demographics', tableName: 'employments' }, 'agency_id', Sequelize.UUID, { transaction });
       await queryInterface.addConstraint('demographics.employments', {
         type: 'FOREIGN KEY',
         fields: ['agency_id'],
@@ -166,43 +158,20 @@ module.exports = {
       `,
         { transaction }
       );
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'employments' },
-        'demographic_id',
-        { transaction }
-      );
-      await queryInterface.sequelize.query(
-        `ALTER TABLE demographics.employments ALTER COLUMN agency_id SET NOT NULL`,
-        { transaction }
-      );
-      await queryInterface.sequelize.query(
-        `ALTER TYPE enum_employments__roles RENAME TO "enum_demographics.employments_roles"`,
-        { transaction }
-      );
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'employments' }, 'demographic_id', { transaction });
+      await queryInterface.sequelize.query(`ALTER TABLE demographics.employments ALTER COLUMN agency_id SET NOT NULL`, { transaction });
+      await queryInterface.sequelize.query(`ALTER TYPE enum_employments__roles RENAME TO "enum_demographics.employments_roles"`, {
+        transaction,
+      });
 
       /// remove the _type modifications from the original agency table
-      await queryInterface.removeConstraint(
-        'demographics',
-        'demographics_agency_id_fkey',
-        { transaction }
-      );
-      await queryInterface.removeConstraint(
-        'agencies',
-        'agencies_demographic_id_fkey',
-        { transaction }
-      );
+      await queryInterface.removeConstraint('demographics', 'demographics_agency_id_fkey', { transaction });
+      await queryInterface.removeConstraint('agencies', 'agencies_demographic_id_fkey', { transaction });
       await queryInterface.sequelize.query(`DELETE FROM demographics`, {
         transaction,
       });
-      await queryInterface.sequelize.query(
-        `DELETE FROM agencies WHERE _type='dAgency'`,
-        { transaction }
-      );
-      await queryInterface.removeConstraint(
-        'agencies',
-        'agencies_demographic_uk',
-        { transaction }
-      );
+      await queryInterface.sequelize.query(`DELETE FROM agencies WHERE _type='dAgency'`, { transaction });
+      await queryInterface.removeConstraint('agencies', 'agencies_demographic_uk', { transaction });
       await queryInterface.removeConstraint('agencies', 'agencies_state_uk', {
         transaction,
       });

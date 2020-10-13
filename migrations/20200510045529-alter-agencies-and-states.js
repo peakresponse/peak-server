@@ -161,10 +161,9 @@ module.exports = {
         `CREATE TYPE enum_employments__roles AS ENUM ('BILLING', 'CONFIGURATION', 'PERSONNEL', 'REPORTING')`,
         { transaction }
       );
-      await queryInterface.sequelize.query(
-        `ALTER TABLE employments ADD COLUMN roles enum_employments__roles[] NOT NULL DEFAULT '{}'`,
-        { transaction }
-      );
+      await queryInterface.sequelize.query(`ALTER TABLE employments ADD COLUMN roles enum_employments__roles[] NOT NULL DEFAULT '{}'`, {
+        transaction,
+      });
       await queryInterface.addConstraint('employments', {
         type: 'UNIQUE',
         fields: ['demographic_id', 'user_id'],
@@ -173,18 +172,9 @@ module.exports = {
       /// clean up the existing agency/state columns
 
       /// remove the current compount index (to be replaced after modifications)
-      await queryInterface.removeIndex(
-        'agencies',
-        'agencies_state_id_state_number',
-        { transaction }
-      );
+      await queryInterface.removeIndex('agencies', 'agencies_state_id_state_number', { transaction });
       /// rename state number column to better match NEMSIS element name
-      await queryInterface.renameColumn(
-        'agencies',
-        'state_number',
-        'state_unique_id',
-        { transaction }
-      );
+      await queryInterface.renameColumn('agencies', 'state_number', 'state_unique_id', { transaction });
       /// rename data blob, it's not one of the main set objects in the model
       await queryInterface.renameColumn('agencies', 'data_set', 'data', {
         transaction,
@@ -194,10 +184,9 @@ module.exports = {
         transaction,
       });
       /// bulk update the column with the appropriate value
-      await queryInterface.sequelize.query(
-        `UPDATE agencies SET state=states.code FROM states WHERE agencies.state_id=states.id`,
-        { transaction }
-      );
+      await queryInterface.sequelize.query(`UPDATE agencies SET state=states.code FROM states WHERE agencies.state_id=states.id`, {
+        transaction,
+      });
       /// now drop the old foreign key
       await queryInterface.removeColumn('agencies', 'state_id', {
         transaction,
@@ -207,30 +196,14 @@ module.exports = {
         transaction,
       });
       /// add created/updated by cols
-      await queryInterface.addColumn(
-        'agencies',
-        'created_by_id',
-        Sequelize.UUID,
-        { transaction }
-      );
-      await queryInterface.addColumn(
-        'agencies',
-        'updated_by_id',
-        Sequelize.UUID,
-        { transaction }
-      );
+      await queryInterface.addColumn('agencies', 'created_by_id', Sequelize.UUID, { transaction });
+      await queryInterface.addColumn('agencies', 'updated_by_id', Sequelize.UUID, { transaction });
       await queryInterface.sequelize.query(
         `UPDATE agencies SET created_by_id=users.id, updated_by_id=users.id FROM users WHERE users.is_admin=TRUE`,
         { transaction }
       );
-      await queryInterface.sequelize.query(
-        `ALTER TABLE agencies ALTER COLUMN created_by_id SET NOT NULL`,
-        { transaction }
-      );
-      await queryInterface.sequelize.query(
-        `ALTER TABLE agencies ALTER COLUMN updated_by_id SET NOT NULL`,
-        { transaction }
-      );
+      await queryInterface.sequelize.query(`ALTER TABLE agencies ALTER COLUMN created_by_id SET NOT NULL`, { transaction });
+      await queryInterface.sequelize.query(`ALTER TABLE agencies ALTER COLUMN updated_by_id SET NOT NULL`, { transaction });
 
       /// drop the primary key on states
       await queryInterface.removeColumn('states', 'id', { transaction });
@@ -256,10 +229,7 @@ module.exports = {
         { transaction }
       );
       /// initialize existing state data
-      await queryInterface.sequelize.query(
-        `UPDATE states SET is_configured=TRUE WHERE data_set IS NOT NULL`,
-        { transaction }
-      );
+      await queryInterface.sequelize.query(`UPDATE states SET is_configured=TRUE WHERE data_set IS NOT NULL`, { transaction });
 
       /// now make state in agencies a foreign key
       await queryInterface.addConstraint('agencies', {
@@ -269,32 +239,16 @@ module.exports = {
         transaction,
       });
       /// and not null
-      await queryInterface.changeColumn(
-        'agencies',
-        'state_id',
-        { type: Sequelize.STRING, allowNull: false },
-        { transaction }
-      );
+      await queryInterface.changeColumn('agencies', 'state_id', { type: Sequelize.STRING, allowNull: false }, { transaction });
 
       /// update the agency model to handle state/agency-level records
 
       /// create _type column, to handle state/agency dem overrides
-      await queryInterface.addColumn(
-        'agencies',
-        '_type',
-        Sequelize.ENUM('sAgency', 'dAgency'),
-        { transaction }
-      );
+      await queryInterface.addColumn('agencies', '_type', Sequelize.ENUM('sAgency', 'dAgency'), { transaction });
       /// set initial value
-      await queryInterface.sequelize.query(
-        `UPDATE agencies SET _type='sAgency'`,
-        { transaction }
-      );
+      await queryInterface.sequelize.query(`UPDATE agencies SET _type='sAgency'`, { transaction });
       /// manually change not null constraint because sequelize dumb
-      await queryInterface.sequelize.query(
-        `ALTER TABLE agencies ALTER COLUMN _type SET NOT NULL`,
-        { transaction }
-      );
+      await queryInterface.sequelize.query(`ALTER TABLE agencies ALTER COLUMN _type SET NOT NULL`, { transaction });
 
       /// agency-added records reference their demographics data set
       await queryInterface.addColumn(

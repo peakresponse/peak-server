@@ -4,27 +4,12 @@ module.exports = {
       await queryInterface.changeColumn('scenes', 'geog', Sequelize.GEOGRAPHY, {
         transaction,
       });
-      await queryInterface.changeColumn(
-        'scene_observations',
-        'geog',
-        Sequelize.GEOGRAPHY,
-        { transaction }
-      );
-      await queryInterface.changeColumn(
-        'locations',
-        'geog',
-        Sequelize.GEOGRAPHY,
-        { transaction }
-      );
+      await queryInterface.changeColumn('scene_observations', 'geog', Sequelize.GEOGRAPHY, { transaction });
+      await queryInterface.changeColumn('locations', 'geog', Sequelize.GEOGRAPHY, { transaction });
       await queryInterface.addColumn('patients', 'geog', Sequelize.GEOGRAPHY, {
         transaction,
       });
-      await queryInterface.addColumn(
-        'patient_observations',
-        'geog',
-        Sequelize.GEOGRAPHY,
-        { transaction }
-      );
+      await queryInterface.addColumn('patient_observations', 'geog', Sequelize.GEOGRAPHY, { transaction });
     });
   },
 

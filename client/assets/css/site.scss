@@ -225,10 +225,15 @@ b {
   }
 
   &.btn-role--mgs {
+    color: $peakBlue;
+    .peakicon {
+      background-color: $peakBlue;
+      font-size: 1.4rem;
+    }
     &.btn-role--highlighted,
     &:hover,
     &:disabled {
-      background-color: $peakBlue;
+      background-color: $peakBlue !important;
       border-color: $peakBlue;
       .peakicon {
         color: $peakBlue;
@@ -246,7 +251,7 @@ b {
     &.btn-role--highlighted,
     &:hover,
     &:disabled {
-      background-color: $red;
+      background-color: $red !important;
       border-color: $red;
       .peakicon {
         color: $red;
@@ -263,7 +268,7 @@ b {
     &.btn-role--highlighted,
     &:hover,
     &:disabled {
-      background-color: $purple2;
+      background-color: $purple2 !important;
       border-color: $purple2;
       .peakicon {
         color: $purple2;
@@ -280,7 +285,7 @@ b {
     &.btn-role--highlighted,
     &:hover,
     &:disabled {
-      background-color: $yellow;
+      background-color: $yellow !important;
       border-color: $yellow;
       .peakicon {
         color: $yellow;
@@ -297,7 +302,7 @@ b {
     &.btn-role--highlighted,
     &:hover,
     &:disabled {
-      background-color: $green3;
+      background-color: $green3 !important;
       border-color: $green3;
       .peakicon {
         color: $green3;
@@ -305,18 +310,19 @@ b {
     }
   }
 
-  &.btn-role--unassign {
-    color: $lowPriorityGrey;
+  &.btn-role--other {
+    color: $mainGrey;
     .peakicon {
-      background-color: $lowPriorityGrey;
+      background-color: $mainGrey;
+      font-size: 1.2rem;
     }
     &.btn-role--highlighted,
     &:hover,
     &:disabled {
-      background-color: $lowPriorityGrey;
-      border-color: $lowPriorityGrey;
+      background-color: $mainGrey !important;
+      border-color: $mainGrey;
       .peakicon {
-        color: $lowPriorityGrey;
+        color: $mainGrey;
       }
     }
   }

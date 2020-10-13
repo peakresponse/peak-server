@@ -16,11 +16,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.transaction(async (transaction) => {
-      await queryInterface.removeColumn(
-        { schema: 'demographics', tableName: 'employments' },
-        'is_pending',
-        { transaction }
-      );
+      await queryInterface.removeColumn({ schema: 'demographics', tableName: 'employments' }, 'is_pending', { transaction });
     });
   },
 };

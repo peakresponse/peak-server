@@ -120,7 +120,7 @@
                 </div>
               </div>
               <button *ngIf="incidentCommanderId == user.id && !responder.role && responder.user.id != incidentCommanderId"
-                      (click)="onTransfer(responder)"
+                      (click)="transferConfirmation.show(responder, {centered: true, size: 'lg'})"
                       type="button" class="btn btn-xs btn-primary mt-2">
                 <span i18n>Transfer MGS Role</span>
               </button>

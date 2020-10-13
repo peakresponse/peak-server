@@ -6,6 +6,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 import assign from 'lodash/assign';
 import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
+import remove from 'lodash/remove';
 import moment from 'moment';
 
 import { ApiService, WebSocketService } from '../../shared/services';
@@ -27,6 +28,9 @@ export class SceneService implements OnDestroy {
   private patients: any[] = [];
   private patientsSubject = new ReplaySubject<any[]>(1);
 
+  private pins: any[] = [];
+  private pinsSubject = new ReplaySubject<any[]>(1);
+
   private responders: any[] = [];
   private respondersSubject = new ReplaySubject<any[]>(1);
 
@@ -38,10 +42,7 @@ export class SceneService implements OnDestroy {
   private patientSubscribers: any = {};
 
   constructor(private api: ApiService, private ws: WebSocketService) {
-    this.elapsedTimeIntervalId = setInterval(
-      () => this.elapsedTimeSubject.next(this.elapsedTime),
-      1000
-    );
+    this.elapsedTimeIntervalId = setInterval(() => this.elapsedTimeSubject.next(this.elapsedTime), 1000);
   }
 
   ngOnDestroy() {
@@ -84,9 +85,7 @@ export class SceneService implements OnDestroy {
 
   get elapsedTime(): string {
     if (this.scene) {
-      return moment
-        .utc(moment().diff(moment(this.scene.createdAt)))
-        .format('HH:mm:ss');
+      return moment.utc(moment().diff(moment(this.scene.createdAt))).format('HH:mm:ss');
     }
     return '--:--:--';
   }
@@ -97,6 +96,10 @@ export class SceneService implements OnDestroy {
 
   get patients$(): Observable<any[]> {
     return this.patientsSubject;
+  }
+
+  get pins$(): Observable<any[]> {
+    return this.pinsSubject;
   }
 
   get responders$(): Observable<any[]> {
@@ -138,7 +141,7 @@ export class SceneService implements OnDestroy {
     } else {
       return this.api.scenes.get(id).pipe(
         catchError(() => of(false)),
-        tap((res) => {
+        tap((res: any) => {
           this.scene = new Scene(res.body);
           this.sceneSubject.next(this.scene);
           this.subscribe(id);
@@ -161,6 +164,18 @@ export class SceneService implements OnDestroy {
     return this.api.scenes.join(this.id);
   }
 
+  addPin(pin: any): Observable<any> {
+    this.pins.push(pin);
+    this.pinsSubject.next(this.pins);
+    return this.api.scenes.addPin(this.id, pin);
+  }
+
+  removePin(pin: any): Observable<any> {
+    remove(this.pins, { id: pin.id });
+    this.pinsSubject.next(this.pins);
+    return this.api.scenes.removePin(this.id, pin.id);
+  }
+
   leave(): Observable<any> {
     return this.api.scenes.leave(this.id);
   }
@@ -177,72 +192,83 @@ export class SceneService implements OnDestroy {
 
   private subscribe(id: string) {
     this.disconnect();
-    this.sceneSubscription = this.ws
-      .connect(`/scene?id=${id}`)
-      .subscribe((data) => {
-        if (data.scene) {
-          this.scene = new Scene(data.scene);
-          this.sceneSubject.next(this.scene);
-        }
-        if (data.responders) {
-          for (let responder of data.responders) {
-            const found = find(this.responders, {
-              user: { id: responder.user.id },
-            });
-            if (!found) {
-              this.responders.push(responder);
-            } else {
-              assign(found, responder);
-            }
+    this.sceneSubscription = this.ws.connect(`/scene?id=${id}`).subscribe((data) => {
+      if (data.scene) {
+        this.scene = new Scene(data.scene);
+        this.sceneSubject.next(this.scene);
+      }
+      if (data.responders) {
+        for (let responder of data.responders) {
+          const found = find(this.responders, {
+            user: { id: responder.user.id },
+          });
+          if (!found) {
+            this.responders.push(responder);
+          } else {
+            assign(found, responder);
           }
-          this.respondersSubject.next(this.responders);
         }
-        if (data.patients) {
-          /// process new records
-          for (let record of data.patients) {
-            const found = find(this.patients, { id: record.id });
+        this.respondersSubject.next(this.responders);
+      }
+      if (data.pins) {
+        for (let record of data.pins) {
+          if (record.deletedAt) {
+            remove(this.pins, { id: record.id });
+          } else {
+            const found = find(this.pins, { id: record.id });
             if (!found) {
-              this.patients.push(record);
+              this.pins.push(record);
             } else {
               assign(found, record);
             }
-            if (this.isSceneInitialized) {
-              /// add to ALL updates list
-              if (!found && !this.stats[0].updates.includes(record.id)) {
-                this.stats[0].updates.push(record.id);
-              }
-              /// then remove from any other tabs it may have been in
-              for (let i = 1; i < 7; i++) {
-                this.stats[i].updates = this.stats[i].updates.filter(
-                  (id: string) => id != record.id
-                );
-              }
-              /// and add it to its current priority tab
-              this.stats[record.priority + 1].updates.push(record.id);
-            }
-            if (this.patientSubscribers[record.id]?.length > 0) {
-              for (let subscriber of this.patientSubscribers[record.id]) {
-                subscriber.next(record);
-              }
-            }
           }
-          this.isSceneInitialized = true;
-          /// reset and update stats
-          for (let stat of this.stats) {
-            stat.total = 0;
-          }
-          for (let patient of this.patients) {
-            /// increment total
-            this.stats[0].total += 1;
-            /// increment priority total
-            this.stats[patient.priority + 1].total += 1;
-          }
-          /// dispatch stats to subscribers
-          this.statsSubject.next(this.stats);
-          /// sort and dispatch updates
-          this.resortAndDispatch();
         }
-      });
+        this.pinsSubject.next(this.pins);
+      }
+      if (data.patients) {
+        /// process new records
+        for (let record of data.patients) {
+          const found = find(this.patients, { id: record.id });
+          if (!found) {
+            this.patients.push(record);
+          } else {
+            assign(found, record);
+          }
+          if (this.isSceneInitialized) {
+            /// add to ALL updates list
+            if (!found && !this.stats[0].updates.includes(record.id)) {
+              this.stats[0].updates.push(record.id);
+            }
+            /// then remove from any other tabs it may have been in
+            for (let i = 1; i < 7; i++) {
+              this.stats[i].updates = this.stats[i].updates.filter((id: string) => id != record.id);
+            }
+            /// and add it to its current priority tab
+            this.stats[record.priority + 1].updates.push(record.id);
+          }
+          if (this.patientSubscribers[record.id]?.length > 0) {
+            for (let subscriber of this.patientSubscribers[record.id]) {
+              subscriber.next(record);
+            }
+          }
+        }
+        this.isSceneInitialized = true;
+        /// reset and update stats
+        for (let stat of this.stats) {
+          stat.total = 0;
+        }
+        for (let patient of this.patients) {
+          /// increment total
+          this.stats[0].total += 1;
+          /// increment priority total
+          this.stats[patient.priority + 1].total += 1;
+        }
+        /// dispatch stats to subscribers
+        this.statsSubject.next(this.stats);
+        /// sort and dispatch updates
+        this.resortAndDispatch();
+      }
+    });
   }
 
   patient$(id: string): Observable<any> {

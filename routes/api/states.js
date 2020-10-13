@@ -57,17 +57,9 @@ router.post(
       let dataSet = null;
       let schematronXml = null;
       for (const filePath of files.values) {
-        if (
-          filePath.startsWith('Resources') &&
-          filePath.endsWith('StateDataSet.xml')
-        ) {
-          dataSet = await nemsis.parseStateDataSet(
-            path.resolve(tmpDir.name, filePath)
-          );
-        } else if (
-          filePath.startsWith('Schematron') &&
-          filePath.endsWith('EMSDataSet.sch.xml')
-        ) {
+        if (filePath.startsWith('Resources') && filePath.endsWith('StateDataSet.xml')) {
+          dataSet = await nemsis.parseStateDataSet(path.resolve(tmpDir.name, filePath));
+        } else if (filePath.startsWith('Schematron') && filePath.endsWith('EMSDataSet.sch.xml')) {
           schematronXml = fs.readFileSync(path.resolve(tmpDir.name, filePath));
         }
       }
@@ -77,27 +69,16 @@ router.post(
         return;
       }
       /// special-case handling for states
-      if (
-        nemsisStates[repo.slug] &&
-        nemsisStates[repo.slug].processStateRepoFiles
-      ) {
-        await nemsisStates[repo.slug].processStateRepoFiles(
-          tmpDir,
-          files.values,
-          dataSet
-        );
+      if (nemsisStates[repo.slug] && nemsisStates[repo.slug].processStateRepoFiles) {
+        await nemsisStates[repo.slug].processStateRepoFiles(tmpDir, files.values, dataSet);
       }
       /// add associated Agencies
       await state.update({
         dataSet: { status: 'Populating state agencies...' },
       });
-      if (
-        dataSet.json.StateDataSet.sAgency &&
-        dataSet.json.StateDataSet.sAgency.sAgencyGroup
-      ) {
+      if (dataSet.json.StateDataSet.sAgency && dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
         await models.sequelize.transaction(async (transaction) => {
-          for (const sAgency of dataSet.json.StateDataSet.sAgency
-            .sAgencyGroup) {
+          for (const sAgency of dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
             const [agency] = await models.Agency.findOrBuild({
               where: {
                 stateUniqueId: sAgency['sAgency.01']._text,
@@ -118,26 +99,16 @@ router.post(
       await state.update({
         dataSet: { status: 'Populating state facilities...' },
       });
-      if (
-        dataSet.json.StateDataSet.sFacility &&
-        dataSet.json.StateDataSet.sFacility.sFacilityGroup
-      ) {
+      if (dataSet.json.StateDataSet.sFacility && dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
         await models.sequelize.transaction(async (transaction) => {
-          for (const sFacilityGroup of dataSet.json.StateDataSet.sFacility
-            .sFacilityGroup) {
+          for (const sFacilityGroup of dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
             const type = sFacilityGroup['sFacility.01']._text;
             if (sFacilityGroup['sFacility.FacilityGroup']) {
-              for (const sFacility of sFacilityGroup[
-                'sFacility.FacilityGroup'
-              ]) {
+              for (const sFacility of sFacilityGroup['sFacility.FacilityGroup']) {
                 const [facility] = await models.Facility.findOrBuild({
                   where: {
-                    stateId: sFacility['sFacility.09']
-                      ? sFacility['sFacility.09']._text
-                      : null,
-                    locationCode: sFacility['sFacility.03']
-                      ? sFacility['sFacility.03']._text
-                      : null,
+                    stateId: sFacility['sFacility.09'] ? sFacility['sFacility.09']._text : null,
+                    locationCode: sFacility['sFacility.03'] ? sFacility['sFacility.03']._text : null,
                   },
                   transaction,
                 });
@@ -146,21 +117,15 @@ router.post(
                 facility.unit = sFacility['sFacility.06']?._text;
                 facility.address = sFacility['sFacility.07']?._text;
                 facility.cityId = sFacility['sFacility.08']?._text;
-                facility.cityName = await City.getName(
-                  sFacility['sFacility.08']?._text,
-                  {
-                    transaction,
-                  }
-                );
+                facility.cityName = await City.getName(sFacility['sFacility.08']?._text, {
+                  transaction,
+                });
                 facility.stateId = sFacility['sFacility.09']?._text;
-                facility.stateName =
-                  State.codeMapping[sFacility['sFacility.09']?._text]?.name;
+                facility.stateName = State.codeMapping[sFacility['sFacility.09']?._text]?.name;
                 facility.zip = sFacility['sFacility.10']?._text;
                 facility.countyId = sFacility['sFacility.11']?._text;
                 if (sFacility['sFacility.13']) {
-                  const m = sFacility['sFacility.13']._text.match(
-                    /([-\d.]+),([-\d.]+)/
-                  );
+                  const m = sFacility['sFacility.13']._text.match(/([-\d.]+),([-\d.]+)/);
                   if (m) {
                     [, facility.lat, facility.lng] = m;
                   }
@@ -202,9 +167,7 @@ router.get(
       if (req.user?.isAdmin && state.dataSet?.status) {
         res.setHeader('X-Status', state.dataSet.status);
       }
-      res
-        .status(state.dataSet?.status ? HttpStatus.ACCEPTED : HttpStatus.OK)
-        .json(state.toJSON());
+      res.status(state.dataSet?.status ? HttpStatus.ACCEPTED : HttpStatus.OK).json(state.toJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }

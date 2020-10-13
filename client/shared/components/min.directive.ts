@@ -1,18 +1,9 @@
 import { Directive, Input, SimpleChanges } from '@angular/core';
-import {
-  AbstractControl,
-  NG_VALIDATORS,
-  ValidationErrors,
-  Validator,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 
 @Directive({
   selector: '[min][formControlName],[min][formControl],[min][ngModel]',
-  providers: [
-    { provide: NG_VALIDATORS, useExisting: MinValidatorDirective, multi: true },
-  ],
+  providers: [{ provide: NG_VALIDATORS, useExisting: MinValidatorDirective, multi: true }],
   host: { '[attr.min]': 'min ? min : null' },
 })
 export class MinValidatorDirective implements Validator {
@@ -37,8 +28,6 @@ export class MinValidatorDirective implements Validator {
   }
 
   private _createValidator(): void {
-    this._validator = Validators.min(
-      typeof this.min === 'number' ? this.min : parseInt(this.min, 10)
-    );
+    this._validator = Validators.min(typeof this.min === 'number' ? this.min : parseInt(this.min, 10));
   }
 }

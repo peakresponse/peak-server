@@ -23,27 +23,14 @@ describe('lib', function () {
         nemsisMocks.mockCaliforniaDownloads();
 
         const data = await nemsis.getStateRepoFiles('california');
-        const tmpDir = await nemsis.downloadRepoFiles(
-          'california',
-          data.values
-        );
+        const tmpDir = await nemsis.downloadRepoFiles('california', data.values);
         for (const filePath of data.values) {
-          if (
-            filePath.startsWith('Resources') &&
-            filePath.endsWith('StateDataSet.xml')
-          ) {
-            const dataSet = await nemsis.parseStateDataSet(
-              path.resolve(tmpDir.name, filePath)
-            );
-            const agencies = await nemsisStates.california.appendAgenciesFromSpreadsheet(
-              dataSet
-            );
+          if (filePath.startsWith('Resources') && filePath.endsWith('StateDataSet.xml')) {
+            const dataSet = await nemsis.parseStateDataSet(path.resolve(tmpDir.name, filePath));
+            const agencies = await nemsisStates.california.appendAgenciesFromSpreadsheet(dataSet);
             assert(agencies.sAgencyGroup);
             assert.deepStrictEqual(agencies.sAgencyGroup.length, 646);
-            assert.deepStrictEqual(
-              dataSet.json.StateDataSet.sAgency.sAgencyGroup.length,
-              1443
-            );
+            assert.deepStrictEqual(dataSet.json.StateDataSet.sAgency.sAgencyGroup.length, 1443);
             break;
           }
         }
@@ -57,27 +44,16 @@ describe('lib', function () {
         nemsisMocks.mockCaliforniaDownloads();
 
         const data = await nemsis.getStateRepoFiles('california');
-        const tmpDir = await nemsis.downloadRepoFiles(
-          'california',
-          data.values
-        );
+        const tmpDir = await nemsis.downloadRepoFiles('california', data.values);
         for (const filePath of data.values) {
-          if (
-            filePath.startsWith('Resources') &&
-            filePath.endsWith('Facilities.xlsx')
-          ) {
-            const result = await nemsisStates.california.parseSpreadsheet(
-              path.resolve(tmpDir.name, filePath)
-            );
+          if (filePath.startsWith('Resources') && filePath.endsWith('Facilities.xlsx')) {
+            const result = await nemsisStates.california.parseSpreadsheet(path.resolve(tmpDir.name, filePath));
             assert.deepStrictEqual(result.rows.length, 119);
-            const facilities = await nemsisStates.california.parseFacilitySpreadsheet(
-              result
-            );
+            const facilities = await nemsisStates.california.parseFacilitySpreadsheet(result);
             assert(facilities.sFacilityGroup);
             assert.deepStrictEqual(facilities.sFacilityGroup.length, 7);
 
-            const facility =
-              facilities.sFacilityGroup[0]['sFacility.FacilityGroup'][0];
+            const facility = facilities.sFacilityGroup[0]['sFacility.FacilityGroup'][0];
             assert.deepStrictEqual(facility, {
               'sFacility.02': { _text: 'Coventry Place' },
               'sFacility.03': { _text: '64673' },

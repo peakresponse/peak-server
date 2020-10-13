@@ -87,10 +87,9 @@ module.exports = {
         },
         { schema: 'demographics', transaction }
       );
-      await queryInterface.sequelize.query(
-        'CREATE INDEX "demographics.facilities_geog_idx" ON demographics.facilities USING gist(geog)',
-        { transaction }
-      );
+      await queryInterface.sequelize.query('CREATE INDEX "demographics.facilities_geog_idx" ON demographics.facilities USING gist(geog)', {
+        transaction,
+      });
       await queryInterface.addConstraint('demographics.facilities', {
         type: 'FOREIGN KEY',
         fields: ['agency_id'],
@@ -172,10 +171,7 @@ module.exports = {
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.transaction(async (transaction) => {
-      await queryInterface.dropTable(
-        { schema: 'demographics', tableName: 'facilities' },
-        { transaction }
-      );
+      await queryInterface.dropTable({ schema: 'demographics', tableName: 'facilities' }, { transaction });
     });
   },
 };

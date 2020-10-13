@@ -13,12 +13,7 @@ import { AppComponent } from './app.component';
 import { ScenesModule } from './scenes/scenes.module';
 import { UsersModule } from './users/users.module';
 
-import {
-  ApiService,
-  NavigationService,
-  UserService,
-  WebSocketService,
-} from '../shared/services';
+import { ApiService, NavigationService, UserService, WebSocketService } from '../shared/services';
 
 @NgModule({
   declarations: [AppComponent],

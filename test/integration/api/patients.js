@@ -76,52 +76,28 @@ describe('/api/patients', function () {
           if (i === 0) {
             /// we should have a full serialized object for the first record
             assert(data.transportAgency);
-            assert.deepStrictEqual(
-              data.transportAgency.id,
-              'e705f64b-1399-436e-a428-18c8378b3444'
-            );
+            assert.deepStrictEqual(data.transportAgency.id, 'e705f64b-1399-436e-a428-18c8378b3444');
             assert(data.transportFacility);
-            assert.deepStrictEqual(
-              data.transportFacility.id,
-              '7d47a57b-f20b-4c09-83ab-2972ac7ad431'
-            );
+            assert.deepStrictEqual(data.transportFacility.id, '7d47a57b-f20b-4c09-83ab-2972ac7ad431');
           } else {
             /// the rest should just have id
             assert(!data.transportAgency);
-            assert.deepStrictEqual(
-              data.transportAgencyId,
-              'e705f64b-1399-436e-a428-18c8378b3444'
-            );
+            assert.deepStrictEqual(data.transportAgencyId, 'e705f64b-1399-436e-a428-18c8378b3444');
             assert(!data.transportFacility);
-            assert.deepStrictEqual(
-              data.transportFacilityId,
-              '7d47a57b-f20b-4c09-83ab-2972ac7ad431'
-            );
+            assert.deepStrictEqual(data.transportFacilityId, '7d47a57b-f20b-4c09-83ab-2972ac7ad431');
           }
         } else if (i === 4) {
           /// we should have a full serialized object for the first record
           assert(data.transportAgency);
-          assert.deepStrictEqual(
-            data.transportAgency.id,
-            '5de082f2-3242-43be-bc2b-6e9396815b4f'
-          );
+          assert.deepStrictEqual(data.transportAgency.id, '5de082f2-3242-43be-bc2b-6e9396815b4f');
           assert(data.transportFacility);
-          assert.deepStrictEqual(
-            data.transportFacility.id,
-            'fbb448ba-eb2b-4070-97d6-4ab6f13263ad'
-          );
+          assert.deepStrictEqual(data.transportFacility.id, 'fbb448ba-eb2b-4070-97d6-4ab6f13263ad');
         } else {
           /// the rest should just have id
           assert(!data.transportAgency);
-          assert.deepStrictEqual(
-            data.transportAgencyId,
-            '5de082f2-3242-43be-bc2b-6e9396815b4f'
-          );
+          assert.deepStrictEqual(data.transportAgencyId, '5de082f2-3242-43be-bc2b-6e9396815b4f');
           assert(!data.transportFacility);
-          assert.deepStrictEqual(
-            data.transportFacilityId,
-            'fbb448ba-eb2b-4070-97d6-4ab6f13263ad'
-          );
+          assert.deepStrictEqual(data.transportFacilityId, 'fbb448ba-eb2b-4070-97d6-4ab6f13263ad');
         }
         i += 1;
       }
@@ -147,10 +123,7 @@ describe('/api/patients', function () {
       assert(response.body?.id);
       const patient = await models.Patient.findByPk(response.body.id);
       assert(patient);
-      assert.deepStrictEqual(
-        patient.sceneId,
-        '25db9094-03a5-4267-8314-bead229eff9d'
-      );
+      assert.deepStrictEqual(patient.sceneId, '25db9094-03a5-4267-8314-bead229eff9d');
       assert.deepStrictEqual(patient.firstName, 'John');
       assert.deepStrictEqual(patient.lastName, 'Doe');
       assert.deepStrictEqual(patient.priority, 2);
@@ -161,9 +134,7 @@ describe('/api/patients', function () {
     });
 
     it('adds a new Observation to update a Patient', async () => {
-      const patient = await models.Patient.findByPk(
-        '47449282-c48a-4ca1-a719-5117b790fc70'
-      );
+      const patient = await models.Patient.findByPk('47449282-c48a-4ca1-a719-5117b790fc70');
       assert.deepStrictEqual(patient.version, 2);
       let observations = await patient.getObservations();
       assert.deepStrictEqual(observations.length, 2);
@@ -204,10 +175,7 @@ describe('/api/patients', function () {
         .get(`/api/patients/47449282-c48a-4ca1-a719-5117b790fc70`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .expect(HttpStatus.OK);
-      assert.deepStrictEqual(
-        response.body?.id,
-        '47449282-c48a-4ca1-a719-5117b790fc70'
-      );
+      assert.deepStrictEqual(response.body?.id, '47449282-c48a-4ca1-a719-5117b790fc70');
     });
   });
 });

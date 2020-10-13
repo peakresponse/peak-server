@@ -30,12 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       validate: {
         async schema() {
-          this.validationError = await nemsis.validateSchema(
-            'dLocation_v3.xsd',
-            'dLocation',
-            'dLocation.LocationGroup',
-            this.data
-          );
+          this.validationError = await nemsis.validateSchema('dLocation_v3.xsd', 'dLocation', 'dLocation.LocationGroup', this.data);
           if (this.validationError) throw this.validationError;
         },
       },
@@ -49,10 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     record.setDataValue('type', record.data?.['dLocation.01']?._text);
     record.setDataValue('name', record.data?.['dLocation.02']?._text);
     record.setDataValue('number', record.data?.['dLocation.03']?._text);
-    record.setDataValue(
-      'geog',
-      Base.geometryFor(record.data?.['dLocation.04']?._text)
-    );
+    record.setDataValue('geog', Base.geometryFor(record.data?.['dLocation.04']?._text));
     record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
   });
 

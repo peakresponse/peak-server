@@ -11,11 +11,7 @@ export class EditStateComponent {
   status: string = null;
   isConfiguring = false;
 
-  constructor(
-    private api: ApiService,
-    private navigation: NavigationService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

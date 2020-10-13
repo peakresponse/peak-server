@@ -3,14 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Observable, of, empty } from 'rxjs';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  tap,
-  switchMap,
-} from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
 
 import { ApiService, NavigationService } from '../shared/services';
 import { AppService } from './app.service';
@@ -25,24 +18,14 @@ export class AgencyComponent {
   agency: any = null;
   isLoading = false;
 
-  constructor(
-    private app: AppService,
-    private api: ApiService,
-    private navigation: NavigationService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private app: AppService, private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.stateId = this.route.snapshot.queryParamMap.get('stateId');
     if (this.app.state == null) {
-      this.api.states
-        .get(this.stateId)
-        .subscribe((res) => (this.app.state = res.body));
+      this.api.states.get(this.stateId).subscribe((res) => (this.app.state = res.body));
     }
-    setTimeout(
-      () => (this.agencyEl ? this.agencyEl.nativeElement.focus() : null),
-      100
-    );
+    setTimeout(() => (this.agencyEl ? this.agencyEl.nativeElement.focus() : null), 100);
   }
 
   formatter = (result: { name: string }) => result.name;
@@ -52,14 +35,10 @@ export class AgencyComponent {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((term) =>
-        this.api.agencies
-          .index(
-            new HttpParams().set('search', term).set('stateId', this.stateId)
-          )
-          .pipe(
-            catchError(() => of([])),
-            map((res) => res.body)
-          )
+        this.api.agencies.index(new HttpParams().set('search', term).set('stateId', this.stateId)).pipe(
+          catchError(() => of([])),
+          map((res) => res.body)
+        )
       )
     );
 

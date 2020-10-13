@@ -3,12 +3,7 @@ import { NgModel } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { empty, Subscription } from 'rxjs';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  tap,
-} from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { ApiService, NavigationService } from '../shared/services';
 
@@ -28,11 +23,7 @@ export class UrlComponent {
   subdomainChanges: Subscription;
   errorStatus: number = null;
 
-  constructor(
-    private route: ActivatedRoute,
-    private api: ApiService,
-    private navigation: NavigationService
-  ) {
+  constructor(private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
     this.stateId = this.route.snapshot.queryParamMap.get('stateId');
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
   }
@@ -56,10 +47,7 @@ export class UrlComponent {
         this.isCreated = true;
         this.subdomain = res.body.subdomain;
       });
-    setTimeout(
-      () => (this.subdomainEl ? this.subdomainEl.nativeElement.focus() : null),
-      100
-    );
+    setTimeout(() => (this.subdomainEl ? this.subdomainEl.nativeElement.focus() : null), 100);
   }
 
   ngAfterViewInit() {

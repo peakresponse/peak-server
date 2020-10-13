@@ -12,12 +12,7 @@ module.exports = {
         fields: ['email'],
         transaction,
       });
-      await queryInterface.changeColumn(
-        { schema: 'demographics', tableName: 'employments' },
-        'email',
-        Sequelize.CITEXT,
-        { transaction }
-      );
+      await queryInterface.changeColumn({ schema: 'demographics', tableName: 'employments' }, 'email', Sequelize.CITEXT, { transaction });
       await queryInterface.addConstraint(
         { schema: 'demographics', tableName: 'employments' },
         {
@@ -36,12 +31,7 @@ module.exports = {
         `ALTER TABLE "demographics"."employments" DROP CONSTRAINT "demographics.employments_agency_id_email_uk"`,
         { transaction }
       );
-      await queryInterface.changeColumn(
-        { schema: 'demographics', tableName: 'employments' },
-        'email',
-        Sequelize.STRING,
-        { transaction }
-      );
+      await queryInterface.changeColumn({ schema: 'demographics', tableName: 'employments' }, 'email', Sequelize.STRING, { transaction });
       await queryInterface.removeConstraint('users', 'users_email_uk', {
         transaction,
       });

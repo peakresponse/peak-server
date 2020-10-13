@@ -11,10 +11,7 @@ describe('models', () => {
 
     describe("scope('canonical')", () => {
       it('filters out non-canonical records', async () => {
-        assert.deepStrictEqual(
-          await models.Agency.scope('canonical').count(),
-          11
-        );
+        assert.deepStrictEqual(await models.Agency.scope('canonical').count(), 11);
       });
     });
 
@@ -26,15 +23,10 @@ describe('models', () => {
 
     describe('getActiveScenes()', () => {
       it('returns active scenes accessible to this agency', async () => {
-        const agency = await models.Agency.findByPk(
-          '9eeb6591-12f8-4036-8af8-6b235153d444'
-        );
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
         const scenes = await agency.getActiveScenes();
         assert.deepStrictEqual(scenes.length, 1);
-        assert.deepStrictEqual(
-          scenes[0].id,
-          '25db9094-03a5-4267-8314-bead229eff9d'
-        );
+        assert.deepStrictEqual(scenes[0].id, '25db9094-03a5-4267-8314-bead229eff9d');
       });
     });
 
@@ -44,17 +36,11 @@ describe('models', () => {
 
         /// spaces are not valid
         agency.subdomain = 'spaces not valid';
-        await assert.rejects(
-          agency.validate(),
-          (err) => err.errors[0].path === 'subdomain'
-        );
+        await assert.rejects(agency.validate(), (err) => err.errors[0].path === 'subdomain');
 
         /// symbols other than hypen or underscore are not valid
         agency.subdomain = 'notvalid!';
-        await assert.rejects(
-          agency.validate(),
-          (err) => err.errors[0].path === 'subdomain'
-        );
+        await assert.rejects(agency.validate(), (err) => err.errors[0].path === 'subdomain');
 
         /// this is a valid domain
         agency.subdomain = 'test1234';
@@ -72,25 +58,19 @@ describe('models', () => {
 
     describe('generateSubdomain()', () => {
       it('should generate a unique, unused subdomain from a short name (less than 4 words)', async () => {
-        const agency = await models.Agency.findByPk(
-          '6b7ceef6-0be4-4791-848d-f115e8f15182'
-        );
+        const agency = await models.Agency.findByPk('6b7ceef6-0be4-4791-848d-f115e8f15182');
         const subdomain = await agency.generateSubdomain();
         assert.deepStrictEqual(subdomain, 'humboldtbayfire');
       });
 
       it('should generate a unique, unused subdomain from an acronym of the name (more than 3 words)', async () => {
-        const agency = await models.Agency.findByPk(
-          '5de082f2-3242-43be-bc2b-6e9396815b4f'
-        );
+        const agency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
         const subdomain = await agency.generateSubdomain();
         assert.deepStrictEqual(subdomain, 'bbfpd');
       });
 
       it('should add a numberic suffix if the generated name is taken', async () => {
-        const agency = await models.Agency.findByPk(
-          '2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d'
-        );
+        const agency = await models.Agency.findByPk('2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d');
         const subdomain = await agency.generateSubdomain();
         assert.deepStrictEqual(subdomain, 'bmacc1');
       });
@@ -98,12 +78,8 @@ describe('models', () => {
 
     describe('register()', () => {
       it('creates a new demographic Agency record for a given Agency/User', async () => {
-        const user = await models.User.findByPk(
-          'ffc7a312-50ba-475f-b10f-76ce793dc62a'
-        );
-        const canonicalAgency = await models.Agency.findByPk(
-          '5de082f2-3242-43be-bc2b-6e9396815b4f'
-        );
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const canonicalAgency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
         assert.deepStrictEqual(canonicalAgency.data, {
           'sAgency.01': { _text: 'S66-50146' },
           'sAgency.02': { _text: 'S66-50146' },
@@ -111,12 +87,7 @@ describe('models', () => {
         });
 
         await models.sequelize.transaction(async (transaction) => {
-          const agency = await models.Agency.register(
-            user,
-            canonicalAgency,
-            'bbfpd',
-            { transaction }
-          );
+          const agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
           assert(agency);
           assert.strictEqual(agency.canonicalAgencyId, canonicalAgency.id);
           assert.strictEqual(agency.subdomain, 'bbfpd');

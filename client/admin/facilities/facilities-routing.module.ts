@@ -3,11 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AgencyService, UserService } from '../../shared/services';
 
-import {
-  EditFacilityComponent,
-  ListFacilitiesComponent,
-  NewFacilityComponent,
-} from '.';
+import { EditFacilityComponent, ListFacilitiesComponent, NewFacilityComponent } from '.';
 
 const appRoutes: Routes = [
   {

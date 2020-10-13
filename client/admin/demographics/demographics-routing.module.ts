@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import {
-  AgencyService,
-  SchemaService,
-  UserService,
-} from '../../shared/services';
+import { AgencyService, SchemaService, UserService } from '../../shared/services';
 
 import {
   AgencyDemographicsComponent,

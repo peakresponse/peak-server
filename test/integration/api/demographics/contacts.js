@@ -10,13 +10,7 @@ describe('/api/demographics/contacts', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures([
-      'users',
-      'states',
-      'agencies',
-      'contacts',
-      'employments',
-    ]);
+    await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments']);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -33,10 +27,7 @@ describe('/api/demographics/contacts', () => {
         .expect(HttpStatus.OK);
       const contacts = response.body;
       assert(Array.isArray(contacts.dContact?.['dContact.ContactInfoGroup']));
-      assert.strictEqual(
-        contacts.dContact['dContact.ContactInfoGroup'].length,
-        2
-      );
+      assert.strictEqual(contacts.dContact['dContact.ContactInfoGroup'].length, 2);
     });
   });
 
@@ -71,10 +62,7 @@ describe('/api/demographics/contacts', () => {
       const contact = await models.Contact.findByPk(data._attributes?.UUID);
       assert(contact);
       assert.strictEqual(contact.id, 'bce2b087-302e-47fb-9852-362f7c2b30b5');
-      assert.strictEqual(
-        contact.createdByAgencyId,
-        '9eeb6591-12f8-4036-8af8-6b235153d444'
-      );
+      assert.strictEqual(contact.createdByAgencyId, '9eeb6591-12f8-4036-8af8-6b235153d444');
       assert.strictEqual(contact.type, '1101017');
       assert.strictEqual(contact.lastName, 'Contact');
       assert.strictEqual(contact.firstName, 'Other');
@@ -112,14 +100,9 @@ describe('/api/demographics/contacts', () => {
           },
         })
         .expect(HttpStatus.NO_CONTENT);
-      const contact = await models.Contact.findByPk(
-        'f77a0e3b-3f09-4891-bd89-924e6d36481d'
-      );
+      const contact = await models.Contact.findByPk('f77a0e3b-3f09-4891-bd89-924e6d36481d');
       assert(contact);
-      assert.strictEqual(
-        contact.createdByAgencyId,
-        '9eeb6591-12f8-4036-8af8-6b235153d444'
-      );
+      assert.strictEqual(contact.createdByAgencyId, '9eeb6591-12f8-4036-8af8-6b235153d444');
       assert.strictEqual(contact.type, '1101001');
       assert.strictEqual(contact.lastName, 'Assist');
       assert.strictEqual(contact.firstName, 'Admin');

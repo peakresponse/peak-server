@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-  UrlTree,
-} from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -18,16 +12,9 @@ import { AppService } from './app.service';
   providedIn: 'root',
 })
 export class AppGuard implements CanActivate {
-  constructor(
-    private api: ApiService,
-    private app: AppService,
-    private router: Router
-  ) {}
+  constructor(private api: ApiService, private app: AppService, private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return this.api.agencies.me().pipe(
       catchError((err) => of(err)),
       map((res: HttpResponse<any>) => {

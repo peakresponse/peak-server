@@ -14,10 +14,7 @@ describe('/api/facilities', function () {
   beforeEach(async () => {
     await helpers.loadFixtures(['states', 'facilities', 'users']);
     testSession = session(app);
-    await testSession
-      .post('/login')
-      .send({ email: 'admin@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
   });
 
   describe('GET /', () => {
@@ -26,10 +23,7 @@ describe('/api/facilities', function () {
         .get('/api/facilities/')
         .expect(HttpStatus.OK)
         .expect('X-Total-Count', '103')
-        .expect(
-          'Link',
-          '<http://lvh.me:3000/api/facilities/?page=2>; rel="next",<http://lvh.me:3000/api/facilities/?page=5>; rel="last"'
-        );
+        .expect('Link', '<http://lvh.me:3000/api/facilities/?page=2>; rel="next",<http://lvh.me:3000/api/facilities/?page=5>; rel="last"');
       assert.deepStrictEqual(response.body.length, 25);
     });
 
@@ -53,10 +47,7 @@ describe('/api/facilities', function () {
           '<http://lvh.me:3000/api/facilities/?lat=37.7873437&lng=-122.4536086&page=2>; rel="next",<http://lvh.me:3000/api/facilities/?lat=37.7873437&lng=-122.4536086&page=5>; rel="last"'
         );
       assert.deepStrictEqual(response.body.length, 25);
-      assert.deepStrictEqual(
-        response.body[0].name,
-        'CPMC - 3801 Sacramento Street'
-      );
+      assert.deepStrictEqual(response.body[0].name, 'CPMC - 3801 Sacramento Street');
     });
 
     it('returns a paginated list of search filtered Facility records near the lat/lng', async () => {
@@ -68,10 +59,7 @@ describe('/api/facilities', function () {
         .expect('X-Total-Count', '7')
         .expect('Link', '');
       assert.deepStrictEqual(response.body.length, 7);
-      assert.deepStrictEqual(
-        response.body[0].name,
-        'CPMC - 3801 Sacramento Street'
-      );
+      assert.deepStrictEqual(response.body[0].name, 'CPMC - 3801 Sacramento Street');
       for (const facility of response.body) {
         assert(facility.name.match(/cpmc/i));
       }

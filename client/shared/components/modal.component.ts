@@ -1,17 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 
-import {
-  NgbModal,
-  NgbModalRef,
-  ModalDismissReasons,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { extend } from 'lodash';
 
 @Component({
@@ -38,10 +27,7 @@ export class ModalComponent {
   }
 
   open(options?: any) {
-    this.modalRef = this.modal.open(
-      this.content,
-      extend({ ariaLabelledBy: 'modal-basic-title' }, options)
-    );
+    this.modalRef = this.modal.open(this.content, extend({ ariaLabelledBy: 'modal-basic-title' }, options));
   }
 
   onConfirm() {

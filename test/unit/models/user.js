@@ -144,9 +144,7 @@ describe('models', () => {
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
             assert.strictEqual(error.errors.length, 1);
-            assert(
-              _.find(error.errors, { path: 'email', message: 'Invalid Email' })
-            );
+            assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
           }
         );
@@ -161,9 +159,7 @@ describe('models', () => {
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
             assert.strictEqual(error.errors.length, 1);
-            assert(
-              _.find(error.errors, { path: 'email', message: 'Invalid Email' })
-            );
+            assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
           }
         );
@@ -178,9 +174,7 @@ describe('models', () => {
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
             assert.strictEqual(error.errors.length, 1);
-            assert(
-              _.find(error.errors, { path: 'email', message: 'Invalid Email' })
-            );
+            assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
           }
         );
@@ -234,10 +228,7 @@ describe('models', () => {
         const emails = nodemailerMock.mock.getSentMail();
         assert.strictEqual(emails.length, 1);
         assert.strictEqual(emails[0].subject, 'Reset your Password');
-        assert.strictEqual(
-          emails[0].to,
-          'Regular User <regular@peakresponse.net>'
-        );
+        assert.strictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
         /// if no agency specified, url is on the base
         const resetUrl = `${process.env.BASE_URL}/passwords/reset/${user.passwordResetToken}`;
         assert(emails[0].text.includes(resetUrl));
@@ -245,12 +236,7 @@ describe('models', () => {
       });
 
       it('generates a password reset on the specified agency domain', async () => {
-        await helpers.loadFixtures([
-          'states',
-          'agencies',
-          'users',
-          'employments',
-        ]);
+        await helpers.loadFixtures(['states', 'agencies', 'users', 'employments']);
         const agency = await models.Agency.findOne({
           where: { subdomain: 'bmacc' },
         });
@@ -264,10 +250,7 @@ describe('models', () => {
         const emails = nodemailerMock.mock.getSentMail();
         assert.strictEqual(emails.length, 1);
         assert.strictEqual(emails[0].subject, 'Reset your Password');
-        assert.strictEqual(
-          emails[0].to,
-          'Regular User <regular@peakresponse.net>'
-        );
+        assert.strictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
         /// the reset link url should be on the agency subdomain
         const resetUrl = `${agency.baseUrl}/passwords/reset/${user.passwordResetToken}`;
         assert(emails[0].text.includes(resetUrl));
@@ -275,12 +258,7 @@ describe('models', () => {
       });
 
       it('should raise an exception if the user is not an employee of the specified agency', async () => {
-        await helpers.loadFixtures([
-          'states',
-          'agencies',
-          'users',
-          'employments',
-        ]);
+        await helpers.loadFixtures(['states', 'agencies', 'users', 'employments']);
         const agency = await models.Agency.findOne({
           where: { subdomain: 'bayshoreambulance' },
         });
@@ -293,12 +271,7 @@ describe('models', () => {
 
     describe('.sendWelcomeEmail()', () => {
       it('sends a welcome email for the user in the specified agency', async () => {
-        await helpers.loadFixtures([
-          'states',
-          'agencies',
-          'users',
-          'employments',
-        ]);
+        await helpers.loadFixtures(['states', 'agencies', 'users', 'employments']);
         const user = await models.User.findOne({
           where: { email: 'regular@peakresponse.net' },
         });
@@ -311,21 +284,13 @@ describe('models', () => {
         const emails = nodemailerMock.mock.getSentMail();
         assert.strictEqual(emails.length, 1);
         assert.strictEqual(emails[0].subject, 'Welcome to Peak Response');
-        assert.strictEqual(
-          emails[0].to,
-          'Regular User <regular@peakresponse.net>'
-        );
+        assert.strictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
         assert(emails[0].text.includes('Bay Medic Ambulance - Contra Costa'));
         assert(emails[0].html.includes('Bay Medic Ambulance - Contra Costa'));
       });
 
       it('sends a pending approval email when employment pending', async () => {
-        await helpers.loadFixtures([
-          'states',
-          'agencies',
-          'users',
-          'employments',
-        ]);
+        await helpers.loadFixtures(['states', 'agencies', 'users', 'employments']);
         const user = await models.User.findOne({
           where: { email: 'pending@peakresponse.net' },
         });
@@ -338,10 +303,7 @@ describe('models', () => {
         const emails = nodemailerMock.mock.getSentMail();
         assert.strictEqual(emails.length, 1);
         assert.strictEqual(emails[0].subject, 'Pending Request to Join');
-        assert.strictEqual(
-          emails[0].to,
-          'Pending User <pending@peakresponse.net>'
-        );
+        assert.strictEqual(emails[0].to, 'Pending User <pending@peakresponse.net>');
         assert(emails[0].text.includes('Bay Medic Ambulance - Contra Costa'));
         assert(emails[0].html.includes('Bay Medic Ambulance - Contra Costa'));
       });

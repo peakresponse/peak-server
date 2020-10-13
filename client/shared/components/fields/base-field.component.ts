@@ -30,9 +30,7 @@ export class BaseFieldComponent {
   }
 
   get value(): string {
-    return this.isEditing
-      ? this.target[this.derivedPropertyName]
-      : this.source?.[this.derivedPropertyName];
+    return this.isEditing ? this.target[this.derivedPropertyName] : this.source?.[this.derivedPropertyName];
   }
 
   set value(value: string) {
@@ -56,12 +54,7 @@ export class BaseFieldComponent {
         x2: parseInt(style.left) + parseInt(style.width),
         y2: parseInt(style.top) + parseInt(style.height),
       };
-      if (
-        x >= targetRect.x1 &&
-        x < targetRect.x2 &&
-        y >= targetRect.y1 &&
-        y < targetRect.y2
-      ) {
+      if (x >= targetRect.x1 && x < targetRect.x2 && y >= targetRect.y1 && y < targetRect.y2) {
         this.onClear();
       }
     }

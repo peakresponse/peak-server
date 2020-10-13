@@ -10,16 +10,7 @@ describe('/api/responders', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures([
-      'users',
-      'states',
-      'agencies',
-      'contacts',
-      'employments',
-      'scenes',
-      'sceneObservations',
-      'responders',
-    ]);
+    await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments', 'scenes', 'sceneObservations', 'responders']);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -50,9 +41,7 @@ describe('/api/responders', () => {
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ role: models.Responder.Roles.TREATMENT })
         .expect(HttpStatus.NO_CONTENT);
-      const responder = await models.Responder.findByPk(
-        '5d0b9f69-7bd4-4674-a2ef-9e0afdc14705'
-      );
+      const responder = await models.Responder.findByPk('5d0b9f69-7bd4-4674-a2ef-9e0afdc14705');
       assert.deepStrictEqual(responder.role, models.Responder.Roles.TREATMENT);
     });
   });

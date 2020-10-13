@@ -101,10 +101,9 @@ module.exports = {
         },
         { transaction }
       );
-      await queryInterface.sequelize.query(
-        'CREATE INDEX scene_observations_geog_idx ON scene_observations USING gist(geog)',
-        { transaction }
-      );
+      await queryInterface.sequelize.query('CREATE INDEX scene_observations_geog_idx ON scene_observations USING gist(geog)', {
+        transaction,
+      });
       await queryInterface.addConstraint('scene_observations', {
         type: 'FOREIGN KEY',
         fields: ['scene_id'],

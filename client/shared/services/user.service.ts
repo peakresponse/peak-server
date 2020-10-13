@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot,
-} from '@angular/router';
+import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 import { Observable, of, EMPTY, ReplaySubject } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
@@ -77,10 +73,7 @@ export class UserService implements Resolve<any> {
       });
   }
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<any> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     if (this.user) {
       return of(this.user);
     }

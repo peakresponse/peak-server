@@ -92,10 +92,7 @@ module.exports = {
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.transaction(async (transaction) => {
-      await queryInterface.dropTable(
-        { schema: 'demographics', tableName: 'configurations' },
-        { transaction }
-      );
+      await queryInterface.dropTable({ schema: 'demographics', tableName: 'configurations' }, { transaction });
     });
   },
 };

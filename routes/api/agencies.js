@@ -25,9 +25,7 @@ router.get(
     if (req.query.stateId && req.query.stateId !== '') {
       options.where.stateId = req.query.stateId;
     }
-    const { docs, pages, total } = await models.Agency.scope(
-      'canonical'
-    ).paginate(options);
+    const { docs, pages, total } = await models.Agency.scope('canonical').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
   })
@@ -111,12 +109,7 @@ router.post(
       /// create User record
       const user = await models.User.register(req.body, { transaction });
       /// create the Demographic Agency record clone
-      const agency = await models.Agency.register(
-        user,
-        canonicalAgency,
-        req.body.subdomain,
-        { transaction }
-      );
+      const agency = await models.Agency.register(user, canonicalAgency, req.body.subdomain, { transaction });
       /// if created without error, now send welcome email
       await user.sendWelcomeEmail(agency, { transaction });
       /// log in the newly created user

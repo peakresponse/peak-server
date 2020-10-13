@@ -8,8 +8,5 @@ import { AgencyService, UserService } from '../shared/services';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  constructor(
-    public currentAgency: AgencyService,
-    public currentUser: UserService
-  ) {}
+  constructor(public currentAgency: AgencyService, public currentUser: UserService) {}
 }

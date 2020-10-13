@@ -7,12 +7,7 @@ import { SharedPipesModule } from '../../shared/pipes';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    FormsModule,
-    SharedComponentsModule,
-    SharedPipesModule,
-  ],
+  imports: [CommonModule, FormsModule, SharedComponentsModule, SharedPipesModule],
   providers: [],
 })
 export class AgencyModule {}

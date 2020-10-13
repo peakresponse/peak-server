@@ -81,10 +81,7 @@ const mockAlabamaFilesRequest = () => {
 };
 
 const mockAlabamaDownloads = () => {
-  for (const filePath of [
-    'Resources/AL_StateDataSet.xml',
-    'Schematron/AL_EMSDataSet.sch.xml',
-  ]) {
+  for (const filePath of ['Resources/AL_StateDataSet.xml', 'Schematron/AL_EMSDataSet.sch.xml']) {
     nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
       .get(`/stash/projects/NES/repos/alabama/raw/${filePath}`)
       .replyWithFile(200, path.resolve(__dirname, 'nemsis/alabama', filePath));
@@ -128,17 +125,10 @@ const mockCaliforniaFilesRequest = () => {
 };
 
 const mockCaliforniaDownloads = () => {
-  for (const filePath of [
-    'Resources/CA_StateDataSet.xml',
-    'Resources/CA_Facilities.xlsx',
-    'Schematron/CA_EMSDataSet.sch.xml',
-  ]) {
+  for (const filePath of ['Resources/CA_StateDataSet.xml', 'Resources/CA_Facilities.xlsx', 'Schematron/CA_EMSDataSet.sch.xml']) {
     nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
       .get(`/stash/projects/NES/repos/california/raw/${filePath}`)
-      .replyWithFile(
-        200,
-        path.resolve(__dirname, 'nemsis/california', filePath)
-      );
+      .replyWithFile(200, path.resolve(__dirname, 'nemsis/california', filePath));
   }
 };
 

@@ -11,9 +11,7 @@ describe('models', () => {
     beforeEach(async () => {
       await helpers.loadFixtures(['users', 'states', 'agencies']);
       user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
-      agency = await models.Agency.findByPk(
-        '9eeb6591-12f8-4036-8af8-6b235153d444'
-      );
+      agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
     });
 
     describe('.save()', () => {
@@ -51,24 +49,10 @@ describe('models', () => {
         assert(record.invitationAt);
         const emails = nodemailerMock.mock.getSentMail();
         assert.strictEqual(emails.length, 1);
-        assert.strictEqual(
-          emails[0].subject,
-          `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`
-        );
-        assert.strictEqual(
-          emails[0].to,
-          'John D Smith <johndsmith@peakresponse.net>'
-        );
-        assert(
-          emails[0].html.indexOf(
-            `http://bmacc.${process.env.BASE_HOST}:3000/sign-up?invitationCode=${record.invitationCode}`
-          ) >= 0
-        );
-        assert(
-          emails[0].text.indexOf(
-            `http://bmacc.${process.env.BASE_HOST}:3000/sign-up?invitationCode=${record.invitationCode}`
-          ) >= 0
-        );
+        assert.strictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+        assert.strictEqual(emails[0].to, 'John D Smith <johndsmith@peakresponse.net>');
+        assert(emails[0].html.indexOf(`http://bmacc.${process.env.BASE_HOST}:3000/sign-up?invitationCode=${record.invitationCode}`) >= 0);
+        assert(emails[0].text.indexOf(`http://bmacc.${process.env.BASE_HOST}:3000/sign-up?invitationCode=${record.invitationCode}`) >= 0);
       });
     });
 

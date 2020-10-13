@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -160,10 +154,7 @@ export class PatientComponent implements OnDestroy {
     if (patient?.observations) {
       return patient.observations
         .filter((o: any) => o.text)
-        .sort(
-          (a: any, b: any) =>
-            moment(b.updatedAt).valueOf() - moment(a.updatedAt).valueOf()
-        );
+        .sort((a: any, b: any) => moment(b.updatedAt).valueOf() - moment(a.updatedAt).valueOf());
     }
     return null;
   }

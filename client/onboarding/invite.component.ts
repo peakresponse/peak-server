@@ -31,12 +31,7 @@ export class InviteComponent {
   isLoading = false;
   errors: any = null;
 
-  constructor(
-    private app: AppService,
-    private route: ActivatedRoute,
-    private api: ApiService,
-    private navigation: NavigationService
-  ) {
+  constructor(private app: AppService, private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
     if (!this.app.agency) {
       this.isLoading = true;
@@ -57,10 +52,7 @@ export class InviteComponent {
   }
 
   ngOnInit() {
-    setTimeout(
-      () => (this.firstEl ? this.firstEl.nativeElement.focus() : null),
-      100
-    );
+    setTimeout(() => (this.firstEl ? this.firstEl.nativeElement.focus() : null), 100);
   }
 
   onInputEmails() {
@@ -71,10 +63,7 @@ export class InviteComponent {
   }
 
   onMore() {
-    this.data.rows.push(
-      { fullName: '', email: '' },
-      { fullName: '', email: '' }
-    );
+    this.data.rows.push({ fullName: '', email: '' }, { fullName: '', email: '' });
   }
 
   get rows() {

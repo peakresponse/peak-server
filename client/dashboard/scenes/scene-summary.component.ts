@@ -11,12 +11,7 @@ import { AgencyService } from '../agencies/agency.service';
 export class SceneSummaryComponent {
   now = new Date();
 
-  constructor(
-    public agency: AgencyService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public scene: SceneService
-  ) {}
+  constructor(public agency: AgencyService, private route: ActivatedRoute, private router: Router, public scene: SceneService) {}
 
   show(patient: any) {
     this.router.navigate([{ outlets: { modal: ['patients', patient.id] } }], {

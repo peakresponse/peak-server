@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Router,
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot,
-} from '@angular/router';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 import { Observable, of, EMPTY } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
@@ -18,10 +13,7 @@ export class SchemaService implements Resolve<any> {
 
   constructor(private api: ApiService) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<any> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     if (this.commonTypes) {
       return of(this.commonTypes);
     }
@@ -62,9 +54,7 @@ export class SchemaService implements Resolve<any> {
         }
         for (let complexType of complexTypes) {
           if (!Array.isArray(complexType['xs:sequence']['xs:element'])) {
-            complexType['xs:sequence']['xs:element'] = [
-              complexType['xs:sequence']['xs:element'],
-            ];
+            complexType['xs:sequence']['xs:element'] = [complexType['xs:sequence']['xs:element']];
           }
         }
         this.schemaCache[schemaPath] = schema;

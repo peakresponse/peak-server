@@ -86,11 +86,7 @@ module.exports = {
       await queryInterface.removeColumn('observations', 'transport_agency_id', {
         transaction,
       });
-      await queryInterface.removeColumn(
-        'observations',
-        'transport_facility_id',
-        { transaction }
-      );
+      await queryInterface.removeColumn('observations', 'transport_facility_id', { transaction });
       await queryInterface.removeColumn('patients', 'transport_agency_id', {
         transaction,
       });

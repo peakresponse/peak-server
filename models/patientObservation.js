@@ -77,10 +77,7 @@ module.exports = (sequelize, DataTypes) => {
       portraitUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl(
-            'patient-observations/portrait',
-            this.portraitFile
-          );
+          return Base.assetUrl('patient-observations/portrait', this.portraitFile);
         },
       },
       photoUrl: {
@@ -121,28 +118,13 @@ module.exports = (sequelize, DataTypes) => {
   );
   PatientObservation.afterSave(async (observation, options) => {
     if (observation.changed('portraitFile')) {
-      Base.handleAssetFile(
-        'patient-observations/portrait',
-        observation.previous('portraitFile'),
-        observation.portraitFile,
-        options
-      );
+      Base.handleAssetFile('patient-observations/portrait', observation.previous('portraitFile'), observation.portraitFile, options);
     }
     if (observation.changed('photoFile')) {
-      Base.handleAssetFile(
-        'patient-observations/photo',
-        observation.previous('photoFile'),
-        observation.photoFile,
-        options
-      );
+      Base.handleAssetFile('patient-observations/photo', observation.previous('photoFile'), observation.photoFile, options);
     }
     if (observation.changed('audioFile')) {
-      Base.handleAssetFile(
-        'patient-observations/audio',
-        observation.previous('audioFile'),
-        observation.audioFile,
-        options
-      );
+      Base.handleAssetFile('patient-observations/audio', observation.previous('audioFile'), observation.audioFile, options);
     }
   });
   return PatientObservation;

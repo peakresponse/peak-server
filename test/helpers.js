@@ -11,9 +11,7 @@ const path = require('path');
 const models = require('../models');
 
 const loadFixtures = async (files) => {
-  const filePaths = files.map((f) =>
-    path.resolve(__dirname, `fixtures/${f}.json`)
-  );
+  const filePaths = files.map((f) => path.resolve(__dirname, `fixtures/${f}.json`));
   await fixtures.loadFiles(filePaths, models);
 };
 
@@ -28,6 +26,7 @@ const resetDatabase = async () => {
     DELETE FROM patients;
     DELETE FROM responders;
     DELETE FROM scene_observations;
+    DELETE FROM scene_pins;
     DELETE FROM scenes;
     DELETE FROM contacts;
     DELETE FROM employments;

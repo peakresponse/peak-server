@@ -30,43 +30,19 @@ app.use(
     useTempFiles: !process.env.AWS_S3_BUCKET,
   })
 );
-app.use(
-  bodyParser.raw({ type: ['image/*', 'video/*', 'audio/*'], limit: '10mb' })
-);
+app.use(bodyParser.raw({ type: ['image/*', 'video/*', 'audio/*'], limit: '10mb' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('trust proxy', 1);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/client', express.static(path.join(__dirname, 'dist')));
-app.use(
-  '/libraries/bootstrap',
-  express.static(path.join(__dirname, 'node_modules/bootstrap/dist'))
-);
-app.use(
-  '/libraries/cleave',
-  express.static(path.join(__dirname, 'node_modules/cleave.js/dist'))
-);
-app.use(
-  '/libraries/fontawesome',
-  express.static(
-    path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')
-  )
-);
-app.use(
-  '/libraries/jquery',
-  express.static(path.join(__dirname, 'node_modules/jquery/dist'))
-);
-app.use(
-  '/libraries/qrcode',
-  express.static(path.join(__dirname, 'node_modules/qrcode/build'))
-);
-app.use(
-  '/libraries/smoothscroll',
-  express.static(
-    path.join(__dirname, 'node_modules/smoothscroll-polyfill/dist')
-  )
-);
+app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+app.use('/libraries/cleave', express.static(path.join(__dirname, 'node_modules/cleave.js/dist')));
+app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
+app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/libraries/qrcode', express.static(path.join(__dirname, 'node_modules/qrcode/build')));
+app.use('/libraries/smoothscroll', express.static(path.join(__dirname, 'node_modules/smoothscroll-polyfill/dist')));
 app.use('/nemsis', express.static(path.join(__dirname, 'nemsis')));
 
 // set up session handler with an app reference so can be used by websocket server
@@ -90,9 +66,7 @@ i18n.configure({
 app.use(helpers.register);
 app.use(i18n.init);
 app.use((req, res, next) => {
-  res.locals.webpackStats = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'client/webpack-stats.json'))
-  );
+  res.locals.webpackStats = JSON.parse(fs.readFileSync(path.join(__dirname, 'client/webpack-stats.json')));
   res.locals.flash = req.flash();
   res.locals.currentUser = req.user;
   next();

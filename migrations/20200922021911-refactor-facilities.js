@@ -8,12 +8,7 @@ module.exports = {
         { transaction }
       );
 
-      await queryInterface.addColumn(
-        'facilities',
-        'canonical_facility_id',
-        Sequelize.UUID,
-        { transaction }
-      );
+      await queryInterface.addColumn('facilities', 'canonical_facility_id', Sequelize.UUID, { transaction });
       await queryInterface.addConstraint('facilities', {
         type: 'FOREIGN KEY',
         fields: ['canonical_facility_id'],
@@ -24,12 +19,7 @@ module.exports = {
         transaction,
       });
 
-      await queryInterface.renameColumn(
-        'facilities',
-        'agency_id',
-        'created_by_agency_id',
-        { transaction }
-      );
+      await queryInterface.renameColumn('facilities', 'agency_id', 'created_by_agency_id', { transaction });
       await queryInterface.removeIndex('facilities', 'facilities_agency_id', {
         transaction,
       });
@@ -38,12 +28,7 @@ module.exports = {
         transaction,
       });
 
-      await queryInterface.renameColumn(
-        'facilities',
-        'state_code',
-        'state_id',
-        { transaction }
-      );
+      await queryInterface.renameColumn('facilities', 'state_code', 'state_id', { transaction });
       await queryInterface.addConstraint('facilities', {
         type: 'FOREIGN KEY',
         fields: ['state_id'],
@@ -64,24 +49,9 @@ module.exports = {
         transaction,
       });
 
-      await queryInterface.addColumn(
-        'facilities',
-        'primary_designation',
-        { type: Sequelize.STRING },
-        { transaction }
-      );
-      await queryInterface.addColumn(
-        'facilities',
-        'primary_national_provider_id',
-        { type: Sequelize.STRING },
-        { transaction }
-      );
-      await queryInterface.addColumn(
-        'facilities',
-        'city_id',
-        { type: Sequelize.STRING },
-        { transaction }
-      );
+      await queryInterface.addColumn('facilities', 'primary_designation', { type: Sequelize.STRING }, { transaction });
+      await queryInterface.addColumn('facilities', 'primary_national_provider_id', { type: Sequelize.STRING }, { transaction });
+      await queryInterface.addColumn('facilities', 'city_id', { type: Sequelize.STRING }, { transaction });
       await queryInterface.addConstraint('facilities', {
         type: 'FOREIGN KEY',
         fields: ['city_id'],
@@ -91,12 +61,7 @@ module.exports = {
         },
         transaction,
       });
-      await queryInterface.addColumn(
-        'facilities',
-        'county_id',
-        { type: Sequelize.STRING },
-        { transaction }
-      );
+      await queryInterface.addColumn('facilities', 'county_id', { type: Sequelize.STRING }, { transaction });
       await queryInterface.addConstraint('facilities', {
         type: 'FOREIGN KEY',
         fields: ['county_id'],
@@ -106,24 +71,9 @@ module.exports = {
         },
         transaction,
       });
-      await queryInterface.addColumn(
-        'facilities',
-        'county_name',
-        { type: Sequelize.STRING },
-        { transaction }
-      );
-      await queryInterface.addColumn(
-        'facilities',
-        'primary_phone',
-        { type: Sequelize.STRING },
-        { transaction }
-      );
-      await queryInterface.addColumn(
-        'facilities',
-        'created_by_id',
-        { type: Sequelize.UUID },
-        { transaction }
-      );
+      await queryInterface.addColumn('facilities', 'county_name', { type: Sequelize.STRING }, { transaction });
+      await queryInterface.addColumn('facilities', 'primary_phone', { type: Sequelize.STRING }, { transaction });
+      await queryInterface.addColumn('facilities', 'created_by_id', { type: Sequelize.UUID }, { transaction });
       await queryInterface.addConstraint('facilities', {
         type: 'FOREIGN KEY',
         fields: ['created_by_id'],
@@ -133,12 +83,7 @@ module.exports = {
         },
         transaction,
       });
-      await queryInterface.addColumn(
-        'facilities',
-        'updated_by_id',
-        { type: Sequelize.UUID },
-        { transaction }
-      );
+      await queryInterface.addColumn('facilities', 'updated_by_id', { type: Sequelize.UUID }, { transaction });
       await queryInterface.addConstraint('facilities', {
         type: 'FOREIGN KEY',
         fields: ['updated_by_id'],
@@ -149,11 +94,7 @@ module.exports = {
         transaction,
       });
 
-      await queryInterface.removeIndex(
-        'facilities',
-        'facilities_state_code_code',
-        { transaction }
-      );
+      await queryInterface.removeIndex('facilities', 'facilities_state_code_code', { transaction });
       /// include the created by agency column in the compound unique ids
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX facilities_primary_national_provider_id_uk ON facilities (created_by_agency_id, primary_national_provider_id) WHERE created_by_agency_id IS NOT NULL',
@@ -203,10 +144,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.transaction(async (transaction) => {
-      await queryInterface.sequelize.query(
-        'DELETE FROM facilities WHERE created_by_agency_id IS NOT NULL',
-        { transaction }
-      );
+      await queryInterface.sequelize.query('DELETE FROM facilities WHERE created_by_agency_id IS NOT NULL', { transaction });
 
       await queryInterface.removeColumn('facilities', 'is_valid', {
         transaction,
@@ -215,12 +153,7 @@ module.exports = {
         transaction,
       });
 
-      await queryInterface.renameColumn(
-        'facilities',
-        'created_by_agency_id',
-        'agency_id',
-        { transaction }
-      );
+      await queryInterface.renameColumn('facilities', 'created_by_agency_id', 'agency_id', { transaction });
       await queryInterface.addIndex('facilities', {
         fields: ['agency_id'],
         transaction,
@@ -230,17 +163,8 @@ module.exports = {
         transaction,
       });
 
-      await queryInterface.removeConstraint(
-        'facilities',
-        'facilities_state_id_states_fk',
-        { transaction }
-      );
-      await queryInterface.renameColumn(
-        'facilities',
-        'state_id',
-        'state_code',
-        { transaction }
-      );
+      await queryInterface.removeConstraint('facilities', 'facilities_state_id_states_fk', { transaction });
+      await queryInterface.renameColumn('facilities', 'state_id', 'state_code', { transaction });
 
       await queryInterface.renameColumn('facilities', 'location_code', 'code', {
         transaction,
@@ -255,11 +179,7 @@ module.exports = {
       await queryInterface.removeColumn('facilities', 'primary_designation', {
         transaction,
       });
-      await queryInterface.removeColumn(
-        'facilities',
-        'primary_national_provider_id',
-        { transaction }
-      );
+      await queryInterface.removeColumn('facilities', 'primary_national_provider_id', { transaction });
       await queryInterface.removeColumn('facilities', 'city_id', {
         transaction,
       });

@@ -35,9 +35,7 @@ router.get(
     /// add additional privilege info
     data.user.isAdmin = req.user.isAdmin;
     /// add any active scenes the user may be a part of
-    data.user.activeScenes = (await req.user.getActiveScenes()).map((s) =>
-      s.toJSON()
-    );
+    data.user.activeScenes = (await req.user.getActiveScenes()).map((s) => s.toJSON());
     if (req.agency) {
       data.agency = req.agency.toJSON();
       data.employment = (
@@ -71,12 +69,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       user = await models.User.findByPk(req.params.id, { transaction });
       if (user) {
-        await helpers.handleUpload(
-          user,
-          'iconUrl',
-          req.body.iconUrl,
-          'users/icon'
-        );
+        await helpers.handleUpload(user, 'iconUrl', req.body.iconUrl, 'users/icon');
         await user.update(
           {
             firstName: req.body.firstName,

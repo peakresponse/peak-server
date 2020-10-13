@@ -36,18 +36,11 @@ export class AccountComponent {
   isLoading = false;
   errors: any = null;
 
-  constructor(
-    private app: AppService,
-    private route: ActivatedRoute,
-    private api: ApiService,
-    private navigation: NavigationService
-  ) {
+  constructor(private app: AppService, private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
     this.exists = this.route.snapshot.data.exists;
     this.stateId = this.route.snapshot.queryParamMap.get('stateId');
     this.data.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
-    this.data.invitationCode = this.route.snapshot.queryParamMap.get(
-      'invitationCode'
-    );
+    this.data.invitationCode = this.route.snapshot.queryParamMap.get('invitationCode');
     if (this.exists) {
       this.agency = this.app.agency;
       if (!this.agency) {
@@ -66,10 +59,7 @@ export class AccountComponent {
   }
 
   ngOnInit() {
-    setTimeout(
-      () => (this.firstNameEl ? this.firstNameEl.nativeElement.focus() : null),
-      100
-    );
+    setTimeout(() => (this.firstNameEl ? this.firstNameEl.nativeElement.focus() : null), 100);
   }
 
   get isFirstStep() {
@@ -79,40 +69,25 @@ export class AccountComponent {
   get isValid() {
     if (this.form && !this.isLoading) {
       return (
-        this.data.password != '' &&
-        this.data.confirmPassword != '' &&
-        this.form.valid &&
-        this.isPasswordSecure &&
-        this.isPasswordConfirmed
+        this.data.password != '' && this.data.confirmPassword != '' && this.form.valid && this.isPasswordSecure && this.isPasswordConfirmed
       );
     }
     return false;
   }
 
   get isPasswordSecure() {
-    return (
-      this.data.password == '' ||
-      this.data.password.match(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/
-      ) != null
-    );
+    return this.data.password == '' || this.data.password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/) != null;
   }
 
   get isPasswordConfirmed() {
-    return (
-      this.data.password == '' ||
-      this.data.confirmPassword == '' ||
-      this.data.password == this.data.confirmPassword
-    );
+    return this.data.password == '' || this.data.confirmPassword == '' || this.data.password == this.data.confirmPassword;
   }
 
   onBack() {
     if (this.exists) {
       this.navigation.backTo(`/agency?stateId=${this.stateId}`);
     } else {
-      this.navigation.backTo(
-        `/url?stateId=${this.stateId}&agencyId=${this.data.agencyId}`
-      );
+      this.navigation.backTo(`/url?stateId=${this.stateId}&agencyId=${this.data.agencyId}`);
     }
   }
 

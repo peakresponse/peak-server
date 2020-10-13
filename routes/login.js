@@ -92,9 +92,7 @@ router.post('/', (req, res, next) => {
           ];
           break;
         case HttpStatus.FORBIDDEN:
-          res.locals.errors = [
-            { path: 'email', message: res.__('login.new.forbidden') },
-          ];
+          res.locals.errors = [{ path: 'email', message: res.__('login.new.forbidden') }];
           break;
         default:
           break;

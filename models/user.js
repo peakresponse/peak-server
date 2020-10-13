@@ -35,15 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 
     static async register(values, options) {
       /// sanitize values
-      const sanitizedValues = _.mapValues(
-        _.pick(values, [
-          'firstName',
-          'lastName',
-          'email',
-          'position',
-          'password',
-        ]),
-        (v) => (v ? v.trim() : '')
+      const sanitizedValues = _.mapValues(_.pick(values, ['firstName', 'lastName', 'email', 'position', 'password']), (v) =>
+        v ? v.trim() : ''
       );
       const user = User.build(sanitizedValues);
       const errors = [];
@@ -54,14 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       if (existingUser) {
         /// add error message
-        errors.push(
-          new Sequelize.ValidationErrorItem(
-            'Email already registered',
-            'Validation error',
-            'email',
-            sanitizedValues.email
-          )
-        );
+        errors.push(new Sequelize.ValidationErrorItem('Email already registered', 'Validation error', 'email', sanitizedValues.email));
       }
       /// let Sequelize perform attribute validations
       try {
@@ -99,9 +85,7 @@ module.exports = (sequelize, DataTypes) => {
       await this.update(
         {
           passwordResetToken: uuid(),
-          passwordResetTokenExpiresAt: new Date(
-            Date.now() + 2 * 24 * 60 * 60 * 1000
-          ),
+          passwordResetTokenExpiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
         },
         options
       );
@@ -150,14 +134,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, [
-        'id',
-        'firstName',
-        'lastName',
-        'email',
-        'position',
-        'iconUrl',
-      ]);
+      return _.pick(attributes, ['id', 'firstName', 'lastName', 'email', 'position', 'iconUrl']);
     }
   }
 
@@ -200,11 +177,7 @@ module.exports = (sequelize, DataTypes) => {
             msg: 'Email cannot be blank',
           },
           isValid(value) {
-            if (
-              value &&
-              value.trim() !== '' &&
-              value.match(/^\S+@\S+\.\S+$/) == null
-            ) {
+            if (value && value.trim() !== '' && value.match(/^\S+@\S+\.\S+$/) == null) {
               throw new Error('Invalid Email');
             }
           },
@@ -248,11 +221,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.VIRTUAL,
         validate: {
           isStrong(value) {
-            if (
-              value.match(
-                /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/
-              ) == null
-            ) {
+            if (value.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/) == null) {
               throw new Error('Password not secure enough');
             }
           },

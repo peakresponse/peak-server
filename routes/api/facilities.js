@@ -30,11 +30,7 @@ router.get(
     let pages;
     let total;
     if (req.query.lat && req.query.lng) {
-      ({ docs, pages, total } = await models.Facility.findNear(
-        req.query.lat,
-        req.query.lng,
-        options
-      ));
+      ({ docs, pages, total } = await models.Facility.findNear(req.query.lat, req.query.lng, options));
     } else {
       ({ docs, pages, total } = await models.Facility.paginate(options));
     }

@@ -5,9 +5,7 @@ module.exports = {
       allowNull: false,
       defaultValue: '',
     });
-    await queryInterface.sequelize.query(
-      'ALTER TABLE users ALTER COLUMN position DROP DEFAULT;'
-    );
+    await queryInterface.sequelize.query('ALTER TABLE users ALTER COLUMN position DROP DEFAULT;');
   },
 
   down: async (queryInterface, Sequelize) => {

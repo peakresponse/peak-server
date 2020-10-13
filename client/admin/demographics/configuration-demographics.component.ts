@@ -11,9 +11,7 @@ export class ConfigurationDemographicsComponent extends BaseDemographicsComponen
     this.section = 'configuration';
     this.sectionHeader = 'Configuration';
     this.sectionSchemaPath = '/nemsis/xsd/dConfiguration_v3.json';
-    this.sectionColumns = [
-      { name: 'State', attr: ['dConfiguration.01'], class: 'col-5' },
-    ];
+    this.sectionColumns = [{ name: 'State', attr: ['dConfiguration.01'], class: 'col-5' }];
     super.ngOnInit();
   }
 }

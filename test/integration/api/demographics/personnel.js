@@ -11,13 +11,7 @@ describe('/api/demographics/personnel', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures([
-      'users',
-      'states',
-      'agencies',
-      'contacts',
-      'employments',
-    ]);
+    await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments']);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -42,10 +36,7 @@ describe('/api/demographics/personnel', () => {
 
       const employments = await models.Employment.findAll({
         where: {
-          email: [
-            'invitee.one@peakresponse.net',
-            'invitee.two@peakresponse.net',
-          ],
+          email: ['invitee.one@peakresponse.net', 'invitee.two@peakresponse.net'],
         },
       });
       assert.strictEqual(employments.length, 2);
@@ -54,22 +45,10 @@ describe('/api/demographics/personnel', () => {
       // eslint-disable-next-line no-nested-ternary
       emails.sort((e1, e2) => (e1.to < e2.to ? -1 : e1.to > e2.to ? 1 : 0));
       assert.strictEqual(emails.length, 2);
-      assert.strictEqual(
-        emails[0].to,
-        'Invitee One <invitee.one@peakresponse.net>'
-      );
-      assert.strictEqual(
-        emails[0].subject,
-        `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`
-      );
-      assert.strictEqual(
-        emails[1].to,
-        'Invitee Two <invitee.two@peakresponse.net>'
-      );
-      assert.strictEqual(
-        emails[1].subject,
-        `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`
-      );
+      assert.strictEqual(emails[0].to, 'Invitee One <invitee.one@peakresponse.net>');
+      assert.strictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+      assert.strictEqual(emails[1].to, 'Invitee Two <invitee.two@peakresponse.net>');
+      assert.strictEqual(emails[1].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
     });
 
     it('allows blank/empty name fields', async () => {
@@ -87,10 +66,7 @@ describe('/api/demographics/personnel', () => {
 
       const employments = await models.Employment.findAll({
         where: {
-          email: [
-            'invitee.one@peakresponse.net',
-            'invitee.two@peakresponse.net',
-          ],
+          email: ['invitee.one@peakresponse.net', 'invitee.two@peakresponse.net'],
         },
       });
       assert.strictEqual(employments.length, 2);
@@ -100,15 +76,9 @@ describe('/api/demographics/personnel', () => {
       emails.sort((e1, e2) => (e1.to < e2.to ? -1 : e1.to > e2.to ? 1 : 0));
       assert.strictEqual(emails.length, 2);
       assert.strictEqual(emails[0].to, '<invitee.one@peakresponse.net>');
-      assert.strictEqual(
-        emails[0].subject,
-        `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`
-      );
+      assert.strictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
       assert.strictEqual(emails[1].to, '<invitee.two@peakresponse.net>');
-      assert.strictEqual(
-        emails[1].subject,
-        `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`
-      );
+      assert.strictEqual(emails[1].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
     });
   });
 
@@ -127,9 +97,7 @@ describe('/api/demographics/personnel', () => {
           position: 'Invited',
         })
         .expect(HttpStatus.CREATED);
-      const employment = await models.Employment.findByPk(
-        '50c06caf-9706-4305-bc3a-5462a7d20b6f'
-      );
+      const employment = await models.Employment.findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
       assert.strictEqual(employment.userId, response.body.id);
       assert(!employment.isPending);
       assert.strictEqual(employment.invitationCode, null);
@@ -137,10 +105,7 @@ describe('/api/demographics/personnel', () => {
       const emails = nodemailerMock.mock.getSentMail();
       assert.strictEqual(emails.length, 1);
       assert.strictEqual(emails[0].subject, 'Welcome to Peak Response');
-      assert.strictEqual(
-        emails[0].to,
-        'Test User <invited.member@peakresponse.net>'
-      );
+      assert.strictEqual(emails[0].to, 'Test User <invited.member@peakresponse.net>');
     });
 
     it('creates a new user and associates with agency employment by matching invitation code', async () => {
@@ -157,9 +122,7 @@ describe('/api/demographics/personnel', () => {
           position: 'Invited to Different Email',
         })
         .expect(HttpStatus.CREATED);
-      const employment = await models.Employment.findByPk(
-        '50c06caf-9706-4305-bc3a-5462a7d20b6f'
-      );
+      const employment = await models.Employment.findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
       assert.strictEqual(employment.userId, response.body.id);
       assert.strictEqual(employment.firstName, 'Different');
       assert.strictEqual(employment.lastName, 'Email');
@@ -169,10 +132,7 @@ describe('/api/demographics/personnel', () => {
       const emails = nodemailerMock.mock.getSentMail();
       assert.strictEqual(emails.length, 1);
       assert.strictEqual(emails[0].subject, 'Welcome to Peak Response');
-      assert.strictEqual(
-        emails[0].to,
-        'Different Email <different.email@peakresponse.net>'
-      );
+      assert.strictEqual(emails[0].to, 'Different Email <different.email@peakresponse.net>');
     });
 
     it('returns not found for an invalid invitation code', async () => {
@@ -218,10 +178,7 @@ describe('/api/demographics/personnel', () => {
       const emails = nodemailerMock.mock.getSentMail();
       assert.strictEqual(emails.length, 1);
       assert.strictEqual(emails[0].subject, 'Pending Request to Join');
-      assert.strictEqual(
-        emails[0].to,
-        'Test User <uninvited.member@peakresponse.net>'
-      );
+      assert.strictEqual(emails[0].to, 'Test User <uninvited.member@peakresponse.net>');
     });
   });
 });

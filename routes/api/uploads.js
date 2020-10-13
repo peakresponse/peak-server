@@ -52,20 +52,13 @@ router.post('/', interceptors.requireLogin(), (req, res) => {
 router.put('/:id', interceptors.requireLogin(), (req, res) => {
   const tmpDir = path.resolve(__dirname, '../../tmp/uploads');
   mkdirp.sync(tmpDir);
-  fs.writeFile(
-    path.resolve(
-      tmpDir,
-      `${req.params.id}.${mime.extension(req.get('Content-Type'))}`
-    ),
-    req.body,
-    (err) => {
-      if (err) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
-      } else {
-        res.status(HttpStatus.OK).end();
-      }
+  fs.writeFile(path.resolve(tmpDir, `${req.params.id}.${mime.extension(req.get('Content-Type'))}`), req.body, (err) => {
+    if (err) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+    } else {
+      res.status(HttpStatus.OK).end();
     }
-  );
+  });
 });
 
 module.exports = router;

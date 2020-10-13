@@ -33,12 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       validate: {
         async schema() {
-          this.validationError = await nemsis.validateSchema(
-            'dVehicle_v3.xsd',
-            'dVehicle',
-            'dVehicle.VehicleGroup',
-            this.data
-          );
+          this.validationError = await nemsis.validateSchema('dVehicle_v3.xsd', 'dVehicle', 'dVehicle.VehicleGroup', this.data);
           if (this.validationError) throw this.validationError;
         },
       },

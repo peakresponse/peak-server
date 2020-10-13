@@ -26,30 +26,18 @@ export class NotifyComponent {
     message: '',
   };
 
-  constructor(
-    private app: AppService,
-    private api: ApiService,
-    private navigation: NavigationService,
-    private route: ActivatedRoute
-  ) {
+  constructor(private app: AppService, private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {
     this.reason = this.route.snapshot.queryParamMap.get('reason');
     this.agency = this.route.snapshot.queryParamMap.get('agency');
     this.state = this.route.snapshot.queryParamMap.get('state');
   }
 
   get isValid() {
-    return (
-      this.data.firstName != '' &&
-      this.data.lastName != '' &&
-      this.data.email != ''
-    );
+    return this.data.firstName != '' && this.data.lastName != '' && this.data.email != '';
   }
 
   ngOnInit() {
-    setTimeout(
-      () => (this.firstEl ? this.firstEl.nativeElement.focus() : null),
-      100
-    );
+    setTimeout(() => (this.firstEl ? this.firstEl.nativeElement.focus() : null), 100);
   }
 
   onBack() {

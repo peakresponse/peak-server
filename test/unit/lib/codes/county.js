@@ -12,19 +12,13 @@ describe('lib', () => {
 
       describe('getCode()', () => {
         it('should return the closest matching code', async () => {
-          assert.deepStrictEqual(
-            await County.getCode('san francisco', '06'),
-            '06075'
-          );
+          assert.deepStrictEqual(await County.getCode('san francisco', '06'), '06075');
         });
       });
 
       describe('getName()', () => {
         it('should return the matching name', async () => {
-          assert.deepStrictEqual(
-            await County.getName('06075'),
-            'San Francisco County'
-          );
+          assert.deepStrictEqual(await County.getName('06075'), 'San Francisco County');
         });
       });
     });

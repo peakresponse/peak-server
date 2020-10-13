@@ -7,26 +7,11 @@ import { SharedComponentsModule } from '../../shared/components';
 import { SharedPipesModule } from '../../shared/pipes';
 
 import { FacilitiesRoutingModule } from './facilities-routing.module';
-import {
-  EditFacilityComponent,
-  ListFacilitiesComponent,
-  NewFacilityComponent,
-} from '.';
+import { EditFacilityComponent, ListFacilitiesComponent, NewFacilityComponent } from '.';
 
 @NgModule({
-  declarations: [
-    EditFacilityComponent,
-    ListFacilitiesComponent,
-    NewFacilityComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModule,
-    SharedComponentsModule,
-    SharedPipesModule,
-    FacilitiesRoutingModule,
-  ],
+  declarations: [EditFacilityComponent, ListFacilitiesComponent, NewFacilityComponent],
+  imports: [CommonModule, FormsModule, NgbModule, SharedComponentsModule, SharedPipesModule, FacilitiesRoutingModule],
   providers: [],
 })
 export class FacilitiesModule {}

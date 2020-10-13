@@ -6,26 +6,14 @@ const models = require('../../../models');
 describe('models', () => {
   describe('Scene', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures([
-        'users',
-        'states',
-        'agencies',
-        'contacts',
-        'employments',
-        'scenes',
-        'sceneObservations',
-        'responders',
-      ]);
+      await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments', 'scenes', 'sceneObservations', 'responders']);
     });
 
     describe("scope('active')", () => {
       it('filters out closed scenes', async () => {
         const scenes = await models.Scene.scope('active').findAll();
         assert.deepStrictEqual(scenes.length, 1);
-        assert.deepStrictEqual(
-          scenes[0].id,
-          '25db9094-03a5-4267-8314-bead229eff9d'
-        );
+        assert.deepStrictEqual(scenes[0].id, '25db9094-03a5-4267-8314-bead229eff9d');
       });
     });
 
@@ -33,21 +21,14 @@ describe('models', () => {
       it('filters out active scenes', async () => {
         const scenes = await models.Scene.scope('closed').findAll();
         assert.deepStrictEqual(scenes.length, 1);
-        assert.deepStrictEqual(
-          scenes[0].id,
-          '7b8ddcc3-63e6-4e6e-a47e-d553289912d1'
-        );
+        assert.deepStrictEqual(scenes[0].id, '7b8ddcc3-63e6-4e6e-a47e-d553289912d1');
       });
     });
 
     describe('start()', () => {
       it('creates a new Scene', async () => {
-        const user = await models.User.findByPk(
-          'ffc7a312-50ba-475f-b10f-76ce793dc62a'
-        );
-        const agency = await models.Agency.findByPk(
-          '9eeb6591-12f8-4036-8af8-6b235153d444'
-        );
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
         const scene = await models.Scene.start(user, agency, {
           name: 'New Scene',
         });
@@ -74,9 +55,7 @@ describe('models', () => {
 
     describe('close()', () => {
       it('closes a Scene by the Incident Commander', async () => {
-        const scene = await models.Scene.findByPk(
-          '25db9094-03a5-4267-8314-bead229eff9d'
-        );
+        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
         assert(scene);
         assert.deepStrictEqual(scene.closedAt, null);
 
@@ -95,15 +74,9 @@ describe('models', () => {
 
     describe('join()', () => {
       it('adds a responder to a Scene', async () => {
-        const user = await models.User.findByPk(
-          '6f4a1b45-b465-4ec9-8127-292d87d7952b'
-        );
-        const agency = await models.Agency.findByPk(
-          '81b433cd-5f48-4458-87f3-0bf4e1591830'
-        );
-        const scene = await models.Scene.findByPk(
-          '25db9094-03a5-4267-8314-bead229eff9d'
-        );
+        const user = await models.User.findByPk('6f4a1b45-b465-4ec9-8127-292d87d7952b');
+        const agency = await models.Agency.findByPk('81b433cd-5f48-4458-87f3-0bf4e1591830');
+        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
         assert(scene);
         assert.deepStrictEqual(scene.respondersCount, 2);
         assert.deepStrictEqual((await scene.getResponders()).length, 2);
@@ -123,15 +96,9 @@ describe('models', () => {
 
     describe('leave()', () => {
       it('records a departure of a responder from a Scene', async () => {
-        const user = await models.User.findByPk(
-          '9c5f542e-f7b0-497d-91ed-1eeefd8ade7f'
-        );
-        const agency = await models.Agency.findByPk(
-          '81b433cd-5f48-4458-87f3-0bf4e1591830'
-        );
-        const scene = await models.Scene.findByPk(
-          '25db9094-03a5-4267-8314-bead229eff9d'
-        );
+        const user = await models.User.findByPk('9c5f542e-f7b0-497d-91ed-1eeefd8ade7f');
+        const agency = await models.Agency.findByPk('81b433cd-5f48-4458-87f3-0bf4e1591830');
+        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
 
         const responder = await scene.leave(user, agency);
         assert(responder);
@@ -139,15 +106,9 @@ describe('models', () => {
       });
 
       it('prevents marking the current incident commander as departed', async () => {
-        const user = await models.User.findByPk(
-          'ffc7a312-50ba-475f-b10f-76ce793dc62a'
-        );
-        const agency = await models.Agency.findByPk(
-          '9eeb6591-12f8-4036-8af8-6b235153d444'
-        );
-        const scene = await models.Scene.findByPk(
-          '25db9094-03a5-4267-8314-bead229eff9d'
-        );
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
 
         await assert.rejects(scene.leave(user, agency));
       });
@@ -155,21 +116,11 @@ describe('models', () => {
 
     describe('transferCommandTo()', () => {
       it('records the Incident Commander transfering command to another User/Agency', async () => {
-        const prevUser = await models.User.findByPk(
-          'ffc7a312-50ba-475f-b10f-76ce793dc62a'
-        );
-        const prevAgency = await models.Agency.findByPk(
-          '9eeb6591-12f8-4036-8af8-6b235153d444'
-        );
-        const user = await models.User.findByPk(
-          '9c5f542e-f7b0-497d-91ed-1eeefd8ade7f'
-        );
-        const agency = await models.Agency.findByPk(
-          '81b433cd-5f48-4458-87f3-0bf4e1591830'
-        );
-        const scene = await models.Scene.findByPk(
-          '25db9094-03a5-4267-8314-bead229eff9d'
-        );
+        const prevUser = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const prevAgency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const user = await models.User.findByPk('9c5f542e-f7b0-497d-91ed-1eeefd8ade7f');
+        const agency = await models.Agency.findByPk('81b433cd-5f48-4458-87f3-0bf4e1591830');
+        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
         assert(scene);
         assert(scene.incidentCommanderId, prevUser.id);
         assert(scene.incidentCommanderAgencyId, prevAgency.id);
@@ -182,20 +133,11 @@ describe('models', () => {
           order: [['created_at', 'DESC']],
         });
         assert.deepStrictEqual(observations.length, 2);
-        assert.deepStrictEqual(observations[0].updatedAttributes, [
-          'incidentCommanderId',
-          'incidentCommanderAgencyId',
-        ]);
+        assert.deepStrictEqual(observations[0].updatedAttributes, ['incidentCommanderId', 'incidentCommanderAgencyId']);
         assert.deepStrictEqual(observations[0].incidentCommanderId, user.id);
-        assert.deepStrictEqual(
-          observations[0].incidentCommanderAgencyId,
-          agency.id
-        );
+        assert.deepStrictEqual(observations[0].incidentCommanderAgencyId, agency.id);
         assert.deepStrictEqual(observations[0].createdById, prevUser.id);
-        assert.deepStrictEqual(
-          observations[0].createdByAgencyId,
-          prevAgency.id
-        );
+        assert.deepStrictEqual(observations[0].createdByAgencyId, prevAgency.id);
       });
     });
   });

@@ -5,13 +5,14 @@ const sequelizePaginate = require('sequelize-paginate');
 module.exports = (sequelize, DataTypes) => {
   class Scene extends Model {
     static associate(models) {
-      Scene.hasMany(models.SceneObservation, { as: 'observations' });
       Scene.hasMany(models.Responder, { as: 'responders' });
       Scene.hasMany(models.Responder.scope('latest'), {
         as: 'latestResponders',
       });
       Scene.hasMany(models.Patient, { as: 'patients' });
       Scene.hasMany(models.PatientObservation, { as: 'patientObservations' });
+      Scene.hasMany(models.SceneObservation, { as: 'observations' });
+      Scene.hasMany(models.ScenePin, { as: 'pins' });
 
       Scene.belongsTo(models.City, { as: 'city' });
       Scene.belongsTo(models.County, { as: 'county' });
@@ -25,9 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static findNear(lat, lng, options = {}) {
-      options.order = sequelize.literal(
-        `"Facility".geog <-> ST_MakePoint(${lng}, ${lat})::geography`
-      );
+      options.order = sequelize.literal(`"Facility".geog <-> ST_MakePoint(${lng}, ${lat})::geography`);
       return Scene.paginate(options);
     }
 
@@ -42,10 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       }
       /// filter and extend data
       const updatedAttributes = _.keys(initialData);
-      _.pullAll(
-        updatedAttributes,
-        sequelize.models.SceneObservation.SYSTEM_ATTRIBUTES
-      );
+      _.pullAll(updatedAttributes, sequelize.models.SceneObservation.SYSTEM_ATTRIBUTES);
       const data = _.extend(
         {
           respondersCount: 1, /// the creating user is first on scene
@@ -99,17 +95,11 @@ module.exports = (sequelize, DataTypes) => {
         updatedAttributes: ['closedAt'],
       };
       await sequelize.models.SceneObservation.create(data, options);
-      await this.update(
-        _.pick(data, ['closedAt', 'updatedById', 'updatedByAgencyId']),
-        options
-      );
+      await this.update(_.pick(data, ['closedAt', 'updatedById', 'updatedByAgencyId']), options);
     }
 
     async join(user, agency, options) {
-      const [
-        responder,
-        created,
-      ] = await sequelize.models.Responder.findOrCreate({
+      const [responder, created] = await sequelize.models.Responder.findOrCreate({
         where: {
           sceneId: this.id,
           userId: user.id,
@@ -188,15 +178,7 @@ module.exports = (sequelize, DataTypes) => {
         updatedAttributes: ['incidentCommanderId', 'incidentCommanderAgencyId'],
       };
       await sequelize.models.SceneObservation.create(data, options);
-      await this.update(
-        _.pick(data, [
-          'incidentCommanderId',
-          'incidentCommanderAgencyId',
-          'updatedById',
-          'updatedByAgencyId',
-        ]),
-        options
-      );
+      await this.update(_.pick(data, ['incidentCommanderId', 'incidentCommanderAgencyId', 'updatedById', 'updatedByAgencyId']), options);
     }
 
     async updatePatientCounts(options) {

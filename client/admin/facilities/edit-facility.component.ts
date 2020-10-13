@@ -11,11 +11,7 @@ export class EditFacilityComponent {
   id: string = null;
   @ViewChild('form') form: FormComponent;
 
-  constructor(
-    private api: ApiService,
-    private navigation: NavigationService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

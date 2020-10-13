@@ -9,16 +9,7 @@ describe('/api/users', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures([
-      'users',
-      'states',
-      'agencies',
-      'contacts',
-      'employments',
-      'scenes',
-      'sceneObservations',
-      'responders',
-    ]);
+    await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments', 'scenes', 'sceneObservations', 'responders']);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -29,10 +20,7 @@ describe('/api/users', () => {
 
   describe('GET /me', () => {
     it('returns the user record of the logged in user', async () => {
-      const response = await testSession
-        .get('/api/users/me')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+      const response = await testSession.get('/api/users/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
       const data = response.body;
       assert(data.user);
       assert.deepStrictEqual(data.user.email, 'regular@peakresponse.net');

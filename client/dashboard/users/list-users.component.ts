@@ -20,18 +20,12 @@ export class ListUsersComponent implements OnDestroy {
 
   private routerSubscription: Subscription;
 
-  constructor(
-    public agency: AgencyService,
-    private navigation: NavigationService
-  ) {
+  constructor(public agency: AgencyService, private navigation: NavigationService) {
     this.routerSubscription = this.navigation
       .getRouter()
       .events.pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        if (
-          event.url == '/users' &&
-          this.navigation.getPreviousUrl() == '/users/(modal:invite)'
-        ) {
+        if (event.url == '/users' && this.navigation.getPreviousUrl() == '/users/(modal:invite)') {
           this.currentList.refresh();
         }
       });

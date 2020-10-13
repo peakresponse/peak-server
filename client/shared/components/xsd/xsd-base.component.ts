@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewContainerRef,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewContainerRef } from '@angular/core';
 
 import * as inflection from 'inflection';
 import clone from 'lodash/clone';
@@ -25,11 +19,7 @@ export class XsdBaseComponent {
   @Input() selectedValue: any;
   private _type: any;
 
-  constructor(
-    protected api: ApiService,
-    private schema: SchemaService,
-    protected viewContainerRef: ViewContainerRef
-  ) {}
+  constructor(protected api: ApiService, private schema: SchemaService, protected viewContainerRef: ViewContainerRef) {}
 
   get type(): any {
     if (this._type !== undefined) {
@@ -39,9 +29,7 @@ export class XsdBaseComponent {
     /// check for a type attribute
     let name = this.element?._attributes?.type;
     if (!name) {
-      name = this.element?.['xs:complexType']?.['xs:simpleContent']?.[
-        'xs:extension'
-      ]?._attributes?.base;
+      name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
     }
     if (name) {
       this._type = this.schema.getType(name);
@@ -89,17 +77,11 @@ export class XsdBaseComponent {
   }
 
   get displayName(): string {
-    let displayName = this.element?.['xs:annotation']?.['xs:documentation']
-      ?.nemsisTacDoc?.name?._text;
+    let displayName = this.element?.['xs:annotation']?.['xs:documentation']?.nemsisTacDoc?.name?._text;
     if (!displayName && this.isGroup) {
-      displayName = inflection.titleize(
-        inflection.underscore(this.name?.split('.').pop() ?? '')
-      );
+      displayName = inflection.titleize(inflection.underscore(this.name?.split('.').pop() ?? ''));
       /// fix all caps abbreviations from being split (i.e. EMS -> E M S)
-      displayName = displayName.replaceAll(
-        /(?:[A-Z] ){2,}/g,
-        (m: any) => `${m.replaceAll(' ', '')} `
-      );
+      displayName = displayName.replaceAll(/(?:[A-Z] ){2,}/g, (m: any) => `${m.replaceAll(' ', '')} `);
       if (this.isMulti) {
         displayName = inflection.pluralize(displayName);
       }
@@ -108,8 +90,7 @@ export class XsdBaseComponent {
   }
 
   get displayText(): string {
-    return this.element?.['xs:annotation']?.['xs:documentation']?.nemsisTacDoc
-      ?.definition?._text;
+    return this.element?.['xs:annotation']?.['xs:documentation']?.nemsisTacDoc?.definition?._text;
   }
 
   get formName(): string {
@@ -179,9 +160,7 @@ export class XsdBaseComponent {
 
   remValue(value: any) {
     if (Array.isArray(this.data?.[this.name])) {
-      this.data[this.name] = this.data[this.name].filter(
-        (v: any) => v != value
-      );
+      this.data[this.name] = this.data[this.name].filter((v: any) => v != value);
     } else if (this.data?.[this.name] == value) {
       delete this.data[this.name];
     }
@@ -233,9 +212,7 @@ export class XsdBaseComponent {
     if (value) {
       this.delValue();
       this.setAttr('xsi:nil', 'true');
-      this.NV = this.nilValues[0]?.['xs:restriction']?.[
-        'xs:enumeration'
-      ]?._attributes?.value;
+      this.NV = this.nilValues[0]?.['xs:restriction']?.['xs:enumeration']?._attributes?.value;
     } else {
       this.delAttr('xsi:nil');
       this.delAttr('NV');
@@ -256,25 +233,15 @@ export class XsdBaseComponent {
   }
 
   get nilValues(): any[] {
-    if (
-      this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.[
-        'xs:attribute'
-      ]
-    ) {
-      let attributes = this.element['xs:complexType']?.['xs:simpleContent']?.[
-        'xs:extension'
-      ]?.['xs:attribute'];
+    if (this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute']) {
+      let attributes = this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute'];
       if (!Array.isArray(attributes)) {
         attributes = [attributes];
       }
       for (let attribute of attributes) {
         if (attribute._attributes?.name == 'NV') {
-          if (
-            attribute['xs:simpleType']?.['xs:union']?._attributes?.memberTypes
-          ) {
-            const types = attribute['xs:simpleType'][
-              'xs:union'
-            ]._attributes.memberTypes.split(' ');
+          if (attribute['xs:simpleType']?.['xs:union']?._attributes?.memberTypes) {
+            const types = attribute['xs:simpleType']['xs:union']._attributes.memberTypes.split(' ');
             return types.map((t: any) => this.schema.getType(t));
           }
           break;

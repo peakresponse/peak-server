@@ -17,26 +17,15 @@ import { ApiService } from '../../shared/services/api.service';
 import { SceneService } from './scene.service';
 
 @Injectable()
-export class SceneGuard
-  implements CanActivate, CanActivateChild, CanDeactivate<any> {
-  constructor(
-    private api: ApiService,
-    private router: Router,
-    private scene: SceneService
-  ) {}
+export class SceneGuard implements CanActivate, CanActivateChild, CanDeactivate<any> {
+  constructor(private api: ApiService, private router: Router, private scene: SceneService) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     console.log('canActivate', route.params.id);
     return this.scene.connect(route.params.id);
   }
 
-  canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> {
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     const path = childRoute.url.join('');
     console.log('canActivateChild', path);
     if (path == '') {
@@ -48,10 +37,7 @@ export class SceneGuard
     } else {
       if (this.scene.isActive && path == 'summary') {
         return of(this.router.parseUrl(`/scenes/${this.scene.id}/overview`));
-      } else if (
-        !this.scene.isActive &&
-        ['overview', 'patients', 'map'].includes(path)
-      ) {
+      } else if (!this.scene.isActive && ['overview', 'patients', 'map'].includes(path)) {
         return of(this.router.parseUrl(`/scenes/${this.scene.id}/summary`));
       }
     }

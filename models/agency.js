@@ -59,12 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         createdByAgencyId: id,
         createdById: user.id,
         updatedById: user.id,
-        data: JSON.parse(
-          JSON.stringify(canonicalAgency.data).replace(
-            /"sAgency\.(0\d)"/g,
-            '"dAgency.$1"'
-          )
-        ),
+        data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
       const agency = await sequelize.models.Agency.create(data, options);
@@ -90,8 +85,7 @@ module.exports = (sequelize, DataTypes) => {
       /// count the number of words
       const tokens = this.name.replace(/[^\w ]|_/g, '').split(/\s+/);
       /// either use the full name or an acronym of first letters depending on number of words
-      const name =
-        tokens.length < 4 ? this.name : tokens.map((t) => t.charAt(0)).join('');
+      const name = tokens.length < 4 ? this.name : tokens.map((t) => t.charAt(0)).join('');
       /// remove whitespace/symbols to generate subdomain
       let subdomain = name.toLowerCase().replace(/[^\w]|_/g, '');
       let index = 1;
@@ -130,13 +124,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toPublicJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, [
-        'id',
-        'stateId',
-        'stateUniqueId',
-        'number',
-        'name',
-      ]);
+      return _.pick(attributes, ['id', 'stateId', 'stateUniqueId', 'number', 'name']);
     }
   }
 
@@ -175,12 +163,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         async schema() {
           if (this.isClaimed) {
-            this.validationError = await nemsis.validateSchema(
-              'dAgency_v3.xsd',
-              'dAgency',
-              null,
-              this.data
-            );
+            this.validationError = await nemsis.validateSchema('dAgency_v3.xsd', 'dAgency', null, this.data);
           }
         },
       },
@@ -197,16 +180,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Agency.beforeSave(async (record) => {
     if (record.isClaimed) {
-      record.setDataValue(
-        'stateUniqueId',
-        record.getFirstNemsisValue(['dAgency.01'])
-      );
+      record.setDataValue('stateUniqueId', record.getFirstNemsisValue(['dAgency.01']));
       record.setDataValue('number', record.getFirstNemsisValue(['dAgency.02']));
       record.setDataValue('name', record.getFirstNemsisValue(['dAgency.03']));
-      record.setDataValue(
-        'isValid',
-        record.getNemsisAttributeValue([], ['pr:isValid'])
-      );
+      record.setDataValue('isValid', record.getNemsisAttributeValue([], ['pr:isValid']));
     }
   });
 

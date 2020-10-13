@@ -45,9 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     async toFullJSON(options) {
       const json = this.toJSON();
       json.user = (this.user || (await this.getUser(options)))?.toJSON();
-      json.agency = (
-        this.agency || (await this.getAgency(options))
-      )?.toPublicJSON();
+      json.agency = (this.agency || (await this.getAgency(options)))?.toPublicJSON();
       return json;
     }
 
@@ -57,37 +55,34 @@ module.exports = (sequelize, DataTypes) => {
       if (this.role === role) {
         return ids;
       }
-      await sequelize.transaction(
-        { transaction: options?.transaction },
-        async (transaction) => {
-          /// remove any other existing Responder with this role
-          if (role !== null) {
-            [, ids] = await Responder.update(
-              { role: null },
-              {
-                where: {
-                  role,
-                  departedAt: null,
-                },
-                raw: true,
-                returning: ['id'],
-                transaction,
-              }
-            );
-          }
-          /// assign and save to this Responder
-          await this.update(
+      await sequelize.transaction({ transaction: options?.transaction }, async (transaction) => {
+        /// remove any other existing Responder with this role
+        if (role !== null) {
+          [, ids] = await Responder.update(
+            { role: null },
             {
-              role,
-              updatedById: user.id,
-              updatedByAgencyId: agency.id,
-            },
-            { transaction }
+              where: {
+                role,
+                departedAt: null,
+              },
+              raw: true,
+              returning: ['id'],
+              transaction,
+            }
           );
-          /// include this record in the list of modified ids
-          ids.push({ id: this.id });
         }
-      );
+        /// assign and save to this Responder
+        await this.update(
+          {
+            role,
+            updatedById: user.id,
+            updatedByAgencyId: agency.id,
+          },
+          { transaction }
+        );
+        /// include this record in the list of modified ids
+        ids.push({ id: this.id });
+      });
       return ids.map((obj) => obj.id);
     }
   }
@@ -125,9 +120,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Responder.addScope('latest', () => ({
-    attributes: [
-      sequelize.literal('DISTINCT ON("Responder".user_id) 1'),
-    ].concat(Object.keys(Responder.rawAttributes)),
+    attributes: [sequelize.literal('DISTINCT ON("Responder".user_id) 1')].concat(Object.keys(Responder.rawAttributes)),
     order: [
       ['user_id', 'ASC'],
       ['arrived_at', 'DESC'],

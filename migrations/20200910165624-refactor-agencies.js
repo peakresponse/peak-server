@@ -1,109 +1,28 @@
 /* eslint-disable no-await-in-loop */
 const CONSTRAINTS = [
-  [
-    'demographics.configurations',
-    'demographics.configurations_agency_id_demographics.agencies_fk',
-    'agency_id',
-  ],
-  [
-    'demographics.contacts',
-    'demographics.contacts_agency_id_demographics.agencies_fk',
-    'agency_id',
-  ],
-  [
-    'demographics.devices',
-    'demographics.devices_agency_id_demographics.agencies_fk',
-    'agency_id',
-  ],
-  [
-    'demographics.employments',
-    'demographics.employments_agency_id_demographics.agencies_fk',
-    'agency_id',
-  ],
-  [
-    'demographics.facilities',
-    'demographics.facilities_agency_id_demographics.agencies_fk',
-    'agency_id',
-  ],
-  [
-    'demographics.locations',
-    'demographics.locations_agency_id_demographics.agencies_fk',
-    'agency_id',
-  ],
-  [
-    'demographics.vehicles',
-    'demographics.vehicles_agency_id_demographics.agencies_fk',
-    'agency_id',
-  ],
-  [
-    'observations',
-    'observations_created_by_agency_id_[object Object]_fk',
-    'created_by_agency_id',
-  ],
-  [
-    'observations',
-    'observations_updated_by_agency_id_[object Object]_fk',
-    'updated_by_agency_id',
-  ],
-  [
-    'patients',
-    'patients_created_by_agency_id_[object Object]_fk',
-    'created_by_agency_id',
-  ],
-  [
-    'patients',
-    'patients_updated_by_agency_id_[object Object]_fk',
-    'updated_by_agency_id',
-  ],
+  ['demographics.configurations', 'demographics.configurations_agency_id_demographics.agencies_fk', 'agency_id'],
+  ['demographics.contacts', 'demographics.contacts_agency_id_demographics.agencies_fk', 'agency_id'],
+  ['demographics.devices', 'demographics.devices_agency_id_demographics.agencies_fk', 'agency_id'],
+  ['demographics.employments', 'demographics.employments_agency_id_demographics.agencies_fk', 'agency_id'],
+  ['demographics.facilities', 'demographics.facilities_agency_id_demographics.agencies_fk', 'agency_id'],
+  ['demographics.locations', 'demographics.locations_agency_id_demographics.agencies_fk', 'agency_id'],
+  ['demographics.vehicles', 'demographics.vehicles_agency_id_demographics.agencies_fk', 'agency_id'],
+  ['observations', 'observations_created_by_agency_id_[object Object]_fk', 'created_by_agency_id'],
+  ['observations', 'observations_updated_by_agency_id_[object Object]_fk', 'updated_by_agency_id'],
+  ['patients', 'patients_created_by_agency_id_[object Object]_fk', 'created_by_agency_id'],
+  ['patients', 'patients_updated_by_agency_id_[object Object]_fk', 'updated_by_agency_id'],
   ['responders', 'responders_agency_id_[object Object]_fk', 'agency_id'],
-  [
-    'responders',
-    'responders_created_by_agency_id_[object Object]_fk',
-    'created_by_agency_id',
-  ],
-  [
-    'responders',
-    'responders_updated_by_agency_id_[object Object]_fk',
-    'updated_by_agency_id',
-  ],
-  [
-    'scene_observations',
-    'scene_observations_created_by_agency_id_[object Object]_fk',
-    'created_by_agency_id',
-  ],
-  [
-    'scene_observations',
-    'scene_observations_incident_commander_agency_id_[object Object]',
-    'incident_commander_agency_id',
-  ],
-  [
-    'scene_observations',
-    'scene_observations_updated_by_agency_id_[object Object]_fk',
-    'updated_by_agency_id',
-  ],
-  [
-    'scenes',
-    'scenes_created_by_agency_id_[object Object]_fk',
-    'created_by_agency_id',
-  ],
-  [
-    'scenes',
-    'scenes_incident_commander_agency_id_[object Object]_fk',
-    'incident_commander_agency_id',
-  ],
-  [
-    'scenes',
-    'scenes_updated_by_agency_id_[object Object]_fk',
-    'updated_by_agency_id',
-  ],
+  ['responders', 'responders_created_by_agency_id_[object Object]_fk', 'created_by_agency_id'],
+  ['responders', 'responders_updated_by_agency_id_[object Object]_fk', 'updated_by_agency_id'],
+  ['scene_observations', 'scene_observations_created_by_agency_id_[object Object]_fk', 'created_by_agency_id'],
+  ['scene_observations', 'scene_observations_incident_commander_agency_id_[object Object]', 'incident_commander_agency_id'],
+  ['scene_observations', 'scene_observations_updated_by_agency_id_[object Object]_fk', 'updated_by_agency_id'],
+  ['scenes', 'scenes_created_by_agency_id_[object Object]_fk', 'created_by_agency_id'],
+  ['scenes', 'scenes_incident_commander_agency_id_[object Object]_fk', 'incident_commander_agency_id'],
+  ['scenes', 'scenes_updated_by_agency_id_[object Object]_fk', 'updated_by_agency_id'],
 ];
 
-const addAgencyReference = async (
-  queryInterface,
-  tableName,
-  column,
-  transaction
-) => {
+const addAgencyReference = async (queryInterface, tableName, column, transaction) => {
   await queryInterface.addConstraint(tableName, {
     type: 'FOREIGN KEY',
     fields: [column],
@@ -125,54 +44,20 @@ module.exports = {
         { transaction }
       );
 
-      await queryInterface.addColumn(
-        'agencies',
-        'subdomain',
-        Sequelize.CITEXT,
-        { transaction }
-      );
+      await queryInterface.addColumn('agencies', 'subdomain', Sequelize.CITEXT, { transaction });
 
-      await queryInterface.addColumn(
-        'agencies',
-        'canonical_agency_id',
-        Sequelize.UUID,
-        { transaction }
-      );
-      await addAgencyReference(
-        queryInterface,
-        'agencies',
-        'canonical_agency_id',
-        transaction
-      );
+      await queryInterface.addColumn('agencies', 'canonical_agency_id', Sequelize.UUID, { transaction });
+      await addAgencyReference(queryInterface, 'agencies', 'canonical_agency_id', transaction);
 
-      await queryInterface.addColumn(
-        'agencies',
-        'created_by_agency_id',
-        Sequelize.UUID,
-        { transaction }
-      );
-      await addAgencyReference(
-        queryInterface,
-        'agencies',
-        'created_by_agency_id',
-        transaction
-      );
+      await queryInterface.addColumn('agencies', 'created_by_agency_id', Sequelize.UUID, { transaction });
+      await addAgencyReference(queryInterface, 'agencies', 'created_by_agency_id', transaction);
 
       /// remove existing agency compound unique id
-      await queryInterface.removeConstraint(
-        'agencies',
-        'agencies_state_unique_id_number_state_id_uk',
-        { transaction }
-      );
+      await queryInterface.removeConstraint('agencies', 'agencies_state_unique_id_number_state_id_uk', { transaction });
       /// include the created by agency column in the compound unique id
       await queryInterface.addConstraint('agencies', {
         type: 'UNIQUE',
-        fields: [
-          'created_by_agency_id',
-          'state_unique_id',
-          'number',
-          'state_id',
-        ],
+        fields: ['created_by_agency_id', 'state_unique_id', 'number', 'state_id'],
         transaction,
       });
       /// ensure there is a compound unique id for a canonical agency record
@@ -241,10 +126,7 @@ module.exports = {
 
       /// re-map foreign key references
       for (const [tableName, constraintId, column] of CONSTRAINTS) {
-        await queryInterface.sequelize.query(
-          `ALTER TABLE ${tableName} DROP CONSTRAINT "${constraintId}"`,
-          { transaction }
-        );
+        await queryInterface.sequelize.query(`ALTER TABLE ${tableName} DROP CONSTRAINT "${constraintId}"`, { transaction });
         await queryInterface.sequelize.query(
           `ALTER TABLE ${tableName} ADD CONSTRAINT ${tableName
             .split('.')
@@ -260,9 +142,7 @@ module.exports = {
       /// re-map foreign key references
       for (const [tableName, constraintId, column] of CONSTRAINTS) {
         await queryInterface.sequelize.query(
-          `ALTER TABLE ${tableName} DROP CONSTRAINT ${tableName
-            .split('.')
-            .pop()}_${column}_agencies_fk`,
+          `ALTER TABLE ${tableName} DROP CONSTRAINT ${tableName.split('.').pop()}_${column}_agencies_fk`,
           { transaction }
         );
         await queryInterface.sequelize.query(
@@ -270,10 +150,7 @@ module.exports = {
           { transaction }
         );
       }
-      await queryInterface.sequelize.query(
-        'DELETE FROM agencies WHERE created_by_agency_id IS NOT NULL',
-        { transaction }
-      );
+      await queryInterface.sequelize.query('DELETE FROM agencies WHERE created_by_agency_id IS NOT NULL', { transaction });
       await queryInterface.removeColumn('agencies', 'is_valid', {
         transaction,
       });

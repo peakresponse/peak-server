@@ -8,13 +8,7 @@ import { Subscription, combineLatest, empty } from 'rxjs';
 import { filter, map, catchError } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 
-import {
-  ApiService,
-  AgencyService,
-  NavigationService,
-  SchemaService,
-  UserService,
-} from '../../shared/services';
+import { ApiService, AgencyService, NavigationService, SchemaService, UserService } from '../../shared/services';
 
 @Component({
   templateUrl: './base-demographics.component.html',
@@ -52,12 +46,10 @@ export class BaseDemographicsComponent {
       this.sectionSchema = schema;
       this.subscribeToRouteParams();
     });
-    this.api.demographics[this.section]
-      .index()
-      .subscribe((response: HttpResponse<any>) => {
-        this.sectionData = response.body || {};
-        this.subscribeToRouteParams();
-      });
+    this.api.demographics[this.section].index().subscribe((response: HttpResponse<any>) => {
+      this.sectionData = response.body || {};
+      this.subscribeToRouteParams();
+    });
   }
 
   handleRouteParams() {
@@ -110,11 +102,9 @@ export class BaseDemographicsComponent {
           const prevUrl = this.navigation.getPreviousUrl();
           if (prevUrl.endsWith('#new')) {
             this.sectionData = undefined;
-            this.api.demographics[this.section]
-              .index()
-              .subscribe((response: HttpResponse<any>) => {
-                this.sectionData = response.body || {};
-              });
+            this.api.demographics[this.section].index().subscribe((response: HttpResponse<any>) => {
+              this.sectionData = response.body || {};
+            });
           }
           this.handleRouteParams();
         });
@@ -126,16 +116,13 @@ export class BaseDemographicsComponent {
   }
 
   get data(): any {
-    this.sectionData[this.rootElementName] =
-      this.sectionData[this.rootElementName] || {};
+    this.sectionData[this.rootElementName] = this.sectionData[this.rootElementName] || {};
     return this.sectionData[this.rootElementName];
   }
 
   get rootElementName(): string {
     if (!this.sectionSchemaRootElementName) {
-      this.sectionSchemaRootElementName = this.sectionSchema?.['xs:schema']?.[
-        'xs:complexType'
-      ]?._attributes?.name;
+      this.sectionSchemaRootElementName = this.sectionSchema?.['xs:schema']?.['xs:complexType']?._attributes?.name;
     }
     return this.sectionSchemaRootElementName;
   }
@@ -161,9 +148,7 @@ export class BaseDemographicsComponent {
   get childElements(): any[] {
     let childElements = this.rootChildElements;
     if (childElements?.length == 1) {
-      return childElements[0]?.['xs:complexType']?.['xs:sequence']?.[
-        'xs:element'
-      ];
+      return childElements[0]?.['xs:complexType']?.['xs:sequence']?.['xs:element'];
     }
     return childElements;
   }

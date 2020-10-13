@@ -11,9 +11,7 @@ describe('models', () => {
     beforeEach(async () => {
       await helpers.loadFixtures(['users', 'states', 'agencies']);
       user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
-      const agency = await models.Agency.findByPk(
-        '5de082f2-3242-43be-bc2b-6e9396815b4f'
-      );
+      const agency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
       await models.sequelize.transaction(async (transaction) => {
         dAgency = await models.Agency.register(user, agency, 'bbfpd', {
           transaction,

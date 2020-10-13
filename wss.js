@@ -37,18 +37,22 @@ sceneServer.on('connection', async (ws, req) => {
       { model: models.PatientObservation, as: 'observations' },
     ],
   });
+  const pins = await req.scene.getPins();
   const data = JSON.stringify({
     scene: req.scene.toJSON(),
     responders: await Promise.all(responders.map((r) => r.toFullJSON())),
     patients: await Promise.all(patients.map((p) => p.toFullJSON())),
+    pins: pins.map((p) => p.toJSON()),
   });
   ws.send(data);
 });
 
 const dispatchSceneUpdate = async (sceneId) => {
   const scene = await models.Scene.findByPk(sceneId);
+  const pins = await scene.getPins();
   let data = JSON.stringify({
     scene: scene.toJSON(),
+    pins: pins.map((p) => p.toJSON()),
   });
   /// dispatch to all clients watching this specific scene
   for (const ws of sceneServer.clients) {
@@ -124,13 +128,8 @@ const configure = (server, app) => {
       let agency;
       if (subdomains.length > process.env.BASE_HOST.split('.').length) {
         agency = subdomains[0].trim();
-      } else if (
-        req.headers['X-Agency-Subdomain'] ||
-        req.headers['x-agency-subdomain']
-      ) {
-        agency = (
-          req.headers['X-Agency-Subdomain'] || req.headers['x-agency-subdomain']
-        ).trim();
+      } else if (req.headers['X-Agency-Subdomain'] || req.headers['x-agency-subdomain']) {
+        agency = (req.headers['X-Agency-Subdomain'] || req.headers['x-agency-subdomain']).trim();
       }
       if (agency) {
         req.agency = await models.Agency.findOne({

@@ -4,12 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import {
-  AgencyService,
-  ApiService,
-  NavigationService,
-  UserService,
-} from '../shared/services';
+import { AgencyService, ApiService, NavigationService, UserService } from '../shared/services';
 import { SharedComponentsModule } from '../shared/components';
 import { SharedPipesModule } from '../shared/pipes';
 
@@ -38,22 +33,8 @@ import { WelcomeComponent } from './welcome.component';
     UrlComponent,
     WelcomeComponent,
   ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    NgbModule,
-    SharedComponentsModule,
-    SharedPipesModule,
-  ],
-  providers: [
-    AgencyService,
-    ApiService,
-    AppService,
-    NavigationService,
-    UserService,
-  ],
+  imports: [AppRoutingModule, BrowserModule, FormsModule, HttpClientModule, NgbModule, SharedComponentsModule, SharedPipesModule],
+  providers: [AgencyService, ApiService, AppService, NavigationService, UserService],
   bootstrap: [AppComponent],
 })
 export class OnboardingAppModule {}

@@ -26,18 +26,12 @@ describe('lib', () => {
       describe('nameMapping', () => {
         it('should contain a mapping of name to objects', () => {
           const { enums } = nemsisCommonTypes;
-          assert.deepStrictEqual(
-            enums.HospitalDesignation.nameMapping['Behavioral Health'],
-            '9908001'
-          );
+          assert.deepStrictEqual(enums.HospitalDesignation.nameMapping['Behavioral Health'], '9908001');
         });
 
         it('should contain a mapping of value to objects', () => {
           const { enums } = nemsisCommonTypes;
-          assert.deepStrictEqual(
-            enums.HospitalDesignation.valueMapping['9908001'],
-            'Behavioral Health'
-          );
+          assert.deepStrictEqual(enums.HospitalDesignation.valueMapping['9908001'], 'Behavioral Health');
         });
       });
     });

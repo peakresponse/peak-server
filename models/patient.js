@@ -25,13 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       return pin;
     }
 
-    static async createOrUpdate(
-      user,
-      agency,
-      scene,
-      initialData,
-      options = {}
-    ) {
+    static async createOrUpdate(user, agency, scene, initialData, options = {}) {
       /// confirm this is a responder on scene
       const responder = await sequelize.models.Responder.findOne({
         where: { sceneId: scene.id, userId: user.id, agencyId: agency.id },
@@ -42,10 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       }
       /// build the observation record
       const updatedAttributes = _.keys(initialData);
-      _.pullAll(
-        updatedAttributes,
-        sequelize.models.PatientObservation.SYSTEM_ATTRIBUTES
-      );
+      _.pullAll(updatedAttributes, sequelize.models.PatientObservation.SYSTEM_ATTRIBUTES);
       const data = _.extend(_.pick(initialData, updatedAttributes), {
         sceneId: scene.id,
         pin: initialData.pin,
@@ -108,15 +99,9 @@ module.exports = (sequelize, DataTypes) => {
 
     async toFullJSON(options) {
       const json = this.toJSON();
-      json.transportAgency = (
-        this.transportAgency || (await this.getTransportAgency(options))
-      )?.toJSON();
-      json.transportFacility = (
-        this.transportFacility || (await this.getTransportFacility(options))
-      )?.toJSON();
-      json.observations = (
-        this.observations || (await this.getObservations(options))
-      ).map((o) => o.toJSON());
+      json.transportAgency = (this.transportAgency || (await this.getTransportAgency(options)))?.toJSON();
+      json.transportFacility = (this.transportFacility || (await this.getTransportFacility(options)))?.toJSON();
+      json.observations = (this.observations || (await this.getObservations(options))).map((o) => o.toJSON());
       return json;
     }
   }

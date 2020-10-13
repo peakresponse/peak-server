@@ -17,18 +17,11 @@ describe('/api/agencies', () => {
 
   describe('GET /', () => {
     beforeEach(async () => {
-      await testSession
-        .post('/login')
-        .send({ email: 'admin@peakresponse.net', password: 'abcd1234' })
-        .expect(200);
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(200);
     });
 
     it('returns a paginated list of Agency records', async () => {
-      const response = await testSession
-        .get('/api/agencies/')
-        .expect(200)
-        .expect('X-Total-Count', '11')
-        .expect('Link', '');
+      const response = await testSession.get('/api/agencies/').expect(200).expect('X-Total-Count', '11').expect('Link', '');
       assert.equal(response.body.length, 11);
     });
 
@@ -40,10 +33,7 @@ describe('/api/agencies', () => {
         .expect('X-Total-Count', '4')
         .expect('Link', '');
       assert.equal(response.body.length, 4);
-      assert.equal(
-        response.body[0].name,
-        'Bodega Bay Fire Protection District'
-      );
+      assert.equal(response.body[0].name, 'Bodega Bay Fire Protection District');
       for (const facility of response.body) {
         assert(facility.name.match(/fire/i));
       }
@@ -61,10 +51,7 @@ describe('/api/agencies', () => {
     });
 
     it('returns the demographic Agency record for the current subdomain', async () => {
-      const response = await testSession
-        .get('/api/agencies/me')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+      const response = await testSession.get('/api/agencies/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
       assert.strictEqual(response.body.subdomain, 'bmacc');
     });
 
@@ -75,49 +62,30 @@ describe('/api/agencies', () => {
 
   describe('GET /validate', () => {
     it('returns unprocessable entity if subdomain is not valid', async () => {
-      await testSession
-        .get('/api/agencies/validate')
-        .query({ subdomain: 'not a valid subdomain' })
-        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
+      await testSession.get('/api/agencies/validate').query({ subdomain: 'not a valid subdomain' }).expect(HttpStatus.UNPROCESSABLE_ENTITY);
     });
 
     it('returns conflict if subdomain is taken', async () => {
-      await testSession
-        .get('/api/agencies/validate')
-        .query({ subdomain: 'bmacc' })
-        .expect(HttpStatus.CONFLICT);
+      await testSession.get('/api/agencies/validate').query({ subdomain: 'bmacc' }).expect(HttpStatus.CONFLICT);
 
       /// should be case insensitive
-      await testSession
-        .get('/api/agencies/validate')
-        .query({ subdomain: 'BMACC' })
-        .expect(HttpStatus.CONFLICT);
+      await testSession.get('/api/agencies/validate').query({ subdomain: 'BMACC' }).expect(HttpStatus.CONFLICT);
     });
 
     it('returns success no content if subdomain valid and available', async () => {
-      await testSession
-        .get('/api/agencies/validate')
-        .query({ subdomain: 'validandavailable' })
-        .expect(HttpStatus.NO_CONTENT);
+      await testSession.get('/api/agencies/validate').query({ subdomain: 'validandavailable' }).expect(HttpStatus.NO_CONTENT);
     });
   });
 
   describe('GET /:id', () => {
     it('returns claim details of a claimed agency record', async () => {
-      const response = await testSession
-        .get('/api/agencies/2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d')
-        .expect(HttpStatus.OK);
-      assert.deepStrictEqual(
-        response.body?.id,
-        '9eeb6591-12f8-4036-8af8-6b235153d444'
-      );
+      const response = await testSession.get('/api/agencies/2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d').expect(HttpStatus.OK);
+      assert.deepStrictEqual(response.body?.id, '9eeb6591-12f8-4036-8af8-6b235153d444');
       assert.deepStrictEqual(response.body?.subdomain, 'bmacc');
     });
 
     it('returns a suggested subdomain for a non-claimed agency record', async () => {
-      const response = await testSession
-        .get('/api/agencies/e705f64b-1399-436e-a428-18c8378b3444')
-        .expect(HttpStatus.NOT_FOUND);
+      const response = await testSession.get('/api/agencies/e705f64b-1399-436e-a428-18c8378b3444').expect(HttpStatus.NOT_FOUND);
       assert.deepStrictEqual(response.body?.subdomain, 'bmaa');
     });
   });
@@ -161,10 +129,7 @@ describe('/api/agencies', () => {
       assert.strictEqual(agency.subdomain, 'baymedicalameda');
       assert.strictEqual(agency.createdById, user.id);
       assert.strictEqual(agency.updatedById, user.id);
-      assert.strictEqual(
-        agency.canonicalAgencyId,
-        'e705f64b-1399-436e-a428-18c8378b3444'
-      );
+      assert.strictEqual(agency.canonicalAgencyId, 'e705f64b-1399-436e-a428-18c8378b3444');
       assert.deepStrictEqual(agency.data, {
         _attributes: {
           'pr:isValid': false,
@@ -193,10 +158,7 @@ describe('/api/agencies', () => {
       assert.strictEqual(employment.email, user.email);
 
       /// the new user should also be logged in at this point
-      response = await testSession
-        .get('/api/users/me')
-        .set('Host', `baymedicalameda.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+      response = await testSession.get('/api/users/me').set('Host', `baymedicalameda.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
       assert.strictEqual(response.body.user?.id, user.id);
     });
   });

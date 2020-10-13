@@ -20,10 +20,7 @@ describe('/api/employments', () => {
 
   describe('GET /', () => {
     it('returns personnel Employment records', async () => {
-      const response = await testSession
-        .get('/api/employments')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+      const response = await testSession.get('/api/employments').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
       assert.deepStrictEqual(response.body?.length, 4);
     });
 

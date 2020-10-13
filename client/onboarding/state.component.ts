@@ -12,18 +12,11 @@ export class StateComponent {
   states: any[] = [];
   state: any = null;
 
-  constructor(
-    private app: AppService,
-    private api: ApiService,
-    private navigation: NavigationService
-  ) {}
+  constructor(private app: AppService, private api: ApiService, private navigation: NavigationService) {}
 
   ngOnInit() {
     this.api.states.index().subscribe((res) => (this.states = res.body));
-    setTimeout(
-      () => (this.stateEl ? this.stateEl.nativeElement.focus() : null),
-      100
-    );
+    setTimeout(() => (this.stateEl ? this.stateEl.nativeElement.focus() : null), 100);
   }
 
   onBack() {

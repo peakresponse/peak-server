@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import clone from 'lodash/clone';
 
 import { SchemaService } from '../../services/schema.service';
@@ -28,51 +22,35 @@ export class XsdInputComponent extends XsdBaseComponent {
   }
 
   get min(): number {
-    if (
-      this.type?.['xs:restriction']?.['xs:minInclusive']?._attributes?.value
-    ) {
-      return parseInt(
-        this.type['xs:restriction']['xs:minInclusive']._attributes.value
-      );
+    if (this.type?.['xs:restriction']?.['xs:minInclusive']?._attributes?.value) {
+      return parseInt(this.type['xs:restriction']['xs:minInclusive']._attributes.value);
     }
     return null;
   }
 
   get max(): number {
-    if (
-      this.type?.['xs:restriction']?.['xs:maxInclusive']?._attributes?.value
-    ) {
-      return parseInt(
-        this.type['xs:restriction']['xs:maxInclusive']._attributes.value
-      );
+    if (this.type?.['xs:restriction']?.['xs:maxInclusive']?._attributes?.value) {
+      return parseInt(this.type['xs:restriction']['xs:maxInclusive']._attributes.value);
     }
     return null;
   }
 
   get minLength(): number {
     if (this.type?.['xs:restriction']?.['xs:minLength']?._attributes?.value) {
-      return parseInt(
-        this.type['xs:restriction']['xs:minLength']._attributes.value
-      );
+      return parseInt(this.type['xs:restriction']['xs:minLength']._attributes.value);
     }
     if (this.type?.['xs:restriction']?.['xs:length']?._attributes?.value) {
-      return parseInt(
-        this.type['xs:restriction']['xs:length']._attributes.value
-      );
+      return parseInt(this.type['xs:restriction']['xs:length']._attributes.value);
     }
     return null;
   }
 
   get maxLength(): number {
     if (this.type?.['xs:restriction']?.['xs:maxLength']?._attributes?.value) {
-      return parseInt(
-        this.type['xs:restriction']['xs:maxLength']._attributes.value
-      );
+      return parseInt(this.type['xs:restriction']['xs:maxLength']._attributes.value);
     }
     if (this.type?.['xs:restriction']?.['xs:length']?._attributes?.value) {
-      return parseInt(
-        this.type['xs:restriction']['xs:length']._attributes.value
-      );
+      return parseInt(this.type['xs:restriction']['xs:length']._attributes.value);
     }
     return null;
   }
@@ -85,21 +63,15 @@ export class XsdInputComponent extends XsdBaseComponent {
   }
 
   get fractionDigits(): number {
-    if (
-      this.type?.['xs:restriction']?.['xs:fractionDigits']?._attributes?.value
-    ) {
-      return parseInt(
-        this.type['xs:restriction']['xs:fractionDigits']._attributes.value
-      );
+    if (this.type?.['xs:restriction']?.['xs:fractionDigits']?._attributes?.value) {
+      return parseInt(this.type['xs:restriction']['xs:fractionDigits']._attributes.value);
     }
     return null;
   }
 
   get totalDigits(): number {
     if (this.type?.['xs:restriction']?.['xs:totalDigits']?._attributes?.value) {
-      return parseInt(
-        this.type['xs:restriction']['xs:totalDigits']._attributes.value
-      );
+      return parseInt(this.type['xs:restriction']['xs:totalDigits']._attributes.value);
     }
     return null;
   }

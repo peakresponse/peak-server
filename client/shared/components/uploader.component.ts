@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { empty } from 'rxjs';
 import { DirectUpload } from 'activestorage';
 
@@ -35,9 +28,7 @@ class Uploader {
   }
 
   directUploadWillStoreFileWithXHR(request: any) {
-    request.upload.addEventListener('progress', (event: any) =>
-      this.directUploadDidProgress(event)
-    );
+    request.upload.addEventListener('progress', (event: any) => this.directUploadDidProgress(event));
   }
 
   directUploadDidProgress(event: any) {
@@ -62,30 +53,26 @@ export class UploaderComponent {
 
   onChange(event: any) {
     for (let file of event.target.files) {
-      let uploader = new Uploader(
-        file,
-        this.directUploadURL,
-        (uploader: Uploader, blob: any) => {
-          this.uploaders.splice(this.uploaders.indexOf(uploader), 1);
-          let upload: any = {
-            name: blob.filename,
-            href: blob.signed_id,
-            mediaType: blob.content_type,
-            file: file,
-            dataURL: null,
-          };
-          const reader = new FileReader();
-          reader.addEventListener('load', () => {
-            upload.dataURL = reader.result;
-            if (this.record) {
-              this.record[this.property] = this.record[this.property] || [];
-              this.record[this.property].push(upload);
-            }
-            this.onUploaded.emit(upload);
-          });
-          reader.readAsDataURL(upload.file);
-        }
-      );
+      let uploader = new Uploader(file, this.directUploadURL, (uploader: Uploader, blob: any) => {
+        this.uploaders.splice(this.uploaders.indexOf(uploader), 1);
+        let upload: any = {
+          name: blob.filename,
+          href: blob.signed_id,
+          mediaType: blob.content_type,
+          file: file,
+          dataURL: null,
+        };
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+          upload.dataURL = reader.result;
+          if (this.record) {
+            this.record[this.property] = this.record[this.property] || [];
+            this.record[this.property].push(upload);
+          }
+          this.onUploaded.emit(upload);
+        });
+        reader.readAsDataURL(upload.file);
+      });
       this.uploaders.push(uploader);
       uploader.start();
     }

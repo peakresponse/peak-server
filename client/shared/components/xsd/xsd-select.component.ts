@@ -12,18 +12,14 @@ import { XsdBaseComponent } from './xsd-base.component';
 export class XsdSelectComponent extends XsdBaseComponent {
   get minLength(): number {
     if (this.type?.['xs:restriction']?.['xs:minLength']?._attributes?.value) {
-      return parseInt(
-        this.type['xs:restriction']['xs:minLength']._attributes.value
-      );
+      return parseInt(this.type['xs:restriction']['xs:minLength']._attributes.value);
     }
     return null;
   }
 
   get maxLength(): number {
     if (this.type?.['xs:restriction']?.['xs:maxLength']?._attributes?.value) {
-      return parseInt(
-        this.type['xs:restriction']['xs:maxLength']._attributes.value
-      );
+      return parseInt(this.type['xs:restriction']['xs:maxLength']._attributes.value);
     }
     return null;
   }

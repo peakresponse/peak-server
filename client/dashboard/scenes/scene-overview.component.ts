@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 
-import {
-  NavigationService,
-  ApiService,
-  UserService,
-} from '../../shared/services';
+import { NavigationService, ApiService, UserService } from '../../shared/services';
 
 import { SceneService } from './scene.service';
 import { Patient } from './patients';
@@ -16,12 +12,7 @@ import { Patient } from './patients';
 export class SceneOverviewComponent {
   private patientPriorities = Patient.PRIORITIES;
 
-  constructor(
-    private api: ApiService,
-    private navigation: NavigationService,
-    public scene: SceneService,
-    public user: UserService
-  ) {}
+  constructor(private api: ApiService, private navigation: NavigationService, public scene: SceneService, public user: UserService) {}
 
   onLeave() {
     const sceneId = this.scene.id;

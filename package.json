@@ -92,6 +92,7 @@
   },
   "prettier": {
     "jsxBracketSameLine": true,
+    "printWidth": 140,
     "singleQuote": true
   },
   "dependencies": {

@@ -11,14 +11,7 @@ import { EditStateComponent, ListStatesComponent } from '.';
 
 @NgModule({
   declarations: [EditStateComponent, ListStatesComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModule,
-    SharedComponentsModule,
-    SharedPipesModule,
-    StatesRoutingModule,
-  ],
+  imports: [CommonModule, FormsModule, NgbModule, SharedComponentsModule, SharedPipesModule, StatesRoutingModule],
   providers: [],
 })
 export class StatesModule {}

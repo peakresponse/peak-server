@@ -1,13 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-  AfterViewInit,
-  OnDestroy,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 
 import { Subscriber, Observable } from 'rxjs';
 import numeral from 'numeral';
@@ -29,17 +20,11 @@ export class AudioComponent implements AfterViewInit, OnDestroy {
         subscriber.next(this.currentTime);
       }
     };
-    this.audio?.nativeElement?.addEventListener(
-      'timeupdate',
-      this.eventListener
-    );
+    this.audio?.nativeElement?.addEventListener('timeupdate', this.eventListener);
   }
 
   ngOnDestroy() {
-    this.audio?.nativeElement?.removeEventListener(
-      'timeupdate',
-      this.eventListener
-    );
+    this.audio?.nativeElement?.removeEventListener('timeupdate', this.eventListener);
     this.eventListener = null;
   }
 

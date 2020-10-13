@@ -109,9 +109,7 @@ module.exports = (sequelize, DataTypes) => {
       fullName: {
         type: DataTypes.VIRTUAL,
         get() {
-          const name = `${this.firstName ?? ''} ${
-            this.middleName ?? ''
-          }`.trim();
+          const name = `${this.firstName ?? ''} ${this.middleName ?? ''}`.trim();
           return `${name} ${this.lastName ?? ''}`.trim();
         },
         set(value) {
@@ -177,19 +175,14 @@ module.exports = (sequelize, DataTypes) => {
       isActive: {
         type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['isPending', 'endedAt']),
         get() {
-          return (
-            !this.isPending &&
-            (this.endedAt == null || moment(this.endedAt).isAfter(moment()))
-          );
+          return !this.isPending && (this.endedAt == null || moment(this.endedAt).isAfter(moment()));
         },
       },
       isOwner: {
         type: DataTypes.BOOLEAN,
         field: 'is_owner',
       },
-      roles: DataTypes.ARRAY(
-        DataTypes.ENUM('BILLING', 'CONFIGURATION', 'PERSONNEL', 'REPORTING')
-      ),
+      roles: DataTypes.ARRAY(DataTypes.ENUM('BILLING', 'CONFIGURATION', 'PERSONNEL', 'REPORTING')),
       data: DataTypes.JSONB,
       isValid: {
         type: DataTypes.BOOLEAN,
@@ -203,12 +196,7 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       validate: {
         async schema() {
-          this.validationError = await nemsis.validateSchema(
-            'dPersonnel_v3.xsd',
-            'dPersonnel',
-            'dPersonnel.PersonnelGroup',
-            this.data
-          );
+          this.validationError = await nemsis.validateSchema('dPersonnel_v3.xsd', 'dPersonnel', 'dPersonnel.PersonnelGroup', this.data);
         },
       },
     }
@@ -229,51 +217,24 @@ module.exports = (sequelize, DataTypes) => {
     }
     if (record.userId) {
       const user = await record.getUser({ transaction: options.transaction });
-      record.setNemsisValue(
-        ['dPersonnel.NameGroup', 'dPersonnel.01'],
-        user.lastName
-      );
-      record.setNemsisValue(
-        ['dPersonnel.NameGroup', 'dPersonnel.02'],
-        user.firstName
-      );
+      record.setNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.01'], user.lastName);
+      record.setNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.02'], user.firstName);
       record.addNemsisValue(['dPersonnel.10'], user.email);
       /// ensure data column is saved after changes: https://github.com/sequelize/sequelize/issues/3534
       options.fields.push('data');
     }
-    record.setDataValue(
-      'lastName',
-      record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.01'])
-    );
-    record.setDataValue(
-      'firstName',
-      record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.02'])
-    );
-    record.setDataValue(
-      'middleName',
-      record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.03'])
-    );
+    record.setDataValue('lastName', record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.01']));
+    record.setDataValue('firstName', record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.02']));
+    record.setDataValue('middleName', record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.03']));
     record.setDataValue('email', record.getFirstNemsisValue(['dPersonnel.10']));
-    record.setDataValue(
-      'status',
-      record.getFirstNemsisValue(['dPersonnel.31'])
-    );
+    record.setDataValue('status', record.getFirstNemsisValue(['dPersonnel.31']));
     if (record.changed('status')) {
       record.setDataValue('statusAt', new Date());
     }
-    record.setDataValue(
-      'hiredAt',
-      record.getFirstNemsisValue(['dPersonnel.33'])
-    );
-    record.setDataValue(
-      'primaryJobRole',
-      record.getFirstNemsisValue(['dPersonnel.34'])
-    );
+    record.setDataValue('hiredAt', record.getFirstNemsisValue(['dPersonnel.33']));
+    record.setDataValue('primaryJobRole', record.getFirstNemsisValue(['dPersonnel.34']));
 
-    record.setDataValue(
-      'isValid',
-      record.getNemsisAttributeValue([], ['pr:isValid'])
-    );
+    record.setDataValue('isValid', record.getNemsisAttributeValue([], ['pr:isValid']));
   });
   Employment.afterCreate(async (record, options) => {
     if (record.invitationCode) {

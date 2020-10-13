@@ -1,0 +1,20 @@
+[
+  {
+    "model": "ScenePin",
+    "data": {
+      "id": "7ce4ac99-e05f-4f7d-bb5f-65da4cac8a53",
+      "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
+      "type": "MGS",
+      "lat": "37.785834",
+      "lng": "-122.406417",
+      "name": "Incident Command",
+      "desc": "Top of the hill overlooking the incident",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

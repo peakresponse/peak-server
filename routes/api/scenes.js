@@ -5,10 +5,7 @@ const _ = require('lodash');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
-const {
-  dispatchSceneUpdate,
-  dispatchSceneRespondersUpdate,
-} = require('../../wss');
+const { dispatchSceneUpdate, dispatchSceneRespondersUpdate } = require('../../wss');
 
 const { Op } = models.Sequelize;
 const router = express.Router();
@@ -26,10 +23,7 @@ router.get(
       options.where = options.where || {};
       options.where.name = { [Op.iLike]: `%${req.query.search.trim()}%` };
     }
-    const { docs, pages, total } = await models.Scene.scope(
-      { method: ['agency', req.agency.id] },
-      'closed'
-    ).paginate(options);
+    const { docs, pages, total } = await models.Scene.scope({ method: ['agency', req.agency.id] }, 'closed').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((d) => d.toJSON()));
   })
@@ -142,6 +136,65 @@ router.patch(
       });
       await scene.transferCommandTo(user, agency, { transaction });
       res.status(HttpStatus.OK).end();
+    });
+    await dispatchSceneUpdate(scene.id);
+  })
+);
+
+router.delete(
+  '/:id/pins/:pinId',
+  interceptors.requireAgency(),
+  helpers.async(async (req, res) => {
+    let scene;
+    await models.sequelize.transaction(async (transaction) => {
+      scene = await models.Scene.findByPk(req.params.id, {
+        rejectOnEmpty: true,
+        transaction,
+      });
+      /// only allow incident commander to add/update pins
+      if (req.user.id !== scene.incidentCommanderId) {
+        res.status(HttpStatus.FORBIDDEN).end();
+        return;
+      }
+      const pin = await models.ScenePin.findOne({
+        where: {
+          id: req.params.pinId,
+          sceneId: scene.id,
+        },
+        rejectOnEmpty: true,
+        transaction,
+      });
+      await pin.update(
+        {
+          deletedAt: new Date(),
+          deletedById: req.user.id,
+          deletedByAgencyId: req.agency.id,
+        },
+        { transaction }
+      );
+      res.status(HttpStatus.NO_CONTENT).end();
+    });
+    await dispatchSceneUpdate(scene.id);
+  })
+);
+
+router.post(
+  '/:id/pins',
+  interceptors.requireAgency(),
+  helpers.async(async (req, res) => {
+    let scene;
+    await models.sequelize.transaction(async (transaction) => {
+      scene = await models.Scene.findByPk(req.params.id, {
+        rejectOnEmpty: true,
+        transaction,
+      });
+      /// only allow incident commander to add/update pins
+      if (req.user.id !== scene.incidentCommanderId) {
+        res.status(HttpStatus.FORBIDDEN).end();
+        return;
+      }
+      const pin = await models.ScenePin.createOrUpdate(req.user, req.agency, scene, req.body, { transaction });
+      res.status(HttpStatus.OK).json(pin.toJSON());
     });
     await dispatchSceneUpdate(scene.id);
   })

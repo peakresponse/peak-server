@@ -12,13 +12,6 @@ import { InviteUsersComponent, ListUsersComponent } from '.';
 
 @NgModule({
   declarations: [InviteUsersComponent, ListUsersComponent],
-  imports: [
-    CommonModule,
-    ComponentsModule,
-    FormsModule,
-    SharedComponentsModule,
-    SharedPipesModule,
-    UsersRoutingModule,
-  ],
+  imports: [CommonModule, ComponentsModule, FormsModule, SharedComponentsModule, SharedPipesModule, UsersRoutingModule],
 })
 export class UsersModule {}

@@ -90,13 +90,7 @@ import {
     XsdSelectComponent,
     XsdSelectStateComponent,
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModule,
-    SortablejsModule,
-    SharedPipesModule,
-  ],
+  imports: [CommonModule, FormsModule, NgbModule, SortablejsModule, SharedPipesModule],
   providers: [],
 })
 export class SharedComponentsModule {}

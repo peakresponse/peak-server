@@ -18,23 +18,14 @@ export class ScenePatientsComponent implements OnDestroy {
   private querySubscription: Subscription;
   private fragmentSubscription: Subscription;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    public scene: SceneService
-  ) {
+  constructor(private route: ActivatedRoute, private router: Router, public scene: SceneService) {
     this.intervalId = setInterval(() => (this.now = new Date()), 1000);
-    this.querySubscription = this.route.queryParams.subscribe(
-      (params: Params) => {
-        this.scene.sort = params['sort'] || this.scene.sort;
-      }
-    );
-    this.fragmentSubscription = this.route.fragment.subscribe(
-      (fragment: string) => {
-        this.tabIndex =
-          Patient.PRIORITIES.indexOf(fragment || this.scene.filter) + 1;
-      }
-    );
+    this.querySubscription = this.route.queryParams.subscribe((params: Params) => {
+      this.scene.sort = params['sort'] || this.scene.sort;
+    });
+    this.fragmentSubscription = this.route.fragment.subscribe((fragment: string) => {
+      this.tabIndex = Patient.PRIORITIES.indexOf(fragment || this.scene.filter) + 1;
+    });
   }
 
   ngOnDestroy() {

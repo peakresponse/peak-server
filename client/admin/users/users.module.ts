@@ -10,13 +10,7 @@ import { EditUserComponent, ListUsersComponent } from '.';
 
 @NgModule({
   declarations: [EditUserComponent, ListUsersComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    SharedComponentsModule,
-    SharedPipesModule,
-    UsersRoutingModule,
-  ],
+  imports: [CommonModule, FormsModule, SharedComponentsModule, SharedPipesModule, UsersRoutingModule],
   providers: [],
 })
 export class UsersModule {}

@@ -35,14 +35,7 @@ import {
     PersonnelDemographicsComponent,
     VehicleDemographicsComponent,
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModule,
-    SharedComponentsModule,
-    SharedPipesModule,
-    DemographicsRoutingModule,
-  ],
+  imports: [CommonModule, FormsModule, NgbModule, SharedComponentsModule, SharedPipesModule, DemographicsRoutingModule],
   providers: [],
 })
 export class DemographicsModule {}

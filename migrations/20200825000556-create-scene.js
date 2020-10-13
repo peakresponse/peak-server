@@ -89,10 +89,7 @@ module.exports = {
         },
         { transaction }
       );
-      await queryInterface.sequelize.query(
-        'CREATE INDEX scenes_geog_idx ON scenes USING gist(geog)',
-        { transaction }
-      );
+      await queryInterface.sequelize.query('CREATE INDEX scenes_geog_idx ON scenes USING gist(geog)', { transaction });
       await queryInterface.addConstraint('scenes', {
         type: 'FOREIGN KEY',
         fields: ['city_id'],

@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 
 @Injectable()
 export class AppService implements CanActivate {
@@ -14,10 +8,7 @@ export class AppService implements CanActivate {
 
   constructor(private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): true | UrlTree {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): true | UrlTree {
     if (this.agency) {
       return true;
     }

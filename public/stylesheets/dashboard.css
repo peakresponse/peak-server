@@ -18,14 +18,7 @@ body {
 }
 
 body.signed-out {
-  background: linear-gradient(
-      121.55deg,
-      #c1ddd8 21.73%,
-      #65b3da 52.52%,
-      #46a5db 77.84%,
-      #2f7eaa 97.61%
-    )
-    fixed;
+  background: linear-gradient(121.55deg, #c1ddd8 21.73%, #65b3da 52.52%, #46a5db 77.84%, #2f7eaa 97.61%) fixed;
   min-height: 100%;
   padding-bottom: 4rem;
 }
