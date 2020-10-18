@@ -5,9 +5,10 @@ const sequelizePaginate = require('sequelize-paginate');
 const uuid = require('uuid/v4');
 
 const mailer = require('../emails/mailer');
+const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Sequelize.Model {
+  class User extends Base {
     static associate(models) {
       User.hasMany(models.Employment, { as: 'employments' });
       User.hasMany(models.Patient, {
@@ -134,7 +135,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, ['id', 'firstName', 'lastName', 'email', 'position', 'iconUrl']);
+      return _.pick(attributes, ['id', 'firstName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl']);
     }
   }
 
@@ -214,7 +215,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       iconUrl: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return Base.assetUrl('users/icon', this.iconFile);
+        },
+      },
+      iconFile: {
         type: DataTypes.STRING,
+        field: 'icon_file',
         allowNull: true,
       },
       password: {
@@ -267,6 +275,12 @@ module.exports = (sequelize, DataTypes) => {
         user.passwordResetToken = null;
         user.passwordResetTokenExpiresAt = null;
       });
+    }
+  });
+
+  User.afterSave(async (user, options) => {
+    if (user.changed('iconFile')) {
+      await Base.handleAssetFile('users/icon', user.previous('iconFile'), user.iconFile, options);
     }
   });
 

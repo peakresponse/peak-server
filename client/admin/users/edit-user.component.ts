@@ -17,12 +17,12 @@ export class EditUserComponent {
   }
 
   onIconRemove(record: any) {
-    record.iconUrl = null;
+    record.iconFile = null;
     this.icon = null;
   }
 
   onIconUploaded(record: any, upload: any) {
-    record.iconUrl = upload.href;
+    record.iconFile = upload.href;
     this.icon = upload;
   }
 

@@ -7,10 +7,7 @@ const nemsis = require('../../../../lib/nemsis');
 const nemsisStates = require('../../../../lib/nemsis/states');
 const nemsisMocks = require('../../../mocks/nemsis');
 
-// eslint-disable-next-line func-names
-describe('lib', function () {
-  this.timeout(10000);
-
+describe('lib', () => {
   describe('nemsisStates.california', () => {
     // eslint-disable-next-line func-names
     beforeEach(async function () {
@@ -29,8 +26,8 @@ describe('lib', function () {
             const dataSet = await nemsis.parseStateDataSet(path.resolve(tmpDir.name, filePath));
             const agencies = await nemsisStates.california.appendAgenciesFromSpreadsheet(dataSet);
             assert(agencies.sAgencyGroup);
-            assert.deepStrictEqual(agencies.sAgencyGroup.length, 646);
-            assert.deepStrictEqual(dataSet.json.StateDataSet.sAgency.sAgencyGroup.length, 1443);
+            assert.deepStrictEqual(agencies.sAgencyGroup.length, 647);
+            assert.deepStrictEqual(dataSet.json.StateDataSet.sAgency.sAgencyGroup.length, 1444);
             break;
           }
         }

@@ -118,13 +118,13 @@ module.exports = (sequelize, DataTypes) => {
   );
   PatientObservation.afterSave(async (observation, options) => {
     if (observation.changed('portraitFile')) {
-      Base.handleAssetFile('patient-observations/portrait', observation.previous('portraitFile'), observation.portraitFile, options);
+      await Base.handleAssetFile('patient-observations/portrait', observation.previous('portraitFile'), observation.portraitFile, options);
     }
     if (observation.changed('photoFile')) {
-      Base.handleAssetFile('patient-observations/photo', observation.previous('photoFile'), observation.photoFile, options);
+      await Base.handleAssetFile('patient-observations/photo', observation.previous('photoFile'), observation.photoFile, options);
     }
     if (observation.changed('audioFile')) {
-      Base.handleAssetFile('patient-observations/audio', observation.previous('audioFile'), observation.audioFile, options);
+      await Base.handleAssetFile('patient-observations/audio', observation.previous('audioFile'), observation.audioFile, options);
     }
   });
   return PatientObservation;

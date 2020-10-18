@@ -50,8 +50,7 @@ describe('lib', () => {
     });
 
     describe('parseStateDataSet()', () => {
-      it('should return the xml as a string and the parsed result as a js object', async function () {
-        this.timeout(4000);
+      it('should return the xml as a string and the parsed result as a js object', async () => {
         nemsisMocks.mockCaliforniaFilesRequest();
         nemsisMocks.mockCaliforniaDownloads();
 

@@ -69,13 +69,12 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       user = await models.User.findByPk(req.params.id, { transaction });
       if (user) {
-        await helpers.handleUpload(user, 'iconUrl', req.body.iconUrl, 'users/icon');
         await user.update(
           {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            iconUrl: user.iconUrl,
+            iconFile: req.body.iconFile,
             password: req.body.password,
           },
           { transaction }

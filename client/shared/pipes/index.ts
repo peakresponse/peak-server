@@ -1,4 +1,3 @@
-export * from './asset.pipe';
 export * from './css-url.pipe';
 export * from './error.pipe';
 export * from './get.pipe';

@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+
+/* eslint-disable no-console */
+
+const AWS = require('aws-sdk');
+require('dotenv').config();
+
+if (process.argv.length !== 4) {
+  console.log('Usage: bin/configure-bucket [http|https] domain.name');
+  process.exit(1);
+}
+
+const [, , scheme, domain] = process.argv;
+
+const s3options = {};
+if (process.env.AWS_ACCESS_KEY_ID) {
+  s3options.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+}
+if (process.env.AWS_SECRET_ACCESS_KEY) {
+  s3options.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+}
+if (process.env.AWS_S3_BUCKET_REGION) {
+  s3options.region = process.env.AWS_S3_BUCKET_REGION;
+}
+const s3 = new AWS.S3(s3options);
+
+async function configure() {
+  await s3
+    .putBucketCors({
+      Bucket: process.env.AWS_S3_BUCKET,
+      CORSConfiguration: {
+        CORSRules: [
+          {
+            AllowedMethods: ['PUT', 'GET'],
+            AllowedOrigins: [`${scheme}//${domain}`, `${scheme}//*.${domain}`],
+            AllowedHeaders: ['*'],
+          },
+        ],
+      },
+    })
+    .promise();
+  await s3
+    .putBucketLifecycleConfiguration({
+      Bucket: process.env.AWS_S3_BUCKET,
+      LifecycleConfiguration: {
+        Rules: [
+          {
+            Expiration: {
+              Days: 1,
+            },
+            Filter: {
+              Prefix: 'uploads/',
+            },
+            ID: 'DeleteOrphanedUploads',
+            Status: 'Enabled',
+          },
+        ],
+      },
+    })
+    .promise();
+}
+
+configure().then(() => {
+  console.log('... Done!');
+  process.exit(0);
+});

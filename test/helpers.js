@@ -2,6 +2,8 @@
 
 /// MUST BE FIRST! set the NODE_ENV to test to disable logging, switch to test db
 process.env.NODE_ENV = 'test';
+/// handle files as local
+process.env.AWS_S3_BUCKET = '';
 
 const fixtures = require('sequelize-fixtures');
 const nock = require('nock');

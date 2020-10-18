@@ -29,11 +29,11 @@
         <img [src]="icon.dataURL" class="img-fluid img-thumbnail mb-2" />
         <button (click)="onIconRemove(record)" type="button" class="btn btn-sm btn-outline-danger">Remove</button>
       </div>
-      <div *ngIf="!icon && record.iconUrl" style="width: 200px;">
-        <img [src]="record.iconUrl|asset" class="img-fluid img-thumbnail mb-2" />
+      <div *ngIf="!icon && record.iconFile" style="width: 200px;">
+        <img [src]="record.iconUrl" class="img-fluid img-thumbnail mb-2" />
         <button (click)="onIconRemove(record)" type="button" class="btn btn-sm btn-outline-danger">Remove</button>
       </div>
-      <app-shared-uploader *ngIf="!record.iconUrl" (onUploaded)="onIconUploaded(record, $event)"></app-shared-uploader>
+      <app-shared-uploader *ngIf="!record.iconFile" (onUploaded)="onIconUploaded(record, $event)"></app-shared-uploader>
     </div>
   </ng-template>
 </app-shared-form>

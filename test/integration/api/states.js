@@ -8,7 +8,7 @@ const app = require('../../../app');
 const models = require('../../../models');
 const nemsisMocks = require('../../mocks/nemsis');
 
-describe('/api/states', function () {
+describe('/api/states', () => {
   let testSession;
 
   beforeEach(async () => {
@@ -32,7 +32,6 @@ describe('/api/states', function () {
       if (!process.env.CI) {
         this.skip();
       }
-      this.timeout(120000);
       nemsisMocks.mockReposRequest();
       nemsisMocks.mockCaliforniaFilesRequest();
       nemsisMocks.mockCaliforniaDownloads();
@@ -51,7 +50,7 @@ describe('/api/states', function () {
       const state = await models.State.findOne({ where: { id: '06' } });
       assert(state);
       assert.deepStrictEqual(state.name, 'California');
-      assert.deepStrictEqual(await state.countAgencies(), 1439);
+      assert.deepStrictEqual(await state.countAgencies(), 1440);
       assert.deepStrictEqual(await models.Facility.count(), 119);
       const facility = await models.Facility.findOne({
         where: { stateId: '06', locationCode: '20046' },

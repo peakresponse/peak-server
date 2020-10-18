@@ -47,21 +47,8 @@ module.exports = (sequelize, DataTypes) => {
         updatedByAgencyId: agency.id,
       });
       const observation = sequelize.models.PatientObservation.build(data);
-      /// add in any computed properties from the obseration
-      if (updatedAttributes.includes('portraitFile')) {
-        data.portraitUrl = observation.portraitUrl;
-      }
-      if (updatedAttributes.includes('photoFile')) {
-        data.photoUrl = observation.photoUrl;
-      }
-      if (updatedAttributes.includes('audioFile')) {
-        data.audioUrl = observation.audioUrl;
-      }
       /// modify attributes for patient
       delete data.id;
-      delete data.portraitFile;
-      delete data.photoFile;
-      delete data.audioFile;
       /// find or create patient record
       let patient;
       let created = false;
@@ -153,16 +140,34 @@ module.exports = (sequelize, DataTypes) => {
       lng: DataTypes.STRING,
       geog: DataTypes.GEOGRAPHY,
       portraitUrl: {
-        type: DataTypes.TEXT,
-        field: 'portrait_url',
+        type: DataTypes.VIRTUAL,
+        get() {
+          return Base.assetUrl('patient-observations/portrait', this.portraitFile);
+        },
       },
       photoUrl: {
-        type: DataTypes.TEXT,
-        field: 'photo_url',
+        type: DataTypes.VIRTUAL,
+        get() {
+          return Base.assetUrl('patient-observations/photo', this.photoFile);
+        },
       },
       audioUrl: {
-        type: DataTypes.TEXT,
-        field: 'audio_url',
+        type: DataTypes.VIRTUAL,
+        get() {
+          return Base.assetUrl('patient-observations/audio', this.audioFile);
+        },
+      },
+      portraitFile: {
+        type: DataTypes.STRING,
+        field: 'portrait_file',
+      },
+      photoFile: {
+        type: DataTypes.STRING,
+        field: 'photo_file',
+      },
+      audioFile: {
+        type: DataTypes.STRING,
+        field: 'audio_file',
       },
     },
     {

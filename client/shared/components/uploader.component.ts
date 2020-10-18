@@ -44,7 +44,7 @@ class Uploader {
 export class UploaderComponent {
   @Input() record: any = null;
   @Input() property: string = null;
-  @Input() directUploadURL = '/api/uploads';
+  @Input() directUploadURL = '/api/assets';
   @Output() onUploaded = new EventEmitter<any>();
   @ViewChild('fileInput') fileInput: ElementRef;
   uploaders: any[] = [];

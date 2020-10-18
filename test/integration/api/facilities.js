@@ -5,10 +5,7 @@ const session = require('supertest-session');
 const helpers = require('../../helpers');
 const app = require('../../../app');
 
-// eslint-disable-next-line func-names
-describe('/api/facilities', function () {
-  this.timeout(10000);
-
+describe('/api/facilities', () => {
   let testSession;
 
   beforeEach(async () => {

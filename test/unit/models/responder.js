@@ -77,6 +77,7 @@ describe('models', () => {
             lastName: 'User',
             email: 'regular@peakresponse.net',
             position: 'Paramedic',
+            iconFile: null,
             iconUrl: null,
           },
           userId: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',

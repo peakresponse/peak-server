@@ -7,10 +7,7 @@ const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
 
-// eslint-disable-next-line func-names
-describe('/api/patients', function () {
-  this.timeout(10000);
-
+describe('/api/patients', () => {
   let testSession;
 
   beforeEach(async () => {

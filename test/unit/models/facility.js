@@ -4,9 +4,7 @@ const nock = require('nock');
 const helpers = require('../../helpers');
 const models = require('../../../models');
 
-// eslint-disable-next-line func-names
-describe('models', function () {
-  this.timeout(10000);
+describe('models', () => {
   describe('Facility', () => {
     describe('findNear()', () => {
       beforeEach(async () => {
