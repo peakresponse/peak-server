@@ -11,32 +11,76 @@ describe('/api/agencies', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['states', 'agencies', 'users']);
+    await helpers.loadFixtures(['states', 'agencies', 'users', 'employments']);
     testSession = session(app);
   });
 
   describe('GET /', () => {
     beforeEach(async () => {
-      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(200);
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
     });
 
     it('returns a paginated list of Agency records', async () => {
-      const response = await testSession.get('/api/agencies/').expect(200).expect('X-Total-Count', '11').expect('Link', '');
-      assert.equal(response.body.length, 11);
+      const response = await testSession.get('/api/agencies/').expect(HttpStatus.OK).expect('X-Total-Count', '11').expect('Link', '');
+      assert.deepStrictEqual(response.body.length, 11);
     });
 
     it('returns a paginated list of search filtered Agency records', async () => {
       const response = await testSession
         .get('/api/agencies/')
         .query({ search: 'fire' })
-        .expect(200)
+        .expect(HttpStatus.OK)
         .expect('X-Total-Count', '4')
         .expect('Link', '');
-      assert.equal(response.body.length, 4);
-      assert.equal(response.body[0].name, 'Bodega Bay Fire Protection District');
+      assert.deepStrictEqual(response.body.length, 4);
+      assert.deepStrictEqual(response.body[0].name, 'Bodega Bay Fire Protection District');
       for (const facility of response.body) {
         assert(facility.name.match(/fire/i));
       }
+    });
+  });
+
+  describe('POST /', () => {
+    it('requires an administrative superuser', async () => {
+      await testSession.post('/api/agencies').set('Accept', 'application/json').send({}).expect(HttpStatus.UNAUTHORIZED);
+
+      await testSession
+        .post('/login')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
+        .expect(HttpStatus.OK);
+
+      await testSession.post('/api/agencies').set('Accept', 'application/json').send({}).expect(HttpStatus.FORBIDDEN);
+    });
+
+    it('creates a new canonical agency record', async () => {
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      const response = await testSession
+        .post('/api/agencies')
+        .send({
+          stateUniqueId: 'DEMO-001',
+          number: 'DEMO-001',
+          name: 'Demo Agency',
+          stateId: '06',
+        })
+        .expect(HttpStatus.CREATED);
+      assert(response.body.id);
+      const agency = await models.Agency.findByPk(response.body.id, { rejectOnEmpty: true });
+      assert.deepStrictEqual(agency.stateUniqueId, 'DEMO-001');
+      assert.deepStrictEqual(agency.number, 'DEMO-001');
+      assert.deepStrictEqual(agency.name, 'Demo Agency');
+      assert.deepStrictEqual(agency.stateId, '06');
+      assert.deepStrictEqual(agency.data, {
+        'sAgency.01': {
+          _text: 'DEMO-001',
+        },
+        'sAgency.02': {
+          _text: 'DEMO-001',
+        },
+        'sAgency.03': {
+          _text: 'Demo Agency',
+        },
+      });
     });
   });
 
@@ -52,7 +96,7 @@ describe('/api/agencies', () => {
 
     it('returns the demographic Agency record for the current subdomain', async () => {
       const response = await testSession.get('/api/agencies/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
-      assert.strictEqual(response.body.subdomain, 'bmacc');
+      assert.deepStrictEqual(response.body.subdomain, 'bmacc');
     });
 
     it('returns not found when called on the naked domain', async () => {
@@ -105,8 +149,8 @@ describe('/api/agencies', () => {
         .expect(HttpStatus.CREATED);
       const { id } = response.body;
       assert(id);
-      assert.strictEqual(response.body.subdomain, 'baymedicalameda');
-      assert.strictEqual(
+      assert.deepStrictEqual(response.body.subdomain, 'baymedicalameda');
+      assert.deepStrictEqual(
         response.body.message,
         'Please join the Bay Medic Ambulance - Alameda Peak Response account. We’ll be using this new software to help organize and document MCIs.'
       );
@@ -115,21 +159,21 @@ describe('/api/agencies', () => {
         where: { email: 'jdoe@peakresponse.net' },
       });
       assert(user);
-      assert.strictEqual(user.firstName, 'John');
-      assert.strictEqual(user.lastName, 'Doe');
+      assert.deepStrictEqual(user.firstName, 'John');
+      assert.deepStrictEqual(user.lastName, 'Doe');
 
       /// it should have sent out an email
       const emails = nodemailerMock.mock.getSentMail();
-      assert.strictEqual(emails.length, 1);
-      assert.strictEqual(emails[0].subject, 'Welcome to Peak Response');
-      assert.strictEqual(emails[0].to, 'John Doe <jdoe@peakresponse.net>');
+      assert.deepStrictEqual(emails.length, 1);
+      assert.deepStrictEqual(emails[0].subject, 'Welcome to Peak Response');
+      assert.deepStrictEqual(emails[0].to, 'John Doe <jdoe@peakresponse.net>');
 
       const agency = await models.Agency.findByPk(id);
       assert(agency);
-      assert.strictEqual(agency.subdomain, 'baymedicalameda');
-      assert.strictEqual(agency.createdById, user.id);
-      assert.strictEqual(agency.updatedById, user.id);
-      assert.strictEqual(agency.canonicalAgencyId, 'e705f64b-1399-436e-a428-18c8378b3444');
+      assert.deepStrictEqual(agency.subdomain, 'baymedicalameda');
+      assert.deepStrictEqual(agency.createdById, user.id);
+      assert.deepStrictEqual(agency.updatedById, user.id);
+      assert.deepStrictEqual(agency.canonicalAgencyId, 'e705f64b-1399-436e-a428-18c8378b3444');
       assert.deepStrictEqual(agency.data, {
         _attributes: {
           'pr:isValid': false,
@@ -153,13 +197,13 @@ describe('/api/agencies', () => {
       });
       assert(employment);
       assert(employment.isOwner);
-      assert.strictEqual(employment.firstName, user.firstName);
-      assert.strictEqual(employment.lastName, user.lastName);
-      assert.strictEqual(employment.email, user.email);
+      assert.deepStrictEqual(employment.firstName, user.firstName);
+      assert.deepStrictEqual(employment.lastName, user.lastName);
+      assert.deepStrictEqual(employment.email, user.email);
 
       /// the new user should also be logged in at this point
       response = await testSession.get('/api/users/me').set('Host', `baymedicalameda.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
-      assert.strictEqual(response.body.user?.id, user.id);
+      assert.deepStrictEqual(response.body.user?.id, user.id);
     });
   });
 });

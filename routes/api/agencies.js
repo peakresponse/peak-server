@@ -6,6 +6,7 @@ const models = require('../../models');
 const { Op } = models.Sequelize;
 
 const helpers = require('../helpers');
+const interceptors = require('../interceptors');
 
 const router = express.Router();
 
@@ -28,6 +29,33 @@ router.get(
     const { docs, pages, total } = await models.Agency.scope('canonical').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
+  })
+);
+
+router.post(
+  '/',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    const agency = await models.Agency.create({
+      stateUniqueId: req.body.stateUniqueId,
+      number: req.body.number,
+      name: req.body.name,
+      stateId: req.body.stateId,
+      data: {
+        'sAgency.01': {
+          _text: req.body.stateUniqueId,
+        },
+        'sAgency.02': {
+          _text: req.body.number,
+        },
+        'sAgency.03': {
+          _text: req.body.name,
+        },
+      },
+      updatedById: req.user.id,
+      createdById: req.user.id,
+    });
+    res.status(HttpStatus.CREATED).json(agency.toJSON());
   })
 );
 
