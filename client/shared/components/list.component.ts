@@ -20,9 +20,8 @@ export class ListComponent {
   @Input() type: string = null;
   @Input() basePath: string = null;
   @Input() params: HttpParams = null;
-  @Input() query: string = null;
+  @Input() search: string = null;
   @ContentChild(TemplateRef) template: TemplateRef<any>;
-  @ViewChild('search') searchInput: ElementRef = null;
 
   records: any[] = null;
   paginationLink: string = null;
@@ -80,11 +79,9 @@ export class ListComponent {
     this.isLoading = true;
     this.paginationLink = null;
     let params = this.params;
-    if (this.query != null) {
-      if (params == null) {
-        params = new HttpParams();
-      }
-      params = params.set('search', this.query);
+    if (this.search != null && this.search != '') {
+      params = params || new HttpParams();
+      params = params.set('search', this.search);
     }
     this.apiSubscription = get(this.api, this.type)
       .index(params)
