@@ -35,7 +35,7 @@ export class InviteComponent {
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
     if (!this.app.agency) {
       this.isLoading = true;
-      this.api.agencies.get(this.agencyId).subscribe((res) => {
+      this.api.agencies.check(this.agencyId).subscribe((res) => {
         this.isLoading = false;
         this.app.agency = res.body;
         this.initData();

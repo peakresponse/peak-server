@@ -30,7 +30,7 @@ export class UrlComponent {
 
   ngOnInit() {
     this.api.agencies
-      .get(this.agencyId)
+      .check(this.agencyId)
       .pipe(
         catchError((res) => {
           this.isLoading = false;

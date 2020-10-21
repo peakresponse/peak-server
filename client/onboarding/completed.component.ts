@@ -15,7 +15,7 @@ export class CompletedComponent {
   constructor(private app: AppService, private api: ApiService, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
     if (!this.app.agency) {
-      this.api.agencies.get(this.agencyId).subscribe((res) => (this.subdomain = res.body.subdomain));
+      this.api.agencies.check(this.agencyId).subscribe((res) => (this.subdomain = res.body.subdomain));
     } else {
       this.subdomain = this.app.agency.subdomain;
     }

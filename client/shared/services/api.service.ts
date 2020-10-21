@@ -73,6 +73,9 @@ export class ApiService {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/agencies', params);
     },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/agencies`, data);
+    },
     me: (params?: HttpParams): Observable<any> => {
       return this.get('/api/agencies/me', params);
     },
@@ -81,6 +84,9 @@ export class ApiService {
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/agencies/${id}`, params);
+    },
+    check: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/agencies/${id}/check`, params);
     },
     claim: (id: string, data: any): Observable<any> => {
       return this.post(`/api/agencies/${id}/claim`, data);
