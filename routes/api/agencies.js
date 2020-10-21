@@ -16,15 +16,28 @@ router.get(
     const page = req.query.page || 1;
     const options = {
       page,
-      where: {},
       include: [{ model: models.State, as: 'state' }],
       order: [['name', 'ASC']],
     };
+    const conditions = [];
     if (req.query.search && req.query.search !== '') {
-      options.where.name = { [Op.iLike]: `%${req.query.search.trim()}%` };
+      conditions.push({
+        [Op.or]: [
+          { stateUniqueId: { [Op.iLike]: `%${req.query.search.trim()}%` } },
+          { number: { [Op.iLike]: `%${req.query.search.trim()}%` } },
+          { name: { [Op.iLike]: `%${req.query.search.trim()}%` } },
+        ],
+      });
     }
     if (req.query.stateId && req.query.stateId !== '') {
-      options.where.stateId = req.query.stateId;
+      conditions.push({
+        stateId: req.query.stateId,
+      });
+    }
+    if (conditions.length > 0) {
+      options.where = {
+        [Op.and]: conditions,
+      };
     }
     const { docs, pages, total } = await models.Agency.scope('canonical').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
