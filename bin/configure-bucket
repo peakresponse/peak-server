@@ -5,12 +5,12 @@
 const AWS = require('aws-sdk');
 require('dotenv').config();
 
-if (process.argv.length !== 4) {
-  console.log('Usage: bin/configure-bucket [http|https] domain.name');
+if (process.argv.length < 4) {
+  console.log('Usage: bin/configure-bucket [http|https] domain.name [domain2.name ...]');
   process.exit(1);
 }
 
-const [, , scheme, domain] = process.argv;
+const [, , scheme, ...domains] = process.argv;
 
 const s3options = {};
 if (process.env.AWS_ACCESS_KEY_ID) {
@@ -25,6 +25,11 @@ if (process.env.AWS_S3_BUCKET_REGION) {
 const s3 = new AWS.S3(s3options);
 
 async function configure() {
+  const origins = [];
+  for (const domain of domains) {
+    origins.push(`${scheme}://${domain}`);
+    origins.push(`${scheme}://*.${domain}`);
+  }
   await s3
     .putBucketCors({
       Bucket: process.env.AWS_S3_BUCKET,
@@ -32,7 +37,7 @@ async function configure() {
         CORSRules: [
           {
             AllowedMethods: ['PUT', 'GET'],
-            AllowedOrigins: [`${scheme}//${domain}`, `${scheme}//*.${domain}`],
+            AllowedOrigins: origins,
             AllowedHeaders: ['*'],
           },
         ],
