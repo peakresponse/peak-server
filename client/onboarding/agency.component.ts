@@ -55,7 +55,7 @@ export class AgencyComponent {
       this.isLoading = true;
       if (this.agency.id) {
         this.api.agencies
-          .get(this.agency.id)
+          .check(this.agency.id)
           .pipe(
             catchError((res) => {
               this.isLoading = false;

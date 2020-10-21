@@ -86,7 +86,7 @@ export class ApiService {
       return this.get(`/api/agencies/${id}`, params);
     },
     check: (id: string, params?: HttpParams): Observable<any> => {
-      return this.get(`/api/agencies/${id}`, params);
+      return this.get(`/api/agencies/${id}/check`, params);
     },
     claim: (id: string, data: any): Observable<any> => {
       return this.post(`/api/agencies/${id}/claim`, data);

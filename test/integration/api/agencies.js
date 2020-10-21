@@ -86,7 +86,6 @@ describe('/api/agencies', () => {
 
   describe('GET /me', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['employments']);
       await testSession
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
@@ -121,15 +120,15 @@ describe('/api/agencies', () => {
     });
   });
 
-  describe('GET /:id', () => {
+  describe('GET /:id/check', () => {
     it('returns claim details of a claimed agency record', async () => {
-      const response = await testSession.get('/api/agencies/2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/agencies/2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d/check').expect(HttpStatus.OK);
       assert.deepStrictEqual(response.body?.id, '9eeb6591-12f8-4036-8af8-6b235153d444');
       assert.deepStrictEqual(response.body?.subdomain, 'bmacc');
     });
 
     it('returns a suggested subdomain for a non-claimed agency record', async () => {
-      const response = await testSession.get('/api/agencies/e705f64b-1399-436e-a428-18c8378b3444').expect(HttpStatus.NOT_FOUND);
+      const response = await testSession.get('/api/agencies/e705f64b-1399-436e-a428-18c8378b3444/check').expect(HttpStatus.NOT_FOUND);
       assert.deepStrictEqual(response.body?.subdomain, 'bmaa');
     });
   });
