@@ -110,6 +110,19 @@ router.get(
 
 router.get(
   '/:id',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    const agency = await models.Agency.findByPk(req.params.id);
+    if (agency) {
+      res.json(agency.toJSON());
+    } else {
+      res.send(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.get(
+  '/:id/check',
   helpers.async(async (req, res) => {
     /// check for a claimed agency record
     const record = await models.Agency.scope('claimed').findOne({

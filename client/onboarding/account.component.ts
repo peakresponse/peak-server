@@ -45,7 +45,7 @@ export class AccountComponent {
       this.agency = this.app.agency;
       if (!this.agency) {
         this.isLoading = true;
-        this.api.agencies.get(this.data.agencyId).subscribe((res) => {
+        this.api.agencies.check(this.data.agencyId).subscribe((res) => {
           this.isLoading = false;
           this.agency = res.body;
         });
