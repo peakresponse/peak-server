@@ -24,3 +24,7 @@ WORKDIR $APP_HOME
 RUN mvn install && \
     npm install && \
     npm run build
+
+CMD ["node", "./bin/www"]
+
+EXPOSE 3000
