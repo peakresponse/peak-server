@@ -1,3 +1,4 @@
 client/webpack-stats.json
 dist
+/nemsis
 *.html

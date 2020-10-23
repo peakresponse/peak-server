@@ -13,6 +13,9 @@ services:
     environment:
       - CI=true
       - DATABASE_URL=postgres://postgres@db/app
+      - NEMSIS_VALIDATOR_USERNAME
+      - NEMSIS_VALIDATOR_PASSWORD
+      - NEMSIS_VALIDATOR_ORGANIZATION
       - PORT=3000
     depends_on:
       - db

@@ -8,12 +8,7 @@
     <dependency>
         <groupId>net.sf.saxon</groupId>
         <artifactId>Saxon-HE</artifactId>
-        <version>10.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schematron</artifactId>
-      <version>5.6.0</version>
+        <version>10.2</version>
     </dependency>
   </dependencies>
 </project>

@@ -2,4 +2,4 @@
 
 # Usage: bin/xslt path/to/input.xml path/to/input.xslt path/to/output.xml
 
-java -jar ~/.m2/repository/net/sf/saxon/Saxon-HE/10.0/Saxon-HE-10.0.jar -s:$1 -xsl:$2 -o:$3
+java -jar ~/.m2/repository/net/sf/saxon/Saxon-HE/10.2/Saxon-HE-10.2.jar -s:$1 -xsl:$2 -o:$3 allow-foreign=true

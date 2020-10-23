@@ -15,6 +15,7 @@ const bodyParser = require('body-parser');
 
 const helpers = require('./routes/helpers');
 const routes = require('./routes');
+const { NemsisServer } = require('./lib/nemsis/webService');
 
 const app = express();
 
@@ -30,7 +31,7 @@ app.use(
     useTempFiles: !process.env.AWS_S3_BUCKET,
   })
 );
-app.use(bodyParser.raw({ type: ['image/*', 'video/*', 'audio/*'], limit: '10mb' }));
+app.use(bodyParser.raw({ type: ['text/xml', 'image/*', 'video/*', 'audio/*'], limit: '10mb' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('trust proxy', 1);
@@ -72,6 +73,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// configure NEMSIS soap endpoint
+const nemsisServer = new NemsisServer('/soap/nemsis');
+nemsisServer.configure(app);
+
+// configure remaining routes
 app.use(routes);
 
 // catch 404 and forward to error handler
