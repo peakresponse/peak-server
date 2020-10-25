@@ -22,7 +22,7 @@ import {
   WizardComponent,
 } from '.';
 
-import { InputFieldComponent, SelectFieldComponent } from './fields';
+import { InputFieldComponent, SelectFieldComponent, SelectGenderFieldComponent } from './fields';
 
 import {
   XsdBaseComponent,
@@ -54,6 +54,7 @@ import {
     /// form fields
     InputFieldComponent,
     SelectFieldComponent,
+    SelectGenderFieldComponent,
     /// XSD components
     XsdBaseComponent,
     XsdDateTimeComponent,
@@ -81,6 +82,7 @@ import {
     /// form fields
     InputFieldComponent,
     SelectFieldComponent,
+    SelectGenderFieldComponent,
     /// XSD components
     XsdDateTimeComponent,
     XsdElementComponent,

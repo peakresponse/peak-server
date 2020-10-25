@@ -123,6 +123,7 @@ export class PatientComponent implements OnDestroy {
       'firstName',
       'lastName',
       'age',
+      'gender',
       'respiratoryRate',
       'pulse',
       'capillaryRefill',
