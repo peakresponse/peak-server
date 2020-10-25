@@ -104,6 +104,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: 'audio_file',
       },
+      predictions: {
+        type: DataTypes.JSONB,
+      },
       updatedAttributes: {
         type: DataTypes.JSONB,
         field: 'updated_attributes',

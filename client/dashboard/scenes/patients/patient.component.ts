@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
+import { isEqual } from 'lodash';
 import moment from 'moment';
-import numeral from 'numeral';
 import uuid from 'uuid';
 
 import { AudioComponent } from '../../../shared/components';
@@ -123,6 +123,8 @@ export class PatientComponent implements OnDestroy {
       'firstName',
       'lastName',
       'age',
+      'ageUnits',
+      'gender',
       'respiratoryRate',
       'pulse',
       'capillaryRefill',
@@ -132,6 +134,11 @@ export class PatientComponent implements OnDestroy {
         observation[property] = this.observation[property];
         isDirty = true;
       }
+    }
+    /// do a deep comparison of predictions
+    if (!isEqual(this.patient?.predictions, this.observation.predictions)) {
+      observation.predictions = this.observation.predictions;
+      isDirty = true;
     }
     if (isDirty) {
       this.api.patients.createOrUpdate(observation).subscribe((response) => {

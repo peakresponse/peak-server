@@ -30,31 +30,12 @@
       <div class="flex-grow-1">
         <div class="d-flex">
           <div class="form-group patient__age">
-            <shared-field-input i18n-label label="Age" id="age" type="number" [source]="patient" [target]="observation">
-              <ng-template let-isFocusable="isFocusable" let-isEditing="isEditing" let-source="source" let-target="target">
-                <select id="ageUnits" name="ageUnits" class="custom-select ml-2"
-                  [class.form-control]="isFocusable && isEditing"
-                  [class.form-control-plaintext]="!isFocusable || !isEditing"
-                  [disabled]="!isFocusable || !isEditing"
-                  [(ngModel)]="isEditing ? target.ageUnits : source.ageUnits">
-                  <option value="2516009">y</option>
-                  <option value="2516007">mo</option>
-                  <option value="2516001">d</option>
-                  <option value="2516003">h</option>
-                  <option value="2516005">min</option>
-                </select>
-              </ng-template>
-            </shared-field-input>
+            <shared-field-input-age i18n-label label="Age" id="age" type="number" [source]="patient" [target]="observation">
+            </shared-field-input-age>
           </div>
           <div class="form-group patient__gender">
-            <shared-field-select i18n-label label="Gender" id="gender" [source]="patient" [target]="observation">
-              <option value="9906001" i18n>Female</option>
-              <option value="9906003" i18n>Male</option>
-              <option value="9906007" i18n>Trans Male</option>
-              <option value="9906009" i18n>Trans Female</option>
-              <option value="9906011" i18n>Other</option>
-              <option value="9906005" i18n>Unknown</option>
-            </shared-field-select>
+            <shared-field-select-gender i18n-label label="Gender" id="gender" [source]="patient" [target]="observation">
+            </shared-field-select-gender>
           </div>
           <div class="form-group patient__firstName">
             <shared-field-input i18n-label label="First name" id="firstName" [source]="patient" [target]="observation"></shared-field-input>

@@ -1,5 +1,6 @@
 <div [class.form-field--editing]="isEditing" [class.form-field--empty]="!value || value == ''" [class.form-field--focused]="isFocused"
-  (click)="onClick($event)" class="form-field">
+     [class.form-field--unconfirmed]="isUnconfirmed"
+     (click)="onClick($event)" class="form-field form-field--confirmed">
   <label [for]="derivedId">{{label}}</label>
   <div class="d-flex">
     <input [id]="derivedId" [name]="derivedName" [type]="type"
