@@ -1,5 +1,6 @@
 <div [class.form-field--editing]="isEditing" [class.form-field--empty]="!value || value == ''" [class.form-field--focused]="isFocused"
-  (click)="onClick($event)" class="form-field">
+     [class.form-field--unconfirmed]="isUnconfirmed"
+  (click)="onClick($event)" class="form-field form-field--confirmed">
   <label [for]="derivedId">{{label}}</label>
   <select [id]="derivedId" [name]="derivedName" class="custom-select"
     [class.form-control]="isFocusable && isEditing"

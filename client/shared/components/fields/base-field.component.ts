@@ -17,6 +17,16 @@ export class BaseFieldComponent {
     return this.target != null;
   }
 
+  get isUnconfirmed(): boolean {
+    const predictions = this.isEditing ? this.target?.predictions : this.source?.predictions;
+    if (predictions && predictions[this.derivedPropertyName]) {
+      if (predictions[this.derivedPropertyName].status == 'UNCONFIRMED') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   get derivedId(): string {
     return this.id || this.name || this.propertyName;
   }
