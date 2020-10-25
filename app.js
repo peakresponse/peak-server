@@ -32,7 +32,7 @@ app.use(
   })
 );
 app.use(bodyParser.raw({ type: ['text/xml', 'image/*', 'video/*', 'audio/*'], limit: '10mb' }));
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: false }));
 app.set('trust proxy', 1);
 
