@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       ScenePin.belongsTo(models.Scene, { as: 'scene' });
+      ScenePin.belongsTo(ScenePin, { as: 'prevPin' });
       ScenePin.belongsTo(models.User, { as: 'updatedBy' });
       ScenePin.belongsTo(models.User, { as: 'createdBy' });
       ScenePin.belongsTo(models.User, { as: 'deletedBy' });
@@ -28,14 +29,20 @@ module.exports = (sequelize, DataTypes) => {
       let pin;
       await sequelize.transaction({ transaction: options?.transaction }, async (transaction) => {
         if (data.id) {
-          const prevPin = await ScenePin.findByPk(data.id, { transaction });
-          if (prevPin) {
-            pin = prevPin;
+          // ScenePin instances are immutable- return if found
+          pin = await ScenePin.findByPk(data.id, { transaction });
+          if (pin) {
             return;
           }
         }
-        if (data.type !== ScenePin.Types.OTHER) {
-          const prevPin = await ScenePin.findOne({
+        let prevPin;
+        if (data.prevPinId) {
+          prevPin = await ScenePin.findByPk(data.prevPinId, { transaction });
+          if (!prevPin) {
+            throw new Error('Previous pin not found');
+          }
+        } else if (data.type !== ScenePin.Types.OTHER) {
+          prevPin = await ScenePin.findOne({
             where: {
               sceneId: scene.id,
               type: data.type,
@@ -43,20 +50,21 @@ module.exports = (sequelize, DataTypes) => {
             },
             transaction,
           });
-          if (prevPin) {
-            await prevPin.update(
-              {
-                deletedById: user.id,
-                deletedByAgencyId: agency.id,
-                deletedAt: new Date(),
-              },
-              { transaction }
-            );
-          }
+        }
+        if (prevPin) {
+          await prevPin.update(
+            {
+              deletedById: user.id,
+              deletedByAgencyId: agency.id,
+              deletedAt: new Date(),
+            },
+            { transaction }
+          );
         }
         pin = await ScenePin.create(
           _.assign(_.pick(data, ['id', 'type', 'lat', 'lng', 'name', 'desc']), {
             sceneId: scene.id,
+            prevPinId: prevPin?.id,
             createdById: user.id,
             updatedById: user.id,
             createdByAgencyId: agency.id,
