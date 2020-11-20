@@ -14,7 +14,7 @@
             <div *ngIf="errors|error:'message'; let error" class="invalid-feedback">{{error.message}}</div>
           </div>
         </div>
-        <div class="form-group d-md-none">
+        <div class="form-group">
           <div class="form-field" [class.is-invalid]="errors|error:'emails'">
             <label for="emails">Emails</label>
             <textarea #firstEl [(ngModel)]="emails" (input)="onInputEmails()" required id="emails" name="emails" type="text" class="form-control" rows="4"
@@ -25,29 +25,6 @@
         <div class="form-group d-md-none text-right">
           <a (click)="onSkip()" class="skip">Skip this step...</a>
         </div>
-      </div>
-    </div>
-    <div *ngFor="let row of data.rows; let i = index;" class="row narrow d-none d-md-flex">
-      <div class="col-md-6">
-        <div class="form-group">
-          <div class="form-field">
-            <label [for]="'fullName_' + i">Name</label>
-            <input [(ngModel)]="row.fullName" required [id]="'fullName_' + i" [name]="'fullName_' + i" type="text" class="form-control" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <div class="form-field" [class.is-invalid]="row.fullName != '' && row.email == ''">
-            <label [for]="'email_' + i">Email</label>
-            <input [(ngModel)]="row.email" required [id]="'email_' + i" [name]="'email_' + i" type="text" class="form-control" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row narrow d-none d-md-flex">
-      <div class="col">
-        <button (click)="onMore()" class="btn btn-sm btn-outline-primary" type="button"><i class="peakicon peakicon-add"></i> Add More</button>
       </div>
     </div>
     <input type="submit" class="d-none" value="Next" />
