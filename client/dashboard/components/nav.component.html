@@ -5,18 +5,18 @@
       <i class="peakicon peakicon-scenes"></i>
       <span i18n>Previous Scenes</span>
     </a>
-    <a *ngIf="user.hasRole('CONFIGURATION') || user.hasRole('REPORTING')">
+    <!-- <a *ngIf="user.hasRole('CONFIGURATION') || user.hasRole('REPORTING')">
       <i class="peakicon peakicon-agency"></i>
       <span i18n>Agency Info</span>
-    </a>
+    </a> -->
     <a *ngIf="user.hasRole('PERSONNEL')" routerLink="/users" routerLinkActive="active">
       <i class="peakicon peakicon-users"></i>
       <span i18n>Users</span>
     </a>
-    <a *ngIf="user.hasRole('REPORTING')">
+    <!-- <a *ngIf="user.hasRole('REPORTING')">
       <img class="nemsis-logo" src="/images/nemsis-logo-square.png" />
       <span i18n>NEMSIS<br/>Submission</span>
-    </a>
+    </a> -->
   </ng-container>
   <ng-container *ngIf="scene">
     <a [routerLink]="['/scenes', scene.id, 'overview']" routerLinkActive="active">
