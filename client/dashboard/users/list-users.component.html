@@ -11,7 +11,8 @@
               <i *ngIf="!record.user?.iconUrl" class="peakicon peakicon-user"></i>
             </div>
             <div class="user__details">
-              <div class="user__name">{{record.firstName}} {{record.lastName}}</div>
+              <div *ngIf="record.firstName || record.lastName" class="user__name">{{record.firstName}} {{record.lastName}}</div>
+              <div *ngIf="!record.firstName && !record.lastName" class="user__name">{{record.email}}</div>
               <div class="user__position">{{record.user?.position}}</div>
             </div>
             <div *ngIf="!record.user && record.invitationAt" class="user__invited" i18n>Invited at {{record.invitationAt|date:'h:mma - MMM d yyyy'}}</div>
