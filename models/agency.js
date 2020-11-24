@@ -43,6 +43,18 @@ module.exports = (sequelize, DataTypes) => {
         as: 'activeScenes',
         foreignKey: 'createdByAgencyId',
       });
+      Agency.belongsToMany(models.User, {
+        as: 'users',
+        through: models.Employment,
+      });
+      Agency.belongsToMany(models.User, {
+        as: 'activeUsers',
+        through: models.Employment.scope('active'),
+      });
+      Agency.belongsToMany(models.User, {
+        as: 'activePersonnelAdminUsers',
+        through: models.Employment.scope({ method: ['role', models.Employment.Roles.PERSONNEL] }, 'active'),
+      });
     }
 
     static async register(user, canonicalAgency, subdomain, options) {

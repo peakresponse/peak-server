@@ -209,6 +209,12 @@ export class ApiService {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/employments', params);
     },
+    approve: (id: string): Observable<any> => {
+      return this.post(`/api/employments/${id}/approve`, {});
+    },
+    refuse: (id: string): Observable<any> => {
+      return this.post(`/api/employments/${id}/refuse`, {});
+    },
   };
 
   facilities = {

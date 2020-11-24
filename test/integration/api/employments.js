@@ -4,6 +4,7 @@ const session = require('supertest-session');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
+const models = require('../../../models');
 
 describe('/api/employments', () => {
   let testSession;
@@ -21,7 +22,7 @@ describe('/api/employments', () => {
   describe('GET /', () => {
     it('returns personnel Employment records', async () => {
       const response = await testSession.get('/api/employments').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
-      assert.deepStrictEqual(response.body?.length, 4);
+      assert.deepStrictEqual(response.body?.length, 6);
     });
 
     it('returns pending personnel Employment records', async () => {
@@ -40,7 +41,41 @@ describe('/api/employments', () => {
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .query({ isPending: 0 })
         .expect(HttpStatus.OK);
-      assert.deepStrictEqual(response.body?.length, 3);
+      assert.deepStrictEqual(response.body?.length, 4);
+    });
+  });
+
+  describe('POST /:id/approve', () => {
+    it('approves a pending Employment record', async () => {
+      const record = await models.Employment.findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
+      assert(record.isPending);
+      assert.deepStrictEqual(record.approvedAt, null);
+      assert.deepStrictEqual(record.approvedById, null);
+      await testSession
+        .post('/api/employments/0544b426-2969-4f98-a458-e090cd3487e2/approve')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .expect(HttpStatus.OK);
+      await record.reload();
+      assert(!record.isPending);
+      assert(record.approvedAt);
+      assert.deepStrictEqual(record.approvedById, 'ffc7a312-50ba-475f-b10f-76ce793dc62a');
+    });
+  });
+
+  describe('POST /:id/refuse', () => {
+    it('refuses a pending Employment record', async () => {
+      const record = await models.Employment.findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
+      assert(record.isPending);
+      assert.deepStrictEqual(record.refusedAt, null);
+      assert.deepStrictEqual(record.refusedById, null);
+      await testSession
+        .post('/api/employments/0544b426-2969-4f98-a458-e090cd3487e2/refuse')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .expect(HttpStatus.OK);
+      await record.reload();
+      assert(!record.isPending);
+      assert(record.refusedAt);
+      assert.deepStrictEqual(record.refusedById, 'ffc7a312-50ba-475f-b10f-76ce793dc62a');
     });
   });
 });

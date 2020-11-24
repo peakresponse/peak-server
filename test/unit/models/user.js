@@ -17,12 +17,12 @@ describe('models', () => {
           password: 'Abcd1234!',
         });
         assert(user);
-        assert.strictEqual(user.firstName, 'John');
-        assert.strictEqual(user.lastName, 'Doe');
-        assert.strictEqual(user.email, 'jdoe@peakresponse.net');
-        assert.strictEqual(user.position, 'Paramedic');
+        assert.deepStrictEqual(user.firstName, 'John');
+        assert.deepStrictEqual(user.lastName, 'Doe');
+        assert.deepStrictEqual(user.email, 'jdoe@peakresponse.net');
+        assert.deepStrictEqual(user.position, 'Paramedic');
         /// password attribute should be cleared
-        assert.strictEqual(user.password, null);
+        assert.deepStrictEqual(user.password, null);
         /// hashedPassword should now be set
         assert(user.hashedPassword);
       });
@@ -36,10 +36,10 @@ describe('models', () => {
           password: 'Abcd1234!',
         });
         assert(user);
-        assert.strictEqual(user.firstName, 'John');
-        assert.strictEqual(user.lastName, 'Doe');
-        assert.strictEqual(user.email, 'jdoe@peakresponse.net');
-        assert.strictEqual(user.position, 'Paramedic');
+        assert.deepStrictEqual(user.firstName, 'John');
+        assert.deepStrictEqual(user.lastName, 'Doe');
+        assert.deepStrictEqual(user.email, 'jdoe@peakresponse.net');
+        assert.deepStrictEqual(user.position, 'Paramedic');
       });
 
       it('validates required fields', async () => {
@@ -53,7 +53,7 @@ describe('models', () => {
           }),
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
-            assert.strictEqual(error.errors.length, 5);
+            assert.deepStrictEqual(error.errors.length, 5);
             assert(
               _.find(error.errors, {
                 path: 'firstName',
@@ -100,7 +100,7 @@ describe('models', () => {
           }),
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
-            assert.strictEqual(error.errors.length, 1);
+            assert.deepStrictEqual(error.errors.length, 1);
             assert(
               _.find(error.errors, {
                 path: 'password',
@@ -120,7 +120,7 @@ describe('models', () => {
           }),
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
-            assert.strictEqual(error.errors.length, 1);
+            assert.deepStrictEqual(error.errors.length, 1);
             assert(
               _.find(error.errors, {
                 path: 'password',
@@ -143,7 +143,7 @@ describe('models', () => {
           }),
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
-            assert.strictEqual(error.errors.length, 1);
+            assert.deepStrictEqual(error.errors.length, 1);
             assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
           }
@@ -158,7 +158,7 @@ describe('models', () => {
           }),
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
-            assert.strictEqual(error.errors.length, 1);
+            assert.deepStrictEqual(error.errors.length, 1);
             assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
           }
@@ -173,7 +173,7 @@ describe('models', () => {
           }),
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
-            assert.strictEqual(error.errors.length, 1);
+            assert.deepStrictEqual(error.errors.length, 1);
             assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
           }
@@ -199,7 +199,7 @@ describe('models', () => {
           }),
           (error) => {
             assert(error instanceof models.Sequelize.ValidationError);
-            assert.strictEqual(error.errors.length, 1);
+            assert.deepStrictEqual(error.errors.length, 1);
             assert(
               _.find(error.errors, {
                 path: 'email',
@@ -226,9 +226,9 @@ describe('models', () => {
         assert(user.passwordResetToken);
         assert(user.passwordResetTokenExpiresAt);
         const emails = nodemailerMock.mock.getSentMail();
-        assert.strictEqual(emails.length, 1);
-        assert.strictEqual(emails[0].subject, 'Reset your Password');
-        assert.strictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
+        assert.deepStrictEqual(emails.length, 1);
+        assert.deepStrictEqual(emails[0].subject, 'Reset your Password');
+        assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
         /// if no agency specified, url is on the base
         const resetUrl = `${process.env.BASE_URL}/passwords/reset/${user.passwordResetToken}`;
         assert(emails[0].text.includes(resetUrl));
@@ -248,9 +248,9 @@ describe('models', () => {
         assert(user.passwordResetToken);
         assert(user.passwordResetTokenExpiresAt);
         const emails = nodemailerMock.mock.getSentMail();
-        assert.strictEqual(emails.length, 1);
-        assert.strictEqual(emails[0].subject, 'Reset your Password');
-        assert.strictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
+        assert.deepStrictEqual(emails.length, 1);
+        assert.deepStrictEqual(emails[0].subject, 'Reset your Password');
+        assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
         /// the reset link url should be on the agency subdomain
         const resetUrl = `${agency.baseUrl}/passwords/reset/${user.passwordResetToken}`;
         assert(emails[0].text.includes(resetUrl));
@@ -282,9 +282,9 @@ describe('models', () => {
         assert(agency);
         await user.sendWelcomeEmail(agency);
         const emails = nodemailerMock.mock.getSentMail();
-        assert.strictEqual(emails.length, 1);
-        assert.strictEqual(emails[0].subject, 'Welcome to Peak Response');
-        assert.strictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
+        assert.deepStrictEqual(emails.length, 1);
+        assert.deepStrictEqual(emails[0].subject, 'Welcome to Peak Response');
+        assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
         assert(emails[0].text.includes('Bay Medic Ambulance - Contra Costa'));
         assert(emails[0].html.includes('Bay Medic Ambulance - Contra Costa'));
       });
@@ -301,11 +301,17 @@ describe('models', () => {
         assert(agency);
         await user.sendWelcomeEmail(agency);
         const emails = nodemailerMock.mock.getSentMail();
-        assert.strictEqual(emails.length, 1);
-        assert.strictEqual(emails[0].subject, 'Pending Request to Join');
-        assert.strictEqual(emails[0].to, 'Pending User <pending@peakresponse.net>');
+        assert.deepStrictEqual(emails.length, 3);
+        assert.deepStrictEqual(emails[0].subject, 'Pending Request to Join');
+        assert.deepStrictEqual(emails[0].to, 'Pending User <pending@peakresponse.net>');
         assert(emails[0].text.includes('Bay Medic Ambulance - Contra Costa'));
         assert(emails[0].html.includes('Bay Medic Ambulance - Contra Costa'));
+
+        for (let i = 1; i <= 2; i += 1) {
+          assert.deepStrictEqual(emails[i].subject, 'Pending User is requesting to join Bay Medic Ambulance - Contra Costa');
+          assert(emails[i].text.includes(`${agency.baseUrl}/users`));
+          assert(emails[i].html.includes(`${agency.baseUrl}/users`));
+        }
       });
     });
   });

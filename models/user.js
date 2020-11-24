@@ -110,13 +110,33 @@ module.exports = (sequelize, DataTypes) => {
         await mailer.send({
           template: 'pending',
           message: {
-            to: `${this.fullNameAndEmail}`,
+            to: this.fullNameAndEmail,
           },
           locals: {
             firstName: this.firstName,
             agencyName: agency.name,
           },
         });
+        // also send emails to personnel admins
+        const admins = await agency.getActivePersonnelAdminUsers({ transaction: options?.transaction });
+        const promises = [];
+        for (const admin of admins) {
+          promises.push(
+            mailer.send({
+              template: 'approve',
+              message: {
+                to: admin.fullNameAndEmail,
+              },
+              locals: {
+                pendingFullName: this.fullName,
+                firstName: admin.firstName,
+                agencyName: agency.name,
+                url: `${agency.baseUrl}/users`,
+              },
+            })
+          );
+        }
+        await Promise.all(promises);
       } else {
         await mailer.send({
           template: 'welcome',

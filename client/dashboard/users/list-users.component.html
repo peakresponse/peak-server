@@ -22,10 +22,22 @@
     </div>
     <div class="col-md-6">      
       <h3 i18n>Pending Users</h3>
-      <app-shared-list basePath="/users" [params]="pendingParams" type="employments" class="users">
+      <app-shared-list #pendingList basePath="/users" [params]="pendingParams" type="employments" class="users">
         <ng-template let-record="record">
           <div class="user">
-            {{record.firstName}} {{record.lastName}}
+            <div class="user__photo" [style.background-image]="record.user?.iconUrl|cssUrl">
+              <i *ngIf="!record.user?.iconUrl" class="peakicon peakicon-user"></i>
+            </div>
+            <div class="user__details">
+              <div *ngIf="record.firstName || record.lastName" class="user__name">{{record.firstName}} {{record.lastName}}</div>
+              <div *ngIf="!record.firstName && !record.lastName" class="user__name">{{record.email}}</div>
+              <div class="user__position">{{record.user?.position}}</div>
+            </div>
+            <div class="user__invited" i18n>Requested at {{record.createdAt|date:'h:mma - MMM d yyyy'}}</div>
+            <div class="user__actions">
+              <button (click)="declineConfirmation.show(record, {centered: true, size: 'lg'})" class="btn btn-xs btn-outline-primary mr-3" type="button" i18n>Decline</button>
+              <button (click)="onAccept(record)" class="btn btn-xs btn-primary" type="button" i18n>Accept</button>
+            </div>
           </div>
         </ng-template>
       </app-shared-list>
@@ -37,3 +49,8 @@
 </div>
 <app-dashboard-active-scenes></app-dashboard-active-scenes>
 <router-outlet name="modal"></router-outlet>
+<app-shared-modal #declineConfirmation
+  i18n-confirmLabel confirmLabel="Decline" i18n-dismissLabel dismissLabel="Cancel" (confirm)="onDecline(declineConfirmation.data)">
+  <h4 class="modal-title" i18n>Are you sure?</h4>
+  <div class="modal-body" i18n>Are you sure you wish to decline the pending user request from <b>{{declineConfirmation.data?.firstName}} {{declineConfirmation.data?.lastName}}</b>?</div>
+</app-shared-modal>

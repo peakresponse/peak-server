@@ -62,6 +62,18 @@
   {
     "model": "User",
     "data": {
+      "id": "b6bc38fd-1087-440b-b27b-3782f148bfe6",
+      "firstName": "Refused",
+      "lastName": "User",
+      "email": "refused@peakresponse.net",
+      "position": "Ambulance Driver",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
       "id": "73644f3e-5fc6-459d-9dad-020869c93658",
       "firstName": "Another",
       "lastName": "User",
@@ -79,6 +91,18 @@
       "lastName": "User",
       "position": "EMT",
       "email": "ended@peakresponse.net",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "8e6753e2-3063-48e1-af22-cea57bd06514",
+      "firstName": "Personnel",
+      "lastName": "User",
+      "position": "Personnel Admin",
+      "email": "personnel.admin@peakresponse.net",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": false
     }

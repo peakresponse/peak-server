@@ -176,9 +176,12 @@ describe('/api/demographics/personnel', () => {
       assert(employment.isPending);
       /// it should have sent out an email
       const emails = nodemailerMock.mock.getSentMail();
-      assert.strictEqual(emails.length, 1);
+      assert.strictEqual(emails.length, 3);
       assert.strictEqual(emails[0].subject, 'Pending Request to Join');
       assert.strictEqual(emails[0].to, 'Test User <uninvited.member@peakresponse.net>');
+      for (let i = 1; i <= 2; i += 1) {
+        assert.deepStrictEqual(emails[i].subject, 'Test User is requesting to join Bay Medic Ambulance - Contra Costa');
+      }
     });
   });
 });

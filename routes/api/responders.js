@@ -64,7 +64,7 @@ router.patch(
     });
     /// notify all listeners on scene
     if (ids) {
-      dispatchSceneRespondersUpdate(ids);
+      await dispatchSceneRespondersUpdate(ids);
     }
   })
 );

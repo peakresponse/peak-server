@@ -25,6 +25,7 @@ h3 {
   box-shadow: $cardShadow;
   padding: 0.5rem 0.75rem;
   display: flex;
+  flex-wrap: wrap;
   position: relative;
   align-items: center;
 }
@@ -62,4 +63,10 @@ h3 {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+}
+
+.user__actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }

@@ -19,6 +19,22 @@
   {
     "model": "Employment",
     "data": {
+      "id": "7939c808-820e-42cc-8331-8e31ff951541",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "userId": "8e6753e2-3063-48e1-af22-cea57bd06514",
+      "hiredAt": "2020-04-06T21:22:10.158Z",
+      "startedAt": "2020-04-06T21:22:10.158Z",
+      "endedAt": null,
+      "roles": ["PERSONNEL"],
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
+  },
+  {
+    "model": "Employment",
+    "data": {
       "id": "5e5f2383-b25b-4cee-91a7-792ec9ca2848",
       "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
       "userId": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
@@ -67,11 +83,26 @@
   {
     "model": "Employment",
     "data": {
+      "id": "ab7f0729-0506-4f80-931d-5456a29cacef",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "userId": "b6bc38fd-1087-440b-b27b-3782f148bfe6",
+      "roles": [],
+      "refusedAt": "2020-04-06T21:22:10.158Z",
+      "refusedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "b6bc38fd-1087-440b-b27b-3782f148bfe6",
+      "createdById": "b6bc38fd-1087-440b-b27b-3782f148bfe6"
+    }
+  },
+  {
+    "model": "Employment",
+    "data": {
       "id": "b0c2b79e-5905-417f-a790-ba77c1134d92",
       "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "99b0ce13-138a-40db-9f05-da6475b8b4eb",
       "endedAt": "2020-04-07T21:22:10.158Z",
-      "roles": [],
+      "roles": ["PERSONNEL"],
       "createdAt": "2020-04-06T21:22:10.158Z",
       "updatedAt": "2020-04-06T21:22:10.158Z",
       "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",

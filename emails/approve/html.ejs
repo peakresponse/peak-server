@@ -1,0 +1,12 @@
+<%- include('../layout/_header.html.ejs') %>
+<h1>Pending Request to Join</h1>
+<p>Hi <%= firstName %>,</p>
+<p><%= pendingFullName %> is requesting to join the <%= agencyName %> on Peak Response. Please review and accept or decline here:</p>
+<%- include('../layout/_button.html.ejs', {
+  label: 'Review Pending Users',
+  url: url
+}) %>
+<p><a href="<%= url %>"><%= url %></a></p>
+<p>Cheers,<br />
+The Peak Response Team</p>
+<%- include('../layout/_footer.html.ejs') %>

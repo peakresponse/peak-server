@@ -6,7 +6,7 @@ const models = require('../../../models');
 describe('models', () => {
   describe('Agency', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'states', 'agencies', 'scenes']);
+      await helpers.loadFixtures(['users', 'states', 'agencies', 'employments', 'scenes']);
     });
 
     describe("scope('canonical')", () => {
@@ -18,6 +18,30 @@ describe('models', () => {
     describe("scope('claimed')", () => {
       it('filters out non-claimed records', async () => {
         assert.deepStrictEqual(await models.Agency.scope('claimed').count(), 2);
+      });
+    });
+
+    describe('getUsers()', () => {
+      it('returns users associated with this agency', async () => {
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const users = await agency.getUsers();
+        assert.deepStrictEqual(users.length, 5);
+      });
+    });
+
+    describe('getActiveUsers()', () => {
+      it('returns only active users associated with this agency', async () => {
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const users = await agency.getActiveUsers();
+        assert.deepStrictEqual(users.length, 2);
+      });
+    });
+
+    describe('getActivePersonnelAdminUsers()', () => {
+      it('returns only active users with personnel admin role associated with this agency', async () => {
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const users = await agency.getActivePersonnelAdminUsers();
+        assert.deepStrictEqual(users.length, 2);
       });
     });
 

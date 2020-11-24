@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const moment = require('moment');
+const { Op } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 const uuid = require('uuid/v4');
 
@@ -25,6 +26,36 @@ module.exports = (sequelize, DataTypes) => {
       Employment.belongsTo(models.User, { as: 'user' });
       Employment.belongsTo(models.User, { as: 'updatedBy' });
       Employment.belongsTo(models.User, { as: 'createdBy' });
+      Employment.belongsTo(models.User, { as: 'approvedBy' });
+      Employment.belongsTo(models.User, { as: 'refusedBy' });
+    }
+
+    async approve(user, options) {
+      if (this.isPending) {
+        await this.update(
+          {
+            isPending: false,
+            approvedAt: new Date(),
+            approvedById: user.id,
+          },
+          options
+        );
+      }
+    }
+
+    async refuse(user, options) {
+      if (this.isPending) {
+        if (this.isPending) {
+          await this.update(
+            {
+              isPending: false,
+              refusedAt: new Date(),
+              refusedById: user.id,
+            },
+            options
+          );
+        }
+      }
     }
 
     async sendInvitationEmail(options) {
@@ -68,12 +99,19 @@ module.exports = (sequelize, DataTypes) => {
         'endedAt',
         'status',
         'statusAt',
+        'createdAt',
+        'updatedAt',
       ]);
     }
   }
 
   Employment.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       lastName: {
         type: DataTypes.STRING,
         field: 'last_name',
@@ -151,6 +189,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
       },
+      approvedAt: {
+        type: DataTypes.DATE,
+        field: 'approved_at',
+      },
+      refusedAt: {
+        type: DataTypes.DATE,
+        field: 'refused_at',
+      },
       status: DataTypes.STRING,
       statusAt: {
         type: DataTypes.DATE,
@@ -173,9 +219,9 @@ module.exports = (sequelize, DataTypes) => {
         field: 'ended_at',
       },
       isActive: {
-        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['isPending', 'endedAt']),
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['isPending', 'refusedAt', 'endedAt']),
         get() {
-          return !this.isPending && (this.endedAt == null || moment(this.endedAt).isAfter(moment()));
+          return !this.isPending && !this.refusedAt && (this.endedAt == null || moment(this.endedAt).isAfter(moment()));
         },
       },
       isOwner: {
@@ -201,6 +247,28 @@ module.exports = (sequelize, DataTypes) => {
       },
     }
   );
+
+  Employment.addScope('active', {
+    where: {
+      endedAt: {
+        [Op.or]: [null, { [Op.gt]: sequelize.literal('NOW()') }],
+      },
+      isPending: false,
+      refusedAt: null,
+      userId: {
+        [Op.not]: null,
+      },
+    },
+  });
+
+  Employment.addScope('role', (role) => {
+    return {
+      where: {
+        [Op.or]: [{ isOwner: true }, { roles: { [Op.contains]: [role] } }],
+      },
+    };
+  });
+
   Employment.beforeValidate((record) => {
     record.data = record.data || {};
     if (record.getNemsisAttributeValue([], 'UUID') === undefined) {
@@ -211,6 +279,7 @@ module.exports = (sequelize, DataTypes) => {
       record.setDataValue('invitationAt', new Date());
     }
   });
+
   Employment.beforeSave(async (record, options) => {
     if (!record.id) {
       record.setDataValue('id', record.getNemsisAttributeValue([], 'UUID'));
@@ -236,11 +305,14 @@ module.exports = (sequelize, DataTypes) => {
 
     record.setDataValue('isValid', record.getNemsisAttributeValue([], ['pr:isValid']));
   });
+
   Employment.afterCreate(async (record, options) => {
     if (record.invitationCode) {
       await record.sendInvitationEmail(options);
     }
   });
+
   sequelizePaginate.paginate(Employment);
+
   return Employment;
 };

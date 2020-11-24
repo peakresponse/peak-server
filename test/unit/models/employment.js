@@ -9,9 +9,28 @@ describe('models', () => {
     let user;
     let agency;
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'states', 'agencies']);
+      await helpers.loadFixtures(['users', 'states', 'agencies', 'employments']);
       user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
       agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+    });
+
+    describe("scope('active')", () => {
+      it('returns only active employments', async () => {
+        const records = await models.Employment.scope('active').findAll();
+        assert.deepStrictEqual(records.length, 4);
+      });
+    });
+
+    describe("scope('role')", () => {
+      it('returns only employments that satisfy the given role (owner satisfies all implicitly)', async () => {
+        const records = await models.Employment.scope({ method: ['role', models.Employment.Roles.PERSONNEL] }).findAll();
+        assert.deepStrictEqual(records.length, 4);
+      });
+
+      it('returns only active employments that satisfy the given role (owner satisfies all implicitly)', async () => {
+        const records = await models.Employment.scope({ method: ['role', models.Employment.Roles.PERSONNEL] }, 'active').findAll();
+        assert.deepStrictEqual(records.length, 3);
+      });
     });
 
     describe('.save()', () => {
@@ -53,6 +72,32 @@ describe('models', () => {
         assert.strictEqual(emails[0].to, 'John D Smith <johndsmith@peakresponse.net>');
         assert(emails[0].html.indexOf(`http://bmacc.${process.env.BASE_HOST}:3000/sign-up?invitationCode=${record.invitationCode}`) >= 0);
         assert(emails[0].text.indexOf(`http://bmacc.${process.env.BASE_HOST}:3000/sign-up?invitationCode=${record.invitationCode}`) >= 0);
+      });
+    });
+
+    describe('.approve()', () => {
+      it('approves a pending employment', async () => {
+        const record = await models.Employment.findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
+        assert(record.isPending);
+        assert(!record.isActive);
+        await record.approve(user);
+        assert(!record.isPending);
+        assert(record.isActive);
+        assert(record.approvedAt);
+        assert.deepStrictEqual(record.approvedById, user.id);
+      });
+    });
+
+    describe('.refuse()', () => {
+      it('refuses a pending employment', async () => {
+        const record = await models.Employment.findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
+        assert(record.isPending);
+        assert(!record.isActive);
+        await record.refuse(user);
+        assert(!record.isPending);
+        assert(!record.isActive);
+        assert(record.refusedAt);
+        assert.deepStrictEqual(record.refusedById, user.id);
       });
     });
 
