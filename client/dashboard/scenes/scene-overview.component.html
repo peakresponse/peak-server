@@ -13,7 +13,6 @@
       <hr />
       <h3 i18n>Initial Observations from IC</h3>
       <p>Approx # Patients: {{(scene.attributes$|async).approxPatients}}</p>
-      <p *ngIf="(scene.attributes$|async).urgency">{{(scene.attributes$|async).urgency}}</p>
       <hr />
       <h3 i18n># Patients Recorded</h3>
       <p class="overview__patients-recorded">{{(scene.stats$|async)[0].total}}</p>

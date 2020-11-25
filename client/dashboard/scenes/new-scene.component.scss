@@ -16,14 +16,6 @@ header {
   }
 }
 
-.col-md-6 {
-  padding-right: 0.625rem;
-
-  & + .col-md-6 {
-    padding-left: 0.625rem;
-  }
-}
-
 .location {
   @include copy-m-regular;
 

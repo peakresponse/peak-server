@@ -37,12 +37,6 @@
               <input [(ngModel)]="record.name" type="text" class="form-control" />
             </div>
           </div>    
-          <div class="form-group">
-            <div class="form-field">
-              <label for="desc" i18n>Description</label>
-              <textarea [(ngModel)]="record.desc" rows="4" class="form-control"></textarea>                
-            </div>
-          </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
@@ -51,10 +45,12 @@
               <input [(ngModel)]="record.approxPatients" type="number" class="form-control" />
             </div>
           </div>
+        </div>
+        <div class="col-12">
           <div class="form-group">
             <div class="form-field">
-              <label for="urgency" i18n>Description of Patient Urgency</label>
-              <textarea [(ngModel)]="record.urgency" rows="4" class="form-control"></textarea>                
+              <label for="desc" i18n>Description</label>
+              <textarea [(ngModel)]="record.desc" rows="4" class="form-control"></textarea>                
             </div>
           </div>
         </div>
