@@ -48,7 +48,7 @@ app.use('/nemsis', express.static(path.join(__dirname, 'nemsis')));
 
 // set up session handler with an app reference so can be used by websocket server
 app.sessionParser = cookieSession({
-  // domain: process.env.NODE_ENV === 'test' ? undefined : process.env.BASE_HOST,
+  domain: process.env.NODE_ENV === 'test' ? undefined : process.env.BASE_HOST,
   maxAge: 24 * 60 * 60 * 1000,
   secret: process.env.SESSION_SECRET,
   secure: process.env.NODE_ENV === 'production',
