@@ -11,7 +11,7 @@
       <button *ngIf="(scene.attributes$|async).incidentCommanderId != user.id && !scene.isOnScene(user.id)" routerLink="/scenes" type="button" class="btn btn-sm btn-warning mr-3" i18n>Exit Scene</button>
       <button *ngIf="(scene.attributes$|async).incidentCommanderId != user.id && !scene.isOnScene(user.id)" (click)="scene.join().subscribe()" type="button" class="btn btn-sm btn-primary" i18n>Join Scene</button>
       <hr />
-      <h3 i18n>Initial Observations from IC</h3>
+      <h3 i18n>Initial Observations from MGS</h3>
       <p>Approx # Patients: {{(scene.attributes$|async).approxPatients}}</p>
       <hr />
       <h3 i18n># Patients Recorded</h3>
