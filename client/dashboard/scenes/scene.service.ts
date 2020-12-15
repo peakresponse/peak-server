@@ -10,6 +10,7 @@ import remove from 'lodash/remove';
 import moment from 'moment';
 
 import { ApiService, WebSocketService } from '../../shared/services';
+import { RequestQueue } from '../../shared/util';
 import { Scene } from './scene';
 
 @Injectable()
@@ -33,6 +34,8 @@ export class SceneService implements OnDestroy {
 
   private responders: any[] = [];
   private respondersSubject = new ReplaySubject<any[]>(1);
+
+  private queue = new RequestQueue();
 
   private stats: any[] = Array(7)
     .fill(null)
@@ -164,16 +167,26 @@ export class SceneService implements OnDestroy {
     return this.api.scenes.join(this.id);
   }
 
+  assign(responder: any, role: string): Observable<any> {
+    if (responder.role == role) {
+      responder.role = null;
+      return this.queue.add(this.api.responders.assign(responder.id, null));
+    } else {
+      responder.role = role;
+      return this.queue.add(this.api.responders.assign(responder.id, role));
+    }
+  }
+
   addPin(pin: any): Observable<any> {
     this.pins.push(pin);
     this.pinsSubject.next(this.pins);
-    return this.api.scenes.addPin(this.id, pin);
+    return this.queue.add(this.api.scenes.addPin(this.id, pin));
   }
 
   removePin(pin: any): Observable<any> {
     remove(this.pins, { id: pin.id });
     this.pinsSubject.next(this.pins);
-    return this.api.scenes.removePin(this.id, pin.id);
+    return this.queue.add(this.api.scenes.removePin(this.id, pin.id));
   }
 
   leave(): Observable<any> {

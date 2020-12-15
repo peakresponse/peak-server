@@ -1,18 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NavigationService, ApiService, UserService } from '../../shared/services';
+import { NavigationService, UserService } from '../../shared/services';
 
 import { SceneService } from './scene.service';
-import { Patient } from './patients';
 
 @Component({
   templateUrl: './scene-overview.component.html',
   styleUrls: ['./scene-overview.component.scss'],
 })
 export class SceneOverviewComponent {
-  private patientPriorities = Patient.PRIORITIES;
-
-  constructor(private api: ApiService, private navigation: NavigationService, public scene: SceneService, public user: UserService) {}
+  constructor(private navigation: NavigationService, public scene: SceneService, public user: UserService) {}
 
   onLeave() {
     const sceneId = this.scene.id;
@@ -35,10 +32,6 @@ export class SceneOverviewComponent {
   }
 
   onToggle(responder: any, role: string) {
-    if (responder.role == role) {
-      this.api.responders.assign(responder.id, null).subscribe();
-    } else {
-      this.api.responders.assign(responder.id, role).subscribe();
-    }
+    this.scene.assign(responder, role).subscribe();
   }
 }
