@@ -2,26 +2,13 @@ const express = require('express');
 const HttpStatus = require('http-status-codes');
 
 const mailer = require('../emails/mailer');
-const models = require('../models');
 const helpers = require('./helpers');
 const interceptors = require('./interceptors');
 
 const router = express.Router();
 
-router.get('/pincodes', (req, res) => {
-  res.render('pincodes', {
-    Patient: models.Patient,
-    seed: req.query.seed || 1,
-    count: req.query.count || 20,
-  });
-});
-
-router.get('/pincodes2', (req, res) => {
-  res.render('pincodes2', {
-    Patient: models.Patient,
-    seed: req.query.seed || 1,
-    count: req.query.count || 20,
-  });
+router.get('/privacy', (req, res) => {
+  res.render('privacy');
 });
 
 router.get('/logout', (req, res) => {
@@ -48,7 +35,7 @@ if (process.env.MARKETING_ENABLED) {
           pilot: req.body.pilot ? 'Yes!' : 'No',
         },
       });
-      res.send(HttpStatus.NO_CONTENT).end();
+      res.status(HttpStatus.NO_CONTENT).end();
     })
   );
 
@@ -56,7 +43,7 @@ if (process.env.MARKETING_ENABLED) {
     if (req.subdomains.length > process.env.BASE_HOST.split('.').length - 2) {
       next();
     } else {
-      res.render('index', { layout: false });
+      res.render('index');
     }
   });
 }

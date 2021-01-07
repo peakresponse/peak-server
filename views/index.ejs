@@ -1,277 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Peak Response is an MCI management system for EMS professionals.">
-    <meta name="author" content="Peak Response">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <title>Peak Response</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/libraries/fontawesome/css/all.css" />
-    <% for (let entry of ['assets']) { %>
-      <% for (let chunk of webpackStats.chunks[entry]) { %>
-        <% if (chunk.name.endsWith('.css')) { %>
-          <link rel="stylesheet" href="<%= chunk.publicPath %>" />
-        <% } %>
-      <% } %>
-    <% } %>
-    <link rel="stylesheet" href="/stylesheets/home.css" />
-    <script type="application/javascript" src="/libraries/smoothscroll/smoothscroll.min.js"></script>
-    <script type="application/javascript" src="/libraries/jquery/jquery.min.js"></script>
-    <script type="application/javascript" src="/libraries/bootstrap/js/bootstrap.min.js"></script>
-    <script type="application/javascript" src="/scripts/home.js"></script>
-    <% if (process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID) { %>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID %>"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '<%= process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID %>');
-    </script>
-    <% } %>
-  </head>
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-md fixed-top top">
-        <div class="container">
-          <a class="navbar-brand" href="#home"><img src="/images/logo.png" alt="NaT" /></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="ncavbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="nav navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#home">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#solution">Our Solution</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#story">Our Story</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#contact">Contact Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="btn btn-xs btn-outline-primary" href="/sign-up">Sign Up</a>
-              </li>
-            </ul>
-          </div>
+<%- contentFor('head') %>
+<link rel="stylesheet" href="/stylesheets/home.css" />
+<script type="application/javascript" src="/libraries/smoothscroll/smoothscroll.min.js"></script>
+<script type="application/javascript" src="/scripts/home.js"></script>
+<% if (process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID) { %>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID %>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '<%= process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID %>');
+</script>
+<% } %>
+<%- contentFor('body') %>
+<%- include('_header', {top: true}) %>
+<main role="main">
+  <section id="home">
+    <div class="container">
+      <div id="home__valprop">
+        <h1>Your calling is saving lives, we want to help you do it.</h1>
+        <p>Peak Response aims to improve the accuracy and efficiency of triage management during mass casualty incidents.</p>
+        <a class="btn btn-sm btn-block btn-outline-primary" href="#solution"><span id="home__cta"><i class="fas fa-chevron-right invisible"></i>Our Solution<i class="fas fa-chevron-right"></i></span></a>
+      </div>
+    </div>
+    <div id="home__credit">Photo credit: Ilka Cole | VIRIN: 170928-F-GY014-009.JPG</div>
+  </section>
+  <section id="solution">
+    <div class="container">
+      <h2>Our Solution</h2>
+      <h3>Peak Response is a MCI management system for EMS professionals.</h3>
+      <div class="row">
+        <div class="col-lg-8 order-lg-2">
+          <img src="/images/home1.jpg" alt="Peak Response mobile app and web dashboard">
         </div>
-      </nav>
-    </header>
-    <main role="main">
-      <section id="home">
-        <div class="container">
-          <div id="home__valprop">
-            <h1>Your calling is saving lives, we want to help you do it.</h1>
-            <p>Peak Response aims to improve the accuracy and efficiency of triage management during mass casualty incidents.</p>
-            <a class="btn btn-sm btn-block btn-outline-primary" href="#solution"><span id="home__cta"><i class="fas fa-chevron-right invisible"></i>Our Solution<i class="fas fa-chevron-right"></i></span></a>
-          </div>
+        <div class="col-lg-4 order-lg-1">
+          <p>Peak Response is an open source software system that provides EMS professionals with simple documentation, powerful sorting, and streamlined analysis capabilities that fit into the workflow of complex MCIs.</p>
+          <p>As first responders collect patient data across a scene, each new piece of information is automatically uploaded to provide a live bird’s-eye view for the incident commander and others managing the scene strategy. Peak Response also allows for easy data transfer to receiving hospitals, creating a foundation for improved continuation of care.</p>
         </div>
-        <div id="home__credit">Photo credit: Ilka Cole | VIRIN: 170928-F-GY014-009.JPG</div>
-      </section>
-      <section id="solution">
-        <div class="container">
-          <h2>Our Solution</h2>
-          <h3>Peak Response is a MCI management system for EMS professionals.</h3>
-          <div class="row">
-            <div class="col-lg-8 order-lg-2">
-              <img src="/images/home1.jpg" alt="Peak Response mobile app and web dashboard">
-            </div>
-            <div class="col-lg-4 order-lg-1">
-              <p>Peak Response is an open source software system that provides EMS professionals with simple documentation, powerful sorting, and streamlined analysis capabilities that fit into the workflow of complex MCIs.</p>
-              <p>As first responders collect patient data across a scene, each new piece of information is automatically uploaded to provide a live bird’s-eye view for the incident commander and others managing the scene strategy. Peak Response also allows for easy data transfer to receiving hospitals, creating a foundation for improved continuation of care.</p>
-            </div>
+      </div>
+    </div>
+    <div class="solution__screenshot bg-alternate">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 order-lg-2">
+            <img src="/images/home2.jpg" alt="Peak Response scene overview">
           </div>
-        </div>
-        <div class="solution__screenshot bg-alternate">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 order-lg-2">
-                <img src="/images/home2.jpg" alt="Peak Response scene overview">
-              </div>
-              <div class="col-lg-6 order-lg-1">
-                <h3>Scene Overview</h3>
-                <p>First responders approaching or just arriving on scene are able to access an overview that helps them understand what to expect.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="solution__screenshot">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6">
-                <img src="/images/home3.jpg" alt="Peak Response mobile app hands-free interface">
-              </div>
-              <div class="col-lg-6">
-                <h3>Hands-Free Documentation</h3>
-                <p>First responders are able to document patient information and triage status using our hands-free voice-to-text capability.  After observations are recorded verbally, Peak Response pulls information from the audio and auto fills the patient form.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="solution__screenshot bg-alternate">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 order-lg-2">
-                <img src="/images/home4.jpg" alt="Peak Response patient sorting options">
-              </div>
-              <div class="col-lg-6 order-lg-1">
-                <h3>Powerful Patient Sorting</h3>
-                <p>Patients in the system can be easily sorted based on a variety of criteria for more effective scene management and patient prioritization. Patients and first responders can also be viewed on a map to identify highly impacted areas and direct resources accordingly.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="solution__screenshot">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6">
-                <img src="/images/home5.jpg" alt="Peak Response mobile app user friendly UI">
-              </div>
-              <div class="col-lg-6">
-                <h3>Simple to Update</h3>
-                <p>Patient documentation can be continuously updated as a scene progresses.  Once a patient is ready to leave the scene, they will be marked as transported and their information can be transported to the receiving hospital.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="story" class="bg-alternate">
-        <div class="container">
-          <h2>Our Story</h2>
-          <h3>Dedicated to providing life saving efficiency.</h3>
-          <p>Peak Response (originally NaTriage) was initially conceptualized in 2019 as part of the Tech to Protect Challenge, sponsored by NIST PSCR, aimed at fostering technological innovation for emergency responders. The solution came out of a focus on a common pain point: time spent documenting injuries and incidents at the scene of mass casualty incidents. These incidents are chaotic, high-pressure environments where time spent documenting can mean the difference between life and death. The quick tag scan and speech-to-text form filling were the first features, but the solution quickly expanded to include a variety of powerful sorting and data export options to improve efficiency, both at the point of contact with the patient and also for the incident commander monitoring the entire scene.</p>
-          <p>We are working to release an improved and expanded version of the software in the fall of 2020 that will include improved feature set and designs.</p>
-          <div id="story__bios" class="row">
-            <div class="col-lg-3">
-              <img src="/images/bio-francis.jpg" alt="Portrait of Francis Li">
-            </div>
-            <div class="col-lg-9">
-              <h4>Francis Li<span>&nbsp;&nbsp;|&nbsp;&nbsp;Co-Founder/CTO</span>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/francisli/"><i class="fab fa-linkedin"></i></a></h4>
-              <p>Francis Li is the original creator of Peak Response. He is a full-stack software architect and interaction designer based in San Francisco. He is also a strong advocate for for community-based civic technology projects as a member of the volunteer <a href="https://codeforsanfrancisco.org">Code for San Francisco</a> brigade and as part of the Board of Directors for <a href="https://devmission.org">Dev/Mission</a>.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3">
-              <img src="/images/bio-britt.jpg" alt="Portrait of Britt Jensen">
-            </div>
-            <div class="col-lg-9">
-              <h4>Britt Jensen<span>&nbsp;&nbsp;|&nbsp;&nbsp;Co-Founder/CEO</span>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/britt-jensen-10957164/"><i class="fab fa-linkedin"></i></a></h4>
-              <p>Britt Jensen joined Francis shortly after the original prototype was created.  She is a user experience, designer, research, and strategist who is passionate about bringing user-centered products to industries that aren’t traditionally design-focued.  She believes everyone, no matter how highly trained, is able to do their work more effectively with well-designed products.</p>
-            </div>
-          </div>
-        </div>
-        <div class="solution__screenshot bg-white">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 order-lg-2">
-                <img src="/images/home6.png" alt="GPL and AGPL logos">
-              </div>
-              <div class="col-lg-6 order-lg-1">
-                <h3>Free. Open Source. Standards Based.</h3>
-                <p>Peak Response is being developed in the open as free software licensed under the GNU General Public License. Browse our <a href="https://github.com/peakresponse/">source code repositories</a> on GitHub.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="contact" class="bg-alternate">
-        <div class="container">
-          <h2>Contact us</h2>
-          <h3>We would love to hear from you.</h3>
-          <p>We’re in the early stages of developing this product and are always looking for feedback from users.  If you’re interested in testing out the product or are just looking for more info, please leave your information and we’ll connect with you.</p>
-          <form class="row" method="post" action="/contact-us">
-            <div class="form-group col-md-6 col-lg-5 offset-lg-1">
-              <div class="form-field">
-                <label for="firstName">First Name</label>
-                <input required type="text" class="form-control" id="firstName" name="firstName" />
-              </div>
-            </div>
-            <div class="form-group col-md-6 col-lg-5">
-              <div class="form-field">
-                <label for="lastName">Last Name</label>
-                <input required type="text" class="form-control" id="lastName" name="lastName"/>
-              </div>
-            </div>
-            <div class="form-group col-lg-10 offset-lg-1">
-              <div class="form-field">
-                <label for="email">Email</label>
-                <input required type="email" class="form-control" id="email" name="email" />
-              </div>
-            </div>
-            <div class="form-group col-lg-10 offset-lg-1">
-              <div class="form-field">
-                <label for="message">Message</label>
-                <textarea required class="form-control" id="message" name="message" rows="4"></textarea>
-              </div>
-            </div>
-            <div class="form-group col-lg-7 offset-lg-1">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="feedback" name="feedback" value="yes">
-                <label for="feedback" class="form-check-label">&nbsp;I'm interested in providing feedback on the product.</label>
-              </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="pilot" name="pilot" value="yes">
-                <label for="pilot" class="form-check-label">&nbsp;I'm interested in being part of a pilot program.</label>
-              </div>
-            </div>
-            <div class="form-group col-lg-3">
-              <button type="submit" class="btn btn-sm btn-block btn-outline-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </section>
-      <!-- FOOTER -->
-      <footer>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-8 order-md-2">
-              <ul>
-                <li><a href="#home"><b>Home</b></a></li>
-                <li><a href="#solution">Our Solution</a></li>
-                <li><a href="#story">Our Story</a></li>
-                <li><a href="#contact">Contact Us</a></li>
-              </ul>
-              <ul id="footer_icons">
-                <li><a href="https://www.linkedin.com/company/peak-response-inc/"><img src="/images/linkedin.png" alt="LinkedIn" /></a></li>
-                <li><a href="https://twitter.com/peakresponseinc"><img src="/images/twitter.png" alt="Twitter" /></a></li>
-                <li><a href="https://facebook.com/peakresponseinc"><img src="/images/facebook.png" alt="Facebook" /></a></li>
-                <li><a href="https://instagram.com/peakresponseinc"><img src="/images/instagram.png" alt="Instagram" /></a></li>
-                <li><a href="https://github.com/peakresponse"><img src="/images/github.png" alt="Github" /></a></li>
-              </ul>
-            </div>
-            <div class="text-md-left col-md-2 order-md-1">
-              <img src="/images/logo.png" alt="Peak Response Logo" />
-            </div>
-            <div id="footer__copyright" class="text-md-right col-md-12 order-md-3">
-              Copyright &copy; 2020 Peak Response Inc. All rights reserved.
-            </div>
-          </div>
-        </div>
-      </footer>
-    </main>
-    <div class="modal fade" id="redirect" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-body">
-            <img src="/images/logo-dark.png" alt="Peak Response Logo" />
-            <p>NaTriage is now Peak Response.<br />Please make note of our new web address:<br/>https://peakresponse.net</p>
-            <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Got it!</button>
+          <div class="col-lg-6 order-lg-1">
+            <h3>Scene Overview</h3>
+            <p>First responders approaching or just arriving on scene are able to access an overview that helps them understand what to expect.</p>
           </div>
         </div>
       </div>
     </div>
-    <script>
-      if (window.location.hash == '#redirect') {
-        window.location.replace("#home");
-        $('#redirect').modal('show');
-      };
-    </script>
-  </body>
-</html>
+    <div class="solution__screenshot">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <img src="/images/home3.jpg" alt="Peak Response mobile app hands-free interface">
+          </div>
+          <div class="col-lg-6">
+            <h3>Hands-Free Documentation</h3>
+            <p>First responders are able to document patient information and triage status using our hands-free voice-to-text capability.  After observations are recorded verbally, Peak Response pulls information from the audio and auto fills the patient form.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="solution__screenshot bg-alternate">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 order-lg-2">
+            <img src="/images/home4.jpg" alt="Peak Response patient sorting options">
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <h3>Powerful Patient Sorting</h3>
+            <p>Patients in the system can be easily sorted based on a variety of criteria for more effective scene management and patient prioritization. Patients and first responders can also be viewed on a map to identify highly impacted areas and direct resources accordingly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="solution__screenshot">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <img src="/images/home5.jpg" alt="Peak Response mobile app user friendly UI">
+          </div>
+          <div class="col-lg-6">
+            <h3>Simple to Update</h3>
+            <p>Patient documentation can be continuously updated as a scene progresses.  Once a patient is ready to leave the scene, they will be marked as transported and their information can be transported to the receiving hospital.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="story" class="bg-alternate">
+    <div class="container">
+      <h2>Our Story</h2>
+      <h3>Dedicated to providing life saving efficiency.</h3>
+      <p>Peak Response (originally NaTriage) was initially conceptualized in 2019 as part of the Tech to Protect Challenge, sponsored by NIST PSCR, aimed at fostering technological innovation for emergency responders. The solution came out of a focus on a common pain point: time spent documenting injuries and incidents at the scene of mass casualty incidents. These incidents are chaotic, high-pressure environments where time spent documenting can mean the difference between life and death. The quick tag scan and speech-to-text form filling were the first features, but the solution quickly expanded to include a variety of powerful sorting and data export options to improve efficiency, both at the point of contact with the patient and also for the incident commander monitoring the entire scene.</p>
+      <p>We are working to release an improved and expanded version of the software in the fall of 2020 that will include improved feature set and designs.</p>
+      <div id="story__bios" class="row">
+        <div class="col-lg-3">
+          <img src="/images/bio-francis.jpg" alt="Portrait of Francis Li">
+        </div>
+        <div class="col-lg-9">
+          <h4>Francis Li<span>&nbsp;&nbsp;|&nbsp;&nbsp;Co-Founder/CTO</span>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/francisli/"><i class="fab fa-linkedin"></i></a></h4>
+          <p>Francis Li is the original creator of Peak Response. He is a full-stack software architect and interaction designer based in San Francisco. He is also a strong advocate for for community-based civic technology projects as a member of the volunteer <a href="https://codeforsanfrancisco.org">Code for San Francisco</a> brigade and as part of the Board of Directors for <a href="https://devmission.org">Dev/Mission</a>.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <img src="/images/bio-britt.jpg" alt="Portrait of Britt Jensen">
+        </div>
+        <div class="col-lg-9">
+          <h4>Britt Jensen<span>&nbsp;&nbsp;|&nbsp;&nbsp;Co-Founder/CEO</span>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/britt-jensen-10957164/"><i class="fab fa-linkedin"></i></a></h4>
+          <p>Britt Jensen joined Francis shortly after the original prototype was created.  She is a user experience, designer, research, and strategist who is passionate about bringing user-centered products to industries that aren’t traditionally design-focued.  She believes everyone, no matter how highly trained, is able to do their work more effectively with well-designed products.</p>
+        </div>
+      </div>
+    </div>
+    <div class="solution__screenshot bg-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 order-lg-2">
+            <img src="/images/home6.png" alt="GPL and AGPL logos">
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <h3>Free. Open Source. Standards Based.</h3>
+            <p>Peak Response is being developed in the open as free software licensed under the GNU General Public License. Browse our <a href="https://github.com/peakresponse/">source code repositories</a> on GitHub.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="bg-alternate">
+    <div class="container">
+      <h2>Contact us</h2>
+      <h3>We would love to hear from you.</h3>
+      <p>We’re in the early stages of developing this product and are always looking for feedback from users.  If you’re interested in testing out the product or are just looking for more info, please leave your information and we’ll connect with you.</p>
+      <form class="row" method="post" action="/contact-us">
+        <div class="form-group col-md-6 col-lg-5 offset-lg-1">
+          <div class="form-field">
+            <label for="firstName">First Name</label>
+            <input required type="text" class="form-control" id="firstName" name="firstName" />
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-5">
+          <div class="form-field">
+            <label for="lastName">Last Name</label>
+            <input required type="text" class="form-control" id="lastName" name="lastName"/>
+          </div>
+        </div>
+        <div class="form-group col-lg-10 offset-lg-1">
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input required type="email" class="form-control" id="email" name="email" />
+          </div>
+        </div>
+        <div class="form-group col-lg-10 offset-lg-1">
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea required class="form-control" id="message" name="message" rows="4"></textarea>
+          </div>
+        </div>
+        <div class="form-group col-lg-7 offset-lg-1">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="feedback" name="feedback" value="yes">
+            <label for="feedback" class="form-check-label">&nbsp;I'm interested in providing feedback on the product.</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="pilot" name="pilot" value="yes">
+            <label for="pilot" class="form-check-label">&nbsp;I'm interested in being part of a pilot program.</label>
+          </div>
+        </div>
+        <div class="form-group col-lg-3">
+          <button type="submit" class="btn btn-sm btn-block btn-outline-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <%- include('_footer') %>
+</main>
+<div class="modal fade" id="redirect" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img src="/images/logo-dark.png" alt="Peak Response Logo" />
+        <p>NaTriage is now Peak Response.<br />Please make note of our new web address:<br/>https://peakresponse.net</p>
+        <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Got it!</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  if (window.location.hash == '#redirect') {
+    window.location.replace("#home");
+    $('#redirect').modal('show');
+  };
+</script>

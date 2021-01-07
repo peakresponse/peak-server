@@ -20,7 +20,7 @@ $(() => {
     const windowTop = $window.scrollTop();
     const windowBottom = windowTop + $window.height();
     for (const $navLink of $navLinksRev) {
-      const attr = $navLink.attr('href');
+      const attr = $navLink.attr('href').substring(1);
       if ($(attr).offset().top < windowBottom) {
         $navLink.addClass('active');
         break;
@@ -33,10 +33,10 @@ $(() => {
     }
   };
 
-  $('a[href^="#"]').on('click', (event) => {
+  $('a[href^="/#"]').on('click', (event) => {
     event.preventDefault();
     $navMenu.removeClass('show');
-    const hash = $(event.target).closest('a').attr('href');
+    const hash = $(event.target).closest('a').attr('href').substring(1);
     window.scrollTo({
       top: $(hash).offset().top,
       behavior: 'smooth',

@@ -2,10 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title><%= title %> - <%= process.env.APP_NAME %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Peak Response is an MCI management system for EMS professionals.">
+    <meta name="author" content="Peak Response Inc.">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title><%= locals.title ? `${title} - ` : '' %><%= process.env.APP_NAME %></title>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/libraries/fontawesome/css/all.css" />
     <% for (let entry of ['assets']) { %>
@@ -16,7 +20,6 @@
       <% } %>
     <% } %>
     <script type="application/javascript" src="/libraries/jquery/jquery.min.js"></script>
-    <script type="application/javascript" src="/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
     <% if (locals.head) { %><%- head %><% } %>
   </head>
   <body<% if (locals.bodyClass) { %> class="<%= bodyClass %>"<% } %>>
