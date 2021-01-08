@@ -105,9 +105,15 @@ footer {
   text-align: center;
 }
 
-footer img {
+#footer__logo {
   width: 231px;
   height: 61px;
+  margin-bottom: 1rem;
+}
+
+#footer__seal {
+  width: 134px;
+  height: auto;
   margin-bottom: 1rem;
 }
 
