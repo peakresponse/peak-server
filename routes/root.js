@@ -11,6 +11,10 @@ router.get('/privacy', (req, res) => {
   res.render('privacy');
 });
 
+router.get('/terms', (req, res) => {
+  res.render('terms');
+});
+
 router.get('/logout', (req, res) => {
   req.logout();
   req.flash('info', 'You have been logged out.');
