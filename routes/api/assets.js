@@ -34,14 +34,16 @@ router.post(
     response.key = id;
     response.metadata = {};
     response.created_at = new Date();
-    response.signed_id = `${id}.${mime.extension(response.content_type)}`;
+    if (!response.signed_id) {
+      response.signed_id = `${id}.${mime.extension(response.content_type)}`;
+    }
     if (process.env.AWS_S3_BUCKET) {
       /// store in S3, in tmp uploads dir
       const url = await s3.getSignedUrlPromise('putObject', {
         ACL: 'private',
         Bucket: process.env.AWS_S3_BUCKET,
         ContentType: response.content_type,
-        Key: `uploads/${id}.${mime.extension(response.content_type)}`,
+        Key: `uploads/${response.signed_id}`,
         ServerSideEncryption: 'AES256',
       });
       response.direct_upload = {
@@ -54,7 +56,7 @@ router.post(
       };
     } else {
       response.direct_upload = {
-        url: `/api/assets/${id}`,
+        url: `/api/assets/${response.signed_id}`,
         headers: {
           'Content-Type': response.content_type,
         },
@@ -64,10 +66,11 @@ router.post(
   })
 );
 
-router.put('/:id', interceptors.requireLogin(), (req, res) => {
+router.put('/:path([^?]+)', interceptors.requireLogin(), (req, res) => {
   const tmpDir = path.resolve(__dirname, '../../tmp/uploads');
-  mkdirp.sync(tmpDir);
-  fs.writeFile(path.resolve(tmpDir, `${req.params.id}.${mime.extension(req.get('Content-Type'))}`), req.body, (err) => {
+  const tmpFile = path.resolve(tmpDir, `${req.params.path}`);
+  mkdirp.sync(path.dirname(tmpFile));
+  fs.writeFile(tmpFile, req.body, (err) => {
     if (err) {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     } else {
