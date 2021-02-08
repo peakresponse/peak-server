@@ -314,6 +314,44 @@ section .row {
   margin-top: 2rem;
 }
 
+.story__quote {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0 2rem;
+  position: relative;
+  text-align: center;
+}
+
+.story__quote::before {
+  content: '\201c';
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 4rem;
+  font-style: italic;
+  line-height: 1.5rem;
+  position: relative;
+  top: 1.75rem;
+  right: 1rem;
+}
+
+.story__quote::after {
+  content: '\201d';
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 4rem;
+  font-style: italic;
+  line-height: 0;
+  position: relative;
+  top: 1.75rem;
+  left: 0.5rem;
+}
+
+.story__quote-attribution {
+  font-style: italic;
+  padding: 0 6rem;
+  text-align: right;
+}
+
 img[src$='home1.jpg'] {
   display: block;
   margin: 0 auto;
