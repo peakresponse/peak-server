@@ -35,7 +35,7 @@ export class ScenePatientsComponent implements OnDestroy {
   }
 
   priorityMatch(patient: any): boolean {
-    return this.tabIndex == 0 ? true : patient.priority == this.tabIndex - 1;
+    return this.tabIndex == 0 ? true : patient.filterPriority == this.tabIndex - 1;
   }
 
   filter(tabIndex: number) {

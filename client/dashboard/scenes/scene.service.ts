@@ -257,7 +257,7 @@ export class SceneService implements OnDestroy {
               this.stats[i].updates = this.stats[i].updates.filter((id: string) => id != record.id);
             }
             /// and add it to its current priority tab
-            this.stats[record.priority + 1].updates.push(record.id);
+            this.stats[record.filterPriority + 1].updates.push(record.id);
           }
           if (this.patientSubscribers[record.id]?.length > 0) {
             for (let subscriber of this.patientSubscribers[record.id]) {
@@ -274,7 +274,7 @@ export class SceneService implements OnDestroy {
           /// increment total
           this.stats[0].total += 1;
           /// increment priority total
-          this.stats[patient.priority + 1].total += 1;
+          this.stats[patient.filterPriority + 1].total += 1;
         }
         /// dispatch stats to subscribers
         this.statsSubject.next(this.stats);
@@ -307,7 +307,7 @@ export class SceneService implements OnDestroy {
   private resortAndDispatch() {
     switch (this._sort) {
       case 'priority':
-        this.patients = orderBy(this.patients, ['priority'], ['asc']);
+        this.patients = orderBy(this.patients, ['filterPriority'], ['asc']);
         break;
       case 'recent':
         this.patients = orderBy(this.patients, ['updatedAt'], ['desc']);

@@ -71,7 +71,7 @@ export class SceneMapComponent implements AfterViewInit, OnDestroy {
   }
 
   pinUrl(patient: any) {
-    return `/images/map/${Patient.PRIORITIES[patient.priority]}.png`;
+    return `/images/map/${Patient.PRIORITIES[patient.filterPriority]}.png`;
   }
 
   onMapClick(event: any) {

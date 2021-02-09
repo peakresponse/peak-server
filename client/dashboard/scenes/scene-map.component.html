@@ -3,7 +3,7 @@
 <app-dashboard-main>
   <agm-map #map [zoom]="16" (mapClick)="onMapClick($event)">
     <ng-container *ngFor="let patient of scene.patients$|async; trackBy: trackById">
-      <agm-overlay *ngIf="patient.lat && patient.lng" [latitude]="+patient.lat" [longitude]="+patient.lng">
+      <agm-overlay *ngIf="!patient.isTransported && patient.lat && patient.lng" [latitude]="+patient.lat" [longitude]="+patient.lng">
         <div [routerLink]="[{outlets: {modal: ['patients', patient.id]}}]" class="marker marker--patient" [style.background-image]="pinUrl(patient)|cssUrl"></div>
       </agm-overlay>
     </ng-container>
