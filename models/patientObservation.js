@@ -107,6 +107,30 @@ module.exports = (sequelize, DataTypes) => {
       predictions: {
         type: DataTypes.JSONB,
       },
+      isTransported: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_transported',
+        set(value) {
+          if (!value) {
+            this.setDataValue('transportAgencyId', null);
+            this.setDataValue('transportFacilityId', null);
+            this.setDataValue('isTransportedLeftIndependently', false);
+          }
+          this.setDataValue('isTransported', value);
+        },
+      },
+      isTransportedLeftIndependently: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_transported_left_independently',
+        set(value) {
+          if (value) {
+            this.setDataValue('transportAgencyId', null);
+            this.setDataValue('transportFacilityId', null);
+            this.setDataValue('isTransported', true);
+          }
+          this.setDataValue('isTransportedLeftIndependently', value);
+        },
+      },
       updatedAttributes: {
         type: DataTypes.JSONB,
         field: 'updated_attributes',
@@ -117,6 +141,19 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'PatientObservation',
       tableName: 'patient_observations',
       underscored: true,
+      validate: {
+        isTransportedValid() {
+          if (this.isTransported) {
+            if (this.isTransportedLeftIndependently && (this.transportAgencyId || this.transportFacilityId)) {
+              throw new Error();
+            } else if (!this.isTransportedLeftIndependently && (!this.transportAgencyId || !this.transportFacilityId)) {
+              throw new Error();
+            }
+          } else if (this.transportAgencyId || this.transportFacilityId || this.isTransportedLeftIndependently) {
+            throw new Error();
+          }
+        },
+      },
     }
   );
   PatientObservation.afterSave(async (observation, options) => {

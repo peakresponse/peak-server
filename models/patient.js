@@ -169,6 +169,30 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: 'audio_file',
       },
+      isTransported: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_transported',
+        set(value) {
+          if (!value) {
+            this.setDataValue('transportAgencyId', null);
+            this.setDataValue('transportFacilityId', null);
+            this.setDataValue('isTransportedLeftIndependently', false);
+          }
+          this.setDataValue('isTransported', value);
+        },
+      },
+      isTransportedLeftIndependently: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_transported_left_independently',
+        set(value) {
+          if (value) {
+            this.setDataValue('transportAgencyId', null);
+            this.setDataValue('transportFacilityId', null);
+            this.setDataValue('isTransported', true);
+          }
+          this.setDataValue('isTransportedLeftIndependently', value);
+        },
+      },
       predictions: {
         type: DataTypes.JSONB,
       },
@@ -178,6 +202,19 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Patient',
       tableName: 'patients',
       underscored: true,
+      validate: {
+        isTransportedValid() {
+          if (this.isTransported) {
+            if (this.isTransportedLeftIndependently && (this.transportAgencyId || this.transportFacilityId)) {
+              throw new Error();
+            } else if (!this.isTransportedLeftIndependently && (!this.transportAgencyId || !this.transportFacilityId)) {
+              throw new Error();
+            }
+          } else if (this.transportAgencyId || this.transportFacilityId || this.isTransportedLeftIndependently) {
+            throw new Error();
+          }
+        },
+      },
     }
   );
   return Patient;

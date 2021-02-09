@@ -1,30 +1,32 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.addColumn('patients', 'is_transported', {
       type: Sequelize.BOOLEAN,
       allowNull: false,
-      defaultValue: false
+      defaultValue: false,
     });
     await queryInterface.addColumn('patients', 'is_transported_left_independently', {
       type: Sequelize.BOOLEAN,
       allowNull: false,
-      defaultValue: false
+      defaultValue: false,
     });
     await queryInterface.addColumn('patient_observations', 'is_transported', {
       type: Sequelize.BOOLEAN,
       allowNull: false,
-      defaultValue: false
+      defaultValue: false,
     });
     await queryInterface.addColumn('patient_observations', 'is_transported_left_independently', {
       type: Sequelize.BOOLEAN,
       allowNull: false,
-      defaultValue: false
+      defaultValue: false,
     });
-    await queryInterface.sequelize.query(`UPDATE patients SET is_transported_left_independently=TRUE WHERE priority=5 AND transport_agency_id IS NULL AND transport_facility_id IS NULL`);
+    await queryInterface.sequelize.query(
+      `UPDATE patients SET is_transported_left_independently=TRUE WHERE priority=5 AND transport_agency_id IS NULL AND transport_facility_id IS NULL`
+    );
     await queryInterface.sequelize.query(`UPDATE patients SET is_transported=TRUE WHERE priority=5`);
-    await queryInterface.sequelize.query(`UPDATE patient_observations SET is_transported_left_independently=TRUE WHERE priority=5 AND transport_agency_id IS NULL AND transport_facility_id IS NULL`);
+    await queryInterface.sequelize.query(
+      `UPDATE patient_observations SET is_transported_left_independently=TRUE WHERE priority=5 AND transport_agency_id IS NULL AND transport_facility_id IS NULL`
+    );
     await queryInterface.sequelize.query(`UPDATE patient_observations SET is_transported=TRUE WHERE priority=5`);
     await queryInterface.sequelize.query(`
       UPDATE patients
@@ -44,5 +46,5 @@ module.exports = {
     await queryInterface.removeColumn('patient_observations', 'is_transported');
     await queryInterface.removeColumn('patients', 'is_transported_left_independently');
     await queryInterface.removeColumn('patients', 'is_transported');
-  }
+  },
 };
