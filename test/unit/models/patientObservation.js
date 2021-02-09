@@ -32,5 +32,20 @@ describe('models', () => {
         assert(true);
       });
     });
+
+    describe('.filterPriority', () => {
+      it('returns priority when isTransported false', () => {
+        const observation = models.PatientObservation.build();
+        observation.priority = models.Patient.Priority.DELAYED;
+        assert.strictEqual(observation.filterPriority, models.Patient.Priority.DELAYED);
+      });
+
+      it('returns a value for transported when isTransported is true', () => {
+        const observation = models.PatientObservation.build();
+        observation.priority = models.Patient.Priority.DELAYED;
+        observation.isTransported = true;
+        assert.strictEqual(observation.filterPriority, models.Patient.Priority.TRANSPORTED);
+      });
+    });
   });
 });

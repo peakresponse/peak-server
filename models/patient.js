@@ -2,8 +2,22 @@ const _ = require('lodash');
 const seedrandom = require('seedrandom');
 const { Base } = require('./base');
 
+const PatientPriority = {
+  IMMEDIATE: 0,
+  DELAYED: 1,
+  MINIMAL: 2,
+  EXPECTANT: 3,
+  DECEASED: 4,
+  TRANSPORTED: 5,
+};
+Object.freeze(PatientPriority);
+
 module.exports = (sequelize, DataTypes) => {
   class Patient extends Base {
+    static get Priority() {
+      return PatientPriority;
+    }
+
     static associate(models) {
       Patient.belongsTo(models.Scene, { as: 'scene' });
       Patient.belongsTo(models.Agency, { as: 'transportAgency' });
@@ -135,6 +149,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       text: DataTypes.TEXT,
       priority: DataTypes.INTEGER,
+      filterPriority: {
+        type: DataTypes.VIRTUAL(DataTypes.INTEGER),
+        get() {
+          return this.isTransported ? 5 : this.priority;
+        },
+      },
       location: DataTypes.TEXT,
       lat: DataTypes.STRING,
       lng: DataTypes.STRING,

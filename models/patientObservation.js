@@ -70,6 +70,12 @@ module.exports = (sequelize, DataTypes) => {
       gcsTotal: DataTypes.INTEGER,
       text: DataTypes.TEXT,
       priority: DataTypes.INTEGER,
+      filterPriority: {
+        type: DataTypes.VIRTUAL(DataTypes.INTEGER),
+        get() {
+          return this.isTransported ? this.sequelize.models.Patient.Priority.TRANSPORTED : this.priority;
+        },
+      },
       location: DataTypes.TEXT,
       lat: DataTypes.STRING,
       lng: DataTypes.STRING,
