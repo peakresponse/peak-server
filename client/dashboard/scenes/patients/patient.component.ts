@@ -99,10 +99,12 @@ export class PatientComponent implements OnDestroy {
     if (this.observation) {
       this.observation['priority'] = priority;
     } else {
-      this.observation = this.patient.cloneDeep();
-      this.observation['priority'] = priority;
-      this.observation['version'] = this.observation['version'] + 1;
-      this.onSave();
+      if (this.patient.priority != priority) {
+        this.observation = this.patient.cloneDeep();
+        this.observation['priority'] = priority;
+        this.observation['version'] = this.observation['version'] + 1;
+        this.onSave();
+      }
     }
     this.isEditingPriority = false;
   }

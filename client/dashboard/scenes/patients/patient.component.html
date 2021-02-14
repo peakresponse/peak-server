@@ -48,14 +48,13 @@
           <shared-field-input i18n-label label="Chief Complaint" id="complaint" [source]="patient" [target]="observation"></shared-field-input>
         </div>
         <div *ngIf="observation || isEditingPriority" class="patient__priority">
-          <button *ngFor="let i of [0,0,0,0,0,0]; let p = index" type="button" (click)="onPriority(p)"
+          <button *ngFor="let i of [0,0,0,0,0]; let p = index" type="button" (click)="onPriority(p)"
             [class]="'btn btn-sm btn-priority btn-priority--' + p" [class.btn-priority--selected]="p == priority">
             <span *ngIf="p==0">Immediate</span>
             <span *ngIf="p==1">Delayed</span>
             <span *ngIf="p==2">Minimal</span>
             <span *ngIf="p==3">Expectant</span>
             <span *ngIf="p==4">Dead</span>
-            <span *ngIf="p==5">Transported</span>
           </button>
         </div>
         <div *ngIf="patient && !observation && !isEditingPriority" class="patient__priority patient__priority--noneditable">
