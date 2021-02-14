@@ -109,6 +109,10 @@ export class PatientComponent implements OnDestroy {
     this.isEditingPriority = false;
   }
 
+  onCancelTransport() {
+    
+  }
+
   onSave() {
     /// only save changed attributes
     this.isSaving = true;

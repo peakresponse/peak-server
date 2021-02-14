@@ -68,7 +68,7 @@
               <span *ngIf="patient.filterPriority==5">Transported</span>
             </button>
             <div *ngIf="patient.isTransported" class="patient__priority-before-transport">
-              <div>Triage Status Before Transport</div>
+              <div i18n>Triage Status Before Transport</div>
               <button type="button" [class]="'btn btn-sm btn-priority btn-priority--' + patient.priority">
                 <span *ngIf="patient.priority==0">Immediate</span>
                 <span *ngIf="patient.priority==1">Delayed</span>
@@ -81,7 +81,7 @@
           <div *ngIf="scene.isOnScene(user.id)" class="patient__actions">
             <button *ngIf="patient.filterPriority < 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Update Status</button>
             <button *ngIf="patient.filterPriority < 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Transport</button>
-            <button *ngIf="patient.filterPriority == 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel Transport</button>
+            <button *ngIf="patient.filterPriority == 5" (click)="cancelTransportConfirmation.show(null, {centered: true, size: 'lg'})" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel Transport</button>
           </div>
         </div>
       </div>
@@ -170,3 +170,10 @@
     </div>
   </div>
 </div>
+<app-shared-modal #cancelTransportConfirmation
+  i18n-confirmLabel confirmLabel="Yes" i18n-dismissLabel dismissLabel="No" (confirm)="onCancelTransport()">
+  <h4 class="modal-title" i18n>Are you sure you want to cancel the transport for this patient?</h4>
+  <div class="modal-body" i18n>
+    <p i18n>If a transport agency and destination facility have been specified, they will be cleared.</p>
+  </div>
+</app-shared-modal>
