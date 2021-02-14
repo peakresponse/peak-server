@@ -110,7 +110,14 @@ export class PatientComponent implements OnDestroy {
   }
 
   onCancelTransport() {
-    
+    if (this.observation) {
+      this.observation['isTransported'] = false;
+    } else {
+      this.observation = this.patient.cloneDeep();
+      this.observation['isTransported'] = false;
+      this.observation['version'] = this.observation['version'] + 1;
+      this.onSave();
+    }
   }
 
   onSave() {
@@ -135,6 +142,9 @@ export class PatientComponent implements OnDestroy {
       'pulse',
       'capillaryRefill',
       'bloodPressure',
+      'isTransported',
+      'transportAgencyId',
+      'transportFacilityId'
     ]) {
       if (this.patient?.[property] !== this.observation[property]) {
         observation[property] = this.observation[property];
