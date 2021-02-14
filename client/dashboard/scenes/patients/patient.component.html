@@ -58,16 +58,30 @@
           </button>
         </div>
         <div *ngIf="patient && !observation && !isEditingPriority" class="patient__priority patient__priority--noneditable">
-          <button type="button" [class]="'btn btn-sm btn-priority btn-priority--' + patient.priority">
-            <span *ngIf="patient.priority==0">Immediate</span>
-            <span *ngIf="patient.priority==1">Delayed</span>
-            <span *ngIf="patient.priority==2">Minimal</span>
-            <span *ngIf="patient.priority==3">Expectant</span>
-            <span *ngIf="patient.priority==4">Dead</span>
-            <span *ngIf="patient.priority==5">Transported</span>
-          </button>
-          <div class="patient__actions">
-            <button *ngIf="scene.isOnScene(user.id)" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Update Status</button>
+          <div class="patient__priority-container">
+            <button type="button" [class]="'btn btn-sm btn-priority btn-priority--' + patient.filterPriority">
+              <span *ngIf="patient.filterPriority==0">Immediate</span>
+              <span *ngIf="patient.filterPriority==1">Delayed</span>
+              <span *ngIf="patient.filterPriority==2">Minimal</span>
+              <span *ngIf="patient.filterPriority==3">Expectant</span>
+              <span *ngIf="patient.filterPriority==4">Dead</span>
+              <span *ngIf="patient.filterPriority==5">Transported</span>
+            </button>
+            <div *ngIf="patient.isTransported" class="patient__priority-before-transport">
+              <div>Triage Status Before Transport</div>
+              <button type="button" [class]="'btn btn-sm btn-priority btn-priority--' + patient.priority">
+                <span *ngIf="patient.priority==0">Immediate</span>
+                <span *ngIf="patient.priority==1">Delayed</span>
+                <span *ngIf="patient.priority==2">Minimal</span>
+                <span *ngIf="patient.priority==3">Expectant</span>
+                <span *ngIf="patient.priority==4">Dead</span>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="scene.isOnScene(user.id)" class="patient__actions">
+            <button *ngIf="patient.filterPriority < 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Update Status</button>
+            <button *ngIf="patient.filterPriority < 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Transport</button>
+            <button *ngIf="patient.filterPriority == 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel Transport</button>
           </div>
         </div>
       </div>
