@@ -1,4 +1,4 @@
-import { Component, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -23,13 +23,25 @@ export class PatientComponent implements OnDestroy {
   now = new Date();
   patient: any;
   observation: any;
+  transportObservation: any;
   isEditingPriority = false;
+  isEditingTransport = false;
+  transportEditorHeight = 500;
+  @ViewChild('modalBodyEl') modalBodyEl: ElementRef;
 
   private isSaving = false;
   private newVersion: number = null;
 
+  get filterPriority(): number {
+    return this.observation?.['filterPriority'] ?? this.patient?.['filterPriority'];
+  }
+
   get priority(): number {
     return this.observation?.['priority'] ?? this.patient?.['priority'];
+  }
+
+  get isTransportedLeftIndependently(): boolean {
+    return this.transportObservation?.['isTransportedLeftIndependently'] ?? this.observation?.['isTransportedLeftIndependently'] ?? this.patient?.['isTransportedLeftIndependently'];
   }
 
   @ViewChildren('audio') audio: QueryList<AudioComponent>;
@@ -109,6 +121,49 @@ export class PatientComponent implements OnDestroy {
     this.isEditingPriority = false;
   }
 
+  onShowTransport() {
+    this.isEditingTransport = true;
+    if (!this.observation) {
+      this.transportObservation = this.patient.cloneDeep();
+      this.transportObservation['isTransported'] = true;
+    }
+    this.calculateTransportHeight();
+  }
+
+  onHideTransport() {
+    this.isEditingTransport = false;
+    this.transportObservation = null;
+  }
+
+  setIsTransportedLeftIndependently(leftIndependently: boolean) {
+    const observation = this.transportObservation ?? this.observation;
+    observation['isTransportedLeftIndependently'] = leftIndependently;
+    if (leftIndependently) {
+      observation['transportAgencyId'] = null;
+      observation['transportFacilityId'] = null;
+    }
+  }
+
+  @HostListener('window:resize')
+  calculateTransportHeight() {
+    let element = this.modalBodyEl.nativeElement;
+    // first offsetTop relative to modal container
+    let top = element.offsetTop;
+    element = element.offsetParent;
+    this.transportEditorHeight = element.offsetHeight - top;
+  }
+
+  onTransport() {
+    if (this.observation) {
+      this.observation['isTransported'] = true;
+    } else if (this.transportObservation) {
+      this.observation = this.transportObservation;
+      this.observation['version'] = this.observation['version'] + 1;
+      this.onSave();
+    }
+    this.onHideTransport();
+  }
+
   onCancelTransport() {
     if (this.observation) {
       this.observation['isTransported'] = false;
@@ -143,6 +198,7 @@ export class PatientComponent implements OnDestroy {
       'capillaryRefill',
       'bloodPressure',
       'isTransported',
+      'isTransportedLeftIndependently',
       'transportAgencyId',
       'transportFacilityId'
     ]) {

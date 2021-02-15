@@ -1,4 +1,4 @@
-<div [class]="'modal patient patient--' + priority">
+<div [class]="'modal patient patient--' + filterPriority">
   <div class="modal__navigation">
     <div *ngIf="scene.isActive" class="scene">
       <h1 class="scene__name">{{(scene.attributes$|async).name}} <span class="scene__elapsed-time">{{scene.elapsedTime$|async}}</span></h1>
@@ -13,7 +13,7 @@
     <a (click)="onEdit()" *ngIf="!observation" class="modal__action" i18n>Edit</a>
     <a (click)="onSave()" *ngIf="observation" class="modal__action" i18n>Save</a>
   </div>
-  <div class="modal__body">
+  <div class="modal__header">
     <div class="d-flex mb-4">
       <div class="mr-5">
         <div class="patient__pin"><span i18n>Tag #:</span> {{observation ? observation.pin : patient?.pin}}</div>
@@ -58,7 +58,7 @@
           </button>
         </div>
         <div *ngIf="patient && !observation && !isEditingPriority" class="patient__priority patient__priority--noneditable">
-          <div class="patient__priority-container">
+          <div *ngIf="!isEditingTransport" class="patient__priority-container">
             <button type="button" [class]="'btn btn-sm btn-priority btn-priority--' + patient.filterPriority">
               <span *ngIf="patient.filterPriority==0">Immediate</span>
               <span *ngIf="patient.filterPriority==1">Delayed</span>
@@ -78,14 +78,26 @@
               </button>
             </div>
           </div>
-          <div *ngIf="scene.isOnScene(user.id)" class="patient__actions">
+          <div *ngIf="!isEditingTransport &&scene.isOnScene(user.id)" class="patient__actions">
             <button *ngIf="patient.filterPriority < 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Update Status</button>
-            <button *ngIf="patient.filterPriority < 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Transport</button>
+            <button *ngIf="patient.filterPriority < 5" (click)="onShowTransport()" type="button" class="btn btn-sm btn-outline-primary" i18n>Transport</button>
             <button *ngIf="patient.filterPriority == 5" (click)="cancelTransportConfirmation.show(null, {centered: true, size: 'lg'})" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel Transport</button>
+          </div>
+          <div *ngIf="isEditingTransport" class="patient__transport-actions">
+            <div class="btn-group">
+              <button (click)="setIsTransportedLeftIndependently(false)" type="button" class="btn btn-sm btn-outline-primary" [class.active]="!isTransportedLeftIndependently" i18n>Transporting to<br/>Hospital</button>
+              <button (click)="setIsTransportedLeftIndependently(true)" type="button" class="btn btn-sm btn-outline-primary" [class.active]="isTransportedLeftIndependently" i18n>Leaving<br/>Independently</button>
+            </div>
+            <div>
+              <button (click)="onHideTransport()" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel</button>
+              <button (click)="onTransport()" type="button" class="btn btn-sm btn-primary ml-3" i18n>Transport</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div #modalBodyEl class="modal__body">
     <div class="row">
       <div class="col-md-6 col-xl-4">
         <fieldset class="form-field-group">
@@ -106,9 +118,6 @@
             <shared-field-input i18n-label label="Total Glasgow Coma Score" id="gcsTotal" [source]="patient" [target]="observation"></shared-field-input>
           </div>
         </fieldset>
-        <!-- <fieldset>
-          <legend i18n>Photos</legend>
-        </fieldset> -->
       </div>
       <div class="col-md-6 col-xl-4">
         <fieldset *ngIf="patient?.transportAgencyId || patient?.transportFacilityId" class="form-field-group">
@@ -166,6 +175,14 @@
             </div>
           </ng-container>
         </fieldset> -->
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isEditingTransport" class="patient__transport" [style.height]="transportEditorHeight + 'px'">
+    <div *ngIf="isTransportedLeftIndependently" class="row">
+      <div class="col text-center">
+        <h1 class="mt-5 mb-3" i18n>Please Confirm the Patient is Leaving Independently</h1>
+        <p i18n>Their profile will be archived in our system.</p>
       </div>
     </div>
   </div>

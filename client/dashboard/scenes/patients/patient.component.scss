@@ -1,5 +1,9 @@
 @import '../../../assets/css/variables';
 
+.modal__body {
+  padding-top: 0;
+}
+
 .patient__priority {
   display: flex;
   align-items: flex-start;
@@ -172,6 +176,29 @@
 
   .btn-outline-primary {
     margin-right: 0.75rem;
+    margin-top: .25rem;
+  }
+}
+
+.patient__transport {
+  background-color: $bgBackground;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.patient__transport-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .btn {
+    margin-top: .75rem;
+  }
+
+  .btn-group .btn {
+    margin-top: 0;
   }
 }
 
@@ -180,18 +207,12 @@
   .patient__photo {
     background-color: $immediateRed;
   }
-  .modal__header {
-    background-color: $lightImmediateRed;
-  }
 }
 
 .patient--1 {
   .modal__bar,
   .patient__photo {
     background-color: $delayedYellow;
-  }
-  .modal__header {
-    background-color: $lightDelayedYellow;
   }
 }
 
@@ -200,9 +221,6 @@
   .patient__photo {
     background-color: $minimalGreen;
   }
-  .modal__header {
-    background-color: $lightMinimalGreen;
-  }
 }
 
 .patient--3 {
@@ -210,18 +228,12 @@
   .patient__photo {
     background-color: $expectGrey;
   }
-  .modal__header {
-    background-color: $lightExpectGrey;
-  }
 }
 
 .patient--4 {
   .modal__bar,
   .patient__photo {
     background-color: $deadBlack;
-  }
-  .modal__header {
-    background-color: $lightDeadBlack;
   }
 }
 
@@ -231,7 +243,7 @@
     background-color: $peakBlue;
   }
   .modal__header {
-    background-color: $lightPeakBlue;
+    height: 28.75rem;
   }
 }
 

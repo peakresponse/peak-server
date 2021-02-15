@@ -355,6 +355,16 @@ b {
   margin-right: 0.25rem;
 }
 
+.btn-group {
+  .btn + .btn {
+    margin-left: 0;
+  }
+
+  .btn-sm {
+    border-radius: .5rem;
+  }
+}
+
 /// Dropdowns
 
 .btn.dropdown-toggle::after {
