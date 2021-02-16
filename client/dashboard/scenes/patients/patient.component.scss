@@ -201,6 +201,14 @@
       flex: 1;
     }
   }
+
+  .col-md-6:first-child {
+    padding-right: 2rem;
+  }
+
+  .col-md-6:last-child {
+    padding-left: 2rem;
+  }
 }
 
 .facility__distance {

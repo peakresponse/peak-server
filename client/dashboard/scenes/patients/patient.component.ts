@@ -16,6 +16,8 @@ import { Patient } from './patient';
   styleUrls: ['./modal.scss', './patient.component.scss'],
 })
 export class PatientComponent implements OnDestroy {
+  @ViewChild('modalBodyEl') modalBodyEl: ElementRef;
+
   private id: string = null;
   private intervalId: any;
   private subscription = new Subscription();
@@ -23,11 +25,11 @@ export class PatientComponent implements OnDestroy {
   now = new Date();
   patient: any;
   observation: any;
-  transportObservation: any;
   isEditingPriority = false;
+
   isEditingTransport = false;
   transportEditorHeight = 500;
-  @ViewChild('modalBodyEl') modalBodyEl: ElementRef;
+  transportObservation: any;
 
   private isSaving = false;
   private newVersion: number = null;
@@ -126,7 +128,7 @@ export class PatientComponent implements OnDestroy {
     if (!this.observation) {
       this.transportObservation = this.patient.cloneDeep();
       this.transportObservation['isTransported'] = true;
-    }
+    }    
     this.calculateTransportHeight();
   }
 

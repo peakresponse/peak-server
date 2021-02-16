@@ -195,15 +195,19 @@
           </div>
         </div>
         <ol class="selection-list facilities">
-          <li *ngFor="let i of [0,0,0,0,0,0,0,0,0]" class="selection-list-item facility">
-            <div class="selection-list-item__header">
-              <div class="facility__name">Facility Name</div>
-              <div class="facility__distance">0.5 mi</div>
-            </div>
-            <div class="selection-list-item__body">
-              <div class="facility__address">1234 Street Name, City Name</div>
-            </div>            
-          </li>
+          <app-shared-list type="facilities">
+            <ng-template let-record="record">
+              <li class="selection-list-item facility">
+                <div class="selection-list-item__header">
+                  <div class="facility__name">{{record.name}}</div>
+                  <div class="facility__distance">0.5 mi</div>
+                </div>
+                <div class="selection-list-item__body">
+                  <div class="facility__address">{{record.address}}, {{record.cityName}}</div>
+                </div>            
+              </li>
+            </ng-template>
+          </app-shared-list>
         </ol>
       </div>
       <div class="col-md-6 h-100 d-flex flex-column">
@@ -214,9 +218,13 @@
           </div>
         </div>
         <ol class="selection-list agencies">
-          <li *ngFor="let i of [0,0,0,0,0,0,0,0,0]" class="selection-list-item agency">
-            <div class="agency__name">Agency Name</div>
-          </li>
+          <app-shared-list type="agencies">
+            <ng-template let-record="record">
+              <li class="selection-list-item agency">
+                <div class="agency__name">{{record.name}}</div>
+              </li>
+            </ng-template>
+          </app-shared-list>
         </ol>
       </div>
     </div>
