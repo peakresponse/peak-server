@@ -90,7 +90,7 @@
             </div>
             <div>
               <button (click)="onHideTransport()" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel</button>
-              <button (click)="onTransport()" type="button" class="btn btn-sm btn-primary ml-3" i18n>Transport</button>
+              <button (click)="onTransport()" [disabled]="!isTransportedLeftIndependently && (!transportObservation.transportFacilityId || !transportObservation.transportAgencyId)" type="button" class="btn btn-sm btn-primary ml-3" i18n>Transport</button>
             </div>
           </div>
         </div>
@@ -197,14 +197,14 @@
         <ol class="selection-list facilities">
           <app-shared-list type="facilities">
             <ng-template let-record="record">
-              <li class="selection-list-item facility">
+              <li (click)="setTransportFacility(record.id)" class="selection-list-item facility" [class.selection-list-item--selected]="transportObservation.transportFacilityId == record.id">
                 <div class="selection-list-item__header">
                   <div class="facility__name">{{record.name}}</div>
                   <div class="facility__distance">0.5 mi</div>
                 </div>
                 <div class="selection-list-item__body">
                   <div class="facility__address">{{record.address}}, {{record.cityName}}</div>
-                </div>            
+                </div>
               </li>
             </ng-template>
           </app-shared-list>
@@ -220,7 +220,7 @@
         <ol class="selection-list agencies">
           <app-shared-list type="agencies">
             <ng-template let-record="record">
-              <li class="selection-list-item agency">
+              <li (click)="setTransportAgency(record.id)" class="selection-list-item agency" [class.selection-list-item--selected]="transportObservation.transportAgencyId == record.id">
                 <div class="agency__name">{{record.name}}</div>
               </li>
             </ng-template>

@@ -146,6 +146,14 @@ export class PatientComponent implements OnDestroy {
     }
   }
 
+  setTransportFacility(facilityId: string) {
+    this.transportObservation['transportFacilityId'] = facilityId;
+  }
+
+  setTransportAgency(agencyId: string) {
+    this.transportObservation['transportAgencyId'] = agencyId;
+  }
+
   @HostListener('window:resize')
   calculateTransportHeight() {
     let element = this.modalBodyEl.nativeElement;

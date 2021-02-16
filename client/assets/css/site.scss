@@ -784,6 +784,7 @@ input.form-control.is-invalid {
   border-radius: .3125rem;
   box-shadow: $cardSelectedShadow;
   color: $mainGrey;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   margin: 1.25rem 0;
