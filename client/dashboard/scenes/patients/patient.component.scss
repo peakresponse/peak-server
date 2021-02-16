@@ -172,7 +172,7 @@
 
 .patient__actions {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 
   .btn-outline-primary {
     margin-right: 0.75rem;
@@ -186,6 +186,25 @@
   left: 0;
   right: 0;
   bottom: 0;
+  padding: 1.5rem 3.5rem;
+
+  h4 {
+    margin-bottom: 1rem;
+  }
+
+  .toolbar {
+    justify-content: flex-start;
+    .toolbar-item:first-child {
+      width: 60%;
+    }
+    .toolbar-item + .toolbar-item {
+      flex: 1;
+    }
+  }
+}
+
+.facility__distance {
+  color: $greyPeakBlue;
 }
 
 .patient__transport-actions {

@@ -168,13 +168,6 @@
             </div>
           </ng-container>
         </fieldset>
-        <!-- <fieldset>
-          <legend i18n>Timeline</legend>
-          <ng-container *ngIf="observations(patient) as observations">
-            <div class="observation" *ngFor="let observation of observations; let i = index;">
-            </div>
-          </ng-container>
-        </fieldset> -->
       </div>
     </div>
   </div>
@@ -183,6 +176,48 @@
       <div class="col text-center">
         <h1 class="mt-5 mb-3" i18n>Please Confirm the Patient is Leaving Independently</h1>
         <p i18n>Their profile will be archived in our system.</p>
+      </div>
+    </div>
+    <div *ngIf="!isTransportedLeftIndependently" class="row h-100">
+      <div class="col-md-6 h-100 d-flex flex-column">
+        <h4 i18n>Select the destination facility:</h4>
+        <div class="toolbar">
+          <div class="toolbar-item">
+            <input id="searchFacilities" name="searchFacilities" i18n-placeholder placeholder="Search" type="text" class="form-control form-control--search" />
+          </div>
+          <div class="toolbar-item">
+            <select id="filterFacilities" name="filterFacilities" class="custom-select">
+              <option value="1701005" i18n>Hospital</option>
+              <option value="1701023" i18n>Morgue/Mortuary</option>
+              <option value="1701025" i18n>Police/Jail</option>
+              <option value="1701009" i18n>Other</option>
+            </select>
+          </div>
+        </div>
+        <ol class="selection-list facilities">
+          <li *ngFor="let i of [0,0,0,0,0,0,0,0,0]" class="selection-list-item facility">
+            <div class="selection-list-item__header">
+              <div class="facility__name">Facility Name</div>
+              <div class="facility__distance">0.5 mi</div>
+            </div>
+            <div class="selection-list-item__body">
+              <div class="facility__address">1234 Street Name, City Name</div>
+            </div>            
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-6 h-100 d-flex flex-column">
+        <h4 i18n>Select the transporting agency:</h4>
+        <div class="toolbar">
+          <div class="toolbar-item">
+            <input id="searchAgencies" name="searchAgencies" i18n-placeholder placeholder="Search" type="text" class="form-control form-control--search" />
+          </div>
+        </div>
+        <ol class="selection-list agencies">
+          <li *ngFor="let i of [0,0,0,0,0,0,0,0,0]" class="selection-list-item agency">
+            <div class="agency__name">Agency Name</div>
+          </li>
+        </ol>
       </div>
     </div>
   </div>
