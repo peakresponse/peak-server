@@ -355,6 +355,16 @@ b {
   margin-right: 0.25rem;
 }
 
+.btn-group {
+  .btn + .btn {
+    margin-left: 0;
+  }
+
+  .btn-sm {
+    border-radius: 0.5rem;
+  }
+}
+
 /// Dropdowns
 
 .btn.dropdown-toggle::after {
@@ -756,6 +766,54 @@ input.form-control.is-invalid {
   border: 0;
   padding: 3.125rem;
   justify-content: space-between;
+}
+
+/// Lists
+
+.selection-list {
+  background: white;
+  list-style-type: none;
+  overflow-y: scroll;
+  position: relative;
+  padding: 0 1.375rem;
+}
+
+.selection-list-item {
+  @include copy-m-bold;
+  background: $lightPeakBlue;
+  border: 2px solid $lightPeakBlue;
+  border-radius: 0.3125rem;
+  box-shadow: $cardSelectedShadow;
+  color: $mainGrey;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin: 1.25rem 0;
+  min-height: 4.875rem;
+  overflow: hidden;
+  padding: 1.25rem 1rem;
+}
+
+.selection-list-item--selected {
+  border: 3px solid $greyPeakBlue;
+}
+
+.selection-list-item__header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: -1rem;
+  margin-bottom: 0.5rem;
+}
+
+.selection-list-item__body {
+  @include copy-s-bold;
+  background: white;
+  color: $lowPriorityGrey;
+  flex: 1;
+  margin: 0 -1rem -1.25rem;
+  padding: 0.5rem 1rem;
 }
 
 /// Toolbar

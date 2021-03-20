@@ -1,23 +1,27 @@
-import { Component, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { isEqual } from 'lodash';
 import moment from 'moment';
 import uuid from 'uuid';
 
 import { AudioComponent } from '../../../shared/components';
-import { ApiService, UserService } from '../../../shared/services';
+import { ApiService, GeolocationService, UserService } from '../../../shared/services';
 import { SceneService } from '../scene.service';
 import { Patient } from './patient';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   templateUrl: './patient.component.html',
   styleUrls: ['./modal.scss', './patient.component.scss'],
 })
 export class PatientComponent implements OnDestroy {
+  @ViewChild('modalBodyEl') modalBodyEl: ElementRef;
+
   private id: string = null;
   private intervalId: any;
+  private position: any;
   private subscription = new Subscription();
 
   now = new Date();
@@ -25,23 +29,51 @@ export class PatientComponent implements OnDestroy {
   observation: any;
   isEditingPriority = false;
 
+  isEditingTransport = false;
+  transportEditorHeight = 500;
+  transportObservation: any;
+  facilitySearch = '';
+  facilityFilter = '1701005';
+  facilitySearchParams = new HttpParams().set('type', this.facilityFilter);
+  agencySearch = '';
+
   private isSaving = false;
   private newVersion: number = null;
 
+  get filterPriority(): number {
+    return this.observation?.['filterPriority'] ?? this.patient?.['filterPriority'];
+  }
+
   get priority(): number {
     return this.observation?.['priority'] ?? this.patient?.['priority'];
+  }
+
+  get isTransportedLeftIndependently(): boolean {
+    return (
+      this.transportObservation?.['isTransportedLeftIndependently'] ??
+      this.observation?.['isTransportedLeftIndependently'] ??
+      this.patient?.['isTransportedLeftIndependently']
+    );
   }
 
   @ViewChildren('audio') audio: QueryList<AudioComponent>;
 
   constructor(
     private api: ApiService,
+    private geolocation: GeolocationService,
     public scene: SceneService,
     private route: ActivatedRoute,
     private router: Router,
     public user: UserService
   ) {
     this.intervalId = setInterval(() => (this.now = new Date()), 1000);
+
+    this.subscription.add(
+      this.geolocation.position$.subscribe((position: any) => {
+        this.position = position;
+        this.updateFacilitySearchParams();
+      })
+    );
 
     this.id = this.route.snapshot.params['id'];
     if (this.id != 'new') {
@@ -99,12 +131,90 @@ export class PatientComponent implements OnDestroy {
     if (this.observation) {
       this.observation['priority'] = priority;
     } else {
-      this.observation = this.patient.cloneDeep();
-      this.observation['priority'] = priority;
+      if (this.patient.priority != priority) {
+        this.observation = this.patient.cloneDeep();
+        this.observation['priority'] = priority;
+        this.observation['version'] = this.observation['version'] + 1;
+        this.onSave();
+      }
+    }
+    this.isEditingPriority = false;
+  }
+
+  onShowTransport() {
+    this.isEditingTransport = true;
+    if (!this.observation) {
+      this.transportObservation = this.patient.cloneDeep();
+      this.transportObservation['isTransported'] = true;
+    }
+    this.calculateTransportHeight();
+  }
+
+  onHideTransport() {
+    this.isEditingTransport = false;
+    this.transportObservation = null;
+  }
+
+  setIsTransportedLeftIndependently(leftIndependently: boolean) {
+    const observation = this.transportObservation ?? this.observation;
+    observation['isTransportedLeftIndependently'] = leftIndependently;
+    if (leftIndependently) {
+      observation['transportAgencyId'] = null;
+      observation['transportFacilityId'] = null;
+    }
+  }
+
+  onChangeFacilityFilter(newValue: string) {
+    this.facilityFilter = newValue;
+    this.updateFacilitySearchParams();
+  }
+
+  updateFacilitySearchParams() {
+    this.facilitySearchParams = new HttpParams().set('type', this.facilityFilter);
+    if (this.position) {
+      this.facilitySearchParams = this.facilitySearchParams
+        .set('lat', this.position.coords.latitude)
+        .set('lng', this.position.coords.longitude);
+    }
+  }
+
+  setTransportFacility(facilityId: string) {
+    this.transportObservation['transportFacilityId'] = facilityId;
+  }
+
+  setTransportAgency(agencyId: string) {
+    this.transportObservation['transportAgencyId'] = agencyId;
+  }
+
+  @HostListener('window:resize')
+  calculateTransportHeight() {
+    let element = this.modalBodyEl.nativeElement;
+    // first offsetTop relative to modal container
+    let top = element.offsetTop;
+    element = element.offsetParent;
+    this.transportEditorHeight = element.offsetHeight - top;
+  }
+
+  onTransport() {
+    if (this.observation) {
+      this.observation['isTransported'] = true;
+    } else if (this.transportObservation) {
+      this.observation = this.transportObservation;
       this.observation['version'] = this.observation['version'] + 1;
       this.onSave();
     }
-    this.isEditingPriority = false;
+    this.onHideTransport();
+  }
+
+  onCancelTransport() {
+    if (this.observation) {
+      this.observation['isTransported'] = false;
+    } else {
+      this.observation = this.patient.cloneDeep();
+      this.observation['isTransported'] = false;
+      this.observation['version'] = this.observation['version'] + 1;
+      this.onSave();
+    }
   }
 
   onSave() {
@@ -129,6 +239,10 @@ export class PatientComponent implements OnDestroy {
       'pulse',
       'capillaryRefill',
       'bloodPressure',
+      'isTransported',
+      'isTransportedLeftIndependently',
+      'transportAgencyId',
+      'transportFacilityId',
     ]) {
       if (this.patient?.[property] !== this.observation[property]) {
         observation[property] = this.observation[property];

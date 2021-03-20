@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <div class="d-flex">
       <h1 class="h2">Agencies</h1>
-      <input [ngModel]="search" (ngModelChange)="searchSubject.next($event)" type="text" class="form-control ml-3" placeholder="Search..." id="search" name="search" />
+      <input [ngModel]="search" [app-shared-debounced] (debouncedValueChange)="search = $event" type="text" class="form-control ml-3" placeholder="Search..." id="search" name="search" />
     </div>
     <a routerLink="/agencies/new" class="btn btn-sm btn-outline-secondary">New Agency</a>
   </div>

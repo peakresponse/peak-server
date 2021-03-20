@@ -9,7 +9,7 @@
         <div class="form-group">
           <div class="row">
             <div class="col-md-6 offset-lg-1 col-lg-5">
-              <input #subdomainEl #subdomainModel="ngModel" [(ngModel)]="subdomain" [class.is-invalid]="!isLoading && !isValid" type="text" class="form-control" name="subdomain" />
+              <input #subdomainEl [ngModel]="subdomain" (ngModelChange)="isLoading=true" [app-shared-debounced] (debouncedValueChange)="validate($event)" [class.is-invalid]="!isLoading && !isValid" type="text" class="form-control" name="subdomain" />
             </div>
             <div class="col-md-6 col-lg-5">
               <input type="text" readonly tabindex="-1" class="form-control-plaintext" value=".peakresponse.net" />

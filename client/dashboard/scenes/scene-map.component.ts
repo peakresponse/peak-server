@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { AgmMap, LatLngBounds } from '@agm/core';
-import { GeolocationService } from '@ng-web-apis/geolocation';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import uuid from 'uuid';
 
-import { UserService } from '../../shared/services';
+import { GeolocationService, UserService } from '../../shared/services';
 import { SceneService } from './scene.service';
 import { Patient } from './patients';
 
@@ -23,12 +22,12 @@ export class SceneMapComponent implements AfterViewInit, OnDestroy {
   selectedPin: any = null;
   isEditingSelectedPin = false;
 
-  constructor(private geolocation$: GeolocationService, public scene: SceneService, public user: UserService) {}
+  constructor(private geolocation: GeolocationService, public scene: SceneService, public user: UserService) {}
 
   ngAfterViewInit() {
     this.map.mapReady.subscribe(() => {
       this.recenterMap();
-      this.locationSubscription = this.geolocation$.subscribe((position: any) => this.updateLocation(position));
+      this.locationSubscription = this.geolocation.position$.subscribe((position: any) => this.updateLocation(position));
     });
   }
 
@@ -71,7 +70,7 @@ export class SceneMapComponent implements AfterViewInit, OnDestroy {
   }
 
   pinUrl(patient: any) {
-    return `/images/map/${Patient.PRIORITIES[patient.priority]}.png`;
+    return `/images/map/${Patient.PRIORITIES[patient.filterPriority]}.png`;
   }
 
   onMapClick(event: any) {

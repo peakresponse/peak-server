@@ -6,12 +6,18 @@ const helpers = require('../../helpers');
 const app = require('../../../app');
 
 describe('/api/facilities', () => {
+  let server;
   let testSession;
 
   beforeEach(async () => {
     await helpers.loadFixtures(['states', 'facilities', 'users']);
-    testSession = session(app);
+    server = app.listen(3333);
+    testSession = session(server);
     await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+  });
+
+  afterEach((done) => {
+    server.close(done);
   });
 
   describe('GET /', () => {
@@ -20,7 +26,10 @@ describe('/api/facilities', () => {
         .get('/api/facilities/')
         .expect(HttpStatus.OK)
         .expect('X-Total-Count', '103')
-        .expect('Link', '<http://lvh.me:3000/api/facilities/?page=2>; rel="next",<http://lvh.me:3000/api/facilities/?page=5>; rel="last"');
+        .expect(
+          'Link',
+          '<http://127.0.0.1:3333/api/facilities/?page=2>; rel="next",<http://127.0.0.1:3333/api/facilities/?page=5>; rel="last"'
+        );
       assert.deepStrictEqual(response.body.length, 25);
     });
 
@@ -41,7 +50,7 @@ describe('/api/facilities', () => {
         .expect('X-Total-Count', '103')
         .expect(
           'Link',
-          '<http://lvh.me:3000/api/facilities/?lat=37.7873437&lng=-122.4536086&page=2>; rel="next",<http://lvh.me:3000/api/facilities/?lat=37.7873437&lng=-122.4536086&page=5>; rel="last"'
+          '<http://127.0.0.1:3333/api/facilities/?lat=37.7873437&lng=-122.4536086&page=2>; rel="next",<http://127.0.0.1:3333/api/facilities/?lat=37.7873437&lng=-122.4536086&page=5>; rel="last"'
         );
       assert.deepStrictEqual(response.body.length, 25);
       assert.deepStrictEqual(response.body[0].name, 'CPMC - 3801 Sacramento Street');

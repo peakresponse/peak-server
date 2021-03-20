@@ -190,13 +190,15 @@ module.exports = (sequelize, DataTypes) => {
       const results = await sequelize.models.Patient.findAll({
         group: ['priority'],
         attributes: ['priority', [sequelize.fn('COUNT', '*'), 'count']],
-        where: { sceneId: this.id },
+        where: { sceneId: this.id, isTransported: false },
         raw: true,
         transaction: options.transaction,
       });
       for (const result of results) {
         priorityPatientsCounts[result.priority] = parseInt(result.count, 10);
       }
+      priorityPatientsCounts[5] =
+        this.patientsCount - priorityPatientsCounts.reduce((previousValue, currentValue) => previousValue + currentValue);
       this.priorityPatientsCounts = priorityPatientsCounts;
       return this.save(options);
     }

@@ -2,6 +2,7 @@ export * from './array.component';
 export * from './audio.component';
 export * from './autoload.directive';
 export * from './clear.component';
+export * from './debounced.directive';
 export * from './error.component';
 export * from './form.component';
 export * from './list.component';

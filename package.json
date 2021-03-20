@@ -13,7 +13,9 @@
     "test": "mocha --unhandled-rejections=strict --recursive test/unit test/integration",
     "ci": "prettier --check . && npm run lint && npm run test",
     "lint": "eslint .",
-    "pp": "prettier --write ."
+    "lint:changed": "eslint $(git diff --name-only | xargs)",
+    "pp": "prettier --write .",
+    "pp:changed": "prettier --write $(git diff --name-only | xargs)"
   },
   "eslintConfig": {
     "parserOptions": {

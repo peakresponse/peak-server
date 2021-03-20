@@ -1,9 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NgModel } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { empty, Subscription } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { ApiService, NavigationService } from '../shared/services';
 
@@ -13,14 +12,12 @@ import { ApiService, NavigationService } from '../shared/services';
 })
 export class UrlComponent {
   @ViewChild('subdomainEl') subdomainEl: ElementRef;
-  @ViewChild('subdomainModel') subdomainModel: NgModel;
 
   stateId: string = null;
   agencyId: string = null;
   isLoading = true;
   isCreated = false;
   subdomain: string = '';
-  subdomainChanges: Subscription;
   errorStatus: number = null;
 
   constructor(private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
@@ -39,7 +36,7 @@ export class UrlComponent {
           } else {
             /// TODO: show error
           }
-          return empty();
+          return EMPTY;
         })
       )
       .subscribe((res) => {
@@ -50,41 +47,30 @@ export class UrlComponent {
     setTimeout(() => (this.subdomainEl ? this.subdomainEl.nativeElement.focus() : null), 100);
   }
 
-  ngAfterViewInit() {
-    this.subdomainChanges = this.subdomainModel.valueChanges
+  validate(value: string) {
+    this.subdomain = value;
+    this.errorStatus = null;
+    this.api.agencies
+      .validate(value)
       .pipe(
-        tap(() => (this.isLoading = true)),
-        debounceTime(300),
-        distinctUntilChanged()
+        catchError((res) => {
+          if (this.subdomain == value) {
+            console.log('ERROR', res);
+            this.isLoading = false;
+            this.errorStatus = res.status;
+          }
+          return EMPTY;
+        })
       )
-      .subscribe((value: string) => {
-        this.errorStatus = null;
-        this.api.agencies
-          .validate(value)
-          .pipe(
-            catchError((res) => {
-              if (this.subdomain == value) {
-                console.log('ERROR', res);
-                this.isLoading = false;
-                this.errorStatus = res.status;
-              }
-              return empty();
-            })
-          )
-          .subscribe(() => {
-            if (this.subdomain == value) {
-              this.isLoading = false;
-            }
-          });
+      .subscribe(() => {
+        if (this.subdomain == value) {
+          this.isLoading = false;
+        }
       });
   }
 
   get isValid() {
     return this.subdomain != '' && !this.isLoading && !this.errorStatus;
-  }
-
-  ngOnDestroy() {
-    this.subdomainChanges?.unsubscribe();
   }
 
   onBack() {

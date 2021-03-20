@@ -1,4 +1,4 @@
-<div [class]="'modal patient patient--' + priority">
+<div [class]="'modal patient patient--' + filterPriority">
   <div class="modal__navigation">
     <div *ngIf="scene.isActive" class="scene">
       <h1 class="scene__name">{{(scene.attributes$|async).name}} <span class="scene__elapsed-time">{{scene.elapsedTime$|async}}</span></h1>
@@ -13,7 +13,7 @@
     <a (click)="onEdit()" *ngIf="!observation" class="modal__action" i18n>Edit</a>
     <a (click)="onSave()" *ngIf="observation" class="modal__action" i18n>Save</a>
   </div>
-  <div class="modal__body">
+  <div class="modal__header">
     <div class="d-flex mb-4">
       <div class="mr-5">
         <div class="patient__pin"><span i18n>Tag #:</span> {{observation ? observation.pin : patient?.pin}}</div>
@@ -48,31 +48,56 @@
           <shared-field-input i18n-label label="Chief Complaint" id="complaint" [source]="patient" [target]="observation"></shared-field-input>
         </div>
         <div *ngIf="observation || isEditingPriority" class="patient__priority">
-          <button *ngFor="let i of [0,0,0,0,0,0]; let p = index" type="button" (click)="onPriority(p)"
+          <button *ngFor="let i of [0,0,0,0,0]; let p = index" type="button" (click)="onPriority(p)"
             [class]="'btn btn-sm btn-priority btn-priority--' + p" [class.btn-priority--selected]="p == priority">
             <span *ngIf="p==0">Immediate</span>
             <span *ngIf="p==1">Delayed</span>
             <span *ngIf="p==2">Minimal</span>
             <span *ngIf="p==3">Expectant</span>
             <span *ngIf="p==4">Dead</span>
-            <span *ngIf="p==5">Transported</span>
           </button>
         </div>
         <div *ngIf="patient && !observation && !isEditingPriority" class="patient__priority patient__priority--noneditable">
-          <button type="button" [class]="'btn btn-sm btn-priority btn-priority--' + patient.priority">
-            <span *ngIf="patient.priority==0">Immediate</span>
-            <span *ngIf="patient.priority==1">Delayed</span>
-            <span *ngIf="patient.priority==2">Minimal</span>
-            <span *ngIf="patient.priority==3">Expectant</span>
-            <span *ngIf="patient.priority==4">Dead</span>
-            <span *ngIf="patient.priority==5">Transported</span>
-          </button>
-          <div class="patient__actions">
-            <button *ngIf="scene.isOnScene(user.id)" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Update Status</button>
+          <div *ngIf="!isEditingTransport" class="patient__priority-container">
+            <button type="button" [class]="'btn btn-sm btn-priority btn-priority--' + patient.filterPriority">
+              <span *ngIf="patient.filterPriority==0">Immediate</span>
+              <span *ngIf="patient.filterPriority==1">Delayed</span>
+              <span *ngIf="patient.filterPriority==2">Minimal</span>
+              <span *ngIf="patient.filterPriority==3">Expectant</span>
+              <span *ngIf="patient.filterPriority==4">Dead</span>
+              <span *ngIf="patient.filterPriority==5">Transported</span>
+            </button>
+            <div *ngIf="patient.isTransported" class="patient__priority-before-transport">
+              <div i18n>Triage Status Before Transport</div>
+              <button type="button" [class]="'btn btn-sm btn-priority btn-priority--' + patient.priority">
+                <span *ngIf="patient.priority==0">Immediate</span>
+                <span *ngIf="patient.priority==1">Delayed</span>
+                <span *ngIf="patient.priority==2">Minimal</span>
+                <span *ngIf="patient.priority==3">Expectant</span>
+                <span *ngIf="patient.priority==4">Dead</span>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="!isEditingTransport &&scene.isOnScene(user.id)" class="patient__actions">
+            <button *ngIf="patient.filterPriority < 5" (click)="isEditingPriority=true" type="button" class="btn btn-sm btn-outline-primary" i18n>Update Status</button>
+            <button *ngIf="patient.filterPriority < 5" (click)="onShowTransport()" type="button" class="btn btn-sm btn-outline-primary" i18n>Transport</button>
+            <button *ngIf="patient.filterPriority == 5" (click)="cancelTransportConfirmation.show(null, {centered: true, size: 'lg'})" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel Transport</button>
+          </div>
+          <div *ngIf="isEditingTransport" class="patient__transport-actions">
+            <div class="btn-group">
+              <button (click)="setIsTransportedLeftIndependently(false)" type="button" class="btn btn-sm btn-outline-primary" [class.active]="!isTransportedLeftIndependently" i18n>Transporting to<br/>Hospital</button>
+              <button (click)="setIsTransportedLeftIndependently(true)" type="button" class="btn btn-sm btn-outline-primary" [class.active]="isTransportedLeftIndependently" i18n>Leaving<br/>Independently</button>
+            </div>
+            <div>
+              <button (click)="onHideTransport()" type="button" class="btn btn-sm btn-outline-primary" i18n>Cancel</button>
+              <button (click)="onTransport()" [disabled]="!isTransportedLeftIndependently && (!transportObservation.transportFacilityId || !transportObservation.transportAgencyId)" type="button" class="btn btn-sm btn-primary ml-3" i18n>Transport</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div #modalBodyEl class="modal__body">
     <div class="row">
       <div class="col-md-6 col-xl-4">
         <fieldset class="form-field-group">
@@ -93,27 +118,30 @@
             <shared-field-input i18n-label label="Total Glasgow Coma Score" id="gcsTotal" [source]="patient" [target]="observation"></shared-field-input>
           </div>
         </fieldset>
-        <!-- <fieldset>
-          <legend i18n>Photos</legend>
-        </fieldset> -->
       </div>
       <div class="col-md-6 col-xl-4">
-        <fieldset *ngIf="patient?.transportAgencyId || patient?.transportFacilityId" class="form-field-group">
+        <fieldset *ngIf="patient?.isTransported" class="form-field-group">
           <legend i18n>Transport</legend>
-          <div class="form-group">
+          <div class="form-group" *ngIf="patient?.isTransportedLeftIndependently">
+            <div class="observation">
+              <div class="observation__header"></div>
+              <div class="observation__text">This patient left the scene independently.</div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="!patient?.isTransportedLeftIndependently">
             <div class="form-field">
               <label for="transportAgency">Agency</label>
               <input type="text" readonly class="form-control-plaintext" tabindex="-1" [value]="patient?.transportAgency?.name" />
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="!patient?.isTransportedLeftIndependently">
             <div class="form-field">
               <label for="transportFacility">Facility</label>
               <input type="text" readonly class="form-control-plaintext" tabindex="-1" [value]="patient?.transportFacility?.name" />
             </div>
           </div>
         </fieldset>
-        <fieldset *ngIf="!patient?.transportAgencyId && !patient?.transportFacilityId" class="form-field-group">
+        <fieldset *ngIf="!patient?.isTransported" class="form-field-group">
           <legend i18n>Location</legend>
           <div class="form-group">
             <shared-field-input i18n-label label="Location" id="location" [source]="patient" [target]="observation"></shared-field-input>
@@ -146,14 +174,72 @@
             </div>
           </ng-container>
         </fieldset>
-        <!-- <fieldset>
-          <legend i18n>Timeline</legend>
-          <ng-container *ngIf="observations(patient) as observations">
-            <div class="observation" *ngFor="let observation of observations; let i = index;">
-            </div>
-          </ng-container>
-        </fieldset> -->
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isEditingTransport" class="patient__transport" [style.height]="transportEditorHeight + 'px'">
+    <div *ngIf="isTransportedLeftIndependently" class="row">
+      <div class="col text-center">
+        <h1 class="mt-5 mb-3" i18n>Please Confirm the Patient is Leaving Independently</h1>
+        <p i18n>Their profile will be archived in our system.</p>
+      </div>
+    </div>
+    <div *ngIf="!isTransportedLeftIndependently" class="row h-100">
+      <div class="col-md-6 h-100 d-flex flex-column">
+        <h4 i18n>Select the destination facility:</h4>
+        <div class="toolbar">
+          <div class="toolbar-item">
+            <input [ngModel]="facilitySearch" [app-shared-debounced] (debouncedValueChange)="facilitySearch=$event" id="searchFacilities" name="searchFacilities" i18n-placeholder placeholder="Search" type="text" class="form-control form-control--search" />
+          </div>
+          <div class="toolbar-item">
+            <select [ngModel]="facilityFilter" (ngModelChange)="onChangeFacilityFilter($event)" id="filterFacilities" name="filterFacilities" class="custom-select">
+              <option value="1701005" i18n>Hospital</option>
+              <option value="1701023" i18n>Morgue/Mortuary</option>
+              <option value="1701025" i18n>Police/Jail</option>
+              <option value="1701009" i18n>Other</option>
+            </select>
+          </div>
+        </div>
+        <ol class="selection-list facilities" (scroll)="facilitiesList.onScroll($event)">
+          <app-shared-list #facilitiesList type="facilities" [search]="facilitySearch" [params]="facilitySearchParams">
+            <ng-template let-record="record">
+              <li (click)="setTransportFacility(record.id)" class="selection-list-item facility" [class.selection-list-item--selected]="transportObservation.transportFacilityId == record.id">
+                <div class="selection-list-item__header">
+                  <div class="facility__name">{{record.name}}</div>
+                  <div class="facility__distance">0.5 mi</div>
+                </div>
+                <div class="selection-list-item__body">
+                  <div class="facility__address">{{record.address}}, {{record.cityName}}</div>
+                </div>
+              </li>
+            </ng-template>
+          </app-shared-list>
+        </ol>
+      </div>
+      <div class="col-md-6 h-100 d-flex flex-column">
+        <h4 i18n>Select the transporting agency:</h4>
+        <div class="toolbar">
+          <div class="toolbar-item">
+            <input [ngModel]="agencySearch" [app-shared-debounced] (debouncedValueChange)="agencySearch=$event" id="searchAgencies" name="searchAgencies" i18n-placeholder placeholder="Search" type="text" class="form-control form-control--search" />
+          </div>
+        </div>
+        <ol class="selection-list agencies" (scroll)="agenciesList.onScroll($event)">
+          <app-shared-list #agenciesList type="agencies" [search]="agencySearch">
+            <ng-template let-record="record">
+              <li (click)="setTransportAgency(record.id)" class="selection-list-item agency" [class.selection-list-item--selected]="transportObservation.transportAgencyId == record.id">
+                <div class="agency__name">{{record.name}}</div>
+              </li>
+            </ng-template>
+          </app-shared-list>
+        </ol>
       </div>
     </div>
   </div>
 </div>
+<app-shared-modal #cancelTransportConfirmation
+  i18n-confirmLabel confirmLabel="Yes" i18n-dismissLabel dismissLabel="No" (confirm)="onCancelTransport()">
+  <h4 class="modal-title" i18n>Are you sure you want to cancel the transport for this patient?</h4>
+  <div class="modal-body" i18n>
+    <p i18n>If a transport agency and destination facility have been specified, they will be cleared.</p>
+  </div>
+</app-shared-modal>

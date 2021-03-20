@@ -10,6 +10,7 @@ import get from 'lodash/get';
 import remove from 'lodash/remove';
 
 import { ApiService, NavigationService, UserService } from '../services';
+import { AutoloadDirective } from './autoload.directive';
 
 @Component({
   selector: 'app-shared-list',
@@ -25,6 +26,7 @@ export class ListComponent {
 
   records: any[] = null;
   paginationLink: string = null;
+  @ViewChild('paginationLoader') paginationLoader: AutoloadDirective;
   isLoading = true;
 
   apiSubscription: Subscription;
@@ -138,6 +140,12 @@ export class ListComponent {
 
   trackById(record: any, index: number): string {
     return record.id;
+  }
+
+  onScroll($event: any) {
+    if (this.paginationLoader) {
+      this.paginationLoader.onScroll($event);
+    }
   }
 
   private onLoadMore(paginationLink: string) {

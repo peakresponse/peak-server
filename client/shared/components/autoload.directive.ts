@@ -2,6 +2,7 @@ import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from
 
 @Directive({
   selector: '[app-shared-autoload]',
+  exportAs: 'appSharedAutoload',
 })
 export class AutoloadDirective {
   @Input('app-shared-autoload') paginationLink: string;
@@ -25,6 +26,15 @@ export class AutoloadDirective {
       offsetTop += element.offsetTop;
     }
     return offsetTop;
+  }
+
+  onScroll($event: any) {
+    // if this method is being called, then assume we're scrolling within the offsetParent element rather than the window
+    const top = this.el.nativeElement.offsetTop;
+    const parent = this.el.nativeElement.offsetParent;
+    if (parent.scrollTop >= top - 1.25 * parent.offsetHeight) {
+      this.onLoadMore.emit(this.paginationLink);
+    }
   }
 
   @HostListener('window:scroll', ['$event'])

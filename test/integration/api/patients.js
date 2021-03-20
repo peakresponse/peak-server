@@ -51,6 +51,7 @@ describe('/api/patients', () => {
       for (const data of response.body) {
         // eslint-disable-next-line no-await-in-loop
         const patient = await models.Patient.findByPk(data.id);
+        patient.isTransported = true;
         if (i < 4) {
           patient.transportAgencyId = 'e705f64b-1399-436e-a428-18c8378b3444';
           patient.transportFacilityId = '7d47a57b-f20b-4c09-83ab-2972ac7ad431';
