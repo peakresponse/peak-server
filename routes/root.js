@@ -29,6 +29,7 @@ if (process.env.MARKETING_ENABLED) {
         template: 'contact',
         message: {
           to: process.env.MARKETING_EMAIL,
+          replyTo: req.body.email,
         },
         locals: {
           firstName: req.body.firstName,

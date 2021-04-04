@@ -9,7 +9,9 @@ jobs:
       - image: cimg/base:2020.01
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.2
+      - run: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
       - run: docker-compose -f docker-compose.test.yml up -d db
       - run: docker-compose -f docker-compose.test.yml run server npx sequelize db:create --env=test
       - run: docker-compose -f docker-compose.test.yml run server npx sequelize db:migrate --env=test
@@ -20,16 +22,12 @@ jobs:
               equal: [master, << pipeline.git.branch >>]
           steps:
             - run: docker tag peakresponse/peak-server:latest peakresponse/peak-server:$CIRCLE_BRANCH
-            - run: |
-                echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
-                docker push peakresponse/peak-server:$CIRCLE_BRANCH
+            - run: docker push peakresponse/peak-server:$CIRCLE_BRANCH
       - when:
           condition:
             equal: [master, << pipeline.git.branch >>]
           steps:
-            - run: |
-                echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
-                docker push peakresponse/peak-server:latest
+            - run: docker push peakresponse/peak-server:latest
 workflows:
   test:
     jobs:
