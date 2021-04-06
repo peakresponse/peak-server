@@ -25,6 +25,12 @@ if (process.env.MARKETING_ENABLED) {
   router.post(
     '/contact-us',
     helpers.async(async (req, res) => {
+      // don't allow spammers to use our own domain
+      const domain = process.env.MARKETING_EMAIL.substring(process.env.MARKETING_EMAIL.indexOf('@'));
+      if (req.body.email.indexOf(domain) >= 0) {
+        res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+        return;
+      }
       await mailer.send({
         template: 'contact',
         message: {
