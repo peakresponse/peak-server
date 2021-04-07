@@ -22,13 +22,39 @@ describe('/api/states', () => {
       const response = await testSession.get('/api/states/').expect(200);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 7);
+      assert.deepStrictEqual(data.length, 8);
       assert.deepStrictEqual(data[0].name, 'Alabama');
     });
   });
 
   describe('POST /:id/configure', () => {
-    it('should configure a State record and associated Agency and Facility records', async function () {
+    it('should configure a Washington State record and associated Agency and Facility records', async function () {
+      if (!process.env.CI) {
+        this.skip();
+      }
+      nemsisMocks.mockReposRequest();
+      nemsisMocks.mockWashingtonFilesRequest();
+      nemsisMocks.mockWashingtonDownloads();
+
+      let response = await testSession.post('/api/states/53/configure').expect(HttpStatus.ACCEPTED);
+      /// start polling for completion
+      for (;;) {
+        response = await testSession.get(`/api/states/53`);
+        if (response.accepted) {
+          await helpers.sleep(1000);
+        } else {
+          assert(response.status, HttpStatus.OK);
+          break;
+        }
+      }
+      const state = await models.State.findOne({ where: { id: '53' } });
+      assert(state);
+      assert.deepStrictEqual(state.name, 'Washington');
+      assert.deepStrictEqual(await state.countAgencies(), 495);
+      assert.deepStrictEqual(await models.Facility.count(), 159);
+    });
+
+    it('should configure a California State record and associated Agency and Facility records', async function () {
       if (!process.env.CI) {
         this.skip();
       }

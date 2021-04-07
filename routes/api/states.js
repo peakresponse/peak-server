@@ -100,6 +100,9 @@ router.post(
         dataSet: { status: 'Populating state facilities...' },
       });
       if (dataSet.json.StateDataSet.sFacility && dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
+        if (!Array.isArray(dataSet.json.StateDataSet.sFacility.sFacilityGroup)) {
+          dataSet.json.StateDataSet.sFacility.sFacilityGroup = [dataSet.json.StateDataSet.sFacility.sFacilityGroup];
+        }
         await models.sequelize.transaction(async (transaction) => {
           for (const sFacilityGroup of dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
             const type = sFacilityGroup['sFacility.01']._text;

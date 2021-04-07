@@ -61,5 +61,14 @@
       "createdAt": "2020-04-06T21:25:03.495Z",
       "updatedAt": "2020-04-06T21:25:11.116Z"
     }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "53",
+      "name": "Washington",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
   }
 ]

@@ -21,5 +21,28 @@
       "createdAt": "2020-04-07T19:59:21.446Z",
       "updatedAt": "2020-04-07T19:59:21.446Z"
     }
+  },
+  {
+    "model": "City",
+    "data": {
+      "id": "2412314",
+      "featureName": "City of Yakima",
+      "featureClass": "Civil",
+      "censusCode": "80010",
+      "censusClassCode": "C1",
+      "gsaCode": "",
+      "opmCode": "",
+      "stateNumeric": "53",
+      "stateAlpha": "WA",
+      "countySequence": "1",
+      "countyNumeric": "077",
+      "countyName": "Yakima",
+      "primaryLatitude": "46.592286",
+      "primaryLongitude": "-120.5495572",
+      "dateCreated": "03/11/2008",
+      "dateEdited": "03/24/2019",
+      "createdAt": "2020-04-07T19:59:21.446Z",
+      "updatedAt": "2020-04-07T19:59:21.446Z"
+    }
   }
 ]

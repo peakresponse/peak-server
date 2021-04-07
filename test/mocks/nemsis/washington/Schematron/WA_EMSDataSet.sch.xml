@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="//www.nemsis.org/media/nemsis_v3/master/Schematron/utilities/html/schematronHtml.xsl"?>
+<sch:schema id="EMSDataSet" xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:dp="http://www.dpawson.co.uk/ns#" xmlns:xs="http://www.w3.org/2001/XMLSchema" queryBinding="xslt2" schemaVersion="3.4.0.150302_EMSDataSet_3.4.0_Elite_Washington">
+	<sch:title>ISO schematron file for 3.4.0.150302_EMSDataSet_3.4.0_Elite_Washington.</sch:title>
+	<sch:ns prefix="dp" uri="http://www.dpawson.co.uk/ns#"/>
+	<sch:ns prefix="nem" uri="http://www.nemsis.org"/>
+	<!-- "Initialize" variables used by nemsisDiagnostic. -->
+	<sch:let name="nemsisElements" value="()"/>
+	<sch:let name="nemsisElementsMissing" value="''"/>
+	<sch:let name="nemsisElementsMissingContext" value="()"/>
+	
+		<sch:pattern>
+			<sch:title>eTimes.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.01"/> <sch:assert id="a1" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.01 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.02) or nem:eTimes.01 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.03) or nem:eTimes.01 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.04) or nem:eTimes.01 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.05) or nem:eTimes.01 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.06) or nem:eTimes.01 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.07) or nem:eTimes.01 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.08) or nem:eTimes.01 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.09) or nem:eTimes.01 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.01 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.11) or nem:eTimes.01 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.12) or nem:eTimes.01 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.01 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.01 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.01 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.01) &gt; xs:dateTime(nem:eTimes.16))">PSAP appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.02"/> <sch:assert id="a2" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.02 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.02) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.02 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.03) or nem:eTimes.02 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.04) or nem:eTimes.02 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.05) or nem:eTimes.02 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.06) or nem:eTimes.02 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.07) or nem:eTimes.02 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.08) or nem:eTimes.02 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.09) or nem:eTimes.02 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.02 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.11) or nem:eTimes.02 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.12) or nem:eTimes.02 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.02 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.02 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.02 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.02) &gt; xs:dateTime(nem:eTimes.16))">Dispatch Notified appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.03"/> <sch:assert id="a3" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.03 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.03) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.03 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.03) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.03 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.04) or nem:eTimes.03 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.05) or nem:eTimes.03 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.06) or nem:eTimes.03 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.07) or nem:eTimes.03 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.08) or nem:eTimes.03 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.09) or nem:eTimes.03 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.03 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.11) or nem:eTimes.03 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.12) or nem:eTimes.03 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.03 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.03 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.03 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.03) &gt; xs:dateTime(nem:eTimes.16))">Unit Notified by Dispatch appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.05 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.05"/> <sch:assert id="a5" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.05 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.05) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.05 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.05) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.05 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.05) &lt; xs:dateTime(nem:eTimes.03) or nem:eTimes.05 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.05) &lt; xs:dateTime(nem:eTimes.04) or nem:eTimes.05 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.06) or nem:eTimes.05 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.07) or nem:eTimes.05 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.08) or nem:eTimes.05 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.09) or nem:eTimes.05 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.05 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.11) or nem:eTimes.05 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.12) or nem:eTimes.05 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.05 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.05 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.05 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.05) &gt; xs:dateTime(nem:eTimes.16))">Unit En Route appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.06 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.06"/> <sch:assert id="a6" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.06 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.06) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.06 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.06) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.06 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.06) &lt; xs:dateTime(nem:eTimes.03) or nem:eTimes.06 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.06) &lt; xs:dateTime(nem:eTimes.04) or nem:eTimes.06 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.06) &lt; xs:dateTime(nem:eTimes.05) or nem:eTimes.06 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.07) or nem:eTimes.06 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.08) or nem:eTimes.06 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.09) or nem:eTimes.06 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.06 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.06 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.11) or nem:eTimes.06 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.12) or nem:eTimes.06 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.06 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.06 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.06 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.06) &gt; xs:dateTime(nem:eTimes.16))">Unit Arrived on Scene appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.07 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.07"/> <sch:assert id="a7" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.07 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.07) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.07 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.07) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.07 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.07) &lt; xs:dateTime(nem:eTimes.03) or nem:eTimes.07 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.07) &lt; xs:dateTime(nem:eTimes.04) or nem:eTimes.07 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.07) &lt; xs:dateTime(nem:eTimes.05) or nem:eTimes.07 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.07) &lt; xs:dateTime(nem:eTimes.06) or nem:eTimes.07 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.08) or nem:eTimes.07 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.09) or nem:eTimes.07 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.07 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.11) or nem:eTimes.07 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.12) or nem:eTimes.07 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.07 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.07 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.07 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.07) &gt; xs:dateTime(nem:eTimes.16))">Arrived at Patient appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.09 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.09"/> <sch:assert id="a9" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.09 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.09) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.09 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.09) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.09 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.09) &lt; xs:dateTime(nem:eTimes.03) or nem:eTimes.09 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.09) &lt; xs:dateTime(nem:eTimes.04) or nem:eTimes.09 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.09) &lt; xs:dateTime(nem:eTimes.05) or nem:eTimes.09 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.09) &lt; xs:dateTime(nem:eTimes.06) or nem:eTimes.09 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.09) &lt; xs:dateTime(nem:eTimes.07) or nem:eTimes.09 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.09) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.09 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.09) &gt; xs:dateTime(nem:eTimes.11) or nem:eTimes.09 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.09) &gt; xs:dateTime(nem:eTimes.12) or nem:eTimes.09 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.09) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.09 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.09) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.09 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.09) &gt; xs:dateTime(nem:eTimes.15))">Unit Left Scene appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.11 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.11"/> <sch:assert id="a11" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.11 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.11 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.11 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.03) or nem:eTimes.11 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.04) or nem:eTimes.11 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.05) or nem:eTimes.11 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.06) or nem:eTimes.11 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.07) or nem:eTimes.11 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.09) or nem:eTimes.11 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.11) &lt; xs:dateTime(nem:eTimes.10) or nem:eTimes.11 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.11) &gt; xs:dateTime(nem:eTimes.16) or nem:eTimes.11 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.11) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.11 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.11) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.11 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.11) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.11 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.11) &gt; xs:dateTime(nem:eTimes.12))">Patient Arrived at Destination appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.12 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.12"/> <sch:assert id="a12" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.12 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.12 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.12 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.03) or nem:eTimes.12 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.04) or nem:eTimes.12 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.05) or nem:eTimes.12 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.06) or nem:eTimes.12 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.07) or nem:eTimes.12 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.08) or nem:eTimes.12 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.09) or nem:eTimes.12 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.10) or nem:eTimes.12 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.12) &lt; xs:dateTime(nem:eTimes.11) or nem:eTimes.12 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.12) &gt; xs:dateTime(nem:eTimes.16) or nem:eTimes.12 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.12) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.12 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.12) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.12 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.12) &gt; xs:dateTime(nem:eTimes.13))">Destination Patient Transfer of Care appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.13 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.13"/> <sch:assert id="a13" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.13 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.13 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.13 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.03) or nem:eTimes.13 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.04) or nem:eTimes.13 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.05) or nem:eTimes.13 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.06) or nem:eTimes.13 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.07) or nem:eTimes.13 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.08) or nem:eTimes.13 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.09) or nem:eTimes.13 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.10) or nem:eTimes.13 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.11) or nem:eTimes.13 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.12) or nem:eTimes.13 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.13) &lt; xs:dateTime(nem:eTimes.14) or nem:eTimes.13 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.13) &gt; xs:dateTime(nem:eTimes.15) or nem:eTimes.13 != '' and nem:eTimes.16 != '' and xs:dateTime(nem:eTimes.13) &gt; xs:dateTime(nem:eTimes.16))">Unit Back in Service appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.14 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.14"/> <sch:assert id="a14" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.14 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.01) or nem:eTimes.14 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.02) or nem:eTimes.14 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.03) or nem:eTimes.14 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.04) or nem:eTimes.14 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.05) or nem:eTimes.14 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.06) or nem:eTimes.14 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.07) or nem:eTimes.14 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.08) or nem:eTimes.14 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.09) or nem:eTimes.14 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.10) or nem:eTimes.14 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.11) or nem:eTimes.14 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.14) &lt; xs:dateTime(nem:eTimes.12) or nem:eTimes.14 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.14) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.14 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.14) &gt; xs:dateTime(nem:eTimes.15))">Unit Canceled appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.17 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient">
+			<sch:let name="nemsisElements" value="nem:ePatient.17"/> <sch:assert id="a19" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:ePatient.17 != '' and ../nem:eTimes/nem:eTimes.03 != '' and xs:date(substring(nem:ePatient.17, 1, 10)) &gt; xs:date(substring(../nem:eTimes/nem:eTimes.03, 1, 10)) and ../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.16 = '2516009')">The sequence of time requires that Date of Birth occur before Unit Notified by Dispatch.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eVitals.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eVitals/nem:eVitals.VitalGroup">
+			<sch:let name="nemsisElements" value="nem:eVitals.01"/> <sch:assert id="a21" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eVitals.02 != '9923003' and nem:eVitals.01 != '' and ../../nem:eTimes/nem:eTimes.07 != '' and xs:dateTime(nem:eVitals.01) &lt; xs:dateTime(../../nem:eTimes/nem:eTimes.07))">The sequence of time requires that Vital Signs Recorded occur after Arrived at Patient .</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eMedications.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eMedications/nem:eMedications.MedicationGroup">
+			<sch:let name="nemsisElements" value="nem:eMedications.01"/> <sch:assert id="a23" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eMedications.02 != '9923003' and nem:eMedications.01 != '' and ../../nem:eTimes/nem:eTimes.07 != '' and xs:dateTime(nem:eMedications.01) &lt; xs:dateTime(../../nem:eTimes/nem:eTimes.07))">The sequence of time requires that Medication Administered occur after Arrived at Patient.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eProcedures.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eProcedures/nem:eProcedures.ProcedureGroup">
+			<sch:let name="nemsisElements" value="nem:eProcedures.01"/> <sch:assert id="a24" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eProcedures.02 != '9923003' and nem:eProcedures.01 != '' and ../../nem:eTimes/nem:eTimes.07 != '' and xs:dateTime(nem:eProcedures.01) &lt; xs:dateTime(../../nem:eTimes/nem:eTimes.07))">The sequence of time requires that Procedure Performed occur after Arrived at Patient .</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eAirway.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eAirway/nem:eAirway.AirwayGroup/nem:eAirway.ConfirmationGroup">
+			<sch:let name="nemsisElements" value="nem:eAirway.02"/> <sch:assert id="a25" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eAirway.02 != '' and ../../../nem:eTimes/nem:eTimes.07 != '' and xs:dateTime(nem:eAirway.02) &lt; xs:dateTime(../../../nem:eTimes/nem:eTimes.07))">The sequence of time requires that Time Airway Device Placement Confirmed occur after Arrived at Patient.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eExam.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eExam/nem:eExam.AssessmentGroup">
+			<sch:let name="nemsisElements" value="nem:eExam.03"/> <sch:assert id="a28" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eExam.03 != '' and ../../nem:eTimes/nem:eTimes.07 != '' and xs:dateTime(nem:eExam.03) &lt; xs:dateTime(../../nem:eTimes/nem:eTimes.07))">The sequence of time requires that Assessment occur after Arrived at Patient .</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.15 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.15"/> <sch:assert id="a30" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eArrest.15 != '' and ../nem:eTimes/nem:eTimes.13 != '' and xs:dateTime(nem:eArrest.15) &gt; xs:dateTime(../nem:eTimes/nem:eTimes.13))">The sequence of time requires that Resuscitation Discontinued occur before Unit Back in Service.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.14 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.14"/> <sch:assert id="a31" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eArrest.14 != '' and ../nem:eTimes/nem:eTimes.13 != '' and xs:dateTime(nem:eArrest.14) &gt; xs:dateTime(../nem:eTimes/nem:eTimes.13))">The sequence of time requires that Cardiac Arrest occur before Unit Back in Service.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eSituation.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eSituation">
+			<sch:let name="nemsisElements" value="nem:eSituation.01"/> <sch:assert id="a32" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eSituation.01 != '' and ../nem:eTimes/nem:eTimes.07 != '' and xs:dateTime(nem:eSituation.01) &gt; xs:dateTime(../nem:eTimes/nem:eTimes.07))">The sequence of time requires that Symptom Onset occurs before Arrived at Patient.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eSituation.12 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eSituation">
+			<sch:let name="nemsisElements" value="nem:eSituation.12"/> <sch:assert id="a35" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((nem:eSituation.12 and nem:eSituation.12 != '') and (not(nem:eSituation.11) or nem:eSituation.11 = ''))">Provider&apos;s Secondary Impressions must be blank when Provider&apos;s Primary Impression is blank.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eRecord.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eRecord">
+			<sch:let name="nemsisElements" value="nem:eRecord.01"/> <sch:assert id="a76" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eRecord.01) or nem:eRecord.01 = ''))">Patient Care Report Number is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.05 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse/nem:eResponse.ServiceGroup">
+			<sch:let name="nemsisElements" value="nem:eResponse.05"/> <sch:assert id="a77" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.05) or nem:eResponse.05 = ''))">Type of Service Requested is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.07 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.07"/> <sch:assert id="a78" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.07) or nem:eResponse.07 = ''))">Primary Role of the Unit is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.13 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.13"/> <sch:assert id="a79" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.13) or nem:eResponse.13 = ''))">EMS Vehicle (Unit) Number is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.14 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.14"/> <sch:assert id="a80" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.14) or nem:eResponse.14 = ''))">EMS Unit Call Sign is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.15 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.15"/> <sch:assert id="a81" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.15) or nem:eResponse.15 = ''))">Level of Care of This Unit is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.23 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.23"/> <sch:assert id="a82" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.23) or nem:eResponse.23 = ''))">Response Mode to Scene is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDispatch.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDispatch">
+			<sch:let name="nemsisElements" value="nem:eDispatch.01"/> <sch:assert id="a83" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eDispatch.01) or nem:eDispatch.01 = ''))">Complaint Reported by Dispatch is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.03"/> <sch:assert id="a84" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eTimes.03) or nem:eTimes.03 = ''))">Unit Notified by Dispatch Time is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.13 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.13"/> <sch:assert id="a85" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eTimes.13) or nem:eTimes.13 = ''))">Unit Back in Service Time is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDisposition.12 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition">
+			<sch:let name="nemsisElements" value="nem:eDisposition.12"/> <sch:assert id="a86" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eDisposition.12) or nem:eDisposition.12 = ''))">Incident/Patient Disposition is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.03"/> <sch:assert id="a87" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.03) or nem:eResponse.03 = ''))">Incident Number is a required field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.10 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.10"/> <sch:assert id="a89" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((../nem:eInjury/nem:eInjury.03 and ../nem:eInjury/nem:eInjury.03 != '') and ../nem:eDisposition/nem:eDisposition.12 = '4212033' and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001' and (not(nem:eResponse.10) or nem:eResponse.10 = '') and nem:eResponse.10[@NV!='7701001'])">Type of Scene Delay is a required field when a Step 1 or Step 2 patient is transported.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.05 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.05"/> <sch:assert id="a91" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eTimes.05) or nem:eTimes.05 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Unit En Route Time is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.06 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.06"/> <sch:assert id="a92" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eTimes.06) or nem:eTimes.06 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Unit Arrived on Scene Time is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.09 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.09"/> <sch:assert id="a93" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eTimes.09) or nem:eTimes.09 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Unit Left Scene Time is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.11 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.11"/> <sch:assert id="a94" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eTimes.11) or nem:eTimes.11 = '') and ../nem:eDisposition/nem:eDisposition.12 = '4212033')">Patient Arrived at Destination Time is a required field when patient is transported by this EMS unit.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.09 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient">
+			<sch:let name="nemsisElements" value="nem:ePatient.09"/> <sch:assert id="a95" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePatient.09) or nem:ePatient.09 = '') and nem:ePatient.09[@NV!='7701001'] and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Patient&apos;s Home ZIP Code is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.13 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient">
+			<sch:let name="nemsisElements" value="nem:ePatient.13"/> <sch:assert id="a96" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePatient.13) or nem:ePatient.13 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Gender is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.15 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient/nem:ePatient.AgeGroup">
+			<sch:let name="nemsisElements" value="nem:ePatient.15"/> <sch:assert id="a97" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePatient.15) or nem:ePatient.15 = '') and nem:ePatient.15[@NV!='7701001'] and (../../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Age is a required field when a patient is evaluated or treated.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.16 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient/nem:ePatient.AgeGroup">
+			<sch:let name="nemsisElements" value="nem:ePatient.16"/> <sch:assert id="a98" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePatient.16) or nem:ePatient.16 = '') and (nem:ePatient.15 and nem:ePatient.15 != ''))">Age Units is a required field when an age is entered.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eScene.09 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eScene">
+			<sch:let name="nemsisElements" value="nem:eScene.09"/> <sch:assert id="a101" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eScene.09) or nem:eScene.09 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and nem:eScene.09[@NV!='7701001'])">Incident Location Type is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eScene.19 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eScene">
+			<sch:let name="nemsisElements" value="nem:eScene.19"/> <sch:assert id="a102" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eScene.19) or nem:eScene.19 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Incident ZIP Code is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eSituation.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eSituation">
+			<sch:let name="nemsisElements" value="nem:eSituation.01"/> <sch:assert id="a103" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eSituation.01) or nem:eSituation.01 = '') and ../nem:eDisposition/nem:eDisposition.12 = '4212033' and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001') and ((nem:eSituation.11 = 'I63.9' or nem:eSituation.11 = 'G45.9') or (nem:eSituation.12 = 'I63.9' or nem:eSituation.12 = 'G45.9')))">Time of Symptom Onset is a required field for transported stroke/TIA patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eSituation.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eSituation">
+			<sch:let name="nemsisElements" value="nem:eSituation.02"/> <sch:assert id="a104" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eSituation.02) or nem:eSituation.02 = '') and (not(nem:eSituation.02[@NV]) or (nem:eSituation.02[@NV!='7701001'] and nem:eSituation.02[@NV!='7701003'])) and (../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037' or ../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019'))">Possible Injury is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eSituation.09 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eSituation">
+			<sch:let name="nemsisElements" value="nem:eSituation.09"/> <sch:assert id="a107" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eSituation.09) or nem:eSituation.09 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025') and nem:eSituation.09[@NV!='7701001']) and (nem:eSituation.11 = 'J98.01' or count(nem:eSituation.12[text() = 'J98.01']) != 0))">Primary Symptom is a required field for bronchospasm patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eSituation.11 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eSituation">
+			<sch:let name="nemsisElements" value="nem:eSituation.11"/> <sch:assert id="a109" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eSituation.11) or nem:eSituation.11 = '') and (not(nem:eSituation.11[@NV]) or (nem:eSituation.11[@NV!='7701001'] and nem:eSituation.11[@NV!='7701003'])) and (../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Provider&apos;s Primary Impression is a required field when a patient is treated.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eSituation.12 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eSituation">
+			<sch:let name="nemsisElements" value="nem:eSituation.12"/> <sch:assert id="a110" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eSituation.12) or nem:eSituation.12 = '') and nem:eSituation.12[@NV!='7701001'] and (nem:eSituation.11 = 'J98.01' or nem:eSituation.11 = 'J45.901') and (../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Provider&apos;s Secondary Impression is a required field when Primary Impression is bronchospasm or asthma.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.01"/> <sch:assert id="a112" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eArrest.01) or nem:eArrest.01 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and (not(nem:eArrest.01[@NV]) or (nem:eArrest.01[@NV!='7701001'] and nem:eArrest.01[@NV!='7701003'])))">Cardiac Arrest is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.02"/> <sch:assert id="a113" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eArrest.02) or nem:eArrest.02 = '') and nem:eArrest.02[@NV!='7701001']) and ((nem:eArrest.01 = '3001005' or nem:eArrest.01 = '3001003') or ../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0))">Cardiac Arrest Etiology is a required field when Cardiac Arrest.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.03"/> <sch:assert id="a114" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eArrest.03) or nem:eArrest.03 = '') and nem:eArrest.03[@NV!='7701001'] and nem:eArrest.02 != '3002015') and ((nem:eArrest.01 = '3001005' or nem:eArrest.01 = '3001003') or ../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0))">Resuscitation Attempted By EMS is a required field for non-traumatic cardiac arrest patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.04 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.04"/> <sch:assert id="a115" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eArrest.04) or nem:eArrest.04 = '') and nem:eArrest.04[@NV!='7701001'] and nem:eArrest.02 = '3002001') and (nem:eArrest.01 = '3001003' or ../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0))">Arrest Witnessed By is a required field when Cardiac Arrest.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.05 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.05"/> <sch:assert id="a116" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eArrest.05) or nem:eArrest.05 = '') and nem:eArrest.05[@NV!='7701001'] and nem:eArrest.02 != '3002015' and (nem:eArrest.03 = '3003001' or nem:eArrest.03 = '3003003' or nem:eArrest.03 = '3003005') and (../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033')) and (nem:eArrest.01 = '3001003' or ../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0))">CPR Care Provided Prior to EMS Arrival is a required field for non-traumatic cardiac arrest patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eMedications.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eMedications/nem:eMedications.MedicationGroup">
+			<sch:let name="nemsisElements" value="nem:eMedications.02"/> <sch:assert id="a130" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eMedications.02) or nem:eMedications.02 = '') and (not(nem:eMedications.02[@NV]) or (nem:eMedications.02[@NV!='7701001'] and nem:eMedications.02[@NV!='7701003'])) and (not(nem:eMedications.03[@PN])) and (nem:eMedications.03 and nem:eMedications.03 != ''))">Medication Administered Prior to this Units EMS Care is a required field on each Medication.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eMedications.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eMedications/nem:eMedications.MedicationGroup">
+			<sch:let name="nemsisElements" value="nem:eMedications.03"/> <sch:assert id="a131" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eMedications.03) or nem:eMedications.03 = '') and (../../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../../nem:eDisposition/nem:eDisposition.12 = '4212037') and (not(nem:eMedications.03[@NV]) or (nem:eMedications.03[@NV!='7701001'] and nem:eMedications.03[@NV!='7701003'])))">Medication Given is a required field when a patient is treated.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eProcedures.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eProcedures/nem:eProcedures.ProcedureGroup">
+			<sch:let name="nemsisElements" value="nem:eProcedures.02"/> <sch:assert id="a137" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eProcedures.02) or nem:eProcedures.02 = '') and (not(nem:eProcedures.02[@NV]) or (nem:eProcedures.02[@NV!='7701001'] and nem:eProcedures.02[@NV!='7701003'])) and (not(nem:eProcedures.03[@PN])) and (nem:eProcedures.03 and nem:eProcedures.03 != ''))">Procedure Performed Prior to this Units EMS Care is a required field on each Procedure.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eProcedures.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eProcedures/nem:eProcedures.ProcedureGroup">
+			<sch:let name="nemsisElements" value="nem:eProcedures.03"/> <sch:assert id="a138" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eProcedures.03) or nem:eProcedures.03 = '') and (not(nem:eProcedures.03[@NV]) or (nem:eProcedures.03[@NV!='7701001'] and nem:eProcedures.03[@NV!='7701003'])) and (../../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Procedure Performed is a required field when a patient is treated.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eProcedures.05 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eProcedures/nem:eProcedures.ProcedureGroup">
+			<sch:let name="nemsisElements" value="nem:eProcedures.05"/> <sch:assert id="a139" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eProcedures.05) or nem:eProcedures.05 = '') and (nem:eProcedures.03 = '232685002' or nem:eProcedures.03 = '232679009' or nem:eProcedures.03 = '418613003' or nem:eProcedures.03 = '232674004' or nem:eProcedures.03 = '241689008' or nem:eProcedures.03 = '397874007' or nem:eProcedures.03 = '397892004') and (not(nem:eProcedures.03[@PN])))">Number of Procedure Attempts is a required field on all Intubation Procedures.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eProcedures.06 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eProcedures/nem:eProcedures.ProcedureGroup">
+			<sch:let name="nemsisElements" value="nem:eProcedures.06"/> <sch:assert id="a140" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eProcedures.06) or nem:eProcedures.06 = '') and (nem:eProcedures.03 = '232685002' or nem:eProcedures.03 = '232679009' or nem:eProcedures.03 = '418613003' or nem:eProcedures.03 = '232674004' or nem:eProcedures.03 = '241689008' or nem:eProcedures.03 = '397874007' or nem:eProcedures.03 = '397892004' or nem:eProcedures.03 = '427753009' or nem:eProcedures.03 = '424979004') and (not(nem:eProcedures.03[@PN])))">Procedure Successful is a required field on all Advanced Airway Procedures.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDisposition.16 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition">
+			<sch:let name="nemsisElements" value="nem:eDisposition.16"/> <sch:assert id="a144" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eDisposition.16) or nem:eDisposition.16 = '') and nem:eDisposition.12 = '4212033')">EMS Transport Method is a required field when the patient is transported by this EMS unit.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDisposition.20 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition">
+			<sch:let name="nemsisElements" value="nem:eDisposition.20"/> <sch:assert id="a147" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eDisposition.20) or nem:eDisposition.20 = '') and nem:eDisposition.20[@NV!='7701001'] and nem:eDisposition.12 = '4212033')">Reason for Choosing Destination is a required field when the patient is transported by this EMS unit.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDisposition.21 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition">
+			<sch:let name="nemsisElements" value="nem:eDisposition.21"/> <sch:assert id="a148" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eDisposition.21) or nem:eDisposition.21 = '') and nem:eDisposition.12 = '4212033' and nem:eDisposition.21[@NV!='7701001'])">Type of Destination is a required field when the patient is transported by this EMS unit.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient/nem:ePatient.PatientNameGroup">
+			<sch:let name="nemsisElements" value="nem:ePatient.02"/> <sch:assert id="a152" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePatient.02) or nem:ePatient.02 = '') and (not(nem:ePatient.02[@PN])) and (../../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Last Name is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient/nem:ePatient.PatientNameGroup">
+			<sch:let name="nemsisElements" value="nem:ePatient.03"/> <sch:assert id="a153" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePatient.03) or nem:ePatient.03 = '') and (not(nem:ePatient.03[@PN])) and (../../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../../nem:eDisposition/nem:eDisposition.12 = '4212037'))">First Name is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.06 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.06"/> <sch:assert id="a167" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eArrest.05 = '9923003' and (not(nem:eArrest.06) or nem:eArrest.06 = ''))">Who Provided CPR Prior to EMS Arrival is a necessary field when CPR was provided prior to EMS arrival.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.16 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.16"/> <sch:assert id="a171" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eTimes.16 != '' and nem:eTimes.01 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.01) or nem:eTimes.16 != '' and nem:eTimes.02 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.02) or nem:eTimes.16 != '' and nem:eTimes.03 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.03) or nem:eTimes.16 != '' and nem:eTimes.04 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.04) or nem:eTimes.16 != '' and nem:eTimes.05 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.05) or nem:eTimes.16 != '' and nem:eTimes.06 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.06) or nem:eTimes.16 != '' and nem:eTimes.07 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.07) or nem:eTimes.16 != '' and nem:eTimes.08 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.08) or nem:eTimes.16 != '' and nem:eTimes.09 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.09) or nem:eTimes.16 != '' and nem:eTimes.10 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.10) or nem:eTimes.16 != '' and nem:eTimes.11 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.11) or nem:eTimes.16 != '' and nem:eTimes.12 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.12) or nem:eTimes.16 != '' and nem:eTimes.13 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.13) or nem:eTimes.16 != '' and nem:eTimes.14 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.14) or nem:eTimes.16 != '' and nem:eTimes.15 != '' and xs:dateTime(nem:eTimes.16) &gt; xs:dateTime(nem:eTimes.15))">EMS Call Completed appears to be out of sequence with other recorded date/time value(s).</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.06 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.06"/> <sch:assert id="a179" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eTimes.06) or nem:eTimes.06 = '') and ../nem:eDisposition/nem:eDisposition.12 = '4212033' and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001') and (((../nem:eInjury/nem:eInjury.03 and ../nem:eInjury/nem:eInjury.03 != '') or (../nem:eSituation/nem:eSituation.11 = 'I63.9' or ../nem:eSituation/nem:eSituation.11 = 'G45.9') or (../nem:eSituation/nem:eSituation.12 = 'I63.9' or ../nem:eSituation/nem:eSituation.12 = 'G45.9')) or ((../nem:eSituation/nem:eSituation.11 = 'I20.9' or ../nem:eSituation/nem:eSituation.11 = 'I21.0' or ../nem:eSituation/nem:eSituation.11 = 'I21.1' or ../nem:eSituation/nem:eSituation.11 = 'I21.2' or ../nem:eSituation/nem:eSituation.11 = 'I22' or ../nem:eSituation/nem:eSituation.11 = 'R07.9') and (../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.15 != '' and ../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.15 &gt; 34)) or ((../nem:eSituation/nem:eSituation.12 = 'I22' or ../nem:eSituation/nem:eSituation.12 = 'I20.9' or ../nem:eSituation/nem:eSituation.12 = 'R07.9' or ../nem:eSituation/nem:eSituation.12 = 'I21.0' or ../nem:eSituation/nem:eSituation.12 = 'I21.1' or ../nem:eSituation/nem:eSituation.12 = 'I21.2') and (../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.15 != '' and ../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.15 &gt; 34))))">Unit Arrived on Scene Time is a required field for transported Step 1/Step 2, cardiac chest pain, ACS, stroke, or TIA patients</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eProcedures.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eProcedures/nem:eProcedures.ProcedureGroup">
+			<sch:let name="nemsisElements" value="nem:eProcedures.01"/> <sch:assert id="a180" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eProcedures.01) or nem:eProcedures.01 = '') and (not(nem:eProcedures.03[@PN])) and (nem:eProcedures.03 = '426220008' or nem:eProcedures.03 = '233169004') and ../../nem:eScene/nem:eScene.01 = '9923003' and (../../nem:eArrest/nem:eArrest.02 = '3002001' or ../../nem:eArrest/nem:eArrest.02 = '3002003' or ../../nem:eArrest/nem:eArrest.02 = '3002005' or ../../nem:eArrest/nem:eArrest.02 = '3002007' or ../../nem:eArrest/nem:eArrest.02 = '3002009' or ../../nem:eArrest/nem:eArrest.02 = '3002011' or ../../nem:eArrest/nem:eArrest.02 = '3002013')) and (../../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0 or ../../nem:eArrest/nem:eArrest.01 = '3001003'))">Time First Defibrillation Procedure Performed is a required field for non-traumatic cardiac arrest patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.01"/> <sch:assert id="a182" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eTimes.01) or nem:eTimes.01 = '') and (../nem:eArrest/nem:eArrest.02 = '3002001' or ../nem:eArrest/nem:eArrest.02 = '3002003' or ../nem:eArrest/nem:eArrest.02 = '3002005' or ../nem:eArrest/nem:eArrest.02 = '3002007' or ../nem:eArrest/nem:eArrest.02 = '3002009' or ../nem:eArrest/nem:eArrest.02 = '3002011' or ../nem:eArrest/nem:eArrest.02 = '3002013') and ../nem:eScene/nem:eScene.01 = '9923003') and (../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0 or ../nem:eArrest/nem:eArrest.01 = '3001003'))">PSAP Call Time is a required field for non-traumatic cardiac arrest patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.09 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.09"/> <sch:assert id="a183" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eTimes.09) or nem:eTimes.09 = '') and ../nem:eDisposition/nem:eDisposition.12 = '4212033' and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001') and (((../nem:eInjury/nem:eInjury.03 and ../nem:eInjury/nem:eInjury.03 != '') or (../nem:eSituation/nem:eSituation.11 = 'I63.9' or ../nem:eSituation/nem:eSituation.11 = 'G45.9') or (../nem:eSituation/nem:eSituation.12 = 'I63.9' or ../nem:eSituation/nem:eSituation.12 = 'G45.9')) or ((../nem:eSituation/nem:eSituation.11 = 'I22' or ../nem:eSituation/nem:eSituation.11 = 'I20.9' or ../nem:eSituation/nem:eSituation.11 = 'R07.9' or ../nem:eSituation/nem:eSituation.11 = 'I21.0' or ../nem:eSituation/nem:eSituation.11 = 'I21.1' or ../nem:eSituation/nem:eSituation.11 = 'I21.2') and (../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.15 != '' and ../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.15 &gt; 34)) or ((../nem:eSituation/nem:eSituation.12 = 'I22' or ../nem:eSituation/nem:eSituation.12 = 'I20.9' or ../nem:eSituation/nem:eSituation.12 = 'R07.9' or ../nem:eSituation/nem:eSituation.12 = 'I21.0' or ../nem:eSituation/nem:eSituation.12 = 'I21.1' or ../nem:eSituation/nem:eSituation.12 = 'I21.2') and (../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.15 != '' and ../nem:ePatient/nem:ePatient.AgeGroup/nem:ePatient.15 &gt; 34))))">Unit Left Scene Time is a required field for transported Step 1/Step 2, cardiac chest pain, ACS, stroke, or TIA patients</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.11 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.11"/> <sch:assert id="a184" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eTimes.11) or nem:eTimes.11 = '') and ../nem:eDisposition/nem:eDisposition.12 = '4212033' and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001') and ((../nem:eSituation/nem:eSituation.11 = 'I63.9' or ../nem:eSituation/nem:eSituation.11 = 'G45.9') or (../nem:eSituation/nem:eSituation.12 = 'I63.9' or ../nem:eSituation/nem:eSituation.12 = 'G45.9')))">Time of Patient Arrived at Destination is a required field for transported stroke/TIA patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDisposition.23 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition">
+			<sch:let name="nemsisElements" value="nem:eDisposition.23"/> <sch:assert id="a186" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eDisposition.23) or nem:eDisposition.23 = '') and nem:eDisposition.23[@NV!='7701001'] and (not(nem:eDisposition.21) or nem:eDisposition.21 = '' or (nem:eDisposition.21 != '4221001' and nem:eDisposition.21 != '4221007' and nem:eDisposition.21 != '4221009' and nem:eDisposition.21 != '4221011' and nem:eDisposition.21 != '4221013' and nem:eDisposition.21 != '4221015' and nem:eDisposition.21 != '4221017' and nem:eDisposition.21 != '4221019' and nem:eDisposition.21 != '4221021' and nem:eDisposition.21 != '4221023')) and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001' and nem:eDisposition.12 = '4212033') and ((../nem:eSituation/nem:eSituation.11 = 'I63.9' or ../nem:eSituation/nem:eSituation.11 = 'G45.9' or ../nem:eSituation/nem:eSituation.11 = 'I21.0' or ../nem:eSituation/nem:eSituation.11 = 'I21.1' or ../nem:eSituation/nem:eSituation.11 = 'I21.2') or (../nem:eSituation/nem:eSituation.12 = 'I63.9' or ../nem:eSituation/nem:eSituation.12 = 'G45.9' or ../nem:eSituation/nem:eSituation.12 = 'I21.0' or ../nem:eSituation/nem:eSituation.12 = 'I21.1' or ../nem:eSituation/nem:eSituation.12 = 'I21.2') or (../nem:eInjury/nem:eInjury.03 and ../nem:eInjury/nem:eInjury.03 != '')))">Hospital Capability is a required field for transported Step 1/Step 2, STEMI, and stroke patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eHistory.08 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eHistory">
+			<sch:let name="nemsisElements" value="nem:eHistory.08"/> <sch:assert id="a187" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eHistory.08) or nem:eHistory.08 = '') and nem:eHistory.08[@NV!='7701001'] and (../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037')) and (../nem:eSituation/nem:eSituation.11 = 'J98.01' or count(../nem:eSituation/nem:eSituation.12[text() = 'J98.01']) != 0))">Medical/Surgical History is a required field for bronchospasm patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eHistory.08 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eHistory">
+			<sch:let name="nemsisElements" value="nem:eHistory.08"/> <sch:assert id="a188" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eHistory.08) or nem:eHistory.08 = '') and nem:eHistory.08[@NV!='7701001'] and (../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037')) and ((../nem:eSituation/nem:eSituation.11 = 'G40.901' or ../nem:eSituation/nem:eSituation.11 = 'G40.909' or ../nem:eSituation/nem:eSituation.11 = 'R56.9' or ../nem:eSituation/nem:eSituation.11 = 'R56.0' or ../nem:eSituation/nem:eSituation.11 = 'G40.3') or (../nem:eSituation/nem:eSituation.12 = 'G40.901' or ../nem:eSituation/nem:eSituation.12 = 'G40.909' or ../nem:eSituation/nem:eSituation.12 = 'R56.9' or ../nem:eSituation/nem:eSituation.12 = 'R56.0' or ../nem:eSituation/nem:eSituation.12 = 'G40.3') or (../nem:eSituation/nem:eSituation.09 = 'R56.9' or ../nem:eSituation/nem:eSituation.09 = 'R56.0' or ../nem:eSituation/nem:eSituation.09 = 'G40.3') or (../nem:eSituation/nem:eSituation.10 = 'R56.9' or ../nem:eSituation/nem:eSituation.10 = 'R56.0' or ../nem:eSituation/nem:eSituation.10 = 'G40.3')))">Medical/Surgical History is a required field for seizure patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDisposition.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition/nem:eDisposition.DestinationGroup">
+			<sch:let name="nemsisElements" value="nem:eDisposition.01"/> <sch:assert id="a192" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eDisposition.01) or nem:eDisposition.01 = '') and ../../nem:eDisposition/nem:eDisposition.12 = '4212033' and (not(nem:eDisposition.01[@NV]) or (nem:eDisposition.01[@NV!='7701001'] and nem:eDisposition.01[@NV!='7701003'])))">Destination/Transferred To, Name is a required field when the patient is transported.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDisposition.05 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition/nem:eDisposition.DestinationGroup">
+			<sch:let name="nemsisElements" value="nem:eDisposition.05"/> <sch:assert id="a193" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eDisposition.05) or nem:eDisposition.05 = '') and ../../nem:eDisposition/nem:eDisposition.12 = '4212033')">Destination State is a required field when the patient is transported.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.06 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.06"/> <sch:assert id="a205" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eArrest.06) or nem:eArrest.06 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and nem:eArrest.02 != '3002015' and (nem:eArrest.03 = '3003001' or nem:eArrest.03 = '3003003' or nem:eArrest.03 = '3003005') and nem:eArrest.05 = '9923003') and (../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0 or nem:eArrest.01 = '3001003'))">Who Provided CPR Prior to EMS Arrival is a required field when CPR is provided prior to EMS arrival for non-traumatic cardiac arrest patients with attempted resuscitation by EMS.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.04 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient/nem:ePatient.PatientNameGroup">
+			<sch:let name="nemsisElements" value="nem:ePatient.04"/> <sch:assert id="a206" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePatient.04) or nem:ePatient.04 = '') and (../../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../../nem:eDisposition/nem:eDisposition.12 = '4212037') and (nem:ePatient.03 and nem:ePatient.03 != '') and (not(nem:ePatient.03[@PN])))">Middle Initial/Name is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eScene.21 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eScene">
+			<sch:let name="nemsisElements" value="nem:eScene.21"/> <sch:assert id="a207" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eScene.21) or nem:eScene.21 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Incident County is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.04 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.04"/> <sch:assert id="a208" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.04) or nem:eResponse.04 = ''))">EMS Response Number is a required field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eRecord.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eRecord/nem:eRecord.SoftwareApplicationGroup">
+			<sch:let name="nemsisElements" value="nem:eRecord.02"/> <sch:assert id="a209" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eRecord.02) or nem:eRecord.02 = ''))">Software Creator is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eRecord.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eRecord/nem:eRecord.SoftwareApplicationGroup">
+			<sch:let name="nemsisElements" value="nem:eRecord.03"/> <sch:assert id="a210" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eRecord.03) or nem:eRecord.03 = ''))">Software Name is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eRecord.04 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eRecord/nem:eRecord.SoftwareApplicationGroup">
+			<sch:let name="nemsisElements" value="nem:eRecord.04"/> <sch:assert id="a211" role="[FATAL]" diagnostics="nemsisDiagnostic" test="not((not(nem:eRecord.04) or nem:eRecord.04 = ''))">Software Version is a mandatory field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eTimes.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eTimes">
+			<sch:let name="nemsisElements" value="nem:eTimes.01"/> <sch:assert id="a212" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eTimes.01) or nem:eTimes.01 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and (not(nem:eTimes.01[@NV]) or (nem:eTimes.01[@NV!='7701001'] and nem:eTimes.01[@NV!='7701003'])))">PSAP Call Time is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.17 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient">
+			<sch:let name="nemsisElements" value="nem:ePatient.17"/> <sch:assert id="a213" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePatient.17) or nem:ePatient.17 = '') and (not(nem:ePatient.17[@PN])) and nem:ePatient.17[@NV!='7701001'] and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Date of Birth is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.15 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient/nem:ePatient.AgeGroup">
+			<sch:let name="nemsisElements" value="nem:ePatient.15"/> <sch:assert id="a214" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:ePatient.15) or nem:ePatient.15 = '') and nem:ePatient.15[@NV!='7701001']) and ((../../nem:eSituation/nem:eSituation.11 = 'I22' or ../../nem:eSituation/nem:eSituation.11 = 'I20.9' or ../../nem:eSituation/nem:eSituation.11 = 'R07.9' or ../../nem:eSituation/nem:eSituation.11 = 'I21.0' or ../../nem:eSituation/nem:eSituation.11 = 'I21.1' or ../../nem:eSituation/nem:eSituation.11 = 'I21.2') or (../../nem:eSituation/nem:eSituation.12 = 'I22' or ../../nem:eSituation/nem:eSituation.12 = 'I20.9' or ../../nem:eSituation/nem:eSituation.12 = 'R07.9' or ../../nem:eSituation/nem:eSituation.12 = 'I21.0' or ../../nem:eSituation/nem:eSituation.12 = 'I21.1' or ../../nem:eSituation/nem:eSituation.12 = 'I21.2')))">Age is a required field for ACS/Cardiac Chest Pain patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePatient.16 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePatient/nem:ePatient.AgeGroup">
+			<sch:let name="nemsisElements" value="nem:ePatient.16"/> <sch:assert id="a215" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:ePatient.16) or nem:ePatient.16 = '') and (nem:ePatient.15 and nem:ePatient.15 != '')) and ((../../nem:eSituation/nem:eSituation.11 = 'I22' or ../../nem:eSituation/nem:eSituation.11 = 'I20.9' or ../../nem:eSituation/nem:eSituation.11 = 'R07.9' or ../../nem:eSituation/nem:eSituation.11 = 'I21.0' or ../../nem:eSituation/nem:eSituation.11 = 'I21.1' or ../../nem:eSituation/nem:eSituation.11 = 'I21.2') or (../../nem:eSituation/nem:eSituation.12 = 'I22' or ../../nem:eSituation/nem:eSituation.12 = 'I20.9' or ../../nem:eSituation/nem:eSituation.12 = 'R07.9' or ../../nem:eSituation/nem:eSituation.12 = 'I21.0' or ../../nem:eSituation/nem:eSituation.12 = 'I21.1' or ../../nem:eSituation/nem:eSituation.12 = 'I21.2')))">Age Units is a required field when an age is entered for ACS/Cardiac Chest Pain patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>ePayment.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:ePayment">
+			<sch:let name="nemsisElements" value="nem:ePayment.01"/> <sch:assert id="a216" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:ePayment.01) or nem:ePayment.01 = '') and (not(nem:ePayment.01[@NV]) or (nem:ePayment.01[@NV!='7701001'] and nem:ePayment.01[@NV!='7701003'])) and (../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212033'))">Primary Method of Payment is a required field when a patient is transported.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eScene.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eScene">
+			<sch:let name="nemsisElements" value="nem:eScene.01"/> <sch:assert id="a217" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eScene.01) or nem:eScene.01 = '') and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001' and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">First EMS Unit on Scene is a required field when patient contact is made on a scene response.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eScene.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eScene">
+			<sch:let name="nemsisElements" value="nem:eScene.01"/> <sch:assert id="a218" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eScene.01) or nem:eScene.01 = '') and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001' and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and (../nem:eArrest/nem:eArrest.02 = '3002001' or ../nem:eArrest/nem:eArrest.02 = '3002003' or ../nem:eArrest/nem:eArrest.02 = '3002005' or ../nem:eArrest/nem:eArrest.02 = '3002007' or ../nem:eArrest/nem:eArrest.02 = '3002009' or ../nem:eArrest/nem:eArrest.02 = '3002011' or ../nem:eArrest/nem:eArrest.02 = '3002013')) and (../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0 or ../nem:eArrest/nem:eArrest.01 = '3001003'))">First EMS Unit on Scene is a required field when the unit makes contact with non-traumatic cardiac arrest patients on a scene response.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eScene.15 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eScene">
+			<sch:let name="nemsisElements" value="nem:eScene.15"/> <sch:assert id="a219" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eScene.15) or nem:eScene.15 = '') and nem:eScene.15[@NV!='7701001'] and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001' and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Incident Street Address is a required field when patient contact is made on a scene response.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eScene.17 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eScene">
+			<sch:let name="nemsisElements" value="nem:eScene.17"/> <sch:assert id="a220" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eScene.17) or nem:eScene.17 = '') and nem:eScene.17[@NV!='7701001'] and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Incident City is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eScene.18 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eScene">
+			<sch:let name="nemsisElements" value="nem:eScene.18"/> <sch:assert id="a221" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eScene.18) or nem:eScene.18 = '') and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037'))">Incident State is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eInjury.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eInjury">
+			<sch:let name="nemsisElements" value="nem:eInjury.01"/> <sch:assert id="a222" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eInjury.01) or nem:eInjury.01 = '') and nem:eInjury.01[@NV!='7701001'] and ../nem:eSituation/nem:eSituation.02 = '9922005')">Cause of Injury is a required field when there is a possible injury.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eInjury.03 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eInjury">
+			<sch:let name="nemsisElements" value="nem:eInjury.03"/> <sch:assert id="a223" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eInjury.03) or nem:eInjury.03 = '') and nem:eInjury.03[@NV!='7701001'] and (not(nem:eInjury.04) or nem:eInjury.04 = '') and (nem:eInjury.01 and nem:eInjury.01 != ''))">Trauma Center Criteria is a required field when there is an injury.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eInjury.04 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eInjury">
+			<sch:let name="nemsisElements" value="nem:eInjury.04"/> <sch:assert id="a224" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eInjury.04) or nem:eInjury.04 = '') and nem:eInjury.04[@NV!='7701001'] and (not(nem:eInjury.03) or nem:eInjury.03 = '') and (nem:eInjury.01 and nem:eInjury.01 != ''))">Vehicular, Pedestrian, or Other Injury Risk Factor is a required field when there is an injury.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eInjury.07 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eInjury">
+			<sch:let name="nemsisElements" value="nem:eInjury.07"/> <sch:assert id="a225" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eInjury.07) or nem:eInjury.07 = '') and (not(nem:eInjury.07[@NV]) or (nem:eInjury.07[@NV!='7701001'] and nem:eInjury.07[@NV!='7701005']))) and ((nem:eInjury.04 = '2904007' or nem:eInjury.04 = '2904009' or nem:eInjury.04 = '2904011' or nem:eInjury.04 = '2904013' or nem:eInjury.04 = '2904015') or (nem:eInjury.01 = 'W69' or nem:eInjury.01 = 'V79.9' or nem:eInjury.01 = 'V49.9' or nem:eInjury.01 = 'V29.9' or nem:eInjury.01 = 'V69.9' or nem:eInjury.01 = 'V59.9' or nem:eInjury.01 = 'V39.9' or nem:eInjury.01 = 'V19.9' or nem:eInjury.01 = 'W74' or nem:eInjury.01 = 'V40.9' or nem:eInjury.01 = 'V20.9' or nem:eInjury.01 = 'V60.9' or nem:eInjury.01 = 'V86.34' or nem:eInjury.01 = 'V86.39' or nem:eInjury.01 = 'V50.9' or nem:eInjury.01 = 'V86.32' or nem:eInjury.01 = 'V30.9')))">Use of Occupant Safety Equipment is a required field when a patient is injured.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eArrest.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eArrest">
+			<sch:let name="nemsisElements" value="nem:eArrest.02"/> <sch:assert id="a227" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eArrest.02) or nem:eArrest.02 = '') and nem:eArrest.02[@NV!='7701001'] and (not(../nem:eDisposition/nem:eDisposition.12) or ../nem:eDisposition/nem:eDisposition.12 = '' or (../nem:eDisposition/nem:eDisposition.12 != '4212013' and ../nem:eDisposition/nem:eDisposition.12 != '4212015' and ../nem:eDisposition/nem:eDisposition.12 != '4212017' and ../nem:eDisposition/nem:eDisposition.12 != '4212019'))) and (nem:eArrest.01 = '3001003' or ../nem:eSituation/nem:eSituation.11 = 'I46.9' or count(../nem:eSituation/nem:eSituation.12[text() = 'I46.9']) != 0) and ((nem:eArrest.03 = '3003001' or nem:eArrest.03 = '3003003' or nem:eArrest.03 = '3003005') or (nem:eArrest.04 = '3004003' or nem:eArrest.04 = '3004005' or nem:eArrest.04 = '3004007')))">Cardiac Arrest Etiology is a required field for living cardiac arrest patients.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eAirway.04 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eAirway/nem:eAirway.AirwayGroup/nem:eAirway.ConfirmationGroup">
+			<sch:let name="nemsisElements" value="nem:eAirway.04"/> <sch:assert id="a520" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eAirway.04) or nem:eAirway.04 = '') and nem:eAirway.04[@NV!='7701001'] and (nem:eAirway.03 and nem:eAirway.03 != ''))">Airway Device Placement Confirmed Method is a required field when an airway device is confirmed.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eCrew.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eCrew/nem:eCrew.CrewGroup">
+			<sch:let name="nemsisElements" value="nem:eCrew.01"/> <sch:assert id="a522" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eCrew.01) or nem:eCrew.01 = '') and (not(nem:eCrew.01[@NV]) or (nem:eCrew.01[@NV!='7701001'] and nem:eCrew.01[@NV!='7701003'] and nem:eCrew.01[@NV!='7701005'])))">Crew Member is a required field.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eResponse.21 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.21"/> <sch:assert id="a523" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.21) or nem:eResponse.21 = '') and ../nem:eDisposition/nem:eDisposition.12 = '4212033' and (../nem:ePayment/nem:ePayment.01 = '2601019' or ../nem:ePayment/nem:ePayment.01 = '2601017' or ../nem:ePayment/nem:ePayment.01 = '2601001' or ../nem:ePayment/nem:ePayment.01 = '2601003' or ../nem:ePayment/nem:ePayment.01 = '2601005' or ../nem:ePayment/nem:ePayment.01 = '2601021' or ../nem:ePayment/nem:ePayment.01 = '2601009' or ../nem:ePayment/nem:ePayment.01 = '2601023' or ../nem:ePayment/nem:ePayment.01 = '2601015' or ../nem:ePayment/nem:ePayment.01 = '2601011' or ../nem:ePayment/nem:ePayment.01 = '2601013'))">Mileage is required for billing.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eVitals related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eVitals">
+			<sch:let name="nemsisElements" value="nem:eVitals"/><sch:assert id="a533" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and count(nem:eVitals.VitalGroup) &lt; 1 and ../nem:eDisposition/nem:eDisposition.16 != '4216015')">Vital signs are required when a patient is treated.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+		
+		<sch:pattern>
+			<sch:title>eProcedures related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eProcedures">
+			<sch:let name="nemsisElements" value="nem:eProcedures"/><sch:assert id="a534" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and count(nem:eProcedures.ProcedureGroup) &lt; 1 and ../nem:eDisposition/nem:eDisposition.16 != '4216015')">Procedure Performed is a required field when a patient is treated.  Select Not Applicable if no procedure was performed or attempted.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eMedications related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eMedications">
+			<sch:let name="nemsisElements" value="nem:eVitals"/><sch:assert id="a535" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and count(nem:eMedications.MedicationGroup) &lt; 1 and ../nem:eDisposition/nem:eDisposition.16 != '4216015' and count(../nem:eProcedures/nem:eProcedures.ProcedureGroup) &lt; 1)">Medication Given is a required field when a patient is treated.  Select Not Applicable if no medication was given or attempted.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eDisposition related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition">
+			<sch:let name="nemsisElements" value="nem:eDisposition"/><sch:assert id="a536" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(count(nem:eDisposition.HospitalTeamActivationGroup) &lt; 1 and nem:eDisposition.12 = '4212033' and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001' and ((../nem:eSituation/nem:eSituation.11 = 'I21.0' or ../nem:eSituation/nem:eSituation.11 = 'I21.1' or ../nem:eSituation/nem:eSituation.11 = 'I21.2' or ../nem:eSituation/nem:eSituation.11 = 'I63.9' or ../nem:eSituation/nem:eSituation.11 = 'G45.9' or ../nem:eSituation/nem:eSituation.11 = 'A41.9') or (../nem:eInjury/nem:eInjury.03 != '' and ../nem:eInjury/nem:eInjury.03[@NV != '7701001']) or (../nem:eSituation/nem:eSituation.12 = 'I21.0' or ../nem:eSituation/nem:eSituation.12 = 'I21.1' or ../nem:eSituation/nem:eSituation.12 = 'I21.2' or ../nem:eSituation/nem:eSituation.12 = 'I63.9' or ../nem:eSituation/nem:eSituation.12 = 'G45.9' or ../nem:eSituation/nem:eSituation.12 = 'A41.9') or (../nem:eInjury/nem:eInjury.04 != '' and ../nem:eInjury/nem:eInjury.04[@NV != '7701001'])))">Code Alerts are required for transported patients with STEMI, stroke, TIA, trauma, and sepsis</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+		
+		<sch:pattern>
+			<sch:title>eResponse.20 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eResponse">
+			<sch:let name="nemsisElements" value="nem:eResponse.20"/> <sch:assert id="a537" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eResponse.20) or nem:eResponse.20 = '') and ../nem:eDisposition/nem:eDisposition.12 = '4212033' and (../nem:ePayment/nem:ePayment.01 = '2601019' or ../nem:ePayment/nem:ePayment.01 = '2601017' or ../nem:ePayment/nem:ePayment.01 = '2601001' or ../nem:ePayment/nem:ePayment.01 = '2601003' or ../nem:ePayment/nem:ePayment.01 = '2601005' or ../nem:ePayment/nem:ePayment.01 = '2601021' or ../nem:ePayment/nem:ePayment.01 = '2601009' or ../nem:ePayment/nem:ePayment.01 = '2601023' or ../nem:ePayment/nem:ePayment.01 = '2601015' or ../nem:ePayment/nem:ePayment.01 = '2601011' or ../nem:ePayment/nem:ePayment.01 = '2601013'))">Mileage is required for billing.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eSituation.18 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eSituation">
+			<sch:let name="nemsisElements" value="nem:eSituation.18"/> <sch:assert id="a559" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(((not(nem:eSituation.18) or nem:eSituation.18 = '') and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001' and ../nem:eDisposition/nem:eDisposition.12 = '4212033') and ((nem:eSituation.11 = 'I63.9' or nem:eSituation.11 = 'G45.9') or (nem:eSituation.12 = 'I63.9' or nem:eSituation.12 = 'G45.9')))">Date/Time Last Known Well is required when impression is stroke or TIA.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+		<sch:pattern>
+			<sch:title>eNarrative.01 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eNarrative">
+			<sch:let name="nemsisElements" value="nem:eNarrative.01"/> <sch:assert id="a560" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((not(nem:eNarrative.01) or nem:eNarrative.01 = '') and nem:eNarrative.01[@NV!='7701001'] and (../nem:eDisposition/nem:eDisposition.12 = '4212013' or ../nem:eDisposition/nem:eDisposition.12 = '4212015' or ../nem:eDisposition/nem:eDisposition.12 = '4212017' or ../nem:eDisposition/nem:eDisposition.12 = '4212019' or ../nem:eDisposition/nem:eDisposition.12 = '4212021' or ../nem:eDisposition/nem:eDisposition.12 = '4212023' or ../nem:eDisposition/nem:eDisposition.12 = '4212025' or ../nem:eDisposition/nem:eDisposition.12 = '4212027' or ../nem:eDisposition/nem:eDisposition.12 = '4212029' or ../nem:eDisposition/nem:eDisposition.12 = '4212031' or ../nem:eDisposition/nem:eDisposition.12 = '4212033' or ../nem:eDisposition/nem:eDisposition.12 = '4212035' or ../nem:eDisposition/nem:eDisposition.12 = '4212037') and ../nem:eResponse/nem:eResponse.ServiceGroup/nem:eResponse.05 = '2205001')">PCR Narrative is a required field when patient contact is made.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+
+		<sch:pattern>
+			<sch:title>itVitals.055 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport">
+			<sch:let name="nemsisElements" value="nem:itVitals.055"/> <sch:assert id="Rule_itVitals055" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not((nem:eCustomResults/nem:eCustomResults.ResultsGroup[nem:eCustomResults.02 = 'itVitals.055'][nem:eCustomResults.01 != ''] and (nem:eCustomResults/nem:eCustomResults.ResultsGroup[nem:eCustomResults.02 = 'itVitals.055'][number(nem:eCustomResults.01) != number(nem:eCustomResults.01)]) or (nem:eCustomResults/nem:eCustomResults.ResultsGroup[nem:eCustomResults.02 = 'itVitals.055'][number(nem:eCustomResults.01) &lt; 0] or nem:eCustomResults/nem:eCustomResults.ResultsGroup[nem:eCustomResults.02 = 'itVitals.055'][number(nem:eCustomResults.01) &gt; 100])) or (nem:eCustomResults/nem:eCustomResults.ResultsGroup[nem:eCustomResults.02 = 'itVitals.055'][nem:eCustomResults.01 = ''] and not(nem:eCustomResults/nem:eCustomResults.ResultsGroup[nem:eCustomResults.02 = 'itVitals.055'][nem:eCustomResults.01[@NV]]) and not(nem:eCustomResults/nem:eCustomResults.ResultsGroup[nem:eCustomResults.02 = 'itVitals.055'][nem:eCustomResults.01[@PN]])))">Stroke Scale Score Value (itVitals.055) should be between 0 and 100 OR a Not Value or Pertinent Negative.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+
+		<sch:pattern>
+			<sch:title>eDisposition.02 related rule.</sch:title>
+			<sch:rule context="nem:PatientCareReport/nem:eDisposition/nem:eDisposition.DestinationGroup">
+				<sch:let name="nemsisElements" value="nem:eDisposition.02"/>
+				<sch:assert id="RestrictByDestinationCode" role="[WARNING]" diagnostics="nemsisDiagnostic" test="not(nem:eDisposition.02 and nem:eDisposition.02 != '' and .[not(nem:eDisposition.02 = ('101', '102', '103', '1100', '1124078969', '1144216367', '12016', '1300UGM', '1356393805', '1396971032', '14-0012', '14-0027', '14-0056', '14-0056a', '14-0500', '14-0912', '14-1008', '14-1073', '14-1127', '14-1146', '14-1336', '14-1337', '14-1430', '14-1452', '14-1471', '14-1472', '14900', '15400', '158701', '159', '1600Pacific', '1616E30TH', '163', '1649624453', '1679879662', '1695', '186', '188', '1916', '1922295922', '201', '202', '202N7', '205', '205Simcoe', '2061', '207', '208501', '2136', '2156', '2157', '2158', '2159', '219', '2224', '2283', '2283-2', '2288', '240700', '252400', '2707', '2951', '29800', '3210', '3210-McCormick', '3300Englewood', '3807Summitview', '38200', '389901', '39R05', '401Homer', '408', '438300', '4423', '444300', '444400', '444500', '444600', '4510I', '4510II', '4510III', '4510IV', '4540', '4592', '4654', '4702', '500030', '5068', '50Wispoosh', '5257', '5396', '5595', '5653', '570100', '589700', '591000', '602700', '6062', '60632893', '6081', '61300', '621504', '643600', '707300', '717Fruitvale', '724700', '729500', '750299', '750326', '750477', '750604', '750624', '751442', '751618', '751619', '751620', '751639', '751735', '751882', '752148', '752247', '752526', '752690', '7541', '9032', '9033', '9034', '9035', '9036', '9037', '9038', '9039', '9041', '9042', '9043', '9044', '9045', '9046', '9047', '9088', '9089', '9098', '9099', '91WSR108', '9999', 'ASF.FS.60100164', 'ASF.FS.60100954', 'ASF.FS.60101652', 'ASF.FS.60103038', 'DRCS.FX.00056021', 'ESSO.ES.60322342', 'GC.FS.00010198', 'HAC.FS.00000001', 'HAC.FS.00000008', 'HAC.FS.00000010', 'HAC.FS.00000010a', 'HAC.FS.00000010b', 'HAC.FS.00000014', 'HAC.FS.00000020', 'HAC.FS.00000021', 'HAC.FS.00000022', 'HAC.FS.00000023', 'HAC.FS.00000026', 'HAC.FS.00000029', 'HAC.FS.00000030', 'HAC.FS.00000032', 'HAC.FS.00000032a', 'HAC.FS.00000035', 'HAC.FS.00000038', 'HAC.FS.00000039A', 'HAC.FS.00000039B', 'HAC.FS.00000042', 'HAC.FS.00000043', 'HAC.FS.00000045', 'HAC.FS.00000046', 'HAC.FS.00000050', 'HAC.FS.00000054', 'HAC.FS.00000056', 'HAC.FS.00000058', 'HAC.FS.00000058a', 'HAC.FS.00000063', 'HAC.FS.00000078', 'HAC.FS.00000079', 'HAC.FS.00000080', 'HAC.FS.00000082', 'HAC.FS.00000084', 'HAC.FS.00000084a', 'HAC.FS.00000084b', 'HAC.FS.00000085', 'HAC.FS.00000096', 'HAC.FS.00000102', 'HAC.FS.00000104', 'HAC.FS.00000106', 'HAC.FS.00000107', 'HAC.FS.00000108', 'HAC.FS.00000111', 'HAC.FS.00000125', 'HAC.FS.00000126', 'HAC.FS.00000128', 'HAC.FS.00000129', 'HAC.FS.00000130', 'HAC.FS.00000131', 'HAC.FS.00000132', 'HAC.FS.00000134', 'HAC.FS.00000137', 'HAC.FS.00000139', 'HAC.FS.00000140', 'HAC.FS.00000141', 'HAC.FS.00000142', 'HAC.FS.00000145', 'HAC.FS.00000147', 'HAC.FS.00000148', 'HAC.FS.00000150', 'HAC.FS.00000152', 'HAC.FS.00000153', 'HAC.FS.00000155', 'HAC.FS.00000156', 'HAC.FS.00000157', 'HAC.FS.00000158', 'HAC.FS.00000159', 'HAC.FS.00000161', 'HAC.FS.00000162', 'HAC.FS.00000164', 'HAC.FS.00000165', 'HAC.FS.00000167', 'HAC.FS.00000168', 'HAC.FS.00000172', 'HAC.FS.00000173', 'HAC.FS.00000175', 'HAC.FS.00000176A', 'HAC.FS.00000176B', 'HAC.FS.00000186', 'HAC.FS.00000191', 'HAC.FS.00000194', 'HAC.FS.00000195', 'HAC.FS.00000197', 'HAC.FS.00000198', 'HAC.FS.00000199', 'HAC.FS.00000201', 'HAC.FS.00000202', 'HAC.FS.00000204', 'HAC.FS.00000207', 'HAC.FS.00000208', 'HAC.FS.60054542', 'HAC.FS.60054580', 'HAC.FS.60075769', 'HAC.FS.60183546', 'HAC.FS.60221541', 'HAC.FS.60256001', 'HAC.FS.60311052', 'HAC.FS.60311052a', 'HAC.FS.60316803', 'HAC.FS.60329940', 'HAC.FS.60417818', 'HAC.FS.60424211', 'HAC.FS.60435729', 'HALC.FS.60238024', 'HPSY.FS.00000004', 'HPSY.FS.00000015', 'HPSY.FS.00000016', 'HPSY.FS.00000019', 'HPSY.FS.60429197', 'HPSY.FS.60492181', 'HPSY.FS.60603057', 'MTSA.FS.60212747', 'MTSA.FS.60594712', 'MTSC.FS.00003012', 'MTSC.FS.60085407', 'MTSC.FS.60200558', 'MTSC.FS.60204157', 'MTSC.FS.60265409', 'MTSC.FS.60591864', 'MTSP.FS.00000503', 'MTSP.FS.00001584', 'MTSP.FS.00004360', 'MTSP.FS.60019223', 'MTSP.FS.60409555', 'MTSP.FS.60551373', 'MTSW.FS.00000615', 'MTSW.FS.00000729', 'MTSW.FS.00000803', 'MTSW.FS.00000976', 'MTSW.FS.00001321', 'MTSW.FS.00001430', 'MTSW.FS.00001464', 'MTSW.FS.00001620', 'MTSW.FS.00001644', 'MTSW.FS.00001673', 'MTSW.FS.00001703', 'MTSW.FS.00001817', 'MTSW.FS.00001829', 'MTSW.FS.00001892', 'MTSW.FS.00001963', 'MTSW.FS.00001971', 'MTSW.FS.00001982', 'MTSW.FS.00001993', 'MTSW.FS.00002019', 'MTSW.FS.00002023', 'MTSW.FS.00002025', 'MTSW.FS.00002040', 'MTSW.FS.00002086', 'MTSW.FS.00002097', 'MTSW.FS.00002107', 'MTSW.FS.00002110', 'MTSW.FS.00002118', 'MTSW.FS.00002119', 'MTSW.FS.00002135', 'MTSW.FS.00002156', 'MTSW.FS.00002216', 'MTSW.FS.00002218', 'MTSW.FS.00002242', 'MTSW.FS.00002246', 'MTSW.FS.00002307', 'MTSW.FS.00002308', 'MTSW.FS.00002309', 'MTSW.FS.00002352', 'MTSW.FS.00002357', 'MTSW.FS.00002365', 'MTSW.FS.00002394', 'MTSW.FS.00002395', 'MTSW.FS.00002405', 'MTSW.FS.00002416', 'MTSW.FS.00002423', 'MTSW.FS.00002428', 'MTSW.FS.00002488', 'MTSW.FS.00002493', 'MTSW.FS.00002493a', 'MTSW.FS.00002531', 'MTSW.FS.00002535', 'MTSW.FS.00002564', 'MTSW.FS.00002583', 'MTSW.FS.00002627', 'MTSW.FS.00002641', 'MTSW.FS.00002694', 'MTSW.FS.00002708', 'MTSW.FS.00002740', 'MTSW.FS.00002774', 'MTSW.FS.00002798', 'MTSW.FS.00002817', 'MTSW.FS.00002851', 'MTSW.FS.00002930', 'MTSW.FS.00002964', 'MTSW.FS.00002988', 'MTSW.FS.00003047', 'MTSW.FS.00003099', 'MTSW.FS.00003115', 'MTSW.FS.00003164', 'MTSW.FS.00003540', 'MTSW.FS.00003719', 'MTSW.FS.00003927', 'MTSW.FS.00004061', 'MTSW.FS.00004107', 'MTSW.FS.00004259', 'MTSW.FS.00004356', 'MTSW.FS.00004440', 'MTSW.FS.00004508', 'MTSW.FS.00004682', 'MTSW.FS.00004901', 'MTSW.FS.00005086', 'MTSW.FS.00005147', 'MTSW.FS.60063025', 'MTSW.FS.60065323', 'MTSW.FS.60085774', 'MTSW.FS.60085784', 'MTSW.FS.60097720', 'MTSW.FS.60101575', 'MTSW.FS.60105154', 'MTSW.FS.60132830', 'MTSW.FS.60156664', 'MTSW.FS.60179831', 'MTSW.FS.60187346', 'MTSW.FS.60199665', 'MTSW.FS.60204977', 'MTSW.FS.60204980', 'MTSW.FS.60204996', 'MTSW.FS.60204998', 'MTSW.FS.60232304', 'MTSW.FS.60251114', 'MTSW.FS.60267143', 'MTSW.FS.60274990', 'MTSW.FS.60286603', 'MTSW.FS.60290123', 'MTSW.FS.60295901', 'MTSW.FS.60302257', 'MTSW.FS.60318724', 'MTSW.FS.60318753', 'MTSW.FS.60318763', 'MTSW.FS.60318779', 'MTSW.FS.60326913', 'MTSW.FS.60388738', 'MTSW.FS.60388821', 'MTSW.FS.60402509', 'MTSW.FS.60407032', 'MTSW.FS.60468649', 'MTSW.FS.60498641', 'MTSW.FS.60505037', 'MTSW.FS.60532428', 'MTSW.FS.60536161', 'MTSW.FS.60539349', 'MTSW.FS.60540666', 'MTSW.FS.60554912', 'MTSW.FS.60556913', 'MTSW.FS.60569320', 'MTSW.FS.60589636', 'MTSW.FS.60589642', 'MTSW.FS.60589692', 'MTSW.FS.60590123', 'MTSW.FS.60591022', 'MTSW.FS.60592223', 'MTSW.FS.60595353', 'MTSW.FS.60603310', 'MTSW.FS.60613316', 'MTSW.FS.60613346', 'MTSW.FS.60626947', 'MTSW.FS.60626980', 'MTSW.FS.60655187', 'OVH', 'PHAR.CF.00056595', 'PHHC.FX.60384158', 'RTF.FS.00001005', 'RTF.FS.00001012', 'RTF.FS.00001064', 'RTF.FS.00001065', 'RTF.FS.00001068', 'RTF.FS.00001070', 'RTF.FS.00001085', 'RTF.FS.00001090', 'RTF.FS.60068796', 'RTF.FS.60248187', 'RTF.FS.60411219', 'RTF.FS.60503751', 'SI.FS.00003283', 'SI.FS.00003661', 'YWCAYAK'))])">Submitted value for Destination Code (eDisposition.02) does not exist in the system.</sch:assert>
+			</sch:rule>
+		</sch:pattern>
+	
+  <!-- DIAGNOSTICS -->
+	<sch:diagnostics>
+<sch:diagnostic id="nemsisDiagnostic" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+  <!-- This is the NEMSIS national diagnostic. It must exist in every NEMSIS Schematron document, 
+       and it should be referenced by every assert and report. It provides nationally-
+       standardized, structured data to communicate which data elements are of interest in a 
+       failed assert or successful report. -->
+
+  <nemsisDiagnostic xmlns="http://www.nemsis.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!-- Elements that uniquely identify the record where the problem happened. -->
+
+    <record>
+      <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
+      <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
+      <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+    </record>
+
+    <!-- Elements that the user may want to revisit to resolve the problem, along with their values. -->
+
+    <elements>
+      <xsl:for-each select="$nemsisElements">
+        <xsl:element name="element">
+          <xsl:attribute name="location">
+            <xsl:apply-templates select="." mode="schematron-get-full-path"/>
+          </xsl:attribute>
+          <xsl:for-each select ="@*">
+            <xsl:attribute name="{name()}">
+              <xsl:value-of select="."/>
+            </xsl:attribute>
+          </xsl:for-each>
+          <xsl:if test="not(*)">
+            <xsl:value-of select="."/>
+          </xsl:if>
+        </xsl:element>
+      </xsl:for-each>
+    </elements>
+
+    <!-- Elements that were missing, that the user may want to visit to resolve the problem. -->
+
+    <elementsMissing>
+      <xsl:variable name="default_context" select="."/>
+      <xsl:for-each select="tokenize($nemsisElementsMissing, ' ')">
+        <xsl:variable name="parent" select="$nemsisElementsMissingContext[contains(local-name(), substring-before(current(), '.'))][1]"/>
+        <element>
+          <xsl:attribute name="parentLocation">
+            <xsl:choose>
+              <xsl:when test="$parent">
+                <xsl:apply-templates select="$parent" mode="schematron-get-full-path"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates select="$default_context" mode="schematron-get-full-path"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+          <xsl:attribute name="name">
+            <xsl:value-of select="."/>
+          </xsl:attribute>
+        </element>
+      </xsl:for-each>
+    </elementsMissing>
+
+  </nemsisDiagnostic>
+
+</sch:diagnostic>
+      
+  </sch:diagnostics>
+
+</sch:schema>
+

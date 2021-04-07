@@ -12,5 +12,19 @@
       "createdAt": "2020-04-07T19:53:42.434Z",
       "updatedAt": "2020-04-07T19:53:42.434Z"
     }
+  },
+  {
+    "model": "County",
+    "data": {
+      "fullCode": "53077",
+      "id": "53077",
+      "stateAbbr": "WA",
+      "stateCode": "53",
+      "countyCode": "077",
+      "name": "Yakima County",
+      "classCode": "H1",
+      "createdAt": "2020-04-07T19:53:42.434Z",
+      "updatedAt": "2020-04-07T19:53:42.434Z"
+    }
   }
 ]

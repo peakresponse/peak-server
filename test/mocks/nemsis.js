@@ -1,7 +1,7 @@
 const nock = require('nock');
 const path = require('path');
 
-/// Uncomment line below to record external HTTP calls
+// Uncomment line below to record external HTTP calls
 // nock.recorder.rec();
 
 const mockReposRequest = () => {
@@ -132,10 +132,54 @@ const mockCaliforniaDownloads = () => {
   }
 };
 
+const mockWashingtonFilesRequest = () => {
+  nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
+    .get('/stash/rest/api/1.0/projects/NES/repos/washington/files')
+    .query({ limit: '100' })
+    .reply(
+      200,
+      [
+        '1f8b0800000000000000',
+        '848cb10a02311005ff65eba02776e904ed14c42d2c4464098b17d8e420bb390ec57f379e58dbcd6386f78491a4b282bfc08975a825b02ecf9b1b1a196fc908d91653127080a1e7445686fc097607fc690dfd1f3d3f5c1d687c30f8b583a87b523bd2bd4d2b959b322a06be732031c546abae71e669aef06b731579bd010000ffff',
+        '0300f0998ab6b4000000',
+      ],
+      [
+        'X-AREQUESTID',
+        '@1XB8LJMx1051x95866x0',
+        'Cache-Control',
+        'no-cache, no-transform',
+        'Vary',
+        'accept-encoding,x-auserid,cookie,x-ausername,accept-encoding',
+        'X-Content-Type-Options',
+        'nosniff',
+        'Content-Encoding',
+        'gzip',
+        'Content-Type',
+        'application/json;charset=UTF-8',
+        'Transfer-Encoding',
+        'chunked',
+        'Date',
+        'Tue, 06 Apr 2021 23:31:03 GMT',
+        'Connection',
+        'close',
+      ]
+    );
+};
+
+const mockWashingtonDownloads = () => {
+  for (const filePath of ['Resources/WA_StateDataSet.xml', 'Schematron/WA_EMSDataSet.sch.xml']) {
+    nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
+      .get(`/stash/projects/NES/repos/washington/raw/${filePath}`)
+      .replyWithFile(200, path.resolve(__dirname, 'nemsis/washington', filePath));
+  }
+};
+
 module.exports = {
   mockAlabamaDownloads,
   mockAlabamaFilesRequest,
   mockCaliforniaDownloads,
   mockCaliforniaFilesRequest,
   mockReposRequest,
+  mockWashingtonDownloads,
+  mockWashingtonFilesRequest,
 };
