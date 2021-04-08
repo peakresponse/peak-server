@@ -3,9 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
   {
-    path: '',
+    path: '**',
     redirectTo: '/scenes',
-    pathMatch: 'full',
   },
 ];
 

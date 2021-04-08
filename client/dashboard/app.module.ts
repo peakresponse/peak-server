@@ -20,13 +20,13 @@ import { ApiService, GeolocationService, NavigationService, UserService, WebSock
   imports: [
     AgmCoreModule.forRoot(),
     AgmOverlays,
-    AppRoutingModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
     NgbModule,
     ScenesModule,
     UsersModule,
+    AppRoutingModule,
   ],
   providers: [
     ApiService,
