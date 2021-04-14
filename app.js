@@ -12,6 +12,7 @@ const passport = require('passport');
 const fileUpload = require('express-fileupload');
 const i18n = require('i18n');
 const bodyParser = require('body-parser');
+const Rollbar = require('rollbar');
 
 const helpers = require('./routes/helpers');
 const routes = require('./routes');
@@ -86,7 +87,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.currentUser = null;
   res.locals.flash = {};
@@ -97,6 +98,13 @@ app.use((err, req, res) => {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+
+  // allow error to pass to following Rollbar handler
+  next(err, req, res);
 });
+
+// log unhandled errors with Rollbar
+const rollbar = new Rollbar(process.env.ROLLBAR_POST_SERVER_ITEM_ACCESS_TOKEN);
+app.use(rollbar.errorHandler());
 
 module.exports = app;
