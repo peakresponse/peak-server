@@ -16,6 +16,7 @@ import { ScenesRoutingModule } from './scenes-routing.module';
 import {
   ListScenesComponent,
   NewSceneComponent,
+  SceneCloserComponent,
   SceneMapComponent,
   SceneOverviewComponent,
   ScenePatientsComponent,
@@ -26,6 +27,7 @@ import {
   declarations: [
     ListScenesComponent,
     NewSceneComponent,
+    SceneCloserComponent,
     SceneMapComponent,
     SceneOverviewComponent,
     ScenePatientsComponent,

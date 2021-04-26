@@ -37,22 +37,26 @@ export class AgencyService implements OnDestroy {
     this.agencySubscription = this.ws.connect().subscribe((data) => {
       this.agency = data.agency;
       this.agencySubject.next(this.agency);
-      data.scenes = data.scenes.map((s: any) => new Scene(s));
-      for (let scene of data.scenes) {
-        const index = findIndex(this.activeScenes, { id: scene.id });
-        if (index >= 0) {
-          if (scene.isActive) {
-            this.activeScenes[index].update(scene);
+      if (data.scenes.length > 0) {
+        data.scenes = data.scenes.map((s: any) => new Scene(s));
+        for (let scene of data.scenes) {
+          const index = findIndex(this.activeScenes, { id: scene.id });
+          if (index >= 0) {
+            if (scene.isActive) {
+              this.activeScenes[index].update(scene);
+            } else {
+              this.activeScenes.splice(index, 1);
+            }
           } else {
-            this.activeScenes.splice(index, 1);
-          }
-        } else {
-          if (scene.isActive) {
-            this.activeScenes.push(scene);
+            if (scene.isActive) {
+              this.activeScenes.push(scene);
+            }
           }
         }
+        this.activeScenes = orderBy(this.activeScenes, ['updatedAt'], ['desc']);
+      } else {
+        this.activeScenes = [];
       }
-      this.activeScenes = orderBy(this.activeScenes, ['updatedAt'], ['desc']);
       this.activeScenesSubject.next(this.activeScenes);
     });
   }
