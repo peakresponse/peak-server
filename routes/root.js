@@ -1,6 +1,10 @@
 const express = require('express');
+const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
+const moment = require('moment');
+const xmljs = require('xml-js');
 
+const cache = require('../lib/cache');
 const mailer = require('../emails/mailer');
 const helpers = require('./helpers');
 const interceptors = require('./interceptors');
@@ -50,11 +54,46 @@ if (process.env.MARKETING_ENABLED) {
     })
   );
 
-  router.get('/', (req, res, next) => {
+  router.get('/', async (req, res, next) => {
     if (req.subdomains.length > process.env.BASE_HOST.split('.').length - 2) {
       next();
     } else {
-      res.render('index');
+      let articles = cache.get('root-index-articles');
+      if (articles === undefined) {
+        articles = [];
+        cache.set('root-index-articles', articles);
+        try {
+          const response = await fetch(process.env.MARKETING_BLOG_FEED);
+          const xml = await response.text();
+          const json = xmljs.xml2js(xml, { compact: true });
+          for (const item of json.rss.channel.item) {
+            const article = {
+              title: item.title._cdata,
+              pubDate: moment(item.pubDate._text).format('MMMM D, YYYY'),
+              link: item.link._text,
+              content: item['content:encoded']._cdata,
+            };
+            // extract first image from content as thumbnail
+            let match = article.content.match(/<img[^>]+>/);
+            if (match) {
+              match = match[0].match(/src="([^"]+)"/);
+              if (match) {
+                [, article.image] = match;
+              }
+            }
+            // extract first paragraph
+            article.content = article.content.substring(article.content.indexOf('<p>') + 3, article.content.indexOf('</p>'));
+            articles.push(article);
+            if (articles.length === 3) {
+              break;
+            }
+          }
+          cache.set('root-index-articles', articles, 30 * 60);
+        } catch (err) {
+          // console.log(err);
+        }
+      }
+      res.render('index', { articles });
     }
   });
 }

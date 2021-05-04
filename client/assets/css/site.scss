@@ -71,6 +71,11 @@ h4 span {
   font-weight: normal;
 }
 
+h5 {
+  @include copy-s-bold;
+  color: $greyPeakBlue;
+}
+
 p,
 ol,
 ul {

@@ -91,7 +91,29 @@
       </div>
     </div>
   </section>
-  <section id="story" class="bg-alternate">
+  <section id="blog" class="bg-alternate">
+    <div class="container">
+      <h2>Blog</h2>
+      <div class="row">
+        <% for (const article of articles) { %> 
+          <div class="col-md-4 article">
+            <a class="card" href="<%= article.link %>" target="_blank">
+              <img src="<%= article.image %>" class="card-img-top" alt="<%= article.title %>" />
+              <div class="card-body">
+                <h4 class="card-title"><%= article.title %></h4>
+                <h5 class="card-subtitle"><%= article.pubDate %></h5>
+                <p class="card-text"><%- article.content %></p>
+              </div>
+            </a>
+          </div>
+        <% } %>
+      </div>
+      <div class="text-center">
+        <a class="btn btn-sm btn-outline-primary" href="<%= process.env.MARKETING_BLOG %>" target="_blank">View More Articles</a>
+      </div>
+    </div>
+  </section>
+  <section id="story">
     <div class="container">
       <h2>Our Story</h2>
       <h3>Dedicated to providing life saving efficiency.</h3>
@@ -137,7 +159,7 @@
         </div>
       </div>
     </div>
-    <div class="solution__screenshot bg-white">
+    <div class="solution__screenshot">
       <div class="container">
         <div class="row">
           <div class="col-lg-6 order-lg-2">
