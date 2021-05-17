@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
 import { Observable, of, Subscription, ReplaySubject } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, take, tap, map } from 'rxjs/operators';
 
 import assign from 'lodash/assign';
 import find from 'lodash/find';
@@ -9,7 +9,7 @@ import orderBy from 'lodash/orderBy';
 import remove from 'lodash/remove';
 import moment from 'moment';
 
-import { ApiService, WebSocketService } from '../../shared/services';
+import { ApiService, GeolocationService, WebSocketService } from '../../shared/services';
 import { RequestQueue } from '../../shared/util';
 import { Scene } from './scene';
 
@@ -44,7 +44,7 @@ export class SceneService implements OnDestroy {
 
   private patientSubscribers: any = {};
 
-  constructor(private api: ApiService, private ws: WebSocketService) {
+  constructor(private api: ApiService, private geolocation: GeolocationService, private ws: WebSocketService) {
     this.elapsedTimeIntervalId = setInterval(() => this.elapsedTimeSubject.next(this.elapsedTime), 1000);
   }
 
@@ -128,6 +128,15 @@ export class SceneService implements OnDestroy {
     this.patientsSubject.next(this.patients);
     this.respondersSubject.next(this.responders);
     this.statsSubject.next(this.stats);
+  }
+
+  captureLocation(id: string) {
+    this.geolocation.position$.pipe(take(1)).subscribe((position: any) => {
+      this.scene.lat = position.coords.latitude;
+      this.scene.lng = position.coords.longitude;
+      this.sceneSubject.next(this.scene);
+      this.api.scenes.update(this.scene.id, { lat: this.scene.lat, lng: this.scene.lng }).subscribe();
+    });
   }
 
   connect(id: string): Observable<boolean> {

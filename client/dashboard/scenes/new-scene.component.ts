@@ -1,7 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { take } from 'rxjs/operators';
 
 import { ApiService, GeolocationService, NavigationService } from '../../shared/services';
-import { take } from 'rxjs/operators';
+import { SceneService } from './scene.service';
 
 @Component({
   templateUrl: './new-scene.component.html',
@@ -10,7 +11,12 @@ import { take } from 'rxjs/operators';
 export class NewSceneComponent implements AfterViewInit {
   data: any = {};
 
-  constructor(private api: ApiService, private geolocation: GeolocationService, private navigation: NavigationService) {}
+  constructor(
+    private api: ApiService,
+    private geolocation: GeolocationService,
+    private navigation: NavigationService,
+    private scene: SceneService
+  ) {}
 
   ngAfterViewInit() {
     this.geolocation.position$.pipe(take(1)).subscribe((position: any) => {
@@ -29,6 +35,9 @@ export class NewSceneComponent implements AfterViewInit {
   }
 
   onCreate(data: any) {
+    if (!data.lat || !data.lng) {
+      this.scene.captureLocation(data.id);
+    }
     this.navigation.replaceWith(`/scenes/${data.id}`);
   }
 }
