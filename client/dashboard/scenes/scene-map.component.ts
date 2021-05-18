@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { AgmMap, LatLngBounds } from '@agm/core';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -15,6 +15,11 @@ import { Patient } from './patients';
 export class SceneMapComponent implements AfterViewInit, OnDestroy {
   @ViewChild('map') private map: AgmMap;
 
+  scale: number;
+  transform: string;
+  width: string;
+  height: string;
+
   private locationSubscription: Subscription;
   location: any = null;
 
@@ -26,6 +31,7 @@ export class SceneMapComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.map.mapReady.subscribe(() => {
+      this.onWindowResize();
       this.recenterMap();
       this.locationSubscription = this.geolocation.position$.subscribe((position: any) => this.updateLocation(position));
     });
@@ -33,6 +39,14 @@ export class SceneMapComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.locationSubscription?.unsubscribe();
+  }
+
+  @HostListener('window:resize')
+  private onWindowResize() {
+    this.scale = Math.max(1, 1792 / window.innerWidth);
+    this.transform = `scale(${this.scale})`;
+    this.width = `${(window.innerWidth * this.scale - 128) / this.scale}px`;
+    this.height = `${(window.innerHeight * this.scale - 128) / this.scale}px`;
   }
 
   recenterMap() {

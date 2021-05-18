@@ -1,22 +1,24 @@
 <app-dashboard-nav [scene]="scene"></app-dashboard-nav>
 <app-dashboard-header [scene]="scene"></app-dashboard-header>
 <app-dashboard-main>
-  <agm-map #map [zoom]="16" (mapClick)="onMapClick($event)">
-    <ng-container *ngFor="let patient of scene.patients$|async; trackBy: trackById">
-      <agm-overlay *ngIf="!patient.isTransported && patient.lat && patient.lng" [latitude]="+patient.lat" [longitude]="+patient.lng">
-        <div [routerLink]="[{outlets: {modal: ['patients', patient.id]}}]" class="marker marker--patient" [style.background-image]="pinUrl(patient)|cssUrl"></div>
+  <div class="map" [style.width]="width" [style.height]="height" [style.transform]="transform">
+    <agm-map #map [zoom]="16" (mapClick)="onMapClick($event)">
+      <ng-container *ngFor="let patient of scene.patients$|async; trackBy: trackById">
+        <agm-overlay *ngIf="!patient.isTransported && patient.lat && patient.lng" [latitude]="+patient.lat" [longitude]="+patient.lng">
+          <div [routerLink]="[{outlets: {modal: ['patients', patient.id]}}]" class="marker marker--patient" [style.background-image]="pinUrl(patient)|cssUrl"></div>
+        </agm-overlay>
+      </ng-container>
+      <agm-overlay *ngFor="let pin of scene.pins$|async; trackBy: trackById" [latitude]="+pin.lat" [longitude]="+pin.lng">
+        <div (click)="selectedPin = pin" [class]="'marker marker--pin marker--pin-' + (pin.type ? pin.type.toLowerCase() : 'other')"></div>
       </agm-overlay>
-    </ng-container>
-    <agm-overlay *ngFor="let pin of scene.pins$|async; trackBy: trackById" [latitude]="+pin.lat" [longitude]="+pin.lng">
-      <div (click)="selectedPin = pin" [class]="'marker marker--pin marker--pin-' + (pin.type ? pin.type.toLowerCase() : 'other')"></div>
-    </agm-overlay>
-    <agm-overlay *ngIf="location" [latitude]="location.lat" [longitude]="location.lng">
-      <div class="marker marker--me"></div>
-    </agm-overlay>
-    <agm-overlay *ngIf="newPin" [latitude]="newPin.lat" [longitude]="newPin.lng">
-      <div [class]="'marker marker--pin marker--pin-' + (newPin.type ? newPin.type.toLowerCase() : 'other')"></div>
-    </agm-overlay>
-  </agm-map>
+      <agm-overlay *ngIf="location" [latitude]="location.lat" [longitude]="location.lng">
+        <div class="marker marker--me"></div>
+      </agm-overlay>
+      <agm-overlay *ngIf="newPin" [latitude]="newPin.lat" [longitude]="newPin.lng">
+        <div [class]="'marker marker--pin marker--pin-' + (newPin.type ? newPin.type.toLowerCase() : 'other')"></div>
+      </agm-overlay>
+    </agm-map>
+  </div>
   <div *ngIf="selectedPin" class="pin-info">
     <div class="pin-info__icon">
       <i *ngIf="selectedPin.type=='MGS'" class="peakicon peakicon-star"></i>

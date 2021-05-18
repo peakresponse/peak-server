@@ -1,5 +1,9 @@
 @import '../../assets/css/variables';
 
+.map {
+  transform-origin: 0 0;
+}
+
 app-dashboard-header {
   z-index: 1;
 }
