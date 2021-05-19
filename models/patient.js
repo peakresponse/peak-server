@@ -126,6 +126,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       dob: DataTypes.DATEONLY,
       complaint: DataTypes.STRING,
+      triageMentalStatus: {
+        type: DataTypes.STRING,
+        field: 'triage_mental_status',
+      },
+      triagePerfusion: {
+        type: DataTypes.STRING,
+        field: 'triage_perfusion',
+      },
       respiratoryRate: {
         type: DataTypes.INTEGER,
         field: 'respiratory_rate',

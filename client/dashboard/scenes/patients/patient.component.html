@@ -106,10 +106,18 @@
             <shared-field-input i18n-label label="Respiratory Rate" id="respiratoryRate" [source]="patient" [target]="observation"></shared-field-input>
           </div>
           <div class="form-group">
+            <shared-field-select-triage-perfusion i18n-label label="Radial Pulse?" id="triagePerfusion" [source]="patient" [target]="observation">
+            </shared-field-select-triage-perfusion>
+          </div>
+          <div class="form-group">
             <shared-field-input i18n-label label="Pulse" id="pulse" [source]="patient" [target]="observation"></shared-field-input>
           </div>
           <div class="form-group">
             <shared-field-input i18n-label label="Capillary Refill" id="capillaryRefill" [source]="patient" [target]="observation"></shared-field-input>
+          </div>
+          <div class="form-group">
+            <shared-field-select-triage-mental-status i18n-label label="Mental Status" id="triageMentalStatus" [source]="patient" [target]="observation">
+            </shared-field-select-triage-mental-status>
           </div>
           <div class="form-group">
             <shared-field-input i18n-label label="Blood Pressure" id="bloodPressure" [source]="patient" [target]="observation"></shared-field-input>

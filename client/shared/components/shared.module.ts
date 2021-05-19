@@ -23,7 +23,14 @@ import {
   WizardComponent,
 } from '.';
 
-import { InputFieldComponent, InputAgeFieldComponent, SelectFieldComponent, SelectGenderFieldComponent } from './fields';
+import {
+  InputFieldComponent,
+  InputAgeFieldComponent,
+  SelectFieldComponent,
+  SelectGenderFieldComponent,
+  SelectTriageMentalStatusFieldComponent,
+  SelectTriagePerfusionFieldComponent,
+} from './fields';
 
 import {
   XsdBaseComponent,
@@ -58,6 +65,8 @@ import {
     InputAgeFieldComponent,
     SelectFieldComponent,
     SelectGenderFieldComponent,
+    SelectTriageMentalStatusFieldComponent,
+    SelectTriagePerfusionFieldComponent,
     /// XSD components
     XsdBaseComponent,
     XsdDateTimeComponent,
@@ -88,6 +97,8 @@ import {
     InputAgeFieldComponent,
     SelectFieldComponent,
     SelectGenderFieldComponent,
+    SelectTriageMentalStatusFieldComponent,
+    SelectTriagePerfusionFieldComponent,
     /// XSD components
     XsdDateTimeComponent,
     XsdElementComponent,
