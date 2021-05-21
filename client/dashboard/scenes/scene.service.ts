@@ -37,6 +37,12 @@ export class SceneService implements OnDestroy {
 
   private queue = new RequestQueue();
 
+  private approxStats: any[] = Array(7)
+    .fill(null)
+    .map(() => ({ total: 0 }));
+  private approxStatsSubject = new ReplaySubject<any[]>(1);
+  private approxStatsDebounceTimeoutID: any;
+
   private stats: any[] = Array(7)
     .fill(null)
     .map(() => ({ total: 0, updates: [] }));
@@ -109,6 +115,10 @@ export class SceneService implements OnDestroy {
     return this.respondersSubject;
   }
 
+  get approxStats$(): Observable<any[]> {
+    return this.approxStatsSubject;
+  }
+
   get stats$(): Observable<any[]> {
     return this.statsSubject;
   }
@@ -120,6 +130,9 @@ export class SceneService implements OnDestroy {
 
     this.patients = [];
     this.responders = [];
+    this.approxStats = Array(7)
+      .fill(null)
+      .map(() => ({ total: 0 }));
     this.stats = Array(7)
       .fill(null)
       .map(() => ({ total: 0, updates: [] }));
@@ -163,6 +176,15 @@ export class SceneService implements OnDestroy {
     }
   }
 
+  isMGS(userId: string): boolean {
+    return this.scene.incidentCommanderId == userId;
+  }
+
+  hasRole(userId: string, role: string): boolean {
+    const found = find(this.responders, { user: { id: userId } } as any);
+    return found && !found.departedAt && found.role == role;
+  }
+
   isOnScene(userId: string): boolean {
     const found = find(this.responders, { user: { id: userId } } as any);
     return found && !found.departedAt;
@@ -184,6 +206,41 @@ export class SceneService implements OnDestroy {
       responder.role = role;
       return this.queue.add(this.api.responders.assign(responder.id, role));
     }
+  }
+
+  decrApproxPatientsCount(index: number) {
+    this.updateApproxPatientsCount(index, -1);
+  }
+
+  incrApproxPatientsCount(index: number) {
+    this.updateApproxPatientsCount(index, 1);
+  }
+
+  private updateApproxPatientsCount(index: number, delta: number) {
+    if (index == 0) {
+      this.scene.approxPatientsCount = Math.max(0, this.scene.approxPatientsCount + delta);
+      this.sceneSubject.next(this.scene);
+    } else {
+      this.scene.approxPriorityPatientsCounts[index - 1] = Math.max(0, this.scene.approxPriorityPatientsCounts[index - 1] + delta);
+      this.approxStats[0].total = 0;
+      let i = 1;
+      for (const count of this.scene.approxPriorityPatientsCounts) {
+        this.approxStats[i].total = count;
+        this.approxStats[0].total += count;
+        i += 1;
+      }
+      this.approxStatsSubject.next(this.approxStats);
+    }
+    // update server, with debounce
+    if (this.approxStatsDebounceTimeoutID) {
+      clearTimeout(this.approxStatsDebounceTimeoutID);
+    }
+    const sceneId = this.scene.id;
+    const approxPatientsCount = this.scene.approxPatientsCount;
+    const approxPriorityPatientsCounts = [...this.scene.approxPriorityPatientsCounts];
+    this.approxStatsDebounceTimeoutID = setTimeout(() => {
+      this.api.scenes.update(sceneId, { approxPatientsCount, approxPriorityPatientsCounts }).subscribe();
+    }, 300);
   }
 
   addPin(pin: any): Observable<any> {
@@ -218,6 +275,17 @@ export class SceneService implements OnDestroy {
       if (data.scene) {
         this.scene = new Scene(data.scene);
         this.sceneSubject.next(this.scene);
+
+        if (data.scene.approxPriorityPatientsCounts) {
+          this.approxStats[0].total = 0;
+          let i = 1;
+          for (const count of data.scene.approxPriorityPatientsCounts) {
+            this.approxStats[i].total = count;
+            this.approxStats[0].total += count;
+            i += 1;
+          }
+          this.approxStatsSubject.next(this.approxStats);
+        }
       }
       if (data.responders) {
         for (let responder of data.responders) {

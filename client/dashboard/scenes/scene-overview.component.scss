@@ -48,10 +48,6 @@ h3 {
   @include copy-m-regular;
 }
 
-.overview__patients-recorded {
-  @include copy-xxl-bold;
-}
-
 .overview__responders {
   flex: 1 50%;
   margin: 1.25rem 1.25rem 0;
@@ -59,50 +55,174 @@ h3 {
 }
 
 .priorities {
+  align-items: center;
   display: flex;
-  margin-top: 0.625rem;
-  margin-left: -0.3125rem;
-  margin-right: -0.3125rem;
+  flex-direction: column;
+  text-align: center;
 }
 
 .priority {
-  width: 5.625rem;
-  height: 4.6875rem;
-  margin-left: 0.3125rem;
-  margin-right: 0.3125rem;
+  width: 11rem;
+  height: 3.3125rem;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   border-radius: 0.375rem;
-  @include copy-l-bold;
-  div {
-    @include copy-s-bold;
+  position: relative;
+}
+
+.priority__decr,
+.priority__incr {
+  align-items: center;
+  bottom: 0;
+  color: white;
+  cursor: pointer;
+  display: none;
+  font-size: 1.5rem;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 2.875rem;
+}
+
+.priority__decr {
+  left: 0;
+}
+
+.priority__incr {
+  right: 0;
+}
+
+.priority__title {
+  @include copy-s-bold;
+  font-size: 0.75rem;
+  color: $lowPriorityGrey;
+  line-height: 1;
+  margin-top: 0.375rem;
+  text-transform: uppercase;
+}
+
+.priority__value {
+  @include copy-xl-bold;
+  line-height: 1.5625rem;
+  margin-top: 0.125rem;
+}
+
+.priority__bottom {
+  border-top: 0.1875rem solid $greyPeakBlue;
+  margin-top: 0.375rem;
+  width: 100%;
+}
+
+.priority--0 {
+  background-color: $lightGreyBlue;
+  height: 6.625rem;
+
+  .priority__value {
+    margin-top: 1.5rem;
   }
 }
 
-.priority-1 {
+.priority--1 {
   background-color: $lightImmediateRed;
 }
 
-.priority-2 {
+.priority--2 {
   background-color: $lightDelayedYellow;
 }
 
-.priority-3 {
+.priority--3 {
   background-color: $lightMinimalGreen;
 }
 
-.priority-4 {
+.priority--4 {
   background-color: $lightExpectGrey;
 }
 
-.priority-5 {
+.priority--5 {
   background-color: $lightDeadBlack;
 }
 
-.priority-6 {
+.priority--6 {
   background-color: $lightPeakBlue;
+}
+
+.priority--approx {
+  background-color: white;
+  border-width: 0.1875rem;
+  border-style: solid;
+
+  .priority__title {
+    margin-top: 0.1875rem;
+  }
+
+  &.priority--0 {
+    border-color: $greyPeakBlue;
+    .priority__value {
+      margin-top: 0.125rem;
+    }
+    .priority__decr,
+    .priority__incr {
+      background-color: $greyPeakBlue;
+      bottom: 50%;
+    }
+  }
+
+  &.priority--1 {
+    border-color: $immediateRed;
+    .priority__decr,
+    .priority__incr {
+      background-color: $immediateRed;
+    }
+  }
+
+  &.priority--2 {
+    border-color: $delayedYellow;
+    .priority__decr,
+    .priority__incr {
+      background-color: $delayedYellow;
+    }
+  }
+
+  &.priority--3 {
+    border-color: $minimalGreen;
+    .priority__decr,
+    .priority__incr {
+      background-color: $minimalGreen;
+    }
+  }
+
+  &.priority--4 {
+    border-color: $expectGrey;
+    .priority__decr,
+    .priority__incr {
+      background-color: $expectGrey;
+    }
+  }
+
+  &.priority--5 {
+    border-color: $deadBlack;
+    .priority__decr,
+    .priority__incr {
+      background-color: $deadBlack;
+    }
+  }
+
+  &.priority--6 {
+    border-color: $peakBlue;
+    .priority__decr,
+    .priority__incr {
+      background-color: $peakBlue;
+    }
+  }
+}
+
+.priority--editable {
+  .priority__decr,
+  .priority__incr {
+    display: flex;
+  }
 }
 
 .notes,

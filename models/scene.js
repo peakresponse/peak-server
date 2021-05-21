@@ -218,9 +218,13 @@ module.exports = (sequelize, DataTypes) => {
       note: {
         type: DataTypes.TEXT,
       },
-      approxPatients: {
+      approxPatientsCount: {
         type: DataTypes.INTEGER,
-        field: 'approx_patients',
+        field: 'approx_patients_count',
+      },
+      approxPriorityPatientsCounts: {
+        type: DataTypes.JSONB,
+        field: 'approx_priority_patients_counts',
       },
       patientsCount: {
         type: DataTypes.INTEGER,

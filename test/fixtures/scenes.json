@@ -4,7 +4,7 @@
     "data": {
       "id": "7b8ddcc3-63e6-4e6e-a47e-d553289912d1",
       "name": "Closed Scene",
-      "approxPatients": 0,
+      "approxPatientsCount": 0,
       "patientsCount": 0,
       "priorityPatientsCounts": [0, 0, 0, 0, 0, 0],
       "respondersCount": 2,
@@ -24,6 +24,7 @@
     "data": {
       "id": "25db9094-03a5-4267-8314-bead229eff9d",
       "name": "Active Scene",
+      "approxPatientsCount": 7,
       "patientsCount": 7,
       "priorityPatientsCounts": [5, 1, 0, 0, 1, 0],
       "respondersCount": 2,

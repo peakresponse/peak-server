@@ -5,7 +5,7 @@ export class Scene {
   constructor(data: any) {
     this.data = data;
     return new Proxy(this, {
-      get: (target, prop) => {
+      get(target, prop) {
         return target[prop] ?? target.data?.[prop];
       },
       set(obj, prop, value) {
