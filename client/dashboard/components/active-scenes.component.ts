@@ -29,6 +29,9 @@ export class ActiveScenesComponent implements OnDestroy {
           }
         }
       }
+      if (this.maximizedScene) {
+        this.maximizedScene.isMaximized = true;
+      }
     });
   }
 
@@ -37,12 +40,7 @@ export class ActiveScenesComponent implements OnDestroy {
   }
 
   onToggle(scene: Scene) {
-    if (scene.isMaximized) {
-      scene.isMaximized = false;
-      if (this.scenes.length > 1) {
-        this.maximizedScene = null;
-      }
-    } else {
+    if (!scene.isMaximized) {
       for (let scene of this.scenes) {
         scene.isMaximized = false;
       }

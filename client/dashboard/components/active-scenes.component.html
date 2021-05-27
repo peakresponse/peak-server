@@ -1,8 +1,7 @@
-<div class="backdrop" [class.backdrop--overlay]="maximizedScene?.isMaximized">
+<div class="backdrop">
   <div>
     <div *ngIf="maximizedScene; let scene" class="maximized-scene">
       <div (click)="onToggle(scene)" class="scene">
-        <i *ngIf="scene.isMaximized" class="scene__icon peakicon peakicon-minimize"></i>
         <i *ngIf="!scene.isMaximized" class="scene__icon peakicon peakicon-maximize"></i>
         <div class="scene__name">{{scene.name}}</div>
         <div class="scene__desc">{{scene.desc}}&nbsp;</div>
@@ -11,14 +10,14 @@
       <div *ngIf="scene.isMaximized" class="scene-details">
         <div class="d-flex">
           <div class="flex-grow-1">
-            <div class="scene-details__timestamp">{{scene.createdAt|date:'h:mma - MMM d yyyy'}}</div>
+            <div class="scene-details__timestamp">{{scene.createdAt|date:'h:mma - MMM d, yyyy'}}</div>
             <div class="scene-details__patients"><b>{{scene.patientsCount}}</b>&nbsp;<span i18n>Patients on Scene</span></div>
             <div class="scene-details__transported"><b>{{scene.priorityPatientsCounts[5]}}</b>&nbsp;<span i18n>Patients Transported</span></div>
             <div class="scene-details__responders"><b>{{scene.respondersCount}}</b>&nbsp;<span i18n>First responders on Scene</span></div>
           </div>
-          <div class="scene-actions d-flex flex-column">
-            <button (click)="onView(scene)" type="button" class="btn btn-sm btn-outline-primary mb-3" i18n>View Scene</button>
-            <button (click)="onJoin(scene)" type="button" class="btn btn-sm btn-primary" i18n>Join Scene</button>
+          <div class="scene-actions d-flex flex-column text-center">
+            <button (click)="onJoin(scene)" type="button" class="btn btn-sm btn-primary mb-3" i18n>Arrived on Scene</button>
+            <a (click)="onView(scene)" class="scene-actions__view" tabindex="0" i18n>View Scene</a>
           </div>
         </div>
       </div>
