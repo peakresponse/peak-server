@@ -48,11 +48,6 @@ router.patch(
         rejectOnEmpty: true,
         transaction,
       });
-      /// only IC/MGS can update roles
-      if (req.user.id !== scene.incidentCommanderId) {
-        res.status(HttpStatus.FORBIDDEN).end();
-        return;
-      }
       /// cannot assign a role to the MGS (command should be transferred first)
       if (responder.userId === scene.incidentCommanderId) {
         res.status(HttpStatus.FORBIDDEN).end();

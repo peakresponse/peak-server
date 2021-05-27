@@ -16,7 +16,7 @@
           <div class="priorities">
             <h3 class="mb-3" i18n>Approximate Number<br />of Patients</h3>
             <ng-container *ngFor="let tab of scene.approxStats$|async; index as i">
-              <div [class]="'priority priority--approx priority--' + i" [class.priority--editable]="scene.isMGS(user.id) || scene.hasRole(user.id, 'TRIAGE') || scene.hasRole(user.id, 'TREATMENT')">
+              <div [class]="'priority priority--approx priority--editable priority--' + i">
                 <a (click)="scene.decrApproxPatientsCount(i)" class="priority__decr"><i class="peakicon peakicon-minimize"></i></a>
                 <div *ngIf="i==0" class="priority__title" i18n>Total</div>
                 <div *ngIf="i==1" class="priority__title" i18n>Immediate</div>
@@ -100,18 +100,18 @@
               <i class="peakicon peakicon-star"></i><span i18n>Medical Group<br />Supervisor</span>
             </button>
             <div *ngIf="!scene.isMGS(responder.user.id)" ngbDropdown container="body" display="dynamic" placement="bottom-left">
-              <button *ngIf="responder.role" [disabled]="!scene.isMGS(user.id)" ngbDropdownToggle
+              <button *ngIf="responder.role" ngbDropdownToggle
                       type="button" [class]="'btn btn-xs btn-role btn-role--highlighted btn-role--' + responder.role.toLowerCase()">
                 <ng-container *ngIf="responder.role == 'STAGING'"><i class="peakicon peakicon-pause"></i><span i18n>Staging Officer</span></ng-container>
                 <ng-container *ngIf="responder.role == 'TRANSPORT'"><i class="peakicon peakicon-transport"></i><span i18n>Transport Officer</span></ng-container>
                 <ng-container *ngIf="responder.role == 'TREATMENT'"><i class="peakicon peakicon-heart"></i><span i18n>Treatment Officer</span></ng-container>
                 <ng-container *ngIf="responder.role == 'TRIAGE'"><i class="peakicon peakicon-check-circle"></i><span i18n>Triage Officer</span></ng-container>
               </button>
-              <button *ngIf="scene.isMGS(user.id) && !responder.role" ngbDropdownToggle
+              <button *ngIf="!responder.role" ngbDropdownToggle
                       type="button" class="btn btn-xs btn-outline-primary">
                 <span i18n>Assign Role</span>
               </button>
-              <div *ngIf="scene.isMGS(user.id)" ngbDropdownMenu [class]="'dropdown-menu btn-role-dropdown' + (responder.role ? ' btn-role--' + responder.role.toLowerCase() : '')">
+              <div ngbDropdownMenu [class]="'dropdown-menu btn-role-dropdown' + (responder.role ? ' btn-role--' + responder.role.toLowerCase() : '')">
                 <div class="btn-role-dropdown__bg">
                   <div class="d-flex align-items-center">
                     <button *ngIf="responder.role == 'TRIAGE'" (click)="onToggle(responder, null)" ngbDropdownItem type="button" class="btn-role--remove"><i class="peakicon peakicon-remove"></i></button>
@@ -140,7 +140,7 @@
                 </div>
               </div>
             </div>
-            <button *ngIf="scene.isMGS(user.id) && !responder.role && !scene.isMGS(responder.user.id)"
+            <button *ngIf="!responder.role && !scene.isMGS(responder.user.id)"
                     (click)="transferConfirmation.show(responder, {centered: true, size: 'lg'})"
                     type="button" class="btn btn-xs btn-primary mt-2">
               <span i18n>Transfer MGS Role</span>
@@ -168,8 +168,5 @@
 <app-shared-modal #transferConfirmation
   i18n-confirmLabel confirmLabel="Transfer" i18n-dismissLabel dismissLabel="Cancel" (confirm)="onTransfer(transferConfirmation.data)">
   <h4 class="modal-title" i18n>Are you sure you want to transfer command to {{transferConfirmation.data?.user.firstName}} {{transferConfirmation.data?.user.lastName}}?</h4>
-  <div class="modal-body" i18n>
-    <p i18n>Once you transfer, you will no longer be able to edit the scene overview or close the scene.</p>
-  </div>
 </app-shared-modal>
 <app-dashboard-scene-closer></app-dashboard-scene-closer>

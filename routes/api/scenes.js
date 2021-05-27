@@ -121,11 +121,6 @@ router.patch(
         rejectOnEmpty: true,
         transaction,
       });
-      /// only allow incident commander to transfer
-      if (req.user.id !== scene.incidentCommanderId) {
-        res.status(HttpStatus.FORBIDDEN).end();
-        return;
-      }
       const user = await models.User.findByPk(req.body.userId, {
         rejectOnEmpty: true,
         transaction,
