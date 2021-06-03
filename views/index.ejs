@@ -1,5 +1,6 @@
 <%- contentFor('head') %>
 <link rel="stylesheet" href="/stylesheets/home.css" />
+<script type="application/javascript" src="/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script type="application/javascript" src="/libraries/smoothscroll/smoothscroll.min.js"></script>
 <script type="application/javascript" src="/scripts/home.js"></script>
 <% if (process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID) { %>
@@ -17,81 +18,56 @@
   <section id="home">
     <div class="container">
       <div id="home__valprop">
-        <h1>Your calling is saving lives, we want to help you do it.</h1>
-        <p>Peak Response aims to improve the accuracy and efficiency of triage management during mass casualty incidents.</p>
+        <h1>Tools for real-time patient documentation.</h1>
+        <p>At Peak Response, we make cutting-edge technology accessible, simple, and integrated to serve the unique needs of the public safety community.</p>
         <a class="btn btn-sm btn-block btn-outline-primary" href="#solution"><span id="home__cta"><i class="fas fa-chevron-right invisible"></i>Our Solution<i class="fas fa-chevron-right"></i></span></a>
       </div>
     </div>
-    <div id="home__credit">Photo credit: Ilka Cole | VIRIN: 170928-F-GY014-009.JPG</div>
+    <div id="home__credit">Photo credit: <a href="https://unsplash.com/@camstejim">https://unsplash.com/@camstejim</a></div>
   </section>
   <section id="solution">
     <div class="container">
       <h2>Our Solution</h2>
-      <h3>Peak Response is a MCI management system for EMS professionals.</h3>
+      <h3>Coordination and documentation software that doesn’t distract from patient care.</h3>
       <div class="row">
         <div class="col-lg-8 order-lg-2">
           <img src="/images/home1.jpg" alt="Peak Response mobile app and web dashboard">
         </div>
         <div class="col-lg-4 order-lg-1">
-          <p>Peak Response is an open source software system that provides EMS professionals with simple documentation, powerful sorting, and streamlined analysis capabilities that fit into the workflow of complex MCIs.</p>
-          <p>As first responders collect patient data across a scene, each new piece of information is automatically uploaded to provide a live bird’s-eye view for the incident commander and others managing the scene strategy. Peak Response also allows for easy data transfer to receiving hospitals, creating a foundation for improved continuation of care.</p>
+          <p>Peak Response simplifies real-time patient data capture by combining user-centered design principles and powerful modern technology. Originally created to be used during mass casualty incidents, the Peak Response software performs under pressure and without pulling attention away from patient care and coordination. Using a combination of hands-free voice-to-text form filling, instant information syncing, accurate time-stamping, and integrated data transfer, the software enables first responders to document patients and coordinate care with ease during regular incidents and mass casualties alike.</p>
+          <p>Peak Response was designed to work well with existing tools and protocols and can be run on smartphones, tablets, and laptops already owned by many departments, so no proprietary hardware is required. The data collected by the software helps with real-time care and can easily transfer into an electronic patient care report for more accurate final documentation after an incident is complete.</p>
         </div>
       </div>
     </div>
-    <div class="solution__screenshot bg-alternate">
+    <div class="bg-alternate pt-5">
       <div class="container">
+        <h2>Key Features</h2>
         <div class="row">
-          <div class="col-lg-6 order-lg-2">
-            <img src="/images/home2.jpg" alt="Peak Response scene overview">
+          <div class="col-lg text-center mb-5">
+            <div class="solution__feature"><img src="/images/feature1.png" alt="Hands-Free" /></div>
+            <h4>Hands-Free<br />Voice-to-Text<br />Documentation</h4>
           </div>
-          <div class="col-lg-6 order-lg-1">
-            <h3>Scene Overview</h3>
-            <p>First responders approaching or just arriving on scene are able to access an overview that helps them understand what to expect.</p>
+          <div class="col-lg text-center mb-5">
+            <div class="solution__feature"><img src="/images/feature2.png" alt="Real-Time" /></div>
+            <h4>Real-Time<br />Information<br />Syncing</h4>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="solution__screenshot">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <img src="/images/home3.jpg" alt="Peak Response mobile app hands-free interface">
+          <div class="col-lg text-center mb-5">
+            <div class="solution__feature"><img src="/images/feature3.png" alt="Time-Stamped" /></div>
+            <h4>Time-Stamped<br />Data</h4>
           </div>
-          <div class="col-lg-6">
-            <h3>Hands-Free Documentation</h3>
-            <p>First responders are able to document patient information and triage status using our hands-free voice-to-text capability.  After observations are recorded verbally, Peak Response pulls information from the audio and auto fills the patient form.</p>
+          <div class="col-lg text-center mb-5">
+            <div class="solution__feature"><img src="/images/feature4.png" alt="Commodity Hardware" /></div>
+            <h4>Runs on<br />Commodity<br />Hardware</h4>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="solution__screenshot bg-alternate">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 order-lg-2">
-            <img src="/images/home4.jpg" alt="Peak Response patient sorting options">
-          </div>
-          <div class="col-lg-6 order-lg-1">
-            <h3>Powerful Patient Sorting</h3>
-            <p>Patients in the system can be easily sorted based on a variety of criteria for more effective scene management and patient prioritization. Patients and first responders can also be viewed on a map to identify highly impacted areas and direct resources accordingly.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="solution__screenshot">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <img src="/images/home5.jpg" alt="Peak Response mobile app user friendly UI">
-          </div>
-          <div class="col-lg-6">
-            <h3>Simple to Update</h3>
-            <p>Patient documentation can be continuously updated as a scene progresses.  Once a patient is ready to leave the scene, they will be marked as transported and their information can be transported to the receiving hospital.</p>
+          <div class="col-lg text-center mb-5">
+            <div class="solution__feature"><img src="/images/feature5.png" alt="Integrated" /></div>
+            <h4>Integrated with<br />CAD & ePCR</h4>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section id="blog" class="bg-alternate">
+  <section id="blog">
     <div class="container">
       <h2>Blog</h2>
       <div class="row">
@@ -113,11 +89,12 @@
       </div>
     </div>
   </section>
-  <section id="story">
+  <section id="story" class="bg-alternate">
     <div class="container">
       <h2>Our Story</h2>
       <h3>Dedicated to providing life saving efficiency.</h3>
       <p>Peak Response (originally NaTriage) was initially conceptualized in 2019 as part of the Tech to Protect Challenge, sponsored by NIST PSCR, aimed at fostering technological innovation for emergency responders. The solution came out of a focus on a common pain point: time spent documenting injuries and incidents at the scene of mass casualty incidents. These incidents are chaotic, high-pressure environments where time spent documenting can mean the difference between life and death. The quick tag scan and speech-to-text form filling were the first features, but the solution quickly expanded to include a variety of powerful sorting and data export options to improve efficiency, both at the point of contact with the patient and also for the incident commander monitoring the entire scene.</p>
+      <p>The Peak Response software has now expanded beyond mass casualties and a version designed specifically for quick daily patient documentation will be released in fall 2021.</p>
       <div id="story__bios" class="row">
         <div class="col-lg-3">
           <img src="/images/bio-britt.jpg" alt="Portrait of Britt Jensen">
@@ -159,7 +136,7 @@
         </div>
       </div>
     </div>
-    <div class="solution__screenshot">
+    <div class="solution__screenshot bg-white">
       <div class="container">
         <div class="row">
           <div class="col-lg-6 order-lg-2">

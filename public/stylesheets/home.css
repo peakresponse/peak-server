@@ -79,7 +79,7 @@ body {
   color: #46a5db;
 }
 
-.navbar-expand-md .navbar-nav .nav-link {
+.navbar-expand-lg .navbar-nav .nav-link {
   padding-left: 0;
   padding-right: 0;
 }
@@ -228,8 +228,8 @@ section .row {
 
 #home__valprop {
   position: relative;
-  top: 10rem;
-  right: 0;
+  top: 12rem;
+  left: 0;
   color: #f1f5f8;
 }
 
@@ -284,6 +284,10 @@ section .row {
   bottom: 1rem;
   right: 1rem;
   color: #507d9e;
+}
+
+.solution__feature {
+  height: 7.5rem;
 }
 
 .solution__screenshot {
@@ -388,44 +392,37 @@ img[src$='home1.jpg'] {
   height: auto;
 }
 
-img[src$='home2.jpg'] {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 582px;
-  height: auto;
-}
-
-img[src$='home3.jpg'] {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 525px;
-  height: auto;
-}
-
-img[src$='home4.jpg'] {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 582px;
-  height: auto;
-}
-
-img[src$='home5.jpg'] {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 525px;
-  height: auto;
-}
-
 img[src$='home6.png'] {
   display: block;
   margin: 0 auto;
   width: 100%;
   max-width: 750px;
   height: auto;
+}
+
+img[src$='feature1.png'] {
+  width: 105px;
+  height: 93px;
+}
+
+img[src$='feature2.png'] {
+  width: 81px;
+  height: 95px;
+}
+
+img[src$='feature3.png'] {
+  width: 109px;
+  height: 109px;
+}
+
+img[src$='feature4.png'] {
+  width: 88px;
+  height: 92px;
+}
+
+img[src$='feature5.png'] {
+  width: 96px;
+  height: 96px;
 }
 
 img[src*='bio-'] {
