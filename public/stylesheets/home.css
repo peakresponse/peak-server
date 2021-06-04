@@ -338,6 +338,12 @@ section .row {
   justify-content: space-between;
 }
 
+.contact__captcha {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 #story {
   padding-bottom: 0;
 }

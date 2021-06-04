@@ -2,6 +2,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
 const moment = require('moment');
+const querystring = require('querystring');
 const xmljs = require('xml-js');
 
 const cache = require('../lib/cache');
@@ -32,6 +33,22 @@ if (process.env.MARKETING_ENABLED) {
       // don't allow spammers to use our own domain
       const domain = process.env.MARKETING_EMAIL.substring(process.env.MARKETING_EMAIL.indexOf('@'));
       if (req.body.email.indexOf(domain) >= 0) {
+        res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+        return;
+      }
+      // validate reCAPTCHA response
+      let response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        body: querystring.stringify({
+          secret: process.env.GOOGLE_RECAPTCHA_SECRET_KEY,
+          response: req.body['g-recaptcha-response'],
+        }),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      response = await response.json();
+      if (!response.success) {
         res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
         return;
       }

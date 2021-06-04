@@ -62,4 +62,8 @@ $(() => {
         alert("I'm sorry, but your message could not be sent at this time. Please try again later.");
       });
   });
+
+  window.onRecaptchaCallback = function onRecaptchaCallback() {
+    $form.find('button').prop('disabled', false);
+  };
 });
