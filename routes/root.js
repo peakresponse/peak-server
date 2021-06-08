@@ -72,7 +72,7 @@ if (process.env.MARKETING_ENABLED) {
   );
 
   router.get('/', async (req, res, next) => {
-    if (req.subdomains.length > process.env.BASE_HOST.split('.').length - 2) {
+    if (req.subdomains.length > 0) {
       next();
     } else {
       let articles = cache.get('root-index-articles');

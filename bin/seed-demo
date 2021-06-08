@@ -270,10 +270,10 @@ async function parseWorkbook() {
 
   let server = await readInput(
     rl,
-    'Select a server to import into [http://lvh.me:3000]: '
+    'Select a server to import into [http://localhost:3000]: '
   );
   if (server === '') {
-    server = 'http://lvh.me:3000';
+    server = 'http://localhost:3000';
   }
   const email = await readInput(rl, 'Email: ');
   const password = await readInput(rl, 'Password: ');

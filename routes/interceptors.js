@@ -42,7 +42,7 @@ passport.deserializeUser(async (id, done) => {
 module.exports.passport = passport;
 
 function getAgencySubdomain(req) {
-  if (req.subdomains.length > process.env.BASE_HOST.split('.').length - 2) {
+  if (req.subdomains.length > 0) {
     return req.subdomains[0].trim();
   }
   if (req.header('X-Agency-Subdomain')) {

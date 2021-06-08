@@ -126,7 +126,7 @@ const configure = (server, app) => {
       /// ensure agency specified
       const subdomains = req.headers.host.split('.');
       let agency;
-      if (subdomains.length > process.env.BASE_HOST.split('.').length) {
+      if (subdomains.length > 0) {
         agency = subdomains[0].trim();
       } else if (req.headers['X-Agency-Subdomain'] || req.headers['x-agency-subdomain']) {
         agency = (req.headers['X-Agency-Subdomain'] || req.headers['x-agency-subdomain']).trim();

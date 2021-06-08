@@ -26,14 +26,14 @@ describe('/soap/nemsis', () => {
     await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments']);
     testSession = session(app);
 
-    nock('http://lvh.me:3000')
+    nock('http://localhost:3000')
       .get('/soap/nemsis?wsdl')
       .reply(async (uri, requestBody, cb) => {
         const response = await testSession.get('/soap/nemsis?wsdl').expect(HttpStatus.OK);
         cb(null, [response.statusCode, response.text]);
       });
 
-    nock('http://lvh.me:3000')
+    nock('http://localhost:3000')
       .post('/soap/nemsis')
       .reply(async (uri, requestBody, cb) => {
         const response = await testSession.post('/soap/nemsis').type('text/xml').send(requestBody).expect(HttpStatus.OK);
@@ -42,7 +42,7 @@ describe('/soap/nemsis', () => {
   });
 
   it('requires a valid Agency subdomain in the organization field', async () => {
-    const client = await NemsisClient.create('http://lvh.me:3000/soap/nemsis?wsdl');
+    const client = await NemsisClient.create('http://localhost:3000/soap/nemsis?wsdl');
     client.username = 'regular@peakresponse.net';
     client.password = 'abcd1234';
     client.organization = 'foo';
@@ -51,7 +51,7 @@ describe('/soap/nemsis', () => {
   });
 
   it('requires a valid User credentials in the organization field', async () => {
-    const client = await NemsisClient.create('http://lvh.me:3000/soap/nemsis?wsdl');
+    const client = await NemsisClient.create('http://localhost:3000/soap/nemsis?wsdl');
     client.username = 'regular@peakresponse.net';
     client.password = 'wrongpass';
     client.organization = 'bmacc';
@@ -62,7 +62,7 @@ describe('/soap/nemsis', () => {
   describe('SubmitData', () => {
     let client;
     beforeEach(async () => {
-      client = await NemsisClient.create('http://lvh.me:3000/soap/nemsis?wsdl');
+      client = await NemsisClient.create('http://localhost:3000/soap/nemsis?wsdl');
       client.username = 'regular@peakresponse.net';
       client.password = 'abcd1234';
       client.organization = 'bmacc';
