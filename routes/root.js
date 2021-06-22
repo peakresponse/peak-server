@@ -100,6 +100,8 @@ if (process.env.MARKETING_ENABLED) {
             }
             // extract first paragraph
             article.content = article.content.substring(article.content.indexOf('<p>') + 3, article.content.indexOf('</p>'));
+            // remove any links in the paragraph
+            article.content = article.content.replace(/<a [^>]+>([^<]+)<\/a>/, '$1');
             articles.push(article);
             if (articles.length === 3) {
               break;
