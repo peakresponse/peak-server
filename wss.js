@@ -126,10 +126,10 @@ const configure = (server, app) => {
       /// ensure agency specified
       const subdomains = req.headers.host.split('.');
       let agency;
-      if (subdomains.length > 0) {
-        agency = subdomains[0].trim();
-      } else if (req.headers['X-Agency-Subdomain'] || req.headers['x-agency-subdomain']) {
+      if (req.headers['X-Agency-Subdomain'] || req.headers['x-agency-subdomain']) {
         agency = (req.headers['X-Agency-Subdomain'] || req.headers['x-agency-subdomain']).trim();
+      } else if (subdomains.length > parseInt(process.env.EXPRESS_SUBDOMAIN_OFFSET, 10)) {
+        agency = subdomains[0].trim();
       }
       if (agency) {
         req.agency = await models.Agency.findOne({
