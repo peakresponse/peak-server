@@ -5,8 +5,9 @@ mobile app repository, visit:
 
 https://github.com/peakresponse/peak-ios
 
-Peak Response (formerly NaTriage) was developed as part of the 2019 Tech to
-Protect Challenge to create new technologies for emergency responders.
+Peak Response (formerly NaTriage) was initially developed as part of the
+NIST PSCR Tech to Protect Challenge in 2019 to create new technologies for
+emergency responders.
 
 ## Getting Started (Local Evaluation and Development)
 
