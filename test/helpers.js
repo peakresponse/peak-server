@@ -7,6 +7,7 @@ process.env.AWS_S3_BUCKET = '';
 /// override any custom base host/url
 process.env.BASE_HOST = 'peakresponse.localhost';
 process.env.BASE_URL = 'http://peakresponse.localhost:3000';
+process.env.EXPRESS_SUBDOMAIN_OFFSET = '2';
 
 const fixtures = require('sequelize-fixtures');
 const nock = require('nock');
