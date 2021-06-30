@@ -26,7 +26,7 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-if (process.env.MARKETING_ENABLED) {
+if (process.env.MARKETING_ENABLED === 'true') {
   router.post(
     '/contact-us',
     helpers.async(async (req, res) => {
