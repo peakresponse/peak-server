@@ -8,12 +8,10 @@ https://github.com/peakresponse/peak-ios
 Peak Response (formerly NaTriage) was developed as part of the 2019 Tech to
 Protect Challenge to create new technologies for emergency responders.
 
-## Getting Started
+## Getting Started (Local Evaluation and Development)
 
-1. Install Docker Desktop: https://www.docker.com/products/docker-desktop
-
-   1. If you have Windows Home Edition, you will need to install Docker Toolbox instead.
-      See the troubleshooting notes below.
+1. Install Docker Desktop for Windows or Mac: https://docs.docker.com/desktop/
+   Install Docker Engine for Linux: https://docs.docker.com/engine/
 
 2. Clone this git repo to a "local" directory (on your computer), then change
    into the directory.
@@ -26,38 +24,89 @@ Protect Challenge to create new technologies for emergency responders.
 3. Open a command-line shell, change into your repo directory, and execute this command:
 
    ```
-   $ docker-compose -f docker-compose.deploy.yml pull
+   $ docker compose pull
    ```
 
 4. Start the containers:
 
    ```
-   $ docker-compose -f docker-compose.deploy.yml up
+   $ docker compose up
    ```
 
-5. While still in the server container, you can create an initial bootstrap user:
+   Please wait while a one-time database initialization is performed. This may take many
+   minutes depending upon the performance of your host computer. When you see messages that 
+   look like this, the server is running:
+
+   ```
+   server_1       | 2:14:26 AM web.1     |  > app@0.0.0 start /opt/node/app
+   server_1       | 2:14:26 AM web.1     |  > nodemon -V --ignore ./client ./bin/www
+   server_1       | 2:14:26 AM web.1     |  [nodemon] 1.19.0
+   server_1       | 2:14:26 AM web.1     |  [nodemon] to restart at any time, enter `rs`
+   server_1       | 2:14:26 AM web.1     |  [nodemon] or send SIGHUP to 57 to restart
+   ```
+
+5. Log in to the running server container and create an initial bootstrap admin user account:
+
+   ```
+   $ docker compose exec server bash -l
+   ```
+
+   The above command will log you in to the running server container. Then, execute
+   the following script, replacing the parameters on the command line with your own
+   values:
 
    ```
    # bin/create-admin Firstname Lastname email@address.com password
    ```
 
-6. To populate some sample patient data from the contest 010 sample worksheet:
+6. Now, use that bootstrap admin user account to log in to the Admin dashboard at: http://localhost:3000/admin
+
+7. Once logged in, click on States in the left sidebar, find the state you wish to set up and click on it,
+   then click on the Configure button. Please wait while state-specific agency and facility data is downloaded
+   and loaded into the database. This may again take many minutes depending upon the size of the data
+   and the performance of your host computer. Once completed, you can browse the imported data in the Agencies
+   and Facilities sections linked from the left sidebar.
+
+8. Once configured, log out of the Admin dashboard from the top navbar, then create your first Agency account
+   at: http://localhost:3000/sign-up
+
+   Select the State you configured, go next, then search for the Agency you wish to set up, then continue
+   through the rest of the flow.
+
+   Note that, during this set-up, email will be sent to a catch-all test mail server which also provides a web-based
+   interface for inspecting sent email at:
+
+   http://localhost:1080/
+
+9. Once the first Agency account is set up and configured, you can then log in at the agency specific
+   url: http://<your agency subdomain>.localhost:3000/
+
+10. This default development docker-compose.yml configuration mounts the repository directory
+   inside the running container. Any edits saved to the server source files will be detected
+   by nodemon and the server restarted. Any edits saved to the web app client source files
+   will be detected by the webpack-development-server, triggering a browser refresh after
+   a rebuild. For a production deployment, refer to additional notes below.
+
+   Other useful commands you can run while logged in to the server container include:
 
    ```
-   # bin/import sample.xlsx
+   # psql $DATABASE_URL
    ```
 
-7. Log in with the bootstrap user credentials in a browser: http://localhost:3000/
+   The above command will open the postgres command line utility for inspecting the database.
 
-   1. If you had to install Docker Toolbox, then replace "localhost" with the IP
-      address of the Docker Virtual Machine.
+   ```
+   # npm test
+   ```
 
-8. To stop the server, press CONTROL-C in the window with the running server.
+   The above command will run the continuous integration test suite.
+
+11. To stop the server, press CONTROL-C in the window with the running server.
    If it is successful, you will see something like this:
 
    ```
-   Killing nat-server_db_1           ... done
-   Killing nat-server_server_1       ... done
+   Killing peak-server_db_1           ... done
+   Killing peak-server_server_1       ... done
    ```
 
    If it is not successful, you may see something like this:
@@ -70,34 +119,36 @@ Protect Challenge to create new technologies for emergency responders.
    run the following command and wait for the output to report DONE:
 
    ```
-   $ docker-compose stop
+   $ docker compose stop
    Stopping peak-server_db_1          ... done
    Stopping peak-server_server_1      ... done
    ```
 
-## Development
+## Production Deployment
 
-1. Open a command-line shell, change into your repo directory, and execute this command:
+1. The initialization of the development environment above creates a file called `.env` in your
+   root repository initialized from the contents of `example.env`. These are environment
+   variables that configure aspects of the server deployment, and can be modified accordingly.
+   The `.env` file is ignored by git, and secrets should not be checked in to any publicly
+   available repository.
+
+2. For a production-focused deployment, use the following command to start the server:
 
    ```
-   $ docker-compose up
+   $ docker compose -f docker-compose.deploy.yml up
    ```
 
-   When you see messages that look like this, the server is running:
+   The deploy configuration does not include the test email server from the development
+   configuration (please set the SMTP_* variables in `.env` for your mail server). It also
+   does not mount or watch the server source files on your host computer- it runs only
+   the code as it was originally built and compiled during the creation of the container image.
+
+3. If you have made modifications to the server source code, you can re-build your own image
+   with the following command:
 
    ```
-   server_1       | 2:14:26 AM web.1     |  > app@0.0.0 start /opt/node/app
-   server_1       | 2:14:26 AM web.1     |  > nodemon -V --ignore ./client ./bin/www
-   server_1       | 2:14:26 AM web.1     |  [nodemon] 1.19.0
-   server_1       | 2:14:26 AM web.1     |  [nodemon] to restart at any time, enter `rs`
-   server_1       | 2:14:26 AM web.1     |  [nodemon] or send SIGHUP to 57 to restart
+   $ docker compose build server
    ```
-
-2. The default development docker-compose.yml configuration mounts the repository directory
-   inside the running container. Any edits saved to the server source files will be detected
-   by nodemon and the server restarted. Any edits saved to the web app client source files
-   will be detected by the webpack-development-server, triggering a browser refresh after
-   a rebuild.
 
 ## Shell Command Quick Reference
 
@@ -191,31 +242,31 @@ Protect Challenge to create new technologies for emergency responders.
 - To start all the containers:
 
   ```
-  $ docker-compose up
+  $ docker compose up
   ```
 
 - To log in to the running server container:
 
   ```
-  $ docker-compose exec server bash -l
+  $ docker compose exec server bash -l
   ```
 
 - To stop all the containers, in case things didn't shutdown properly with CTRL-C:
 
   ```
-  $ docker-compose stop
+  $ docker compose stop
   ```
 
 - To run the server container without starting everything using the up command:
 
   ```
-  $ docker-compose run --rm server bash -l
+  $ docker compose run --rm server bash -l
   ```
 
 - To re-build the server container:
 
   ```
-  $ docker-compose build server
+  $ docker compose build server
   ```
 
 ## Docker Troubleshooting
@@ -239,7 +290,7 @@ Protect Challenge to create new technologies for emergency responders.
 ## License
 
 Peak Response
-Copyright (C) 2019-2020 Peak Response Inc.
+Copyright (C) 2019-2021 Peak Response Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
