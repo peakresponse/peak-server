@@ -59,7 +59,7 @@ Protect Challenge to create new technologies for emergency responders.
    # bin/create-admin Firstname Lastname email@address.com password
    ```
 
-6. Now, use that bootstrap admin user account to log in to the Admin dashboard at: http://localhost:3000/admin
+6. Now, use that bootstrap admin user account to log in to the Admin dashboard at: http://peakresponse.localhost:3000/admin
 
 7. Once logged in, click on States in the left sidebar, find the state you wish to set up and click on it,
    then click on the Configure button. Please wait while state-specific agency and facility data is downloaded
@@ -68,7 +68,7 @@ Protect Challenge to create new technologies for emergency responders.
    and Facilities sections linked from the left sidebar.
 
 8. Once configured, log out of the Admin dashboard from the top navbar, then create your first Agency account
-   at: http://localhost:3000/sign-up
+   at: http://peakresponse.localhost:3000/sign-up
 
    Select the State you configured, go next, then search for the Agency you wish to set up, then continue
    through the rest of the flow.
@@ -76,10 +76,10 @@ Protect Challenge to create new technologies for emergency responders.
    Note that, during this set-up, email will be sent to a catch-all test mail server which also provides a web-based
    interface for inspecting sent email at:
 
-   http://localhost:1080/
+   http://peakresponse.localhost:1080/
 
 9. Once the first Agency account is set up and configured, you can then log in at the agency specific
-   url subdomain you set up: http://your-agency-subdomain.localhost:3000/
+   url subdomain you set up: http://your-agency-subdomain.peakresponse.localhost:3000/
 
 10. This default development docker-compose.yml configuration mounts the repository directory
     inside the running container. Any edits saved to the server source files will be detected
@@ -271,21 +271,7 @@ Protect Challenge to create new technologies for emergency responders.
 
 ## Docker Troubleshooting
 
-- On some PC laptops, a hardware CPU feature called virtualization is disabled by default, which is required by Docker. To enable it, reboot your computer into its BIOS interface (typically by pressing a key like DELETE or F1 during the boot process), and look for an option to enable it. It may be called something like _Intel Virtualization Technology_, _Intel VT_, _AMD-V_, or some similar variation.
-
-- On Windows, Docker Desktop cannot run on Windows Home edition. Install Docker Toolbox instead:
-
-  https://docs.docker.com/toolbox/overview/
-
-  https://github.com/docker/toolbox/releases
-
-  Use the _Docker QuickStart shell_ installed with Docker Toolbox to open a command-line shell that launches Docker for you when it starts. On Windows, right-click on the shotcut and Run as Administrator. Note: this can take a long time to start, depending upon your computer, as it needs to start a virtual machine running Linux.
-
-  The virtual machine will have its own, separate IP address on your computer. In the `.env` file (see step 4 in Getting Started), replace _localhost_ with _192.168.99.100_ in the BASE_HOST and BASE_URL variables. To confirm that this is the correct IP address, run this command in the command-line shell:
-
-  ```
-  $ docker-machine ip
-  ```
+- On some PC laptops, a hardware CPU feature called virtualization is disabled by default, which is required by Docker. To enable it, reboot your computer into its BIOS interface (typically by pressing a key like DELETE or F1 during the boot process), and look for an option to enable it. It may be called something like _Intel Virtualization Technology_, _Intel VT_, _AMD-V_, _AMD SMV Mode_, or some similar variation.
 
 ## License
 
