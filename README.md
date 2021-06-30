@@ -34,7 +34,7 @@ Protect Challenge to create new technologies for emergency responders.
    ```
 
    Please wait while a one-time database initialization is performed. This may take many
-   minutes depending upon the performance of your host computer. When you see messages that 
+   minutes depending upon the performance of your host computer. When you see messages that
    look like this, the server is running:
 
    ```
@@ -82,47 +82,47 @@ Protect Challenge to create new technologies for emergency responders.
    url: http://<your agency subdomain>.localhost:3000/
 
 10. This default development docker-compose.yml configuration mounts the repository directory
-   inside the running container. Any edits saved to the server source files will be detected
-   by nodemon and the server restarted. Any edits saved to the web app client source files
-   will be detected by the webpack-development-server, triggering a browser refresh after
-   a rebuild. For a production deployment, refer to additional notes below.
+    inside the running container. Any edits saved to the server source files will be detected
+    by nodemon and the server restarted. Any edits saved to the web app client source files
+    will be detected by the webpack-development-server, triggering a browser refresh after
+    a rebuild. For a production deployment, refer to additional notes below.
 
-   Other useful commands you can run while logged in to the server container include:
+Other useful commands you can run while logged in to the server container include:
 
-   ```
-   # psql $DATABASE_URL
-   ```
+```
+# psql $DATABASE_URL
+```
 
-   The above command will open the postgres command line utility for inspecting the database.
+The above command will open the postgres command line utility for inspecting the database.
 
-   ```
-   # npm test
-   ```
+```
+# npm test
+```
 
-   The above command will run the continuous integration test suite.
+The above command will run the continuous integration test suite.
 
 11. To stop the server, press CONTROL-C in the window with the running server.
-   If it is successful, you will see something like this:
+    If it is successful, you will see something like this:
 
-   ```
-   Killing peak-server_db_1           ... done
-   Killing peak-server_server_1       ... done
-   ```
+```
+Killing peak-server_db_1           ... done
+Killing peak-server_server_1       ... done
+```
 
-   If it is not successful, you may see something like this:
+If it is not successful, you may see something like this:
 
-   ```
-   ERROR: Aborting.
-   ```
+```
+ERROR: Aborting.
+```
 
-   If you get an error, the server may still be running on your computer. To force it to stop,
-   run the following command and wait for the output to report DONE:
+If you get an error, the server may still be running on your computer. To force it to stop,
+run the following command and wait for the output to report DONE:
 
-   ```
-   $ docker compose stop
-   Stopping peak-server_db_1          ... done
-   Stopping peak-server_server_1      ... done
-   ```
+```
+$ docker compose stop
+Stopping peak-server_db_1          ... done
+Stopping peak-server_server_1      ... done
+```
 
 ## Production Deployment
 
@@ -139,7 +139,7 @@ Protect Challenge to create new technologies for emergency responders.
    ```
 
    The deploy configuration does not include the test email server from the development
-   configuration (please set the SMTP_* variables in `.env` for your mail server). It also
+   configuration (please set the SMTP\_\* variables in `.env` for your mail server). It also
    does not mount or watch the server source files on your host computer- it runs only
    the code as it was originally built and compiled during the creation of the container image.
 
