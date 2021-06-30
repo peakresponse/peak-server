@@ -79,7 +79,7 @@ Protect Challenge to create new technologies for emergency responders.
    http://localhost:1080/
 
 9. Once the first Agency account is set up and configured, you can then log in at the agency specific
-   url: http://<your agency subdomain>.localhost:3000/
+   url subdomain you set up: http://your-agency-subdomain.localhost:3000/
 
 10. This default development docker-compose.yml configuration mounts the repository directory
     inside the running container. Any edits saved to the server source files will be detected
