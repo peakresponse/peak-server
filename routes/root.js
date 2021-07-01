@@ -115,7 +115,7 @@ router.get('/', async (req, res, next) => {
     }
     res.render('index', { articles });
   } else {
-    res.redirect('/admin');
+    res.redirect('/sign-up');
   }
 });
 
