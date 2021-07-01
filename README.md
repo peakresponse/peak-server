@@ -22,6 +22,23 @@ emergency responders.
    $ cd peak-server
    ```
 
+   Windows: Make sure that git is configured to preserve text line endings. To
+   check, execute this git command and check the following setting:
+
+   ```
+   $ git config -l
+   ...
+   core.autocrlf=false
+   ...
+   ```
+
+   Make sure that the `core.autocrlf` setting is `false` or `input`. To change this
+   setting, you can set it like this:
+
+   ```
+   $ git config --global core.autcrlf false
+   ```
+
 3. Open a command-line shell, change into your repo directory, and execute this command:
 
    ```
@@ -82,6 +99,11 @@ emergency responders.
 9. Once the first Agency account is set up and configured, you can then log in at the agency specific
    url subdomain you set up: http://your-agency-subdomain.peakresponse.localhost:3000/
 
+   Certain features of the web interface require a secure HTTPS connection to function. To test
+   locally, use Google Chrome or Chromium, and add the agency url in Chrome flags (go to chrome://flags
+   in a new tab or window) under the setting _Insecure origins treated as secure_ and make sure the
+   setting is enabled.
+
 10. This default development docker-compose.yml configuration mounts the repository directory
     inside the running container. Any edits saved to the server source files will be detected
     by nodemon and the server restarted. Any edits saved to the web app client source files
@@ -133,7 +155,7 @@ emergency responders.
    The `.env` file is ignored by git, and secrets should not be checked in to any publicly
    available repository.
 
-2. For a production-focused deployment, use the following command to start the server:
+2. For a more production-focused deployment, use the following command to start the server:
 
    ```
    $ docker compose -f docker-compose.deploy.yml up
@@ -150,6 +172,11 @@ emergency responders.
    ```
    $ docker compose build server
    ```
+
+4. Production deployments must be served over secure HTTPS connections. Setup of a secure
+   front-end (i.e. nginx, apache) with SSL certificates is out of the scope of this
+   README file, but there are many web resources and options for this depending
+   upon your hosting environment.
 
 ## Shell Command Quick Reference
 
