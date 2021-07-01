@@ -11,7 +11,7 @@ emergency responders.
 
 ## Getting Started (Local Evaluation and Development)
 
-1. Install Docker Desktop for Windows or Mac: https://docs.docker.com/desktop/
+1. Install Docker Desktop for Windows or Mac: https://docs.docker.com/desktop/  
    Install Docker Engine for Linux: https://docs.docker.com/engine/
 
 2. Clone this git repo to a "local" directory (on your computer), then change
@@ -22,8 +22,9 @@ emergency responders.
    $ cd peak-server
    ```
 
-   Windows: Make sure that git is configured to preserve text line endings. To
-   check, execute this git command and check the following setting:
+   Windows: BEFORE executing the clone command, make sure that git is configured
+   to preserve text line endings. To check, execute this git command and check
+   the following setting:
 
    ```
    $ git config -l
@@ -44,6 +45,8 @@ emergency responders.
    ```
    $ docker compose pull
    ```
+   
+   Please wait while Docker downloads the container images needed to run the server.
 
 4. Start the containers:
 
@@ -51,7 +54,7 @@ emergency responders.
    $ docker compose up
    ```
 
-   Please wait while a one-time database initialization is performed. This may take many
+   Please wait while a one-time database initialization is performed. This may take some
    minutes depending upon the performance of your host computer. When you see messages that
    look like this, the server is running:
 
@@ -70,8 +73,8 @@ emergency responders.
    ```
 
    The above command will log you in to the running server container. Then, execute
-   the following script, replacing the parameters on the command line with your own
-   values:
+   the following script on the server, replacing the parameters on the command line with your own
+   account information:
 
    ```
    # bin/create-admin Firstname Lastname email@address.com password
@@ -81,7 +84,7 @@ emergency responders.
 
 7. Once logged in, click on States in the left sidebar, find the state you wish to set up and click on it,
    then click on the Configure button. Please wait while state-specific agency and facility data is downloaded
-   and loaded into the database. This may again take many minutes depending upon the size of the data
+   and loaded into the database. This may again take some minutes depending upon the size of the data
    and the performance of your host computer. Once completed, you can browse the imported data in the Agencies
    and Facilities sections linked from the left sidebar.
 
@@ -119,12 +122,14 @@ emergency responders.
     The above command will open the postgres command line utility for inspecting the database.
 
     ```
+    # sequelize db:create --env=test
+    # sequelize db:migration --env=test
     # npm test
     ```
 
-    The above command will run the continuous integration test suite.
+    The above commands will set up a test database and run the continuous integration test suite.
 
-11. To stop the server, press CONTROL-C in the window with the running server.
+11. To stop the server, press CONTROL-C in the shell with the running server.
     If it is successful, you will see something like this:
 
     ```
@@ -177,6 +182,43 @@ emergency responders.
    front-end (i.e. nginx, apache) with SSL certificates is out of the scope of this
    README file, but there are many web resources and options for this depending
    upon your hosting environment.
+
+## Docker Command Quick Reference
+
+- To start all the containers:
+
+  ```
+  $ docker compose up
+  ```
+
+- To log in to the running server container:
+
+  ```
+  $ docker compose exec server bash -l
+  ```
+
+- To stop all the containers, in case things didn't shutdown properly with CTRL-C:
+
+  ```
+  $ docker compose stop
+  ```
+
+- To run the server container without starting everything using the up command:
+
+  ```
+  $ docker compose run --rm server bash -l
+  ```
+
+- To re-build the server container:
+
+  ```
+  $ docker compose build server
+  ```
+
+## Docker Troubleshooting
+
+- On some PC laptops, a hardware CPU feature called virtualization is disabled by default, which is required by Docker. To enable it, reboot your computer into its BIOS interface (typically by pressing a key like DELETE or F1 during the boot process), and look for an option to enable it. It may be called something like _Intel Virtualization Technology_, _Intel VT_, _AMD-V_, _AMD SMV Mode_, or some similar variation.
+
 
 ## Shell Command Quick Reference
 
@@ -265,45 +307,8 @@ emergency responders.
   $ git pull
   ```
 
-## Docker Command Quick Reference
-
-- To start all the containers:
-
-  ```
-  $ docker compose up
-  ```
-
-- To log in to the running server container:
-
-  ```
-  $ docker compose exec server bash -l
-  ```
-
-- To stop all the containers, in case things didn't shutdown properly with CTRL-C:
-
-  ```
-  $ docker compose stop
-  ```
-
-- To run the server container without starting everything using the up command:
-
-  ```
-  $ docker compose run --rm server bash -l
-  ```
-
-- To re-build the server container:
-
-  ```
-  $ docker compose build server
-  ```
-
-## Docker Troubleshooting
-
-- On some PC laptops, a hardware CPU feature called virtualization is disabled by default, which is required by Docker. To enable it, reboot your computer into its BIOS interface (typically by pressing a key like DELETE or F1 during the boot process), and look for an option to enable it. It may be called something like _Intel Virtualization Technology_, _Intel VT_, _AMD-V_, _AMD SMV Mode_, or some similar variation.
-
 ## License
 
-Peak Response
 Copyright (C) 2019-2021 Peak Response Inc.
 
 This program is free software: you can redistribute it and/or modify
