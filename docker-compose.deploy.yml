@@ -10,6 +10,9 @@ services:
     command: bash -l -c "npm start"
     env_file:
       - .env
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgres://postgres@db/app
     ports:
       - ${HOST_PORT:-3000}:3000
     depends_on:
