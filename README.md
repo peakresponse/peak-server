@@ -45,7 +45,7 @@ emergency responders.
    ```
    $ docker compose pull
    ```
-   
+
    Please wait while Docker downloads the container images needed to run the server.
 
 4. Start the containers:
@@ -218,7 +218,6 @@ emergency responders.
 ## Docker Troubleshooting
 
 - On some PC laptops, a hardware CPU feature called virtualization is disabled by default, which is required by Docker. To enable it, reboot your computer into its BIOS interface (typically by pressing a key like DELETE or F1 during the boot process), and look for an option to enable it. It may be called something like _Intel Virtualization Technology_, _Intel VT_, _AMD-V_, _AMD SMV Mode_, or some similar variation.
-
 
 ## Shell Command Quick Reference
 
