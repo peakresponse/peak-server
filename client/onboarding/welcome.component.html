@@ -1,4 +1,4 @@
-<app-shared-wizard [isCancelVisible]="false" (back)="onBack()" (cancel)="onBack()" (next)="onNext()">
+<app-shared-wizard [isBackVisible]="isMarketingEnabled" [isCancelVisible]="false" (back)="onBack()" (cancel)="onBack()" (next)="onNext()">
   <ng-container class="wizard__header">
     <h1 i18n>Welcome to Peak Response</h1>
   </ng-container>

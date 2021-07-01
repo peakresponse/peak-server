@@ -17,10 +17,12 @@ export class UrlComponent {
   agencyId: string = null;
   isLoading = true;
   isCreated = false;
+  baseHost = 'peakresponse.net';
   subdomain: string = '';
   errorStatus: number = null;
 
   constructor(private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
+    this.baseHost = window['env'].BASE_HOST;
     this.stateId = this.route.snapshot.queryParamMap.get('stateId');
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId');
   }

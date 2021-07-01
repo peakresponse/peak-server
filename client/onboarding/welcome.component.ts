@@ -6,7 +6,11 @@ import { NavigationService } from '../shared/services';
   templateUrl: './welcome.component.html',
 })
 export class WelcomeComponent {
-  constructor(private navigation: NavigationService) {}
+  isMarketingEnabled = false;
+
+  constructor(private navigation: NavigationService) {
+    this.isMarketingEnabled = window['env'].MARKETING_ENABLED === 'true';
+  }
 
   onBack() {
     window.location.href = `${window.location.protocol}//${window.location.host}`;
