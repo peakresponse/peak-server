@@ -28,6 +28,7 @@ const recordNetworkRequests = () => {
 const resetDatabase = async () => {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
+    DELETE FROM vehicles;
     DELETE FROM patient_observations;
     DELETE FROM patients;
     DELETE FROM responders;

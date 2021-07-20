@@ -122,6 +122,11 @@ class Base extends Model {
     this.changed('data', true);
   }
 
+  setFieldAndNemsisValue(key, keyPath, newValue) {
+    this.setDataValue(key, newValue);
+    this.setNemsisValue(keyPath, newValue);
+  }
+
   getNemsisAttributeValue(keyPath, attribute) {
     const attrPath = [...keyPath, '_attributes', attribute];
     return _.get(this.data, attrPath);

@@ -10,8 +10,7 @@ const nemsisMocks = require('../../../mocks/nemsis');
 
 describe('lib', () => {
   describe('nemsisStates.california', () => {
-    // eslint-disable-next-line func-names
-    beforeEach(async function () {
+    beforeEach(async () => {
       await helpers.loadFixtures(['cities', 'counties']);
     });
 
