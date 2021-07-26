@@ -106,5 +106,17 @@
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": false
     }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "9eb5be23-c098-495c-a758-ce1def3ff541",
+      "firstName": "SFFD",
+      "lastName": "User",
+      "position": "Integration",
+      "email": "sffd.user@peakresponse.net",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
   }
 ]

@@ -9,13 +9,15 @@ const nemsisRouter = require('./nemsis');
 const onboardingRouter = require('./onboarding');
 const passwordsRouter = require('./passwords');
 const rootRouter = require('./root');
+const webhooksRouter = require('./webhooks');
 
 const router = express.Router();
 
 router.use(interceptors.loadAgency);
 
-router.use('/admin', adminRouter);
 router.use('/api', apiRouter);
+router.use('/webhooks', webhooksRouter);
+router.use('/admin', adminRouter);
 router.use('/login', loginRouter);
 router.use('/nemsis', nemsisRouter);
 router.use('/passwords', passwordsRouter);

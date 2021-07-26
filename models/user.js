@@ -10,7 +10,7 @@ const { Base } = require('./base');
 module.exports = (sequelize, DataTypes) => {
   class User extends Base {
     static associate(models) {
-      User.hasMany(models.Employment, { as: 'employments' });
+      User.hasMany(models.Employment, { as: 'employments', foreignKey: 'userId' });
       User.hasMany(models.Patient, {
         as: 'createdPatients',
         foreignKey: 'createdById',

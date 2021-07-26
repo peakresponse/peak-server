@@ -2,6 +2,70 @@
   {
     "model": "Agency",
     "data": {
+      "id": "9466185d-6ad7-429a-9081-4426d2398f9f",
+      "canonicalAgencyId": null,
+      "stateId": "06",
+      "subdomain": null,
+      "stateUniqueId": "S38-50827",
+      "number": "S38-50827",
+      "name": "San Francisco Fire Department",
+      "isValid": false,
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdByAgencyId": null,
+      "updatedAt": "2020-10-06T01:44:44.012Z",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "data": {
+        "sAgency.01": {
+          "_text": "S38-50827"
+        },
+        "sAgency.02": {
+          "_text": "S38-50827"
+        },
+        "sAgency.03": {
+          "_text": "San Francisco Fire Department"
+        }
+      }
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
+      "id": "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8",
+      "canonicalAgencyId": "9466185d-6ad7-429a-9081-4426d2398f9f",
+      "stateId": "06",
+      "subdomain": "sffd",
+      "stateUniqueId": "S38-50827",
+      "number": "S38-50827",
+      "name": "San Francisco Fire Department",
+      "isValid": false,
+      "createdAt": "2021-07-21T22:23:56.159Z",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdByAgencyId": "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8",
+      "updatedAt": "2021-07-21T22:23:56.159Z",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "data": {
+        "dAgency.01": {
+          "_text": "S38-50827"
+        },
+        "dAgency.02": {
+          "_text": "S38-50827"
+        },
+        "dAgency.03": {
+          "_text": "San Francisco Fire Department"
+        },
+        "dAgency.04": {
+          "_text": "06"
+        },
+        "_attributes": {
+          "pr:isValid": false
+        }
+      }
+    }
+  },
+  {
+    "model": "Agency",
+    "data": {
       "id": "e705f64b-1399-436e-a428-18c8378b3444",
       "stateUniqueId": "S01-50120",
       "number": "S01-50120",
@@ -174,6 +238,9 @@
       "updatedAt": "2020-04-06T21:22:12.726Z",
       "stateId": "06",
       "data": {
+        "_attributes": {
+          "UUID": "5de082f2-3242-43be-bc2b-6e9396815b4f"
+        },
         "sAgency.01": {
           "_text": "S66-50146"
         },
