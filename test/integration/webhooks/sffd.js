@@ -33,6 +33,14 @@ describe('/webhooks/sffd', () => {
         .send(data)
         .expect(HttpStatus.OK);
       assert.deepStrictEqual(await models.Vehicle.count(), 26);
+      assert(
+        await models.Vehicle.findOne({
+          where: {
+            createdByAgencyId: '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8',
+            number: '74',
+          },
+        })
+      );
     });
   });
 });
