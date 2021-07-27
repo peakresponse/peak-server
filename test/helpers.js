@@ -31,6 +31,7 @@ const resetDatabase = async () => {
     DELETE FROM vehicles;
     DELETE FROM patient_observations;
     DELETE FROM patients;
+    DELETE from psaps;
     DELETE FROM responders;
     DELETE FROM scene_observations;
     DELETE FROM scene_pins;
