@@ -21,7 +21,7 @@ class Base extends Model {
   constructor(value, options) {
     super(value, options);
     if (!this.getNemsisAttributeValue([], 'UUID')) {
-      this.setNemsisAttributeValue([], 'UUID', uuid());
+      this.setNemsisAttributeValue([], 'UUID', this.id || uuid());
     }
   }
 

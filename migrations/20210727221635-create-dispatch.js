@@ -34,9 +34,6 @@ module.exports = {
           key: 'id',
         },
       },
-      updated_attributes: {
-        type: Sequelize.JSONB,
-      },
       incident_id: {
         allowNull: false,
         type: Sequelize.UUID,
@@ -65,6 +62,17 @@ module.exports = {
       },
       data: {
         type: Sequelize.JSONB,
+      },
+      updated_attributes: {
+        type: Sequelize.JSONB,
+      },
+      updated_data_attributes: {
+        type: Sequelize.JSONB,
+      },
+      is_valid: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       created_by_id: {
         allowNull: false,

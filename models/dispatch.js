@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const { Base } = require('./base');
+const nemsis = require('../lib/nemsis');
 
 module.exports = (sequelize, DataTypes) => {
   class Dispatch extends Base {
@@ -25,42 +26,47 @@ module.exports = (sequelize, DataTypes) => {
       if (!options?.transaction) {
         return sequelize.transaction((transaction) => Dispatch.createOrUpdate(user, agency, data, { ...options, transaction }));
       }
-      if (data.parentId) {
-        // this is updating the parent to create a new version, update canonical record
-        // const parent = await Dispatch.findByPk(data.parentId, {transaction: options.transaction, rejectOnEmpty: true});
-        // // sanitize the data by picking only the attributes allowed to be updated
-        // const filteredData = _.pick(data, [
-        //   parentId, dispatchedAt, acknowledgedAt, data
-        // ]);
-        // // get a list of the updated attributes
-        // const updatedAttributes = _.keys(filteredData);
-        // create the new historical record
-        const record = await Dispatch.findOrBuild({ where: { id: data.id }, transaction: options.transaction });
-        // update the canonical record, resolving any merge trees
-        return record;
-      }
       // find or create the new historical record
       let record = await Dispatch.findByPk(data.id, { transaction: options.transaction });
       if (record) {
-        // assume this is a repeated request, handle as idempotent
+        // assume this is a repeated request, handle as immutable and idempotent
         return record;
       }
-      const filteredData = _.pick(data, ['id', 'canonicalId', 'incidentId', 'vehicleId', 'dispatchedAt', 'acknowledgedAt', 'data']);
-      // get a list of the updated attributes
-      const updatedAttributes = _.keys(filteredData);
-      record = Dispatch.build(filteredData);
-      record.updatedAttributes = updatedAttributes;
-      record.createdById = user.id;
-      record.updatedById = user.id;
-      record.createdByAgencyId = agency?.id;
-      record.updatedByAgencyId = agency?.id;
-      // create the canonical record
-      const canonical = Dispatch.build({ ...filteredData, id: data.canonicalId, canonicalId: null });
-      canonical.createdById = user.id;
+      let filteredData;
+      let updatedAttributes;
+      let canonical;
+      if (data.parentId) {
+        // this is updating the parent to create a new version and update canonical record
+        const parent = await Dispatch.findByPk(data.parentId, { transaction: options.transaction, rejectOnEmpty: true });
+        // sanitize the data by picking only the attributes allowed to be updated
+        filteredData = _.pick(data, ['id', 'parentId', 'dispatchedAt', 'acknowledgedAt', 'data']);
+        // get a list of the updated attributes
+        updatedAttributes = _.keys(filteredData);
+        // merge the new attributes into the parent attributes
+        filteredData = _.assign(parent.get(), filteredData);
+        // update the canonical record
+        canonical = await Dispatch.findByPk(filteredData.canonicalId, { transaction: options.transaction, rejectOnEmpty: true });
+        // TODO - handle merging parallel and out-of-order updates
+        canonical.set(_.pick(filteredData, ['dispatchedAt', 'acknowledgedAt', 'data']));
+      } else {
+        // this is creating an entirely new record
+        filteredData = _.pick(data, ['id', 'canonicalId', 'incidentId', 'vehicleId', 'dispatchedAt', 'acknowledgedAt', 'data']);
+        updatedAttributes = _.keys(filteredData);
+        // set createdBy with this user/agency
+        filteredData.createdById = user.id;
+        filteredData.createdByAgencyId = agency?.id;
+        // create the canonical record
+        canonical = Dispatch.build({ ...filteredData, id: data.canonicalId, canonicalId: null });
+      }
+      // create/update the canonical record
       canonical.updatedById = user.id;
-      canonical.createdByAgencyId = agency?.id;
       canonical.updatedByAgencyId = agency?.id;
       await canonical.save({ transaction: options.transaction });
+      // create the historical record
+      record = Dispatch.build(filteredData);
+      record.updatedAttributes = updatedAttributes;
+      record.updatedById = user.id;
+      record.updatedByAgencyId = agency?.id;
       await record.save({ transaction: options.transaction });
       return record;
     }
@@ -81,13 +87,30 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSONB,
         field: 'updated_attributes',
       },
+      updatedDataAttributes: {
+        type: DataTypes.JSONB,
+        field: 'updated_data_attributes',
+      },
+      isValid: {
+        type: DataTypes.BOOLEAN,
+      },
     },
     {
       sequelize,
       modelName: 'Dispatch',
       tableName: 'dispatches',
       underscored: true,
+      validate: {
+        async schema() {
+          this.validationError = await nemsis.validateSchema('eDispatch_v3.xsd', 'eDispatch', null, this.data);
+        },
+      },
     }
   );
+
+  Dispatch.beforeSave(async (record) => {
+    record.setDataValue('isValid', record.getNemsisAttributeValue([], ['pr:isValid']));
+  });
+
   return Dispatch;
 };
