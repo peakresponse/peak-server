@@ -1,0 +1,17 @@
+[
+  {
+    "model": "Psap",
+    "data": {
+      "id": "588",
+      "name": "San Francisco Department Of Emergency Management (san Francisco)",
+      "change": "M",
+      "comments": "PSAP Name, State, County or City text has been modified since the original posting of the FCC Registry.",
+      "modifiedOn": "2012-10-03",
+      "createdAt": "2021-07-27T18:11:51.085Z",
+      "updatedAt": "2021-07-27T18:18:50.333Z",
+      "stateId": "06",
+      "countyId": "06075",
+      "cityId": "2411786"
+    }
+  }
+]

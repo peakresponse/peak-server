@@ -7,6 +7,36 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID,
       },
+      canonical_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'dispatches',
+          },
+          key: 'id',
+        },
+      },
+      parent_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'dispatches',
+          },
+          key: 'id',
+        },
+      },
+      second_parent_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'dispatches',
+          },
+          key: 'id',
+        },
+      },
+      updated_attributes: {
+        type: Sequelize.JSONB,
+      },
       incident_id: {
         allowNull: false,
         type: Sequelize.UUID,

@@ -118,5 +118,17 @@
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": false
     }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "firstName": "SFDEM",
+      "lastName": "Dispatcher",
+      "position": "Integration",
+      "email": "sfdem.user@peakresponse.net",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
   }
 ]

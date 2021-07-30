@@ -1,0 +1,15 @@
+[
+  {
+    "model": "Dispatcher",
+    "data": {
+      "id": "1f8a2ee2-8b6a-43b6-8764-a6013643a24b",
+      "userId": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "psapId": "588",
+      "callSign": "DT01",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]
