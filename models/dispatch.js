@@ -1,4 +1,6 @@
+const jsonDiff = require('json-diff');
 const _ = require('lodash');
+
 const { Base } = require('./base');
 const nemsis = require('../lib/nemsis');
 
@@ -34,10 +36,12 @@ module.exports = (sequelize, DataTypes) => {
       }
       let filteredData;
       let updatedAttributes;
+      let updatedDataAttributes;
       let canonical;
+      let parent;
       if (data.parentId) {
         // this is updating the parent to create a new version and update canonical record
-        const parent = await Dispatch.findByPk(data.parentId, { transaction: options.transaction, rejectOnEmpty: true });
+        parent = await Dispatch.findByPk(data.parentId, { transaction: options.transaction, rejectOnEmpty: true });
         // sanitize the data by picking only the attributes allowed to be updated
         filteredData = _.pick(data, ['id', 'parentId', 'dispatchedAt', 'acknowledgedAt', 'data']);
         // get a list of the updated attributes
@@ -65,6 +69,11 @@ module.exports = (sequelize, DataTypes) => {
       // create the historical record
       record = Dispatch.build(filteredData);
       record.updatedAttributes = updatedAttributes;
+      if (updatedAttributes.includes('data')) {
+        const diff = jsonDiff.diff(parent?.data || {}, data.data);
+        updatedDataAttributes = _.keys(diff).filter((key) => !key.startsWith('_'));
+      }
+      record.updatedDataAttributes = updatedDataAttributes;
       record.updatedById = user.id;
       record.updatedByAgencyId = agency?.id;
       await record.save({ transaction: options.transaction });

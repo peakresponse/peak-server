@@ -71,9 +71,6 @@ describe('/api/agencies', () => {
       assert.deepStrictEqual(agency.name, 'Demo Agency');
       assert.deepStrictEqual(agency.stateId, '06');
       assert.deepStrictEqual(agency.data, {
-        _attributes: {
-          UUID: agency.id,
-        },
         'sAgency.01': {
           _text: 'DEMO-001',
         },

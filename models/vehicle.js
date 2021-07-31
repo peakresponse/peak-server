@@ -1,9 +1,18 @@
 const sequelizePaginate = require('sequelize-paginate');
+const uuid = require('uuid/v4');
+
 const nemsis = require('../lib/nemsis');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Vehicle extends Base {
+    constructor(value, options) {
+      super(value, options);
+      if (!this.id && !this.getNemsisAttributeValue([], 'UUID')) {
+        this.setNemsisAttributeValue([], 'UUID', uuid());
+      }
+    }
+
     static associate(models) {
       Vehicle.belongsTo(models.User, { as: 'updatedBy' });
       Vehicle.belongsTo(models.User, { as: 'createdBy' });

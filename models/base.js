@@ -3,7 +3,6 @@ const AWS = require('aws-sdk');
 const fs = require('fs-extra');
 const path = require('path');
 const { Model } = require('sequelize');
-const uuid = require('uuid/v4');
 
 const s3options = {};
 if (process.env.AWS_ACCESS_KEY_ID) {
@@ -18,13 +17,6 @@ if (process.env.AWS_S3_BUCKET_REGION) {
 const s3 = new AWS.S3(s3options);
 
 class Base extends Model {
-  constructor(value, options) {
-    super(value, options);
-    if (!this.getNemsisAttributeValue([], 'UUID')) {
-      this.setNemsisAttributeValue([], 'UUID', this.id || uuid());
-    }
-  }
-
   // MARK: - file attachment helpers
 
   static assetUrl(pathPrefix, file) {

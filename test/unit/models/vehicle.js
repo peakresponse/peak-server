@@ -15,7 +15,38 @@ describe('models', () => {
     });
 
     describe('.save()', () => {
-      it('populates attributes from Nemsis data', async () => {
+      it('populates data from attributes', async () => {
+        const record = models.Vehicle.build();
+        record.number = 'RC1';
+        record.vin = '5XYKU4A12BG001739';
+        record.callSign = 'RC1';
+        record.type = '1404019';
+        record.createdByAgencyId = agency.id;
+        record.createdById = user.id;
+        record.updatedById = user.id;
+        await record.save();
+
+        assert.deepStrictEqual(record.data, {
+          _attributes: {
+            UUID: record.id,
+            'pr:isValid': true,
+          },
+          'dVehicle.01': {
+            _text: 'RC1',
+          },
+          'dVehicle.02': {
+            _text: '5XYKU4A12BG001739',
+          },
+          'dVehicle.03': {
+            _text: 'RC1',
+          },
+          'dVehicle.04': {
+            _text: '1404019',
+          },
+        });
+      });
+
+      it('populates attributes from NEMSIS data', async () => {
         const record = models.Vehicle.build();
         record.createdByAgencyId = agency.id;
         record.createdById = user.id;

@@ -21,7 +21,12 @@
       "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
       "vehicleId": "91986460-5a12-426d-9855-93227b47ead5",
       "dispatchedAt": "2020-04-06T21:22:10.102Z",
-      "updatedAttributes": ["id", "canonicalId", "incidentId", "vehicleId", "dispatchedAt"],
+      "data": {
+        "eDispatch.01": {
+          "_text": "2301019"
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "incidentId", "vehicleId", "dispatchedAt", "data"],
       "createdById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
       "updatedById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
       "createdAt": "2020-04-06T21:22:10.102Z",
