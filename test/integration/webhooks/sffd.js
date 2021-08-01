@@ -12,13 +12,9 @@ describe('/webhooks/sffd', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'agencies', 'employments']);
+    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'dispatchers', 'agencies', 'employments']);
     testSession = session(app);
-    await testSession
-      .post('/login')
-      .set('Host', `sffd.${process.env.BASE_HOST}`)
-      .send({ email: 'sffd.user@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'sfdem.user@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
   });
 
   describe('POST /cad', () => {
@@ -41,6 +37,25 @@ describe('/webhooks/sffd', () => {
           },
         })
       );
+    });
+
+    it('creates Incident records', async () => {
+      // read sample data
+      const data = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'sffd.cad.json')));
+      // post to webhook endpoint
+      await testSession
+        .post('/webhooks/sffd/cad')
+        .set('Host', `sffd.${process.env.BASE_HOST}`)
+        .set('Accept', 'application/json')
+        .send(data)
+        .expect(HttpStatus.OK);
+      assert.deepStrictEqual(await models.Incident.count(), 92);
+      const incident = await models.Incident.findOne({
+        where: {
+          number: '21049703',
+        },
+      });
+      assert(incident);
     });
   });
 });

@@ -2,7 +2,6 @@ const express = require('express');
 const HttpStatus = require('http-status-codes');
 
 const models = require('../../models');
-const interceptors = require('../interceptors');
 
 const router = express.Router();
 
@@ -10,34 +9,53 @@ const UNIT_SFFD_REGEX = /^\d+$/;
 const UNIT_AM_REGEX = /^AM\d+$/;
 const UNIT_KM_REGEX = /^KM\d+$/;
 
-router.post('/cad', interceptors.requireAgency(), async (req, res) => {
-  if (req.agency.stateUniqueId !== 'S38-50827') {
-    res.status(HttpStatus.FORBIDDEN).end();
-  }
+router.post('/cad', async (req, res) => {
   const data = req.body;
   if (!Array.isArray(data)) {
+    res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+    return;
+  }
+  if (!req.user) {
+    res.status(HttpStatus.UNAUTHORIZED).end();
+    return;
+  }
+  const psap = await models.Psap.findByPk('588', { rejectOnEmpty: true });
+  const dispatcher = await models.Dispatcher.findOne({
+    where: {
+      psapId: psap.id,
+      userId: req.user.id,
+    },
+  });
+  if (!dispatcher) {
+    res.status(HttpStatus.FORBIDDEN).end();
     return;
   }
   await models.sequelize.transaction(async (transaction) => {
-    const sffd = req.agency;
+    const sffd = await models.Agency.scope('claimed').findOne({
+      where: {
+        stateUniqueId: 'S38-50827',
+      },
+      transaction,
+    });
     const vehicles = {};
+    const incidents = {};
     // eslint-disable-next-line no-restricted-syntax
     for (const record of data) {
-      const { UNIT, INC_NO /* , DISPATCH_DTTM */ } = record;
+      const { UNIT, INC_NO, ADDRESS /* , DISPATCH_DTTM */ } = record;
       // skip records with no incident number
       if (!INC_NO) {
         // eslint-disable-next-line no-continue
         continue;
       }
+      let org = null;
+      if (UNIT_SFFD_REGEX.test(UNIT)) {
+        org = sffd;
+      } else if (UNIT_AM_REGEX.test(UNIT)) {
+        // noop
+      } else if (UNIT_KM_REGEX.test(UNIT)) {
+        // noop
+      }
       if (!vehicles[UNIT]) {
-        let org = null;
-        if (UNIT_SFFD_REGEX.test(UNIT)) {
-          org = sffd;
-        } else if (UNIT_AM_REGEX.test(UNIT)) {
-          // noop
-        } else if (UNIT_KM_REGEX.test(UNIT)) {
-          // noop
-        }
         if (org) {
           // eslint-disable-next-line no-await-in-loop
           const [vehicle] = await models.Vehicle.findOrCreate({
@@ -53,6 +71,35 @@ router.post('/cad', interceptors.requireAgency(), async (req, res) => {
           });
           vehicles[UNIT] = vehicle;
         }
+      }
+      if (!incidents[INC_NO]) {
+        // eslint-disable-next-line no-await-in-loop
+        const [incident] = await models.Incident.findOrBuild({
+          where: {
+            number: INC_NO,
+          },
+          defaults: {
+            psapId: psap.id,
+            createdById: req.user.id,
+            updatedById: req.user.id,
+          },
+          transaction,
+        });
+        if (incident.isNewRecord) {
+          // eslint-disable-next-line no-await-in-loop
+          const scene = await models.Scene.create(
+            {
+              address1: ADDRESS.trim(),
+              createdById: req.user.id,
+              updatedById: req.user.id,
+            },
+            { transaction }
+          );
+          incident.sceneId = scene.id;
+          // eslint-disable-next-line no-await-in-loop
+          await incident.save({ transaction });
+        }
+        incidents[INC_NO] = incident;
       }
     }
   });

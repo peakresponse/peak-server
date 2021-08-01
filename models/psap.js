@@ -17,6 +17,12 @@ module.exports = (sequelize, DataTypes) => {
       Psap.belongsTo(models.State, { as: 'state' });
       Psap.belongsTo(models.County, { as: 'county' });
       Psap.belongsTo(models.City, { as: 'city' });
+      Psap.belongsToMany(models.User, {
+        as: 'users',
+        through: models.Dispatcher,
+        otherKey: 'userId',
+        foreignKey: 'psapId',
+      });
     }
 
     static async importPsapsForState(stateId) {

@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Dispatcher.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       callSign: {
         type: DataTypes.STRING,
         field: 'call_sign',
