@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         return sequelize.transaction((transaction) => Dispatch.createOrUpdate(user, agency, data, { ...options, transaction }));
       }
       // find or create the new historical record
-      if (!data.id || !data.canonicalId) {
+      if (!data.id || (!data.canonicalId && !data.parentId)) {
         throw new Error();
       }
       let record = await Dispatch.findByPk(data.id, { transaction: options.transaction });
