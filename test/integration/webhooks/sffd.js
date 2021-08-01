@@ -39,7 +39,7 @@ describe('/webhooks/sffd', () => {
       );
     });
 
-    it('creates Incident records', async () => {
+    it('creates Incident and Scene records', async () => {
       // read sample data
       const data = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'sffd.cad.json')));
       // post to webhook endpoint
@@ -56,6 +56,9 @@ describe('/webhooks/sffd', () => {
         },
       });
       assert(incident);
+      const scene = await incident.getScene();
+      assert(scene);
+      assert.deepStrictEqual(scene.address1, '114 POWELL ST');
     });
   });
 });
