@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         return sequelize.transaction((transaction) => Dispatch.createOrUpdate(user, agency, data, { ...options, transaction }));
       }
       // find or create the new historical record
+      if (!data.id || !data.canonicalId) {
+        throw new Error();
+      }
       let record = await Dispatch.findByPk(data.id, { transaction: options.transaction });
       if (record) {
         // assume this is a repeated request, handle as immutable and idempotent
@@ -116,6 +119,13 @@ module.exports = (sequelize, DataTypes) => {
       },
     }
   );
+
+  Dispatch.addScope('canonical', {
+    where: {
+      canonicalId: null,
+      parentId: null,
+    },
+  });
 
   Dispatch.beforeSave(async (record) => {
     record.setDataValue('isValid', record.getNemsisAttributeValue([], ['pr:isValid']));

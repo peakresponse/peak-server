@@ -1,5 +1,6 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
+const uuid = require('uuid');
 
 const models = require('../../models');
 
@@ -41,7 +42,7 @@ router.post('/cad', async (req, res) => {
     const incidents = {};
     // eslint-disable-next-line no-restricted-syntax
     for (const record of data) {
-      const { UNIT, INC_NO, ADDRESS /* , DISPATCH_DTTM */ } = record;
+      const { UNIT, INC_NO, ADDRESS, DISPATCH_DTTM } = record;
       // skip records with no incident number
       if (!INC_NO) {
         // eslint-disable-next-line no-continue
@@ -90,6 +91,9 @@ router.post('/cad', async (req, res) => {
           const scene = await models.Scene.create(
             {
               address1: ADDRESS.trim(),
+              cityId: '2411786',
+              countyId: '06075',
+              stateId: '06',
               createdById: req.user.id,
               updatedById: req.user.id,
             },
@@ -100,6 +104,31 @@ router.post('/cad', async (req, res) => {
           await incident.save({ transaction });
         }
         incidents[INC_NO] = incident;
+      }
+      if (vehicles[UNIT] && incidents[INC_NO]) {
+        // eslint-disable-next-line no-await-in-loop
+        const dispatch = await models.Dispatch.scope('canonical').findOne({
+          where: {
+            incidentId: incidents[INC_NO].id,
+            vehicleId: vehicles[UNIT].id,
+          },
+          transaction,
+        });
+        if (!dispatch) {
+          // eslint-disable-next-line no-await-in-loop
+          await models.Dispatch.createOrUpdate(
+            req.user,
+            null,
+            {
+              id: uuid.v4(),
+              canonicalId: uuid.v4(),
+              incidentId: incidents[INC_NO].id,
+              vehicleId: vehicles[UNIT].id,
+              dispatchedAt: DISPATCH_DTTM,
+            },
+            { transaction }
+          );
+        }
       }
     }
   });

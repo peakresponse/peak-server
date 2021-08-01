@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       Incident.belongsTo(models.User, { as: 'updatedBy' });
       Incident.belongsTo(models.Agency, { as: 'createdByAgency' });
       Incident.belongsTo(models.Agency, { as: 'updatedByAgency' });
+      Incident.hasMany(models.Dispatch.scope('canonical'), { as: 'dispatches', foreignKey: 'incidentId' });
     }
   }
   Incident.init(
