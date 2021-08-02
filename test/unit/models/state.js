@@ -2,6 +2,7 @@ const assert = require('assert');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const fccMocks = require('../../mocks/fcc');
 const geonamesMocks = require('../../mocks/geonames');
 const nemsisMocks = require('../../mocks/nemsis');
 
@@ -26,14 +27,15 @@ describe('models', () => {
     });
 
     describe('.configure()', () => {
-      beforeEach(async () => {
-        await helpers.loadFixtures(['cities', 'counties', 'states', 'users']);
-      });
-
+      // eslint-disable-next-line func-names
       it('should configure a Washington State record and associated Agency and Facility records', async function () {
         if (!process.env.CI) {
           this.skip();
         }
+
+        await helpers.loadFixtures(['cities', 'counties', 'states', 'users']);
+
+        fccMocks.mockPsapRegistryDownloads();
         geonamesMocks.mockWashingtonDownloads();
         nemsisMocks.mockReposRequest();
         nemsisMocks.mockWashingtonFilesRequest();

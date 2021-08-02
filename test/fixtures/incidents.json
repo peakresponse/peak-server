@@ -1,0 +1,17 @@
+[
+  {
+    "model": "Incident",
+    "data": {
+      "id": "6621202f-ca09-4ad9-be8f-b56346d1de65",
+      "psapId": "588",
+      "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
+      "number": "12345678",
+      "calledAt": "2020-04-06T21:22:10.102Z",
+      "dispatchNotifiedAt": "2020-04-06T21:22:10.102Z",
+      "createdById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "updatedById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

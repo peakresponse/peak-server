@@ -171,7 +171,7 @@ module.exports = (sequelize, DataTypes) => {
     record.setDataValue('zip', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.10`]));
     record.setDataValue(
       'countyName',
-      await sequelize.models.County.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]))
+      await sequelize.models.County.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]), options)
     );
     if (record.countyName) {
       record.setDataValue('countyId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]));

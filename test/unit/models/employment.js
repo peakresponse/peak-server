@@ -17,7 +17,7 @@ describe('models', () => {
     describe("scope('active')", () => {
       it('returns only active employments', async () => {
         const records = await models.Employment.scope('active').findAll();
-        assert.deepStrictEqual(records.length, 4);
+        assert.deepStrictEqual(records.length, 5);
       });
     });
 
@@ -105,9 +105,7 @@ describe('models', () => {
       it('also sets the Nemsis data elements when set directly', () => {
         const record = models.Employment.build();
         record.email = 'john.doe@peakresponse.net';
-        assert.deepStrictEqual(record.data, {
-          'dPersonnel.10': { _text: 'john.doe@peakresponse.net' },
-        });
+        assert.deepStrictEqual(record.data['dPersonnel.10'], { _text: 'john.doe@peakresponse.net' });
       });
     });
 
@@ -123,12 +121,10 @@ describe('models', () => {
         assert.strictEqual(record.middleName, 'Jane');
         assert.strictEqual(record.lastName, 'Watson');
 
-        assert.deepStrictEqual(record.data, {
-          'dPersonnel.NameGroup': {
-            'dPersonnel.01': { _text: 'Watson' },
-            'dPersonnel.02': { _text: 'Mary' },
-            'dPersonnel.03': { _text: 'Jane' },
-          },
+        assert.deepStrictEqual(record.data['dPersonnel.NameGroup'], {
+          'dPersonnel.01': { _text: 'Watson' },
+          'dPersonnel.02': { _text: 'Mary' },
+          'dPersonnel.03': { _text: 'Jane' },
         });
       });
     });

@@ -11,13 +11,13 @@ describe('models', () => {
 
     describe("scope('canonical')", () => {
       it('filters out non-canonical records', async () => {
-        assert.deepStrictEqual(await models.Agency.scope('canonical').count(), 11);
+        assert.deepStrictEqual(await models.Agency.scope('canonical').count(), 12);
       });
     });
 
     describe("scope('claimed')", () => {
       it('filters out non-claimed records', async () => {
-        assert.deepStrictEqual(await models.Agency.scope('claimed').count(), 2);
+        assert.deepStrictEqual(await models.Agency.scope('claimed').count(), 3);
       });
     });
 
@@ -105,6 +105,9 @@ describe('models', () => {
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const canonicalAgency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
         assert.deepStrictEqual(canonicalAgency.data, {
+          _attributes: {
+            UUID: '5de082f2-3242-43be-bc2b-6e9396815b4f',
+          },
           'sAgency.01': { _text: 'S66-50146' },
           'sAgency.02': { _text: 'S66-50146' },
           'sAgency.03': { _text: 'Bodega Bay Fire Protection District' },
@@ -113,17 +116,25 @@ describe('models', () => {
         await models.sequelize.transaction(async (transaction) => {
           const agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
           assert(agency);
-          assert.strictEqual(agency.canonicalAgencyId, canonicalAgency.id);
-          assert.strictEqual(agency.subdomain, 'bbfpd');
-          assert.strictEqual(agency.createdById, user.id);
-          assert.strictEqual(agency.updatedById, user.id);
-          assert.strictEqual(agency.createdById, user.id);
-          assert.strictEqual(agency.updatedById, user.id);
-          assert(agency.data, {
+          assert.deepStrictEqual(agency.canonicalAgencyId, canonicalAgency.id);
+          assert.deepStrictEqual(agency.subdomain, 'bbfpd');
+          assert.deepStrictEqual(agency.createdById, user.id);
+          assert.deepStrictEqual(agency.updatedById, user.id);
+          assert.deepStrictEqual(agency.createdById, user.id);
+          assert.deepStrictEqual(agency.updatedById, user.id);
+          assert.deepStrictEqual(agency.data, {
             'dAgency.01': { _text: 'S66-50146' },
             'dAgency.02': { _text: 'S66-50146' },
             'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
             'dAgency.04': { _text: '06' },
+            _attributes: {
+              'pr:isValid': false,
+              'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+              'xsi:schemaLocation':
+                'http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.191130CP1/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd',
+              UUID: agency.id,
+              xmlns: 'http://www.nemsis.org',
+            },
           });
 
           const employment = await models.Employment.findOne({

@@ -1,9 +1,18 @@
 const sequelizePaginate = require('sequelize-paginate');
+const uuid = require('uuid/v4');
+
 const nemsis = require('../lib/nemsis');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Vehicle extends Base {
+    constructor(value, options) {
+      super(value, options);
+      if (!this.id && !this.getNemsisAttributeValue([], 'UUID')) {
+        this.setNemsisAttributeValue([], 'UUID', uuid());
+      }
+    }
+
     static associate(models) {
       Vehicle.belongsTo(models.User, { as: 'updatedBy' });
       Vehicle.belongsTo(models.User, { as: 'createdBy' });
@@ -13,13 +22,31 @@ module.exports = (sequelize, DataTypes) => {
 
   Vehicle.init(
     {
-      number: DataTypes.STRING,
-      vin: DataTypes.STRING,
+      number: {
+        type: DataTypes.STRING,
+        set(newValue) {
+          this.setFieldAndNemsisValue('number', ['dVehicle.01'], newValue);
+        },
+      },
+      vin: {
+        type: DataTypes.STRING,
+        set(newValue) {
+          this.setFieldAndNemsisValue('vin', ['dVehicle.02'], newValue);
+        },
+      },
       callSign: {
         type: DataTypes.STRING,
         field: 'call_sign',
+        set(newValue) {
+          this.setFieldAndNemsisValue('callSign', ['dVehicle.03'], newValue);
+        },
       },
-      type: DataTypes.STRING,
+      type: {
+        type: DataTypes.STRING,
+        set(newValue) {
+          this.setFieldAndNemsisValue('type', ['dVehicle.04'], newValue);
+        },
+      },
       data: DataTypes.JSONB,
       isValid: {
         type: DataTypes.BOOLEAN,
@@ -42,13 +69,13 @@ module.exports = (sequelize, DataTypes) => {
 
   Vehicle.beforeSave(async (record) => {
     if (!record.id) {
-      record.setDataValue('id', record.data?._attributes?.UUID);
+      record.setDataValue('id', record.getNemsisAttributeValue([], 'UUID'));
     }
-    record.setDataValue('number', record.data?.['dVehicle.01']?._text);
-    record.setDataValue('vin', record.data?.['dVehicle.02']?._text);
-    record.setDataValue('callSign', record.data?.['dVehicle.03']?._text);
-    record.setDataValue('type', record.data?.['dVehicle.04']?._text);
-    record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
+    record.setDataValue('number', record.getFirstNemsisValue(['dVehicle.01']));
+    record.setDataValue('vin', record.getFirstNemsisValue(['dVehicle.02']));
+    record.setDataValue('callSign', record.getFirstNemsisValue(['dVehicle.03']));
+    record.setDataValue('type', record.getFirstNemsisValue(['dVehicle.04']));
+    record.setDataValue('isValid', record.getNemsisAttributeValue([], 'pr:isValid'));
   });
 
   sequelizePaginate.paginate(Vehicle);

@@ -7,11 +7,11 @@ const models = require('../../../../models');
 const nemsis = require('../../../../lib/nemsis');
 const nemsisStates = require('../../../../lib/nemsis/states');
 const nemsisMocks = require('../../../mocks/nemsis');
+const { parseSpreadsheet } = require('../../../../lib/utils');
 
 describe('lib', () => {
   describe('nemsisStates.california', () => {
-    // eslint-disable-next-line func-names
-    beforeEach(async function () {
+    beforeEach(async () => {
       await helpers.loadFixtures(['cities', 'counties']);
     });
 
@@ -27,8 +27,8 @@ describe('lib', () => {
             const dataSet = await nemsis.parseStateDataSet(path.resolve(tmpDir.name, filePath));
             const agencies = await nemsisStates.california.appendAgenciesFromSpreadsheet(models, dataSet);
             assert(agencies.sAgencyGroup);
-            assert.deepStrictEqual(agencies.sAgencyGroup.length, 647);
-            assert.deepStrictEqual(dataSet.json.StateDataSet.sAgency.sAgencyGroup.length, 1444);
+            assert.deepStrictEqual(agencies.sAgencyGroup.length, 649);
+            assert.deepStrictEqual(dataSet.json.StateDataSet.sAgency.sAgencyGroup.length, 1446);
             break;
           }
         }
@@ -45,7 +45,7 @@ describe('lib', () => {
         const tmpDir = await nemsis.downloadRepoFiles('california', data.values);
         for (const filePath of data.values) {
           if (filePath.startsWith('Resources') && filePath.endsWith('Facilities.xlsx')) {
-            const result = await nemsisStates.california.parseSpreadsheet(path.resolve(tmpDir.name, filePath));
+            const result = await parseSpreadsheet(path.resolve(tmpDir.name, filePath));
             assert.deepStrictEqual(result.rows.length, 119);
             const facilities = await nemsisStates.california.parseFacilitySpreadsheet(models, result);
             assert(facilities.sFacilityGroup);

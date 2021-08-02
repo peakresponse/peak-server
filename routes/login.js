@@ -36,7 +36,7 @@ router.post('/', (req, res, next) => {
         }
         req.agencies = [req.agency];
       } else if (!user.isAdmin) {
-        /// check if user is a site admin- if not, check for an active agency employment
+        /// check if user is a site admin- if not, check for an active agency employment or psap dispatcher
         const employments = (
           await models.Employment.findAll({
             where: { userId: user.id },
@@ -45,7 +45,11 @@ router.post('/', (req, res, next) => {
         ).filter((e) => e.isActive);
         /// if none, block from login
         if (employments.length === 0) {
-          throw HttpStatus.FORBIDDEN;
+          /// check if a dispatcher
+          const dispatchers = await user.getDispatchers();
+          if (dispatchers.length === 0) {
+            throw HttpStatus.FORBIDDEN;
+          }
         }
         /// else, collect agencies
         req.agencies = employments.map((e) => e.agency);

@@ -2,6 +2,23 @@
   {
     "model": "Employment",
     "data": {
+      "id": "1a9b0a41-f194-419c-99f5-0ce5757a9026",
+      "agencyId": "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8",
+      "userId": "9eb5be23-c098-495c-a758-ce1def3ff541",
+      "hiredAt": "2020-10-06T01:44:44.012Z",
+      "startedAt": "2020-10-06T01:44:44.012Z",
+      "endedAt": null,
+      "isOwner": false,
+      "roles": [],
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z",
+      "updatedById": "9eb5be23-c098-495c-a758-ce1def3ff541",
+      "createdById": "9eb5be23-c098-495c-a758-ce1def3ff541"
+    }
+  },
+  {
+    "model": "Employment",
+    "data": {
       "id": "8abdb57e-cebf-455c-8148-2ef16d383d55",
       "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "ffc7a312-50ba-475f-b10f-76ce793dc62a",

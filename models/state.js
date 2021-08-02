@@ -87,6 +87,9 @@ module.exports = (sequelize, DataTypes) => {
         await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating city database for ${State.getNameForCode(stateId)}...`);
         await sequelize.models.City.importCitiesForState(stateId);
       }
+      // import PSAPs for the state
+      await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating PSAP database for ${this.name}...`);
+      await sequelize.models.Psap.importPsapsForState(this.id);
       // fetch NEMSIS state repositories list and find state repository
       const repos = await nemsis.getStateRepos();
       const repo = _.find(repos.values, { name: this.name });

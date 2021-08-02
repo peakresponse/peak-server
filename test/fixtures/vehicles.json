@@ -1,0 +1,64 @@
+[
+  {
+    "model": "Vehicle",
+    "ignoreSet": true,
+    "data": {
+      "id": "4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7",
+      "number": "88",
+      "vin": "JN1HS36P2LW140218",
+      "callSign": "88",
+      "type": "1404001",
+      "data": {
+        "_attributes": {
+          "UUID": "4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7"
+        },
+        "dVehicle.01": {
+          "_text": "88"
+        },
+        "dVehicle.02": {
+          "_text": "JN1HS36P2LW140218"
+        },
+        "dVehicle.03": {
+          "_text": "88"
+        },
+        "dVehicle.04": {
+          "_text": "1404001"
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444"
+    }
+  },
+  {
+    "model": "Vehicle",
+    "ignoreSet": true,
+    "data": {
+      "id": "91986460-5a12-426d-9855-93227b47ead5",
+      "number": "50",
+      "vin": "JH4DA9380PS016488",
+      "callSign": "50",
+      "type": "1404001",
+      "data": {
+        "_attributes": {
+          "UUID": "91986460-5a12-426d-9855-93227b47ead5"
+        },
+        "dVehicle.01": {
+          "_text": "50"
+        },
+        "dVehicle.02": {
+          "_text": "JH4DA9380PS016488"
+        },
+        "dVehicle.03": {
+          "_text": "50"
+        },
+        "dVehicle.04": {
+          "_text": "1404001"
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444"
+    }
+  }
+]

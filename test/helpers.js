@@ -30,6 +30,11 @@ const resetDatabase = async () => {
   await models.sequelize.query(`
     DELETE FROM patient_observations;
     DELETE FROM patients;
+    DELETE FROM dispatches;
+    DELETE FROM vehicles;
+    DELETE FROM incidents;
+    DELETE FROM dispatchers;
+    DELETE FROM psaps;
     DELETE FROM responders;
     DELETE FROM scene_observations;
     DELETE FROM scene_pins;

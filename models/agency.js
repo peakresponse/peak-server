@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'contacts',
         foreignKey: 'createdByAgencyId',
       });
+      Agency.hasMany(models.Employment, { as: 'employments', foreignKey: 'agencyId' });
       Agency.hasMany(models.PatientObservation, {
         as: 'patientObservations',
         foreignKey: 'transportAgencyId',
@@ -43,17 +44,27 @@ module.exports = (sequelize, DataTypes) => {
         as: 'activeScenes',
         foreignKey: 'createdByAgencyId',
       });
+      Agency.hasMany(models.Vehicle, {
+        as: 'vehicles',
+        foreignKey: 'createdByAgencyId',
+      });
       Agency.belongsToMany(models.User, {
         as: 'users',
         through: models.Employment,
+        otherKey: 'userId',
+        foreignKey: 'agencyId',
       });
       Agency.belongsToMany(models.User, {
         as: 'activeUsers',
         through: models.Employment.scope('active'),
+        otherKey: 'userId',
+        foreignKey: 'agencyId',
       });
       Agency.belongsToMany(models.User, {
         as: 'activePersonnelAdminUsers',
         through: models.Employment.scope({ method: ['role', models.Employment.Roles.PERSONNEL] }, 'active'),
+        otherKey: 'userId',
+        foreignKey: 'agencyId',
       });
     }
 
@@ -73,6 +84,7 @@ module.exports = (sequelize, DataTypes) => {
         updatedById: user.id,
         data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
+      data.data._attributes = { UUID: id };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
       const agency = await sequelize.models.Agency.create(data, options);
       /// associate User to Demographic as owner
@@ -191,6 +203,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Agency.beforeSave(async (record) => {
+    if (!record.id) {
+      let id = record.getNemsisAttributeValue([], 'UUID');
+      if (!id) {
+        id = uuid.v4();
+      }
+      record.setDataValue('id', id);
+    }
     if (record.isClaimed) {
       record.setDataValue('stateUniqueId', record.getFirstNemsisValue(['dAgency.01']));
       record.setDataValue('number', record.getFirstNemsisValue(['dAgency.02']));
