@@ -60,7 +60,7 @@ module.exports = {
       },
     });
     await queryInterface.addIndex('dispatchers', {
-      fields: ['psap_id', 'call_sign'],
+      fields: ['user_id', 'psap_id'],
       unique: true,
     });
   },

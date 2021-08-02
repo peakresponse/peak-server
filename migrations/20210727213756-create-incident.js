@@ -83,10 +83,9 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface.addIndex('incidents', {
-      fields: ['psap_id', 'number'],
-      unique: true,
-    });
+    await queryInterface.sequelize.query(
+      'CREATE UNIQUE INDEX incidents_psap_id_number ON incidents (psap_id, number) WHERE psap_id IS NOT NULL'
+    );
     await queryInterface.sequelize.query(`ALTER TABLE scenes ALTER COLUMN incident_commander_id DROP NOT NULL`);
     await queryInterface.sequelize.query(`ALTER TABLE scenes ALTER COLUMN incident_commander_agency_id DROP NOT NULL`);
     await queryInterface.sequelize.query(`ALTER TABLE scenes ALTER COLUMN created_by_agency_id DROP NOT NULL`);
