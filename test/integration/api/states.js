@@ -6,6 +6,7 @@ const session = require('supertest-session');
 const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
+const fccMocks = require('../../mocks/fcc');
 const geonamesMocks = require('../../mocks/geonames');
 const nemsisMocks = require('../../mocks/nemsis');
 
@@ -33,6 +34,7 @@ describe('/api/states', () => {
       if (!process.env.CI) {
         this.skip();
       }
+      fccMocks.mockPsapRegistryDownloads();
       geonamesMocks.mockWashingtonDownloads();
       nemsisMocks.mockReposRequest();
       nemsisMocks.mockWashingtonFilesRequest();
@@ -60,6 +62,7 @@ describe('/api/states', () => {
       if (!process.env.CI) {
         this.skip();
       }
+      fccMocks.mockPsapRegistryDownloads();
       geonamesMocks.mockCaliforniaDownloads();
       nemsisMocks.mockReposRequest();
       nemsisMocks.mockCaliforniaFilesRequest();

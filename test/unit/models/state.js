@@ -2,6 +2,7 @@ const assert = require('assert');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const fccMocks = require('../../mocks/fcc');
 const geonamesMocks = require('../../mocks/geonames');
 const nemsisMocks = require('../../mocks/nemsis');
 
@@ -34,6 +35,7 @@ describe('models', () => {
 
         await helpers.loadFixtures(['cities', 'counties', 'states', 'users']);
 
+        fccMocks.mockPsapRegistryDownloads();
         geonamesMocks.mockWashingtonDownloads();
         nemsisMocks.mockReposRequest();
         nemsisMocks.mockWashingtonFilesRequest();
