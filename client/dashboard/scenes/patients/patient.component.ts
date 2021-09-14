@@ -38,7 +38,6 @@ export class PatientComponent implements OnDestroy {
   agencySearch = '';
 
   private isSaving = false;
-  private newVersion: number = null;
 
   get filterPriority(): number {
     return this.observation?.['filterPriority'] ?? this.patient?.['filterPriority'];
@@ -80,11 +79,10 @@ export class PatientComponent implements OnDestroy {
       this.subscription.add(
         this.scene.patient$(this.id).subscribe((patient) => {
           if (this.isSaving) {
-            if (patient.version == this.newVersion) {
+            if (patient.currentId == this.observation.id) {
               this.patient = new Patient(patient);
               this.observation = null;
               this.isSaving = false;
-              this.newVersion = null;
             }
           } else {
             this.patient = new Patient(patient);
@@ -98,7 +96,6 @@ export class PatientComponent implements OnDestroy {
         id: uuid.v4(),
         sceneId,
         pin,
-        version: 1,
       });
     }
   }
@@ -124,7 +121,8 @@ export class PatientComponent implements OnDestroy {
 
   onEdit() {
     this.observation = this.patient.cloneDeep();
-    this.observation['version'] = this.observation['version'] + 1;
+    this.observation['id'] = uuid.v4();
+    this.observation['parentId'] = this.patient.currentId;
   }
 
   onPriority(priority: number) {
@@ -133,8 +131,9 @@ export class PatientComponent implements OnDestroy {
     } else {
       if (this.patient.priority != priority) {
         this.observation = this.patient.cloneDeep();
+        this.observation['id'] = uuid.v4();
+        this.observation['parentId'] = this.patient.currentId;
         this.observation['priority'] = priority;
-        this.observation['version'] = this.observation['version'] + 1;
         this.onSave();
       }
     }
@@ -145,6 +144,8 @@ export class PatientComponent implements OnDestroy {
     this.isEditingTransport = true;
     if (!this.observation) {
       this.transportObservation = this.patient.cloneDeep();
+      this.transportObservation['id'] = uuid.v4();
+      this.transportObservation['parentId'] = this.patient.currentId;
       this.transportObservation['isTransported'] = true;
     }
     this.calculateTransportHeight();
@@ -200,7 +201,6 @@ export class PatientComponent implements OnDestroy {
       this.observation['isTransported'] = true;
     } else if (this.transportObservation) {
       this.observation = this.transportObservation;
-      this.observation['version'] = this.observation['version'] + 1;
       this.onSave();
     }
     this.onHideTransport();
@@ -211,8 +211,12 @@ export class PatientComponent implements OnDestroy {
       this.observation['isTransported'] = false;
     } else {
       this.observation = this.patient.cloneDeep();
+      this.observation['id'] = uuid.v4();
+      this.observation['parentId'] = this.patient.currentId;
       this.observation['isTransported'] = false;
-      this.observation['version'] = this.observation['version'] + 1;
+      this.observation['isTransportedLeftIndependently'] = false;
+      this.observation['transportAgencyId'] = null;
+      this.observation['transportFacilityId'] = null;
       this.onSave();
     }
   }
@@ -221,11 +225,13 @@ export class PatientComponent implements OnDestroy {
     /// only save changed attributes
     this.isSaving = true;
     const observation: any = {};
+    observation.id = this.observation['id'];
+    observation.parentId = this.observation['parentId'];
     observation.sceneId = this.observation['sceneId'];
     observation.pin = this.observation['pin'];
-    observation.version = this.observation['version'];
     let isDirty = false;
     for (let property of [
+      'complaint',
       'priority',
       'location',
       'lat',
@@ -238,7 +244,9 @@ export class PatientComponent implements OnDestroy {
       'respiratoryRate',
       'pulse',
       'capillaryRefill',
+      'triageMentalStatus',
       'bloodPressure',
+      'gcsTotal',
       'isTransported',
       'isTransportedLeftIndependently',
       'transportAgencyId',
@@ -257,12 +265,10 @@ export class PatientComponent implements OnDestroy {
     if (isDirty) {
       this.api.patients.createOrUpdate(observation).subscribe((response) => {
         if (this.patient) {
-          this.newVersion = response.body['version'];
           /// wait until patient record is updated to latest version
-          if (this.patient?.['version'] == this.newVersion) {
+          if (this.patient?.currentId === this.observation.id) {
             this.observation = null;
             this.isSaving = false;
-            this.newVersion = null;
           }
         } else {
           this.onCancel();
@@ -272,8 +278,8 @@ export class PatientComponent implements OnDestroy {
   }
 
   observations(patient: any): any[] {
-    if (patient?.observations) {
-      return patient.observations
+    if (patient?.versions) {
+      return patient.versions
         .filter((o: any) => o.text)
         .sort((a: any, b: any) => moment(b.updatedAt).valueOf() - moment(a.updatedAt).valueOf());
     }

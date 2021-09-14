@@ -28,10 +28,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'createdByAgencyId',
       });
       Agency.hasMany(models.Employment, { as: 'employments', foreignKey: 'agencyId' });
-      Agency.hasMany(models.PatientObservation, {
-        as: 'patientObservations',
-        foreignKey: 'transportAgencyId',
-      });
       Agency.hasMany(models.Patient, {
         as: 'patients',
         foreignKey: 'transportAgencyId',
@@ -40,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'scenes',
         foreignKey: 'createdByAgencyId',
       });
-      Agency.hasMany(models.Scene.scope('active'), {
+      Agency.hasMany(models.Scene.scope('canonical', 'active'), {
         as: 'activeScenes',
         foreignKey: 'createdByAgencyId',
       });
@@ -188,6 +184,7 @@ module.exports = (sequelize, DataTypes) => {
         async schema() {
           if (this.isClaimed) {
             this.validationError = await nemsis.validateSchema('dAgency_v3.xsd', 'dAgency', null, this.data);
+            this.isValid = this.validationError === null;
           }
         },
       },
@@ -214,7 +211,6 @@ module.exports = (sequelize, DataTypes) => {
       record.setDataValue('stateUniqueId', record.getFirstNemsisValue(['dAgency.01']));
       record.setDataValue('number', record.getFirstNemsisValue(['dAgency.02']));
       record.setDataValue('name', record.getFirstNemsisValue(['dAgency.03']));
-      record.setDataValue('isValid', record.getNemsisAttributeValue([], ['pr:isValid']));
     }
   });
 

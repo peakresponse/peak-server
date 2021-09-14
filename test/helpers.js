@@ -16,9 +16,11 @@ const path = require('path');
 
 const models = require('../models');
 
-const loadFixtures = async (files) => {
+const loadFixtures = (files) => {
   const filePaths = files.map((f) => path.resolve(__dirname, `fixtures/${f}.json`));
-  await fixtures.loadFiles(filePaths, models);
+  return models.sequelize.transaction((transaction) => {
+    return fixtures.loadFiles(filePaths, models, { transaction });
+  });
 };
 
 const recordNetworkRequests = () => {
@@ -28,6 +30,19 @@ const recordNetworkRequests = () => {
 const resetDatabase = async () => {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
+    DELETE FROM reports_medications;
+    DELETE FROM reports_procedures;
+    DELETE FROM reports_vitals;
+    DELETE FROM reports;
+    DELETE FROM vitals;
+    DELETE FROM medications;
+    DELETE FROM procedures;
+    DELETE FROM responses;
+    DELETE FROM situations;
+    DELETE FROM times;
+    DELETE FROM dispositions;
+    DELETE FROM histories;
+    DELETE FROM narratives;
     DELETE FROM patient_observations;
     DELETE FROM patients;
     DELETE FROM dispatches;

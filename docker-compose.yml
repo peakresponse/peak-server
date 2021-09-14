@@ -1,14 +1,14 @@
 version: '2'
 services:
-  db:
-    image: postgis/postgis:11-3.0-alpine
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
   mailcatcher:
     image: dockage/mailcatcher:0.7.1
     ports:
       - 1080:1080
       - 1025:1025
+  db:
+    image: postgis/postgis:11-3.0-alpine
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
   server:
     build: .
     image: peakresponse/peak-server
@@ -20,8 +20,19 @@ services:
       - PORT=3000
       - DATABASE_URL=postgres://postgres@db/app
     ports:
-      - 3000:3000
       - 3001:3001
-      - 8080:8080
     depends_on:
       - db
+  nginx:
+    build: ./nginx
+    image: peakresponse/peak-nginx
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates
+      - ./nginx/letsencrypt:/etc/letsencrypt
+    env_file:
+      - ./.env
+    ports:
+      - 3000:3000
+      - 8080:8080
+    depends_on:
+      - server

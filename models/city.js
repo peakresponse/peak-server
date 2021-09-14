@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       // associations can be defined here
       City.hasMany(models.Facility, { as: 'cities', foreignKey: 'cityId' });
       City.hasMany(models.Scene);
-      City.hasMany(models.SceneObservation);
     }
 
     static async getCode(name, stateNumeric, options) {

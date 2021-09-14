@@ -128,12 +128,7 @@ describe('models', () => {
             'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
             'dAgency.04': { _text: '06' },
             _attributes: {
-              'pr:isValid': false,
-              'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-              'xsi:schemaLocation':
-                'http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.191130CP1/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd',
               UUID: agency.id,
-              xmlns: 'http://www.nemsis.org',
             },
           });
 

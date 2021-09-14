@@ -243,6 +243,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         async schema() {
           this.validationError = await nemsis.validateSchema('dPersonnel_v3.xsd', 'dPersonnel', 'dPersonnel.PersonnelGroup', this.data);
+          this.isValid = this.validationError === null;
         },
       },
     }
@@ -302,8 +303,6 @@ module.exports = (sequelize, DataTypes) => {
     }
     record.setDataValue('hiredAt', record.getFirstNemsisValue(['dPersonnel.33']));
     record.setDataValue('primaryJobRole', record.getFirstNemsisValue(['dPersonnel.34']));
-
-    record.setDataValue('isValid', record.getNemsisAttributeValue([], ['pr:isValid']));
   });
 
   Employment.afterCreate(async (record, options) => {

@@ -150,8 +150,7 @@
       "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "data": {
         "_attributes": {
-          "UUID": "50c06caf-9706-4305-bc3a-5462a7d20b6f",
-          "pr:isValid": true
+          "UUID": "50c06caf-9706-4305-bc3a-5462a7d20b6f"
         },
         "dPersonnel.10": {
           "_text": "invited.member@peakresponse.net"

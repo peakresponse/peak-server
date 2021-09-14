@@ -29,7 +29,7 @@ router.get(
       res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
       return;
     }
-    const records = await models.Patient.findAll(options);
+    const records = await models.Patient.scope('canonical').findAll(options);
     /// reduce payload size by only including a dependency on its first reference
     const agencies = [];
     const facilities = [];
@@ -63,13 +63,10 @@ router.post(
     let patient;
     let created;
     await models.sequelize.transaction(async (transaction) => {
-      const scene = await models.Scene.findByPk(req.body.sceneId, {
-        transaction,
-      });
-      [patient, created] = await models.Patient.createOrUpdate(req.user, req.agency, scene, req.body, { transaction });
+      [patient, created] = await models.Patient.createOrUpdate(req.user, req.agency, req.body, { transaction });
       res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(await patient.toFullJSON({ transaction }));
     });
-    await dispatchPatientUpdate(patient.id);
+    await dispatchPatientUpdate(patient.canonicalId);
   })
 );
 

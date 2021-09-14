@@ -1,0 +1,171 @@
+[
+  {
+    "model": "Disposition",
+    "data": {
+      "id": "103f7af7-c1c9-47ed-8668-2d6aaf9341fd",
+      "canonicalId": null,
+      "data": {
+        "eDisposition.DestinationGroup": {
+          "eDisposition.05": {
+            "_text": "06"
+          },
+          "eDisposition.06": {
+            "_text": "06075"
+          },
+          "eDisposition.07": {
+            "_text": "94103"
+          }
+        },
+        "eDisposition.IncidentDispositionGroup": {
+          "eDisposition.27": {
+            "_text": "4227001"
+          },
+          "eDisposition.28": {
+            "_text": "4228001"
+          },
+          "eDisposition.29": {
+            "_text": "4229003"
+          },
+          "eDisposition.30": {
+            "_text": "4230005"
+          }
+        },
+        "eDisposition.16": {
+          "_text": "4216005"
+        },
+        "eDisposition.17": {
+          "_text": "4217003"
+        },
+        "eDisposition.18": {
+          "_text": "4218015"
+        },
+        "eDisposition.19": {
+          "_text": "4219005"
+        },
+        "eDisposition.20": {
+          "_text": "4220001"
+        },
+        "eDisposition.21": {
+          "_text": "4221003"
+        },
+        "eDisposition.22": {
+          "_attributes": {
+            "NV": "7701001",
+            "xsi:nil": "true"
+          }
+        },
+        "eDisposition.23": {
+          "_text": "9908007"
+        },
+        "eDisposition.HospitalTeamActivationGroup": {
+          "eDisposition.24": {
+            "_attributes": {
+              "NV": "7701003",
+              "xsi:nil": "true"
+            }
+          },
+          "eDisposition.25": {
+            "_attributes": {
+              "NV": "7701003",
+              "xsi:nil": "true"
+            }
+          }
+        },
+        "eDisposition.32": {
+          "_text": "4232001"
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Disposition",
+    "data": {
+      "id": "4f996971-6588-4f86-ac22-85d4eba146ff",
+      "canonicalId": "103f7af7-c1c9-47ed-8668-2d6aaf9341fd",
+      "data": {
+        "eDisposition.DestinationGroup": {
+          "eDisposition.05": {
+            "_text": "06"
+          },
+          "eDisposition.06": {
+            "_text": "06075"
+          },
+          "eDisposition.07": {
+            "_text": "94103"
+          }
+        },
+        "eDisposition.IncidentDispositionGroup": {
+          "eDisposition.27": {
+            "_text": "4227001"
+          },
+          "eDisposition.28": {
+            "_text": "4228001"
+          },
+          "eDisposition.29": {
+            "_text": "4229003"
+          },
+          "eDisposition.30": {
+            "_text": "4230005"
+          }
+        },
+        "eDisposition.16": {
+          "_text": "4216005"
+        },
+        "eDisposition.17": {
+          "_text": "4217003"
+        },
+        "eDisposition.18": {
+          "_text": "4218015"
+        },
+        "eDisposition.19": {
+          "_text": "4219005"
+        },
+        "eDisposition.20": {
+          "_text": "4220001"
+        },
+        "eDisposition.21": {
+          "_text": "4221003"
+        },
+        "eDisposition.22": {
+          "_attributes": {
+            "NV": "7701001",
+            "xsi:nil": "true"
+          }
+        },
+        "eDisposition.23": {
+          "_text": "9908007"
+        },
+        "eDisposition.HospitalTeamActivationGroup": {
+          "eDisposition.24": {
+            "_attributes": {
+              "NV": "7701003",
+              "xsi:nil": "true"
+            }
+          },
+          "eDisposition.25": {
+            "_attributes": {
+              "NV": "7701003",
+              "xsi:nil": "true"
+            }
+          }
+        },
+        "eDisposition.32": {
+          "_text": "4232001"
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "data"],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

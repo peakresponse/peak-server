@@ -12,7 +12,7 @@ module.exports = webpackMerge(commonConfig, {
     host: '0.0.0.0',
     port: 8080,
     disableHostCheck: true,
-    publicPath: `http://${process.env.BASE_HOST}:8080/dist/`,
+    publicPath: `http${process.env.BASE_URL.startsWith('https://') ? 's' : ''}://${process.env.BASE_HOST}:8080/dist/`,
     historyApiFallback: true,
     stats: 'normal',
     headers: {
@@ -24,7 +24,7 @@ module.exports = webpackMerge(commonConfig, {
 
   output: {
     path: helpers.root('../dist/'),
-    publicPath: `http://${process.env.BASE_HOST}:8080/dist/`,
+    publicPath: `http${process.env.BASE_URL.startsWith('https://') ? 's' : ''}://${process.env.BASE_HOST}:8080/dist/`,
     filename: '[name].[hash].bundle.js',
     chunkFilename: '[id].[hash].chunk.js',
   },

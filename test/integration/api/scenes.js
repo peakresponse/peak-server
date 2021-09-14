@@ -10,17 +10,7 @@ describe('/api/scenes', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures([
-      'users',
-      'states',
-      'agencies',
-      'contacts',
-      'employments',
-      'scenes',
-      'sceneObservations',
-      'scenePins',
-      'responders',
-    ]);
+    await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments', 'scenes', 'scenePins', 'responders']);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -38,23 +28,57 @@ describe('/api/scenes', () => {
 
   describe('POST /', () => {
     it('creates a new scene', async () => {
-      const response = await testSession
+      await testSession
         .post('/api/scenes')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({
+          id: '7f263c9d-5304-4c44-9cce-47b1b3743cdd',
+          canonicalId: '75c66bf2-b11a-46fa-9b5c-bffdfb8c58d3',
           name: 'New Scene',
         })
         .expect(HttpStatus.CREATED);
-      assert(response.body?.id);
-      const scene = await models.Scene.findByPk(response.body.id);
+
+      const scene = await models.Scene.findByPk('75c66bf2-b11a-46fa-9b5c-bffdfb8c58d3');
       assert(scene);
       assert.deepStrictEqual(scene.name, 'New Scene');
       assert(scene.isActive);
 
-      const observations = await scene.getObservations();
-      assert.deepStrictEqual(observations.length, 1);
-      assert.deepStrictEqual(observations[0].name, 'New Scene');
-      assert.deepStrictEqual(observations[0].updatedAttributes, ['name']);
+      const versions = await scene.getVersions();
+      assert.deepStrictEqual(versions.length, 1);
+      assert.deepStrictEqual(versions[0].id, '7f263c9d-5304-4c44-9cce-47b1b3743cdd');
+      assert.deepStrictEqual(versions[0].name, 'New Scene');
+      assert.deepStrictEqual(versions[0].updatedAttributes, [
+        'id',
+        'canonicalId',
+        'name',
+        'incidentCommanderId',
+        'incidentCommanderAgencyId',
+      ]);
+    });
+  });
+
+  describe('PATCH /', () => {
+    it('updates a scene', async () => {
+      await testSession
+        .patch(`/api/scenes`)
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          id: 'ea025d22-f219-491e-9eb5-d7445abdd902',
+          parentId: 'a3486aa2-fc71-41c8-9db8-a28f30c48b2a',
+          name: 'Updated Scene',
+        })
+        .expect(HttpStatus.OK);
+
+      const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
+      assert(scene);
+      assert.deepStrictEqual(scene.name, 'Updated Scene');
+
+      const versions = await scene.getVersions({
+        order: [['updatedAt', 'DESC']],
+      });
+      assert.deepStrictEqual(versions.length, 2);
+      assert.deepStrictEqual(versions[0].name, 'Updated Scene');
+      assert.deepStrictEqual(versions[0].updatedAttributes, ['id', 'parentId', 'name']);
     });
   });
 
@@ -177,29 +201,6 @@ describe('/api/scenes', () => {
       assert(scene);
       assert(scene.incidentCommanderId, '9c5f542e-f7b0-497d-91ed-1eeefd8ade7f');
       assert(scene.incidentCommanderAgencyId, '81b433cd-5f48-4458-87f3-0bf4e1591830');
-    });
-  });
-
-  describe('PATCH /:id', () => {
-    it('updates a scene', async () => {
-      const response = await testSession
-        .patch(`/api/scenes/25db9094-03a5-4267-8314-bead229eff9d`)
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .send({
-          name: 'Updated Scene',
-        })
-        .expect(HttpStatus.OK);
-      assert.deepStrictEqual(response.body?.id, '25db9094-03a5-4267-8314-bead229eff9d');
-      const scene = await models.Scene.findByPk(response.body.id);
-      assert(scene);
-      assert.deepStrictEqual(scene.name, 'Updated Scene');
-
-      const observations = await scene.getObservations({
-        order: [['updatedAt', 'DESC']],
-      });
-      assert.deepStrictEqual(observations.length, 2);
-      assert.deepStrictEqual(observations[0].name, 'Updated Scene');
-      assert.deepStrictEqual(observations[0].updatedAttributes, ['name']);
     });
   });
 });

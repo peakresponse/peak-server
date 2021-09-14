@@ -265,11 +265,11 @@ export class ApiService {
     create: (data: any): Observable<any> => {
       return this.post(`/api/scenes`, data);
     },
+    update: (data: any): Observable<any> => {
+      return this.patch(`/api/scenes`, data);
+    },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/scenes/${id}`, params);
-    },
-    update: (id: string, data: any): Observable<any> => {
-      return this.patch(`/api/scenes/${id}`, data);
     },
     close: (id: string): Observable<any> => {
       return this.patch(`/api/scenes/${id}/close`);

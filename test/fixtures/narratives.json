@@ -1,0 +1,39 @@
+[
+  {
+    "model": "Narrative",
+    "data": {
+      "id": "75645200-6ed6-408e-814b-0ca6725db0f1",
+      "canonicalId": null,
+      "data": {
+        "eNarrative.01": {
+          "_text": "This is a test narrative"
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Narrative",
+    "data": {
+      "id": "c5fa9054-c293-4a3f-a8c4-e11eef6a7e8f",
+      "canonicalId": "75645200-6ed6-408e-814b-0ca6725db0f1",
+      "data": {
+        "eNarrative.01": {
+          "_text": "This is a test narrative"
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "data"],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

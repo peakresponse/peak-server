@@ -1,0 +1,98 @@
+[
+  {
+    "model": "Report",
+    "data": {
+      "id": "9242e8de-9d22-457f-96c8-00a43dfc1f3a",
+      "canonicalId": null,
+      "responseId": "50c74d8a-60c3-42af-a2ed-1a12a42f2b69",
+      "timeId": "4ee8a6ae-53eb-424f-bec7-bfe702c6d801",
+      "situationId": "d7b842f4-383e-4eb3-9e5f-353eac2d6e9b",
+      "dispositionId": "4f996971-6588-4f86-ac22-85d4eba146ff",
+      "historyId": "daf606fb-3135-47a4-ab09-6933180f2348",
+      "narrativeId": "c5fa9054-c293-4a3f-a8c4-e11eef6a7e8f",
+      "medicationIds": ["6f43bc3d-1d4e-470a-9568-0c8b50c8281e"],
+      "medications": ["6f43bc3d-1d4e-470a-9568-0c8b50c8281e"],
+      "procedureIds": ["34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0"],
+      "procedures": ["34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0"],
+      "vitalIds": ["2036119d-4545-4452-a26f-b9ec6a1a323b"],
+      "vitals": ["2036119d-4545-4452-a26f-b9ec6a1a323b"],
+      "data": {
+        "eRecord.01": {
+          "_text": "9242e8de-9d22-457f-96c8-00a43dfc1f3a"
+        },
+        "eRecord.SoftwareApplicationGroup": {
+          "eRecord.02": {
+            "_text": "Peak Response Inc"
+          },
+          "eRecord.03": {
+            "_text": "Peak Response"
+          },
+          "eRecord.04": {
+            "_text": "Unit test version"
+          }
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Report",
+    "data": {
+      "id": "c19bb731-5e9e-4feb-9192-720782ecf9a8",
+      "canonicalId": "9242e8de-9d22-457f-96c8-00a43dfc1f3a",
+      "responseId": "50c74d8a-60c3-42af-a2ed-1a12a42f2b69",
+      "timeId": "4ee8a6ae-53eb-424f-bec7-bfe702c6d801",
+      "situationId": "d7b842f4-383e-4eb3-9e5f-353eac2d6e9b",
+      "dispositionId": "4f996971-6588-4f86-ac22-85d4eba146ff",
+      "historyId": "daf606fb-3135-47a4-ab09-6933180f2348",
+      "narrativeId": "c5fa9054-c293-4a3f-a8c4-e11eef6a7e8f",
+      "medicationIds": ["6f43bc3d-1d4e-470a-9568-0c8b50c8281e"],
+      "medications": ["6f43bc3d-1d4e-470a-9568-0c8b50c8281e"],
+      "procedureIds": ["34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0"],
+      "procedures": ["34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0"],
+      "vitalIds": ["2036119d-4545-4452-a26f-b9ec6a1a323b"],
+      "vitals": ["2036119d-4545-4452-a26f-b9ec6a1a323b"],
+      "data": {
+        "eRecord.01": {
+          "_text": "9242e8de-9d22-457f-96c8-00a43dfc1f3a"
+        },
+        "eRecord.SoftwareApplicationGroup": {
+          "eRecord.02": {
+            "_text": "Peak Response Inc"
+          },
+          "eRecord.03": {
+            "_text": "Peak Response"
+          },
+          "eRecord.04": {
+            "_text": "Unit test version"
+          }
+        }
+      },
+      "updatedAttributes": [
+        "id",
+        "canonicalId",
+        "data",
+        "responseId",
+        "timesId",
+        "dispositionId",
+        "historyId",
+        "narrativeId",
+        "medicationIds",
+        "vitalIds",
+        "procedureIds"
+      ],
+      "updatedDataAttributes": ["eRecord.01", "eRecord.SoftwareApplicationGroup"],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         async schema() {
           this.validationError = await nemsis.validateSchema('dContact_v3.xsd', 'dContact', 'dContact.ContactInfoGroup', this.data);
+          this.isValid = this.validationError === null;
           if (this.validationError) throw this.validationError;
         },
       },
@@ -64,7 +65,6 @@ module.exports = (sequelize, DataTypes) => {
     record.setDataValue('middleName', record.data?.['dContact.04']?._text);
     record.setDataValue('primaryPhone', Base.firstValueOf(record.data?.['dContact.10']));
     record.setDataValue('primaryEmail', Base.firstValueOf(record.data?.['dContact.11']));
-    record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
   });
 
   sequelizePaginate.paginate(Contact);

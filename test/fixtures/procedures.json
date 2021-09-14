@@ -1,0 +1,133 @@
+[
+  {
+    "model": "Procedure",
+    "data": {
+      "id": "575a2e81-65ba-4c10-b43b-09f393df2883",
+      "canonicalId": null,
+      "data": {
+        "eProcedures.01": {
+          "_text": "2020-04-06T21:22:10-00:00"
+        },
+        "eProcedures.02": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.03": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.05": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.06": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.07": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.08": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.10": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Procedure",
+    "data": {
+      "id": "34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0",
+      "canonicalId": "575a2e81-65ba-4c10-b43b-09f393df2883",
+      "data": {
+        "eProcedures.01": {
+          "_text": "2020-04-06T21:22:10-00:00"
+        },
+        "eProcedures.02": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.03": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.05": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.06": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.07": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.08": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eProcedures.10": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "data"],
+      "updatedDataAttributes": [
+        "/eProcedures.01",
+        "/eProcedures.02",
+        "/eProcedures.03",
+        "/eProcedures.05",
+        "/eProcedures.06",
+        "/eProcedures.07",
+        "/eProcedures.08",
+        "/eProcedures.10"
+      ],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

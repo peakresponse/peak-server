@@ -8,6 +8,7 @@ import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
 import remove from 'lodash/remove';
 import moment from 'moment';
+import uuid from 'uuid';
 
 import { ApiService, GeolocationService, WebSocketService } from '../../shared/services';
 import { RequestQueue } from '../../shared/util';
@@ -148,7 +149,14 @@ export class SceneService implements OnDestroy {
       this.scene.lat = position.coords.latitude;
       this.scene.lng = position.coords.longitude;
       this.sceneSubject.next(this.scene);
-      this.api.scenes.update(this.scene.id, { lat: this.scene.lat, lng: this.scene.lng }).subscribe();
+      this.api.scenes
+        .update({
+          id: uuid.v4(),
+          parentId: this.scene.currentId,
+          lat: this.scene.lat,
+          lng: this.scene.lng,
+        })
+        .subscribe();
     });
   }
 
@@ -235,11 +243,18 @@ export class SceneService implements OnDestroy {
     if (this.approxStatsDebounceTimeoutID) {
       clearTimeout(this.approxStatsDebounceTimeoutID);
     }
-    const sceneId = this.scene.id;
+    const parentId = this.scene.currentId;
     const approxPatientsCount = this.scene.approxPatientsCount;
     const approxPriorityPatientsCounts = [...this.scene.approxPriorityPatientsCounts];
     this.approxStatsDebounceTimeoutID = setTimeout(() => {
-      this.api.scenes.update(sceneId, { approxPatientsCount, approxPriorityPatientsCounts }).subscribe();
+      this.api.scenes
+        .update({
+          id: uuid.v4(),
+          parentId,
+          approxPatientsCount,
+          approxPriorityPatientsCounts,
+        })
+        .subscribe();
     }, 300);
   }
 

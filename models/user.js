@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         as: 'updatedPatients',
         foreignKey: 'updatedById',
       });
-      User.hasMany(models.PatientObservation, {
-        as: 'patientObservations',
-        foreignKey: 'createdById',
-      });
       User.hasMany(models.Responder, { as: 'responders' });
       User.belongsToMany(models.Psap, {
         as: 'psaps',
@@ -37,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       User.belongsToMany(models.Scene.scope('active'), {
         as: 'activeScenes',
-        through: models.Responder.scope('onscene'),
+        through: models.Responder.scope('onScene'),
       });
     }
 

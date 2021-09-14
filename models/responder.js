@@ -115,7 +115,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Responder.addScope('onscene', {
+  Responder.addScope('onScene', {
     where: { departedAt: null },
   });
 

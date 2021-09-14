@@ -1,0 +1,178 @@
+[
+  {
+    "model": "Situation",
+    "data": {
+      "id": "07ed9852-a0ba-49df-b083-74ef9a98cc7b",
+      "canonicalId": null,
+      "data": {
+        "eSituation.01": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.02": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.07": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.08": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.09": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.10": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.11": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.12": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.13": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.18": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.20": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Situation",
+    "data": {
+      "id": "d7b842f4-383e-4eb3-9e5f-353eac2d6e9b",
+      "canonicalId": "07ed9852-a0ba-49df-b083-74ef9a98cc7b",
+      "data": {
+        "eSituation.01": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.02": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.07": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.08": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.09": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.10": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.11": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.12": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.13": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.18": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        },
+        "eSituation.20": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": true
+          }
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "data"],
+      "updatedDataAttributes": [
+        "/eSituation.01",
+        "/eSituation.02",
+        "/eSituation.07",
+        "/eSituation.08",
+        "/eSituation.09",
+        "/eSituation.10",
+        "/eSituation.11",
+        "/eSituation.12",
+        "/eSituation.13",
+        "/eSituation.18",
+        "/eSituation.20"
+      ],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

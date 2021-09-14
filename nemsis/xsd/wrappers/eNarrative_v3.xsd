@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.nemsis.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../eNarrative_v3.xsd"/>
+  <xs:element name="eNarrative" type="eNarrative" id="eNarrativeSection">
+    <xs:annotation>
+      <xs:documentation>Call Event Narrative</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>

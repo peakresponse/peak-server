@@ -1,0 +1,134 @@
+[
+  {
+    "model": "Time",
+    "data": {
+      "id": "58cbecc7-b7aa-4145-99c6-9d5d8835ed77",
+      "canonicalId": null,
+      "data": {
+        "eTimes.01": {
+          "_text": "2020-04-06T21:22:10-00:00"
+        },
+        "eTimes.03": {
+          "_text": "2020-04-06T21:22:10-00:00"
+        },
+        "eTimes.05": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.06": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.07": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.09": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.11": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.12": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.13": {
+          "_text": "2020-04-06T21:22:10-00:00"
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Time",
+    "data": {
+      "id": "4ee8a6ae-53eb-424f-bec7-bfe702c6d801",
+      "canonicalId": "58cbecc7-b7aa-4145-99c6-9d5d8835ed77",
+      "data": {
+        "eTimes.01": {
+          "_text": "2020-04-06T21:22:10-00:00"
+        },
+        "eTimes.03": {
+          "_text": "2020-04-06T21:22:10-00:00"
+        },
+        "eTimes.05": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.06": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.07": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.09": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.11": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.12": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eTimes.13": {
+          "_text": "2020-04-06T21:22:10-00:00"
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "data"],
+      "updatedDataAttributes": [
+        "/eTimes.01",
+        "/eTimes.03",
+        "/eTimes.05",
+        "/eTimes.06",
+        "/eTimes.07",
+        "/eTimes.09",
+        "/eTimes.11",
+        "/eTimes.12",
+        "/eTimes.13"
+      ],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

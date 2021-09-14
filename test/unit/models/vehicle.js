@@ -26,10 +26,10 @@ describe('models', () => {
         record.updatedById = user.id;
         await record.save();
 
+        assert(record.isValid);
         assert.deepStrictEqual(record.data, {
           _attributes: {
             UUID: record.id,
-            'pr:isValid': true,
           },
           'dVehicle.01': {
             _text: 'RC1',
@@ -87,10 +87,10 @@ describe('models', () => {
         record.type = '1404019';
         await record.save();
 
+        assert(record.isValid);
         assert.deepStrictEqual(record.data, {
           _attributes: {
             UUID: '4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7',
-            'pr:isValid': true,
           },
           'dVehicle.01': {
             _text: '99',

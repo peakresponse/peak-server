@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
             'dConfiguration.ConfigurationGroup',
             this.data
           );
+          this.isValid = this.validationError === null;
         },
       },
     }
@@ -47,7 +48,6 @@ module.exports = (sequelize, DataTypes) => {
       record.setDataValue('id', record.data?._attributes?.UUID);
     }
     record.setDataValue('stateId', record.data?.['dConfiguration.01']?._text);
-    record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
   });
 
   sequelizePaginate.paginate(Configuration);

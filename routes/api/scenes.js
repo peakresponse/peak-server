@@ -1,6 +1,5 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
-const _ = require('lodash');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -23,7 +22,7 @@ router.get(
       options.where = options.where || {};
       options.where.name = { [Op.iLike]: `%${req.query.search.trim()}%` };
     }
-    const { docs, pages, total } = await models.Scene.scope({ method: ['agency', req.agency.id] }, 'closed').paginate(options);
+    const { docs, pages, total } = await models.Scene.scope({ method: ['agency', req.agency.id] }, 'canonical', 'closed').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((d) => d.toJSON()));
   })
@@ -33,14 +32,19 @@ router.post(
   '/',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    let scene;
-    await models.sequelize.transaction(async (transaction) => {
-      scene = await models.Scene.start(req.user, req.agency, req.body, {
-        transaction,
-      });
-      res.status(HttpStatus.CREATED).json(scene.toJSON());
-    });
-    await dispatchSceneUpdate(scene.id);
+    const [scene] = await models.Scene.start(req.user, req.agency, req.body);
+    res.status(HttpStatus.CREATED).json(scene.toJSON());
+    await dispatchSceneUpdate(scene.canonicalId);
+  })
+);
+
+router.patch(
+  '/',
+  interceptors.requireAgency(),
+  helpers.async(async (req, res) => {
+    const [scene] = await models.Scene.createOrUpdate(req.user, req.agency, req.body);
+    res.status(HttpStatus.OK).json(scene.toJSON());
+    await dispatchSceneUpdate(scene.canonicalId);
   })
 );
 
@@ -48,10 +52,8 @@ router.get(
   '/:id',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    await models.sequelize.transaction(async (transaction) => {
-      const scene = await models.Scene.findByPk(req.params.id, { transaction });
-      res.status(HttpStatus.OK).json(scene.toJSON());
-    });
+    const scene = await models.Scene.scope('canonical').findByPk(req.params.id);
+    res.status(HttpStatus.OK).json(scene.toJSON());
   })
 );
 
@@ -65,12 +67,7 @@ router.patch(
         rejectOnEmpty: true,
         transaction,
       });
-      /// only allow incident commander to close
-      if (req.user.id !== scene.incidentCommanderId) {
-        res.status(HttpStatus.FORBIDDEN).end();
-        return;
-      }
-      await scene.close({ transaction });
+      await scene.close(req.user, req.agency, { transaction });
       res.status(HttpStatus.OK).json(scene.toJSON());
     });
     await dispatchSceneUpdate(scene.id);
@@ -190,41 +187,6 @@ router.post(
       }
       const pin = await models.ScenePin.createOrUpdate(req.user, req.agency, scene, req.body, { transaction });
       res.status(HttpStatus.OK).json(pin.toJSON());
-    });
-    await dispatchSceneUpdate(scene.id);
-  })
-);
-
-router.patch(
-  '/:id',
-  interceptors.requireAgency(),
-  helpers.async(async (req, res) => {
-    const updatedAttributes = _.keys(req.body);
-    _.pullAll(updatedAttributes, models.SceneObservation.SYSTEM_ATTRIBUTES);
-    let scene;
-    await models.sequelize.transaction(async (transaction) => {
-      scene = await models.Scene.findByPk(req.params.id, { transaction });
-      const data = _.extend(
-        {
-          createdById: req.user.id,
-          updatedById: req.user.id,
-          createdByAgencyId: req.agency.id,
-          updatedByAgencyId: req.agency.id,
-        },
-        _.pick(req.body, updatedAttributes)
-      );
-      await scene.update(data, { transaction });
-      await models.SceneObservation.create(
-        _.extend(
-          {
-            sceneId: scene.id,
-            updatedAttributes,
-          },
-          data
-        ),
-        { transaction }
-      );
-      res.status(HttpStatus.OK).json(scene.toJSON());
     });
     await dispatchSceneUpdate(scene.id);
   })

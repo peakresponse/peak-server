@@ -34,8 +34,9 @@ describe('models', () => {
           vehicleId: '4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7',
           dispatchedAt: now,
         };
-        const dispatch = await models.Dispatch.createOrUpdate(user, null, data);
+        let [dispatch, created] = await models.Dispatch.createOrUpdate(user, null, data);
         assert(dispatch);
+        assert(created);
         assert.deepStrictEqual(dispatch.id, data.id);
         assert.deepStrictEqual(dispatch.parentId, null);
         assert.deepStrictEqual(dispatch.canonicalId, data.canonicalId);
@@ -61,18 +62,19 @@ describe('models', () => {
         assert.deepStrictEqual(moment(canonical.dispatchedAt).toISOString(), data.dispatchedAt);
 
         // records should be immutable and idempodent, sending data with same id returns existing record
-        const dispatch2 = await models.Dispatch.createOrUpdate(user, null, { ...data, dispatchedAt: null });
-        assert(dispatch2);
-        assert.deepStrictEqual(dispatch2.id, data.id);
-        assert.deepStrictEqual(dispatch2.parentId, null);
-        assert.deepStrictEqual(dispatch2.canonicalId, data.canonicalId);
-        assert.deepStrictEqual(dispatch2.incidentId, data.incidentId);
-        assert.deepStrictEqual(dispatch2.vehicleId, data.vehicleId);
-        assert.deepStrictEqual(dispatch2.createdById, user.id);
-        assert.deepStrictEqual(dispatch2.updatedById, user.id);
-        assert.deepStrictEqual(dispatch2.createdByAgencyId, null);
-        assert.deepStrictEqual(dispatch2.updatedByAgencyId, null);
-        assert.deepStrictEqual(moment(dispatch2.dispatchedAt).toISOString(), data.dispatchedAt);
+        [dispatch, created] = await models.Dispatch.createOrUpdate(user, null, { ...data, dispatchedAt: null });
+        assert(dispatch);
+        assert(!created);
+        assert.deepStrictEqual(dispatch.id, data.id);
+        assert.deepStrictEqual(dispatch.parentId, null);
+        assert.deepStrictEqual(dispatch.canonicalId, data.canonicalId);
+        assert.deepStrictEqual(dispatch.incidentId, data.incidentId);
+        assert.deepStrictEqual(dispatch.vehicleId, data.vehicleId);
+        assert.deepStrictEqual(dispatch.createdById, user.id);
+        assert.deepStrictEqual(dispatch.updatedById, user.id);
+        assert.deepStrictEqual(dispatch.createdByAgencyId, null);
+        assert.deepStrictEqual(dispatch.updatedByAgencyId, null);
+        assert.deepStrictEqual(moment(dispatch.dispatchedAt).toISOString(), data.dispatchedAt);
       });
 
       it('updates an existing canonical record and creates a corresponding history Dispatch record', async () => {
@@ -84,8 +86,9 @@ describe('models', () => {
           parentId: '374450ef-99e3-4554-9298-c8b70373d63f',
           acknowledgedAt: now,
         };
-        const dispatch = await models.Dispatch.createOrUpdate(user, agency, data);
+        const [dispatch, created] = await models.Dispatch.createOrUpdate(user, agency, data);
         assert(dispatch);
+        assert(!created);
         assert.deepStrictEqual(dispatch.id, data.id);
         assert.deepStrictEqual(dispatch.parentId, data.parentId);
         const parent = await dispatch.getParent();
@@ -128,11 +131,12 @@ describe('models', () => {
             },
           },
         };
-        const dispatch = await models.Dispatch.createOrUpdate(user, agency, data);
+        const [dispatch, created] = await models.Dispatch.createOrUpdate(user, agency, data);
         assert(dispatch);
+        assert(!created);
         assert(dispatch.isValid);
         assert(dispatch.updatedAttributes, ['parentId', 'data']);
-        assert(dispatch.updatedDataAttributes, ['eDispatch.01__added', 'eDisptach.02__added']);
+        assert(dispatch.updatedDataAttributes, ['/eDispatch.01', '/eDispatch.02']);
       });
     });
   });

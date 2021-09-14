@@ -1,6 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 
+import uuid from 'uuid';
+
 import { ApiService, GeolocationService, NavigationService } from '../../shared/services';
 import { SceneService } from './scene.service';
 
@@ -9,7 +11,10 @@ import { SceneService } from './scene.service';
   styleUrls: ['./new-scene.component.scss'],
 })
 export class NewSceneComponent implements AfterViewInit {
-  data: any = {};
+  data: any = {
+    id: uuid.v4(),
+    canonicalId: uuid.v4(),
+  };
 
   constructor(
     private api: ApiService,
@@ -38,6 +43,6 @@ export class NewSceneComponent implements AfterViewInit {
     if (!data.lat || !data.lng) {
       this.scene.captureLocation(data.id);
     }
-    this.navigation.replaceWith(`/scenes/${data.id}`);
+    this.navigation.replaceWith(`/scenes/${data.canonicalId}`);
   }
 }

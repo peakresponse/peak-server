@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         as: 'patients',
         foreignKey: 'transportFacilityId',
       });
-      Facility.hasMany(models.PatientObservation, {
-        as: 'patientObservations',
-        foreignKey: 'transportFacilityId',
-      });
     }
 
     static findNear(lat, lng, options = {}) {
@@ -137,6 +133,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         async schema() {
           this.validationError = await nemsis.validateSchema('dFacility_v3.xsd', 'dFacility', 'dFacilityGroup', this.data);
+          this.isValid = this.validationError === null;
         },
       },
     }
@@ -179,7 +176,6 @@ module.exports = (sequelize, DataTypes) => {
     record.setDataValue('country', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.12`]));
     record.setDataValue('geog', Base.geometryFor(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.13`])));
     record.setDataValue('primaryPhone', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.15`]));
-    record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
   });
 
   sequelizePaginate.paginate(Facility);

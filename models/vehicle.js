@@ -61,6 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         async schema() {
           this.validationError = await nemsis.validateSchema('dVehicle_v3.xsd', 'dVehicle', 'dVehicle.VehicleGroup', this.data);
+          this.isValid = this.validationError === null;
           if (this.validationError) throw this.validationError;
         },
       },
@@ -75,7 +76,6 @@ module.exports = (sequelize, DataTypes) => {
     record.setDataValue('vin', record.getFirstNemsisValue(['dVehicle.02']));
     record.setDataValue('callSign', record.getFirstNemsisValue(['dVehicle.03']));
     record.setDataValue('type', record.getFirstNemsisValue(['dVehicle.04']));
-    record.setDataValue('isValid', record.getNemsisAttributeValue([], 'pr:isValid'));
   });
 
   sequelizePaginate.paginate(Vehicle);

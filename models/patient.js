@@ -1,6 +1,8 @@
-const _ = require('lodash');
 const seedrandom = require('seedrandom');
+const uuid = require('uuid');
+
 const { Base } = require('./base');
+const nemsis = require('../lib/nemsis');
 
 const PatientPriority = {
   IMMEDIATE: 0,
@@ -19,15 +21,20 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      Patient.belongsTo(models.Scene, { as: 'scene' });
-      Patient.belongsTo(models.Agency, { as: 'transportAgency' });
-      Patient.belongsTo(models.Facility, { as: 'transportFacility' });
-      Patient.hasMany(models.PatientObservation, { as: 'observations' });
-
+      Patient.belongsTo(Patient, { as: 'canonical' });
+      Patient.belongsTo(Patient, { as: 'current' });
+      Patient.belongsTo(Patient, { as: 'parent' });
+      Patient.belongsTo(Patient, { as: 'secondParent' });
       Patient.belongsTo(models.User, { as: 'updatedBy' });
       Patient.belongsTo(models.User, { as: 'createdBy' });
       Patient.belongsTo(models.Agency, { as: 'updatedByAgency' });
       Patient.belongsTo(models.Agency, { as: 'createdByAgency' });
+
+      Patient.belongsTo(models.Scene, { as: 'scene' });
+      Patient.belongsTo(models.Agency, { as: 'transportAgency' });
+      Patient.belongsTo(models.Facility, { as: 'transportFacility' });
+
+      Patient.hasMany(Patient, { as: 'versions', foreignKey: 'canonicalId' });
     }
 
     static generatePIN(seed) {
@@ -39,8 +46,34 @@ module.exports = (sequelize, DataTypes) => {
       return pin;
     }
 
-    static async createOrUpdate(user, agency, scene, initialData, options = {}) {
-      /// confirm this is a responder on scene
+    static async createOrUpdate(user, agency, data, options) {
+      if (!options?.transaction) {
+        return sequelize.transaction((transaction) => Patient.createOrUpdate(user, agency, data, { ...options, transaction }));
+      }
+      // allow sceneId and pin as an alternative to canonicalId
+      if (data.sceneId && data.pin) {
+        const canonical = await Patient.findOne({
+          where: {
+            canonicalId: null,
+            sceneId: data.sceneId,
+            pin: data.pin,
+          },
+          transaction: options.transaction,
+        });
+        data.canonicalId = canonical ? canonical.id : uuid.v4();
+      }
+      // for now, for backwards compatibility until Scene/Incident refactor...
+      // get the scene for this patient
+      let scene;
+      if (data.sceneId) {
+        scene = await sequelize.models.Scene.findByPk(data.sceneId, { rejectOnEmpty: true, transaction: options.transaction });
+      } else if (data.parentId) {
+        const parent = await Patient.findByPk(data.parentId, { rejectOnEmpty: true, transaction: options.transaction });
+        scene = await parent.getScene(options);
+      } else {
+        throw new Error();
+      }
+      // confirm this is a responder on scene
       const responder = await sequelize.models.Responder.findOne({
         where: { sceneId: scene.id, userId: user.id, agencyId: agency.id },
         transaction: options?.transaction,
@@ -48,64 +81,59 @@ module.exports = (sequelize, DataTypes) => {
       if (!responder) {
         throw new Error();
       }
-      /// build the observation record
-      const updatedAttributes = _.keys(initialData);
-      _.pullAll(updatedAttributes, sequelize.models.PatientObservation.SYSTEM_ATTRIBUTES);
-      const data = _.extend(_.pick(initialData, updatedAttributes), {
-        sceneId: scene.id,
-        pin: initialData.pin,
-        version: initialData.version,
-        createdById: user.id,
-        updatedById: user.id,
-        createdByAgencyId: agency.id,
-        updatedByAgencyId: agency.id,
-      });
-      const observation = sequelize.models.PatientObservation.build(data);
-      /// modify attributes for patient
-      delete data.id;
-      /// find or create patient record
-      let patient;
-      let created = false;
-      if (data.patientId) {
-        /// note: patient record must already exist if referenced by id
-        patient = await Patient.findByPk(data.patientId, {
-          rejectOnEmpty: true,
-          transaction: options?.transaction,
-        });
-      } else if (data.sceneId && data.pin) {
-        [patient, created] = await Patient.findOrCreate({
-          where: { sceneId: data.sceneId, pin: data.pin },
-          defaults: data,
-          transaction: options?.transaction,
-        });
-      } else {
-        throw new Error();
-      }
-      /// save the observation
-      observation.patientId = patient.id;
-      observation.updatedAttributes = updatedAttributes;
-      await observation.save(options);
-      /// update the patient, if not newly created
-      if (!created) {
-        if (observation.version > patient.version) {
-          await patient.update(data, options);
-        } else {
-          // TODO: handle out-of-order observation merging...?
-        }
-      }
-      /// update scene counts
+      const [record, created] = await Base.createOrUpdate(
+        Patient,
+        user,
+        agency,
+        data,
+        ['sceneId', 'pin'],
+        [
+          'lastName',
+          'firstName',
+          'gender',
+          'age',
+          'ageUnits',
+          'dob',
+          'complaint',
+          'triageMentalStatus',
+          'triagePerfusion',
+          'respiratoryRate',
+          'pulse',
+          'capillaryRefill',
+          'bpSystolic',
+          'bpDiastolic',
+          'gcsTotal',
+          'text',
+          'priority',
+          'location',
+          'lat',
+          'lng',
+          'geog',
+          'portraitFile',
+          'photoFile',
+          'audioFile',
+          'predictions',
+          'isTransported',
+          'isTransportedLeftIndependently',
+          'transportAgencyId',
+          'transportFacilityId',
+          'data',
+        ],
+        options
+      );
       await scene.updatePatientCounts(options);
-      return [patient, created];
+      return [record, created];
     }
 
     async toFullJSON(options) {
       const json = this.toJSON();
       json.transportAgency = (this.transportAgency || (await this.getTransportAgency(options)))?.toJSON();
       json.transportFacility = (this.transportFacility || (await this.getTransportFacility(options)))?.toJSON();
-      json.observations = (this.observations || (await this.getObservations(options))).map((o) => o.toJSON());
+      json.versions = (this.versions || (await this.getVersions(options))).map((o) => o.toJSON());
       return json;
     }
   }
+
   Patient.init(
     {
       pin: DataTypes.STRING,
@@ -170,19 +198,19 @@ module.exports = (sequelize, DataTypes) => {
       portraitUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patient-observations/portrait', this.portraitFile);
+          return Base.assetUrl('patients/portrait', this.portraitFile);
         },
       },
       photoUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patient-observations/photo', this.photoFile);
+          return Base.assetUrl('patients/photo', this.photoFile);
         },
       },
       audioUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patient-observations/audio', this.audioFile);
+          return Base.assetUrl('patients/audio', this.audioFile);
         },
       },
       portraitFile: {
@@ -224,6 +252,23 @@ module.exports = (sequelize, DataTypes) => {
       predictions: {
         type: DataTypes.JSONB,
       },
+      data: DataTypes.JSONB,
+      updatedAttributes: {
+        type: DataTypes.JSONB,
+        field: 'updated_attributes',
+      },
+      updatedDataAttributes: {
+        type: DataTypes.JSONB,
+        field: 'updated_data_attributes',
+      },
+      isValid: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_valid',
+      },
+      validationErrors: {
+        type: DataTypes.JSONB,
+        field: 'validation_errors',
+      },
     },
     {
       sequelize,
@@ -242,8 +287,35 @@ module.exports = (sequelize, DataTypes) => {
             throw new Error();
           }
         },
+        async schema() {
+          this.validationErrors = await nemsis.validateSchema('ePatient_v3.xsd', 'ePatient', null, this.data);
+          this.isValid = this.validationErrors === null;
+        },
       },
     }
   );
+
+  Patient.afterSave(async (patient, options) => {
+    if (!patient.canonicalId) {
+      return;
+    }
+    if (patient.changed('portraitFile')) {
+      await Base.handleAssetFile('patients/portrait', patient.previous('portraitFile'), patient.portraitFile, options);
+    }
+    if (patient.changed('photoFile')) {
+      await Base.handleAssetFile('patients/photo', patient.previous('photoFile'), patient.photoFile, options);
+    }
+    if (patient.changed('audioFile')) {
+      await Base.handleAssetFile('patients/audio', patient.previous('audioFile'), patient.audioFile, options);
+    }
+  });
+
+  Patient.addScope('canonical', {
+    where: {
+      canonicalId: null,
+      parentId: null,
+    },
+  });
+
   return Patient;
 };

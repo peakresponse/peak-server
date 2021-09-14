@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const AWS = require('aws-sdk');
 const fs = require('fs-extra');
+const jsonpatch = require('fast-json-patch');
 const path = require('path');
 const { Model } = require('sequelize');
 
@@ -17,6 +18,84 @@ if (process.env.AWS_S3_BUCKET_REGION) {
 const s3 = new AWS.S3(s3options);
 
 class Base extends Model {
+  // MARK: - record versioning helpers
+  static async createOrUpdate(model, user, agency, data, createAttrs, updateAttrs, options) {
+    if (!options?.transaction) {
+      return model.sequelize.transaction((transaction) =>
+        Base.createOrUpdate(model, user, agency, data, createAttrs, updateAttrs, { ...options, transaction })
+      );
+    }
+    // find or create the new historical record
+    if (!data.id || (!data.canonicalId && !data.parentId)) {
+      throw new Error();
+    }
+    let record = await model.findByPk(data.id, { transaction: options.transaction });
+    if (record) {
+      // assume this is a repeated request, handle as immutable and idempotent
+      return [record, false];
+    }
+    let filteredData;
+    let updatedAttributes;
+    let updatedDataAttributes;
+    let canonical;
+    let parent;
+    let created;
+    if (data.parentId) {
+      created = false;
+      // this is updating the parent to create a new version and update canonical record
+      parent = await model.findByPk(data.parentId, { transaction: options.transaction, rejectOnEmpty: true });
+      // sanitize the data by picking only the attributes allowed to be updated
+      filteredData = _.pick(data, ['id', 'parentId'].concat(updateAttrs));
+      // get a list of the updated attributes
+      updatedAttributes = _.keys(filteredData);
+      // check for data patch
+      if (data.data_patch && updateAttrs.includes('data')) {
+        updatedAttributes.push('data');
+        filteredData.data = jsonpatch.applyPatch(parent.data, data.data_patch).newDocument;
+      }
+      // merge the new attributes into the parent attributes
+      filteredData = _.assign({ ...parent.get() }, filteredData);
+      // update the canonical record
+      canonical = await model.findByPk(filteredData.canonicalId, { transaction: options.transaction, rejectOnEmpty: true });
+      // TODO - handle merging parallel and out-of-order updates
+      canonical.set(_.pick(filteredData, updateAttrs));
+    } else {
+      created = true;
+      // this is creating an entirely new record
+      filteredData = _.pick(data, ['id', 'canonicalId'].concat(createAttrs).concat(updateAttrs));
+      updatedAttributes = _.keys(filteredData);
+      // set createdBy with this user/agency
+      filteredData.createdById = user.id;
+      filteredData.createdByAgencyId = agency?.id;
+      // create the canonical record
+      canonical = model.build({ ...filteredData, id: data.canonicalId, canonicalId: null });
+    }
+    // create/update the canonical record
+    canonical.updatedById = user.id;
+    canonical.updatedByAgencyId = agency?.id;
+    await canonical.save({ transaction: options.transaction });
+    // create the historical record
+    record = model.build(filteredData);
+    record.updatedAttributes = updatedAttributes;
+    if (updatedAttributes.includes('data')) {
+      const diff = data.data_patch ? data.data_patch : jsonpatch.compare(parent?.data || {}, data.data);
+      updatedDataAttributes = diff
+        .map((d) => {
+          if (d.path.endsWith('/_text') || d.path.endsWith('/_attributes')) {
+            return d.path.substring(0, d.path.lastIndexOf('/'));
+          }
+          return d.path;
+        })
+        .filter((p, i, array) => array.indexOf(p) === i);
+    }
+    record.updatedDataAttributes = updatedDataAttributes;
+    record.updatedById = user.id;
+    record.updatedByAgencyId = agency?.id;
+    await record.save({ transaction: options.transaction });
+    await canonical.update({ currentId: record.id }, { transaction: options.transaction });
+    return [record, created];
+  }
+
   // MARK: - file attachment helpers
 
   static assetUrl(pathPrefix, file) {
@@ -58,7 +137,7 @@ class Base extends Model {
         if (prevFile) {
           fs.removeSync(path.resolve(__dirname, '../public/assets', pathPrefix, prevFile));
         }
-        if (newFile) {
+        if (newFile && fs.existsSync(path.resolve(__dirname, '../tmp/uploads', newFile))) {
           fs.moveSync(
             path.resolve(__dirname, '../tmp/uploads', newFile),
             path.resolve(__dirname, '../public/assets', pathPrefix, newFile),

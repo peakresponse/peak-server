@@ -34,8 +34,11 @@ sceneServer.on('connection', async (ws, req) => {
     include: [
       { model: models.Agency, as: 'transportAgency' },
       { model: models.Facility, as: 'transportFacility' },
-      { model: models.PatientObservation, as: 'observations' },
+      { model: models.Patient, as: 'versions' },
     ],
+    where: {
+      canonicalId: null,
+    },
   });
   const pins = await req.scene.getPins();
   const data = JSON.stringify({

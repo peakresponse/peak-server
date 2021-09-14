@@ -13,9 +13,9 @@
     "test": "mocha --unhandled-rejections=strict --recursive test/unit test/integration",
     "ci": "prettier --check . && npm run lint && npm run test",
     "lint": "eslint .",
-    "lint:changed": "eslint $(git diff --name-only | xargs)",
+    "lint:changed": "eslint $(git diff --name-only; git ls-files -o --exclude-standard)",
     "pp": "prettier --write .",
-    "pp:changed": "prettier --write $(git diff --name-only | xargs)"
+    "pp:changed": "prettier --write $(git diff --name-only; git ls-files -o --exclude-standard)"
   },
   "eslintConfig": {
     "parserOptions": {
@@ -143,6 +143,7 @@
     "express": "~4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-fileupload": "^1.1.4",
+    "fast-json-patch": "^3.0.0-1",
     "fs-extra": "^8.1.0",
     "http-errors": "~1.6.2",
     "http-status-codes": "^1.4.0",
@@ -151,7 +152,6 @@
     "inflection": "^1.12.0",
     "install": "^0.13.0",
     "jquery": "^3.4.1",
-    "json-diff": "^0.5.4",
     "jsondiffpatch": "^0.4.1",
     "line-by-line": "^0.1.6",
     "lodash": "^4.17.15",

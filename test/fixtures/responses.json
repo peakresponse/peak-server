@@ -1,0 +1,147 @@
+[
+  {
+    "model": "Response",
+    "data": {
+      "id": "7808a0c9-6c9f-444a-9dc4-640ce86939a0",
+      "canonicalId": null,
+      "data": {
+        "eResponse.AgencyGroup": {
+          "eResponse.01": {
+            "_text": "S07-50120"
+          }
+        },
+        "eResponse.03": {
+          "_text": "12345"
+        },
+        "eResponse.04": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eResponse.ServiceGroup": {
+          "eResponse.05": {
+            "_text": "2205001"
+          }
+        },
+        "eResponse.07": {
+          "_text": "2207015"
+        },
+        "eResponse.08": {
+          "_text": "2208013"
+        },
+        "eResponse.09": {
+          "_text": "2209011"
+        },
+        "eResponse.10": {
+          "_text": "2210017"
+        },
+        "eResponse.11": {
+          "_text": "2211011"
+        },
+        "eResponse.12": {
+          "_text": "2212015"
+        },
+        "eResponse.13": {
+          "_text": "88"
+        },
+        "eResponse.14": {
+          "_text": "88"
+        },
+        "eResponse.23": {
+          "_text": "2223001"
+        },
+        "eResponse.24": {
+          "_text": "2224019"
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Response",
+    "data": {
+      "id": "50c74d8a-60c3-42af-a2ed-1a12a42f2b69",
+      "canonicalId": "7808a0c9-6c9f-444a-9dc4-640ce86939a0",
+      "data": {
+        "eResponse.AgencyGroup": {
+          "eResponse.01": {
+            "_text": "S07-50120"
+          }
+        },
+        "eResponse.03": {
+          "_text": "12345"
+        },
+        "eResponse.04": {
+          "_attributes": {
+            "NV": "7701003",
+            "xsi:nil": "true"
+          }
+        },
+        "eResponse.ServiceGroup": {
+          "eResponse.05": {
+            "_text": "2205001"
+          }
+        },
+        "eResponse.07": {
+          "_text": "2207015"
+        },
+        "eResponse.08": {
+          "_text": "2208013"
+        },
+        "eResponse.09": {
+          "_text": "2209011"
+        },
+        "eResponse.10": {
+          "_text": "2210017"
+        },
+        "eResponse.11": {
+          "_text": "2211011"
+        },
+        "eResponse.12": {
+          "_text": "2212015"
+        },
+        "eResponse.13": {
+          "_text": "88"
+        },
+        "eResponse.14": {
+          "_text": "88"
+        },
+        "eResponse.23": {
+          "_text": "2223001"
+        },
+        "eResponse.24": {
+          "_text": "2224019"
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "data"],
+      "updatedDataAttributes": [
+        "/eResponse.AgencyGroup",
+        "/eResponse.03",
+        "/eResponse.04",
+        "/eResponse.ServiceGroup",
+        "/eResponse.07",
+        "/eResponse.08",
+        "/eResponse.09",
+        "/eResponse.10",
+        "/eResponse.11",
+        "/eResponse.12",
+        "/eResponse.13",
+        "/eResponse.14",
+        "/eResponse.23",
+        "/eResponse.24"
+      ],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

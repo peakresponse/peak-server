@@ -21,10 +21,8 @@ describe('/api/patients', () => {
       'contacts',
       'employments',
       'scenes',
-      'sceneObservations',
       'responders',
       'patients',
-      'patientObservations',
     ]);
     testSession = session(app);
     await testSession
@@ -114,7 +112,6 @@ describe('/api/patients', () => {
           id,
           sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
           pin: '123456',
-          version: 1,
           firstName: 'John',
           lastName: 'Doe',
           priority: 2,
@@ -128,16 +125,18 @@ describe('/api/patients', () => {
       assert.deepStrictEqual(patient.lastName, 'Doe');
       assert.deepStrictEqual(patient.priority, 2);
 
-      const observations = await patient.getObservations();
-      assert.deepStrictEqual(observations.length, 1);
-      assert.deepStrictEqual(observations[0].id, id);
+      const canonical = await patient.getCanonical();
+      assert(canonical);
+
+      const versions = await canonical.getVersions();
+      assert.deepStrictEqual(versions.length, 1);
+      assert.deepStrictEqual(versions[0].id, id);
     });
 
-    it('adds a new Observation to update a Patient', async () => {
+    it('updates a Patient', async () => {
       const patient = await models.Patient.findByPk('47449282-c48a-4ca1-a719-5117b790fc70');
-      assert.deepStrictEqual(patient.version, 2);
-      let observations = await patient.getObservations();
-      assert.deepStrictEqual(observations.length, 2);
+      let versions = await patient.getVersions();
+      assert.deepStrictEqual(versions.length, 2);
 
       const id = uuid();
       const response = await testSession
@@ -145,27 +144,23 @@ describe('/api/patients', () => {
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({
           id,
-          sceneId: patient.sceneId,
-          pin: patient.pin,
-          version: patient.version + 1,
+          parentId: 'cb94a8a4-bf8b-4316-8a3f-191aa2df4633',
           firstName: 'New',
           lastName: 'Name',
         })
         .expect(HttpStatus.OK);
-      assert.deepStrictEqual(response.body?.version, 3);
       assert.deepStrictEqual(response.body?.firstName, 'New');
       assert.deepStrictEqual(response.body?.lastName, 'Name');
 
       await patient.reload();
-      assert.deepStrictEqual(patient.version, 3);
       assert.deepStrictEqual(patient.firstName, 'New');
       assert.deepStrictEqual(patient.lastName, 'Name');
 
-      observations = await patient.getObservations();
-      assert.deepStrictEqual(observations.length, 3);
+      versions = await patient.getVersions();
+      assert.deepStrictEqual(versions.length, 3);
 
-      const observation = await models.PatientObservation.findByPk(id);
-      assert(observation);
+      const version = await models.Patient.findByPk(id);
+      assert(version);
     });
   });
 

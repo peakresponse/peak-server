@@ -175,12 +175,7 @@ describe('/api/agencies', () => {
       assert.deepStrictEqual(agency.canonicalAgencyId, 'e705f64b-1399-436e-a428-18c8378b3444');
       assert.deepStrictEqual(agency.data, {
         _attributes: {
-          'pr:isValid': false,
-          'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-          'xsi:schemaLocation':
-            'http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.191130CP1/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd',
           UUID: id,
-          xmlns: 'http://www.nemsis.org',
         },
         'dAgency.01': {
           _text: 'S01-50120',

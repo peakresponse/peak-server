@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         async schema() {
           this.validationError = await nemsis.validateSchema('dDevice_v3.xsd', 'dDevice', 'dDevice.DeviceGroup', this.data);
+          this.isValid = this.validationError === null;
           if (this.validationError) throw this.validationError;
         },
       },
@@ -49,7 +50,6 @@ module.exports = (sequelize, DataTypes) => {
     record.setDataValue('serialNumber', record.data?.['dDevice.01']?._text);
     record.setDataValue('name', record.data?.['dDevice.02']?._text);
     record.setDataValue('primaryType', Base.firstValueOf(record.data?.['dDevice.03']));
-    record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
   });
 
   sequelizePaginate.paginate(Device);
