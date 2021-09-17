@@ -1,11 +1,15 @@
 <div class="text-field"
-    [class.text-field--editing]="isEditing"
-    [class.text-field--focused]="isFocused"
-    [class.text-field--unconfirmed]="isUnconfirmed"
-    (click)="onClick($event)">
+  [class.text-field--disabled]="isDisabled"
+  [class.text-field--editing]="isEditing"
+  [class.text-field--focused]="isFocused"
+  [class.text-field--invalid]="isInvalid"
+  [class.text-field--unconfirmed]="isUnconfirmed"
+  (click)="onClick($event)">
   <label [for]="derivedId">{{label}}</label>
   <div class="d-flex">
     <input [type]="type" [id]="derivedId" [name]="derivedName"
+      [placeholder]="placeholder"
+      [disabled]="isDisabled"
       [readonly]="!isFocusable || !isEditing"
       [tabindex]="isFocusable && isEditing ? 0 : -1"
       (focus)="onFocus($event)" (blur)="onBlur($event)"
@@ -13,3 +17,4 @@
     <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{isEditing: isEditing, isFocusable: isFocusable, isFocused: isFocused, source: source, target: target}"></ng-template>
   </div>
 </div>
+<div class="invalid-feedback" *ngIf="errorMessage as msg">{{msg}}</div>

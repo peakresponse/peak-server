@@ -1,4 +1,4 @@
-client/webpack-stats.json
+webpack-stats.json
 dist
 /nemsis
 /nginx/letsencrypt

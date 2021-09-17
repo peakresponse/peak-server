@@ -5,5 +5,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./inputs.component.scss'],
 })
 export class InputsComponent {
-  source: any = { field: 'Input' };
+  source: any = {
+    empty: '',
+    field: 'Input',
+  };
+  error: any = {
+    messages: [
+      {
+        path: 'field',
+        message: 'Error note',
+      },
+    ],
+  };
 }

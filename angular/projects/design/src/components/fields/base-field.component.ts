@@ -12,12 +12,23 @@ export class BaseFieldComponent {
   @Input() target?: any;
   @Input() source?: any;
   @Input() propertyName?: string;
+  @Input() error: any;
+  @Input() hasError: boolean = false;
+  @Input() isDisabled: boolean = false;
   @Input() isFocusable: boolean = true;
 
   isFocused = false;
 
   get isEditing(): boolean {
     return this.target != null;
+  }
+
+  get isInvalid(): boolean {
+    return this.hasError || this.error?.messages?.find((error: any) => error.path === this.derivedPropertyName) !== undefined;
+  }
+
+  get errorMessage(): string | undefined {
+    return this.error?.messages?.find((error: any) => error.path === this.derivedPropertyName).message;
   }
 
   get isUnconfirmed(): boolean {
