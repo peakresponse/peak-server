@@ -1,7 +1,9 @@
 const express = require('express');
 const fetch = require('node-fetch');
+const fs = require('fs');
 const HttpStatus = require('http-status-codes');
 const moment = require('moment');
+const path = require('path');
 const querystring = require('querystring');
 const xmljs = require('xml-js');
 
@@ -25,6 +27,15 @@ router.get('/logout', (req, res) => {
   req.flash('info', 'You have been logged out.');
   res.redirect('/');
 });
+
+if (process.env.NODE_ENV !== 'production') {
+  router.get('/design/*', (req, res) => {
+    res.locals.webpackStats = JSON.parse(fs.readFileSync(path.join(__dirname, '../angular/projects/design/webpack-stats.json')));
+    res.render('design/index', {
+      layout: 'design/layout',
+    });
+  });
+}
 
 if (process.env.MARKETING_ENABLED === 'true') {
   router.post(

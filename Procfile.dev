@@ -1,2 +1,3 @@
 web: npm start
 webpack: npm run build:dev
+design: cd angular && npm start -- --port 4200 --serve-path /angular/design design

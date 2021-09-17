@@ -17,8 +17,12 @@ RUN mkdir -p $APP_HOME
 
 # Add the project files into the app directory and set as working directory
 ADD . $APP_HOME
-WORKDIR $APP_HOME
 
+WORKDIR $APP_HOME/angular
+RUN npm install && \
+    npm run build design
+
+WORKDIR $APP_HOME
 RUN mvn install && \
     npm install && \
     npm run build

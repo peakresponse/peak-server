@@ -9,7 +9,7 @@
     "build:dev": "webpack-dev-server",
     "build:prod": "npm run build:clean && npm run webpack-prod && npm run build:clean",
     "build:clean": "del-cli 'client/**/*.js' '!client/**/*.font.js' 'client/**/*.js.map' 'client/**/*.ngsummary.json' 'client/**/*.metadata.json' 'client/**/**/*.ngfactory.ts' 'client/**/*.ngstyle.ts' 'client/**/*.shim.ts'",
-    "start": "nodemon -V --ignore ./client --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
+    "start": "nodemon -V --ignore ./angular --ignore ./client --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
     "test": "mocha --unhandled-rejections=strict --recursive test/unit test/integration",
     "ci": "prettier --check . && npm run lint && npm run test",
     "lint": "eslint .",

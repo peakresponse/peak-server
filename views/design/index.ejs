@@ -1,0 +1,13 @@
+<%- contentFor('title') %>Design
+<%- contentFor('head') %>
+<base href="/design">
+<script type="text/javascript">
+  window.env = {};
+</script>
+<%- contentFor('body') %>
+<app-root><%= __('common.pleaseWait') %></app-root>
+<% for (let asset of Object.keys(webpackStats.assets)) { %>
+  <% if (asset.endsWith('.js')) { %>
+    <script type="application/javascript" src="<%= webpackStats.assets[asset].publicPath %>" defer></script>
+  <% } %>
+<% } %>
