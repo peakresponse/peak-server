@@ -65,7 +65,8 @@
     },
     "ignorePatterns": [
       "dist",
-      "node_modules"
+      "node_modules",
+      "*.conf.js"
     ],
     "overrides": [
       {
