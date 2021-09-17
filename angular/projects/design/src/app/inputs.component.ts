@@ -7,12 +7,14 @@ import { Component } from '@angular/core';
 export class InputsComponent {
   source: any = {
     empty: '',
-    field: 'Input',
+    disabled: 'Input',
+    readonly: 'Input',
+    invalid: 'Input',
   };
   error: any = {
     messages: [
       {
-        path: 'field',
+        path: 'invalid',
         message: 'Error note',
       },
     ],

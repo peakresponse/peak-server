@@ -1,9 +1,10 @@
-<div class="text-field"
-  [class.text-field--disabled]="isDisabled"
-  [class.text-field--editing]="isEditing"
-  [class.text-field--focused]="isFocused"
-  [class.text-field--invalid]="isInvalid"
-  [class.text-field--unconfirmed]="isUnconfirmed"
+<div class="form-field"
+  [class.form-field--disabled]="isDisabled"
+  [class.form-field--editing]="isEditing"
+  [class.form-field--focused]="isFocused"
+  [class.form-field--invalid]="isInvalid"
+  [class.form-field--nonempty]="isNonEmpty"
+  [class.form-field--unconfirmed]="isUnconfirmed"
   (click)="onClick($event)">
   <label [for]="derivedId">{{label}}</label>
   <div class="d-flex">

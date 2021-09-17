@@ -31,6 +31,11 @@ export class BaseFieldComponent {
     return this.error?.messages?.find((error: any) => error.path === this.derivedPropertyName).message;
   }
 
+  get isNonEmpty(): boolean {
+    const value = this.value;
+    return value && value !== '' ? true : false;
+  }
+
   get isUnconfirmed(): boolean {
     const predictions = this.isEditing ? this.target?.predictions : this.source?.predictions;
     if (predictions && predictions[this.derivedPropertyName]) {

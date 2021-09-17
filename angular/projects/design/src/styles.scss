@@ -40,7 +40,7 @@ $h6-font-size: 0.675rem;
   font-weight: $font-weight-semibold;
 }
 
-$headings-font-weight: normal;
+$headings-font-weight: bold;
 
 $base-000: white;
 $base-100: #f1f5f8;
@@ -128,9 +128,10 @@ $brand-secondaries: (
 // Utilities
 @import '~bootstrap/scss/utilities/api';
 
-.text-field {
+.form-field {
   border: 2px solid $brand-primary-300;
   border-radius: 0.5rem;
+  position: relative;
 
   label {
     @include h4-semibold;
@@ -155,11 +156,27 @@ $brand-secondaries: (
   }
 }
 
-.text-field--disabled {
+.form-field--disabled {
   border-color: $base-500;
 }
 
-.text-field--focused {
+.form-field--editing {
+  &.form-field--nonempty {
+    &::after {
+      display: block;
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.875rem;
+      background-color: gray;
+      content: '';
+      cursor: pointer;
+      height: 2.25rem;
+      width: 2.25rem;
+    }
+  }
+}
+
+.form-field--focused {
   border-color: $brand-primary-500;
   box-shadow: 0 0 0 4px $brand-primary-200;
 
@@ -168,9 +185,9 @@ $brand-secondaries: (
   }
 }
 
-.text-field--invalid {
+.form-field--invalid {
   border-color: $brand-secondary-500;
-  &.text-field--focused {
+  &.form-field--focused {
     box-shadow: 0 0 0 4px $brand-secondary-400;
   }
 
@@ -184,6 +201,6 @@ $brand-secondaries: (
   color: $brand-secondary-500;
 }
 
-.text-field + .invalid-feedback {
+.form-field + .invalid-feedback {
   margin: 0.25rem 1rem 0;
 }
