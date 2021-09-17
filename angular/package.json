@@ -37,6 +37,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "~4.3.5",
+    "webfonts-loader": "^7.3.0",
     "webpack-bundle-tracker": "^1.3.0"
   }
 }

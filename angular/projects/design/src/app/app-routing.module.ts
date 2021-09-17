@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { IconsComponent } from './icons.component';
 import { InputsComponent } from './inputs.component';
 
 const routes: Routes = [
+  {
+    path: 'icons',
+    component: IconsComponent,
+  },
   {
     path: 'inputs',
     component: InputsComponent,
