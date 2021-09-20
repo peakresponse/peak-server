@@ -102,6 +102,9 @@ export class ApiService {
     forgot: (data: any): Observable<any> => {
       return this.post('/passwords/forgot', data);
     },
+    reset: (token: string, data: any): Observable<any> => {
+      return this.post(`/passwords/reset/${token}`, data);
+    },
   };
 
   demographics = {

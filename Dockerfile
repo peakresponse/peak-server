@@ -21,7 +21,8 @@ ADD . $APP_HOME
 WORKDIR $APP_HOME/angular
 RUN npm install && \
     npm run build shared && \
-    npm run build design
+    npm run build design && \
+    npm run build auth
 
 WORKDIR $APP_HOME
 RUN mvn install && \
