@@ -14,6 +14,7 @@ export class LoginComponent {
     email: '',
     password: '',
   };
+  error: any = null;
   isLoading = false;
 
   constructor(private api: ApiService, private route: ActivatedRoute) {}
@@ -25,16 +26,27 @@ export class LoginComponent {
   onSubmit($event: Event) {
     $event.preventDefault();
     this.isLoading = true;
+    this.error = null;
     this.api.auth
       .login(this.data)
       .pipe(
         catchError((error: any, caught: Observable<any>) => {
           this.isLoading = false;
+          this.error = {
+            messages: [
+              {
+                path: 'email',
+              },
+              {
+                path: 'password',
+                message: 'Invalid email and/or password.',
+              },
+            ],
+          };
           return EMPTY;
         })
       )
       .subscribe((response: any) => {
-        this.isLoading = false;
         const redirectURI = this.route.snapshot.queryParamMap.get('redirectURI') || '/';
         window.location.href = redirectURI;
       });
