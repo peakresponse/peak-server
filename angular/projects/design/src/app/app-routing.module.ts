@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { BrandingComponent } from './branding.component';
 import { ButtonsComponent } from './buttons.component';
 import { IconsComponent } from './icons.component';
 import { InputsComponent } from './inputs.component';
 
 const routes: Routes = [
+  {
+    path: 'branding',
+    component: BrandingComponent,
+  },
   {
     path: 'buttons',
     component: ButtonsComponent,

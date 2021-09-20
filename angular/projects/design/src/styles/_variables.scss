@@ -1,0 +1,70 @@
+$font-family-sans-serif: 'Barlow', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans',
+  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+$font-weight-semibold: 600;
+
+$h1-font-size: 3rem;
+$h2-font-size: 2.25rem;
+$h3-font-size: 1.5rem;
+$h4-font-size: 1.25rem;
+$h5-font-size: 0.875rem;
+$h6-font-size: 0.675rem;
+
+$headings-font-weight: bold;
+
+$base-000: white;
+$base-100: #f1f5f8;
+$base-300: #cfdde3;
+$base-500: #7e9ca9;
+$base-800: #2f4a56;
+$bases: (
+  '000': $base-000,
+  '100': $base-100,
+  '300': $base-300,
+  '500': $base-500,
+  '800': $base-800,
+);
+
+$brand-primary-100: #e9f6fe;
+$brand-primary-200: #d0e9f6;
+$brand-primary-300: #add7ef;
+$brand-primary-500: #46a5db;
+$brand-primary-600: #2381b6;
+$brand-primary-700: #0d5a86;
+$brand-primary-900: #013d5e;
+$brand-primaries: (
+  '100': $brand-primary-100,
+  '200': $brand-primary-200,
+  '300': $brand-primary-300,
+  '500': $brand-primary-500,
+  '600': $brand-primary-600,
+  '700': $brand-primary-700,
+  '900': $brand-primary-900,
+);
+
+$brand-secondary-300: #ffeddf;
+$brand-secondary-400: #fed2b1;
+$brand-secondary-500: #ee924f;
+$brand-secondary-800: #d7600a;
+$brand-secondaries: (
+  '300': $brand-secondary-300,
+  '400': $brand-secondary-400,
+  '500': $brand-secondary-500,
+  '800': $brand-secondary-800,
+);
+
+$btn-border-radius: 0.5rem;
+$btn-border-radius-lg: $btn-border-radius;
+$btn-border-radius-sm: $btn-border-radius;
+$btn-border-width: 0.1875rem;
+$btn-font-size: 1.5rem;
+$btn-font-size-lg: 2.25rem;
+$btn-font-size-sm: 0.875rem;
+$btn-font-weight: $font-weight-semibold;
+$btn-padding-y: 1rem;
+$btn-padding-x: 1.75rem;
+$btn-padding-y-lg: 1.0625rem;
+$btn-padding-x-lg: 1.9375rem;
+$btn-padding-y-sm: 0.5rem;
+$btn-padding-x-sm: 1.125rem;
+
+$link-color: $brand-primary-500;
