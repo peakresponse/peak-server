@@ -1,5 +1,5 @@
 module.exports = {
-  files: ['./svg/*.svg'],
+  files: ['./icons/*.svg'],
   fontName: 'pr-icons',
   classPrefix: 'pr-icon-',
   baseSelector: '.pr-icon',

@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { BaseFieldComponent } from './base-field.component';
 
 @Component({
-  selector: 'text-field',
+  selector: 'shared-text-field',
   templateUrl: './text-field.component.html',
   styles: [':host{display:block;}'],
 })

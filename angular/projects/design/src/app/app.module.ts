@@ -7,11 +7,11 @@ import { ButtonsComponent } from './buttons.component';
 import { IconsComponent } from './icons.component';
 import { InputsComponent } from './inputs.component';
 
-import { ComponentsModule } from '../components/components.module';
+import { SharedModule } from 'shared';
 
 @NgModule({
   declarations: [AppComponent, ButtonsComponent, IconsComponent, InputsComponent],
-  imports: [BrowserModule, AppRoutingModule, ComponentsModule],
+  imports: [BrowserModule, AppRoutingModule, SharedModule],
   providers: [],
   bootstrap: [AppComponent],
 })
