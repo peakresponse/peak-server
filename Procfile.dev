@@ -2,3 +2,4 @@ web: npm start
 webpack: npm run build:dev
 shared: cd angular && npm run build -- shared --watch --configuration=development
 design: cd angular && npm start -- --port 4200 --serve-path /angular/design design
+auth: cd angular && npm start -- --port 4300 --serve-path /angular/auth auth

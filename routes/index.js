@@ -4,6 +4,7 @@ const interceptors = require('./interceptors');
 
 const adminRouter = require('./admin');
 const apiRouter = require('./api');
+const authRouter = require('./auth');
 const loginRouter = require('./login');
 const nemsisRouter = require('./nemsis');
 const onboardingRouter = require('./onboarding');
@@ -16,6 +17,7 @@ const router = express.Router();
 router.use(interceptors.loadAgency);
 
 router.use('/api', apiRouter);
+router.use('/auth', authRouter);
 router.use('/webhooks', webhooksRouter);
 router.use('/admin', adminRouter);
 router.use('/login', loginRouter);
