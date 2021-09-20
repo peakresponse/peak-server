@@ -2,7 +2,7 @@
  * Public API Surface of shared
  */
 
-export * from './lib/shared.service';
+export * from './lib/services/api.service';
 
 export * from './lib/components/branding/logo.component';
 export * from './lib/components/branding/logo.full.dark.component';

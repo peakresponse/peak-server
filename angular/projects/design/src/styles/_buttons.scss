@@ -57,6 +57,9 @@
     white,
     $brand-primary-700,
     $brand-primary-700,
+    white,
+    $base-300,
+    $base-300,
     white
   );
 }
@@ -69,6 +72,13 @@
     $brand-primary-600,
     $active-color: $brand-primary-900
   );
+
+  &:disabled,
+  &.disabled {
+    background-color: white;
+    border-color: $base-300;
+    color: $base-300;
+  }
 }
 
 .btn--tertiary {
@@ -77,7 +87,8 @@
     transparent,
     $brand-primary-500,
     $hover-color: $brand-primary-600,
-    $active-color: $brand-primary-900
+    $active-color: $brand-primary-900,
+    $disabled-color: $base-300
   );
 }
 
