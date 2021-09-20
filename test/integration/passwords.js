@@ -40,7 +40,7 @@ describe('/passwords', () => {
       assert.strictEqual(emails[0].subject, 'Reset your Password');
       assert.strictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
       /// the reset link url should be on the agency subdomain
-      const resetUrl = `${agency.baseUrl}/passwords/reset/${user.passwordResetToken}`;
+      const resetUrl = `${agency.baseUrl}/auth/reset-password/${user.passwordResetToken}`;
       assert(emails[0].html.includes(resetUrl));
       assert(emails[0].text.includes(resetUrl));
     });
@@ -66,7 +66,7 @@ describe('/passwords', () => {
 
     it('should update the password', async () => {
       await testSession
-        .post(`/passwords/reset/${user.passwordResetToken}`)
+        .post(`/auth/reset-password/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'Abcd1234!' })
         .expect(HttpStatus.OK);
@@ -80,7 +80,7 @@ describe('/passwords', () => {
 
     it('returns unprocessable entity for a weak password', async () => {
       const response = await testSession
-        .post(`/passwords/reset/${user.passwordResetToken}`)
+        .post(`/auth/reset-password/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
         .expect(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -89,14 +89,14 @@ describe('/passwords', () => {
 
     it('returns not found for an invalid code', async () => {
       let response = await testSession
-        .post(`/passwords/reset/00000000-0000-0000-0000-000000000000`)
+        .post(`/auth/reset-password/00000000-0000-0000-0000-000000000000`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
         .expect(HttpStatus.NOT_FOUND);
       assert(response.text.includes('The password reset link you used is invalid.'));
 
       response = await testSession
-        .post(`/passwords/reset/asdfasdfasdf`)
+        .post(`/auth/reset-password/asdfasdfasdf`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
         .expect(HttpStatus.NOT_FOUND);
@@ -108,7 +108,7 @@ describe('/passwords', () => {
         passwordResetTokenExpiresAt: new Date(Date.now() - 60000),
       });
       await testSession
-        .post(`/passwords/reset/${user.passwordResetToken}`)
+        .post(`/auth/reset-password/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'Strong1!' })
         .expect(HttpStatus.GONE);

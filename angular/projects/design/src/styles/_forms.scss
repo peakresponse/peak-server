@@ -50,6 +50,14 @@
   }
 }
 
+.form-field--disabled,
+fieldset:disabled .form-field {
+  border-color: $base-500;
+  &::after {
+    display: none;
+  }
+}
+
 .form-field--focused {
   border-color: $brand-primary-500;
   box-shadow: 0 0 0 4px $brand-primary-200;
@@ -70,11 +78,17 @@
   }
 }
 
+.valid-feedback {
+  @include h5-bold;
+  color: $brand-primary-500;
+}
+
 .invalid-feedback {
   @include h5-bold;
   color: $brand-secondary-500;
 }
 
-.form-field + .invalid-feedback {
+.form-field + .invalid-feedback,
+.form-field + .valid-feedback {
   margin: 0.25rem 1rem 0;
 }

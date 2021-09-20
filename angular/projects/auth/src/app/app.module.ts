@@ -7,10 +7,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { ApiService, SharedModule } from 'shared';
 
 import { AppComponent } from './app.component';
+import { ForgotComponent } from './forgot.component';
 import { LoginComponent } from './login.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, ForgotComponent, LoginComponent],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, SharedModule],
   providers: [ApiService],
   bootstrap: [AppComponent],

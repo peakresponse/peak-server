@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
           to: `${this.fullNameAndEmail}`,
         },
         locals: {
-          url: `${baseUrl}/passwords/reset/${this.passwordResetToken}`,
+          url: `${baseUrl}/auth/reset-password/${this.passwordResetToken}`,
         },
       });
     }

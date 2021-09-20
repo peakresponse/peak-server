@@ -230,7 +230,7 @@ describe('models', () => {
         assert.deepStrictEqual(emails[0].subject, 'Reset your Password');
         assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
         /// if no agency specified, url is on the base
-        const resetUrl = `${process.env.BASE_URL}/passwords/reset/${user.passwordResetToken}`;
+        const resetUrl = `${process.env.BASE_URL}/auth/reset-password/${user.passwordResetToken}`;
         assert(emails[0].text.includes(resetUrl));
         assert(emails[0].html.includes(resetUrl));
       });
@@ -252,7 +252,7 @@ describe('models', () => {
         assert.deepStrictEqual(emails[0].subject, 'Reset your Password');
         assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
         /// the reset link url should be on the agency subdomain
-        const resetUrl = `${agency.baseUrl}/passwords/reset/${user.passwordResetToken}`;
+        const resetUrl = `${agency.baseUrl}/auth/reset-password/${user.passwordResetToken}`;
         assert(emails[0].text.includes(resetUrl));
         assert(emails[0].html.includes(resetUrl));
       });

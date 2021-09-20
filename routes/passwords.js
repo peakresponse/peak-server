@@ -19,10 +19,18 @@ router.post(
     });
     if (user) {
       await user.sendPasswordResetEmail(req.agency);
-      res.render('passwords/forgot', { isSent: true });
+      if (req.header('Content-Type') === 'application/json') {
+        res.status(HttpStatus.OK).json({ message: res.__('passwords.forgot.success') });
+      } else {
+        res.render('passwords/forgot', { isSent: true });
+      }
     } else {
       res.locals.errors = [{ path: 'email', message: res.__('passwords.forgot.notFound') }];
-      res.status(HttpStatus.NOT_FOUND).render('passwords/forgot');
+      if (req.header('Content-Type') === 'application/json') {
+        res.status(HttpStatus.NOT_FOUND).json({ messages: res.locals.errors });
+      } else {
+        res.status(HttpStatus.NOT_FOUND).render('passwords/forgot');
+      }
     }
   })
 );

@@ -99,6 +99,9 @@ export class ApiService {
     login: (data: any): Observable<any> => {
       return this.post('/login', data);
     },
+    forgot: (data: any): Observable<any> => {
+      return this.post('/passwords/forgot', data);
+    },
   };
 
   demographics = {

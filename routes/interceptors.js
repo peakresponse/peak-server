@@ -72,7 +72,7 @@ module.exports.loadAgency = async (req, res, next) => {
 function sendErrorUnauthorized(req, res) {
   if (req.accepts('html')) {
     req.flash('error', 'You must log in to view the page you visited.');
-    res.redirect(`/login?redirectURI=${encodeURIComponent(req.originalUrl)}`);
+    res.redirect(`/auth/login?redirectURI=${encodeURIComponent(req.originalUrl)}`);
   } else {
     res.status(HttpStatus.UNAUTHORIZED).end();
   }

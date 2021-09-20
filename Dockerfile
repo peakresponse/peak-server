@@ -20,6 +20,7 @@ ADD . $APP_HOME
 
 WORKDIR $APP_HOME/angular
 RUN npm install && \
+    npm run build shared && \
     npm run build design
 
 WORKDIR $APP_HOME
