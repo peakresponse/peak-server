@@ -1,5 +1,5 @@
 const BundleTracker = require('webpack-bundle-tracker');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('@angular-devkit/build-angular/node_modules/mini-css-extract-plugin');
 
 module.exports = {
   module: {
@@ -7,8 +7,7 @@ module.exports = {
       {
         test: /\.font\.js/,
         use: [
-          // MiniCssExtractPlugin.loader,
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
