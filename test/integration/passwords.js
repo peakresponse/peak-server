@@ -66,7 +66,7 @@ describe('/passwords', () => {
 
     it('should update the password', async () => {
       await testSession
-        .post(`/auth/reset-password/${user.passwordResetToken}`)
+        .post(`/passwords/reset/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'Abcd1234!' })
         .expect(HttpStatus.OK);
@@ -80,7 +80,7 @@ describe('/passwords', () => {
 
     it('returns unprocessable entity for a weak password', async () => {
       const response = await testSession
-        .post(`/auth/reset-password/${user.passwordResetToken}`)
+        .post(`/passwords/reset/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
         .expect(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -89,14 +89,14 @@ describe('/passwords', () => {
 
     it('returns not found for an invalid code', async () => {
       let response = await testSession
-        .post(`/auth/reset-password/00000000-0000-0000-0000-000000000000`)
+        .post(`/passwords/reset/00000000-0000-0000-0000-000000000000`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
         .expect(HttpStatus.NOT_FOUND);
       assert(response.text.includes('The password reset link you used is invalid.'));
 
       response = await testSession
-        .post(`/auth/reset-password/asdfasdfasdf`)
+        .post(`/passwords/reset/asdfasdfasdf`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
         .expect(HttpStatus.NOT_FOUND);
@@ -108,7 +108,7 @@ describe('/passwords', () => {
         passwordResetTokenExpiresAt: new Date(Date.now() - 60000),
       });
       await testSession
-        .post(`/auth/reset-password/${user.passwordResetToken}`)
+        .post(`/passwords/reset/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'Strong1!' })
         .expect(HttpStatus.GONE);
