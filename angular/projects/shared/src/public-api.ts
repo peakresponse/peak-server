@@ -11,6 +11,7 @@ export * from './lib/components/branding/logo.full.light.component';
 export * from './lib/components/branding/logo.full.white.component';
 export * from './lib/components/branding/logo.square.dark.component';
 export * from './lib/components/branding/logo.square.light.component';
+export * from './lib/components/fields/select-field.component';
 export * from './lib/components/fields/text-field.component';
 export * from './lib/components/loader.component';
 export * from './lib/components/wizard.component';

@@ -1,0 +1,16 @@
+<shared-wizard [isNextEnabled]="data.state != null" (back)="onBack()" (cancel)="onCancel()" (next)="onNext()">
+  <ng-container class="wizard__header">
+    <h1 i18n>What state are you primarily operating&nbsp;in?</h1>
+  </ng-container>
+  <form class="wizard__body">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+        <div class="form-group">
+          <shared-select-field #stateEl (keyup.enter)="onNext()" id="state" name="state" label="Choose State" [source]="data" [target]="data">
+            <option *ngFor="let state of states" [ngValue]="state">{{state.name}}</option>
+          </shared-select-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</shared-wizard>

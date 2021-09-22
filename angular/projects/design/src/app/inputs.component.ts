@@ -9,6 +9,8 @@ export class InputsComponent {
     disabled: 'Input',
     readonly: 'Input',
     invalid: 'Input',
+    dropdown: '',
+    disabledDropdown: 'entry-2',
   };
   error: any = {
     messages: [

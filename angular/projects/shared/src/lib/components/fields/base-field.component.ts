@@ -1,9 +1,10 @@
-import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
+import { Component, ContentChild, ElementRef, Input, TemplateRef, ViewChild } from '@angular/core';
 
 @Component({
   template: '',
 })
 export class BaseFieldComponent {
+  @ViewChild('inputEl') inputEl?: ElementRef;
   @ContentChild(TemplateRef) template: TemplateRef<any> | null = null;
   @Input() id?: string;
   @Input() name?: string;
@@ -65,6 +66,10 @@ export class BaseFieldComponent {
   set value(value: string | null) {
     this.target[this.derivedPropertyName] = value;
     this.setPredictionStatus('CORRECTED');
+  }
+
+  focus() {
+    this.inputEl?.nativeElement.focus();
   }
 
   onClear() {

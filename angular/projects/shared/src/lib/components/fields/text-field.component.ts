@@ -7,6 +7,6 @@ import { BaseFieldComponent } from './base-field.component';
   templateUrl: './text-field.component.html',
   styles: [':host{display:block;}'],
 })
-export class TextField extends BaseFieldComponent {
+export class TextFieldComponent extends BaseFieldComponent {
   @Input() type = 'text';
 }

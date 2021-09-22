@@ -9,7 +9,8 @@ import { LogoFullLight } from './components/branding/logo.full.light.component';
 import { LogoFullWhite } from './components/branding/logo.full.white.component';
 import { LogoSquareDark } from './components/branding/logo.square.dark.component';
 import { LogoSquareLight } from './components/branding/logo.square.light.component';
-import { TextField } from './components/fields/text-field.component';
+import { SelectFieldComponent } from './components/fields/select-field.component';
+import { TextFieldComponent } from './components/fields/text-field.component';
 import { WizardComponent } from './components/wizard.component';
 
 @NgModule({
@@ -21,10 +22,22 @@ import { WizardComponent } from './components/wizard.component';
     LogoFullWhite,
     LogoSquareDark,
     LogoSquareLight,
-    TextField,
+    SelectFieldComponent,
+    TextFieldComponent,
     WizardComponent,
   ],
   imports: [CommonModule, FormsModule],
-  exports: [LoaderComponent, Logo, LogoFullDark, LogoFullLight, LogoFullWhite, LogoSquareDark, LogoSquareLight, TextField, WizardComponent],
+  exports: [
+    LoaderComponent,
+    Logo,
+    LogoFullDark,
+    LogoFullLight,
+    LogoFullWhite,
+    LogoSquareDark,
+    LogoSquareLight,
+    SelectFieldComponent,
+    TextFieldComponent,
+    WizardComponent,
+  ],
 })
 export class SharedModule {}
