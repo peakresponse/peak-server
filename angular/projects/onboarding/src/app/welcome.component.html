@@ -1,0 +1,13 @@
+<shared-wizard [isBackVisible]="isMarketingEnabled" [isCancelVisible]="false" (back)="onBack()" (cancel)="onBack()" (next)="onNext()">
+  <ng-container class="wizard__header">
+    <h1 i18n>Welcome to Peak Response</h1>
+  </ng-container>
+  <form class="wizard__body">
+    <div class="row narrow">
+      <div class="col">
+        <p i18n>We just need some information to get you set up, this should take about 5 minutes.</p>
+        <p i18n>If you received a Peak Response email invitation from someone at your agency already, please follow the link in the email to make the sign-up process easier.</p>
+      </div>
+    </div>
+  </form>
+</shared-wizard>

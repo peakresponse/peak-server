@@ -1,0 +1,27 @@
+<header class="wizard__header">
+  <div class="container-fluid">
+    <shared-logo class="d-md-none" type="square"></shared-logo>
+    <shared-logo class="d-none d-md-block" type="full"></shared-logo>
+    <ng-content select=".wizard__header"></ng-content>
+  </div>
+</header>
+<main class="container-fluid wizard__body-wrapper">
+  <ng-content select=".wizard__body"></ng-content>
+</main>
+<footer class="container-fluid wizard__footer">
+  <span>
+    <button *ngIf="isBackVisible" [disabled]="!isBackEnabled" (click)="onBack()" class="btn btn--secondary btn--lg d-none d-md-inline" i18n>Back</button>
+    <button *ngIf="isCancelVisible" [disabled]="!isCancelEnabled" (click)="onCancel()" class="d-none d-md-inline btn btn--secondary btn--lg" i18n>Cancel</button>
+    <a *ngIf="isBackVisible || isCancelVisible" [class.pe-none]="!isCancelEnabled" (click)="onCancel()" class="d-md-none" i18n>Cancel</a>
+  </span>
+  <span>
+    <a *ngIf="isSkipVisible" (click)="onSkip()" class="d-none d-md-inline" i18n>Skip</a>
+    <button *ngIf="isNextVisible" [disabled]="!isNextEnabled" (click)="onNext()" class="btn btn--primary btn--lg">
+      <span *ngIf="isLoading"><shared-loader></shared-loader> </span><span i18n>Next</span>
+    </button>
+    <button *ngIf="isSubmitVisible" [disabled]="!isSubmitEnabled" (click)="onSubmit()" class="btn btn--primary btn--lg">
+      <span *ngIf="isLoading"><shared-loader></shared-loader> </span><span i18n>Submit</span>
+    </button>
+    <button *ngIf="isDoneVisible" [disabled]="!isDoneEnabled" (click)="onDone()" class="btn btn--primary btn--lg" i18n>Done</button>
+  </span>
+</footer>

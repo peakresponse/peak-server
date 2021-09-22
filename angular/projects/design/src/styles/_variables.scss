@@ -68,3 +68,27 @@ $btn-padding-y-sm: 0.5rem;
 $btn-padding-x-sm: 1.125rem;
 
 $link-color: $brand-primary-500;
+
+$gradient-brand-light: linear-gradient(101.47deg, #40a2d9 5.1%, #a1cee7 49.87%, #a4ddef 81.54%, #b7e5ee 109.93%);
+$gradient-brand-medium: linear-gradient(101.47deg, #155184 5.1%, #3194c6 33.49%, #7fc4d2 81.54%, #a5deea 109.93%);
+$gradient-brand-dark: linear-gradient(
+  101.47deg,
+  #155184 5.1%,
+  rgba(49, 148, 198, 0.5) 34.58%,
+  rgba(127, 196, 210, 0.25) 61.88%,
+  rgba(127, 196, 210, 0) 109.93%
+);
+$gradient-brand-inverse: linear-gradient(101.47deg, #e6f0f5 17.11%, #65b3da 88.09%, #46a5db 109.92%);
+$gradient-overlay: linear-gradient(180deg, #f1f5f8 -42.11%, rgba(246, 249, 251, 0.9) 42.52%, rgba(255, 255, 255, 0) 86.84%);
+
+$shadow-10-15: 0px 6px 10px rgba(118, 140, 151, 0.15);
+$shadow-40-40: 0px 10px 40px rgba(118, 140, 151, 0.4);
+$shadow-tab: 0px -4px 10px rgba(118, 140, 151, 0.15);
+$shadow-tab-selected: 0px -6px 15px rgba(118, 140, 151, 0.2);
+$shadow-button: 0px 4px 5px rgba(0, 0, 0, 0.06), 0px 1px 10px rgba(0, 0, 0, 0.05), 0px 2px 4px rgba(84, 133, 156, 0.04);
+$shadow-search: 0px 1px 2.96197px rgba(104, 148, 181, 0.1), 0px -2px 3.70246px rgba(104, 148, 181, 0.05),
+  0px 1px 1.48098px rgba(84, 133, 156, 0.1);
+$shadow-under: 0px 3px 6px rgba(98, 99, 99, 0.1);
+$shadow-minimal: 2px 3px 54px rgba(118, 140, 151, 0.1);
+$shadow-focused-recording: 0px 0px 0px 4px #fed2b1;
+$shadow-focused-editing: 0px 0px 0px 4px #d0e9f7;
