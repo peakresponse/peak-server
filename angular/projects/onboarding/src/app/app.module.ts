@@ -10,9 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome.component';
 import { StateComponent } from './state.component';
+import { NotifyComponent } from './notify.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent, StateComponent],
+  declarations: [AppComponent, WelcomeComponent, StateComponent, NotifyComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule, SharedModule, AppRoutingModule],
   providers: [ApiService, AppService, NavigationService],
   bootstrap: [AppComponent],

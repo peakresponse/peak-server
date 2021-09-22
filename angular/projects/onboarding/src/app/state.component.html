@@ -5,9 +5,10 @@
   <form class="wizard__body">
     <div class="row">
       <div class="col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
-        <div class="form-group">
-          <shared-select-field #stateEl (keyup.enter)="onNext()" id="state" name="state" label="Choose State" [source]="data" [target]="data">
-            <option *ngFor="let state of states" [ngValue]="state">{{state.name}}</option>
+        <div class="mb-3">
+          <shared-select-field #stateEl (keyup.enter)="onNext()" id="state" name="state" label="State" [source]="data" [target]="data" [options]="states">
+            <option [ngValue]="null">Please choose your state</option>
+            <option *ngFor="let state of states" [value]="state.id">{{state.name}}</option>
           </shared-select-field>
         </div>
       </div>

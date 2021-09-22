@@ -35,6 +35,7 @@ export class StateComponent {
       if (this.data.state.isConfigured) {
         this.navigation.goTo('/agency', { stateId: this.data.state.id });
       } else {
+        console.log(this.data.state);
         this.navigation.goTo('/notify', {
           reason: 'state',
           state: this.data.state.name,

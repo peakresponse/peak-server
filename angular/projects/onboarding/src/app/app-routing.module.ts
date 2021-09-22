@@ -2,8 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome.component';
 import { StateComponent } from './state.component';
+import { NotifyComponent } from './notify.component';
 
 const routes: Routes = [
+  {
+    path: 'notify',
+    component: NotifyComponent,
+  },
   {
     path: 'state',
     component: StateComponent,

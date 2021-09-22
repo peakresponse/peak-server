@@ -59,11 +59,11 @@ export class BaseFieldComponent {
     return this.propertyName || this.name || this.id || '';
   }
 
-  get value(): string | null {
+  get value(): any {
     return this.isEditing ? this.target[this.derivedPropertyName] : this.source?.[this.derivedPropertyName];
   }
 
-  set value(value: string | null) {
+  set value(value: any) {
     this.target[this.derivedPropertyName] = value;
     this.setPredictionStatus('CORRECTED');
   }

@@ -1,0 +1,58 @@
+<shared-wizard [isNextVisible]="false" [isDoneVisible]="isDone" (done)="onDone()" [isSubmitVisible]="!isDone" [isSubmitEnabled]="isValid" (submit)="onSubmit()" [isBackVisible]="!isDone" (back)="onBack()" [isCancelVisible]="!isDone" (cancel)="onCancel()">
+  <ng-container class="wizard__header">
+    <ng-container *ngIf="!isDone">
+      <h1 *ngIf="reason == 'state'" i18n>Sorry, we’re not yet available in your state.</h1>
+      <h1 *ngIf="reason == 'agency'" i18n>Sorry, we couldn’t find your agency in the NEMSIS agency list.</h1>
+    </ng-container>
+    <ng-container *ngIf="isDone">
+      <h1 i18n>Thanks for letting us know.</h1>
+    </ng-container>
+  </ng-container>
+  <form #form="ngForm" (submit)="onSubmit()" class="wizard__body">
+    <ng-container *ngIf="isDone">
+      <div class="row narrow">
+        <div class="col">
+          <p i18n>We’ll be in touch when we have updates.</p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!isDone">
+      <div class="row narrow">
+        <div class="col">
+          <p *ngIf="reason == 'state'" i18n>Please fill out your details to let us know you’re interested and to be notified as soon as sign-ups are available.</p>
+          <p *ngIf="reason == 'agency'" i18n>Please fill out your details to be notified as soon as we confirm and add your agency to the list.</p>
+        </div>
+      </div>
+      <div class="row narrow">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <shared-text-field id="state" label="State" [source]="{state}"></shared-text-field>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div *ngIf="reason == 'agency'" class="mb-3">
+            <shared-text-field id="agency" label="Agency" [source]="{agency}"></shared-text-field>
+          </div>
+        </div>
+      </div>
+      <div class="row narrow">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <shared-text-field #firstEl id="firstName" label="First Name" placeholder="Jane" [source]="data" [target]="data"></shared-text-field>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <shared-text-field id="lastName" label="Last Name" placeholder="Doe" [source]="data" [target]="data"></shared-text-field>
+          </div>
+        </div>
+      </div>
+      <div class="row narrow">
+        <div class="col">
+          <shared-text-field id="email" label="Email" placeholder="jane@firedepartment.gov" [source]="data" [target]="data"></shared-text-field>
+        </div>
+      </div>
+      <input type="submit" class="d-none" value="Next" />
+    </ng-container>
+  </form>
+</shared-wizard>

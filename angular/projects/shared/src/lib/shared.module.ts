@@ -13,6 +13,8 @@ import { SelectFieldComponent } from './components/fields/select-field.component
 import { TextFieldComponent } from './components/fields/text-field.component';
 import { WizardComponent } from './components/wizard.component';
 
+import { ErrorPipe } from './pipes/error.pipe';
+
 @NgModule({
   declarations: [
     LoaderComponent,
@@ -25,6 +27,7 @@ import { WizardComponent } from './components/wizard.component';
     SelectFieldComponent,
     TextFieldComponent,
     WizardComponent,
+    ErrorPipe,
   ],
   imports: [CommonModule, FormsModule],
   exports: [
@@ -38,6 +41,7 @@ import { WizardComponent } from './components/wizard.component';
     SelectFieldComponent,
     TextFieldComponent,
     WizardComponent,
+    ErrorPipe,
   ],
 })
 export class SharedModule {}

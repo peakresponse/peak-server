@@ -10,7 +10,7 @@
     [disabled]="isDisabled || !isFocusable || !isEditing"
     [tabindex]="isFocusable && isEditing ? 0 : -1"
     (focus)="onFocus($event)" (blur)="onBlur($event)"
-    [(ngModel)]="value">
-    <ng-content></ng-content>
+    [(ngModel)]="optionValue">
+    <ng-content></ng-content>>
   </select>
 </div>
