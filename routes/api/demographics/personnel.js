@@ -88,15 +88,16 @@ router.post(
       let employment;
       if (invitationCode) {
         /// look up the corresponding employment record, associate
-        employment = await models.Employment.findOne({
-          where: {
-            invitationCode: req.body.invitationCode,
-          },
-          transaction,
-        });
-        if (!employment) {
-          /// if not found when code provided, this is an error condition case
-          throw new Error();
+        try {
+          employment = await models.Employment.findOne({
+            where: {
+              invitationCode: req.body.invitationCode,
+            },
+            rejectOnEmpty: true,
+            transaction,
+          });
+        } catch {
+          res.status(HttpStatus.NOT_FOUND).end();
         }
       } else {
         /// look for an employment with a matching email
