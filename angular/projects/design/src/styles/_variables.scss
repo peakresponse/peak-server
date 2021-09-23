@@ -52,6 +52,8 @@ $brand-secondaries: (
   '800': $brand-secondary-800,
 );
 
+$danger: $brand-secondary-500;
+
 $btn-border-radius: 0.5rem;
 $btn-border-radius-lg: $btn-border-radius;
 $btn-border-radius-sm: $btn-border-radius;

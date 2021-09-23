@@ -29,7 +29,7 @@ export class BaseFieldComponent {
   }
 
   get errorMessage(): string | undefined {
-    return this.error?.messages?.find((error: any) => error.path === this.derivedPropertyName).message;
+    return this.error?.messages?.find((error: any) => error.path === this.derivedPropertyName)?.message;
   }
 
   get isNonEmpty(): boolean {

@@ -5,11 +5,23 @@ import { StateComponent } from './state.component';
 import { NotifyComponent } from './notify.component';
 import { AgencyComponent } from './agency.component';
 import { UrlComponent } from './url.component';
+import { AccountComponent } from './account.component';
 
 const routes: Routes = [
   {
+    path: 'account',
+    component: AccountComponent,
+  },
+  {
     path: 'agency',
     component: AgencyComponent,
+  },
+  {
+    path: 'exists',
+    component: AccountComponent,
+    data: {
+      exists: true,
+    },
   },
   {
     path: 'notify',

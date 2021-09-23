@@ -1,0 +1,71 @@
+<shared-wizard [isNextEnabled]="isValid" [isLoading]="isLoading"
+    (back)="onBack()" [isBackVisible]="!isDone && !isFirstStep" 
+    (cancel)="onCancel()" [isCancelVisible]="!isDone"
+    (next)="onNext()" [isNextVisible]="!isDone"
+    [isDoneVisible]="isDone" (done)="onCancel()">
+  <ng-container class="wizard__header">
+    <h1 *ngIf="!isDone && !exists" i18n>Tell us a little about yourself.</h1>
+    <h1 *ngIf="!isDone && exists && !isFirstStep" i18n>Looks like {{agency?.name}} already has an account.</h1>
+    <h1 *ngIf="!isDone && exists && isFirstStep" i18n>Create Your Account</h1>
+    <h1 *ngIf="isDone && !isPending && !data.invitationCode" i18n>Great, looks like you were already invited.</h1>
+    <h1 *ngIf="isDone && !isPending && data.invitationCode" i18n>You’re all signed up!</h1>
+    <h1 *ngIf="isDone && isPending" i18n>We’ve sent a request to your agency administrator</h1>
+  </ng-container>
+  <form #form="ngForm" (submit)="onNext()" class="wizard__body">
+    <div class="row narrow">
+      <div class="col">
+        <p *ngIf="!isDone && !exists" i18n>Since you’re setting up your agency’s account, you’ll automatically be made the owner/admin. Don’t worry, you can change ownership and add others as admin later.</p>
+        <p *ngIf="!isDone && exists && !isFirstStep" i18n>Register with your work email to see if your agency has already invited you. If they haven’t, we’ll automatically send a request to your agency’s adiminstrator.</p>
+        <p *ngIf="!isDone && exists && isFirstStep" i18n>You’re joining Peak Response as part of {{agency?.name}}.</p>
+        <p *ngIf="isDone && !isPending" i18n>Check your inbox for a verification email and follow the link to log into your agency’s account.</p>
+        <p *ngIf="isDone && isPending" i18n>Check your inbox for a confirmation of your request to join. You should hear back from your agency administrator about access shortly.</p>
+      </div>
+    </div>
+    <ng-container *ngIf="!isDone">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <shared-text-field #firstNameEl id="firstName" label="First Name" [source]="data" [target]="data" [error]="error"></shared-text-field>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <shared-text-field id="lastName" label="Last Name" [source]="data" [target]="data" [error]="error"></shared-text-field>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <shared-text-field id="email" label="Email" [source]="data" [target]="data" [error]="error"></shared-text-field>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <shared-text-field id="position" label="Position" [source]="data" [target]="data" [error]="error"></shared-text-field>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="row">
+          <div class="col-md-6">
+            <shared-text-field id="password" label="Password" type="password" [hasError]="!isPasswordSecure || !isPasswordConfirmed" [source]="data" [target]="data" [error]="error">
+              <ng-template>
+                <div *ngIf="!isPasswordConfirmed" class="invalid-feedback">Passwords do not match</div>
+              </ng-template>
+            </shared-text-field>
+          </div>
+          <div class="col-md-6">
+            <shared-text-field id="confirmPassword" label="Confirm Password" type="password" [hasError]="!isPasswordConfirmed" [source]="data" [target]="data" [error]="error">
+              <ng-template>
+                <div *ngIf="!isPasswordConfirmed" class="invalid-feedback">Passwords do not match</div>
+              </ng-template>
+            </shared-text-field>
+          </div>
+        </div>
+        <div class="password-requirements h5-bold" [class.text-danger]="!isPasswordSecure || (error?.messages|error:'password')" i18n>Password must be between 8 and 30 characters. Must include at least one uppercase letter, one lowercase letter, one number and one symbol.</div>
+      </div>
+      <input type="submit" class="d-none" value="Next" />  
+    </ng-container>
+  </form>
+</shared-wizard>
