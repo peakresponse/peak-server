@@ -6,19 +6,13 @@
   flex-direction: column;
   position: relative;
 
-  label {
-    @include h4-semibold;
-    margin: 0.375rem 0.875rem 0;
-    color: $base-500;
-  }
-
   input,
   select {
     @include h3-semibold;
     background-color: white;
     border: 0;
     color: $base-800;
-    margin: 0 0.875rem 0.375rem;
+    margin: 0.375rem 0.875rem;
     padding: 0;
     &::placeholder,
     &:disabled {
@@ -26,6 +20,17 @@
     }
     &:focus {
       outline: none;
+    }
+  }
+
+  label {
+    @include h4-semibold;
+    margin: 0.375rem 0.875rem 0;
+    color: $base-500;
+
+    & + input,
+    & + select {
+      margin-top: 0;
     }
   }
 
@@ -40,6 +45,47 @@
 @-moz-document url-prefix() {
   .form-field select {
     text-indent: -2px;
+  }
+}
+
+.form-field--search {
+  &::after {
+    display: block;
+    position: absolute;
+    bottom: 0.125rem;
+    right: 0.5rem;
+    background: transparent
+      url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 17C13.866 17 17 13.866 17 10C17 6.13401 13.866 3 10 3C6.13401 3 3 6.13401 3 10C3 13.866 6.13401 17 10 17Z' stroke='%232F4A56' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M21 21L15 15' stroke='%232F4A56' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+      no-repeat center center/1.5rem 1.5rem;
+    content: '';
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+
+  ngb-typeahead-window {
+    background-color: white;
+    border: 2px solid $brand-primary-500;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0.75rem 1rem -1rem;
+    padding: 0.375rem;
+    right: 0;
+
+    .dropdown-item {
+      @include h4-semibold;
+      background: none;
+      border: none;
+      border-radius: 0.5rem;
+      color: $base-500;
+      padding: 0.75rem 0.5rem;
+      text-align: left;
+
+      &.active {
+        background-color: $base-100;
+        color: $base-800;
+      }
+    }
   }
 }
 
@@ -67,9 +113,10 @@ fieldset:disabled .form-field {
   &::after {
     display: none;
   }
-  select {
-    background-image: none;
-  }
+}
+
+select:disabled {
+  background-image: none;
 }
 
 .form-field--focused {

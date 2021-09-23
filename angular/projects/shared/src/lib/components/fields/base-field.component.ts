@@ -10,8 +10,8 @@ export class BaseFieldComponent {
   @Input() name?: string;
   @Input() label?: string;
   @Input() placeholder?: string;
-  @Input() target?: any;
-  @Input() source?: any;
+  @Input() target: any;
+  @Input() source: any;
   @Input() propertyName?: string;
   @Input() error: any;
   @Input() hasError: boolean = false;

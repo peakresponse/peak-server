@@ -2,22 +2,22 @@
 <section>
   <h2>Text Fields</h2>
   <div class="mb-3">
-    <shared-text-field id="empty" name="empty" label="Empty Field" placeholder="Sample Input" [source]="source" [target]="source"></shared-text-field>
+    <shared-text-field id="empty" label="Empty Field" placeholder="Sample Input" [source]="source" [target]="source"></shared-text-field>
   </div>
   <div class="mb-3">
-    <shared-text-field id="disabled" name="disabled" label="Disabled Field" [isDisabled]="true" placeholder="Sample Input" [source]="source"></shared-text-field>
+    <shared-text-field id="disabled" label="Disabled Field" [isDisabled]="true" placeholder="Sample Input" [source]="source"></shared-text-field>
   </div>
   <div class="mb-3">
-    <shared-text-field id="readonly" name="readonly" label="Readonly Field" placeholder="Sample Input" [source]="source"></shared-text-field>
+    <shared-text-field id="readonly" label="Readonly Field" placeholder="Sample Input" [source]="source"></shared-text-field>
   </div>
   <div class="mb-3">
-    <shared-text-field id="invalid" name="invalid" label="Invalid Field" [error]="error" placeholder="Sample Input" [source]="source" [target]="source"></shared-text-field>
+    <shared-text-field id="invalid" label="Invalid Field" [error]="error" placeholder="Sample Input" [source]="source" [target]="source"></shared-text-field>
   </div>
 </section>
 <section>
   <h2>Dropdowns</h2>
   <div class="mb-3">
-    <shared-select-field id="dropdown" name="dropdown" label="Dropdown" [source]="source" [target]="source">
+    <shared-select-field id="dropdown" label="Dropdown" [source]="source" [target]="source">
       <option value="entry-1">Entry 1</option>
       <option value="entry-2">Entry 2</option>
       <option value="entry-3">Entry 3</option>
@@ -26,12 +26,27 @@
     </shared-select-field>
   </div>
   <div class="mb-3">
-    <shared-select-field id="disabledDropdown" name="disabledDropdown" label="Disabled Dropdown" [isDisabled]="true" [source]="source" [target]="source">
+    <shared-select-field id="disabledDropdown" label="Disabled Dropdown" [isDisabled]="true" [source]="source" [target]="source">
       <option value="entry-1">Entry 1</option>
       <option value="entry-2">Entry 2</option>
       <option value="entry-3">Entry 3</option>
       <option value="entry-4">Entry 4</option>
       <option value="entry-5">Entry 5</option>
     </shared-select-field>
+  </div>
+  <div class="mb-3">
+    <shared-select-field id="readonlyDropdown" label="Readonly Dropdown" [source]="source">
+      <option value="entry-1">Entry 1</option>
+      <option value="entry-2">Entry 2</option>
+      <option value="entry-3">Entry 3</option>
+      <option value="entry-4">Entry 4</option>
+      <option value="entry-5">Entry 5</option>
+    </shared-select-field>
+  </div>
+</section>
+<section>
+  <h2>Search</h2>
+  <div class="mb-3">
+    <shared-search-field id="search" placeholder="Search" [ngbTypeahead]="search" [source]="source" [target]="source"></shared-search-field>
   </div>
 </section>

@@ -5,7 +5,7 @@ import { BaseFieldComponent } from './base-field.component';
 @Component({
   selector: 'shared-select-field',
   templateUrl: './select-field.component.html',
-  styles: ['.form-field::after { display: none }'],
+  styles: ['.form-field::after { display: none }', 'select:disabled { background-image: none }'],
 })
 export class SelectFieldComponent extends BaseFieldComponent {
   @Input() options: any = null;

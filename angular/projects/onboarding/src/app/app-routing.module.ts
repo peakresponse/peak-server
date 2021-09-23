@@ -3,8 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome.component';
 import { StateComponent } from './state.component';
 import { NotifyComponent } from './notify.component';
+import { AgencyComponent } from './agency.component';
 
 const routes: Routes = [
+  {
+    path: 'agency',
+    component: AgencyComponent,
+  },
   {
     path: 'notify',
     component: NotifyComponent,

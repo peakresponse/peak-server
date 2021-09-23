@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiService, NavigationService, SharedModule } from 'shared';
 
@@ -11,10 +12,11 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome.component';
 import { StateComponent } from './state.component';
 import { NotifyComponent } from './notify.component';
+import { AgencyComponent } from './agency.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent, StateComponent, NotifyComponent],
-  imports: [BrowserModule, FormsModule, HttpClientModule, SharedModule, AppRoutingModule],
+  declarations: [AppComponent, WelcomeComponent, StateComponent, NotifyComponent, AgencyComponent],
+  imports: [BrowserModule, FormsModule, HttpClientModule, NgbModule, SharedModule, AppRoutingModule],
   providers: [ApiService, AppService, NavigationService],
   bootstrap: [AppComponent],
 })

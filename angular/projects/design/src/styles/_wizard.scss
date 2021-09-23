@@ -94,42 +94,6 @@ body {
     @include h5;
     margin-bottom: 1rem;
   }
-
-  .form-group {
-    position: relative;
-  }
-
-  ngb-typeahead-window {
-    @include h5;
-    background: #f1f5f8;
-    border-radius: 0;
-    border: 0;
-    box-shadow: $shadow-40-40;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-
-    .dropdown-item {
-      padding: 1.125rem 1rem;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .dropdown-item.active {
-      background-color: $brand-primary-300;
-      color: $base-800;
-    }
-  }
-
-  .form-group .peakicon {
-    position: absolute;
-    background: rgba($base-100, 0.5);
-    top: 1.25rem;
-    right: 1rem;
-    font-size: 1rem;
-    line-height: 1.0625rem;
-  }
 }
 
 @include media-breakpoint-up(md) {
@@ -143,13 +107,6 @@ body {
     p {
       @include h3;
       text-align: center;
-    }
-
-    ngb-typeahead-window {
-      @include h2;
-      .dropdown-item {
-        padding: 1.5rem 1.5rem;
-      }
     }
   }
 }
