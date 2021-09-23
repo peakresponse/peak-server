@@ -9,6 +9,7 @@ import { BaseFieldComponent } from './base-field.component';
 })
 export class TextFieldComponent extends BaseFieldComponent {
   @Input() type = 'text';
+  @Input() rows = 1;
   @Input() isPlaintext = false;
   @Input('shared-debounced') debounceTime?: number;
   @Output() debouncedValueChange = new EventEmitter<string>();

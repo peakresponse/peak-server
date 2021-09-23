@@ -7,7 +7,8 @@
   position: relative;
 
   input,
-  select {
+  select,
+  textarea {
     @include h3-semibold;
     background-color: white;
     border: 0;
@@ -29,7 +30,8 @@
     color: $base-500;
 
     & + input,
-    & + select {
+    & + select,
+    & + textarea {
       margin-top: 0;
     }
   }
@@ -89,7 +91,7 @@
   }
 }
 
-.form-field--editing {
+:not(.form-field--multiline).form-field--editing {
   &.form-field--nonempty {
     &::after {
       display: block;
@@ -141,7 +143,8 @@ select:disabled {
 
 .form-field--plaintext {
   border: none;
-  input {
+  input,
+  textarea {
     margin: 0.5rem 1rem;
   }
 

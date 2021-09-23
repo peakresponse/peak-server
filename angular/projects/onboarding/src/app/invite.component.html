@@ -1,0 +1,23 @@
+<shared-wizard [isLoading]="isLoading" [isBackVisible]="false" [isCancelVisible]="false" [isNextVisible]="false"
+  [isSubmitVisible]="true" [isSubmitEnabled]="isValid" (submit)="onNext()"
+  [isSkipVisible]="true" (skip)="onSkip()">
+  <ng-container class="wizard__header">
+    <h1 i18n>Send invitations to your team to create their own accounts:</h1>
+  </ng-container>
+  <form #form="ngForm" (submit)="onNext()" class="wizard__body">
+    <div class="row narrow">
+      <div class="col">
+        <div class="mb-3">
+          <shared-text-field id="message" label="Message" [rows]="4" [source]="data" [target]="data" [error]="error"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field #firstEl id="emails" label="Emails" i18n-placeholder placeholder="Type emails here, with a comma between each email." [rows]="4" [source]="data" [target]="data" [error]="error"></shared-text-field>
+        </div>
+        <div class="mb-3 d-md-none text-right">
+          <a (click)="onSkip()" class="skip">Skip this step...</a>
+        </div>
+      </div>
+    </div>
+    <input type="submit" class="d-none" value="Next" />
+  </form>
+</shared-wizard>

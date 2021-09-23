@@ -15,9 +15,21 @@ import { NotifyComponent } from './notify.component';
 import { AgencyComponent } from './agency.component';
 import { UrlComponent } from './url.component';
 import { AccountComponent } from './account.component';
+import { InviteComponent } from './invite.component';
+import { DoneComponent } from './done.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent, StateComponent, NotifyComponent, AgencyComponent, UrlComponent, AccountComponent],
+  declarations: [
+    AppComponent,
+    WelcomeComponent,
+    StateComponent,
+    NotifyComponent,
+    AgencyComponent,
+    UrlComponent,
+    AccountComponent,
+    InviteComponent,
+    DoneComponent,
+  ],
   imports: [BrowserModule, FormsModule, HttpClientModule, NgbModule, SharedModule, AppRoutingModule],
   providers: [ApiService, AppService, NavigationService],
   bootstrap: [AppComponent],
