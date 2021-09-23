@@ -48,7 +48,7 @@ if (process.env.MARKETING_ENABLED === 'true') {
         return;
       }
       // validate reCAPTCHA response if not coming from sign-up flow
-      const referrer = req.headers['referer'];
+      const referrer = req.headers.referer;
       if (!referrer?.indexOf('/sign-up/notify')) {
         let response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
           method: 'POST',
