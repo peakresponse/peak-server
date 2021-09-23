@@ -26,12 +26,12 @@
       <div class="row narrow">
         <div class="col-md-6">
           <div class="mb-3">
-            <shared-text-field id="state" label="State" [source]="{state}"></shared-text-field>
+            <shared-text-field id="state" label="State" [isPlaintext]="true" [source]="{state}"></shared-text-field>
           </div>
         </div>
         <div class="col-md-6">
           <div *ngIf="reason == 'agency'" class="mb-3">
-            <shared-text-field id="agency" label="Agency" [source]="{agency}"></shared-text-field>
+            <shared-text-field id="agency" label="Agency" [isPlaintext]="true" [source]="{agency}"></shared-text-field>
           </div>
         </div>
       </div>
