@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { BaseFieldComponent } from './base-field.component';
 
@@ -9,4 +9,7 @@ import { BaseFieldComponent } from './base-field.component';
 })
 export class TextFieldComponent extends BaseFieldComponent {
   @Input() type = 'text';
+  @Input() isPlaintext = false;
+  @Input('shared-debounced') debounceTime?: number;
+  @Output() debouncedValueChange = new EventEmitter<string>();
 }

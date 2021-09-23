@@ -4,6 +4,7 @@ import { WelcomeComponent } from './welcome.component';
 import { StateComponent } from './state.component';
 import { NotifyComponent } from './notify.component';
 import { AgencyComponent } from './agency.component';
+import { UrlComponent } from './url.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'state',
     component: StateComponent,
+  },
+  {
+    path: 'url',
+    component: UrlComponent,
   },
   {
     path: 'welcome',

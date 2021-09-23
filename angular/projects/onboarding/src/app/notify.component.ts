@@ -43,6 +43,8 @@ export class NotifyComponent {
   onBack() {
     if (this.reason == 'state') {
       this.navigation.backTo('/state');
+    } else if (this.reason == 'agency') {
+      this.navigation.backTo('/agency');
     }
   }
 

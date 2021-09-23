@@ -1,3 +1,11 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M5 9L11.2929 15.2929C11.6834 15.6834 12.3166 15.6834 12.7071 15.2929L19 9" stroke="#2F4A56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="24-chevron-down" transform="translate(5.000000, 8.000000)" fill="#2F4A56" fill-rule="nonzero">
+            <path d="M-0.707106781,0.707106781 L5.58579322,7 C6.36681751,7.78103107 7.63318249,7.78103107 8.41420678,7 L14.7071068,0.707106781 C15.0976311,0.316582489 15.0976311,-0.316582489 14.7071068,-0.707106781 C14.3165825,-1.09763107 13.6834175,-1.09763107 13.2928932,-0.707106781 L7,5.58579322 L0.707106781,-0.707106781 C0.316582489,-1.09763107 -0.316582489,-1.09763107 -0.707106781,-0.707106781 C-1.09763107,-0.316582489 -1.09763107,0.316582489 -0.707106781,0.707106781 Z" id="Path"></path>
+        </g>
+    </g>
 </svg>

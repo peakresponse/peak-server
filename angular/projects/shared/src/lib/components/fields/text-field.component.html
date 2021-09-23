@@ -4,15 +4,17 @@
   [class.form-field--focused]="isFocused"
   [class.form-field--invalid]="isInvalid"
   [class.form-field--nonempty]="isNonEmpty"
+  [class.form-field--plaintext]="isPlaintext"
   [class.form-field--unconfirmed]="isUnconfirmed"
   (click)="onClick($event)">
   <label [for]="derivedId">{{label}}</label>
   <input #inputEl [type]="type" [id]="derivedId" [name]="derivedName"
-    [placeholder]="placeholder"
+    [placeholder]="placeholder || ''"
     [disabled]="isDisabled"
     [readonly]="!isFocusable || !isEditing"
     [tabindex]="isFocusable && isEditing ? 0 : -1"
     (focus)="onFocus($event)" (blur)="onBlur($event)"
+    [shared-debounced]="debounceTime" (debouncedValueChange)="this.debouncedValueChange.emit($event)"
     [(ngModel)]="value" />
 </div>
 <div class="invalid-feedback" *ngIf="errorMessage as msg">{{msg}}</div>

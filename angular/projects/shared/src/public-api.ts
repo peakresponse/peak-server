@@ -16,6 +16,9 @@ export * from './lib/components/fields/select-field.component';
 export * from './lib/components/fields/text-field.component';
 export * from './lib/components/loader.component';
 export * from './lib/components/wizard.component';
+
+export * from './lib/directives/debounced.directive';
+
 export * from './lib/pipes/error.pipe';
 
 export * from './lib/shared.module';

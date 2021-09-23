@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="24-search" transform="translate(2.000000, 2.000000)" fill="#2F4A56" fill-rule="nonzero">
+            <path d="M8,0 C12.4182815,0 16,3.58172202 16,8 C16,9.84820433 15.3732655,11.5500243 14.3207308,12.9045256 L19.7071068,18.2928932 C20.0976311,18.6834175 20.0976311,19.3165825 19.7071068,19.7071068 C19.3165825,20.0976311 18.6834175,20.0976311 18.2928932,19.7071068 L18.2928932,19.7071068 L12.9045256,14.3207308 C11.5500243,15.3732655 9.84820433,16 8,16 C3.58172202,16 0,12.4182815 0,8 C0,3.58172525 3.58172525,0 8,0 Z M8,2 C4.68629475,2 2,4.68629475 2,8 C2,11.3137116 4.68629108,14 8,14 C11.3137153,14 14,11.3137153 14,8 C14,4.68629108 11.3137116,2 8,2 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>

@@ -13,9 +13,10 @@ import { WelcomeComponent } from './welcome.component';
 import { StateComponent } from './state.component';
 import { NotifyComponent } from './notify.component';
 import { AgencyComponent } from './agency.component';
+import { UrlComponent } from './url.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent, StateComponent, NotifyComponent, AgencyComponent],
+  declarations: [AppComponent, WelcomeComponent, StateComponent, NotifyComponent, AgencyComponent, UrlComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule, NgbModule, SharedModule, AppRoutingModule],
   providers: [ApiService, AppService, NavigationService],
   bootstrap: [AppComponent],

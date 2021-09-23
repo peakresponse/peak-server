@@ -15,6 +15,8 @@ import { SelectFieldComponent } from './components/fields/select-field.component
 import { TextFieldComponent } from './components/fields/text-field.component';
 import { WizardComponent } from './components/wizard.component';
 
+import { DebouncedDirective } from './directives/debounced.directive';
+
 import { ErrorPipe } from './pipes/error.pipe';
 
 @NgModule({
@@ -30,6 +32,7 @@ import { ErrorPipe } from './pipes/error.pipe';
     SelectFieldComponent,
     TextFieldComponent,
     WizardComponent,
+    DebouncedDirective,
     ErrorPipe,
   ],
   imports: [CommonModule, FormsModule, NgbModule],
@@ -45,6 +48,7 @@ import { ErrorPipe } from './pipes/error.pipe';
     SelectFieldComponent,
     TextFieldComponent,
     WizardComponent,
+    DebouncedDirective,
     ErrorPipe,
   ],
 })
