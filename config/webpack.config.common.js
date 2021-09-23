@@ -13,7 +13,6 @@ module.exports = {
     admin: './client/admin.ts',
     assets: './client/assets.ts',
     dashboard: './client/dashboard.ts',
-    onboarding: './client/onboarding.ts',
   },
 
   resolve: {
@@ -59,12 +58,7 @@ module.exports = {
           },
           { loader: 'sass-loader', options: { sourceMap: isDev } },
         ],
-        include: [
-          helpers.root('client', 'admin'),
-          helpers.root('client', 'dashboard'),
-          helpers.root('client', 'onboarding'),
-          helpers.root('client', 'shared'),
-        ],
+        include: [helpers.root('client', 'admin'), helpers.root('client', 'dashboard'), helpers.root('client', 'shared')],
       },
     ],
   },

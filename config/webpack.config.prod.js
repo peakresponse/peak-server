@@ -51,7 +51,6 @@ module.exports = webpackMerge(commonConfig, {
       entryModules: [
         helpers.root('client', 'admin', 'app.module#AdminAppModule'),
         helpers.root('client', 'dashboard', 'app.module#DashboardAppModule'),
-        helpers.root('client', 'onboarding', 'app.module#OnboardingAppModule'),
       ],
     }),
   ],
