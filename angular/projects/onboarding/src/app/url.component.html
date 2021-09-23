@@ -8,18 +8,16 @@
         <p i18n>This URL will be the place where your team goes to log in to Peak Response. We’ve put in a generated URL as a suggestion, but you’re welcome to change it.</p>
         <div class="mb-3">
           <div class="row">
-            <div class="col-md-6 offset-lg-1 col-lg-5">
-              <shared-text-field #subdomainEl id="subdomain" label="Subdomain" [source]="data" [target]="data" [shared-debounced] (debouncedValueChange)="validate($event)">
+            <div class="col-md-12 offset-lg-1 col-lg-10">
+              <shared-text-field #subdomainEl id="subdomain" label="URL" [source]="data" [target]="data" [shared-debounced] (debouncedValueChange)="validate($event)">
                 <ng-template>
                   <div *ngIf="isLoading" class="valid-feedback"><shared-loader></shared-loader> Please wait, checking availability...</div>
                   <div *ngIf="!isLoading && isValid" class="valid-feedback">This URL is available!</div>
                   <div *ngIf="!isLoading && errorStatus == 409" class="invalid-feedback">This URL is not available.</div>
                   <div *ngIf="!isLoading && errorStatus == 422" class="invalid-feedback">This is not a valid URL.</div>
+                  <div class="subdomain-host h3-semibold"><span>{{data.subdomain}}</span>.{{baseHost}}</div>
                 </ng-template>
               </shared-text-field>
-            </div>
-            <div class="col-md-6 col-lg-5">
-              <shared-text-field id="baseHost" label="&nbsp;" [isPlaintext]="true" [source]="{baseHost: '.' + baseHost}"></shared-text-field>
             </div>
           </div>
         </div>

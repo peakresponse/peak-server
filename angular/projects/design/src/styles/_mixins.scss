@@ -8,11 +8,6 @@
   font-weight: $font-weight-semibold;
 }
 
-@mixin h3-semibold {
-  @include h3;
-  font-weight: $font-weight-semibold;
-}
-
 @mixin h3 {
   @include font-size($h3-font-size);
   line-height: 2rem;
