@@ -117,25 +117,11 @@ describe('/soap/nemsis', () => {
       assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.FAILED_IMPORT_XSD);
       assert.deepStrictEqual(response.reports, {
         xmlValidationErrorReport: {
-          totalErrorCount: 2,
+          totalErrorCount: 1,
           xmlError: [
             {
               desc:
                 "Element '{http://www.nemsis.org}eCrew.02': [facet 'enumeration'] The value '9925017' is not an element of the set {'9925001', '9925002', '9925003', '9925005', '9925007', '9925023', '9925025', '9925027', '9925029', '9925031', '9925033', '9925035', '9925037', '9925039', '9925041', '9925043'}.",
-              failedElementList: {
-                xmlElementInfo: [
-                  {
-                    elementName: 'eCrew.02',
-                    elementLocation: {
-                      line: 97,
-                    },
-                  },
-                ],
-              },
-            },
-            {
-              desc:
-                "Element '{http://www.nemsis.org}eCrew.02': '9925017' is not a valid value of the atomic type '{http://www.nemsis.org}MemberLevel'.",
               failedElementList: {
                 xmlElementInfo: [
                   {
