@@ -23,7 +23,8 @@ RUN npm install && \
     npm run build -- shared && \
     npm run build -- design && \
     npm run build -- auth && \
-    npm run build -- onboarding
+    npm run build -- onboarding && \
+    npm run build -- admin && \
 
 WORKDIR $APP_HOME
 RUN mvn install && \

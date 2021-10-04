@@ -1,10 +1,8 @@
-<%- contentFor('title') %><%= __('onboarding.title') %>
+<%- contentFor('title') %><%= __('admin.title') %>
 <%- contentFor('head') %>
 <base href="/sign-up">
 <script type="text/javascript">
   window.env = {};
-  window.env.BASE_HOST = '<%= process.env.BASE_HOST %>';
-  window.env.MARKETING_ENABLED = '<%= process.env.MARKETING_ENABLED %>';
 </script>
 <%- contentFor('body') %>
 <app-root><%= __('common.pleaseWait') %></app-root>
