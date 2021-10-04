@@ -1,6 +1,6 @@
 web: npm start
 webpack: npm run build:dev
 shared: cd angular && npm run build -- shared --watch --configuration=development
-design: cd angular && npm start -- --port 4200 --serve-path /angular/design design
-auth: cd angular && npm start -- --port 4300 --serve-path /angular/auth auth
-onboarding: cd angular && npm start -- --port 4400 --serve-path /angular/onboarding onboarding
+design: sleep 10 && cd angular && npm start -- --port 4200 --serve-path /angular/design design
+auth: sleep 10 && cd angular && npm start -- --port 4300 --serve-path /angular/auth auth
+onboarding: sleep 10 && cd angular && npm start -- --port 4400 --serve-path /angular/onboarding onboarding

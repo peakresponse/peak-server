@@ -71,6 +71,7 @@ const states = [
 export class InputsComponent {
   source: any = {
     empty: '',
+    multiline: 'This is a\nmultiline\ntext field.',
     disabled: 'Input',
     readonly: 'Input',
     invalid: 'Input',
