@@ -97,7 +97,7 @@ export class ListComponent {
           if (response.status == 404) {
             //// deleted, remove from list
             let records = clone(this.records ?? []);
-            remove(records, (r) => {
+            remove(records, (r: any) => {
               return r.id == id;
             });
             this.records = records;
