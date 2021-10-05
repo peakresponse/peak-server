@@ -1,66 +1,62 @@
-<div class="container-fluid">
-  <div class="row">  
-    <nav class="col-md-3">
-      <ul class="sidebar nav nav-pills flex-column">
-        <li class="nav-item">
-          <a [routerLink]="['/branding']" class="nav-link">
-            Branding
-          </a>
-        </li>
-        <li class="nav-item">
-          <a [routerLink]="['/buttons']" class="nav-link">
-            Buttons
-          </a>
-        </li>
-        <li class="nav-item">
-          <a [routerLink]="['/icons']" class="nav-link">
-            Icons
-          </a>
-        </li>
-        <li class="nav-item">
-          <a [routerLink]="['/inputs']" class="nav-link">
-            Inputs
-          </a>
-        </li>
-        <!-- <li>
-          <a href="#" class="nav-link">
-            Branding
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link">
-            Text
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link">
-            Object Styles
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link">
-            Colors
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link">
-            Icons
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link">
-            Map Components
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link">
-            Elements
-          </a>
-        </li> -->
-      </ul>
-    </nav>
-    <main role="main" class="col-md-9">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-</div>
+<nav class="sidebar">
+  <ul class="sidebar__nav">
+    <li>
+      <a routerLink="/branding" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Branding
+      </a>
+    </li>
+    <li>
+      <a routerLink="/buttons" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Buttons
+      </a>
+    </li>
+    <li>
+      <a routerLink="/icons" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Icons
+      </a>
+    </li>
+    <li>
+      <a routerLink="/inputs" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Inputs
+      </a>
+    </li>
+    <!-- <li>
+      <a href="#" class="nav-link">
+        Branding
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link">
+        Text
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link">
+        Object Styles
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link">
+        Colors
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link">
+        Icons
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link">
+        Map Components
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link">
+        Elements
+      </a>
+    </li> -->
+  </ul>
+</nav>
+<main role="main">
+  <router-outlet></router-outlet>
+</main>
