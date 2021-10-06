@@ -64,6 +64,23 @@
   );
 }
 
+.btn--danger {
+  @include button-variant(
+    $brand-secondary-500,
+    $brand-secondary-500,
+    white,
+    $brand-secondary-600,
+    $brand-secondary-600,
+    white,
+    $brand-secondary-800,
+    $brand-secondary-800,
+    white,
+    $brand-secondary-400,
+    $brand-secondary-400,
+    white
+  );
+}
+
 .btn--secondary {
   @include button-outline-variant(
     $brand-primary-500,

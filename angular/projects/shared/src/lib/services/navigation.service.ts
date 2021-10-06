@@ -12,11 +12,11 @@ export class NavigationService {
 
   constructor(private location: Location, private router: Router, private route: ActivatedRoute, private title: Title) {
     //// keep track of the current and previous url
-    // router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-    //   this.previousUrl = this.currentUrl;
-    //   this.currentUrl = event.url;
-    //   // console.log('prev', this.previousUrl, 'current', this.currentUrl);
-    // });
+    router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: any) => {
+      this.previousUrl = this.currentUrl;
+      this.currentUrl = event.url;
+      // console.log('prev', this.previousUrl, 'current', this.currentUrl);
+    });
     //// update Title from route data
     router.events
       .pipe(
