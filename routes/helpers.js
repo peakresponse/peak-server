@@ -24,9 +24,7 @@ module.exports.async = (handler) => {
 };
 
 module.exports.setPaginationHeaders = (req, res, pageParam, pages, total) => {
-  const baseURL = `${`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${req.headers?.host}` || process.env.BASE_URL}${
-    req.baseUrl
-  }${req.path}?`;
+  const baseURL = `${process.env.BASE_URL}${req.baseUrl}${req.path}?`;
   const query = _.clone(req.query);
   const page = parseInt(pageParam, 10);
   let link = '';

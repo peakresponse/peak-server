@@ -1,0 +1,32 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Facilities</h1>
+    <shared-search-field placeholder="Search" [debounceTime]="300" (debouncedValueChange)="search = $event"></shared-search-field>
+    <!-- <a routerLink="/facilities/new" class="btn btn--sm btn--secondary">New Facility</a> -->
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Code</th>
+        </tr>
+      </thead>
+      <shared-list type="facilities" [search]="search">
+        <ng-template let-record="record">
+          <tr [routerLink]="['/facilities', record.id]">
+            <td>{{record.name}}</td>
+            <td>{{record.address}}</td>
+            <td>{{record.cityName}}</td>
+            <td>{{record.stateName}}</td>
+            <td>{{record.locationCode}}</td>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+</div>
