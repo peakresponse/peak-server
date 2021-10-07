@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2" i18n>Edit State</h1>
+</div>
+<ngb-alert *ngIf="isConfiguring" type="info" [dismissible]="false">
+  <div><shared-loader></shared-loader> {{status || 'Please wait...'}}</div>
+</ngb-alert>
+<ngb-alert *ngIf="isError" type="danger" [dismissible]="false">
+  <div>{{status}}</div>
+</ngb-alert>
+<div class="row">
+  <shared-form #form *ngIf="id" type="states" [hideButtons]="true" [id]="id" class="col-md-3">
+    <ng-template let-record="record" let-error="error">
+      <fieldset [disabled]="isConfiguring">
+        <div class="mb-3">
+          <shared-text-field id="name" label="Name" [source]="record" [error]="error"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-checkbox id="isConfigured" label="Is configured?" [source]="record"></shared-checkbox>
+        </div>
+        <div class="mb-3">
+          <button (click)="onConfigure()" type="button" class="btn btn--primary" i18n>Configure</button>
+        </div>
+      </fieldset>
+    </ng-template>
+  </shared-form>
+</div>

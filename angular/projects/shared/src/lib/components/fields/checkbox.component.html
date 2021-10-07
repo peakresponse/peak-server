@@ -1,0 +1,4 @@
+<div class="form-check" [class.form-check-inline]="inline">
+  <input class="form-check-input" (click)="onClick($event)" [disabled]="isDisabled" type="checkbox" [id]="derivedId" [name]="derivedName" [(ngModel)]="value">
+  <label class="form-check-label" [for]="derivedId">{{label}}</label>
+</div>

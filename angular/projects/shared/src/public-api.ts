@@ -22,6 +22,7 @@ export * from './lib/components/branding/logo.full.white.component';
 export * from './lib/components/branding/logo.square.dark.component';
 export * from './lib/components/branding/logo.square.light.component';
 
+export * from './lib/components/fields/checkbox.component';
 export * from './lib/components/fields/file-field.component';
 export * from './lib/components/fields/search-field.component';
 export * from './lib/components/fields/select-field.component';

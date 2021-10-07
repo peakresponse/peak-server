@@ -21,6 +21,14 @@
   </div>
 </section>
 <section>
+  <h2>Checkboxes</h2>
+  <div class="mb-3">
+    <shared-checkbox id="checkbox" label="Checkbox" [inline]="true" [source]="source" [target]="source"></shared-checkbox>
+    <shared-checkbox id="readonlyCheckbox" label="Readonly Checkbox" [inline]="true" [source]="source"></shared-checkbox>
+    <shared-checkbox id="disabledCheckbox" label="Disabled Checkbox" [inline]="true" [isDisabled]="true" [source]="source" [target]="source"></shared-checkbox>
+  </div>
+</section>
+<section>
   <h2>File Field</h2>
   <div class="mb-3">
     <shared-file-field id="file" label="File Field" placeholder="Sample Input" [source]="source" [target]="source"></shared-file-field>

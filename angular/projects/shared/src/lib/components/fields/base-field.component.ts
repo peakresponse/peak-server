@@ -24,6 +24,10 @@ export class BaseFieldComponent {
     return this.target != null;
   }
 
+  get isReadOnly(): boolean {
+    return !this.isFocusable || !this.isEditing;
+  }
+
   get isInvalid(): boolean {
     return this.hasError || this.error?.messages?.find((error: any) => error.path === this.derivedPropertyName) !== undefined;
   }
@@ -64,8 +68,10 @@ export class BaseFieldComponent {
   }
 
   set value(value: any) {
-    this.target[this.derivedPropertyName] = value;
-    this.setPredictionStatus('CORRECTED');
+    if (!this.isReadOnly) {
+      this.target[this.derivedPropertyName] = value;
+      this.setPredictionStatus('CORRECTED');
+    }
   }
 
   focus() {

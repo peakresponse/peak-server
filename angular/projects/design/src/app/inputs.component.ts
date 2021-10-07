@@ -76,6 +76,8 @@ export class InputsComponent {
     readonly: 'Input',
     invalid: 'Input',
     plaintext: 'Plain text without borders',
+    checkbox: '',
+    readonlyCheckbox: true,
     file: '',
     dropdown: '',
     disabledDropdown: 'entry-2',

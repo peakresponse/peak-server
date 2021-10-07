@@ -18,6 +18,7 @@ import { LogoFullWhite } from './components/branding/logo.full.white.component';
 import { LogoSquareDark } from './components/branding/logo.square.dark.component';
 import { LogoSquareLight } from './components/branding/logo.square.light.component';
 
+import { CheckboxComponent } from './components/fields/checkbox.component';
 import { FileFieldComponent } from './components/fields/file-field.component';
 import { SearchFieldComponent } from './components/fields/search-field.component';
 import { SelectFieldComponent } from './components/fields/select-field.component';
@@ -43,6 +44,7 @@ import { ErrorPipe } from './pipes/error.pipe';
     LogoFullWhite,
     LogoSquareDark,
     LogoSquareLight,
+    CheckboxComponent,
     FileFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
@@ -66,6 +68,7 @@ import { ErrorPipe } from './pipes/error.pipe';
     LogoFullWhite,
     LogoSquareDark,
     LogoSquareLight,
+    CheckboxComponent,
     FileFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
