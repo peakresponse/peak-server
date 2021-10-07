@@ -7,13 +7,14 @@ import { AppComponent } from './app.component';
 
 import { AgencyService, NavigationService, UserService } from 'shared';
 
+import { AgenciesModule } from './agencies/agencies.module';
 import { FacilitiesModule } from './facilities/facilities.module';
 import { StatesModule } from './states/states.module';
 import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, FacilitiesModule, StatesModule, UsersModule],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, AgenciesModule, FacilitiesModule, StatesModule, UsersModule],
   providers: [AgencyService, NavigationService, UserService],
   bootstrap: [AppComponent],
 })

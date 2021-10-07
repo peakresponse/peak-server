@@ -1,0 +1,10 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">Edit Agency</h1>
+</div>
+<shared-form *ngIf="id" type="agencies" [id]="id" class="d-block col-xl-6">
+  <ng-template let-record="record" let-error="error">
+    <div class="mb-3">
+      <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+  </ng-template>
+</shared-form>

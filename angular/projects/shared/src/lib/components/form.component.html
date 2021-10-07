@@ -1,6 +1,5 @@
 <form #form="ngForm" (submit)="onSubmit()">
   <fieldset [disabled]="loading || disabled">
-    <shared-error *ngIf="error" [error]="error"></shared-error>
     <template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{record: record, error: error}"></template>
     <div *ngIf="!hideButtons && !loading" class="form-group d-flex justify-content-between">
       <span>
@@ -8,6 +7,7 @@
           <span *ngIf="!record.id">{{createLabel}}</span>
           <span *ngIf="record.id">{{updateLabel}}</span>
         </button>
+        <shared-error *ngIf="error" [error]="error" class="ms-3"></shared-error>
         <span *ngIf="updated" class="ms-3 valid-feedback">
           This record has been updated!
         </span>
