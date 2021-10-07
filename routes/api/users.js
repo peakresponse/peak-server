@@ -1,5 +1,6 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
+const { Op } = require('sequelize');
 
 const models = require('../../models');
 const helpers = require('../helpers');
@@ -11,9 +12,18 @@ router.get(
   '/',
   interceptors.requireAdmin(),
   helpers.async(async (req, res) => {
-    const { page } = req.query;
+    const { page, search } = req.query;
+    const where = {};
+    if (search) {
+      where[Op.or] = [
+        { lastName: { [Op.iLike]: `%${search}%` } },
+        { firstName: { [Op.iLike]: `%${search}%` } },
+        { email: { [Op.iLike]: `%${search}%` } },
+      ];
+    }
     const { docs, pages, total } = await models.User.paginate({
       page: req.query.page || 1,
+      where,
       order: [
         ['last_name', 'ASC'],
         ['first_name', 'ASC'],

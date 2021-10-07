@@ -8,13 +8,21 @@
   (click)="onClick($event)">
   <label *ngIf="label" [for]="derivedId">{{label}}</label>
   <ng-template #rt let-r="result" let-t="term">{{r}}</ng-template>
-  <input #inputEl type="text" [id]="derivedId" [name]="derivedName"
+  <input *ngIf="ngbTypeahead" #inputEl type="text" [id]="derivedId" [name]="derivedName"
     [placeholder]="placeholder"
     [disabled]="isDisabled"
     [readonly]="!isFocusable || !isEditing"
     [tabindex]="isFocusable && isEditing ? 0 : -1"
     (focus)="onFocus($event)" (blur)="onBlur($event)"
     [ngbTypeahead]="ngbTypeahead" [inputFormatter]="inputFormatter" [resultTemplate]="resultTemplate ?? rt"
+    [(ngModel)]="value" />
+  <input *ngIf="!ngbTypeahead" #inputEl type="text" [id]="derivedId" [name]="derivedName"
+    [placeholder]="placeholder"
+    [disabled]="isDisabled"
+    [readonly]="!isFocusable || !isEditing"
+    [tabindex]="isFocusable && isEditing ? 0 : -1"
+    (focus)="onFocus($event)" (blur)="onBlur($event)"
+    [shared-debounced]="debounceTime" (debouncedValueChange)="this.debouncedValueChange.emit($event)"
     [(ngModel)]="value" />
 </div>
 <div class="invalid-feedback" *ngIf="errorMessage as msg">{{msg}}</div>

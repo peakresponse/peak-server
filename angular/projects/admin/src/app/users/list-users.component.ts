@@ -6,4 +6,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ListUsersComponent {
   constructor(public route: ActivatedRoute) {}
+
+  search: string = '';
+
+  onSearch(value: string) {
+    this.search = value;
+  }
 }
