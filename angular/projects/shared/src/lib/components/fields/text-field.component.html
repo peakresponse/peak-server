@@ -26,6 +26,6 @@
     (focus)="onFocus($event)" (blur)="onBlur($event)"
     [shared-debounced]="debounceTime" (debouncedValueChange)="this.debouncedValueChange.emit($event)"
     [(ngModel)]="value"></textarea>
-  </div>
+</div>
 <div class="invalid-feedback" *ngIf="errorMessage as msg">{{msg}}</div>
 <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{isEditing: isEditing, isFocusable: isFocusable, isFocused: isFocused, source: source, target: target}"></ng-template>

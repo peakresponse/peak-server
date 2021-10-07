@@ -33,7 +33,7 @@ class Uploader {
 
   directUploadDidProgress(event: any) {
     // Use event.loaded and event.total to update the progress bar
-    this.progress = `${(100 * event.loaded) / event.total}%`;
+    this.progress = `${Math.round((100 * event.loaded) / event.total)}%`;
   }
 }
 
@@ -42,6 +42,7 @@ class Uploader {
   templateUrl: './uploader.component.html',
 })
 export class UploaderComponent {
+  @Input() id: string = '';
   @Input() record: any = null;
   @Input() property: string = '';
   @Input() directUploadURL = '/api/assets';

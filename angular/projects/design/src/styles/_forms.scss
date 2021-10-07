@@ -167,3 +167,8 @@ select:disabled {
 .form-field + .valid-feedback {
   margin: 0.25rem 1rem 0;
 }
+
+.form-field .invalid-feedback,
+.form-field .valid-feedback {
+  margin: 0 0.875rem 0.25rem;
+}

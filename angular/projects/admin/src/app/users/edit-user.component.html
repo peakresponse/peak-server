@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
   <h1 class="h2">Edit User</h1>
 </div>
-<shared-form *ngIf="id" type="users" [id]="id">
+<shared-form class="d-block col-xl-6" *ngIf="id" type="users" [id]="id">
   <ng-template let-record="record" let-error="error">
     <div class="mb-3">
       <shared-text-field id="firstName" label="First Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
@@ -16,16 +16,7 @@
       <shared-text-field type="password" id="password" label="Password" [source]="record" [target]="record" [error]="error"></shared-text-field>
     </div>
     <div class="mb-3">
-      <label for="Icon">Icon</label>
-      <div *ngIf="icon && icon.dataURL" style="width: 200px;">
-        <img [src]="icon.dataURL" class="img-fluid img-thumbnail mb-2" />
-        <button (click)="onIconRemove(record)" type="button" class="btn btn-sm btn-outline-danger">Remove</button>
-      </div>
-      <div *ngIf="!icon && record.iconFile" style="width: 200px;">
-        <img [src]="record.iconUrl" class="img-fluid img-thumbnail mb-2" />
-        <button (click)="onIconRemove(record)" type="button" class="btn btn-sm btn-outline-danger">Remove</button>
-      </div>
-      <shared-uploader *ngIf="!record.iconFile" (onUploaded)="onIconUploaded(record, $event)"></shared-uploader>
+      <shared-file-field id="iconFile" label="Picture" [source]="record" [target]="record" [error]="error"></shared-file-field>
     </div>
   </ng-template>
 </shared-form>
