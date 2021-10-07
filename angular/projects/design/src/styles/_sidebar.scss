@@ -23,6 +23,15 @@
   padding-left: 0;
 }
 
+.sidebar__heading {
+  background-color: $brand-primary-500;
+  border-bottom: 0.125rem solid $brand-primary-500;
+  color: white;
+  display: block;
+  margin: 0;
+  padding: 1.1875rem 1rem 1.1875rem 1.625rem;
+}
+
 .sidebar__item {
   @include h4-semibold;
   border-bottom: 0.125rem solid $brand-primary-500;

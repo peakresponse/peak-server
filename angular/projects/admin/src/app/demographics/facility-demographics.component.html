@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2" [class.mb-3]="!isGrouped" [class.border-bottom]="!isGrouped">
+  <h1 class="h2">{{sectionHeader}}</h1>
+  <a *ngIf="isGrouped && !isEditing" (click)="onNew()" class="btn btn-sm btn-outline-secondary">New</a>
+</div>
+<div class="row">
+  <form *ngIf="sectionSchema && sectionData && !isGrouped" class="col-md-6">
+    <ng-container *ngFor="let element of childElements">
+      <shared-xsd-form-group [element]="element" [data]="data" [error]="error"></shared-xsd-form-group>
+    </ng-container>
+  </form>
+  <div *ngIf="sectionSchema && sectionData && isGrouped && !isEditing" class="col">
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th class="col-1">UUID</th>
+            <th *ngFor="let column of sectionColumns" [class]="column.class">{{column.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of data[groupElementName]" (click)="onSelect(record)">
+            <td>{{record._attributes?.UUID}}</td>
+            <td *ngFor="let column of sectionColumns">
+              {{(record|get:column.attr)?._text}}
+            </td>
+          </tr>
+          <tr *ngIf="data[groupElementName]?.length == 0 || !data[groupElementName]"><td [attr.colspan]="sectionColumns.length + 1">No records yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <form (submit)="onSubmit()" *ngIf="sectionSchema && sectionData && isGrouped && isEditing" class="col-md-6">
+    <shared-error *ngIf="error" [error]="error"></shared-error>
+    <fieldset [disabled]="isLoading">
+      <ng-container *ngFor="let element of childElements; index as i">
+        <shared-xsd-form-group *ngIf="i == 0" [element]="element" [data]="record" [error]="error"></shared-xsd-form-group>
+        <ng-container *ngIf="i == 1">
+          <shared-xsd-form-group *ngFor="let nestedElement of element['xs:complexType']['xs:sequence']['xs:element']"
+            [element]="nestedElement" [data]="record['dFacility.FacilityGroup']" [error]="error"></shared-xsd-form-group>
+        </ng-container>
+      </ng-container>
+      <div class="form-group">
+        <button *ngIf="isNewRecord" type="submit" class="btn btn-primary">Create</button>
+        <button *ngIf="!isNewRecord" type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </fieldset>
+  </form>
+  <div class="col" *ngIf="isLoading">
+    <shared-loader></shared-loader>
+  </div>
+</div>

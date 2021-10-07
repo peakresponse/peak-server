@@ -1,0 +1,18 @@
+.form-group-nested {
+  position: relative;
+  padding-left: 3rem;
+}
+
+.form-group-nested--remove {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+}
+
+.form-group .card-body .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-check-inline .form-check-input {
+  margin-right: 0.15rem;
+}

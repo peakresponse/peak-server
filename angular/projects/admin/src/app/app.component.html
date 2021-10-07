@@ -1,5 +1,39 @@
 <nav class="sidebar">
-  <ul class="sidebar__nav">
+  <ul *ngIf="currentAgency.id" class="sidebar__nav">
+    <h4 class="sidebar__heading">Agency Admin</h4>    
+    <li>
+      <a routerLink="/demographics/agency" routerLinkActive="sidebar__item--active" class="sidebar__item">Agency</a>
+    </li>
+    <li>
+      <a routerLink="/demographics/contacts" routerLinkActive="sidebar__item--active" class="sidebar__item">Contacts</a>
+    </li>
+    <li>
+      <a routerLink="/demographics/configuration" routerLinkActive="sidebar__item--active" class="sidebar__item">Configuration</a>
+    </li>
+    <li>
+      <a routerLink="/demographics/devices" routerLinkActive="sidebar__item--active" class="sidebar__item">Devices</a>
+    </li>
+    <li>
+      <a routerLink="/demographics/facilities" routerLinkActive="sidebar__item--active" class="sidebar__item">Facilities</a>
+    </li>
+    <li>
+      <a routerLink="/demographics/locations" routerLinkActive="sidebar__item--active" class="sidebar__item">Locations</a>
+    </li>
+    <li>
+      <a routerLink="/demographics/personnel" routerLinkActive="sidebar__item--active" class="sidebar__item">Personnel</a>
+    </li>
+    <li>
+      <a routerLink="/demographics/vehicles" routerLinkActive="sidebar__item--active" class="sidebar__item">Vehicles</a>
+    </li>
+    <!-- <li>
+      <a routerLink="/demographics/custom-configuration" routerLinkActive="sidebar__item--active" class="sidebar__item">Demographics</a>
+    </li>
+    <li>
+      <a routerLink="/demographics/custom-results" routerLinkActive="sidebar__item--active" class="sidebar__item">Demographics</a>
+    </li> -->
+  </ul>
+  <ul *ngIf="!currentAgency.id && currentUser.isAdmin" class="sidebar__nav">
+    <h4 class="sidebar__heading">Site Admin</h4>
     <li>
       <a routerLink="/agencies" routerLinkActive="sidebar__item--active" class="sidebar__item">Agencies</a>
     </li>
@@ -11,6 +45,12 @@
     </li>
     <li>
       <a routerLink="/users" routerLinkActive="sidebar__item--active" class="sidebar__item">Users</a>
+    </li>
+  </ul>
+  <ul class="sidebar__nav">
+    <li class="sidebar__item"></li>
+    <li>
+      <a href="/logout" class="sidebar__item">Log out</a>
     </li>
   </ul>
 </nav>

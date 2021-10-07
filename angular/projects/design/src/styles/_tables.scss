@@ -47,7 +47,8 @@ tr[ng-reflect-router-link] {
       height: 2.5rem;
       position: absolute;
       right: 0;
-      top: 1rem;
+      top: 50%;
+      transform: translateY(-1.25rem);
       width: 2.5rem;
     }
   }

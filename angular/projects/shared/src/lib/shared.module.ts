@@ -24,13 +24,25 @@ import { SearchFieldComponent } from './components/fields/search-field.component
 import { SelectFieldComponent } from './components/fields/select-field.component';
 import { TextFieldComponent } from './components/fields/text-field.component';
 
+import { XsdBaseComponent } from './components/fields/xsd/xsd-base.component';
+import { XsdDateTimeComponent } from './components/fields/xsd/xsd-datetime.component';
+import { XsdElementWrapperComponent } from './components/fields/xsd/xsd-element-wrapper.component';
+import { XsdElementComponent } from './components/fields/xsd/xsd-element.component';
+import { XsdFormGroupComponent } from './components/fields/xsd/xsd-form-group.component';
+import { XsdInputComponent } from './components/fields/xsd/xsd-input.component';
+import { XsdSelectStateComponent } from './components/fields/xsd/xsd-select-state.component';
+import { XsdSelectComponent } from './components/fields/xsd/xsd-select.component';
+
 import { AutoloadDirective } from './directives/autoload.directive';
 import { DebouncedDirective } from './directives/debounced.directive';
 
 import { ErrorPipe } from './pipes/error.pipe';
+import { GetPipe } from './pipes/get.pipe';
+import { InflectionPipe } from './pipes/inflection.pipe';
 
 @NgModule({
   declarations: [
+    // components
     ErrorComponent,
     FormComponent,
     ListComponent,
@@ -38,23 +50,39 @@ import { ErrorPipe } from './pipes/error.pipe';
     ModalComponent,
     UploaderComponent,
     WizardComponent,
+    // components/branding
     Logo,
     LogoFullDark,
     LogoFullLight,
     LogoFullWhite,
     LogoSquareDark,
     LogoSquareLight,
+    // components/fields
     CheckboxComponent,
     FileFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
+    // components/fields/xsd
+    XsdBaseComponent,
+    XsdDateTimeComponent,
+    XsdElementWrapperComponent,
+    XsdElementComponent,
+    XsdFormGroupComponent,
+    XsdInputComponent,
+    XsdSelectStateComponent,
+    XsdSelectComponent,
+    // directives
     AutoloadDirective,
     DebouncedDirective,
+    // pipes
     ErrorPipe,
+    GetPipe,
+    InflectionPipe,
   ],
   imports: [CommonModule, FormsModule, NgbModule],
   exports: [
+    // components
     ErrorComponent,
     FormComponent,
     ListComponent,
@@ -62,20 +90,35 @@ import { ErrorPipe } from './pipes/error.pipe';
     ModalComponent,
     UploaderComponent,
     WizardComponent,
+    // components/branding
     Logo,
     LogoFullDark,
     LogoFullLight,
     LogoFullWhite,
     LogoSquareDark,
     LogoSquareLight,
+    // components/fields
     CheckboxComponent,
     FileFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
+    // components/fields/xsd
+    XsdBaseComponent,
+    XsdDateTimeComponent,
+    XsdElementWrapperComponent,
+    XsdElementComponent,
+    XsdFormGroupComponent,
+    XsdInputComponent,
+    XsdSelectStateComponent,
+    XsdSelectComponent,
+    // directives
     AutoloadDirective,
     DebouncedDirective,
+    // pipes
     ErrorPipe,
+    GetPipe,
+    InflectionPipe,
   ],
 })
 export class SharedModule {}

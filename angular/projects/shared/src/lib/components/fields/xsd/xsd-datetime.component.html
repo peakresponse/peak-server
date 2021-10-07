@@ -1,0 +1,6 @@
+<shared-xsd-element-wrapper [element]="element" [data]="data" [index]="index" [selectedValue]="selectedValue">
+  <div class="input-group-prepend">
+    <button (click)="dateInput.toggle()" type="button" class="btn btn-outline-secondary"><i class="far fa-calendar-alt"></i></button>
+  </div>
+  <input [id]="formName" [name]="formName" [(ngModel)]="value" ngbDatepicker #dateInput="ngbDatepicker" placeholder="YYYY-MM-DD" type="text" class="form-control" />
+</shared-xsd-element-wrapper>
