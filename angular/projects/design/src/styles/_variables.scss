@@ -100,6 +100,15 @@ $shadow-minimal: 2px 3px 54px rgba(118, 140, 151, 0.1);
 $shadow-focused-recording: 0px 0px 0px 4px #fed2b1;
 $shadow-focused-editing: 0px 0px 0px 4px #d0e9f7;
 
+$primary: $brand-primary-500;
+$danger: $brand-secondary-500;
+$info: $brand-primary-500;
+
+$alert-padding-x: $grid-gutter-width;
+$alert-border-radius: 0.5rem;
+$alert-border-width: 0;
+$alert-bg-scale: 0;
+
 $modal-content-border-width: 0;
 $modal-content-border-radius: 1rem;
 $modal-content-box-shadow-xs: $shadow-10-15;

@@ -10,6 +10,7 @@ import { AgencyService, NavigationService, SchemaService, UserService } from 'sh
 import { AgenciesModule } from './agencies/agencies.module';
 import { DemographicsModule } from './demographics/demographics.module';
 import { FacilitiesModule } from './facilities/facilities.module';
+import { PsapsModule } from './psaps/psaps.module';
 import { StatesModule } from './states/states.module';
 import { UsersModule } from './users/users.module';
 
@@ -22,6 +23,7 @@ import { UsersModule } from './users/users.module';
     AgenciesModule,
     DemographicsModule,
     FacilitiesModule,
+    PsapsModule,
     StatesModule,
     UsersModule,
   ],
