@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2" i18n>Edit PSAP</h1>
+</div>
+<shared-form *ngIf="id" type="psaps" [id]="id" class="d-block col-xl-6">
+  <ng-template let-record="record" let-error="error">
+    <ul class="nav">
+      <li class="nav__item">
+        <a class="nav__link" [routerLink]="['/psaps', id, 'edit']" routerLinkActive="nav__link--active">Edit</a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link" [routerLink]="['/psaps', id, 'dispatchers']" routerLinkActive="nav__link--active">Dispatchers</a>
+      </li>
+    </ul>
+
+  </ng-template>
+</shared-form>

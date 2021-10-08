@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  templateUrl: './edit-psap.component.html',
+  templateUrl: './edit-psap-dispatchers.component.html',
 })
-export class EditPsapComponent {
+export class EditPsapDispatchersComponent {
   id: string = '';
 
   constructor(private route: ActivatedRoute) {}
