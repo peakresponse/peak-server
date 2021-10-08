@@ -158,7 +158,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, ['id', 'firstName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl']);
+      return _.pick(attributes, ['id', 'firstName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl', 'isAdmin']);
     }
   }
 
@@ -279,6 +279,10 @@ module.exports = (sequelize, DataTypes) => {
       passwordResetTokenExpiresAt: {
         type: DataTypes.DATE,
         field: 'password_reset_token_expires_at',
+      },
+      apiKey: {
+        type: DataTypes.STRING,
+        field: 'api_key',
       },
     },
     {

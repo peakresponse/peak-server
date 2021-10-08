@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { v4 as uuid } from 'uuid';
 
 import { NavigationService } from 'shared';
 
@@ -7,8 +8,7 @@ import { NavigationService } from 'shared';
   templateUrl: './edit-user.component.html',
 })
 export class EditUserComponent {
-  id: string | null = null;
-  icon: any = null;
+  id: string = '';
 
   constructor(private navigation: NavigationService, private route: ActivatedRoute) {}
 
@@ -16,17 +16,11 @@ export class EditUserComponent {
     this.id = this.route.snapshot.params['id'];
   }
 
-  onIconRemove(record: any) {
-    record.iconFile = null;
-    this.icon = null;
-  }
-
-  onIconUploaded(record: any, upload: any) {
-    record.iconFile = upload.href;
-    this.icon = upload;
-  }
-
   onDelete() {
     this.navigation.backTo(`/users`);
+  }
+
+  onGenerate(record: any) {
+    record.apiKey = uuid();
   }
 }

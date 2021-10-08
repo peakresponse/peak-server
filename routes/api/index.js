@@ -8,6 +8,7 @@ router.use('/demographics', require('./demographics'));
 router.use('/employments', require('./employments'));
 router.use('/facilities', require('./facilities'));
 router.use('/patients', require('./patients'));
+router.use('/psaps', require('./psaps'));
 router.use('/reports', require('./reports'));
 router.use('/responders', require('./responders'));
 router.use('/scenes', require('./scenes'));

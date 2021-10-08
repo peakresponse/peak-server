@@ -261,6 +261,15 @@ export class ApiService {
     },
   };
 
+  psaps = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/psaps', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/psaps/${id}`, params);
+    },
+  };
+
   responders = {
     index: (sceneId: string, params?: HttpParams): Observable<any> => {
       params = params || new HttpParams();
@@ -332,6 +341,9 @@ export class ApiService {
     },
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/users', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post('/api/users', data);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/users/${id}`, params);

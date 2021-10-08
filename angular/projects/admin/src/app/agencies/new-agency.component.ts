@@ -15,7 +15,7 @@ export class NewAgencyComponent {
     this.api.states.index().subscribe((res: any) => (this.states = res.body));
   }
 
-  onCreate(facility: any) {
-    this.navigation.replaceWith(`/agencies/${facility.id}`);
+  onCreate(agency: any) {
+    this.navigation.replaceWith(`/agencies/${agency.id}`);
   }
 }

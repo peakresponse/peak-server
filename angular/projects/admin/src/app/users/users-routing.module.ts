@@ -5,6 +5,7 @@ import { AgencyService, UserService } from 'shared';
 
 import { EditUserComponent } from './edit-user.component';
 import { ListUsersComponent } from './list-users.component';
+import { NewUserComponent } from './new-user.component';
 
 const appRoutes: Routes = [
   {
@@ -15,6 +16,10 @@ const appRoutes: Routes = [
       user: UserService,
     },
     children: [
+      {
+        path: 'new',
+        component: NewUserComponent,
+      },
       {
         path: ':id',
         component: EditUserComponent,

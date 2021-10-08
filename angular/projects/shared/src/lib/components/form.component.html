@@ -12,7 +12,7 @@
           This record has been updated!
         </span>
       </span>
-      <button (click)="deleteConfirmation.show()" type="button" *ngIf="record.id" class="btn btn--danger">Delete</button>
+      <button (click)="deleteConfirmation.show()" type="button" *ngIf="record.id && canDelete" class="btn btn--danger">Delete</button>
     </div>
   </fieldset>
 </form>

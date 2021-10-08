@@ -5,10 +5,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './list-psaps.component.html',
 })
 export class ListPsapsComponent {
-  constructor(public route: ActivatedRoute) {}
+  search: string = '';
 
-  borderingStates(records: any[], record: any): any[] {
-    const borderStates = [...record.borderStates];
-    return borderStates.map((s) => records.find((r) => r.id === s));
-  }
+  constructor(public route: ActivatedRoute) {}
 }

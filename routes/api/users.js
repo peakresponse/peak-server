@@ -1,6 +1,7 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
 const { Op } = require('sequelize');
+const _ = require('lodash');
 
 const models = require('../../models');
 const helpers = require('../helpers');
@@ -35,6 +36,15 @@ router.get(
   })
 );
 
+router.post(
+  '/',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    const user = await models.User.register(req.body);
+    res.status(HttpStatus.CREATED).json(user.toJSON());
+  })
+);
+
 router.get(
   '/me',
   interceptors.requireLogin(),
@@ -64,7 +74,10 @@ router.get(
   helpers.async(async (req, res) => {
     const user = await models.User.findByPk(req.params.id);
     if (user) {
-      res.json(user.toJSON());
+      const data = user.toJSON();
+      /// add additional attributes only for admins
+      data.apiKey = user.apiKey;
+      res.json(data);
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
@@ -79,16 +92,8 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       user = await models.User.findByPk(req.params.id, { transaction });
       if (user) {
-        await user.update(
-          {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            iconFile: req.body.iconFile,
-            password: req.body.password,
-          },
-          { transaction }
-        );
+        const data = _.pick(req.body, ['firstName', 'lastName', 'email', 'iconFile', 'position', 'apiKey', 'password', 'isAdmin']);
+        await user.update(data, { transaction });
       }
     });
     if (user) {

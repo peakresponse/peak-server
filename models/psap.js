@@ -1,6 +1,7 @@
 const { Model } = require('sequelize');
 const moment = require('moment');
 const path = require('path');
+const sequelizePaginate = require('sequelize-paginate');
 const tmp = require('tmp');
 
 const { download, parseSpreadsheet } = require('../lib/utils');
@@ -86,5 +87,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+
+  sequelizePaginate.paginate(Psap);
+
   return Psap;
 };

@@ -94,6 +94,10 @@ export class FormComponent {
     return false;
   }
 
+  get canDelete(): boolean {
+    return (this.api as any)[this.type].delete !== undefined;
+  }
+
   onDelete() {
     this.loading = true;
     this.error = false;

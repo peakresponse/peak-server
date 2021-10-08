@@ -40,6 +40,7 @@ tr[ng-reflect-router-link] {
 
   td:last-child {
     position: relative;
+    padding-right: 2.5rem;
     &::after {
       background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 32L26 20L14 8' stroke='%237E9CA9' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
       content: '';

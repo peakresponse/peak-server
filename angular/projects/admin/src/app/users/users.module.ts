@@ -8,9 +8,10 @@ import { UsersRoutingModule } from './users-routing.module';
 
 import { EditUserComponent } from './edit-user.component';
 import { ListUsersComponent } from './list-users.component';
+import { NewUserComponent } from './new-user.component';
 
 @NgModule({
-  declarations: [EditUserComponent, ListUsersComponent],
+  declarations: [EditUserComponent, ListUsersComponent, NewUserComponent],
   imports: [CommonModule, FormsModule, SharedModule, UsersRoutingModule],
   providers: [],
 })
