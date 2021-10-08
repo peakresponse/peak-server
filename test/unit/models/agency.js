@@ -57,6 +57,9 @@ describe('models', () => {
     describe('validate()', () => {
       it('validates that a subdomain is a valid value', async () => {
         const agency = models.Agency.build();
+        /// add placeholder values for other required fields
+        agency.stateUniqueId = 'TEST-001';
+        agency.number = 'TEST-001';
 
         /// spaces are not valid
         agency.subdomain = 'spaces not valid';

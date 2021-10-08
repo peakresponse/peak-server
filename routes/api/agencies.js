@@ -89,7 +89,11 @@ router.get(
       const { subdomain } = req.query;
       try {
         /// validate that it is a valid value
-        let agency = await models.Agency.build({ subdomain });
+        let agency = await models.Agency.build({
+          stateUniqueId: 'placeholder',
+          number: 'placeholder',
+          subdomain,
+        });
         await agency.validate();
         /// check if it already exists
         agency = await models.Agency.findOne({
