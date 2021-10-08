@@ -9,11 +9,12 @@ import { BrandingComponent } from './branding.component';
 import { ButtonsComponent } from './buttons.component';
 import { IconsComponent } from './icons.component';
 import { InputsComponent } from './inputs.component';
+import { NavsComponent } from './navs.component';
 
 import { SharedModule, ApiService, UserService } from 'shared';
 
 @NgModule({
-  declarations: [AppComponent, BrandingComponent, ButtonsComponent, IconsComponent, InputsComponent],
+  declarations: [AppComponent, BrandingComponent, ButtonsComponent, IconsComponent, InputsComponent, NavsComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule, SharedModule],
   providers: [ApiService, UserService],
   bootstrap: [AppComponent],

@@ -75,7 +75,8 @@ router.get(
     const user = await models.User.findByPk(req.params.id);
     if (user) {
       const data = user.toJSON();
-      /// add additional attributes only for admins
+      /// add additional attributes
+      data.isAdmin = user.isAdmin;
       data.apiKey = user.apiKey;
       res.json(data);
     } else {

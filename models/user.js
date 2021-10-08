@@ -158,7 +158,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, ['id', 'firstName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl', 'isAdmin']);
+      return _.pick(attributes, ['id', 'firstName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl']);
     }
   }
 

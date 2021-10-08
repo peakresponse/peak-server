@@ -5,6 +5,7 @@ import { BrandingComponent } from './branding.component';
 import { ButtonsComponent } from './buttons.component';
 import { IconsComponent } from './icons.component';
 import { InputsComponent } from './inputs.component';
+import { NavsComponent } from './navs.component';
 
 const routes: Routes = [
   {
@@ -24,9 +25,13 @@ const routes: Routes = [
     component: InputsComponent,
   },
   {
+    path: 'navs',
+    component: NavsComponent,
+  },
+  {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/inputs',
+    redirectTo: '/branding',
   },
 ];
 
