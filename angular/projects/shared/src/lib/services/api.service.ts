@@ -219,6 +219,18 @@ export class ApiService {
     },
   };
 
+  dispatchers = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/dispatchers', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/dispatchers`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/dispatchers/${id}`, params);
+    },
+  };
+
   employments = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/employments', params);

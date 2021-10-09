@@ -15,6 +15,7 @@ tr[ng-reflect-router-link] {
   width: 100%;
   margin-left: -$grid-gutter-width;
   margin-right: -$grid-gutter-width;
+  margin-bottom: 1rem;
 
   td {
     @include h4;

@@ -4,8 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgencyService, UserService } from 'shared';
 
 import { EditPsapComponent } from './edit-psap.component';
-import { EditPsapDispatchersComponent } from './edit-psap-dispatchers.component';
+import { ListPsapDispatchersComponent } from './list-psap-dispatchers.component';
 import { ListPsapsComponent } from './list-psaps.component';
+import { NewPsapDispatcherComponent } from './new-psap-dispatcher.component';
 
 const appRoutes: Routes = [
   {
@@ -21,8 +22,12 @@ const appRoutes: Routes = [
         component: EditPsapComponent,
       },
       {
+        path: ':id/dispatchers/new',
+        component: NewPsapDispatcherComponent,
+      },
+      {
         path: ':id/dispatchers',
-        component: EditPsapDispatchersComponent,
+        component: ListPsapDispatchersComponent,
       },
       {
         path: ':id',

@@ -32,16 +32,10 @@ export class AgencyComponent {
 
   formatter = (result: { name: string }) => result.name;
 
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((term) =>
-        this.api.agencies.index(new HttpParams().set('search', term).set('stateId', this.stateId)).pipe(
-          catchError(() => of([])),
-          map((res) => res.body)
-        )
-      )
+  searchHandler = (term: string) =>
+    this.api.agencies.index(new HttpParams().set('search', term).set('stateId', this.stateId)).pipe(
+      catchError(() => of([])),
+      map((res) => res.body)
     );
 
   onBack() {

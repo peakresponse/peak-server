@@ -8,11 +8,12 @@ import { SharedModule } from 'shared';
 import { PsapsRoutingModule } from './psaps-routing.module';
 
 import { EditPsapComponent } from './edit-psap.component';
-import { EditPsapDispatchersComponent } from './edit-psap-dispatchers.component';
+import { ListPsapDispatchersComponent } from './list-psap-dispatchers.component';
 import { ListPsapsComponent } from './list-psaps.component';
+import { NewPsapDispatcherComponent } from './new-psap-dispatcher.component';
 
 @NgModule({
-  declarations: [EditPsapComponent, EditPsapDispatchersComponent, ListPsapsComponent],
+  declarations: [EditPsapComponent, ListPsapDispatchersComponent, ListPsapsComponent, NewPsapDispatcherComponent],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, PsapsRoutingModule],
   providers: [],
 })

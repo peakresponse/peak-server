@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Observable, OperatorFunction } from 'rxjs';
+import { Observable, of, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 const states = [
@@ -92,10 +92,6 @@ export class InputsComponent {
       },
     ],
   };
-  search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map((term) => (term.length < 2 ? [] : states.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)))
-    );
+  search = (term: string) =>
+    term.length < 2 ? of([]) : of(states.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 }

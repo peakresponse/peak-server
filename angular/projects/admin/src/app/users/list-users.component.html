@@ -5,7 +5,7 @@
       <h1 class="h2">Users</h1>
       <a routerLink="/users/new" class="btn btn--sm btn--secondary ms-3">New User</a>
     </span>
-    <shared-search-field placeholder="Search" [debounceTime]="300" (debouncedValueChange)="onSearch($event)"></shared-search-field>
+    <shared-search-field placeholder="Search" (debouncedValueChange)="onSearch($event)"></shared-search-field>
   </div>
   <div class="table-responsive">
     <table class="table">

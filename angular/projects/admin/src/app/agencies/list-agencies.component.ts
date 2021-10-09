@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ListAgenciesComponent {
   search = '';
+  searchHandler = (search: string) => (this.search = search);
 
   constructor(public route: ActivatedRoute) {}
 }

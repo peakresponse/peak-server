@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
-import { OperatorFunction } from 'rxjs';
+import { Observable, of, OperatorFunction } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { BaseFieldComponent } from './base-field.component';
 
@@ -10,17 +11,31 @@ import { BaseFieldComponent } from './base-field.component';
   styles: [':host{display:block;}'],
 })
 export class SearchFieldComponent extends BaseFieldComponent {
-  @Input() ngbTypeahead?: OperatorFunction<string, readonly any[]> | null;
+  @Input() searchHandler: (query: string) => Observable<any[]> = (query: string) => of([]);
   @Input() inputFormatter: (item: any) => string = (item: any) => item;
   @Input() resultTemplate?: TemplateRef<any>;
-
   @Input() debounceTime?: number;
   @Output() debouncedValueChange = new EventEmitter<string>();
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(this.debounceTime ?? 300),
+      distinctUntilChanged(),
+      switchMap((text) => {
+        this.debouncedValueChange.emit(text);
+        return this.searchHandler(text);
+      })
+    );
 
   constructor() {
     super();
     this.id = 'search';
     this.source = { search: '' };
     this.target = this.source;
+  }
+
+  onClear() {
+    super.onClear();
+    this.debouncedValueChange.emit('');
   }
 }

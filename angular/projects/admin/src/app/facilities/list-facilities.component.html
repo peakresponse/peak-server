@@ -2,7 +2,7 @@
 <div [class.d-none]="route.firstChild">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <h1 class="h2">Facilities</h1>
-    <shared-search-field placeholder="Search" [debounceTime]="300" (debouncedValueChange)="search = $event"></shared-search-field>
+    <shared-search-field placeholder="Search" (debouncedValueChange)="search = $event"></shared-search-field>
     <!-- <a routerLink="/facilities/new" class="btn btn--sm btn--secondary">New Facility</a> -->
   </div>
   <div class="table-responsive">

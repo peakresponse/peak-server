@@ -37,9 +37,9 @@
 
 .nav__link--active {
   background-color: $brand-primary-500;
-  color: $brand-primary-100;
+  color: white;
 
   &:hover {
-    color: $brand-primary-200;
+    color: $brand-primary-100;
   }
 }

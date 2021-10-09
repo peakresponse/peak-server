@@ -77,6 +77,7 @@
     margin: 1rem 0.75rem 1rem -1rem;
     padding: 0.375rem;
     right: 0;
+    z-index: 1000;
 
     .dropdown-item {
       @include h4-semibold;

@@ -15,6 +15,7 @@ export class FormComponent {
   @Input() id: string | null = null;
   @Input() type: string = '';
   @Input() record: any = {};
+  @Input() transformRecord: (record: any) => any = (record) => record;
   @Input() hideButtons = false;
   @Input() createLabel: string = 'Create';
   @Input() updateLabel: string = 'Update';
@@ -62,7 +63,7 @@ export class FormComponent {
     this.error = false;
     if (this.id) {
       (this.api as any)[this.type]
-        .update(this.id, this.record)
+        .update(this.id, this.transformRecord(this.record))
         .pipe(
           catchError((response: HttpErrorResponse) => {
             this.error = response.error;
@@ -78,7 +79,7 @@ export class FormComponent {
         });
     } else {
       (this.api as any)[this.type]
-        .create(this.record)
+        .create(this.transformRecord(this.record))
         .pipe(
           catchError((response: HttpErrorResponse) => {
             this.error = response.error;
