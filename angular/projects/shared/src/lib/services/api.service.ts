@@ -229,6 +229,9 @@ export class ApiService {
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/dispatchers/${id}`, params);
     },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/dispatchers/${id}`, data);
+    },
   };
 
   employments = {

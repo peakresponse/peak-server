@@ -58,8 +58,26 @@ router.get(
   '/:id',
   interceptors.requireAdmin(),
   helpers.async(async (req, res) => {
-    const dispatcher = await models.Dispatcher.findByPk(req.params.id);
+    const dispatcher = await models.Dispatcher.findByPk(req.params.id, {
+      include: ['user'],
+    });
     if (dispatcher) {
+      res.json(dispatcher.toJSON());
+    } else {
+      res.send(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.patch(
+  '/:id',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    const dispatcher = await models.Dispatcher.findByPk(req.params.id, {
+      include: ['user'],
+    });
+    if (dispatcher) {
+      await dispatcher.update(_.pick(req.body, ['callSign']));
       res.json(dispatcher.toJSON());
     } else {
       res.send(HttpStatus.NOT_FOUND).end();

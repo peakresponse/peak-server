@@ -6,13 +6,13 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './list-psap-dispatchers.component.html',
 })
 export class ListPsapDispatchersComponent {
-  id: string = '';
+  psapId: string = '';
   params: HttpParams = new HttpParams();
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.params = this.params.set('psapId', this.id);
+    this.psapId = this.route.snapshot.params['psapId'];
+    this.params = this.params.set('psapId', this.psapId);
   }
 }
