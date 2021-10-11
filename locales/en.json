@@ -2,11 +2,17 @@
   "admin": {
     "title": "Administration"
   },
+  "app": {
+    "title": "Home"
+  },
   "button": {
     "submit": "Submit"
   },
   "common": {
     "pleaseWait": "Please wait..."
+  },
+  "design": {
+    "title": "Design"
   },
   "login": {
     "new": {
@@ -58,5 +64,8 @@
   },
   "terms": {
     "title": "Terms of Service"
+  },
+  "auth": {
+    "title": "auth.title"
   }
 }

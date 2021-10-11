@@ -2,12 +2,10 @@ const express = require('express');
 
 const interceptors = require('./interceptors');
 
-const adminRouter = require('./admin');
+const angularRouter = require('./angular');
 const apiRouter = require('./api');
-const authRouter = require('./auth');
 const loginRouter = require('./login');
 const nemsisRouter = require('./nemsis');
-const onboardingRouter = require('./onboarding');
 const passwordsRouter = require('./passwords');
 const rootRouter = require('./root');
 const webhooksRouter = require('./webhooks');
@@ -18,13 +16,12 @@ router.use(interceptors.loadAgency);
 router.use(interceptors.loadApiUser);
 
 router.use('/api', apiRouter);
-router.use('/auth', authRouter);
 router.use('/webhooks', webhooksRouter);
-router.use('/admin', adminRouter);
 router.use('/login', loginRouter);
 router.use('/nemsis', nemsisRouter);
 router.use('/passwords', passwordsRouter);
-router.use('/sign-up', onboardingRouter);
 router.use('/', rootRouter);
+// angular router comes last because these routes use wildcards
+router.use('/', angularRouter);
 
 module.exports = router;

@@ -1,0 +1,11 @@
+<%- contentFor('title') %><%= __(title) %>
+<%- contentFor('head') %>
+<base href="<%= baseHref %>">
+<script type="text/javascript">
+  window.env = {};
+  <% for (const key of Object.keys(environment)) { %>
+    window.env.<%= key %> = '<%= environment[key] %>';
+  <% } %>
+</script>
+<%- contentFor('body') %>
+<<%= elementRoot %>><%= __('common.pleaseWait') %></<%= elementRoot %>>

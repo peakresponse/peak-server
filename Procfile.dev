@@ -5,3 +5,4 @@ design: sleep 10 && cd angular && npm start -- --port 4200 --serve-path /angular
 auth: sleep 10 && cd angular && npm start -- --port 4300 --serve-path /angular/auth auth
 onboarding: sleep 10 && cd angular && npm start -- --port 4400 --serve-path /angular/onboarding onboarding
 admin: sleep 10 && cd angular && npm start -- --port 4500 --serve-path /angular/admin admin
+app: sleep 10 && cd angular && npm start -- --port 4600 --serve-path /angular/app app

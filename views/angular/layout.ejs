@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
-    <meta name="description" content="Peak Response is an MCI management system for EMS professionals.">
-    <meta name="author" content="Peak Response Inc.">
+    <meta name="description" content="Peak Response makes real-time patient documentation tools for EMS professionals.">
+    <meta name="author" content="Peak Response Inc">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -12,9 +12,11 @@
     <title><%= locals.title ? `${title} - ` : '' %><%= process.env.APP_NAME %></title>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/libraries/fontawesome/css/all.css" />
-    <% for (let asset of Object.keys(designWebpackStats.assets)) { %>
-      <% if (asset.endsWith('.css')) { %>
-        <link rel="stylesheet" href="<%= designWebpackStats.assets[asset].publicPath %>" />
+    <% if (locals.designWebpackStats) { %>
+      <% for (let asset of Object.keys(designWebpackStats.assets)) { %>
+        <% if (asset.endsWith('.css')) { %>
+          <link rel="stylesheet" href="<%= designWebpackStats.assets[asset].publicPath %>" />
+        <% } %>
       <% } %>
     <% } %>
     <% for (let asset of Object.keys(webpackStats.assets)) { %>
@@ -26,5 +28,10 @@
   </head>
   <body<% if (locals.bodyClass) { %> class="<%= bodyClass %>"<% } %>>
     <%- body %>
+    <% for (let asset of Object.keys(webpackStats.assets)) { %>
+      <% if (asset.endsWith('.js')) { %>
+        <script type="application/javascript" src="<%= webpackStats.assets[asset].publicPath %>" defer></script>
+      <% } %>
+    <% } %>
   </body>
 </html>

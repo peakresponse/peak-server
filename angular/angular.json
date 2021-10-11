@@ -15,7 +15,7 @@
       },
       "root": "projects/design",
       "sourceRoot": "projects/design/src",
-      "prefix": "app",
+      "prefix": "design",
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -103,7 +103,7 @@
       "projectType": "library",
       "root": "projects/shared",
       "sourceRoot": "projects/shared/src",
-      "prefix": "lib",
+      "prefix": "shared",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -142,7 +142,7 @@
       },
       "root": "projects/auth",
       "sourceRoot": "projects/auth/src",
-      "prefix": "app",
+      "prefix": "auth",
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -238,7 +238,7 @@
       },
       "root": "projects/onboarding",
       "sourceRoot": "projects/onboarding/src",
-      "prefix": "app",
+      "prefix": "onboarding",
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -334,7 +334,7 @@
       },
       "root": "projects/admin",
       "sourceRoot": "projects/admin/src",
-      "prefix": "app",
+      "prefix": "admin",
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -413,6 +413,102 @@
             "inlineStyleLanguage": "scss",
             "assets": ["projects/admin/src/favicon.ico", "projects/admin/src/assets"],
             "styles": ["projects/admin/src/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/app",
+      "sourceRoot": "projects/app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "customWebpackConfig": {
+              "path": "projects/app/webpack.config.js"
+            },
+            "outputPath": "dist/app",
+            "index": "projects/app/src/index.html",
+            "main": "projects/app/src/main.ts",
+            "polyfills": "projects/app/src/polyfills.ts",
+            "tsConfig": "projects/app/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": ["projects/app/src/favicon.ico", "projects/app/src/assets"],
+            "styles": ["projects/app/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/app/src/environments/environment.ts",
+                  "with": "projects/app/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "app:build:production"
+            },
+            "development": {
+              "browserTarget": "app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/app/src/test.ts",
+            "polyfills": "projects/app/src/polyfills.ts",
+            "tsConfig": "projects/app/tsconfig.spec.json",
+            "karmaConfig": "projects/app/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": ["projects/app/src/favicon.ico", "projects/app/src/assets"],
+            "styles": ["projects/app/src/styles.scss"],
             "scripts": []
           }
         }
