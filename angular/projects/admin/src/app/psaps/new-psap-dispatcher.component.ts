@@ -22,12 +22,12 @@ export class NewPsapDispatcherComponent {
   formatter = (result: any) => `${result.firstName} ${result.lastName} <${result.email}>`;
 
   transformRecord = (record: any) => ({
-    psapId: this.route.snapshot.params.id,
+    psapId: this.route.snapshot.params.psapId,
     userId: record.user.id,
     callSign: record.callSign,
   });
 
   onCreate() {
-    this.navigation.backTo(`/psaps/${this.route.snapshot.params.id}/dispatchers`);
+    this.navigation.backTo(`/psaps/${this.route.snapshot.params.psapId}/dispatchers`);
   }
 }
