@@ -15,7 +15,6 @@ describe('/webhooks/sffd', () => {
   beforeEach(async () => {
     await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'dispatchers', 'agencies', 'employments']);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'sfdem.user@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
   });
 
   describe('POST /cad', () => {
@@ -26,6 +25,7 @@ describe('/webhooks/sffd', () => {
       await testSession
         .post('/webhooks/sffd/cad')
         .set('Host', `sffd.${process.env.BASE_HOST}`)
+        .set('Authorization', `Bearer 66ced5b6-6ed3-42e3-a11d-ea0d700dee9e`)
         .set('Accept', 'application/json')
         .send(data)
         .expect(HttpStatus.OK);

@@ -15,6 +15,7 @@ const webhooksRouter = require('./webhooks');
 const router = express.Router();
 
 router.use(interceptors.loadAgency);
+router.use(interceptors.loadApiUser);
 
 router.use('/api', apiRouter);
 router.use('/auth', authRouter);

@@ -69,6 +69,21 @@ module.exports.loadAgency = async (req, res, next) => {
   next();
 };
 
+module.exports.loadApiUser = async (req, res, next) => {
+  if (!req.user && req.headers.authorization) {
+    // attempt api key authentication via bearer token
+    const m = req.headers.authorization.match(/Bearer (.+)/);
+    if (m) {
+      req.user = await models.User.findOne({
+        where: {
+          apiKey: m[1],
+        },
+      });
+    }
+  }
+  next();
+};
+
 function sendErrorUnauthorized(req, res) {
   if (req.accepts('html')) {
     req.flash('error', 'You must log in to view the page you visited.');
