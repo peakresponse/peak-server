@@ -57,6 +57,13 @@ export class FormComponent {
       });
   }
 
+  get canSave(): boolean {
+    if (this.id) {
+      return (this.api as any)[this.type].update !== undefined;
+    }
+    return (this.api as any)[this.type].create !== undefined;
+  }
+
   onSubmit() {
     this.loading = true;
     this.updated = false;

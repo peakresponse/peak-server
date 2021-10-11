@@ -4,6 +4,7 @@ const session = require('supertest-session');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
+const models = require('../../../models');
 
 describe('/api/psaps', () => {
   let testSession;
@@ -21,10 +22,42 @@ describe('/api/psaps', () => {
     });
   });
 
+  describe('POST /', () => {
+    it('creates a new record', async () => {
+      const response = await testSession
+        .post('/api/dispatchers')
+        .send({
+          psapId: '588',
+          userId: '9eb5be23-c098-495c-a758-ce1def3ff541',
+          callSign: 'TEST',
+        })
+        .expect(HttpStatus.CREATED);
+
+      const record = await models.Dispatcher.findByPk(response.body.id);
+      assert(record);
+      assert.deepStrictEqual(record.psapId, '588');
+      assert.deepStrictEqual(record.userId, '9eb5be23-c098-495c-a758-ce1def3ff541');
+      assert.deepStrictEqual(record.callSign, 'TEST');
+    });
+  });
+
   describe('GET /:id', () => {
     it('returns a record by id', async () => {
       const response = await testSession.get('/api/dispatchers/1f8a2ee2-8b6a-43b6-8764-a6013643a24b').expect(HttpStatus.OK);
       assert.deepStrictEqual(response.body.callSign, 'DT01');
+    });
+  });
+
+  describe('PATCH /:id', () => {
+    it('updates a record by id', async () => {
+      await testSession
+        .patch('/api/dispatchers/1f8a2ee2-8b6a-43b6-8764-a6013643a24b')
+        .send({
+          callSign: 'TESTING',
+        })
+        .expect(HttpStatus.OK);
+      const record = await models.Dispatcher.findByPk('1f8a2ee2-8b6a-43b6-8764-a6013643a24b');
+      assert.deepStrictEqual(record.callSign, 'TESTING');
     });
   });
 });

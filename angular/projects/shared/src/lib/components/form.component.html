@@ -3,7 +3,7 @@
     <template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{record: record, error: error}"></template>
     <div *ngIf="!hideButtons && !loading" class="form-group d-flex justify-content-between">
       <span>
-        <button [disabled]="!form.valid" type="submit" class="btn btn--primary">
+        <button *ngIf="canSave" [disabled]="!form.valid" type="submit" class="btn btn--primary">
           <span *ngIf="!record.id">{{createLabel}}</span>
           <span *ngIf="record.id">{{updateLabel}}</span>
         </button>
