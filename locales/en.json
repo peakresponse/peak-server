@@ -5,6 +5,9 @@
   "app": {
     "title": "Home"
   },
+  "auth": {
+    "title": "Sign In"
+  },
   "button": {
     "submit": "Submit"
   },
@@ -64,8 +67,5 @@
   },
   "terms": {
     "title": "Terms of Service"
-  },
-  "auth": {
-    "title": "auth.title"
   }
 }
