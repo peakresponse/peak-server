@@ -20,13 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       if (!(await assignee.isEmployedBy(agency, { transaction: options?.transaction }))) {
         throw new Error();
       }
-      if (vehicle.createdByAgencyId !== agency.id) {
+      if (vehicle && vehicle.createdByAgencyId !== agency.id) {
         throw new Error();
       }
       // check if there's a current assignment
       const currentAssignment = await assignee.getCurrentAssignment({ transaction: options?.transaction });
       if (currentAssignment) {
-        if (currentAssignment.vehicleId === vehicle.id) {
+        if (currentAssignment.vehicleId === (vehicle?.id ?? null)) {
           // already assigned to this vehicle, return existing assignment record
           return currentAssignment;
         }
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       return Assignment.create(
         {
           userId: assignee.id,
-          vehicleId: vehicle.id,
+          vehicleId: vehicle?.id,
           createdById: user.id,
           updatedById: user.id,
         },

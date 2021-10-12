@@ -43,6 +43,16 @@ describe('/api/assignments', () => {
       assert.deepStrictEqual(response.body.vehicleId, '91986460-5a12-426d-9855-93227b47ead5');
     });
 
+    it('creates a new null Assignment', async () => {
+      const response = await testSession
+        .post('/api/assignments')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({})
+        .expect(HttpStatus.CREATED);
+      assert.deepStrictEqual(response.body.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
+      assert.deepStrictEqual(response.body.vehicleId, null);
+    });
+
     it('returns an existing Assignment if unchanged', async () => {
       const response = await testSession
         .post('/api/assignments')

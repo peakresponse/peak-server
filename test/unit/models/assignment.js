@@ -30,6 +30,15 @@ describe('models', () => {
         assert.deepStrictEqual(assignment.vehicleId, vehicle.id);
       });
 
+      it('creates a new null Assignment', async () => {
+        const user = await models.User.findByPk('8e6753e2-3063-48e1-af22-cea57bd06514');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const assignment = await models.Assignment.assign(user, agency, user, null);
+        assert(assignment);
+        assert.deepStrictEqual(assignment.userId, user.id);
+        assert.deepStrictEqual(assignment.vehicleId, null);
+      });
+
       it('returns an existing assignment if unchanged', async () => {
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
