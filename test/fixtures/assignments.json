@@ -1,0 +1,15 @@
+[
+  {
+    "model": "Assignment",
+    "data": {
+      "id": "e5b169aa-e0a6-441b-92d4-95c729ff1988",
+      "userId": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "vehicleId": "4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7",
+      "endedAt": null,
+      "createdAt": "2021-07-27T18:11:51.085Z",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedAt": "2021-07-27T18:18:50.333Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
+  }
+]

@@ -10,6 +10,8 @@ const { Base } = require('./base');
 module.exports = (sequelize, DataTypes) => {
   class User extends Base {
     static associate(models) {
+      User.hasMany(models.Assignment, { as: 'assignments', foreignKey: 'userId' });
+      User.hasOne(models.Assignment.scope('current'), { as: 'currentAssignment', foreignKey: 'userId' });
       User.hasMany(models.Dispatcher, { as: 'dispatchers', foreignKey: 'userId' });
       User.hasMany(models.Employment, { as: 'employments', foreignKey: 'userId' });
       User.hasMany(models.Patient, {
@@ -72,6 +74,14 @@ module.exports = (sequelize, DataTypes) => {
 
     authenticate(password) {
       return bcrypt.compare(password, this.hashedPassword);
+    }
+
+    async isEmployedBy(agency, options) {
+      const employment = await sequelize.models.Employment.findOne({
+        where: { userId: this.id, agencyId: agency.id },
+        transaction: options?.transaction,
+      });
+      return employment && employment.isActive ? employment : null;
     }
 
     async sendPasswordResetEmail(agency, options) {

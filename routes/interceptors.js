@@ -108,10 +108,8 @@ async function requireLogin(req, res, next, role) {
     let isAllowed = req.user.isAdmin;
     if (!isAllowed && req.agency) {
       /// check for active employment
-      const employment = await models.Employment.findOne({
-        where: { userId: req.user.id, agencyId: req.agency.id },
-      });
-      isAllowed = employment && employment.isActive;
+      const employment = await req.user.isEmployedBy(req.agency);
+      isAllowed = employment !== null;
       /// check for role, if any
       if (role) {
         isAllowed = employment.isOwner || employment.roles.include(role);

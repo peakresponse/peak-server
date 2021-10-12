@@ -9,7 +9,17 @@ describe('/api/users', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments', 'scenes', 'responders']);
+    await helpers.loadFixtures([
+      'users',
+      'states',
+      'agencies',
+      'vehicles',
+      'assignments',
+      'contacts',
+      'employments',
+      'scenes',
+      'responders',
+    ]);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -25,6 +35,9 @@ describe('/api/users', () => {
       assert(data.user);
       assert.deepStrictEqual(data.user.email, 'regular@peakresponse.net');
       assert.deepStrictEqual(data.user.activeScenes?.length, 1);
+      assert(data.user.currentAssignment);
+      assert(data.user.currentAssignment.vehicle);
+      assert.deepStrictEqual(data.user.currentAssignment.vehicle.number, '88');
       assert(data.agency);
       assert.deepStrictEqual(data.agency.subdomain, 'bmacc');
       assert(data.employment);
