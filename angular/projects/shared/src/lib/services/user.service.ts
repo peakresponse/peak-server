@@ -54,6 +54,13 @@ export class UserService implements Resolve<any> {
     }
   }
 
+  setAssignment(assignment: any) {
+    if (this.user) {
+      this.user.currentAssignment = assignment;
+      this.userSubject.next(this.user);
+    }
+  }
+
   constructor(private api: ApiService) {
     this.api.users
       .me()

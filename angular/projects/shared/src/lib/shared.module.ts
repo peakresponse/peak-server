@@ -8,6 +8,7 @@ import { FormComponent } from './components/form.component';
 import { ListComponent } from './components/list.component';
 import { LoaderComponent } from './components/loader.component';
 import { ModalComponent } from './components/modal.component';
+import { PictureComponent } from './components/picture.component';
 import { UploaderComponent } from './components/uploader.component';
 import { WizardComponent } from './components/wizard.component';
 
@@ -33,6 +34,9 @@ import { XsdInputComponent } from './components/fields/xsd/xsd-input.component';
 import { XsdSelectStateComponent } from './components/fields/xsd/xsd-select-state.component';
 import { XsdSelectComponent } from './components/fields/xsd/xsd-select.component';
 
+import { CommandFooterComponent } from './components/headers/command-footer.component';
+import { HeaderComponent } from './components/headers/header.component';
+
 import { AutoloadDirective } from './directives/autoload.directive';
 import { DebouncedDirective } from './directives/debounced.directive';
 
@@ -48,6 +52,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     ListComponent,
     LoaderComponent,
     ModalComponent,
+    PictureComponent,
     UploaderComponent,
     WizardComponent,
     // components/branding
@@ -72,6 +77,9 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     XsdInputComponent,
     XsdSelectStateComponent,
     XsdSelectComponent,
+    // components/headers
+    CommandFooterComponent,
+    HeaderComponent,
     // directives
     AutoloadDirective,
     DebouncedDirective,
@@ -88,6 +96,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     ListComponent,
     LoaderComponent,
     ModalComponent,
+    PictureComponent,
     UploaderComponent,
     WizardComponent,
     // components/branding
@@ -112,6 +121,9 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     XsdInputComponent,
     XsdSelectStateComponent,
     XsdSelectComponent,
+    // components/headers
+    CommandFooterComponent,
+    HeaderComponent,
     // directives
     AutoloadDirective,
     DebouncedDirective,

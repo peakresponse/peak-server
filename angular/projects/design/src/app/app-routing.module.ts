@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { BrandingComponent } from './branding.component';
 import { ButtonsComponent } from './buttons.component';
+import { HeadersComponent } from './headers.component';
 import { IconsComponent } from './icons.component';
 import { InputsComponent } from './inputs.component';
 import { NavsComponent } from './navs.component';
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'buttons',
     component: ButtonsComponent,
+  },
+  {
+    path: 'headers',
+    component: HeadersComponent,
   },
   {
     path: 'icons',

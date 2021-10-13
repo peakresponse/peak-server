@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ContentChild, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 
 @Component({
   template: '',
@@ -17,6 +17,7 @@ export class BaseFieldComponent {
   @Input() hasError: boolean = false;
   @Input() isDisabled: boolean = false;
   @Input() isFocusable: boolean = true;
+  @Output() valueChange = new EventEmitter<any>();
 
   isFocused = false;
 
@@ -71,6 +72,7 @@ export class BaseFieldComponent {
     if (!this.isReadOnly) {
       this.target[this.derivedPropertyName] = value;
       this.setPredictionStatus('CORRECTED');
+      this.valueChange.emit(value);
     }
   }
 

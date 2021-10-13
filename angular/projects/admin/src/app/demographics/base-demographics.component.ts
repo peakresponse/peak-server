@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 import { find, set } from 'lodash';
 import { Subscription, EMPTY } from 'rxjs';
@@ -45,7 +45,9 @@ export class BaseDemographicsComponent {
       this.sectionSchema = schema;
       this.subscribeToRouteParams();
     });
-    (this.api.demographics as any)[this.section].index().subscribe((response: HttpResponse<any>) => {
+    let params = new HttpParams();
+    params = params.set('format', 'xmljs');
+    (this.api.demographics as any)[this.section].index(params).subscribe((response: HttpResponse<any>) => {
       this.sectionData = response.body || {};
       this.subscribeToRouteParams();
     });

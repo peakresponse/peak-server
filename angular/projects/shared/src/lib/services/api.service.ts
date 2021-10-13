@@ -95,6 +95,12 @@ export class ApiService {
     },
   };
 
+  assignments = {
+    create: (data: any): Observable<any> => {
+      return this.post('/api/assignments', data);
+    },
+  };
+
   auth = {
     login: (data: any): Observable<any> => {
       return this.post('/login', data);

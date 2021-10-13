@@ -1,11 +1,14 @@
+h2,
 .h2-bold {
   @include h2-bold;
 }
 
+h3,
 .h3-semibold {
   @include h3-semibold;
 }
 
+h4,
 .h4-semibold {
   @include h4-semibold;
 }

@@ -13,6 +13,7 @@ export * from './lib/components/form.component';
 export * from './lib/components/list.component';
 export * from './lib/components/loader.component';
 export * from './lib/components/modal.component';
+export * from './lib/components/picture.component';
 export * from './lib/components/uploader.component';
 export * from './lib/components/wizard.component';
 
@@ -37,6 +38,9 @@ export * from './lib/components/fields/xsd/xsd-form-group.component';
 export * from './lib/components/fields/xsd/xsd-input.component';
 export * from './lib/components/fields/xsd/xsd-select-state.component';
 export * from './lib/components/fields/xsd/xsd-select.component';
+
+export * from './lib/components/headers/command-footer.component';
+export * from './lib/components/headers/header.component';
 
 export * from './lib/directives/autoload.directive';
 export * from './lib/directives/debounced.directive';
