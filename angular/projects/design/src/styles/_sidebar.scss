@@ -36,7 +36,7 @@
   @include h4-semibold;
   border-bottom: 0.125rem solid $brand-primary-500;
   display: block;
-  padding: 1.1875rem 1rem 1.1875rem 1.625rem;
+  padding: 1.1875rem $grid-gutter-width/2 1.1875rem $grid-gutter-width;
   text-decoration: none;
   text-transform: none;
 }

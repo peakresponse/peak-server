@@ -5,5 +5,5 @@ import { Component, Input } from '@angular/core';
   templateUrl: './welcome-header.component.html',
 })
 export class WelcomeHeaderComponent {
-  @Input() user: any = {};
+  @Input() user?: any;
 }

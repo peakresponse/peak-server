@@ -43,6 +43,46 @@ $min-command-footer-portrait-width: $portrait-width + 2 * (13.75rem + 2 * $grid-
   }
 }
 
+.command-header {
+  background-color: white;
+  height: 5rem;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.command-header + .sidebar,
+shared-command-header + .sidebar {
+  top: 5rem;
+}
+
+.command-header ~ main,
+shared-command-header ~ main {
+  margin-top: 5rem !important;
+}
+
+.command-header__container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  padding: 1rem $grid-gutter-width;
+}
+
+.command-header__picture {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+}
+
+.command-header__name {
+  @include h4-semibold;
+  color: $base-500;
+  margin: 0;
+}
+
 .welcome-header {
   background-color: $brand-primary-300;
   margin-bottom: 1.25rem;

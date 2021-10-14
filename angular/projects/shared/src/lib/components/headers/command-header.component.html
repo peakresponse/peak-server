@@ -1,0 +1,9 @@
+<header class="command-header">
+  <div class="command-header__container">
+    <div *ngIf="user" class="d-flex align-items-center">
+      <shared-picture class="command-header__picture me-2" [pictureUrl]="user?.iconUrl"></shared-picture>
+      <h4 class="command-header__name"><span *ngIf="user.currentAssignment?.vehicleId">{{user.currentAssignment?.vehicle?.number}}: </span>{{user.position}} {{user.firstName}} {{user.lastName}}</h4>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</header>

@@ -35,6 +35,7 @@ import { XsdSelectStateComponent } from './components/fields/xsd/xsd-select-stat
 import { XsdSelectComponent } from './components/fields/xsd/xsd-select.component';
 
 import { CommandFooterComponent } from './components/headers/command-footer.component';
+import { CommandHeaderComponent } from './components/headers/command-header.component';
 import { WelcomeHeaderComponent } from './components/headers/welcome-header.component';
 
 import { AutoloadDirective } from './directives/autoload.directive';
@@ -79,6 +80,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     XsdSelectComponent,
     // components/headers
     CommandFooterComponent,
+    CommandHeaderComponent,
     WelcomeHeaderComponent,
     // directives
     AutoloadDirective,
@@ -123,6 +125,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     XsdSelectComponent,
     // components/headers
     CommandFooterComponent,
+    CommandHeaderComponent,
     WelcomeHeaderComponent,
     // directives
     AutoloadDirective,
