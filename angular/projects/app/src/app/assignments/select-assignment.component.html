@@ -1,4 +1,4 @@
-<shared-header [user]="user.attributes$|async"></shared-header>
+<shared-welcome-header [user]="user.attributes$|async"></shared-welcome-header>
 <shared-command-footer>
   <button type="button" [disabled]="isLoading || !canContinue" (click)="onContinue()" tabindex="0" class="btn btn--primary">Continue</button>
   <button type="button" [disabled]="isLoading" (click)="onSkip()" tabindex="0" class="btn btn--secondary">Skip</button>

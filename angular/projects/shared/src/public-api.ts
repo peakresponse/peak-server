@@ -40,7 +40,7 @@ export * from './lib/components/fields/xsd/xsd-select-state.component';
 export * from './lib/components/fields/xsd/xsd-select.component';
 
 export * from './lib/components/headers/command-footer.component';
-export * from './lib/components/headers/header.component';
+export * from './lib/components/headers/welcome-header.component';
 
 export * from './lib/directives/autoload.directive';
 export * from './lib/directives/debounced.directive';

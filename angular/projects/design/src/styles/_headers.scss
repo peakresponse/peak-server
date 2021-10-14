@@ -7,6 +7,7 @@
 }
 
 .command-footer__container {
+  @extend .portrait-container;
   position: relative;
 }
 
@@ -42,34 +43,35 @@ $min-command-footer-portrait-width: $portrait-width + 2 * (13.75rem + 2 * $grid-
   }
 }
 
-.header {
+.welcome-header {
   background-color: $brand-primary-300;
   margin-bottom: 1.25rem;
   padding: 1rem 0;
 }
 
-.header__container {
+.welcome-header__container {
+  @extend .portrait-container;
   align-items: center;
   display: flex;
   min-height: 5.625rem;
   position: relative;
 }
 
-.header__picture {
+.welcome-header__picture {
   display: block;
   margin-right: 1.5rem;
   height: 5.625rem;
   width: 5.625rem;
 }
 
-.header__text {
+.welcome-header__text {
   @include h4-semibold;
   color: $base-800;
 }
 
 $min-header-portrait-width: $portrait-width + 2 * (5.625rem + 3rem);
 @media (min-width: $min-header-portrait-width) {
-  .header__picture {
+  .welcome-header__picture {
     position: absolute;
     right: 100%;
   }
