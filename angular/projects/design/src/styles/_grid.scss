@@ -4,3 +4,7 @@
   padding-right: $grid-gutter-width * 0.5;
   padding-left: $grid-gutter-width * 0.5;
 }
+
+main {
+  padding: 0 $grid-gutter-width;
+}

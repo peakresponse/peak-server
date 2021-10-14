@@ -17,6 +17,44 @@ module.exports = (sequelize, DataTypes) => {
       Incident.belongsTo(models.Agency, { as: 'updatedByAgency' });
       Incident.hasMany(models.Dispatch.scope('canonical'), { as: 'dispatches', foreignKey: 'incidentId' });
     }
+
+    static async paginateForAgency(agency, options) {
+      const limit = 25;
+      const offset = (parseInt(options?.page ?? 1, 10) - 1) * limit;
+      const docs = await sequelize.query(
+        `SELECT DISTINCT(incidents.*) FROM incidents
+         INNER JOIN dispatches ON incidents.id=dispatches.incident_id
+         INNER JOIN vehicles ON vehicles.id=dispatches.vehicle_id
+         WHERE vehicles.created_by_agency_id=:agencyId
+         ORDER BY incidents.number DESC
+         LIMIT :limit OFFSET :offset`,
+        {
+          replacements: {
+            agencyId: agency.id,
+            limit,
+            offset,
+          },
+          model: Incident,
+          mapToModel: true,
+        }
+      );
+      const [{ count }] = await sequelize.query(
+        `SELECT COUNT(DISTINCT(incidents.id)) FROM incidents
+         INNER JOIN dispatches ON incidents.id=dispatches.incident_id
+         INNER JOIN vehicles ON vehicles.id=dispatches.vehicle_id
+         WHERE vehicles.created_by_agency_id=:agencyId`,
+        {
+          raw: true,
+          replacements: {
+            agencyId: agency.id,
+          },
+          type: sequelize.QueryTypes.SELECT,
+        }
+      );
+      const total = parseInt(count, 10);
+      const pages = Math.round(total / limit) + 1;
+      return { docs, pages, total };
+    }
   }
   Incident.init(
     {
@@ -37,5 +75,25 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+  Incident.addScope('agency', (agencyId) => ({
+    attributes: [sequelize.literal('DISTINCT ON("Incident".number) 1')].concat(Object.keys(Incident.rawAttributes)),
+    include: [
+      {
+        model: sequelize.models.Dispatch,
+        as: 'dispatches',
+        required: true,
+        include: [
+          {
+            model: sequelize.models.Vehicle,
+            as: 'vehicle',
+            required: true,
+          },
+        ],
+      },
+    ],
+    where: {
+      '$dispatches.vehicle.created_by_agency_id$': agencyId,
+    },
+  }));
   return Incident;
 };

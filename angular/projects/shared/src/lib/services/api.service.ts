@@ -270,6 +270,12 @@ export class ApiService {
     },
   };
 
+  incidents = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/incidents', params);
+    },
+  };
+
   patients = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/patients', params);

@@ -1,3 +1,16 @@
 <shared-command-header [user]="user.attributes$|async">
   <shared-search-field placeholder="Search"></shared-search-field>
 </shared-command-header>
+<main>
+  <div class="table-responsive">
+    <table class="table">
+      <shared-list type="incidents">
+        <ng-template let-record="record">
+          <tr [routerLink]="['/incidents', record.id]">
+            <td>#{{record.number}}</td>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+</main>

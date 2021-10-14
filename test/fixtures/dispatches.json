@@ -37,5 +37,44 @@
       "createdAt": "2020-04-06T21:22:10.102Z",
       "updatedAt": "2020-04-06T21:22:10.102Z"
     }
+  },
+  {
+    "model": "Dispatch",
+    "data": {
+      "id": "16570ba3-7136-447b-bb0e-ffaa766aab09",
+      "canonicalId": null,
+      "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
+      "vehicleId": "4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7",
+      "dispatchedAt": "2020-04-06T21:22:10.102Z",
+      "data": {
+        "eDispatch.01": {
+          "_text": "2301019"
+        }
+      },
+      "createdById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "updatedById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Dispatch",
+    "data": {
+      "id": "4fa1aa11-5428-4d43-962c-fe0316a240bb",
+      "canonicalId": "16570ba3-7136-447b-bb0e-ffaa766aab09",
+      "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
+      "vehicleId": "4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7",
+      "dispatchedAt": "2020-04-06T21:22:10.102Z",
+      "data": {
+        "eDispatch.01": {
+          "_text": "2301019"
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "incidentId", "vehicleId", "dispatchedAt", "data"],
+      "createdById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "updatedById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
   }
 ]

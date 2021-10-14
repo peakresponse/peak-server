@@ -12,7 +12,6 @@
 
 .sidebar + main {
   margin-left: auto !important;
-  padding: 0 $grid-gutter-width;
   width: calc(100% - 12.625rem);
 }
 
