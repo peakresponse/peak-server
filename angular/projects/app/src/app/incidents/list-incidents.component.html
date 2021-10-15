@@ -8,6 +8,7 @@
         <ng-template let-record="record">
           <tr [routerLink]="['/incidents', record.id]">
             <td>#{{record.number}}</td>
+            <td>{{record.scene?.address1}}</td>
           </tr>
         </ng-template>
       </shared-list>

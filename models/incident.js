@@ -53,6 +53,14 @@ module.exports = (sequelize, DataTypes) => {
       );
       const total = parseInt(count, 10);
       const pages = Math.round(total / limit) + 1;
+      // manually eager-load scene records
+      const sceneIds = docs.map((incident) => incident.sceneId);
+      const scenes = await sequelize.models.Scene.findAll({ where: { id: sceneIds } });
+      const sceneMap = scenes.reduce((map, scene) => {
+        map[scene.id] = scene;
+        return map;
+      }, {});
+      docs.forEach((incident) => incident.setDataValue('scene', sceneMap[incident.sceneId]));
       return { docs, pages, total };
     }
   }
