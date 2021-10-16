@@ -60,7 +60,23 @@ module.exports = (sequelize, DataTypes) => {
         map[scene.id] = scene;
         return map;
       }, {});
-      docs.forEach((incident) => incident.setDataValue('scene', sceneMap[incident.sceneId]));
+      // manually eager-load dispatch records
+      const incidentIds = docs.map((incident) => incident.id);
+      const dispatches = await sequelize.models.Dispatch.scope('canonical').findAll({
+        where: {
+          incidentId: incidentIds,
+        },
+        order: [['dispatchedAt', 'ASC']],
+      });
+      const dispatchesMap = dispatches.reduce((map, dispatch) => {
+        map[dispatch.incidentId] = map[dispatch.incidentId] || [];
+        map[dispatch.incidentId].push(dispatch);
+        return map;
+      }, {});
+      docs.forEach((incident) => {
+        incident.setDataValue('scene', sceneMap[incident.sceneId]);
+        incident.setDataValue('dispatches', dispatchesMap[incident.id]);
+      });
       return { docs, pages, total };
     }
   }
