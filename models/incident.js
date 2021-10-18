@@ -55,7 +55,10 @@ module.exports = (sequelize, DataTypes) => {
       const pages = Math.round(total / limit) + 1;
       // manually eager-load scene records
       const sceneIds = docs.map((incident) => incident.sceneId);
-      const scenes = await sequelize.models.Scene.findAll({ where: { id: sceneIds } });
+      const scenes = await sequelize.models.Scene.findAll({
+        include: ['city', 'state'],
+        where: { id: sceneIds },
+      });
       const sceneMap = scenes.reduce((map, scene) => {
         map[scene.id] = scene;
         return map;

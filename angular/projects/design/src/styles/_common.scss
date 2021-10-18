@@ -1,0 +1,9 @@
+// Bootstrap variable overrides- must come before import of default variable values below
+@import 'variables';
+@import 'mixins';
+
+// Configuration
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/utilities';

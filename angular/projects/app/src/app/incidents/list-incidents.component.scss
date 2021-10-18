@@ -1,0 +1,29 @@
+@import '../../../../design/src/styles/common';
+
+.incident {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+.incident__number {
+  @include h2-bold;
+  color: $brand-primary-600;
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.incident__address {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.incident__date {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.incident__time {
+  text-align: right;
+  width: 6rem;
+}

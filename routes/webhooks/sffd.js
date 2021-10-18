@@ -87,18 +87,19 @@ router.post('/cad', async (req, res) => {
           transaction,
         });
         if (incident.isNewRecord) {
+          const newIncident = {
+            address1: ADDRESS.trim(),
+            createdById: req.user.id,
+            updatedById: req.user.id,
+          };
+          if (newIncident.address1.endsWith(', SF')) {
+            newIncident.address1 = newIncident.address1.substring(0, newIncident.address1.length - 4);
+            newIncident.cityId = '2411786';
+            newIncident.countyId = '06075';
+            newIncident.stateId = '06';
+          }
           // eslint-disable-next-line no-await-in-loop
-          const scene = await models.Scene.create(
-            {
-              address1: ADDRESS.trim(),
-              cityId: '2411786',
-              countyId: '06075',
-              stateId: '06',
-              createdById: req.user.id,
-              updatedById: req.user.id,
-            },
-            { transaction }
-          );
+          const scene = await models.Scene.create(newIncident, { transaction });
           incident.sceneId = scene.id;
           // eslint-disable-next-line no-await-in-loop
           await incident.save({ transaction });

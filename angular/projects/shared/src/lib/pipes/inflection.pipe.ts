@@ -10,6 +10,9 @@ import * as inflection from 'inflection';
 })
 export class InflectionPipe implements PipeTransform {
   transform(value: string, type: string): string {
-    return (inflection as any)[type](value);
+    if (value) {
+      return (inflection as any)[type](value);
+    }
+    return value;
   }
 }
