@@ -8,6 +8,8 @@ import { DateTime } from 'luxon';
   styleUrls: ['./list-incidents.component.scss'],
 })
 export class ListIncidentsComponent {
+  search: string = '';
+
   constructor(public user: UserService) {}
 
   cityName(name?: string): string {

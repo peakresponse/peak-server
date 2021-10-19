@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'shared-command-header',
@@ -6,4 +6,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CommandHeaderComponent {
   @Input() user?: any;
+  @Input() showSearch = false;
+  @Output() searchValueChange = new EventEmitter<string>();
 }

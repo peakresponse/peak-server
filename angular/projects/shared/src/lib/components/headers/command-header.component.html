@@ -5,5 +5,6 @@
       <h4 class="command-header__name"><span *ngIf="user.currentAssignment?.vehicleId">{{user.currentAssignment?.vehicle?.number}}: </span>{{user.position}} {{user.firstName}} {{user.lastName}}</h4>
     </div>
     <ng-content></ng-content>
+    <shared-search-field *ngIf="showSearch" placeholder="Search" (debouncedValueChange)="searchValueChange.emit($event)"></shared-search-field>
   </div>
 </header>

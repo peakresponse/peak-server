@@ -16,18 +16,13 @@ router.get(
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
-      // page,
-      // include: ['scene'],
-      order: [['number', 'DESC']],
+      page,
     };
-    const conditions = [];
     if (req.query.search && req.query.search !== '') {
-      conditions.push({ number: { [Op.iLike]: `%${req.query.search.trim()}%` } });
-    }
-    if (conditions.length > 0) {
-      options.where = {
-        [Op.and]: conditions,
-      };
+      const search = req.query.search.trim();
+      if (search) {
+        options.search = search;
+      }
     }
     // manually paginate due to complex joins
     let docs;

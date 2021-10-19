@@ -1,26 +1,27 @@
-<shared-command-header [user]="user.attributes$|async">
-  <shared-search-field placeholder="Search"></shared-search-field>
+<shared-command-header [user]="user.attributes$|async" [showSearch]="true" (searchValueChange)="search = $event">
 </shared-command-header>
 <main>
   <div class="table-responsive">
     <table class="table">
-      <shared-list type="incidents">
+      <shared-list type="incidents" [search]="search">
         <ng-template let-record="record">
           <tr *ngIf="parseDate(record.dispatches[0].dispatchedAt) as datetime" [routerLink]="['/incidents', record.id]">
             <td>
               <div class="incident">
-                <div class="incident__number">#{{record.number}}</div>
-                <div class="incident__address">
-                  {{record.scene?.address1|inflection:'titleize'}}<br />
-                  {{record.scene?.address2|inflection:'titleize'}}<br *ngIf="record.scene?.address2" />
-                  {{cityName(record.scene?.city?.featureName)}}<span *ngIf="record.scene?.city && record.scene?.state">, </span>{{record.scene?.state.abbr}} {{record.scene?.zip}}
-                </div>
-                <div class="incident__date">
-                  {{datePart(datetime)}}
+                <div class="d-flex flex-grow-1">
+                  <div class="incident__number">#{{record.number}}</div>
+                  <div class="incident__address">
+                    {{record.scene?.address1|inflection:'titleize'}}<br />
+                    {{record.scene?.address2|inflection:'titleize'}}<br *ngIf="record.scene?.address2" />
+                    {{cityName(record.scene?.city?.featureName)}}<span *ngIf="record.scene?.city && record.scene?.state">, </span>{{record.scene?.state.abbr}} {{record.scene?.zip}}
+                  </div>
+                  <div class="incident__date">
+                    {{datePart(datetime)}}
+                  </div>  
                 </div>
                 <div class="incident__time">
                   {{timePart(datetime)}}
-                </div>    
+                </div>
               </div>
             </td>
           </tr>

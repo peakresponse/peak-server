@@ -21,16 +21,31 @@ module.exports = (sequelize, DataTypes) => {
     static async paginateForAgency(agency, options) {
       const limit = 25;
       const offset = (parseInt(options?.page ?? 1, 10) - 1) * limit;
+      let conditions = '';
+      let joins = '';
+      let search = '';
+      if (options.search) {
+        search = `%${options.search}%`;
+        joins = `
+         INNER JOIN scenes ON incidents.scene_id=scenes.id
+        `;
+        conditions = `
+         AND (incidents.number ILIKE :search
+         OR scenes.address1 ILIKE :search
+         OR scenes.address2 ILIKE :search)
+        `;
+      }
       const docs = await sequelize.query(
-        `SELECT DISTINCT(incidents.*) FROM incidents
+        `SELECT DISTINCT(incidents.*) FROM incidents ${joins}
          INNER JOIN dispatches ON incidents.id=dispatches.incident_id
-         INNER JOIN vehicles ON vehicles.id=dispatches.vehicle_id
-         WHERE vehicles.created_by_agency_id=:agencyId
+         INNER JOIN vehicles ON dispatches.vehicle_id=vehicles.id
+         WHERE vehicles.created_by_agency_id=:agencyId ${conditions}
          ORDER BY incidents.number DESC
          LIMIT :limit OFFSET :offset`,
         {
           replacements: {
             agencyId: agency.id,
+            search,
             limit,
             offset,
           },
@@ -39,14 +54,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       );
       const [{ count }] = await sequelize.query(
-        `SELECT COUNT(DISTINCT(incidents.id)) FROM incidents
+        `SELECT COUNT(DISTINCT(incidents.id)) FROM incidents ${joins}
          INNER JOIN dispatches ON incidents.id=dispatches.incident_id
          INNER JOIN vehicles ON vehicles.id=dispatches.vehicle_id
-         WHERE vehicles.created_by_agency_id=:agencyId`,
+         WHERE vehicles.created_by_agency_id=:agencyId ${conditions}`,
         {
           raw: true,
           replacements: {
             agencyId: agency.id,
+            search,
           },
           type: sequelize.QueryTypes.SELECT,
         }
