@@ -1,10 +1,10 @@
 <header class="command-header">
   <div class="command-header__container">
-    <div *ngIf="user" class="d-flex align-items-center">
+    <div *ngIf="user" class="order-first d-flex align-items-center">
       <shared-picture class="command-header__picture me-2" [pictureUrl]="user?.iconUrl"></shared-picture>
-      <h4 class="command-header__name"><span *ngIf="user.currentAssignment?.vehicleId">{{user.currentAssignment?.vehicle?.number}}: </span>{{user.position}} {{user.firstName}} {{user.lastName}}</h4>
+      <h4 class="command-header__name"><span *ngIf="user.currentAssignment?.vehicleId">{{user.currentAssignment?.vehicle?.number}}: </span><span class="d-none d-lg-inline">{{user.position}} </span>{{user.firstName}} {{user.lastName}}</h4>
     </div>
+    <shared-search-field class="order-last" *ngIf="showSearch" placeholder="Search" (debouncedValueChange)="searchValueChange.emit($event)"></shared-search-field>
     <ng-content></ng-content>
-    <shared-search-field *ngIf="showSearch" placeholder="Search" (debouncedValueChange)="searchValueChange.emit($event)"></shared-search-field>
   </div>
 </header>

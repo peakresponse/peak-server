@@ -24,3 +24,21 @@
   text-align: right;
   width: 5rem;
 }
+
+shared-command-header ::ng-deep {
+  .command-header__container {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 1024px) {
+  .nav {
+    margin-top: 0.625rem;
+    order: 6 !important;
+    width: 100%;
+  }
+
+  :host ::ng-deep shared-command-header ~ main {
+    margin-top: 9.125rem !important;
+  }
+}
