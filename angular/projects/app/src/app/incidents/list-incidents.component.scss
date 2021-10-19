@@ -31,9 +31,8 @@ shared-command-header ::ng-deep {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: map-get($container-max-widths, 'lg')) {
   .nav {
-    margin-top: 0.625rem;
     order: 6 !important;
     width: 100%;
   }

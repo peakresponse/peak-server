@@ -51,11 +51,6 @@ $min-command-footer-portrait-width: $portrait-width + 2 * (13.75rem + 2 * $grid-
   right: 0;
   top: 0;
   z-index: 1000;
-
-  .nav {
-    margin: 0 auto;
-    width: auto;
-  }
 }
 
 .command-header + .sidebar,
@@ -73,7 +68,16 @@ shared-command-header ~ main {
   display: flex;
   height: 100%;
   justify-content: space-between;
-  padding: 1rem $grid-gutter-width;
+  padding: 0 $grid-gutter-width 1rem;
+
+  & > * {
+    margin-top: 1rem;
+  }
+
+  .nav {
+    margin: 1rem auto 0;
+    width: auto;
+  }
 }
 
 .command-header__picture {
