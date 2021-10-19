@@ -1,9 +1,17 @@
 <shared-command-header [user]="user.attributes$|async" [showSearch]="true" (searchValueChange)="search = $event">
+  <ul class="nav">
+    <li class="nav__item">
+      <a class="nav__link" [class.nav__link--active]="filter == 'mine'" routerLink="/incidents" fragment="mine">My Dispatches</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" [class.nav__link--active]="filter == 'all'" routerLink="/incidents" fragment="all">All incidents</a>
+    </li>
+  </ul>
 </shared-command-header>
 <main>
   <div class="table-responsive">
     <table class="table">
-      <shared-list type="incidents" [search]="search">
+      <shared-list type="incidents" [params]="params" [search]="search">
         <ng-template let-record="record">
           <tr *ngIf="parseDate(record.dispatches[0].dispatchedAt) as datetime" [routerLink]="['/incidents', record.id]">
             <td>

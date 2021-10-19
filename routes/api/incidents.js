@@ -1,9 +1,7 @@
 const express = require('express');
 
-const HttpStatus = require('http-status-codes');
+// const HttpStatus = require('http-status-codes');
 const models = require('../../models');
-
-const { Op } = models.Sequelize;
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -25,13 +23,16 @@ router.get(
       }
     }
     // manually paginate due to complex joins
-    let docs;
-    let pages;
-    let total;
+    let type;
+    let obj;
     if (req.query.vehicleId && req.query.vehicleId !== '') {
+      type = 'Vehicle';
+      obj = await models.Vehicle.findByPk(req.query.vehicleId, { rejectOnEmpty: true });
     } else {
-      ({ docs, pages, total } = await models.Incident.paginateForAgency(req.agency, options));
+      type = 'Agency';
+      obj = req.agency;
     }
+    const { docs, pages, total } = await models.Incident.paginate(type, obj, options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
   })

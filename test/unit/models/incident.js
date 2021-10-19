@@ -22,10 +22,10 @@ describe('models', () => {
       ]);
     });
 
-    describe('paginateForAgency', () => {
+    describe('paginate', () => {
       it('filters records by dispatched agency', async () => {
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
-        const { docs, pages, total } = await models.Incident.paginateForAgency(agency);
+        const { docs, pages, total } = await models.Incident.paginate('Agency', agency);
         assert.deepStrictEqual(docs.length, 1);
         assert.deepStrictEqual(pages, 1);
         assert.deepStrictEqual(total, 1);

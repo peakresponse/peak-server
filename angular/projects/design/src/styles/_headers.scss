@@ -51,6 +51,11 @@ $min-command-footer-portrait-width: $portrait-width + 2 * (13.75rem + 2 * $grid-
   right: 0;
   top: 0;
   z-index: 1000;
+
+  .nav {
+    margin-bottom: 0;
+    width: auto;
+  }
 }
 
 .command-header + .sidebar,

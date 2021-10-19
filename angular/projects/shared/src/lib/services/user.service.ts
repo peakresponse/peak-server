@@ -41,6 +41,10 @@ export class UserService implements Resolve<any> {
     return false;
   }
 
+  get currentAssignment(): any {
+    return this.user?.currentAssignment;
+  }
+
   hasRole(role: string) {
     if (this.user?.isAdmin || this.employment?.isOwner) {
       return true;

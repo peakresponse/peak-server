@@ -17,7 +17,7 @@ module.exports.async = (handler) => {
           messages: originalError.errors.map((e) => _.pick(e, ['path', 'message', 'value'])),
         });
       } else {
-        console.log(error);
+        // console.log(error);
         next(error);
       }
     });
