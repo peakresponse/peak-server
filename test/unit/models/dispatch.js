@@ -31,7 +31,7 @@ describe('models', () => {
           id: 'ce9151bf-090c-45c6-80ff-a0c17ba26065',
           canonicalId: '399c6daf-66db-4845-8fbf-2930477b7e61',
           incidentId: '6621202f-ca09-4ad9-be8f-b56346d1de65',
-          vehicleId: '4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7',
+          vehicleId: 'e8d22910-7962-48f4-8a04-f511b8bf90dd',
           dispatchedAt: now,
         };
         let [dispatch, created] = await models.Dispatch.createOrUpdate(user, null, data);
