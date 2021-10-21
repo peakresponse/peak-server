@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         await currentAssignment.update({ endedAt: new Date(), updatedById: user.id }, { transaction: options?.transaction });
       }
       // create new assignment
-      return Assignment.create(
+      const newAssignment = await Assignment.create(
         {
           userId: assignee.id,
           vehicleId: vehicle?.id,
@@ -43,6 +43,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         { transaction: options?.transaction }
       );
+      newAssignment.setDataValue('vehicle', vehicle);
+      return newAssignment;
     }
   }
   Assignment.init(

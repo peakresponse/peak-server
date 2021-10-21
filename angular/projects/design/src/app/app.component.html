@@ -1,4 +1,10 @@
-<shared-command-header [user]="user"></shared-command-header>
+<shared-command-header [user]="user">
+  <ng-template>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" href="#">Dropdown Link</a>
+    </li>
+  </ng-template>
+</shared-command-header>
 <nav class="sidebar">
   <ul class="sidebar__nav">
     <li>

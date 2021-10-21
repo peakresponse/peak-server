@@ -1,6 +1,14 @@
 <shared-command-header [user]="user.attributes$|async" [showSearch]="true" (searchValueChange)="search = $event">
+  <ng-template>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>
+    </li>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" href="/logout">Log out</a>
+    </li>
+  </ng-template>
   <ul class="nav">
-    <li class="nav__item">
+    <li *ngIf="user.currentAssignment?.vehicleId" class="nav__item">
       <a class="nav__link" [class.nav__link--active]="filter == 'mine'" routerLink="/incidents" fragment="mine">My Dispatches</a>
     </li>
     <li class="nav__item">
@@ -21,7 +29,7 @@
                   <div class="incident__address">
                     {{record.scene?.address1|inflection:'titleize'}}<br />
                     {{record.scene?.address2|inflection:'titleize'}}<br *ngIf="record.scene?.address2" />
-                    {{cityName(record.scene?.city?.featureName)}}<span *ngIf="record.scene?.city && record.scene?.state">, </span>{{record.scene?.state.abbr}} {{record.scene?.zip}}
+                    {{cityName(record.scene?.city?.featureName)}}<span *ngIf="record.scene?.city && record.scene?.state">, </span>{{record.scene?.state?.abbr}} {{record.scene?.zip}}
                   </div>
                   <div class="incident__date">
                     {{datePart(datetime)}}

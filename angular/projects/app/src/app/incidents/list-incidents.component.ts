@@ -30,6 +30,8 @@ export class ListIncidentsComponent {
         const vehicleId = this.user.currentAssignment?.vehicleId;
         if (vehicleId) {
           this.params = this.params.set('vehicleId', vehicleId);
+        } else {
+          this.filter = 'all';
         }
       }
     }
