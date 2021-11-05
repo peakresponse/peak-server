@@ -69,7 +69,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns XSD validation errors for DEMDataSet', async () => {
-      const payload = readPayload('fail/2020-DEM-FailXsd_v350.xml');
+      const payload = readPayload('fail/2021-DEM-FailXsd_v350.xml');
       const response = await client.submitDemDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_XSD]);
@@ -98,7 +98,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns Schematron validation errors for DEMDataSet', async () => {
-      const payload = readPayload('fail/2020-DEM-FailSchematron_v350.xml');
+      const payload = readPayload('fail/2021-DEM-FailSchematron_v350.xml');
       const response = await client.submitDemDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR]);
@@ -110,7 +110,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns XSD validation errors for EMSDataSet', async () => {
-      const payload = readPayload('fail/2020-EMS-FailXsd_v350.xml');
+      const payload = readPayload('fail/2021-EMS-FailXsd_v350.xml');
       const response = await client.submitEmsDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_XSD]);
@@ -139,7 +139,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns Schematron validation errors for EMSDataSet', async () => {
-      const payload = readPayload('fail/2020-EMS-FailSchematron_v350.xml');
+      const payload = readPayload('fail/2021-EMS-FailSchematron_v350.xml');
       const response = await client.submitEmsDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR]);

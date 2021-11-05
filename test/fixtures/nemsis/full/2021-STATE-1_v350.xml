@@ -11,14 +11,14 @@ Expected Result:  PASS
 <StateDataSet xmlns="http://www.nemsis.org"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://www.nemsis.org http://www.nemsis.org/media/nemsis_v3/3.5.0.191130CP1/XSDs/NEMSIS_XSDs/StateDataSet_v3.xsd"
-              timestamp="2019-10-08T16:11:38-00:00"
-              effectiveDate="2019-10-01T00:00:00-06:00">
+              timestamp="2020-09-30T16:11:38-00:00"
+              effectiveDate="2020-10-01T00:00:00-06:00">
    <sState>
       <sState.01>01</sState.01>
    </sState>
    <seCustomConfiguration>
       <seCustomConfiguration.CustomGroup CustomElementID="ALeHistory.001">
-         <seCustomConfiguration.01>Recent Travel Outside U.S.</seCustomConfiguration.01>
+         <seCustomConfiguration.01 nemsisElement="eHistory">Recent Travel Outside U.S.</seCustomConfiguration.01>
          <seCustomConfiguration.02>Has the patient traveled outside the United States in the last 30 days?</seCustomConfiguration.02>
          <seCustomConfiguration.03>9902009</seCustomConfiguration.03>
          <seCustomConfiguration.04>9923001</seCustomConfiguration.04>
@@ -28,7 +28,7 @@ Expected Result:  PASS
          <seCustomConfiguration.08>8801023</seCustomConfiguration.08>
       </seCustomConfiguration.CustomGroup>
       <seCustomConfiguration.CustomGroup CustomElementID="ALeHistory.002">
-         <seCustomConfiguration.01>Return to U.S. Date</seCustomConfiguration.01>
+         <seCustomConfiguration.01 nemsisElement="eHistory">Return to U.S. Date</seCustomConfiguration.01>
          <seCustomConfiguration.02>The date the patient returned to the United States (if the patient has traveled outside the United States in the last 30 days).</seCustomConfiguration.02>
          <seCustomConfiguration.03>9902003</seCustomConfiguration.03>
          <seCustomConfiguration.04>9923001</seCustomConfiguration.04>
@@ -41,13 +41,15 @@ Expected Result:  PASS
          <seCustomConfiguration.03>9902009</seCustomConfiguration.03>
          <seCustomConfiguration.04>9923003</seCustomConfiguration.04>
          <seCustomConfiguration.05>9903003</seCustomConfiguration.05>
-         <seCustomConfiguration.06 nemsisCode="2903015" customValueDescription="All penetrating injuries to head, neck, or torso">2903015.1</seCustomConfiguration.06>
-         <seCustomConfiguration.06 nemsisCode="2903015" customValueDescription="All penetrating injuries to extremities proximal to elbow or knee">2903015.2</seCustomConfiguration.06>
+         <seCustomConfiguration.06 nemsisCode="2903015"
+                                   customValueDescription="All penetrating injuries to head, neck, or torso">2903015.1</seCustomConfiguration.06>
+         <seCustomConfiguration.06 nemsisCode="2903015"
+                                   customValueDescription="All penetrating injuries to extremities proximal to elbow or knee">2903015.2</seCustomConfiguration.06>
       </seCustomConfiguration.CustomGroup>
    </seCustomConfiguration>
    <sdCustomConfiguration>
       <sdCustomConfiguration.CustomGroup CustomElementID="ALdAgency.001">
-         <sdCustomConfiguration.01>Canceled Calls per Year</sdCustomConfiguration.01>
+         <sdCustomConfiguration.01 nemsisElement="dAgency.AgencyYearGroup">Canceled Calls per Year</sdCustomConfiguration.01>
          <sdCustomConfiguration.02>The number of canceled calls for the calendar year. Should be correlated with a Statistical Calendar Year (dAgency.15).</sdCustomConfiguration.02>
          <sdCustomConfiguration.03>9902005</sdCustomConfiguration.03>
          <sdCustomConfiguration.04>9923003</sdCustomConfiguration.04>
@@ -62,7 +64,7 @@ Expected Result:  PASS
       <sSoftware.SoftwareGroup>
          <sSoftware.01>NEMSIS Technical Assistance Center</sSoftware.01>
          <sSoftware.02>Compliance Testing</sSoftware.02>
-         <sSoftware.03>3.5.0.191130CP1_191122</sSoftware.03>
+         <sSoftware.03>3.5.0.191130CP1_191130</sSoftware.03>
       </sSoftware.SoftwareGroup>
    </sSoftware>
    <sElement>
@@ -668,158 +670,465 @@ Expected Result:  PASS
       <sConfiguration.ProcedureGroup>
          <sConfiguration.02>9917001</sConfiguration.02>
          <sConfiguration.03>133901003</sConfiguration.03>
+         <sConfiguration.03>182531007</sConfiguration.03>
+         <sConfiguration.03>182555002</sConfiguration.03>
+         <sConfiguration.03>182556001</sConfiguration.03>
          <sConfiguration.03>20655006</sConfiguration.03>
+         <sConfiguration.03>22206003</sConfiguration.03>
          <sConfiguration.03>225116006</sConfiguration.03>
          <sConfiguration.03>225358003</sConfiguration.03>
+         <sConfiguration.03>230040009</sConfiguration.03>
          <sConfiguration.03>232664002</sConfiguration.03>
-         <sConfiguration.03>232707004</sConfiguration.03>
          <sConfiguration.03>23690002</sConfiguration.03>
-         <sConfiguration.03>236973005</sConfiguration.03>
+         <sConfiguration.03>26906007</sConfiguration.03>
+         <sConfiguration.03>304562007</sConfiguration.03>
+         <sConfiguration.03>308292007</sConfiguration.03>
+         <sConfiguration.03>372045002</sConfiguration.03>
+         <sConfiguration.03>373675000</sConfiguration.03>
          <sConfiguration.03>392230005</sConfiguration.03>
+         <sConfiguration.03>396540005</sConfiguration.03>
          <sConfiguration.03>425447009</sConfiguration.03>
-         <sConfiguration.03>426498007</sConfiguration.03>
-         <sConfiguration.03>428803005</sConfiguration.03>
-         <sConfiguration.03>430824005</sConfiguration.03>
+         <sConfiguration.03>427753009</sConfiguration.03>
+         <sConfiguration.03>429202003</sConfiguration.03>
          <sConfiguration.03>431774007</sConfiguration.03>
          <sConfiguration.03>431949004</sConfiguration.03>
-         <sConfiguration.03>450591000124106</sConfiguration.03>
-         <sConfiguration.03>450611000124100</sConfiguration.03>
+         <sConfiguration.03>447686008</sConfiguration.03>
+         <sConfiguration.03>449199004</sConfiguration.03>
          <sConfiguration.03>450661000124102</sConfiguration.03>
+         <sConfiguration.03>49689007</sConfiguration.03>
+         <sConfiguration.03>58715004</sConfiguration.03>
+         <sConfiguration.03>79321009</sConfiguration.03>
          <sConfiguration.03>89666000</sConfiguration.03>
       </sConfiguration.ProcedureGroup>
       <sConfiguration.ProcedureGroup>
          <sConfiguration.02>9917005</sConfiguration.02>
          <sConfiguration.03>133901003</sConfiguration.03>
+         <sConfiguration.03>182531007</sConfiguration.03>
+         <sConfiguration.03>182555002</sConfiguration.03>
          <sConfiguration.03>20655006</sConfiguration.03>
          <sConfiguration.03>225116006</sConfiguration.03>
          <sConfiguration.03>225358003</sConfiguration.03>
+         <sConfiguration.03>230040009</sConfiguration.03>
          <sConfiguration.03>232664002</sConfiguration.03>
-         <sConfiguration.03>232707004</sConfiguration.03>
          <sConfiguration.03>23690002</sConfiguration.03>
-         <sConfiguration.03>236973005</sConfiguration.03>
+         <sConfiguration.03>304562007</sConfiguration.03>
+         <sConfiguration.03>308292007</sConfiguration.03>
+         <sConfiguration.03>373675000</sConfiguration.03>
          <sConfiguration.03>425447009</sConfiguration.03>
-         <sConfiguration.03>426498007</sConfiguration.03>
+         <sConfiguration.03>429202003</sConfiguration.03>
          <sConfiguration.03>431774007</sConfiguration.03>
          <sConfiguration.03>431949004</sConfiguration.03>
-         <sConfiguration.03>450591000124106</sConfiguration.03>
+         <sConfiguration.03>447686008</sConfiguration.03>
+         <sConfiguration.03>449199004</sConfiguration.03>
          <sConfiguration.03>450661000124102</sConfiguration.03>
+         <sConfiguration.03>49689007</sConfiguration.03>
+         <sConfiguration.03>58715004</sConfiguration.03>
+         <sConfiguration.03>79321009</sConfiguration.03>
          <sConfiguration.03>89666000</sConfiguration.03>
       </sConfiguration.ProcedureGroup>
       <sConfiguration.ProcedureGroup>
          <sConfiguration.02>9917007</sConfiguration.02>
+         <sConfiguration.03>103744005</sConfiguration.03>
+         <sConfiguration.03>128968000</sConfiguration.03>
          <sConfiguration.03>133901003</sConfiguration.03>
+         <sConfiguration.03>171397002</sConfiguration.03>
+         <sConfiguration.03>182531007</sConfiguration.03>
+         <sConfiguration.03>182555002</sConfiguration.03>
+         <sConfiguration.03>182556001</sConfiguration.03>
+         <sConfiguration.03>182692007</sConfiguration.03>
+         <sConfiguration.03>182705007</sConfiguration.03>
+         <sConfiguration.03>182777000</sConfiguration.03>
+         <sConfiguration.03>18590009</sConfiguration.03>
+         <sConfiguration.03>18629005</sConfiguration.03>
          <sConfiguration.03>20655006</sConfiguration.03>
+         <sConfiguration.03>22206003</sConfiguration.03>
          <sConfiguration.03>225116006</sConfiguration.03>
+         <sConfiguration.03>225287004</sConfiguration.03>
          <sConfiguration.03>225358003</sConfiguration.03>
+         <sConfiguration.03>225398001</sConfiguration.03>
+         <sConfiguration.03>225399009</sConfiguration.03>
+         <sConfiguration.03>225718003</sConfiguration.03>
+         <sConfiguration.03>226005007</sConfiguration.03>
+         <sConfiguration.03>22633006</sConfiguration.03>
+         <sConfiguration.03>228621007</sConfiguration.03>
+         <sConfiguration.03>230040009</sConfiguration.03>
          <sConfiguration.03>232664002</sConfiguration.03>
          <sConfiguration.03>232674004</sConfiguration.03>
-         <sConfiguration.03>232707004</sConfiguration.03>
-         <sConfiguration.03>233516009</sConfiguration.03>
+         <sConfiguration.03>235425002</sConfiguration.03>
          <sConfiguration.03>23690002</sConfiguration.03>
-         <sConfiguration.03>236973005</sConfiguration.03>
+         <sConfiguration.03>23852006</sConfiguration.03>
          <sConfiguration.03>241689008</sConfiguration.03>
+         <sConfiguration.03>243140006</sConfiguration.03>
+         <sConfiguration.03>243142003</sConfiguration.03>
+         <sConfiguration.03>248753002</sConfiguration.03>
+         <sConfiguration.03>250980009</sConfiguration.03>
+         <sConfiguration.03>252465000</sConfiguration.03>
          <sConfiguration.03>268400002</sConfiguration.03>
+         <sConfiguration.03>26906007</sConfiguration.03>
+         <sConfiguration.03>270352002</sConfiguration.03>
+         <sConfiguration.03>278414003</sConfiguration.03>
+         <sConfiguration.03>284029005</sConfiguration.03>
+         <sConfiguration.03>284394000</sConfiguration.03>
+         <sConfiguration.03>284405008</sConfiguration.03>
+         <sConfiguration.03>29303009</sConfiguration.03>
+         <sConfiguration.03>302488007</sConfiguration.03>
+         <sConfiguration.03>304562007</sConfiguration.03>
+         <sConfiguration.03>308292007</sConfiguration.03>
+         <sConfiguration.03>315639002</sConfiguration.03>
+         <sConfiguration.03>33747003</sConfiguration.03>
+         <sConfiguration.03>353008</sConfiguration.03>
+         <sConfiguration.03>371907003</sConfiguration.03>
+         <sConfiguration.03>371908008</sConfiguration.03>
+         <sConfiguration.03>372045002</sConfiguration.03>
+         <sConfiguration.03>373675000</sConfiguration.03>
+         <sConfiguration.03>385857005</sConfiguration.03>
+         <sConfiguration.03>386053000</sConfiguration.03>
+         <sConfiguration.03>386237008</sConfiguration.03>
+         <sConfiguration.03>386328006</sConfiguration.03>
+         <sConfiguration.03>386358000</sConfiguration.03>
+         <sConfiguration.03>386423001</sConfiguration.03>
          <sConfiguration.03>392230005</sConfiguration.03>
+         <sConfiguration.03>392247006</sConfiguration.03>
+         <sConfiguration.03>396540005</sConfiguration.03>
+         <sConfiguration.03>398041008</sConfiguration.03>
+         <sConfiguration.03>405427009</sConfiguration.03>
+         <sConfiguration.03>408867002</sConfiguration.03>
+         <sConfiguration.03>408994004</sConfiguration.03>
+         <sConfiguration.03>409582008</sConfiguration.03>
+         <sConfiguration.03>422618004</sConfiguration.03>
+         <sConfiguration.03>423184003</sConfiguration.03>
+         <sConfiguration.03>423401003</sConfiguration.03>
+         <sConfiguration.03>423850004</sConfiguration.03>
+         <sConfiguration.03>424287005</sConfiguration.03>
+         <sConfiguration.03>424979004</sConfiguration.03>
+         <sConfiguration.03>425058005</sConfiguration.03>
+         <sConfiguration.03>425074000</sConfiguration.03>
          <sConfiguration.03>425447009</sConfiguration.03>
+         <sConfiguration.03>425543005</sConfiguration.03>
+         <sConfiguration.03>426220008</sConfiguration.03>
          <sConfiguration.03>426498007</sConfiguration.03>
+         <sConfiguration.03>427753009</sConfiguration.03>
          <sConfiguration.03>428803005</sConfiguration.03>
+         <sConfiguration.03>429202003</sConfiguration.03>
+         <sConfiguration.03>429283006</sConfiguration.03>
+         <sConfiguration.03>429705000</sConfiguration.03>
          <sConfiguration.03>430824005</sConfiguration.03>
+         <sConfiguration.03>431393006</sConfiguration.03>
          <sConfiguration.03>431774007</sConfiguration.03>
          <sConfiguration.03>431949004</sConfiguration.03>
-         <sConfiguration.03>433695001</sConfiguration.03>
-         <sConfiguration.03>433795008</sConfiguration.03>
+         <sConfiguration.03>445828009</sConfiguration.03>
+         <sConfiguration.03>447686008</sConfiguration.03>
+         <sConfiguration.03>449199004</sConfiguration.03>
          <sConfiguration.03>450591000124106</sConfiguration.03>
+         <sConfiguration.03>450601000124103</sConfiguration.03>
          <sConfiguration.03>450611000124100</sConfiguration.03>
          <sConfiguration.03>450661000124102</sConfiguration.03>
+         <sConfiguration.03>45851008</sConfiguration.03>
+         <sConfiguration.03>46825001</sConfiguration.03>
+         <sConfiguration.03>46973005</sConfiguration.03>
+         <sConfiguration.03>47545007</sConfiguration.03>
+         <sConfiguration.03>49689007</sConfiguration.03>
+         <sConfiguration.03>56251003</sConfiguration.03>
+         <sConfiguration.03>56342008</sConfiguration.03>
+         <sConfiguration.03>56469005</sConfiguration.03>
+         <sConfiguration.03>57485005</sConfiguration.03>
+         <sConfiguration.03>58715004</sConfiguration.03>
+         <sConfiguration.03>61746007</sConfiguration.03>
+         <sConfiguration.03>65653002</sConfiguration.03>
+         <sConfiguration.03>68664003</sConfiguration.03>
+         <sConfiguration.03>707794004</sConfiguration.03>
+         <sConfiguration.03>7443007</sConfiguration.03>
+         <sConfiguration.03>78086002</sConfiguration.03>
+         <sConfiguration.03>79321009</sConfiguration.03>
+         <sConfiguration.03>87750000</sConfiguration.03>
          <sConfiguration.03>89666000</sConfiguration.03>
       </sConfiguration.ProcedureGroup>
       <sConfiguration.ProcedureGroup>
          <sConfiguration.02>9917019</sConfiguration.02>
+         <sConfiguration.03>103744005</sConfiguration.03>
+         <sConfiguration.03>128968000</sConfiguration.03>
          <sConfiguration.03>133901003</sConfiguration.03>
+         <sConfiguration.03>171397002</sConfiguration.03>
+         <sConfiguration.03>182531007</sConfiguration.03>
+         <sConfiguration.03>182555002</sConfiguration.03>
+         <sConfiguration.03>182556001</sConfiguration.03>
+         <sConfiguration.03>182692007</sConfiguration.03>
+         <sConfiguration.03>182705007</sConfiguration.03>
+         <sConfiguration.03>182777000</sConfiguration.03>
+         <sConfiguration.03>18590009</sConfiguration.03>
+         <sConfiguration.03>18629005</sConfiguration.03>
          <sConfiguration.03>20655006</sConfiguration.03>
+         <sConfiguration.03>22206003</sConfiguration.03>
          <sConfiguration.03>225116006</sConfiguration.03>
+         <sConfiguration.03>225287004</sConfiguration.03>
          <sConfiguration.03>225358003</sConfiguration.03>
+         <sConfiguration.03>225398001</sConfiguration.03>
+         <sConfiguration.03>225399009</sConfiguration.03>
+         <sConfiguration.03>225718003</sConfiguration.03>
+         <sConfiguration.03>226005007</sConfiguration.03>
+         <sConfiguration.03>22633006</sConfiguration.03>
+         <sConfiguration.03>228621007</sConfiguration.03>
+         <sConfiguration.03>230040009</sConfiguration.03>
          <sConfiguration.03>232664002</sConfiguration.03>
          <sConfiguration.03>232674004</sConfiguration.03>
-         <sConfiguration.03>232707004</sConfiguration.03>
-         <sConfiguration.03>233516009</sConfiguration.03>
+         <sConfiguration.03>235425002</sConfiguration.03>
          <sConfiguration.03>23690002</sConfiguration.03>
-         <sConfiguration.03>236973005</sConfiguration.03>
+         <sConfiguration.03>23852006</sConfiguration.03>
          <sConfiguration.03>241689008</sConfiguration.03>
+         <sConfiguration.03>243140006</sConfiguration.03>
+         <sConfiguration.03>243142003</sConfiguration.03>
+         <sConfiguration.03>248753002</sConfiguration.03>
+         <sConfiguration.03>250980009</sConfiguration.03>
+         <sConfiguration.03>252465000</sConfiguration.03>
          <sConfiguration.03>268400002</sConfiguration.03>
+         <sConfiguration.03>26906007</sConfiguration.03>
+         <sConfiguration.03>270352002</sConfiguration.03>
+         <sConfiguration.03>278414003</sConfiguration.03>
+         <sConfiguration.03>284029005</sConfiguration.03>
+         <sConfiguration.03>284394000</sConfiguration.03>
+         <sConfiguration.03>284405008</sConfiguration.03>
+         <sConfiguration.03>29303009</sConfiguration.03>
+         <sConfiguration.03>302488007</sConfiguration.03>
+         <sConfiguration.03>304562007</sConfiguration.03>
+         <sConfiguration.03>308292007</sConfiguration.03>
+         <sConfiguration.03>315639002</sConfiguration.03>
+         <sConfiguration.03>33747003</sConfiguration.03>
+         <sConfiguration.03>353008</sConfiguration.03>
+         <sConfiguration.03>371907003</sConfiguration.03>
+         <sConfiguration.03>371908008</sConfiguration.03>
+         <sConfiguration.03>372045002</sConfiguration.03>
+         <sConfiguration.03>373675000</sConfiguration.03>
+         <sConfiguration.03>385857005</sConfiguration.03>
+         <sConfiguration.03>386053000</sConfiguration.03>
+         <sConfiguration.03>386237008</sConfiguration.03>
+         <sConfiguration.03>386328006</sConfiguration.03>
+         <sConfiguration.03>386358000</sConfiguration.03>
+         <sConfiguration.03>386423001</sConfiguration.03>
          <sConfiguration.03>392230005</sConfiguration.03>
+         <sConfiguration.03>392247006</sConfiguration.03>
+         <sConfiguration.03>396540005</sConfiguration.03>
+         <sConfiguration.03>398041008</sConfiguration.03>
+         <sConfiguration.03>405427009</sConfiguration.03>
+         <sConfiguration.03>408867002</sConfiguration.03>
+         <sConfiguration.03>408994004</sConfiguration.03>
+         <sConfiguration.03>409582008</sConfiguration.03>
+         <sConfiguration.03>422618004</sConfiguration.03>
+         <sConfiguration.03>423184003</sConfiguration.03>
+         <sConfiguration.03>423401003</sConfiguration.03>
+         <sConfiguration.03>423850004</sConfiguration.03>
+         <sConfiguration.03>424287005</sConfiguration.03>
+         <sConfiguration.03>424979004</sConfiguration.03>
+         <sConfiguration.03>425058005</sConfiguration.03>
+         <sConfiguration.03>425074000</sConfiguration.03>
          <sConfiguration.03>425447009</sConfiguration.03>
+         <sConfiguration.03>425543005</sConfiguration.03>
+         <sConfiguration.03>426220008</sConfiguration.03>
          <sConfiguration.03>426498007</sConfiguration.03>
+         <sConfiguration.03>427753009</sConfiguration.03>
          <sConfiguration.03>428803005</sConfiguration.03>
+         <sConfiguration.03>429202003</sConfiguration.03>
+         <sConfiguration.03>429283006</sConfiguration.03>
+         <sConfiguration.03>429705000</sConfiguration.03>
          <sConfiguration.03>430824005</sConfiguration.03>
+         <sConfiguration.03>431393006</sConfiguration.03>
          <sConfiguration.03>431774007</sConfiguration.03>
          <sConfiguration.03>431949004</sConfiguration.03>
-         <sConfiguration.03>433695001</sConfiguration.03>
-         <sConfiguration.03>433795008</sConfiguration.03>
+         <sConfiguration.03>445828009</sConfiguration.03>
+         <sConfiguration.03>447686008</sConfiguration.03>
+         <sConfiguration.03>449199004</sConfiguration.03>
          <sConfiguration.03>450591000124106</sConfiguration.03>
+         <sConfiguration.03>450601000124103</sConfiguration.03>
          <sConfiguration.03>450611000124100</sConfiguration.03>
          <sConfiguration.03>450661000124102</sConfiguration.03>
+         <sConfiguration.03>45851008</sConfiguration.03>
+         <sConfiguration.03>46825001</sConfiguration.03>
+         <sConfiguration.03>46973005</sConfiguration.03>
+         <sConfiguration.03>47545007</sConfiguration.03>
+         <sConfiguration.03>49689007</sConfiguration.03>
+         <sConfiguration.03>56251003</sConfiguration.03>
+         <sConfiguration.03>56342008</sConfiguration.03>
+         <sConfiguration.03>56469005</sConfiguration.03>
+         <sConfiguration.03>57485005</sConfiguration.03>
+         <sConfiguration.03>58715004</sConfiguration.03>
+         <sConfiguration.03>61746007</sConfiguration.03>
+         <sConfiguration.03>65653002</sConfiguration.03>
+         <sConfiguration.03>68664003</sConfiguration.03>
+         <sConfiguration.03>707794004</sConfiguration.03>
+         <sConfiguration.03>7443007</sConfiguration.03>
+         <sConfiguration.03>78086002</sConfiguration.03>
+         <sConfiguration.03>79321009</sConfiguration.03>
+         <sConfiguration.03>87750000</sConfiguration.03>
          <sConfiguration.03>89666000</sConfiguration.03>
       </sConfiguration.ProcedureGroup>
       <sConfiguration.MedicationGroup>
          <sConfiguration.04>9917001</sConfiguration.04>
+         <sConfiguration.05 CodeType="9924003">10368</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">1191</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">296</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">3498</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">377980</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">161</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">214199</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">237159</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">237653</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">313002</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">328316</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">435</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4832</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4850</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">4917</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">6387</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">6585</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">7052</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7242</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7806</sConfiguration.05>
       </sConfiguration.MedicationGroup>
       <sConfiguration.MedicationGroup>
          <sConfiguration.04>9917005</sConfiguration.04>
          <sConfiguration.05 CodeType="9924003">1191</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">3498</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">377980</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">4917</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">161</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">214199</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">435</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4850</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7242</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7806</sConfiguration.05>
       </sConfiguration.MedicationGroup>
       <sConfiguration.MedicationGroup>
          <sConfiguration.04>9917007</sConfiguration.04>
+         <sConfiguration.05 CodeType="9924003">1008377</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">10154</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">10368</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">10454</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">10691</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">11124</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">11149</sConfiguration.05>
          <sConfiguration.05 CodeType="9924005">116762002</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">116795008</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">116861002</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">116865006</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">1191</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">1223</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">1605101</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">161</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">1795477</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">180208003</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">1901</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">1908</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">214199</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">2193</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">237159</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">237653</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">260258</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">26225</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">296</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">319864</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">313002</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">317361</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">3264</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">328316</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">3322</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">33389009</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">3423</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">3443</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">3498</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">377980</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">35827</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">3628</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">36676</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4177</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">4337</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">435</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4603</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4832</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4850</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">4917</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">5093</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">5224</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6130</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6185</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">6387</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6470</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">6585</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">68139</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6902</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6918</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6960</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">703</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7052</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">71493000</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">71535</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">7213</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7242</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">7396</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">7512</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7806</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">8163</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">8591</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">8745</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">8782</sConfiguration.05>
       </sConfiguration.MedicationGroup>
       <sConfiguration.MedicationGroup>
          <sConfiguration.04>9917019</sConfiguration.04>
+         <sConfiguration.05 CodeType="9924003">1008377</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">10154</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">10368</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">10454</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">10691</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">11124</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">11149</sConfiguration.05>
          <sConfiguration.05 CodeType="9924005">116762002</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">116795008</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">116861002</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">116865006</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">1191</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">1223</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">1605101</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">161</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">1795477</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">180208003</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">1901</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">1908</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">214199</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">2193</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">237159</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">237653</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">260258</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">26225</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">296</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">319864</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">313002</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">317361</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">3264</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">328316</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">3322</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">33389009</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">3423</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">3443</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">3498</sConfiguration.05>
-         <sConfiguration.05 CodeType="9924003">377980</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">35827</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">3628</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">36676</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4177</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">4337</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">435</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4603</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4832</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">4850</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">4917</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">5093</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">5224</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6130</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6185</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">6387</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6470</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">6585</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">68139</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6902</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6918</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">6960</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">703</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7052</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924005">71493000</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">71535</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">7213</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7242</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">7396</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">7512</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">7806</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">8163</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">8591</sConfiguration.05>
+         <sConfiguration.05 CodeType="9924003">8745</sConfiguration.05>
          <sConfiguration.05 CodeType="9924003">8782</sConfiguration.05>
       </sConfiguration.MedicationGroup>
       <sConfiguration.06>9914001</sConfiguration.06>
