@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="../utilities/html/schematronHtml.xsl"?><sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" queryBinding="xslt2" id="DEMDataSet" schemaVersion="3.5.0.191130CP1" see="https://nemsis.org/technical-resources/version-3/version-3-schematron/">
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="../utilities/html/schematronHtml.xsl"?><sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" queryBinding="xslt2" id="DEMDataSet" schemaVersion="3.5.0.211008CP3" see="https://nemsis.org/technical-resources/version-3/version-3-schematron/">
 
   <sch:title>NEMSIS National ISO Schematron file for DEMDataSet</sch:title>
 
@@ -708,7 +708,9 @@
 
   <sch:rule id="nemSch_dNvPn_rule_1" context="nem:dCustomResults.01">
 
-    <!-- This rule fires on dCustomResults.01 to prevent subsequent rules from firing. Nothing is checked. dCustomResults should be validated based on information contained in dCustomConfiguration. -->
+    <!-- This rule fires on dCustomResults.01 to prevent subsequent rules from firing. Nothing is 
+         checked. dCustomResults should be validated based on information contained in 
+         dCustomConfiguration. -->
 
     <sch:let name="nemsisElements" value="."/>
 
@@ -892,6 +894,9 @@
       <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
       <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
       <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+      <xsl:if test="ancestor-or-self::*[@UUID]">
+        <UUID><xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/></UUID>
+      </xsl:if>
     </record>
 
     <!-- Elements that the user may want to revisit to resolve the problem, along with their values. -->
