@@ -153,7 +153,7 @@
    <xsl:template match="/">
       <svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                               title="NEMSIS National ISO Schematron file for EMSDataSet"
-                              schemaVersion="3.5.0.191130CP1">
+                              schemaVersion="3.5.0.211008CP3">
          <xsl:comment>
             <xsl:value-of select="$archiveDirParameter"/>   
 		 <xsl:value-of select="$archiveNameParameter"/>  
@@ -977,6 +977,11 @@
                      <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                      <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                      <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                     <xsl:if test="ancestor-or-self::*[@UUID]">
+                        <UUID>
+                           <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                        </UUID>
+                     </xsl:if>
                   </record>
                   <elements>
                      <xsl:for-each select="$nemsisElements">
@@ -1046,6 +1051,11 @@
                      <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                      <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                      <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                     <xsl:if test="ancestor-or-self::*[@UUID]">
+                        <UUID>
+                           <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                        </UUID>
+                     </xsl:if>
                   </record>
                   <elements>
                      <xsl:for-each select="$nemsisElements">
@@ -1115,6 +1125,11 @@
                      <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                      <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                      <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                     <xsl:if test="ancestor-or-self::*[@UUID]">
+                        <UUID>
+                           <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                        </UUID>
+                     </xsl:if>
                   </record>
                   <elements>
                      <xsl:for-each select="$nemsisElements">
@@ -1192,6 +1207,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -1270,6 +1290,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -1346,6 +1371,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -1422,6 +1452,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -1498,6 +1533,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -1574,6 +1614,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -1649,6 +1694,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -1724,6 +1774,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -1800,6 +1855,11 @@
                      <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                      <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                      <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                     <xsl:if test="ancestor-or-self::*[@UUID]">
+                        <UUID>
+                           <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                        </UUID>
+                     </xsl:if>
                   </record>
                   <elements>
                      <xsl:for-each select="$nemsisElements">
@@ -1871,6 +1931,11 @@
                      <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                      <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                      <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                     <xsl:if test="ancestor-or-self::*[@UUID]">
+                        <UUID>
+                           <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                        </UUID>
+                     </xsl:if>
                   </record>
                   <elements>
                      <xsl:for-each select="$nemsisElements">
@@ -1940,6 +2005,11 @@
                      <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                      <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                      <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                     <xsl:if test="ancestor-or-self::*[@UUID]">
+                        <UUID>
+                           <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                        </UUID>
+                     </xsl:if>
                   </record>
                   <elements>
                      <xsl:for-each select="$nemsisElements">
@@ -2017,6 +2087,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2095,6 +2170,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2180,6 +2260,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2228,9 +2313,11 @@
       <xsl:apply-templates select="*" mode="M11"/>
    </xsl:template>
    <!--RULE nemSch_eResponse_rule_2-->
-   <xsl:template match="nem:eResponse.08[. = '2208013']" priority="1004" mode="M11">
+   <xsl:template match="nem:eResponse.08[. = '2208013'][1]"
+                 priority="1004"
+                 mode="M11">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eResponse.08[. = '2208013']"
+                       context="nem:eResponse.08[. = '2208013'][1]"
                        id="nemSch_eResponse_rule_2"/>
       <xsl:variable name="nemsisElements" select="../nem:eResponse.08"/>
       <!--ASSERT [WARNING]-->
@@ -2256,6 +2343,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2304,9 +2396,11 @@
       <xsl:apply-templates select="*" mode="M11"/>
    </xsl:template>
    <!--RULE nemSch_eResponse_rule_3-->
-   <xsl:template match="nem:eResponse.09[. = '2209011']" priority="1003" mode="M11">
+   <xsl:template match="nem:eResponse.09[. = '2209011'][1]"
+                 priority="1003"
+                 mode="M11">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eResponse.09[. = '2209011']"
+                       context="nem:eResponse.09[. = '2209011'][1]"
                        id="nemSch_eResponse_rule_3"/>
       <xsl:variable name="nemsisElements" select="../nem:eResponse.09"/>
       <!--ASSERT [WARNING]-->
@@ -2332,6 +2426,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2380,9 +2479,11 @@
       <xsl:apply-templates select="*" mode="M11"/>
    </xsl:template>
    <!--RULE nemSch_eResponse_rule_4-->
-   <xsl:template match="nem:eResponse.10[. = '2210017']" priority="1002" mode="M11">
+   <xsl:template match="nem:eResponse.10[. = '2210017'][1]"
+                 priority="1002"
+                 mode="M11">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eResponse.10[. = '2210017']"
+                       context="nem:eResponse.10[. = '2210017'][1]"
                        id="nemSch_eResponse_rule_4"/>
       <xsl:variable name="nemsisElements" select="../nem:eResponse.10"/>
       <!--ASSERT [WARNING]-->
@@ -2408,6 +2509,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2456,9 +2562,11 @@
       <xsl:apply-templates select="*" mode="M11"/>
    </xsl:template>
    <!--RULE nemSch_eResponse_rule_5-->
-   <xsl:template match="nem:eResponse.11[. = '2211011']" priority="1001" mode="M11">
+   <xsl:template match="nem:eResponse.11[. = '2211011'][1]"
+                 priority="1001"
+                 mode="M11">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eResponse.11[. = '2211011']"
+                       context="nem:eResponse.11[. = '2211011'][1]"
                        id="nemSch_eResponse_rule_5"/>
       <xsl:variable name="nemsisElements" select="../nem:eResponse.11"/>
       <!--ASSERT [WARNING]-->
@@ -2484,6 +2592,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2532,9 +2645,11 @@
       <xsl:apply-templates select="*" mode="M11"/>
    </xsl:template>
    <!--RULE nemSch_eResponse_rule_6-->
-   <xsl:template match="nem:eResponse.12[. = '2212015']" priority="1000" mode="M11">
+   <xsl:template match="nem:eResponse.12[. = '2212015'][1]"
+                 priority="1000"
+                 mode="M11">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eResponse.12[. = '2212015']"
+                       context="nem:eResponse.12[. = '2212015'][1]"
                        id="nemSch_eResponse_rule_6"/>
       <xsl:variable name="nemsisElements" select="../nem:eResponse.12"/>
       <!--ASSERT [WARNING]-->
@@ -2560,6 +2675,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2644,6 +2764,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2722,6 +2847,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2800,6 +2930,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2878,6 +3013,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -2956,6 +3096,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3026,6 +3171,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3104,6 +3254,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3182,6 +3337,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3260,6 +3420,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3338,6 +3503,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3408,6 +3578,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3478,6 +3653,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3548,6 +3728,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3626,6 +3811,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3704,6 +3894,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3774,6 +3969,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3844,6 +4044,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3914,6 +4119,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -3984,6 +4194,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4062,6 +4277,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4140,6 +4360,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4210,6 +4435,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4280,6 +4510,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4350,6 +4585,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4420,6 +4660,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4490,6 +4735,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4560,6 +4810,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4630,6 +4885,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4700,6 +4960,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4778,6 +5043,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4848,6 +5118,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4918,6 +5193,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -4988,6 +5268,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5058,6 +5343,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5128,6 +5418,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5198,6 +5493,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5268,6 +5568,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5338,6 +5643,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5408,6 +5718,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5478,6 +5793,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5562,6 +5882,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5614,7 +5939,7 @@
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="nem:ePatient.07[. != '']"
                        id="nemSch_ePatient_rule_2"/>
-      <xsl:variable name="nemsisElements" select="., ../nem:ePatient.08"/>
+      <xsl:variable name="nemsisElements" select="."/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="starts-with(., ../nem:ePatient.08)"/>
@@ -5640,6 +5965,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5718,6 +6048,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5796,6 +6131,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5874,6 +6214,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -5922,17 +6267,17 @@
       <xsl:apply-templates select="*" mode="M13"/>
    </xsl:template>
    <!--RULE nemSch_ePatient_rule_6-->
-   <xsl:template match="nem:ePatient.14[. = '']" priority="1002" mode="M13">
+   <xsl:template match="nem:ePatient.14[. = ''][1]" priority="1002" mode="M13">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:ePatient.14[. = '']"
+                       context="nem:ePatient.14[. = ''][1]"
                        id="nemSch_ePatient_rule_6"/>
-      <xsl:variable name="nemsisElements" select="."/>
+      <xsl:variable name="nemsisElements" select="../nem:ePatient.14"/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
-         <xsl:when test="ancestor::nem:PatientCareReport/nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.28 != '4228001'"/>
+         <xsl:when test="../nem:ePatient.14 != '' or ancestor::nem:PatientCareReport/nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.28 != '4228001'"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                                test="ancestor::nem:PatientCareReport/nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.28 != '4228001'">
+                                test="../nem:ePatient.14 != '' or ancestor::nem:PatientCareReport/nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.28 != '4228001'">
                <xsl:attribute name="id">nemSch_e062</xsl:attribute>
                <xsl:attribute name="role">[WARNING]</xsl:attribute>
                <xsl:attribute name="location">
@@ -5952,6 +6297,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6030,6 +6380,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6108,6 +6463,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6177,6 +6537,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6261,6 +6626,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6345,6 +6715,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6415,6 +6790,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6493,6 +6873,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6571,6 +6956,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6649,6 +7039,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6727,6 +7122,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6805,6 +7205,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6857,7 +7262,7 @@
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="nem:eScene.21[. != '']"
                        id="nemSch_eScene_rule_7"/>
-      <xsl:variable name="nemsisElements" select="., ../nem:eScene.18"/>
+      <xsl:variable name="nemsisElements" select="."/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="starts-with(., ../nem:eScene.18)"/>
@@ -6883,6 +7288,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -6969,6 +7379,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7049,6 +7464,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7117,6 +7537,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7197,6 +7622,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7277,6 +7707,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7357,6 +7792,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7435,6 +7875,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7515,6 +7960,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7593,6 +8043,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7673,6 +8128,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7753,6 +8213,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7825,6 +8290,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7897,6 +8367,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -7975,6 +8450,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8061,6 +8541,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8113,7 +8598,7 @@
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="nem:eInjury.01[. != ''][1]"
                        id="nemSch_eInjury_rule_2"/>
-      <xsl:variable name="nemsisElements" select="../nem:eInjury.01"/>
+      <xsl:variable name="nemsisElements" select="../nem:eInjury.01[. != '']"/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="ancestor::nem:PatientCareReport/nem:eSituation/nem:eSituation.02 = '9922005'"/>
@@ -8139,6 +8624,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8191,7 +8681,7 @@
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="nem:eInjury.03[. != ''][1]"
                        id="nemSch_eInjury_rule_3"/>
-      <xsl:variable name="nemsisElements" select="../nem:eInjury.03"/>
+      <xsl:variable name="nemsisElements" select="../nem:eInjury.03[. != '']"/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="ancestor::nem:PatientCareReport/nem:eSituation/nem:eSituation.02 = '9922005'"/>
@@ -8217,6 +8707,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8269,7 +8764,7 @@
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="nem:eInjury.04[. != ''][1]"
                        id="nemSch_eInjury_rule_4"/>
-      <xsl:variable name="nemsisElements" select="../nem:eInjury.04"/>
+      <xsl:variable name="nemsisElements" select="../nem:eInjury.04[. != '']"/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="ancestor::nem:PatientCareReport/nem:eSituation/nem:eSituation.02 = '9922005'"/>
@@ -8295,6 +8790,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8381,6 +8881,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8459,6 +8964,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8539,6 +9049,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8609,6 +9124,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8677,6 +9197,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8747,6 +9272,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8817,6 +9347,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8897,6 +9432,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -8949,7 +9489,7 @@
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="nem:eArrest.04[. != ''][1]"
                        id="nemSch_eArrest_rule_5"/>
-      <xsl:variable name="nemsisElements" select="../nem:eArrest.04"/>
+      <xsl:variable name="nemsisElements" select="../nem:eArrest.04[. != '']"/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="../nem:eArrest.01 = ('3001003', '3001005')"/>
@@ -8975,6 +9515,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9043,6 +9588,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9091,17 +9641,17 @@
       <xsl:apply-templates select="*" mode="M18"/>
    </xsl:template>
    <!--RULE nemSch_eArrest_rule_6-->
-   <xsl:template match="nem:eArrest.07[. = ''][1]" priority="1016" mode="M18">
+   <xsl:template match="nem:eArrest.07[. = '']" priority="1016" mode="M18">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eArrest.07[. = ''][1]"
+                       context="nem:eArrest.07[. = '']"
                        id="nemSch_eArrest_rule_6"/>
-      <xsl:variable name="nemsisElements" select="../nem:eArrest.07"/>
+      <xsl:variable name="nemsisElements" select="."/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
-         <xsl:when test="../nem:eArrest.07 != '' or not(../nem:eArrest.01 = ('3001003', '3001005')) or ancestor::nem:PatientCareReport/nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.28 != '4228001'"/>
+         <xsl:when test="not(../nem:eArrest.01 = ('3001003', '3001005')) or ancestor::nem:PatientCareReport/nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.28 != '4228001'"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                                test="../nem:eArrest.07 != '' or not(../nem:eArrest.01 = ('3001003', '3001005')) or ancestor::nem:PatientCareReport/nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.28 != '4228001'">
+                                test="not(../nem:eArrest.01 = ('3001003', '3001005')) or ancestor::nem:PatientCareReport/nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.28 != '4228001'">
                <xsl:attribute name="id">nemSch_e103</xsl:attribute>
                <xsl:attribute name="role">[WARNING]</xsl:attribute>
                <xsl:attribute name="location">
@@ -9123,6 +9673,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9171,11 +9726,11 @@
       <xsl:apply-templates select="*" mode="M18"/>
    </xsl:template>
    <!--RULE nemSch_eArrest_rule_7-->
-   <xsl:template match="nem:eArrest.07[. != ''][1]" priority="1015" mode="M18">
+   <xsl:template match="nem:eArrest.07[. != '']" priority="1015" mode="M18">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eArrest.07[. != ''][1]"
+                       context="nem:eArrest.07[. != '']"
                        id="nemSch_eArrest_rule_7"/>
-      <xsl:variable name="nemsisElements" select="../nem:eArrest.07"/>
+      <xsl:variable name="nemsisElements" select="."/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="../nem:eArrest.01 = ('3001003', '3001005')"/>
@@ -9201,6 +9756,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9279,6 +9839,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9349,6 +9914,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9419,6 +9989,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9499,6 +10074,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9551,7 +10131,7 @@
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="nem:eArrest.12[. != ''][1]"
                        id="nemSch_eArrest_rule_10"/>
-      <xsl:variable name="nemsisElements" select="../nem:eArrest.12"/>
+      <xsl:variable name="nemsisElements" select="../nem:eArrest.12[. != '']"/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="../nem:eArrest.01 = ('3001003', '3001005')"/>
@@ -9577,6 +10157,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9645,6 +10230,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9723,6 +10313,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9801,6 +10396,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9881,6 +10481,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -9933,7 +10538,7 @@
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="nem:eArrest.17[. != ''][1]"
                        id="nemSch_eArrest_rule_14"/>
-      <xsl:variable name="nemsisElements" select="../nem:eArrest.17"/>
+      <xsl:variable name="nemsisElements" select="../nem:eArrest.17[. != '']"/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
          <xsl:when test="../nem:eArrest.01 = ('3001003', '3001005')"/>
@@ -9959,6 +10564,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10039,6 +10649,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10117,6 +10732,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10195,6 +10815,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10273,6 +10898,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10351,6 +10981,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10429,6 +11064,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10507,6 +11147,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10585,6 +11230,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10669,6 +11319,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10755,6 +11410,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10835,6 +11495,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10907,6 +11572,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -10977,6 +11647,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11047,6 +11722,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11119,6 +11799,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11195,6 +11880,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11263,6 +11953,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11331,6 +12026,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11398,6 +12098,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11446,9 +12151,9 @@
       <xsl:apply-templates select="*" mode="M20"/>
    </xsl:template>
    <!--RULE nemSch_eVitals_rule_4-->
-   <xsl:template match="nem:eVitals.22[. = '3322003']" priority="1000" mode="M20">
+   <xsl:template match="nem:eVitals.22[. = '3322003'][1]" priority="1000" mode="M20">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eVitals.22[. = '3322003']"
+                       context="nem:eVitals.22[. = '3322003'][1]"
                        id="nemSch_eVitals_rule_4"/>
       <xsl:variable name="nemsisElements" select="../nem:eVitals.22"/>
       <!--ASSERT [WARNING]-->
@@ -11474,6 +12179,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11560,6 +12270,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11640,6 +12355,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11712,6 +12432,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11782,6 +12507,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11852,6 +12582,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -11924,6 +12659,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12001,6 +12741,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12079,6 +12824,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12147,6 +12897,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12223,6 +12978,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12303,6 +13063,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12383,6 +13148,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12463,6 +13233,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12541,6 +13316,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12621,6 +13401,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12707,6 +13492,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12787,6 +13577,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12859,6 +13654,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12929,6 +13729,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -12999,6 +13804,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13071,6 +13881,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13148,6 +13963,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13226,6 +14046,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13306,6 +14131,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13390,6 +14220,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13468,6 +14303,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13546,6 +14386,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13624,6 +14469,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13702,6 +14552,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13772,6 +14627,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13850,6 +14710,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13920,6 +14785,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -13998,6 +14868,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14046,17 +14921,17 @@
       <xsl:apply-templates select="*" mode="M23"/>
    </xsl:template>
    <!--RULE nemSch_eDisposition_rule_8-->
-   <xsl:template match="nem:eDisposition.20[. = '']" priority="1010" mode="M23">
+   <xsl:template match="nem:eDisposition.20[. = ''][1]" priority="1010" mode="M23">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="nem:eDisposition.20[. = '']"
+                       context="nem:eDisposition.20[. = ''][1]"
                        id="nemSch_eDisposition_rule_8"/>
-      <xsl:variable name="nemsisElements" select="."/>
+      <xsl:variable name="nemsisElements" select="../nem:eDisposition.20"/>
       <!--ASSERT [WARNING]-->
       <xsl:choose>
-         <xsl:when test="not(ancestor::nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.30 = ('4230001', '4230003'))"/>
+         <xsl:when test="../nem:eDisposition.20 != '' or not(ancestor::nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.30 = ('4230001', '4230003'))"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                                test="not(ancestor::nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.30 = ('4230001', '4230003'))">
+                                test="../nem:eDisposition.20 != '' or not(ancestor::nem:eDisposition/nem:eDisposition.IncidentDispositionGroup/nem:eDisposition.30 = ('4230001', '4230003'))">
                <xsl:attribute name="id">nemSch_e169</xsl:attribute>
                <xsl:attribute name="role">[WARNING]</xsl:attribute>
                <xsl:attribute name="location">
@@ -14076,6 +14951,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14154,6 +15034,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14223,7 +15108,7 @@
                   <xsl:value-of select="key('nemSch_key_elements', local-name(), $nemSch_elements)"/>
                   <xsl:text/> should be recorded when <xsl:text/>
                   <xsl:value-of select="key('nemSch_key_elements', 'eDisposition.21', $nemSch_elements)"/>
-                  <xsl:text/>is "Hospital..." or "Freestanding Emergency Department" and <xsl:text/>
+                  <xsl:text/> is "Hospital..." or "Freestanding Emergency Department" and <xsl:text/>
                   <xsl:value-of select="key('nemSch_key_elements', 'eArrest.01', $nemSch_elements)"/>
                   <xsl:text/> is "Yes...".
     </svrl:text>
@@ -14234,6 +15119,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14295,7 +15185,7 @@
                   <xsl:value-of select="key('nemSch_key_elements', local-name(), $nemSch_elements)"/>
                   <xsl:text/> should be recorded when <xsl:text/>
                   <xsl:value-of select="key('nemSch_key_elements', 'eDisposition.21', $nemSch_elements)"/>
-                  <xsl:text/>is "Hospital..." or "Freestanding Emergency Department" and <xsl:text/>
+                  <xsl:text/> is "Hospital..." or "Freestanding Emergency Department" and <xsl:text/>
                   <xsl:value-of select="key('nemSch_key_elements', 'eVitals.29', $nemSch_elements)"/>
                   <xsl:text/> is "Positive".
     </svrl:text>
@@ -14306,6 +15196,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14367,7 +15262,7 @@
                   <xsl:value-of select="key('nemSch_key_elements', local-name(), $nemSch_elements)"/>
                   <xsl:text/> should be recorded when <xsl:text/>
                   <xsl:value-of select="key('nemSch_key_elements', 'eDisposition.21', $nemSch_elements)"/>
-                  <xsl:text/>is "Hospital..." or "Freestanding Emergency Department" and <xsl:text/>
+                  <xsl:text/> is "Hospital..." or "Freestanding Emergency Department" and <xsl:text/>
                   <xsl:value-of select="key('nemSch_key_elements', 'eVitals.03', $nemSch_elements)"/>
                   <xsl:text/> is "STEMI...".
     </svrl:text>
@@ -14378,6 +15273,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14457,6 +15357,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14537,6 +15442,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14607,6 +15517,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14685,6 +15600,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14755,6 +15675,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14825,6 +15750,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14903,6 +15833,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -14973,6 +15908,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -15043,6 +15983,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -15121,6 +16066,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -15191,6 +16141,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -15269,6 +16224,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -15347,6 +16307,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
@@ -15425,6 +16390,11 @@
                         <xsl:copy-of select="ancestor-or-self::*:DemographicReport/*:dAgency/(*:dAgency.01 | *:dAgency.02 | *:dAgency.04)"/>
                         <xsl:copy-of select="ancestor-or-self::*:Header/*:DemographicGroup/*"/>
                         <xsl:copy-of select="ancestor-or-self::*:PatientCareReport/*:eRecord/*:eRecord.01"/>
+                        <xsl:if test="ancestor-or-self::*[@UUID]">
+                           <UUID>
+                              <xsl:value-of select="ancestor-or-self::*[@UUID][1]/@UUID"/>
+                           </UUID>
+                        </xsl:if>
                      </record>
                      <elements>
                         <xsl:for-each select="$nemsisElements">
