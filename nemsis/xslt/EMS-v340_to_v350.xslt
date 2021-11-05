@@ -4,8 +4,8 @@
 
 XML Stylesheet Language Transformation (XSLT) to transform NEMSIS EMSDataSet from v3.4.0 to v3.5.0
 
-Version: 3.4.0.160713CP2_3.5.0.191130CP1_200206
-Revision Date: February 6, 2020
+Version: 3.4.0.200910CP2_3.5.0.191130CP1_201106
+Revision Date: November 6, 2020
 
 -->
 
@@ -719,12 +719,12 @@ Revision Date: February 6, 2020
       </eDisposition.28>
       <eDisposition.29>
         <xsl:choose>
-          <!-- Assist..., Patient Dead at Scene-No Resuscitation Attempted (With Transport), Patient Refused Evaluation/Care (With Transport), Standby-Public Safety, Fire, or EMS Operational Support Provided, Transport Non-Patient, Organs, etc. => Incident Support Services Provided (Including Standby) -->
-          <xsl:when test=". = ('4212001', '4212003', '4212005', '4212013', '4212023', '4212041', '4212043')">4229009</xsl:when>
+          <!-- Assist..., Patient Dead at Scene-No Resuscitation Attempted (With Transport), Standby-Public Safety, Fire, or EMS Operational Support Provided, Transport Non-Patient, Organs, etc. => Incident Support Services Provided (Including Standby) -->
+          <xsl:when test=". = ('4212001', '4212003', '4212005', '4212013', '4212041', '4212043')">4229009</xsl:when>
           <!-- Patient Refused Evaluation/Care... => Patient Refused Evaluation/Care -->
           <xsl:when test=". = ('4212007', '4212009', '4212011', '4212015', '4212021', '4212039')">4229011</xsl:when>
-          <!-- Patient Refused Evaluation/Care (Without Transport) => Back in Service, Care/Support Services Refused -->
-          <xsl:when test=". = '4212025'">4229011</xsl:when>
+          <!-- Patient Refused Evaluation/Care (With Transport), Patient Refused Evaluation/Care (Without Transport) => Back in Service, Care/Support Services Refused -->
+          <xsl:when test=". = ('4212023','4212025')">4229013</xsl:when>
           <!-- Patient Treated, Transferred Care to Another EMS Unit => Initiated Primary Care and Transferred to Another EMS Crew -->
           <xsl:when test=". = '4212031'">4229003</xsl:when>
           <!-- Otherwise: Patient Dead at Scene-Resuscitation Attempted..., Patient Treated, Released..., Patient Treated, Transported... => Initiated and Continued Primary Care -->

@@ -53,7 +53,6 @@ export class ApiService {
   parsePaginationLink(link?: string): any {
     if (link) {
       const linkRe = /<([^>]+)>; rel="([^"]+)"/g;
-      const pageRe = /(?:\?|&)page=(\d)+/;
       const urls: any = {};
       let m;
       while ((m = linkRe.exec(link)) !== null) {
