@@ -86,7 +86,7 @@ describe('/soap/nemsis', () => {
                   {
                     elementName: 'dConfiguration.02',
                     elementLocation: {
-                      line: 164,
+                      line: 175,
                     },
                   },
                 ],
@@ -127,7 +127,7 @@ describe('/soap/nemsis', () => {
                   {
                     elementName: 'eCrew.02',
                     elementLocation: {
-                      line: 97,
+                      line: 95,
                     },
                   },
                 ],
