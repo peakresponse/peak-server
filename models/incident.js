@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Incident.belongsTo(models.Agency, { as: 'createdByAgency' });
       Incident.belongsTo(models.Agency, { as: 'updatedByAgency' });
       Incident.hasMany(models.Dispatch.scope('canonical'), { as: 'dispatches', foreignKey: 'incidentId' });
+      Incident.hasMany(models.Report.scope('canonical'), { as: 'reports', foreignKey: 'incidentId' });
     }
 
     static async paginate(type, obj, options) {
@@ -120,6 +121,10 @@ module.exports = (sequelize, DataTypes) => {
       dispatchNotifiedAt: {
         type: DataTypes.DATE,
         field: 'dispatch_notified_at',
+      },
+      reportsCount: {
+        type: DataTypes.INTEGER,
+        field: 'reports_count',
       },
     },
     {

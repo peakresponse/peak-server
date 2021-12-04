@@ -11,12 +11,19 @@ describe('/api/reports', () => {
 
   beforeEach(async () => {
     await helpers.loadFixtures([
-      'users',
+      'cities',
+      'counties',
       'states',
       'agencies',
+      'users',
       'contacts',
       'employments',
+      'psaps',
+      'dispatchers',
       'scenes',
+      'incidents',
+      'vehicles',
+      'dispatches',
       'responders',
       'responses',
       'times',

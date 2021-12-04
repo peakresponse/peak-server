@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const inflection = require('inflection');
+const path = require('path');
+const xmljs = require('xml-js');
+
+if (process.argv.length != 3) {
+  console.log("Usage: bin/xsd-to-swift-enum CommonTypeName");
+  return;
+}
+
+const xml = fs.readFileSync(path.resolve(__dirname, '../nemsis/xsd/commonTypes_v3.xsd')).toString();
+const json = xmljs.xml2js(xml, { compact: true });
+if (json['xs:schema'] && json['xs:schema']['xs:simpleType']) {
+  for (const simpleType of json['xs:schema']['xs:simpleType']) {
+    const typeName = simpleType._attributes?.name
+    if (typeName === process.argv[2]) {
+      let values = simpleType['xs:restriction']['xs:enumeration'];
+      if (!Array.isArray(values)) {
+        values = [values];
+      }
+      console.log(`enum ${typeName}: String {
+${values.map((val) => `    case ${inflection.camelize(val['xs:annotation']['xs:documentation']._text.replace(/[^A-Za-z0-9]/g, ''), true)} = "${val._attributes.value}"`).join('\n')}
+
+    var description: String {
+      return "${typeName}.\\(rawValue)".localized
+    }
+}
+
+${values.map((val) => `"${typeName}.${val._attributes.value}" = "${val['xs:annotation']['xs:documentation']._text}";`).join('\n')}
+`);
+      break;
+    }
+  }
+}

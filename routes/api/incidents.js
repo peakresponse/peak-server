@@ -38,4 +38,34 @@ router.get(
   })
 );
 
+router.get(
+  '/:id',
+  interceptors.requireAgency(),
+  helpers.async(async (req, res) => {
+    const incident = await models.Incident.findByPk(req.params.id, {
+      include: [
+        'scene',
+        {
+          model: models.Report,
+          as: 'reports',
+          include: [
+            'response',
+            'time',
+            'patient',
+            'situation',
+            'history',
+            'disposition',
+            'narrative',
+            'medications',
+            'procedures',
+            'vitals',
+          ]
+        }
+      ],
+      rejectOnEmpty: true
+    });
+    res.json(incident.toJSON());
+  })
+);
+
 module.exports = router;
