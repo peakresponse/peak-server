@@ -1,0 +1,115 @@
+#!/usr/bin/env node
+/* eslint-disable no-console, no-await-in-loop */
+const fetch = require('node-fetch');
+const fs = require('fs-extra');
+const mkdirp = require('mkdirp');
+const path = require('path');
+const readline = require('readline');
+const XLSX = require('xlsx');
+const { URLSearchParams } = require('url');
+const _ = require('lodash');
+const uuid = require('uuid/v4');
+const models = require('../models');
+const Op = models.Sequelize.Op;
+
+if (process.argv.length < 5) {
+  console.log('Usage: bin/import-list superuser@email.com filename.xlsx field[,field,field] [ICD10CM|SNOMED|RXNORM]');
+  process.exit(1);
+}
+
+function downloadWorkbook(url) {
+  return new Promise((resolve, reject) => {
+    mkdirp.sync(path.resolve(__dirname, '../tmp'));
+    const filename = path.resolve(__dirname, '../tmp/file.xlsx');
+    const file = fs.createWriteStream(filename);
+    fetch(url)
+      .then((response) => {
+        response.body.on('end', () => {
+          resolve(filename);
+        });
+        response.body.pipe(file);
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+async function importWorkbook() {
+  // get the superuser that will be associated with the new records
+  const superuser = await models.User.findOne({where: {email: process.argv[2], isAdmin: true}, rejectOnEmpty: true});
+
+  // find or create the list
+  const fields = process.argv[4].split(',');
+  const [list] = await models.List.findOrCreate({
+    where: { fields: {
+      [Op.eq]: fields
+    }, agencyId: null },
+    defaults: {
+      fields,
+      createdById: superuser.id,
+      updatedById: superuser.id,
+    }
+  });
+
+  const system = process.argv[5];
+
+  // download the file, if url
+  let filename = process.argv[3];
+  if (filename.startsWith('http')) {
+    console.log('Downloading workbook...');
+    filename = await downloadWorkbook(filename);
+  }
+
+  // start processing the first sheet in the workbook
+  const workbook = XLSX.readFile(filename);
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
+  let isHeaderFound = false
+  let section = null;
+  for (const row of rows) {
+    if (row.length < 3) {
+      continue;
+    }
+    if (!isHeaderFound) {
+      isHeaderFound = true;
+      continue;
+    }
+    const [sectionName, name, code] = row;
+    if (sectionName) {
+      [section] = await models.ListSection.findOrCreate({
+        where: {
+          listId: list.id,
+          name: sectionName.trim(),          
+        },
+        defaults: {
+          createdById: superuser.id,
+          updatedById: superuser.id,
+        }
+      });
+    }
+    if (name && code) {
+      [item] = await models.ListItem.findOrCreate({
+        where: {
+          listId: list.id,
+          system,
+          code: code.trim(),
+        },
+        defaults: {
+          name: name.trim(),
+          createdById: superuser.id,
+          updatedById: superuser.id,
+        }
+      });
+      item.sectionId = section.id;
+      item.name = name.trim();
+      item.updatedById = superuser.id;
+      await item.save();
+    }
+  }
+}
+
+importWorkbook().then(() => {
+  process.exit(0);
+}).catch((error) => {
+  console.log(error);
+  process.exit(1);  
+});

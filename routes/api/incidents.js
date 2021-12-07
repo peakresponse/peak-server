@@ -59,10 +59,10 @@ router.get(
             'medications',
             'procedures',
             'vitals',
-          ]
-        }
+          ],
+        },
       ],
-      rejectOnEmpty: true
+      rejectOnEmpty: true,
     });
     res.json(incident.toJSON());
   })

@@ -55,9 +55,8 @@ describe('/api/incidents', () => {
       const response = await testSession
         .get(`/api/incidents/6621202f-ca09-4ad9-be8f-b56346d1de65`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK)
+        .expect(HttpStatus.OK);
       const incident = response.body;
-      console.log(incident);
       assert.deepStrictEqual(incident.number, '12345678');
       assert.deepStrictEqual(incident.reports?.length, 1);
     });
