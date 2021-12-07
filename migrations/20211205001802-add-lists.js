@@ -160,7 +160,7 @@ module.exports = {
             onDelete: 'SET NULL',
           },
           system: {
-            type: Sequelize.ENUM('ICD10CM', 'SNOMED', 'RXNORM'),
+            type: Sequelize.STRING,
             allowNull: false,
           },
           code: {
@@ -208,6 +208,10 @@ module.exports = {
         transaction,
       });
     });
+    await queryInterface.changeColumn('list_items', 'system', {
+      type: Sequelize.ENUM('ICD10CM', 'SNOMED', 'RXNORM'),
+      allowNull: false,
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -222,5 +226,6 @@ module.exports = {
       await queryInterface.dropTable('list_sections', { transaction });
       await queryInterface.dropTable('lists', { transaction });
     });
+    await queryInterface.sequelize.query('DROP TYPE IF EXISTS enum_list_items_system');
   },
 };

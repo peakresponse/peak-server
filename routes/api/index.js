@@ -10,6 +10,7 @@ router.use('/dispatchers', require('./dispatchers'));
 router.use('/employments', require('./employments'));
 router.use('/facilities', require('./facilities'));
 router.use('/incidents', require('./incidents'));
+router.use('/lists', require('./lists'));
 router.use('/patients', require('./patients'));
 router.use('/psaps', require('./psaps'));
 router.use('/reports', require('./reports'));
