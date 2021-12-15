@@ -275,6 +275,19 @@ export class ApiService {
     },
   };
 
+  lists = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/lists', params);
+    },
+  };
+
+  listItems = {
+    index: (params?: HttpParams): Observable<any> => {
+      const listId = params?.get('listId');
+      return this.get(`/api/lists/${listId}/items`, params?.delete('listId'));
+    },
+  };
+
   patients = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/patients', params);
