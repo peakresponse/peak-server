@@ -70,7 +70,7 @@ async function importWorkbook() {
   let isHeaderFound = false;
   let section = null;
   for (const row of rows) {
-    if (row.length < cols - 1) {
+    if (!isHeaderFound && row.length < cols - 1) {
       // eslint-disable-next-line no-continue
       continue;
     }
@@ -104,7 +104,7 @@ async function importWorkbook() {
         where: {
           listId: list.id,
           system,
-          code: code.trim(),
+          code: `${code}`.trim(),
         },
         defaults: {
           name: name.trim(),
