@@ -14,7 +14,20 @@ router.post(
     await models.sequelize.transaction(async (transaction) => {
       // TODO: check if logged-in user is authorized to create/update
       let created;
-      for (const model of ['Response', 'Scene', 'Time', 'Patient', 'Situation', 'History', 'Disposition', 'Narrative', 'Report']) {
+      for (const model of [
+        'Response',
+        'Scene',
+        'Time',
+        'Patient',
+        'Situation',
+        'History',
+        'Disposition',
+        'Narrative',
+        'Medication',
+        'Procedure',
+        'Vital',
+        'Report',
+      ]) {
         let records = req.body[model];
         if (records) {
           if (!Array.isArray(records)) {
