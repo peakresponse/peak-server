@@ -18,9 +18,9 @@ describe('/api/lists', () => {
       .expect(HttpStatus.OK);
   });
 
-  describe('GET /', () => {
+  describe('GET /all', () => {
     it('returns all the lists for the user agency', async () => {
-      const response = await testSession.get('/api/lists').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      const response = await testSession.get('/api/lists/all').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.lists.length, 2);
