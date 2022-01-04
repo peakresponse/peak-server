@@ -99,7 +99,7 @@ router.post('/cad', async (req, res) => {
             newScene.stateId = '06';
           }
           // eslint-disable-next-line no-await-in-loop
-          const [scene,] = await models.Scene.createOrUpdate(req.user, null, newScene, { transaction });
+          const [scene] = await models.Scene.createOrUpdate(req.user, null, newScene, { transaction });
           incident.sceneId = scene.id;
           // eslint-disable-next-line no-await-in-loop
           await incident.save({ transaction });
