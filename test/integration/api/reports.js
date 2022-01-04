@@ -53,10 +53,17 @@ describe('/api/reports', () => {
             },
           },
         },
+        Patient: {
+          id: '059efacd-ebf3-486a-b726-9a49912187f9',
+          canonicalId: 'ded89a78-359c-487e-99ce-c6d292c9b0de',
+          firstName: 'Test',
+          lastName: 'Patient',
+        },
         Report: {
           id: '2f1b5eb1-4689-41ef-8d88-aeda834a99ac',
           canonicalId: '90cf28b8-a59f-4ca2-8a4b-7756e1c0bd9e',
           narrativeId: '89529548-19f7-4a17-b7d3-ad783c575f63',
+          patientId: '059efacd-ebf3-486a-b726-9a49912187f9',
           data: {
             'eRecord.01': {
               _text: '90cf28b8-a59f-4ca2-8a4b-7756e1c0bd9e',
@@ -80,13 +87,19 @@ describe('/api/reports', () => {
       const report = await models.Report.findByPk('2f1b5eb1-4689-41ef-8d88-aeda834a99ac');
       assert(report);
       assert.deepStrictEqual(report.data, data.Report.data);
-      assert.deepStrictEqual(report.updatedAttributes, ['id', 'canonicalId', 'data', 'narrativeId']);
+      assert.deepStrictEqual(report.updatedAttributes, ['id', 'canonicalId', 'data', 'patientId', 'narrativeId']);
       assert.deepStrictEqual(report.updatedDataAttributes, ['/eRecord.01', '/eRecord.SoftwareApplicationGroup']);
 
       const narrative = await report.getNarrative();
       assert(narrative);
       assert.deepStrictEqual(narrative.id, data.Narrative.id);
       assert.deepStrictEqual(narrative.data, data.Narrative.data);
+
+      const patient = await report.getPatient();
+      assert(patient);
+      assert.deepStrictEqual(patient.id, data.Patient.id);
+      assert.deepStrictEqual(patient.firstName, data.Patient.firstName);
+      assert.deepStrictEqual(patient.lastName, data.Patient.lastName);
 
       const canonical = await report.getCanonical();
       assert(canonical);

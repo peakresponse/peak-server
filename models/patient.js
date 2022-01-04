@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         return sequelize.transaction((transaction) => Patient.createOrUpdate(user, agency, data, { ...options, transaction }));
       }
       // allow sceneId and pin as an alternative to canonicalId
-      if (data.sceneId && data.pin) {
+      if (!data.canonicalId && data.sceneId && data.pin) {
         const canonical = await Patient.findOne({
           where: {
             canonicalId: null,
@@ -70,16 +70,16 @@ module.exports = (sequelize, DataTypes) => {
       } else if (data.parentId) {
         const parent = await Patient.findByPk(data.parentId, { rejectOnEmpty: true, transaction: options.transaction });
         scene = await parent.getScene(options);
-      } else {
-        throw new Error();
       }
-      // confirm this is a responder on scene
-      const responder = await sequelize.models.Responder.findOne({
-        where: { sceneId: scene.id, userId: user.id, agencyId: agency.id },
-        transaction: options?.transaction,
-      });
-      if (!responder) {
-        throw new Error();
+      if (scene) {
+        // confirm this is a responder on scene
+        const responder = await sequelize.models.Responder.findOne({
+          where: { sceneId: scene.id, userId: user.id, agencyId: agency.id },
+          transaction: options?.transaction,
+        });
+        if (!responder) {
+          throw new Error();
+        }
       }
       const [record, created] = await Base.createOrUpdate(
         Patient,
@@ -121,7 +121,7 @@ module.exports = (sequelize, DataTypes) => {
         ],
         options
       );
-      await scene.updatePatientCounts(options);
+      await scene?.updatePatientCounts(options);
       return [record, created];
     }
 
