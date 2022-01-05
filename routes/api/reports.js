@@ -7,6 +7,73 @@ const models = require('../../models');
 
 const router = express.Router();
 
+router.get(
+  '/',
+  interceptors.requireAgency(),
+  helpers.async(async (req, res) => {
+    const options = {
+      where: {},
+    };
+    const { incidentId } = req.query;
+    if (!incidentId) {
+      res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+      return;
+    }
+    options.where.incidentId = incidentId;
+    await models.sequelize.transaction(async (transaction) => {
+      options.transaction = transaction;
+      const reports = await models.Report.scope('canonical').findAll(options);
+      const ids = {
+        Response: [],
+        Scene: [],
+        Time: [],
+        Patient: [],
+        Situation: [],
+        History: [],
+        Disposition: [],
+        Narrative: [],
+        Medication: [],
+        Procedure: [],
+        Vital: [],
+      };
+      const payload = {
+        Report: [],
+      };
+      for (const report of reports) {
+        payload.Report.push(report.toJSON());
+        ids.Response.push(report.responseId);
+        ids.Scene.push(report.sceneId);
+        ids.Time.push(report.timeId);
+        ids.Patient.push(report.patientId);
+        ids.Situation.push(report.situationIds);
+        ids.History.push(report.historyIds);
+        ids.Disposition.push(report.dispositionId);
+        ids.Narrative.push(report.narrativeId);
+        ids.Medication = ids.Medication.concat(report.medicationIds);
+        ids.Procedure = ids.Procedure.concat(report.procedureIds);
+        ids.Vital = ids.Vital.concat(report.vitalIds);
+      }
+      for (const model of [
+        'Response',
+        'Scene',
+        'Time',
+        'Patient',
+        'Situation',
+        'History',
+        'Disposition',
+        'Narrative',
+        'Medication',
+        'Procedure',
+        'Vital',
+      ]) {
+        // eslint-disable-next-line no-await-in-loop
+        payload[model] = (await models[model].findAll({ where: { id: ids[model] }, transaction })).map((record) => record.toJSON());
+      }
+      res.json(payload);
+    });
+  })
+);
+
 router.post(
   '/',
   interceptors.requireAgency(),

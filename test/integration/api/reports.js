@@ -41,6 +41,18 @@ describe('/api/reports', () => {
       .expect(HttpStatus.OK);
   });
 
+  describe('GET /', () => {
+    it('returns Reports for an Incident', async () => {
+      const response = await testSession
+        .get(`/api/reports?incidentId=6621202f-ca09-4ad9-be8f-b56346d1de65`)
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .expect(HttpStatus.OK);
+      const data = response.body;
+      assert(data.Report);
+      assert.deepStrictEqual(data.Report.length, 1);
+    });
+  });
+
   describe('POST /', () => {
     it('creates a new Report', async () => {
       const data = {
