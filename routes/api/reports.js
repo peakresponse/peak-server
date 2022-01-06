@@ -45,8 +45,8 @@ router.get(
         ids.Scene.push(report.sceneId);
         ids.Time.push(report.timeId);
         ids.Patient.push(report.patientId);
-        ids.Situation.push(report.situationIds);
-        ids.History.push(report.historyIds);
+        ids.Situation.push(report.situationId);
+        ids.History.push(report.historyId);
         ids.Disposition.push(report.dispositionId);
         ids.Narrative.push(report.narrativeId);
         ids.Medication = ids.Medication.concat(report.medicationIds);
