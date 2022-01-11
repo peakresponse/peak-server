@@ -141,18 +141,42 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING,
         field: 'last_name',
+        set(newValue) {
+          this.setFieldAndNemsisValue('lastName', ['ePatient.PatientNameGroup', 'ePatient.02'], newValue);
+        },
       },
       firstName: {
         type: DataTypes.STRING,
         field: 'first_name',
+        set(newValue) {
+          this.setFieldAndNemsisValue('firstName', ['ePatient.PatientNameGroup', 'ePatient.03'], newValue);
+        },
       },
-      gender: DataTypes.STRING,
-      age: DataTypes.INTEGER,
+      gender: {
+        type: DataTypes.STRING,
+        set(newValue) {
+          this.setFieldAndNemsisValue('gender', ['ePatient.13'], newValue);
+        },
+      },
+      age: {
+        type: DataTypes.INTEGER,
+        set(newValue) {
+          this.setFieldAndNemsisValue('age', ['ePatient.AgeGroup', 'ePatient.15'], newValue);
+        },
+      },
       ageUnits: {
         type: DataTypes.STRING,
         field: 'age_units',
+        set(newValue) {
+          this.setFieldAndNemsisValue('ageUnits', ['ePatient.AgeGroup', 'ePatient.16'], newValue);
+        },
       },
-      dob: DataTypes.DATEONLY,
+      dob: {
+        type: DataTypes.DATEONLY,
+        set(newValue) {
+          this.setFieldAndNemsisValue('dob', ['ePatient.17'], newValue);
+        },
+      },
       complaint: DataTypes.STRING,
       triageMentalStatus: {
         type: DataTypes.STRING,

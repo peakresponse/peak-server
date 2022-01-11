@@ -51,7 +51,7 @@ class Base extends Model {
       // check for data patch
       if (data.data_patch && updateAttrs.includes('data')) {
         updatedAttributes.push('data');
-        filteredData.data = jsonpatch.applyPatch(parent.data, data.data_patch).newDocument;
+        filteredData.data = jsonpatch.applyPatch(parent.data || {}, data.data_patch).newDocument;
       }
       // merge the new attributes into the parent attributes
       filteredData = _.assign({ ...parent.get() }, filteredData);

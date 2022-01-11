@@ -1,6 +1,7 @@
 [
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "47449282-c48a-4ca1-a719-5117b790fc70",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
@@ -35,6 +36,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "a3e7833d-0f55-427d-beea-f0045034340e",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
@@ -69,6 +71,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "8daa0a6b-386e-4c56-b28a-a32542d5c240",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
@@ -103,6 +106,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "cbc1250f-d2c3-4955-8837-ae8af547f568",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
@@ -135,6 +139,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "caaba1a2-2f10-403a-b4a0-d36f2ded6abc",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
@@ -169,6 +174,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "79068107-5a3b-4bc0-af38-7b143c2edd9f",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
@@ -203,6 +209,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "0d0df3dc-ed07-4ddf-9870-cb6fa1938501",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
@@ -237,6 +244,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "6045b198-590e-483b-b493-40510b8d86ca",
       "version": 1,
@@ -287,6 +295,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "cb94a8a4-bf8b-4316-8a3f-191aa2df4633",
       "parentId": "6045b198-590e-483b-b493-40510b8d86ca",
@@ -322,6 +331,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "6ae0e0b0-db99-49c8-9174-d91234107157",
       "version": 1,
@@ -372,6 +382,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "4012c21f-cc05-4f18-89b6-8d32e261b077",
       "version": 1,
@@ -422,6 +433,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "1b76259b-d08e-45d2-ba62-983880ef2e4e",
       "parentId": "4012c21f-cc05-4f18-89b6-8d32e261b077",
@@ -458,6 +470,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "4227c672-2497-44fa-bde6-ca36a7282c13",
       "version": 1,
@@ -491,6 +504,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "e8c8db8d-7fcc-4170-b5a8-a0b805a6ce82",
       "version": 1,
@@ -541,6 +555,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "01b08bf0-13ac-4c38-94cc-265518fb8604",
       "parentId": "e8c8db8d-7fcc-4170-b5a8-a0b805a6ce82",
@@ -577,6 +592,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "2ccf15a8-0be9-4b61-a2b1-10ae8f3359db",
       "version": 1,
@@ -627,6 +643,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "9d6295a1-b2cd-4e01-9425-11a4a01e947e",
       "parentId": "2ccf15a8-0be9-4b61-a2b1-10ae8f3359db",
@@ -663,6 +680,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "3c366588-a41e-47d1-a1fd-788ada643536",
       "version": 1,
@@ -713,6 +731,7 @@
   },
   {
     "model": "Patient",
+    "ignoreSet": true,
     "data": {
       "id": "54a52c0a-b2f0-49ef-bc8d-9150fb2da654",
       "parentId": "3c366588-a41e-47d1-a1fd-788ada643536",

@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+/* eslint-disable no-console, no-await-in-loop */
+
+const models = require('../models');
+
+if (process.argv.length < 4) {
+  console.log('Usage: bin/resave ModelName field[,field,field]');
+  process.exit(1);
+}
+
+const modelName = process.argv[2];
+const fields = process.argv[3].split(',');
+
+async function resaveData() {
+  const count = await models[modelName].count();
+  const limit = 100;
+  for (let offset = 0; offset < count; offset += limit) {
+    await models.sequelize.transaction(async (transaction) => {
+      const records = await models[modelName].findAll({
+        order: [['id', 'ASC']],
+        offset,
+        limit,
+        transaction,
+      });
+      for (const record of records) {
+        for (const field of fields) {
+          // eslint-disable-next-line no-self-assign
+          record[field] = record[field];
+        }
+        await models[modelName].update(
+          { data: record.data },
+          {
+            where: { id: record.id },
+            silent: true,
+            transaction,
+          }
+        );
+      }
+    });
+  }
+}
+
+resaveData()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.log(error);
+    process.exit(1);
+  });
