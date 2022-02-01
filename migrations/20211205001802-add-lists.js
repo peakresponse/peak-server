@@ -209,7 +209,7 @@ module.exports = {
       });
     });
     await queryInterface.changeColumn('list_items', 'system', {
-      type: Sequelize.ENUM('ICD10CM', 'SNOMED', 'RXNORM'),
+      type: Sequelize.ENUM('9924001', '9924005', '9924003'),
       allowNull: false,
     });
   },

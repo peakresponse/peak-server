@@ -4,7 +4,7 @@
     "data": {
       "id": "ad450821-8899-443d-bffb-a1d4d32f0a1b",
       "sectionId": "3732ca2b-15f0-4dde-8682-93946980bb33",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.84",
       "name": "Generalized pain",
       "createdAt": "2021-12-07T00:10:20.522Z",
@@ -19,7 +19,7 @@
     "data": {
       "id": "a4fc0e22-3259-4e9d-8ca6-e76815e654e4",
       "sectionId": "3732ca2b-15f0-4dde-8682-93946980bb33",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.3",
       "name": "Lower abdominal pain",
       "createdAt": "2021-12-07T00:10:20.527Z",
@@ -34,7 +34,7 @@
     "data": {
       "id": "4a9c1940-2b35-46de-9d33-62e2dc2f50f8",
       "sectionId": "3732ca2b-15f0-4dde-8682-93946980bb33",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.81",
       "name": "Tenderness",
       "createdAt": "2021-12-07T00:10:20.531Z",
@@ -49,7 +49,7 @@
     "data": {
       "id": "ee18b4a6-7eb5-4a57-bcfb-b841d24a16fc",
       "sectionId": "3732ca2b-15f0-4dde-8682-93946980bb33",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.9",
       "name": "Unspecified pain",
       "createdAt": "2021-12-07T00:10:20.535Z",
@@ -64,7 +64,7 @@
     "data": {
       "id": "46cf4da3-de99-4f0f-9c8d-59f3db01272f",
       "sectionId": "3732ca2b-15f0-4dde-8682-93946980bb33",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.1",
       "name": "Upper abdominal pain",
       "createdAt": "2021-12-07T00:10:20.539Z",
@@ -79,7 +79,7 @@
     "data": {
       "id": "f1dee631-e132-42dd-9e6c-879bf202132e",
       "sectionId": "d00dea77-6fb6-42fb-a28d-3ccf5d728db2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F10.92",
       "name": "Alcohol use with intoxication",
       "createdAt": "2021-12-07T00:10:20.546Z",
@@ -94,7 +94,7 @@
     "data": {
       "id": "bd6aa344-ba4b-4bb3-a8d4-b086b661d04e",
       "sectionId": "d00dea77-6fb6-42fb-a28d-3ccf5d728db2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F10.9",
       "name": "Alcohol use",
       "createdAt": "2021-12-07T00:10:20.551Z",
@@ -109,7 +109,7 @@
     "data": {
       "id": "18373a8c-f2ca-45a0-bfa5-eabcd9c90e3a",
       "sectionId": "d00dea77-6fb6-42fb-a28d-3ccf5d728db2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T57.9",
       "name": "Inorganic substance use",
       "createdAt": "2021-12-07T00:10:20.556Z",
@@ -124,7 +124,7 @@
     "data": {
       "id": "b20acd3a-6e43-4422-8db8-454ebc806263",
       "sectionId": "d00dea77-6fb6-42fb-a28d-3ccf5d728db2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T40.6",
       "name": "Narcotic use",
       "createdAt": "2021-12-07T00:10:20.561Z",
@@ -139,7 +139,7 @@
     "data": {
       "id": "ab8d3502-2802-42a5-a4fd-1f2db218475a",
       "sectionId": "d00dea77-6fb6-42fb-a28d-3ccf5d728db2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T50",
       "name": "Unspecified drugs/substance",
       "createdAt": "2021-12-07T00:10:20.565Z",
@@ -154,7 +154,7 @@
     "data": {
       "id": "825f7adc-1609-4c02-a441-21b80f789bc7",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I20.9",
       "name": "Angina, NOS",
       "createdAt": "2021-12-07T00:10:20.570Z",
@@ -169,7 +169,7 @@
     "data": {
       "id": "3e73855a-6842-4ef3-9fe7-febc672428cb",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I48.91",
       "name": "Atrial fibrillation, NOS",
       "createdAt": "2021-12-07T00:10:20.578Z",
@@ -184,7 +184,7 @@
     "data": {
       "id": "8cc4dc08-64b4-43f4-afcf-65e4b08b6a31",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I46.9",
       "name": "Cardiac arrest",
       "createdAt": "2021-12-07T00:10:20.581Z",
@@ -199,7 +199,7 @@
     "data": {
       "id": "40ad0dc8-24e8-44db-8dd0-17adcb58f9cc",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I10",
       "name": "Hypertension",
       "createdAt": "2021-12-07T00:10:20.585Z",
@@ -214,7 +214,7 @@
     "data": {
       "id": "97f71688-ac17-4f1f-929e-38e15ea5e9ec",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I95.9",
       "name": "Hypotension",
       "createdAt": "2021-12-07T00:10:20.589Z",
@@ -229,7 +229,7 @@
     "data": {
       "id": "6931e9b3-b60f-4935-a8c9-b69b28ebd813",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I21",
       "name": "Myocardial infarction, NOS",
       "createdAt": "2021-12-07T00:10:20.593Z",
@@ -244,7 +244,7 @@
     "data": {
       "id": "534683f4-218e-4bb2-835b-9e683ce7f7a9",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R00.2",
       "name": "Palpitations",
       "createdAt": "2021-12-07T00:10:20.597Z",
@@ -259,7 +259,7 @@
     "data": {
       "id": "ef098ab2-e653-456f-a1b7-fecdea5d19e1",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I21.3",
       "name": "STEMI, NOS",
       "createdAt": "2021-12-07T00:10:20.602Z",
@@ -274,7 +274,7 @@
     "data": {
       "id": "417d3f2d-d6ae-4fdc-b0a0-a47026890842",
       "sectionId": "4c988e0d-fb76-41eb-8f27-d5c1a503fc57",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R14.0",
       "name": "Abdominal distention/bloating",
       "createdAt": "2021-12-07T00:10:20.610Z",
@@ -289,7 +289,7 @@
     "data": {
       "id": "6ad3b9fe-fc58-48d7-a245-4d064cd14db4",
       "sectionId": "4c988e0d-fb76-41eb-8f27-d5c1a503fc57",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "K59.00",
       "name": "Constipation",
       "createdAt": "2021-12-07T00:10:20.615Z",
@@ -304,7 +304,7 @@
     "data": {
       "id": "368b875f-e46a-49c1-ae76-8c4e58256cb7",
       "sectionId": "4c988e0d-fb76-41eb-8f27-d5c1a503fc57",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R19.7",
       "name": "Diarrhea",
       "createdAt": "2021-12-07T00:10:20.619Z",
@@ -319,7 +319,7 @@
     "data": {
       "id": "79920ace-3ea5-46ce-96fe-da4836dc4af2",
       "sectionId": "4c988e0d-fb76-41eb-8f27-d5c1a503fc57",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R11.0",
       "name": "Nausea",
       "createdAt": "2021-12-07T00:10:20.623Z",
@@ -334,7 +334,7 @@
     "data": {
       "id": "b16b3522-ea9e-40c6-b670-147c30e59ffb",
       "sectionId": "4c988e0d-fb76-41eb-8f27-d5c1a503fc57",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R11.10",
       "name": "Vomiting",
       "createdAt": "2021-12-07T00:10:20.627Z",
@@ -349,7 +349,7 @@
     "data": {
       "id": "e75cd405-5062-4f7a-b6a5-114e302c0ccd",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F41.9",
       "name": "Anxiety",
       "createdAt": "2021-12-07T00:10:20.637Z",
@@ -364,7 +364,7 @@
     "data": {
       "id": "d0b57eca-d18f-4654-8c23-30dbca0ccd13",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F32.9",
       "name": "Depression",
       "createdAt": "2021-12-07T00:10:20.641Z",
@@ -379,7 +379,7 @@
     "data": {
       "id": "77cb7cae-b633-4ec0-8660-c2893692245b",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.7",
       "name": "Emotional shock/stress",
       "createdAt": "2021-12-07T00:10:20.646Z",
@@ -394,7 +394,7 @@
     "data": {
       "id": "e837ca23-35b1-4b00-99e6-f5bba2ee8163",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F99",
       "name": "Mental illness, NOS",
       "createdAt": "2021-12-07T00:10:20.649Z",
@@ -409,7 +409,7 @@
     "data": {
       "id": "1c56d6d3-efea-4658-93e4-5a71bca696bc",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.0",
       "name": "Nervousness",
       "createdAt": "2021-12-07T00:10:20.653Z",
@@ -424,7 +424,7 @@
     "data": {
       "id": "2b19d2fc-e45d-4b6e-9d1d-413d990c12ca",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R46.3",
       "name": "Overactivity",
       "createdAt": "2021-12-07T00:10:20.657Z",
@@ -439,7 +439,7 @@
     "data": {
       "id": "1dd01ed8-e6db-4506-8885-67f1b77f245e",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.1",
       "name": "Restless/agitated",
       "createdAt": "2021-12-07T00:10:20.662Z",
@@ -454,7 +454,7 @@
     "data": {
       "id": "057ddc10-b889-4c98-a7f4-f285bf42f8c0",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R46.4",
       "name": "Slowness/poor responsiveness",
       "createdAt": "2021-12-07T00:10:20.666Z",
@@ -469,7 +469,7 @@
     "data": {
       "id": "1957b3ef-4784-403a-95cf-0df4aacba3ed",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R46.2",
       "name": "Strange/inexplicable behavior",
       "createdAt": "2021-12-07T00:10:20.671Z",
@@ -484,7 +484,7 @@
     "data": {
       "id": "a442a884-db55-4f1c-8f05-ab117a0bd758",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.851",
       "name": "Suicidal ideation",
       "createdAt": "2021-12-07T00:10:20.675Z",
@@ -499,7 +499,7 @@
     "data": {
       "id": "24621e35-ea33-49e3-b51f-73108686d93e",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.6",
       "name": "Violent behavior",
       "createdAt": "2021-12-07T00:10:20.679Z",
@@ -514,7 +514,7 @@
     "data": {
       "id": "60e321c9-ce46-4afe-bc14-1abb0f84e9c0",
       "sectionId": "b3bf12ed-bb69-4dd7-94f9-f27bb6fb238a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.82",
       "name": "Worries",
       "createdAt": "2021-12-07T00:10:20.683Z",
@@ -529,7 +529,7 @@
     "data": {
       "id": "f48b9800-fafa-4dfc-a61b-ec5267874ba8",
       "sectionId": "2ef19e25-5c49-4fb6-b9bc-a91045e97eb8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "E13.8",
       "name": "Diabetic complications",
       "createdAt": "2021-12-07T00:10:20.693Z",
@@ -544,7 +544,7 @@
     "data": {
       "id": "b858e3da-9f78-4482-bc4d-cbf6c401279f",
       "sectionId": "2ef19e25-5c49-4fb6-b9bc-a91045e97eb8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R73.9",
       "name": "Hyperglycemia",
       "createdAt": "2021-12-07T00:10:20.697Z",
@@ -559,7 +559,7 @@
     "data": {
       "id": "0a8ae27d-da2b-4023-aa7a-fc822eabb8e0",
       "sectionId": "2ef19e25-5c49-4fb6-b9bc-a91045e97eb8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "E16.2",
       "name": "Hypoglycemia",
       "createdAt": "2021-12-07T00:10:20.702Z",
@@ -574,7 +574,7 @@
     "data": {
       "id": "e7a46340-b16b-4981-9d13-5d8515304b0e",
       "sectionId": "2ef19e25-5c49-4fb6-b9bc-a91045e97eb8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R30.0",
       "name": "Pain upon urination",
       "createdAt": "2021-12-07T00:10:20.707Z",
@@ -589,7 +589,7 @@
     "data": {
       "id": "6ab925e7-345a-4255-a1c9-e5f0e7bd407d",
       "sectionId": "2ef19e25-5c49-4fb6-b9bc-a91045e97eb8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R33.9",
       "name": "Unable to urinate",
       "createdAt": "2021-12-07T00:10:20.714Z",
@@ -604,7 +604,7 @@
     "data": {
       "id": "d6365ee0-16a3-4b40-9d73-3815d666069b",
       "sectionId": "2ef19e25-5c49-4fb6-b9bc-a91045e97eb8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "N19",
       "name": "Uremia (on dialysis)",
       "createdAt": "2021-12-07T00:10:20.718Z",
@@ -619,7 +619,7 @@
     "data": {
       "id": "8a640472-eee5-4996-beb0-27d3c1241970",
       "sectionId": "1726627b-db77-44ed-b0fd-a7abb3f3847e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R50.9",
       "name": "Fever, NOS",
       "createdAt": "2021-12-07T00:10:20.724Z",
@@ -634,7 +634,7 @@
     "data": {
       "id": "e68e42e2-9b1c-4f6b-99f1-93202c873a01",
       "sectionId": "1726627b-db77-44ed-b0fd-a7abb3f3847e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R68.89",
       "name": "General symptoms, NOS",
       "createdAt": "2021-12-07T00:10:20.729Z",
@@ -649,7 +649,7 @@
     "data": {
       "id": "82c092d8-171f-4859-9360-68d9a16c5163",
       "sectionId": "1726627b-db77-44ed-b0fd-a7abb3f3847e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R69",
       "name": "Illness, NOS",
       "createdAt": "2021-12-07T00:10:20.733Z",
@@ -664,7 +664,7 @@
     "data": {
       "id": "d1c99a88-a8eb-43a4-9318-3c14a1c6c76d",
       "sectionId": "1726627b-db77-44ed-b0fd-a7abb3f3847e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R99",
       "name": "Undefined/unknown",
       "createdAt": "2021-12-07T00:10:20.737Z",
@@ -679,7 +679,7 @@
     "data": {
       "id": "bc222809-f952-409b-9037-90c21148f718",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S09.93",
       "name": "Facial injury",
       "createdAt": "2021-12-07T00:10:20.743Z",
@@ -694,7 +694,7 @@
     "data": {
       "id": "3470d84f-3b05-4c31-810b-e1b833067d37",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S09.90",
       "name": "Head injury",
       "createdAt": "2021-12-07T00:10:20.747Z",
@@ -709,7 +709,7 @@
     "data": {
       "id": "71110bf0-ce5e-4435-a199-8cdb0b26a340",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S79",
       "name": "Hip/thigh injury",
       "createdAt": "2021-12-07T00:10:20.754Z",
@@ -724,7 +724,7 @@
     "data": {
       "id": "1131be0a-2a52-4eda-a8ec-4365df6fc2ac",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T14",
       "name": "Injury, NOS",
       "createdAt": "2021-12-07T00:10:20.758Z",
@@ -739,7 +739,7 @@
     "data": {
       "id": "f33d764b-69c5-48a5-a0c0-cde206f108b5",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S89.90",
       "name": "Lower leg injury",
       "createdAt": "2021-12-07T00:10:20.762Z",
@@ -754,7 +754,7 @@
     "data": {
       "id": "0016f3c5-c378-411c-b413-3bc4ef7b0e46",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S49.9",
       "name": "Shoulder/upper arm injury",
       "createdAt": "2021-12-07T00:10:20.771Z",
@@ -769,7 +769,7 @@
     "data": {
       "id": "404bf760-e54d-4b88-a9d5-3a45efc0e9ac",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S69.9",
       "name": "Wrist/hand/finger injury",
       "createdAt": "2021-12-07T00:10:20.776Z",
@@ -784,7 +784,7 @@
     "data": {
       "id": "9e843e87-5a51-4a2f-9273-c80a17375d06",
       "sectionId": "74328fb6-fa7b-41cb-85de-17a30be360f8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R41.82",
       "name": "Altered mental status, NOS",
       "createdAt": "2021-12-07T00:10:20.781Z",
@@ -799,7 +799,7 @@
     "data": {
       "id": "12c0b553-925c-4b0c-87f9-403a38e6b43c",
       "sectionId": "74328fb6-fa7b-41cb-85de-17a30be360f8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R41.0",
       "name": "Disoriented, NOS",
       "createdAt": "2021-12-07T00:10:20.789Z",
@@ -814,7 +814,7 @@
     "data": {
       "id": "afdd5fd3-3290-4c88-88ec-8b174fb3a730",
       "sectionId": "74328fb6-fa7b-41cb-85de-17a30be360f8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R40.0",
       "name": "Drowsiness",
       "createdAt": "2021-12-07T00:10:20.794Z",
@@ -829,7 +829,7 @@
     "data": {
       "id": "86f922c0-24f6-40fe-ad24-7468c9ffa96b",
       "sectionId": "74328fb6-fa7b-41cb-85de-17a30be360f8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R55",
       "name": "Fainting/collapse",
       "createdAt": "2021-12-07T00:10:20.797Z",
@@ -844,7 +844,7 @@
     "data": {
       "id": "2c919477-4256-4eaa-91bf-faa8c79d1d82",
       "sectionId": "74328fb6-fa7b-41cb-85de-17a30be360f8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R40.20",
       "name": "Unconscious, NOS",
       "createdAt": "2021-12-07T00:10:20.801Z",
@@ -859,7 +859,7 @@
     "data": {
       "id": "db468837-ec99-4b8d-994a-9ba41b06add8",
       "sectionId": "49d49dfa-94d0-49b5-9bbd-9088188ad3b7",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R53.83",
       "name": "Fatigue, NOS",
       "createdAt": "2021-12-07T00:10:20.806Z",
@@ -874,7 +874,7 @@
     "data": {
       "id": "b43be22f-0325-4e45-b47b-adb6b4a8a677",
       "sectionId": "49d49dfa-94d0-49b5-9bbd-9088188ad3b7",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R53.81",
       "name": "Malaise, NOS",
       "createdAt": "2021-12-07T00:10:20.810Z",
@@ -889,7 +889,7 @@
     "data": {
       "id": "02b14996-91b5-4f86-b3e5-6067dd52e155",
       "sectionId": "49d49dfa-94d0-49b5-9bbd-9088188ad3b7",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R53.1",
       "name": "Weakness",
       "createdAt": "2021-12-07T00:10:20.814Z",
@@ -904,7 +904,7 @@
     "data": {
       "id": "0c4e269c-d431-4c4c-9361-d4293e27b84a",
       "sectionId": "ca697778-a669-4358-ad08-5d9cb2afb890",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R56.9",
       "name": "Convulsions, NOS",
       "createdAt": "2021-12-07T00:10:20.819Z",
@@ -919,7 +919,7 @@
     "data": {
       "id": "865c2d50-d299-42be-be70-b15582a01c44",
       "sectionId": "ca697778-a669-4358-ad08-5d9cb2afb890",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G40.3",
       "name": "Epileptic seizure/syndrome",
       "createdAt": "2021-12-07T00:10:20.822Z",
@@ -934,7 +934,7 @@
     "data": {
       "id": "4584d82b-5607-4ccb-90ba-3013a23c6cac",
       "sectionId": "ca697778-a669-4358-ad08-5d9cb2afb890",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R56.0",
       "name": "Febrile convulsions",
       "createdAt": "2021-12-07T00:10:20.828Z",
@@ -949,7 +949,7 @@
     "data": {
       "id": "90cd8064-81ed-4d8c-9d9e-8121de991a34",
       "sectionId": "ca697778-a669-4358-ad08-5d9cb2afb890",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R42",
       "name": "Lightheaded/vertigo",
       "createdAt": "2021-12-07T00:10:20.831Z",
@@ -964,7 +964,7 @@
     "data": {
       "id": "088152b8-5dc1-4324-9cba-d97f0e6c291a",
       "sectionId": "ca697778-a669-4358-ad08-5d9cb2afb890",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G40.89",
       "name": "Seizure, NOS",
       "createdAt": "2021-12-07T00:10:20.835Z",
@@ -979,7 +979,7 @@
     "data": {
       "id": "04730412-bccb-4577-ac5b-f167c145b907",
       "sectionId": "ca697778-a669-4358-ad08-5d9cb2afb890",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R47.81",
       "name": "Slurred speech",
       "createdAt": "2021-12-07T00:10:20.840Z",
@@ -994,7 +994,7 @@
     "data": {
       "id": "d424522a-2c5e-4216-8965-9fbc727f9d59",
       "sectionId": "ca697778-a669-4358-ad08-5d9cb2afb890",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I63.9",
       "name": "Stroke",
       "createdAt": "2021-12-07T00:10:20.843Z",
@@ -1009,7 +1009,7 @@
     "data": {
       "id": "48bfdfdd-c80f-4928-9759-d8a969e6e033",
       "sectionId": "897e3e48-d61b-4818-8290-c7acaae4034a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R25.8",
       "name": "Abnormal involuntary movements",
       "createdAt": "2021-12-07T00:10:20.854Z",
@@ -1024,7 +1024,7 @@
     "data": {
       "id": "b3bdd674-b3c7-461a-a4e9-97d1096b8f60",
       "sectionId": "897e3e48-d61b-4818-8290-c7acaae4034a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R25.2",
       "name": "Cramp/spasm",
       "createdAt": "2021-12-07T00:10:20.858Z",
@@ -1039,7 +1039,7 @@
     "data": {
       "id": "d9e4fe16-8689-45b7-9f57-0c8a6a30fe12",
       "sectionId": "897e3e48-d61b-4818-8290-c7acaae4034a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R26.2",
       "name": "Difficulty walking",
       "createdAt": "2021-12-07T00:10:20.862Z",
@@ -1054,7 +1054,7 @@
     "data": {
       "id": "3db4b97e-45d8-4d43-88b6-b0845780a453",
       "sectionId": "897e3e48-d61b-4818-8290-c7acaae4034a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R29.810",
       "name": "Facial weakness",
       "createdAt": "2021-12-07T00:10:20.866Z",
@@ -1069,7 +1069,7 @@
     "data": {
       "id": "7bcbca00-7d5c-44ed-97d0-bc7c41afcbb0",
       "sectionId": "897e3e48-d61b-4818-8290-c7acaae4034a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R29.8",
       "name": "Other symptoms, NOS",
       "createdAt": "2021-12-07T00:10:20.870Z",
@@ -1084,7 +1084,7 @@
     "data": {
       "id": "b1150adf-c512-490d-a145-a9249179625e",
       "sectionId": "897e3e48-d61b-4818-8290-c7acaae4034a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R29.6",
       "name": "Repeated falls",
       "createdAt": "2021-12-07T00:10:20.874Z",
@@ -1099,7 +1099,7 @@
     "data": {
       "id": "3e492d87-82e5-492d-82de-5c689f877ef0",
       "sectionId": "d2279ce6-b716-4beb-b9c8-fec299ea93ad",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T76",
       "name": "Abuse/Neglect NOS, suspected",
       "createdAt": "2021-12-07T00:10:20.880Z",
@@ -1114,7 +1114,7 @@
     "data": {
       "id": "867b8912-39af-4f6a-922d-8e2e0be1d5b1",
       "sectionId": "d2279ce6-b716-4beb-b9c8-fec299ea93ad",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z00.00",
       "name": "Adult encounter, no finding",
       "createdAt": "2021-12-07T00:10:20.885Z",
@@ -1129,7 +1129,7 @@
     "data": {
       "id": "acc870a6-c640-491b-9f1d-3bbfebdca540",
       "sectionId": "d2279ce6-b716-4beb-b9c8-fec299ea93ad",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z00.12",
       "name": "Child encounter, no finding",
       "createdAt": "2021-12-07T00:10:20.889Z",
@@ -1144,7 +1144,7 @@
     "data": {
       "id": "f3abed40-0899-41b7-b39a-120d8cd4c840",
       "sectionId": "d2279ce6-b716-4beb-b9c8-fec299ea93ad",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z71.1",
       "name": "Feared condition not observed",
       "createdAt": "2021-12-07T00:10:20.893Z",
@@ -1159,7 +1159,7 @@
     "data": {
       "id": "3fa63307-aed7-4027-bb65-1072a6b1a6f8",
       "sectionId": "d2279ce6-b716-4beb-b9c8-fec299ea93ad",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z00",
       "name": "General exam, no complaint",
       "createdAt": "2021-12-07T00:10:20.898Z",
@@ -1174,7 +1174,7 @@
     "data": {
       "id": "4602e823-fc73-47c8-9f5e-f152386ae910",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G89.11",
       "name": "Acute pain due to trauma",
       "createdAt": "2021-12-07T00:10:20.903Z",
@@ -1189,7 +1189,7 @@
     "data": {
       "id": "ac8e0eb5-0d39-4e18-96c9-fae87c60dd62",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M54.9",
       "name": "Back pain, NOS",
       "createdAt": "2021-12-07T00:10:20.906Z",
@@ -1204,7 +1204,7 @@
     "data": {
       "id": "fbbf656a-7dcd-4575-91ad-1e06fe00e42e",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R07.9",
       "name": "Chest pain, NOS",
       "createdAt": "2021-12-07T00:10:20.915Z",
@@ -1219,7 +1219,7 @@
     "data": {
       "id": "b3b7dbe2-8bbc-49e9-9d7c-26263a03f977",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "H57.10",
       "name": "Eye pain",
       "createdAt": "2021-12-07T00:10:20.919Z",
@@ -1234,7 +1234,7 @@
     "data": {
       "id": "ce9d9734-dfae-42ec-9d7b-6206b0921c1a",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G50.1",
       "name": "Facial pain",
       "createdAt": "2021-12-07T00:10:20.923Z",
@@ -1249,7 +1249,7 @@
     "data": {
       "id": "9a2d1065-7274-48d5-8801-3d0550b27812",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R51",
       "name": "Headache",
       "createdAt": "2021-12-07T00:10:20.927Z",
@@ -1264,7 +1264,7 @@
     "data": {
       "id": "3e9963f3-e8bb-439e-a719-edd21229e076",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M25.55",
       "name": "Hip pain",
       "createdAt": "2021-12-07T00:10:20.932Z",
@@ -1279,7 +1279,7 @@
     "data": {
       "id": "bb885a05-a08c-4667-a6dc-0ba33132aef3",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M25.56",
       "name": "Knee pain",
       "createdAt": "2021-12-07T00:10:20.937Z",
@@ -1294,7 +1294,7 @@
     "data": {
       "id": "409aac9f-b4be-4a29-a579-1f2506bbe28e",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M79.6",
       "name": "Limb/hand/foot/fingers/toes pain",
       "createdAt": "2021-12-07T00:10:20.942Z",
@@ -1309,7 +1309,7 @@
     "data": {
       "id": "c2e2b121-358f-48c6-b1a3-4135193ae5b5",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M54.5",
       "name": "Lower back pain",
       "createdAt": "2021-12-07T00:10:20.946Z",
@@ -1324,7 +1324,7 @@
     "data": {
       "id": "f585f1dc-2c4c-4e6b-9259-1a8b68b60b23",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M54.2",
       "name": "Neck pain",
       "createdAt": "2021-12-07T00:10:20.950Z",
@@ -1339,7 +1339,7 @@
     "data": {
       "id": "2691816f-d992-401e-b78f-a55d873bca4c",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G89.2",
       "name": "Pain, chronic",
       "createdAt": "2021-12-07T00:10:20.954Z",
@@ -1354,7 +1354,7 @@
     "data": {
       "id": "4d820600-3ae2-4073-af20-f549fd894659",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R52",
       "name": "Pain, NOS",
       "createdAt": "2021-12-07T00:10:20.958Z",
@@ -1369,7 +1369,7 @@
     "data": {
       "id": "5dd2350a-efe0-4688-94dc-6debb18dc437",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.2",
       "name": "Pelvic/perineal pain",
       "createdAt": "2021-12-07T00:10:20.962Z",
@@ -1384,7 +1384,7 @@
     "data": {
       "id": "861803ff-ad86-4dc5-8897-92bbf4d1d36a",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R07.82",
       "name": "Rib pain",
       "createdAt": "2021-12-07T00:10:20.966Z",
@@ -1399,7 +1399,7 @@
     "data": {
       "id": "08b8dbcc-5f3f-434d-81ca-80c4011a7c6c",
       "sectionId": "7f2c4ff8-cf4d-44d9-a50d-3f23d4a3cd16",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "N93.9",
       "name": "Vaginal bleeding, NOS",
       "createdAt": "2021-12-07T00:10:20.975Z",
@@ -1414,7 +1414,7 @@
     "data": {
       "id": "2482de79-c8ff-4660-976e-875406fd88a7",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06",
       "name": "Abnormal breathing",
       "createdAt": "2021-12-07T00:10:20.982Z",
@@ -1429,7 +1429,7 @@
     "data": {
       "id": "b9012fd6-5a7e-4b95-991b-5c2163a9968b",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T17",
       "name": "Choking",
       "createdAt": "2021-12-07T00:10:20.985Z",
@@ -1444,7 +1444,7 @@
     "data": {
       "id": "c7a07fd2-d3d8-4ec1-a1dc-847908bc1dec",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J44.9",
       "name": "COPD, NOS",
       "createdAt": "2021-12-07T00:10:20.990Z",
@@ -1459,7 +1459,7 @@
     "data": {
       "id": "22cd59a9-b361-4436-b3ea-080684d532d0",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R05",
       "name": "Cough",
       "createdAt": "2021-12-07T00:10:20.995Z",
@@ -1474,7 +1474,7 @@
     "data": {
       "id": "6e764027-c9a0-4ab1-8c9f-50362fac0ed8",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06.00",
       "name": "Difficulty breathing",
       "createdAt": "2021-12-07T00:10:21.000Z",
@@ -1489,7 +1489,7 @@
     "data": {
       "id": "6f2c2b44-cf04-45bd-bfda-8ef6b96682cd",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R04.0",
       "name": "Nosebleed",
       "createdAt": "2021-12-07T00:10:21.004Z",
@@ -1504,7 +1504,7 @@
     "data": {
       "id": "7c6098e0-90df-495f-8e52-eead78b968e9",
       "sectionId": "3732ca2b-15f0-4dde-8682-93946980bb33",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.0",
       "name": "Acute pain",
       "createdAt": "2021-12-07T00:10:20.512Z",
@@ -1519,7 +1519,7 @@
     "data": {
       "id": "b73e0ac2-3268-4494-8c1d-cb49ecb43a92",
       "sectionId": "be6e2a83-465b-4944-957b-3c70a744caff",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I49.9",
       "name": "Arrhythmia",
       "createdAt": "2021-12-07T00:10:20.574Z",
@@ -1534,7 +1534,7 @@
     "data": {
       "id": "e6bd2d2d-2ad1-4e23-993b-419562c9376f",
       "sectionId": "4c988e0d-fb76-41eb-8f27-d5c1a503fc57",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "K92.0",
       "name": "Vomiting blood",
       "createdAt": "2021-12-07T00:10:20.631Z",
@@ -1549,7 +1549,7 @@
     "data": {
       "id": "93677f1f-b52d-407b-8aee-d2a744c17195",
       "sectionId": "2ef19e25-5c49-4fb6-b9bc-a91045e97eb8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "N18",
       "name": "Chronic kidney disease",
       "createdAt": "2021-12-07T00:10:20.689Z",
@@ -1564,7 +1564,7 @@
     "data": {
       "id": "7d7d0961-de71-4999-b7da-dbce3aa14244",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R58",
       "name": "Hemorrhage, NOS",
       "createdAt": "2021-12-07T00:10:20.750Z",
@@ -1579,7 +1579,7 @@
     "data": {
       "id": "7cb615ee-635d-4bce-8fca-338ce0e30cc5",
       "sectionId": "72ffd3d6-25f7-4578-9e69-17a674f73e6e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T07",
       "name": "Multiple injuries, NOS",
       "createdAt": "2021-12-07T00:10:20.766Z",
@@ -1594,7 +1594,7 @@
     "data": {
       "id": "228d9df1-0f07-4551-a7f6-4a22de87a7b6",
       "sectionId": "74328fb6-fa7b-41cb-85de-17a30be360f8",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R40.4",
       "name": "Altered mental status, transient",
       "createdAt": "2021-12-07T00:10:20.785Z",
@@ -1609,7 +1609,7 @@
     "data": {
       "id": "9bac7bef-6eca-48d6-b510-515d0b03874d",
       "sectionId": "897e3e48-d61b-4818-8290-c7acaae4034a",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R26.89",
       "name": "Abnormal gait/mobility",
       "createdAt": "2021-12-07T00:10:20.849Z",
@@ -1624,7 +1624,7 @@
     "data": {
       "id": "2fc76849-94ef-490f-ad35-3b7172f8c0f6",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R07.89",
       "name": "Chest pain (not angina)",
       "createdAt": "2021-12-07T00:10:20.910Z",
@@ -1639,7 +1639,7 @@
     "data": {
       "id": "7aa93c5f-5c92-413b-b3c9-46bd44ff1b03",
       "sectionId": "062ba833-d4d5-465d-958a-d451396ea265",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M25.51",
       "name": "Shoulder pain",
       "createdAt": "2021-12-07T00:10:20.970Z",
@@ -1654,7 +1654,7 @@
     "data": {
       "id": "68996686-22d0-4ff3-92fe-50f1417150a2",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06.81",
       "name": "Not breathing",
       "createdAt": "2021-12-07T00:10:21.008Z",
@@ -1669,7 +1669,7 @@
     "data": {
       "id": "42d5240a-fdb6-4f04-9ffc-13b3778a6eba",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06.89",
       "name": "Other abnormalities of breathing",
       "createdAt": "2021-12-07T00:10:21.011Z",
@@ -1684,7 +1684,7 @@
     "data": {
       "id": "ba21fa34-2ae9-48f3-ac01-fb1f8618fa25",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R07.0",
       "name": "Pain in throat",
       "createdAt": "2021-12-07T00:10:21.015Z",
@@ -1699,7 +1699,7 @@
     "data": {
       "id": "411fcb06-e96c-4f0f-96fb-b273b22419ce",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R07.1",
       "name": "Painful breathing",
       "createdAt": "2021-12-07T00:10:21.018Z",
@@ -1714,7 +1714,7 @@
     "data": {
       "id": "906197cf-999e-4d31-a35f-da9a266288aa",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06.3",
       "name": "Periodic breathing",
       "createdAt": "2021-12-07T00:10:21.022Z",
@@ -1729,7 +1729,7 @@
     "data": {
       "id": "625f3915-3fcc-4619-99ac-1d3de5834d00",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R09.2",
       "name": "Respiratory arrest",
       "createdAt": "2021-12-07T00:10:21.025Z",
@@ -1744,7 +1744,7 @@
     "data": {
       "id": "5690effe-c41f-4e96-b84b-b5481af4b040",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J80",
       "name": "Respiratory distress",
       "createdAt": "2021-12-07T00:10:21.028Z",
@@ -1759,7 +1759,7 @@
     "data": {
       "id": "f729e82c-060d-43ee-9433-2a6440f73c89",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06.02",
       "name": "Shortness of breath",
       "createdAt": "2021-12-07T00:10:21.032Z",
@@ -1774,7 +1774,7 @@
     "data": {
       "id": "e7b0c80c-4814-42dc-a4a9-0b6685da68bd",
       "sectionId": "8d47837b-8869-4893-b5a0-eedddae03c91",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06.2",
       "name": "Wheezing",
       "createdAt": "2021-12-07T00:10:21.040Z",
@@ -1789,7 +1789,7 @@
     "data": {
       "id": "dd37117b-72da-4e78-aea6-469084684714",
       "sectionId": "8e5ebc5e-010e-40b9-a508-70532e62089e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R60.9",
       "name": "Edema",
       "createdAt": "2021-12-07T00:10:21.046Z",
@@ -1804,7 +1804,7 @@
     "data": {
       "id": "cc2049c3-ade7-4047-923e-e10cb0c395bb",
       "sectionId": "8e5ebc5e-010e-40b9-a508-70532e62089e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R22",
       "name": "Localized swelling/mass/lump",
       "createdAt": "2021-12-07T00:10:21.050Z",
@@ -1819,7 +1819,7 @@
     "data": {
       "id": "df14a6a6-409d-4b9e-bab3-0dc77ddf1c9d",
       "sectionId": "8e5ebc5e-010e-40b9-a508-70532e62089e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R20.0",
       "name": "Numbness",
       "createdAt": "2021-12-07T00:10:21.053Z",
@@ -1834,7 +1834,7 @@
     "data": {
       "id": "3429a381-ceb1-4a81-97e8-474a1a923f6d",
       "sectionId": "8e5ebc5e-010e-40b9-a508-70532e62089e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R23.8",
       "name": "Other skin changes",
       "createdAt": "2021-12-07T00:10:21.058Z",
@@ -1849,7 +1849,7 @@
     "data": {
       "id": "669423a5-60f9-4871-8e81-21bd48c049a3",
       "sectionId": "8e5ebc5e-010e-40b9-a508-70532e62089e",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R21",
       "name": "Rash",
       "createdAt": "2021-12-07T00:10:21.062Z",
@@ -1864,7 +1864,7 @@
     "data": {
       "id": "53a9b5ab-52b4-4bda-8336-fe566bf74851",
       "sectionId": "8e88fce0-6b2b-4bf0-bd22-b7aae3d3e3fd",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "ICD-10",
       "name": "EMS DESCRIPTION",
       "createdAt": "2021-12-07T00:57:23.331Z",
@@ -1879,7 +1879,7 @@
     "data": {
       "id": "3331d48c-1ca0-41a0-85bb-76a90d5b1c03",
       "sectionId": "b8a8c746-99ff-4c0c-b326-61744bf828a1",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.0",
       "name": "Acute pain",
       "createdAt": "2021-12-07T00:57:23.350Z",
@@ -1894,7 +1894,7 @@
     "data": {
       "id": "1c6a0358-bfb8-4081-a68f-1cb78b075bdc",
       "sectionId": "b8a8c746-99ff-4c0c-b326-61744bf828a1",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.84",
       "name": "Generalized pain",
       "createdAt": "2021-12-07T00:57:23.356Z",
@@ -1909,7 +1909,7 @@
     "data": {
       "id": "f0811b9a-15b2-4e62-9b3c-a21b517cf77a",
       "sectionId": "b5bc979b-2570-414d-ac0a-f4da30f5bfb3",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T50.90",
       "name": "Adverse effect of unspecified substance",
       "createdAt": "2021-12-07T00:57:23.368Z",
@@ -1924,7 +1924,7 @@
     "data": {
       "id": "d9388754-39ac-4dae-9548-fa8f616f04b7",
       "sectionId": "b5bc979b-2570-414d-ac0a-f4da30f5bfb3",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F10.92",
       "name": "Alcohol intoxication",
       "createdAt": "2021-12-07T00:57:23.375Z",
@@ -1939,7 +1939,7 @@
     "data": {
       "id": "b6566f0f-51b2-4354-b96b-c75aa0ebc67a",
       "sectionId": "b5bc979b-2570-414d-ac0a-f4da30f5bfb3",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F10.9",
       "name": "Alcohol use",
       "createdAt": "2021-12-07T00:57:23.381Z",
@@ -1954,7 +1954,7 @@
     "data": {
       "id": "6ea054d6-517b-4002-851a-3b8f07432215",
       "sectionId": "b5bc979b-2570-414d-ac0a-f4da30f5bfb3",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F10.23",
       "name": "Alcohol withdrawal",
       "createdAt": "2021-12-07T00:57:23.387Z",
@@ -1969,7 +1969,7 @@
     "data": {
       "id": "92552d38-474a-4200-acf1-93387f25c109",
       "sectionId": "b5bc979b-2570-414d-ac0a-f4da30f5bfb3",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F11",
       "name": "Suspected Opioid related",
       "createdAt": "2021-12-07T00:57:23.393Z",
@@ -1984,7 +1984,7 @@
     "data": {
       "id": "8e20823d-c6f5-419c-b1be-a6165ec22582",
       "sectionId": "b5bc979b-2570-414d-ac0a-f4da30f5bfb3",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F19",
       "name": "Other psychoactive substance",
       "createdAt": "2021-12-07T00:57:23.399Z",
@@ -1999,7 +1999,7 @@
     "data": {
       "id": "338c9b86-98c4-492b-a30a-c8d6fe1d8b0f",
       "sectionId": "b5bc979b-2570-414d-ac0a-f4da30f5bfb3",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F13",
       "name": "Sedative, anti-anxiety related",
       "createdAt": "2021-12-07T00:57:23.404Z",
@@ -2014,7 +2014,7 @@
     "data": {
       "id": "ca0f2ee5-b58a-4b1c-8d39-accbc0553e16",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I20.9",
       "name": "Angina (pain related to heart)",
       "createdAt": "2021-12-07T00:57:23.414Z",
@@ -2029,7 +2029,7 @@
     "data": {
       "id": "7f5f2bdc-9146-4599-b9f5-026313a185b6",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I49.9",
       "name": "Arrhythmia",
       "createdAt": "2021-12-07T00:57:23.420Z",
@@ -2044,7 +2044,7 @@
     "data": {
       "id": "34f268ca-b959-4f43-b108-44c4b55a2f89",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I46.9",
       "name": "Cardiac arrest",
       "createdAt": "2021-12-07T00:57:23.426Z",
@@ -2059,7 +2059,7 @@
     "data": {
       "id": "e4c8e943-3382-40c1-b42b-b7b6cb566b3a",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R07.9",
       "name": "Chest pain, NOS",
       "createdAt": "2021-12-07T00:57:23.432Z",
@@ -2074,7 +2074,7 @@
     "data": {
       "id": "26f5d1e0-4830-4928-a4d8-f1a4831a6348",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I21",
       "name": "Myocardial Infarction, NOS",
       "createdAt": "2021-12-07T00:57:23.438Z",
@@ -2089,7 +2089,7 @@
     "data": {
       "id": "71b77337-b33c-4dbe-841c-7a9858bd10bb",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I50.9",
       "name": "Heart failure",
       "createdAt": "2021-12-07T00:57:23.443Z",
@@ -2104,7 +2104,7 @@
     "data": {
       "id": "667e49ec-59fa-4bb1-a03f-9241fde2fb43",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I10",
       "name": "Hypertension",
       "createdAt": "2021-12-07T00:57:23.448Z",
@@ -2119,7 +2119,7 @@
     "data": {
       "id": "6ef68b9b-afbd-4023-9f5c-2bc9ba8193d7",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I95.9",
       "name": "Hypotension",
       "createdAt": "2021-12-07T00:57:23.454Z",
@@ -2134,7 +2134,7 @@
     "data": {
       "id": "1b8cc437-f33e-46ab-8606-6f266ae07cea",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I21.4",
       "name": "Non-STEMI",
       "createdAt": "2021-12-07T00:57:23.465Z",
@@ -2149,7 +2149,7 @@
     "data": {
       "id": "496ed7e4-d2ad-4c17-be32-eeef70bbd8b1",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I99.9",
       "name": "Other, unspecified CV disorder",
       "createdAt": "2021-12-07T00:57:23.471Z",
@@ -2164,7 +2164,7 @@
     "data": {
       "id": "f116b11b-a310-48fb-a24d-d06a3f8c4392",
       "sectionId": "1fffee8a-d003-4876-986b-7431f63558c2",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I21.3",
       "name": "STEMI",
       "createdAt": "2021-12-07T00:57:23.476Z",
@@ -2179,7 +2179,7 @@
     "data": {
       "id": "c1f02ef3-bce2-494d-b10b-66dd3af161ae",
       "sectionId": "d95b8956-e087-4218-bd7b-af4f9d908ced",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "K92.2",
       "name": "Blood in vomit or stool (GI bleed)",
       "createdAt": "2021-12-07T00:57:23.485Z",
@@ -2194,7 +2194,7 @@
     "data": {
       "id": "48ffc96f-15c6-4eeb-a488-cb389fecca4e",
       "sectionId": "d95b8956-e087-4218-bd7b-af4f9d908ced",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "K59.00",
       "name": "Constipation",
       "createdAt": "2021-12-07T00:57:23.491Z",
@@ -2209,7 +2209,7 @@
     "data": {
       "id": "2fe54108-fe1c-413a-a297-037c7e308829",
       "sectionId": "d95b8956-e087-4218-bd7b-af4f9d908ced",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "K59.1",
       "name": "Diarrhea",
       "createdAt": "2021-12-07T00:57:23.496Z",
@@ -2224,7 +2224,7 @@
     "data": {
       "id": "61ac465a-7594-45cf-8116-4eb2b8038f2f",
       "sectionId": "d95b8956-e087-4218-bd7b-af4f9d908ced",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R11.0",
       "name": "Nausea",
       "createdAt": "2021-12-07T00:57:23.501Z",
@@ -2239,7 +2239,7 @@
     "data": {
       "id": "1aea57ce-1ab2-450a-8801-103f177cea36",
       "sectionId": "d95b8956-e087-4218-bd7b-af4f9d908ced",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R11.1",
       "name": "Vomiting",
       "createdAt": "2021-12-07T00:57:23.507Z",
@@ -2254,7 +2254,7 @@
     "data": {
       "id": "52d09eda-fab4-4ab4-adb5-7976150ef670",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F41.9",
       "name": "Anxiety",
       "createdAt": "2021-12-07T00:57:23.515Z",
@@ -2269,7 +2269,7 @@
     "data": {
       "id": "4bc1174f-0c6c-4551-8215-7d347b674a47",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F32",
       "name": "Depression",
       "createdAt": "2021-12-07T00:57:23.520Z",
@@ -2284,7 +2284,7 @@
     "data": {
       "id": "88ccbacd-f951-40fe-93b0-88cf7f511447",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.85",
       "name": "Homicidal ideation",
       "createdAt": "2021-12-07T00:57:23.525Z",
@@ -2299,7 +2299,7 @@
     "data": {
       "id": "2c564bfa-f8fe-4ae3-a73a-ee7ccdaf2ccc",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "X83",
       "name": "Intentional self-harm",
       "createdAt": "2021-12-07T00:57:23.531Z",
@@ -2314,7 +2314,7 @@
     "data": {
       "id": "1819e1d6-31cd-444d-a600-df0614103af2",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F99",
       "name": "Mental illness, NOS",
       "createdAt": "2021-12-07T00:57:23.538Z",
@@ -2329,7 +2329,7 @@
     "data": {
       "id": "5c6caac1-b743-4b88-9561-60af81dc138e",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.89",
       "name": "Other emotional symptoms",
       "createdAt": "2021-12-07T00:57:23.547Z",
@@ -2344,7 +2344,7 @@
     "data": {
       "id": "a1763c55-ebe2-4593-bce8-f51fe670d3ed",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "F60.8",
       "name": "Other personality disorder",
       "createdAt": "2021-12-07T00:57:23.555Z",
@@ -2359,7 +2359,7 @@
     "data": {
       "id": "da640efa-44a8-4c49-92e4-f159ab776829",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R45.851",
       "name": "Suicidal ideation",
       "createdAt": "2021-12-07T00:57:23.561Z",
@@ -2374,7 +2374,7 @@
     "data": {
       "id": "16e50f9f-917a-486c-921b-df0376b1dd37",
       "sectionId": "de18afaf-2a57-42dc-88e7-3032cb2c5427",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T14.91",
       "name": "Suicide attempt",
       "createdAt": "2021-12-07T00:57:23.566Z",
@@ -2389,7 +2389,7 @@
     "data": {
       "id": "88614259-1a60-4d2a-a3dc-959adfe5cc70",
       "sectionId": "1e385047-e19c-462b-8b4b-37b69ee8bb97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R73.9",
       "name": "Hyperglycemia",
       "createdAt": "2021-12-07T00:57:23.575Z",
@@ -2404,7 +2404,7 @@
     "data": {
       "id": "be93e481-dda4-4ff9-ab44-759d4c264252",
       "sectionId": "1e385047-e19c-462b-8b4b-37b69ee8bb97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "E13.65",
       "name": "Hyperglycemia, known diabetic",
       "createdAt": "2021-12-07T00:57:23.580Z",
@@ -2419,7 +2419,7 @@
     "data": {
       "id": "7b5e69d2-0588-4083-9310-40f3fe07bb55",
       "sectionId": "1e385047-e19c-462b-8b4b-37b69ee8bb97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "E16.2",
       "name": "Hypoglycemia",
       "createdAt": "2021-12-07T00:57:23.586Z",
@@ -2434,7 +2434,7 @@
     "data": {
       "id": "56c53640-f4ac-4b75-8e69-f0cde8912d31",
       "sectionId": "1e385047-e19c-462b-8b4b-37b69ee8bb97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "E13.64",
       "name": "Hypoglycemia, known diabetic",
       "createdAt": "2021-12-07T00:57:23.593Z",
@@ -2449,7 +2449,7 @@
     "data": {
       "id": "558c5555-450f-4016-a99a-3e5ef27f89db",
       "sectionId": "1e385047-e19c-462b-8b4b-37b69ee8bb97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "N17.8",
       "name": "Kidney failure, NOS",
       "createdAt": "2021-12-07T00:57:23.599Z",
@@ -2464,7 +2464,7 @@
     "data": {
       "id": "389b084e-bb61-4490-b80f-a960a7287a8a",
       "sectionId": "1e385047-e19c-462b-8b4b-37b69ee8bb97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "N18.6",
       "name": "Kidney/renal disease requiring dialysis",
       "createdAt": "2021-12-07T00:57:23.605Z",
@@ -2479,7 +2479,7 @@
     "data": {
       "id": "c1a21f24-1c39-4b51-8fb4-45486d5de41a",
       "sectionId": "1e385047-e19c-462b-8b4b-37b69ee8bb97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "N39.0",
       "name": "Urinary tract infection (UTI)",
       "createdAt": "2021-12-07T00:57:23.611Z",
@@ -2494,7 +2494,7 @@
     "data": {
       "id": "93f4ddad-7430-4731-b791-641d7e6c9136",
       "sectionId": "eae90980-64b5-4c77-811e-fac9496bd45f",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R50.9",
       "name": "Fever",
       "createdAt": "2021-12-07T00:57:23.622Z",
@@ -2509,7 +2509,7 @@
     "data": {
       "id": "3fb8386a-7fe6-4915-9112-1256dc41fb1f",
       "sectionId": "eae90980-64b5-4c77-811e-fac9496bd45f",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R68.89",
       "name": "General symptoms",
       "createdAt": "2021-12-07T00:57:23.627Z",
@@ -2524,7 +2524,7 @@
     "data": {
       "id": "630b8235-6e01-45dc-8731-bfaf2dc2edc9",
       "sectionId": "eae90980-64b5-4c77-811e-fac9496bd45f",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R69",
       "name": "Illness, NOS",
       "createdAt": "2021-12-07T00:57:23.632Z",
@@ -2539,7 +2539,7 @@
     "data": {
       "id": "eaadc2c6-2954-4fc7-a0eb-be7f9b098fad",
       "sectionId": "eae90980-64b5-4c77-811e-fac9496bd45f",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "A41.9",
       "name": "Sepsis",
       "createdAt": "2021-12-07T00:57:23.638Z",
@@ -2554,7 +2554,7 @@
     "data": {
       "id": "e8ba1272-90d2-47d1-94b5-145eea07d4d9",
       "sectionId": "eae90980-64b5-4c77-811e-fac9496bd45f",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "B99.9",
       "name": "Unspecified infectious disease",
       "createdAt": "2021-12-07T00:57:23.650Z",
@@ -2569,7 +2569,7 @@
     "data": {
       "id": "5ea86ec6-0a08-4f59-a372-7d80f552087c",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S99.91",
       "name": "Ankle injury",
       "createdAt": "2021-12-07T00:57:23.662Z",
@@ -2584,7 +2584,7 @@
     "data": {
       "id": "22bb5259-1d7f-4368-ab0e-e953be93c751",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T30.0",
       "name": "Burn, NOS",
       "createdAt": "2021-12-07T00:57:23.670Z",
@@ -2599,7 +2599,7 @@
     "data": {
       "id": "e15ec960-5f50-4a72-87cc-86904f122de3",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S06.0X9",
       "name": "Concussion, with LOC",
       "createdAt": "2021-12-07T00:57:23.677Z",
@@ -2614,7 +2614,7 @@
     "data": {
       "id": "e8053558-51a6-4771-9947-e65b64ce64c4",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S06.0",
       "name": "Concussion, without LOC",
       "createdAt": "2021-12-07T00:57:23.683Z",
@@ -2629,7 +2629,7 @@
     "data": {
       "id": "d7eee48b-cc1f-4768-b52d-e66fe8c8d4e8",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T79.9",
       "name": "Early complication of trauma",
       "createdAt": "2021-12-07T00:57:23.689Z",
@@ -2644,7 +2644,7 @@
     "data": {
       "id": "4776a615-e93e-4cf0-9774-8f1303b35208",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S09.93",
       "name": "Facial injury",
       "createdAt": "2021-12-07T00:57:23.694Z",
@@ -2659,7 +2659,7 @@
     "data": {
       "id": "a2bcccb8-bd69-434c-8649-54de17a5a014",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S99.92",
       "name": "Foot injury",
       "createdAt": "2021-12-07T00:57:23.702Z",
@@ -2674,7 +2674,7 @@
     "data": {
       "id": "1f699f6d-a951-4ceb-968d-34ba668499dd",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S59.91",
       "name": "Forearm injury",
       "createdAt": "2021-12-07T00:57:23.709Z",
@@ -2689,7 +2689,7 @@
     "data": {
       "id": "31ec024f-15da-495c-93dd-ed4184d5eecf",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S09.90",
       "name": "Head injury",
       "createdAt": "2021-12-07T00:57:23.715Z",
@@ -2704,7 +2704,7 @@
     "data": {
       "id": "7f107eb3-1e98-4899-8e10-cf203cde507c",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R58",
       "name": "Hemorrhage",
       "createdAt": "2021-12-07T00:57:23.722Z",
@@ -2719,7 +2719,7 @@
     "data": {
       "id": "222cfa2e-4754-4df6-965b-564deaa29fb8",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S79.91",
       "name": "Hip injury",
       "createdAt": "2021-12-07T00:57:23.728Z",
@@ -2734,7 +2734,7 @@
     "data": {
       "id": "dc3902f8-f3a9-4830-b590-cbf5f0cf9e14",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T14.90",
       "name": "Injury, unspecified",
       "createdAt": "2021-12-07T00:57:23.734Z",
@@ -2749,7 +2749,7 @@
     "data": {
       "id": "e173407f-bcc2-49a5-94c8-a11f1705f00f",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S39.92",
       "name": "Lower back injury",
       "createdAt": "2021-12-07T00:57:23.739Z",
@@ -2764,7 +2764,7 @@
     "data": {
       "id": "c023c00a-0947-4934-a918-c16094b49ddf",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S89.9",
       "name": "Lower leg injury",
       "createdAt": "2021-12-07T00:57:23.744Z",
@@ -2779,7 +2779,7 @@
     "data": {
       "id": "45a160e6-0be4-40f1-9674-41d38aa47a19",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T07",
       "name": "Multiple injuries",
       "createdAt": "2021-12-07T00:57:23.749Z",
@@ -2794,7 +2794,7 @@
     "data": {
       "id": "0b9fadbf-09db-4ee4-9d7a-389180d9cbaa",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S19.9",
       "name": "Neck injury",
       "createdAt": "2021-12-07T00:57:23.754Z",
@@ -2809,7 +2809,7 @@
     "data": {
       "id": "3d9c3ad7-8c6e-4875-a624-232fcce765b5",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S39.93",
       "name": "Pelvis injury",
       "createdAt": "2021-12-07T00:57:23.760Z",
@@ -2824,7 +2824,7 @@
     "data": {
       "id": "08dca884-b2f0-4398-8f4b-0620fc2981e3",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S49.9",
       "name": "Shoulder/upper arm injury",
       "createdAt": "2021-12-07T00:57:23.765Z",
@@ -2839,7 +2839,7 @@
     "data": {
       "id": "e988660f-0ff2-4325-9400-165f5435dba5",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S79.92",
       "name": "Thigh injury",
       "createdAt": "2021-12-07T00:57:23.770Z",
@@ -2854,7 +2854,7 @@
     "data": {
       "id": "b17cca72-e953-4431-8716-118d60a3fd3e",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S29.9",
       "name": "Thorax injury",
       "createdAt": "2021-12-07T00:57:23.775Z",
@@ -2869,7 +2869,7 @@
     "data": {
       "id": "f0b43e4d-8cf4-43ee-9bc0-9e4d69dcc3f0",
       "sectionId": "fda6e4ed-57e2-457d-a9b7-eb3a96f1ba97",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "S69.9",
       "name": "Wrist/hand/finger injury",
       "createdAt": "2021-12-07T00:57:23.780Z",
@@ -2884,7 +2884,7 @@
     "data": {
       "id": "b3a25d72-3d3b-44b5-b843-850209269f54",
       "sectionId": "31733970-0b77-40f6-87e7-f3c894557739",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R41.82",
       "name": "Altered mental status",
       "createdAt": "2021-12-07T00:57:23.789Z",
@@ -2899,7 +2899,7 @@
     "data": {
       "id": "b0a9d582-6200-4d26-914e-9517e18d8379",
       "sectionId": "31733970-0b77-40f6-87e7-f3c894557739",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R40.4",
       "name": "Altered mental status, transient",
       "createdAt": "2021-12-07T00:57:23.794Z",
@@ -2914,7 +2914,7 @@
     "data": {
       "id": "0d77be50-f7db-4366-b094-718fe2140e3d",
       "sectionId": "31733970-0b77-40f6-87e7-f3c894557739",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R41.0",
       "name": "Disoriented",
       "createdAt": "2021-12-07T00:57:23.800Z",
@@ -2929,7 +2929,7 @@
     "data": {
       "id": "df5004a5-d3fb-48aa-be04-1b0593dc0edc",
       "sectionId": "31733970-0b77-40f6-87e7-f3c894557739",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R55",
       "name": "Fainting/collapse",
       "createdAt": "2021-12-07T00:57:23.806Z",
@@ -2944,7 +2944,7 @@
     "data": {
       "id": "4f8f1a06-a040-4bb9-8406-f39d174efae3",
       "sectionId": "826f5d85-ad1e-4a17-b417-a2f999aaf2fc",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R53.83",
       "name": "Fatigue",
       "createdAt": "2021-12-07T00:57:23.816Z",
@@ -2959,7 +2959,7 @@
     "data": {
       "id": "52c5b973-9e0f-4995-b0c4-6a053b6ae706",
       "sectionId": "826f5d85-ad1e-4a17-b417-a2f999aaf2fc",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R53.81",
       "name": "Malaise (feeling unwell)",
       "createdAt": "2021-12-07T00:57:23.822Z",
@@ -2974,7 +2974,7 @@
     "data": {
       "id": "fba6c6b8-93be-4402-81e5-66f5d194c5e9",
       "sectionId": "826f5d85-ad1e-4a17-b417-a2f999aaf2fc",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M62.81",
       "name": "Muscle weakness",
       "createdAt": "2021-12-07T00:57:23.829Z",
@@ -2989,7 +2989,7 @@
     "data": {
       "id": "eac49d2d-04dd-43bb-8543-ec6112846e6b",
       "sectionId": "b00a55ee-39bc-45f3-a44c-d4f46ea5c135",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R99",
       "name": "Obvious death",
       "createdAt": "2021-12-07T00:57:23.644Z",
@@ -3004,7 +3004,7 @@
     "data": {
       "id": "992f1ceb-6eb3-4dee-a26a-4979494b1502",
       "sectionId": "826f5d85-ad1e-4a17-b417-a2f999aaf2fc",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R53.1",
       "name": "Weakness",
       "createdAt": "2021-12-07T00:57:23.834Z",
@@ -3019,7 +3019,7 @@
     "data": {
       "id": "807ad5a9-2727-4b47-a9f3-882ca37b59bf",
       "sectionId": "61126722-6601-4fb2-9d56-ebd63264105f",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z74.01",
       "name": "Bedridden",
       "createdAt": "2021-12-07T00:57:23.845Z",
@@ -3034,7 +3034,7 @@
     "data": {
       "id": "44c4243b-a9dd-4106-b4be-28d4fe5c420f",
       "sectionId": "61126722-6601-4fb2-9d56-ebd63264105f",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z74.09",
       "name": "Reduced mobility",
       "createdAt": "2021-12-07T00:57:23.851Z",
@@ -3049,7 +3049,7 @@
     "data": {
       "id": "63828494-41a8-48b6-b6d5-4fb4cb63cf28",
       "sectionId": "422c76a0-7969-4d78-99d6-4c99d427b46b",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R56.9",
       "name": "Convulsions, NOS",
       "createdAt": "2021-12-07T00:57:23.859Z",
@@ -3064,7 +3064,7 @@
     "data": {
       "id": "54fc9659-b040-47f9-a094-ad0bb7257cc0",
       "sectionId": "422c76a0-7969-4d78-99d6-4c99d427b46b",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R42",
       "name": "Lightheaded/vertigo",
       "createdAt": "2021-12-07T00:57:23.864Z",
@@ -3079,7 +3079,7 @@
     "data": {
       "id": "b58c6609-73d7-4b81-bd12-2a25b41bdf1a",
       "sectionId": "422c76a0-7969-4d78-99d6-4c99d427b46b",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G40.909",
       "name": "Seizure, epileptic",
       "createdAt": "2021-12-07T00:57:23.876Z",
@@ -3094,7 +3094,7 @@
     "data": {
       "id": "b5daf570-a3ea-485e-b7b1-443198557aa4",
       "sectionId": "422c76a0-7969-4d78-99d6-4c99d427b46b",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G40.89",
       "name": "Seizure, NOS",
       "createdAt": "2021-12-07T00:57:23.883Z",
@@ -3109,7 +3109,7 @@
     "data": {
       "id": "2cfba72b-9b8d-4858-b140-430ba5d2c991",
       "sectionId": "422c76a0-7969-4d78-99d6-4c99d427b46b",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G40.901",
       "name": "Seizure, status epilepticus",
       "createdAt": "2021-12-07T00:57:23.889Z",
@@ -3124,7 +3124,7 @@
     "data": {
       "id": "9adb9c65-4692-4ae4-a02a-ec245ff65261",
       "sectionId": "422c76a0-7969-4d78-99d6-4c99d427b46b",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "I63.9",
       "name": "Stroke",
       "createdAt": "2021-12-07T00:57:23.895Z",
@@ -3139,7 +3139,7 @@
     "data": {
       "id": "b6377367-97bc-4678-94da-0186eccf154a",
       "sectionId": "422c76a0-7969-4d78-99d6-4c99d427b46b",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G45.9",
       "name": "TIA",
       "createdAt": "2021-12-07T00:57:23.902Z",
@@ -3154,7 +3154,7 @@
     "data": {
       "id": "adad1083-a56f-4b66-b239-7ae5af208577",
       "sectionId": "da09107f-b308-44e3-bef8-9f62bde7cad5",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z00.00",
       "name": "Adult general exam, no finding",
       "createdAt": "2021-12-07T00:57:23.912Z",
@@ -3169,7 +3169,7 @@
     "data": {
       "id": "6653e447-8804-4bf3-9040-eeb9cff2c84b",
       "sectionId": "da09107f-b308-44e3-bef8-9f62bde7cad5",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z00.129",
       "name": "Child general exam, no finding",
       "createdAt": "2021-12-07T00:57:23.918Z",
@@ -3184,7 +3184,7 @@
     "data": {
       "id": "c4891ad2-8335-4edc-9b1a-2cf793c08b30",
       "sectionId": "da09107f-b308-44e3-bef8-9f62bde7cad5",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z51.89",
       "name": "Encounter for aftercare",
       "createdAt": "2021-12-07T00:57:23.925Z",
@@ -3199,7 +3199,7 @@
     "data": {
       "id": "d751cfab-b2b0-4690-a8c9-0a8b6b248d3c",
       "sectionId": "da09107f-b308-44e3-bef8-9f62bde7cad5",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z71.1",
       "name": "Encounter, feared condition not observed",
       "createdAt": "2021-12-07T00:57:23.931Z",
@@ -3214,7 +3214,7 @@
     "data": {
       "id": "c6503a35-dc5e-42e4-a1b2-d856cb187343",
       "sectionId": "da09107f-b308-44e3-bef8-9f62bde7cad5",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z00",
       "name": "General exam, no complaint",
       "createdAt": "2021-12-07T00:57:23.937Z",
@@ -3229,7 +3229,7 @@
     "data": {
       "id": "31a43112-68eb-47dc-8fb6-a24e06891db6",
       "sectionId": "da09107f-b308-44e3-bef8-9f62bde7cad5",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z04.9",
       "name": "General exam, NOS",
       "createdAt": "2021-12-07T00:57:23.943Z",
@@ -3244,7 +3244,7 @@
     "data": {
       "id": "9199a202-5fd0-45dc-a300-5625fbc62375",
       "sectionId": "da09107f-b308-44e3-bef8-9f62bde7cad5",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z03.89",
       "name": "Observation only",
       "createdAt": "2021-12-07T00:57:23.950Z",
@@ -3259,7 +3259,7 @@
     "data": {
       "id": "e49c9d55-84f1-4668-b6a3-8fc111b6f92c",
       "sectionId": "da09107f-b308-44e3-bef8-9f62bde7cad5",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "Z04.6",
       "name": "Psych exam, requested by authority",
       "createdAt": "2021-12-07T00:57:23.955Z",
@@ -3274,7 +3274,7 @@
     "data": {
       "id": "e12a3065-8fc1-4d18-9f56-ff706b35e0b3",
       "sectionId": "b00a55ee-39bc-45f3-a44c-d4f46ea5c135",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T76",
       "name": "Abuse/Neglect NOS, suspected",
       "createdAt": "2021-12-07T00:57:23.964Z",
@@ -3289,7 +3289,7 @@
     "data": {
       "id": "2f5defba-28af-4856-8065-025b91f37a98",
       "sectionId": "b00a55ee-39bc-45f3-a44c-d4f46ea5c135",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T78.40",
       "name": "Allergic reaction, NOS",
       "createdAt": "2021-12-07T00:57:23.969Z",
@@ -3304,7 +3304,7 @@
     "data": {
       "id": "1ba0f2ae-06ed-4e79-8aa8-d90e2356a17d",
       "sectionId": "b00a55ee-39bc-45f3-a44c-d4f46ea5c135",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "E86.0",
       "name": "Dehydration",
       "createdAt": "2021-12-07T00:57:23.974Z",
@@ -3319,7 +3319,7 @@
     "data": {
       "id": "69ea936c-032b-4210-a30d-b5cc86e2f9f6",
       "sectionId": "b00a55ee-39bc-45f3-a44c-d4f46ea5c135",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "T67",
       "name": "Heat related (heat stroke/exhaustion)",
       "createdAt": "2021-12-07T00:57:23.979Z",
@@ -3334,7 +3334,7 @@
     "data": {
       "id": "5c49e8e6-405a-4ede-8fd4-d2b6e4850058",
       "sectionId": "b00a55ee-39bc-45f3-a44c-d4f46ea5c135",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "D49",
       "name": "New growth, tumor",
       "createdAt": "2021-12-07T00:57:23.985Z",
@@ -3349,7 +3349,7 @@
     "data": {
       "id": "618b761b-c98f-44aa-8f86-1c8e9d2c59fa",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M54.9",
       "name": "Back pain, NOS",
       "createdAt": "2021-12-07T00:57:23.998Z",
@@ -3364,7 +3364,7 @@
     "data": {
       "id": "de57162a-b6c2-4d9c-9fcd-a71348944c0e",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R51",
       "name": "Headache",
       "createdAt": "2021-12-07T00:57:24.003Z",
@@ -3379,7 +3379,7 @@
     "data": {
       "id": "2aec0b5c-7afb-441f-9a7b-bbce4f49b66a",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M79.6",
       "name": "Limb/hand/foot/fingers/toes pain",
       "createdAt": "2021-12-07T00:57:24.008Z",
@@ -3394,7 +3394,7 @@
     "data": {
       "id": "8da62995-3faa-40bc-99fe-fdc94aaf1555",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "M54.5",
       "name": "Lower back pain",
       "createdAt": "2021-12-07T00:57:24.013Z",
@@ -3409,7 +3409,7 @@
     "data": {
       "id": "1660a560-cc5c-479c-aaa1-c082316a9cb3",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G89.1",
       "name": "Pain, acute",
       "createdAt": "2021-12-07T00:57:24.019Z",
@@ -3424,7 +3424,7 @@
     "data": {
       "id": "f0392b55-ecbb-4a89-908d-cd49e3812025",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G89.11",
       "name": "Pain, acute due to trauma",
       "createdAt": "2021-12-07T00:57:24.025Z",
@@ -3439,7 +3439,7 @@
     "data": {
       "id": "472f0634-7b45-4bca-869b-b00d84730b76",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "G89.2",
       "name": "Pain, chronic",
       "createdAt": "2021-12-07T00:57:24.030Z",
@@ -3454,7 +3454,7 @@
     "data": {
       "id": "cb01b8be-05df-4ce3-a25c-1ff1b2a97faa",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R52",
       "name": "Pain, NOS",
       "createdAt": "2021-12-07T00:57:24.035Z",
@@ -3469,7 +3469,7 @@
     "data": {
       "id": "60645d5c-0401-4b66-8d2a-a6a0a2550b6a",
       "sectionId": "bc004abc-7764-46bd-b732-77b3bff4b205",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R10.2",
       "name": "Pelvic/perineal pain",
       "createdAt": "2021-12-07T00:57:24.040Z",
@@ -3484,7 +3484,7 @@
     "data": {
       "id": "0f5f7030-5328-432e-b6a0-669bfc1d526c",
       "sectionId": "603d6986-0794-4382-a4f0-6987d122cc0c",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "O80",
       "name": "Normal delivery",
       "createdAt": "2021-12-07T00:57:24.048Z",
@@ -3499,7 +3499,7 @@
     "data": {
       "id": "d9c2568f-74aa-413d-b77d-0332ede96a37",
       "sectionId": "603d6986-0794-4382-a4f0-6987d122cc0c",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "O26.90",
       "name": "Pregnancy related",
       "createdAt": "2021-12-07T00:57:24.054Z",
@@ -3514,7 +3514,7 @@
     "data": {
       "id": "64c7a3a6-fdd6-426b-b10e-30514c4361fa",
       "sectionId": "603d6986-0794-4382-a4f0-6987d122cc0c",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "N93.9",
       "name": "Vaginal bleeding, abnormal",
       "createdAt": "2021-12-07T00:57:24.059Z",
@@ -3529,7 +3529,7 @@
     "data": {
       "id": "5376069f-2db8-4da0-b0db-d67a04ba7665",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J45",
       "name": "Asthma",
       "createdAt": "2021-12-07T00:57:24.071Z",
@@ -3544,7 +3544,7 @@
     "data": {
       "id": "332def69-ea63-40c6-9a4e-1d63077bff87",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J98.01",
       "name": "Bronchospasm, acute",
       "createdAt": "2021-12-07T00:57:24.076Z",
@@ -3559,7 +3559,7 @@
     "data": {
       "id": "76e0f2a8-f3ca-4f92-81a6-4dc89482f67f",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J00",
       "name": "Common cold",
       "createdAt": "2021-12-07T00:57:24.083Z",
@@ -3574,7 +3574,7 @@
     "data": {
       "id": "01e9c4a2-3c87-4358-a70c-b6f21ee46864",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J44.1",
       "name": "COPD",
       "createdAt": "2021-12-07T00:57:24.089Z",
@@ -3589,7 +3589,7 @@
     "data": {
       "id": "53ca3876-6437-4a93-857b-1e2cc32135d5",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06.00",
       "name": "Difficulty breathing",
       "createdAt": "2021-12-07T00:57:24.094Z",
@@ -3604,7 +3604,7 @@
     "data": {
       "id": "f5f82630-be72-4104-bda4-abd60f7e42c5",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J11",
       "name": "Flu",
       "createdAt": "2021-12-07T00:57:24.100Z",
@@ -3619,7 +3619,7 @@
     "data": {
       "id": "f2580f1a-11be-4b8f-9ac4-56eb8ca47a4e",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J81.0",
       "name": "Fluid in lungs",
       "createdAt": "2021-12-07T00:57:24.106Z",
@@ -3634,7 +3634,7 @@
     "data": {
       "id": "f6fee292-2c3a-470e-9856-c86e3171693d",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R04.0",
       "name": "Nosebleed",
       "createdAt": "2021-12-07T00:57:24.112Z",
@@ -3649,7 +3649,7 @@
     "data": {
       "id": "a0e0fd51-87b8-42c2-99f0-c0dcda324e45",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J18.9",
       "name": "Pneumonia",
       "createdAt": "2021-12-07T00:57:24.117Z",
@@ -3664,7 +3664,7 @@
     "data": {
       "id": "01d2d5aa-ca80-4232-85f1-5cc0c2379e69",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J80",
       "name": "Respiratory distress",
       "createdAt": "2021-12-07T00:57:24.122Z",
@@ -3679,7 +3679,7 @@
     "data": {
       "id": "279e2655-6f56-4dc5-8210-b99bc43d135e",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J96.9",
       "name": "Respiratory failure",
       "createdAt": "2021-12-07T00:57:24.128Z",
@@ -3694,7 +3694,7 @@
     "data": {
       "id": "93b57718-9779-4ae3-97b5-afd9cdede489",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "J98.9",
       "name": "Respiratory, other disorder",
       "createdAt": "2021-12-07T00:57:24.133Z",
@@ -3709,7 +3709,7 @@
     "data": {
       "id": "55307081-a9ca-4e41-86c7-a20573e66adb",
       "sectionId": "2a9b4c43-88a5-4680-8c70-0d027d637e05",
-      "system": "ICD10CM",
+      "system": "9924001",
       "code": "R06.02",
       "name": "Shortness of breath",
       "createdAt": "2021-12-07T00:57:24.138Z",

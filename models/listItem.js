@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         field: 'list_section_id',
       },
       system: {
-        type: DataTypes.ENUM('ICD10CM', 'SNOMED', 'RXNORM'),
+        type: DataTypes.ENUM('9924001', '9924005', '9924003'),
       },
       code: {
         type: DataTypes.STRING,

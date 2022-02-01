@@ -54,7 +54,22 @@ async function importWorkbook() {
     },
   });
 
-  let system = process.argv[5];
+  let system;
+  switch (process.argv[5]) {
+    case 'ICD10CM':
+      system = '9924001';
+      break;
+    case 'SNOMED':
+      system = '9924005';
+      break;
+    case 'RXNORM':
+      system = '9924003';
+      break;
+    case 'MIX':
+      break;
+    default:
+      throw new Error();
+  }
 
   // download the file, if url
   let filename = process.argv[3];
