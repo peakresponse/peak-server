@@ -11,7 +11,7 @@ const { Op } = models.Sequelize;
 
 if (process.argv.length < 5) {
   console.log(
-    'Usage: bin/import-list superuser@email.com filename.xlsx field[,field,field] ICD10CM|SNOMED|RXNORM [3=no sections,4=sections (default)]'
+    'Usage: bin/import-list superuser@email.com filename.xlsx field[,field,field] ICD10CM|SNOMED|RXNORM|MIX [3=no sections,4=sections (default)]'
   );
   process.exit(1);
 }
@@ -54,7 +54,7 @@ async function importWorkbook() {
     },
   });
 
-  const system = process.argv[5];
+  let system = process.argv[5];
 
   // download the file, if url
   let filename = process.argv[3];
@@ -73,6 +73,17 @@ async function importWorkbook() {
     if (!isHeaderFound && row.length < cols - 1) {
       // eslint-disable-next-line no-continue
       continue;
+    }
+    if (process.argv[5] === 'MIX') {
+      if (row[0]?.startsWith('EMS DESCRIPTION')) {
+        isHeaderFound = true;
+        system = row[1].toUpperCase().trim();
+        // eslint-disable-next-line no-continue
+        continue;
+      } else if (!isHeaderFound) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
     }
     if (!isHeaderFound) {
       isHeaderFound = true;
