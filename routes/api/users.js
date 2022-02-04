@@ -3,6 +3,7 @@ const HttpStatus = require('http-status-codes');
 const { Op } = require('sequelize');
 const _ = require('lodash');
 
+const aws = require('../../lib/aws');
 const models = require('../../models');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -58,6 +59,9 @@ router.get(
     data.user.activeScenes = (await req.user.getActiveScenes()).map((s) => s.toJSON());
     // add vehicle/unit assignment, if any
     data.user.currentAssignment = (await req.user.getCurrentAssignment({ include: 'vehicle' }))?.toJSON() ?? null;
+    // temporary AWS credentials for use with Transcribe service
+    data.user.awsCredentials = await aws.getTemporaryCredentialsForMobileApp();
+    // add Agency/Employment info, if any
     if (req.agency) {
       data.agency = req.agency.toJSON();
       data.employment = (
