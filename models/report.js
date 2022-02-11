@@ -60,6 +60,7 @@ module.exports = (sequelize, DataTypes) => {
           'procedureIds',
           'dispositionId',
           'narrativeId',
+          'predictions',
         ],
         options
       );
@@ -104,6 +105,9 @@ module.exports = (sequelize, DataTypes) => {
       vitalIds: {
         type: DataTypes.JSONB,
         field: 'vital_ids',
+      },
+      predictions: {
+        type: DataTypes.JSONB,
       },
     },
     {
