@@ -320,7 +320,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Patient.afterSave(async (patient, options) => {
-    if (!patient.canonicalId) {
+    if (patient.canonicalId) {
       return;
     }
     if (patient.changed('portraitFile')) {

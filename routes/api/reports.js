@@ -35,6 +35,7 @@ router.get(
         Medication: [],
         Procedure: [],
         Vital: [],
+        File: [],
       };
       const payload = {
         Report: [],
@@ -52,6 +53,7 @@ router.get(
         ids.Medication = ids.Medication.concat(report.medicationIds);
         ids.Procedure = ids.Procedure.concat(report.procedureIds);
         ids.Vital = ids.Vital.concat(report.vitalIds);
+        ids.File = ids.File.concat(report.fileIds);
       }
       for (const model of [
         'Response',
@@ -65,6 +67,7 @@ router.get(
         'Medication',
         'Procedure',
         'Vital',
+        'File',
       ]) {
         // eslint-disable-next-line no-await-in-loop
         payload[model] = (await models[model].findAll({ where: { id: ids[model] }, transaction })).map((record) => record.toJSON());
@@ -93,6 +96,7 @@ router.post(
         'Medication',
         'Procedure',
         'Vital',
+        'File',
         'Report',
       ]) {
         let records = req.body[model];

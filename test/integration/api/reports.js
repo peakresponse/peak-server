@@ -31,6 +31,10 @@ describe('/api/reports', () => {
       'dispositions',
       'histories',
       'narratives',
+      'medications',
+      'vitals',
+      'procedures',
+      'files',
       'reports',
     ]);
     testSession = session(app);
@@ -50,6 +54,15 @@ describe('/api/reports', () => {
       const data = response.body;
       assert(data.Report);
       assert.deepStrictEqual(data.Report.length, 1);
+      assert.deepStrictEqual(data.Response?.length, 1);
+      assert.deepStrictEqual(data.Time.length, 1);
+      assert.deepStrictEqual(data.Disposition.length, 1);
+      assert.deepStrictEqual(data.History.length, 1);
+      assert.deepStrictEqual(data.Narrative.length, 1);
+      assert.deepStrictEqual(data.Medication.length, 1);
+      assert.deepStrictEqual(data.Vital.length, 1);
+      assert.deepStrictEqual(data.Procedure.length, 1);
+      assert.deepStrictEqual(data.File.length, 1);
     });
   });
 

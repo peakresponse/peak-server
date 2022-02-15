@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       Report.belongsToMany(models.Medication, { as: 'medications', through: 'reports_medications', timestamps: false });
       Report.belongsToMany(models.Procedure, { as: 'procedures', through: 'reports_procedures', timestamps: false });
       Report.belongsToMany(models.Vital, { as: 'vitals', through: 'reports_vitals', timestamps: false });
+      Report.belongsToMany(models.File, { as: 'files', through: 'reports_files', timestamps: false });
 
       Report.hasMany(Report, { as: 'versions', foreignKey: 'canonicalId' });
     }
@@ -60,11 +61,12 @@ module.exports = (sequelize, DataTypes) => {
           'procedureIds',
           'dispositionId',
           'narrativeId',
+          'fileIds',
           'predictions',
         ],
         options
       );
-      for (const prefix of ['medication', 'procedure', 'vital']) {
+      for (const prefix of ['medication', 'procedure', 'vital', 'file']) {
         const ids = data[`${prefix}Ids`];
         if (ids) {
           // eslint-disable-next-line no-await-in-loop
@@ -105,6 +107,10 @@ module.exports = (sequelize, DataTypes) => {
       vitalIds: {
         type: DataTypes.JSONB,
         field: 'vital_ids',
+      },
+      fileIds: {
+        type: DataTypes.JSONB,
+        field: 'file_ids',
       },
       predictions: {
         type: DataTypes.JSONB,
