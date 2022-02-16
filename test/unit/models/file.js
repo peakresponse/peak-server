@@ -18,10 +18,7 @@ describe('models', () => {
       beforeEach(() => {
         file = `${uuid()}.png`;
         mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
-        fs.copySync(
-          path.resolve(__dirname, '../../fixtures/files/512x512.png'),
-          path.resolve(__dirname, `../../../tmp/uploads/${file}`)
-        );
+        fs.copySync(path.resolve(__dirname, '../../fixtures/files/512x512.png'), path.resolve(__dirname, `../../../tmp/uploads/${file}`));
       });
 
       afterEach(() => {
@@ -61,10 +58,7 @@ describe('models', () => {
         assert.deepStrictEqual(record.data, data.data);
         assert(record.isValid);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'file', 'metadata', 'data']);
-        assert.deepStrictEqual(record.updatedDataAttributes, [
-          '/eOther.09',
-          '/eOther.10',
-        ]);
+        assert.deepStrictEqual(record.updatedDataAttributes, ['/eOther.09', '/eOther.10']);
         assert.deepStrictEqual(record.createdById, user.id);
         assert.deepStrictEqual(record.updatedById, user.id);
         assert.deepStrictEqual(record.createdByAgencyId, agency.id);
@@ -93,7 +87,7 @@ describe('models', () => {
           parentId: '7b6ea987-3aee-489a-b2ad-eb455204b5f0',
           file,
           metadata: {
-            new: 'metadata'
+            new: 'metadata',
           },
           data_patch: [
             {

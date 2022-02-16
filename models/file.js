@@ -22,50 +22,48 @@ module.exports = (sequelize, DataTypes) => {
     static createOrUpdate(user, agency, data, options) {
       return Base.createOrUpdate(File, user, agency, data, [], ['file', 'metadata', 'data'], options);
     }
-  };
-  File.init({
-    file: DataTypes.STRING,
-    fileUrl: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        return Base.assetUrl('files/file', this.file);
+  }
+  File.init(
+    {
+      file: DataTypes.STRING,
+      fileUrl: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return Base.assetUrl('files/file', this.file);
+        },
+      },
+      metadata: DataTypes.JSONB,
+      data: DataTypes.JSONB,
+      updatedAttributes: {
+        type: DataTypes.JSONB,
+        field: 'updated_attributes',
+      },
+      updatedDataAttributes: {
+        type: DataTypes.JSONB,
+        field: 'updated_data_attributes',
+      },
+      isValid: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_valid',
+      },
+      validationErrors: {
+        type: DataTypes.JSONB,
+        field: 'validation_errors',
       },
     },
-    metadata: DataTypes.JSONB,
-    data: DataTypes.JSONB,
-    updatedAttributes: {
-      type: DataTypes.JSONB,
-      field: 'updated_attributes',
-    },
-    updatedDataAttributes: {
-      type: DataTypes.JSONB,
-      field: 'updated_data_attributes',
-    },
-    isValid: {
-      type: DataTypes.BOOLEAN,
-      field: 'is_valid',
-    },
-    validationErrors: {
-      type: DataTypes.JSONB,
-      field: 'validation_errors',
-    },
-  }, {
-    sequelize,
-    modelName: 'File',
-    tableName: 'files',
-    underscored: true,
-    validate: {
-      async schema() {
-        this.validationErrors = await nemsis.validateSchema(
-          'eOther_v3.xsd',
-          'eOther',
-          'eOther.FileGroup',
-          this.data
-        );
-        this.isValid = this.validationErrors === null;
+    {
+      sequelize,
+      modelName: 'File',
+      tableName: 'files',
+      underscored: true,
+      validate: {
+        async schema() {
+          this.validationErrors = await nemsis.validateSchema('eOther_v3.xsd', 'eOther', 'eOther.FileGroup', this.data);
+          this.isValid = this.validationErrors === null;
+        },
       },
-    },
-  });
+    }
+  );
 
   File.afterSave(async (file, options) => {
     if (file.canonicalId) {

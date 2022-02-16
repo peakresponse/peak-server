@@ -45,19 +45,19 @@ module.exports = {
         },
       },
       file: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       metadata: {
-        type: Sequelize.JSONB
+        type: Sequelize.JSONB,
       },
       data: {
-        type: Sequelize.JSONB
+        type: Sequelize.JSONB,
       },
       updated_attributes: {
-        type: Sequelize.JSONB
+        type: Sequelize.JSONB,
       },
       updated_data_attributes: {
-        type: Sequelize.JSONB
+        type: Sequelize.JSONB,
       },
       is_valid: {
         allowNull: false,
@@ -65,7 +65,7 @@ module.exports = {
         defaultValue: false,
       },
       validation_errors: {
-        type: Sequelize.JSONB
+        type: Sequelize.JSONB,
       },
       created_by_id: {
         allowNull: false,
@@ -107,12 +107,12 @@ module.exports = {
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
     await queryInterface.createTable('reports_files', {
       report_id: {
@@ -147,5 +147,5 @@ module.exports = {
     await queryInterface.removeColumn('reports', 'file_ids');
     await queryInterface.dropTable('reports_files');
     await queryInterface.dropTable('files');
-  }
+  },
 };
