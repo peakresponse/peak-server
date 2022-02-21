@@ -222,19 +222,19 @@ module.exports = (sequelize, DataTypes) => {
       portraitUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patients/portrait', this.portraitFile);
+          return this.assetUrl('portraitFile');
         },
       },
       photoUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patients/photo', this.photoFile);
+          return this.assetUrl('photoFile');
         },
       },
       audioUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patients/audio', this.audioFile);
+          return this.assetUrl('audioFile');
         },
       },
       portraitFile: {
@@ -320,18 +320,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Patient.afterSave(async (patient, options) => {
-    if (patient.canonicalId) {
+    if (!patient.canonicalId) {
       return;
     }
-    if (patient.changed('portraitFile')) {
-      await Base.handleAssetFile('patients/portrait', patient.previous('portraitFile'), patient.portraitFile, options);
-    }
-    if (patient.changed('photoFile')) {
-      await Base.handleAssetFile('patients/photo', patient.previous('photoFile'), patient.photoFile, options);
-    }
-    if (patient.changed('audioFile')) {
-      await Base.handleAssetFile('patients/audio', patient.previous('audioFile'), patient.audioFile, options);
-    }
+    await patient.handleAssetFile('portraitFile', options);
+    await patient.handleAssetFile('photoFile', options);
+    await patient.handleAssetFile('audioFile', options);
   });
 
   Patient.addScope('canonical', {

@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       fileUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('files/file', this.file);
+          return this.assetUrl('file');
         },
       },
       metadata: DataTypes.JSONB,
@@ -66,12 +66,10 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   File.afterSave(async (file, options) => {
-    if (file.canonicalId) {
+    if (!file.canonicalId) {
       return;
     }
-    if (file.changed('file')) {
-      await Base.handleAssetFile('files/file', file.previous('file'), file.file, options);
-    }
+    await file.handleAssetFile('file', options);
   });
 
   return File;

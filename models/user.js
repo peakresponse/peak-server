@@ -250,7 +250,7 @@ module.exports = (sequelize, DataTypes) => {
       iconUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('users/icon', this.iconFile);
+          return this.assetUrl('iconFile');
         },
       },
       iconFile: {
@@ -316,9 +316,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.afterSave(async (user, options) => {
-    if (user.changed('iconFile')) {
-      await Base.handleAssetFile('users/icon', user.previous('iconFile'), user.iconFile, options);
-    }
+    await user.handleAssetFile('iconFile', options);
   });
 
   sequelizePaginate.paginate(User);

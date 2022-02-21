@@ -2,8 +2,9 @@
 
 /// MUST BE FIRST! set the NODE_ENV to test to disable logging, switch to test db
 process.env.NODE_ENV = 'test';
-/// handle files as local
+/// handle files as local, in a test subdir
 process.env.AWS_S3_BUCKET = '';
+process.env.ASSET_PATH_PREFIX = 'test';
 /// override any custom base host/url
 process.env.BASE_HOST = 'peakresponse.localhost';
 process.env.BASE_URL = 'http://peakresponse.localhost:3000';

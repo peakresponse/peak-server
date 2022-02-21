@@ -23,7 +23,7 @@ describe('models', () => {
 
       afterEach(() => {
         fs.removeSync(path.resolve(__dirname, `../../../tmp/uploads/${file}`));
-        fs.removeSync(path.resolve(__dirname, `../../../public/assets/files/file/${file}`));
+        fs.removeSync(path.resolve(__dirname, `../../../public/assets/test`));
       });
 
       it('creates a new canonical and corresponding history record', async () => {
@@ -52,8 +52,8 @@ describe('models', () => {
         assert.deepStrictEqual(record.parentId, null);
         assert.deepStrictEqual(record.canonicalId, data.canonicalId);
         assert.deepStrictEqual(record.file, file);
-        assert.deepStrictEqual(record.fileUrl, `/api/assets/files/file/${file}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, '../../../public/assets/files/file', file)));
+        assert.deepStrictEqual(record.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
+        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${record.id}/file`, file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
         assert.deepStrictEqual(record.data, data.data);
         assert(record.isValid);
@@ -70,7 +70,7 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.parentId, null);
         assert.deepStrictEqual(canonical.canonicalId, null);
         assert.deepStrictEqual(canonical.file, file);
-        assert.deepStrictEqual(canonical.fileUrl, `/api/assets/files/file/${file}`);
+        assert.deepStrictEqual(canonical.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
         assert.deepStrictEqual(canonical.metadata, data.metadata);
         assert.deepStrictEqual(canonical.data, data.data);
         assert.deepStrictEqual(canonical.createdById, user.id);
@@ -109,8 +109,8 @@ describe('models', () => {
         assert.deepStrictEqual(record.createdByAgencyId, parent.createdByAgencyId);
         assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
         assert.deepStrictEqual(record.file, file);
-        assert.deepStrictEqual(record.fileUrl, `/api/assets/files/file/${file}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, '../../../public/assets/files/file', file)));
+        assert.deepStrictEqual(record.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
+        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${record.id}/file`, file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
         assert.deepStrictEqual(record.data['eOther.09']._text, '4509015');
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'file', 'metadata', 'data']);
@@ -124,7 +124,7 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.createdByAgencyId, record.createdByAgencyId);
         assert.deepStrictEqual(canonical.updatedByAgencyId, record.updatedByAgencyId);
         assert.deepStrictEqual(canonical.file, file);
-        assert.deepStrictEqual(canonical.fileUrl, `/api/assets/files/file/${file}`);
+        assert.deepStrictEqual(canonical.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
         assert.deepStrictEqual(canonical.metadata, data.metadata);
         assert.deepStrictEqual(canonical.data, record.data);
       });
