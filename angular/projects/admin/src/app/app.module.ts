@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AgencyService, NavigationService, SchemaService, UserService } from 'shared';
 
 import { AgenciesModule } from './agencies/agencies.module';
+import { ClientsModule } from './clients/clients.module';
 import { DemographicsModule } from './demographics/demographics.module';
 import { FacilitiesModule } from './facilities/facilities.module';
 import { ListsModule } from './lists/lists.module';
@@ -22,6 +23,7 @@ import { UsersModule } from './users/users.module';
     HttpClientModule,
     AppRoutingModule,
     AgenciesModule,
+    ClientsModule,
     DemographicsModule,
     FacilitiesModule,
     ListsModule,

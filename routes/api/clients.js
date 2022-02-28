@@ -49,6 +49,38 @@ router.post(
   })
 );
 
+router.get(
+  '/:id',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    const client = await models.Client.findByPk(req.params.id);
+    if (client) {
+      res.json(client.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.delete(
+  '/:id',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    let client;
+    await models.sequelize.transaction(async (transaction) => {
+      client = await models.Client.findByPk(req.params.id, { transaction });
+      if (client) {
+        await client.destroy({ transaction });
+      }
+    });
+    if (client) {
+      res.status(HttpStatus.OK).end();
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
 router.patch(
   '/:id/regenerate',
   interceptors.requireAdmin(),
@@ -59,6 +91,7 @@ router.patch(
       client = await models.Client.findByPk(req.params.id, { transaction });
       if (client) {
         ({ clientSecret } = client.generateClientIdAndSecret());
+        client.updatedById = req.user.id;
         await client.save({ transaction });
       }
     });
@@ -81,6 +114,7 @@ router.patch(
       client = await models.Client.findByPk(req.params.id, { transaction });
       if (client) {
         const data = _.pick(req.body, ['name', 'redirectUri']);
+        data.updatedById = req.user.id;
         await client.update(data, { transaction });
       }
     });

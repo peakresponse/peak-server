@@ -41,6 +41,37 @@ describe('/api/clients', () => {
     });
   });
 
+  describe('GET /:id', () => {
+    it('returns an existing Client', async () => {
+      const response = await testSession
+        .get('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0')
+        .set('Accept', 'application/json')
+        .expect(HttpStatus.OK);
+      const data = response.body;
+      delete data.updatedAt;
+      assert.deepStrictEqual(data, {
+        id: '9db6b601-13fc-4755-906a-c532ce319be0',
+        name: 'Test Client 2',
+        clientId: 'R7M6UhUuKq76aYtcdbr5',
+        redirectUri: 'http://localhost:3000/callback',
+        createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+        updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+        createdAt: '2020-04-07T19:53:42.434Z',
+      });
+    });
+  });
+
+  describe('DELETE /:id', () => {
+    it('deletes an existing Client', async () => {
+      const response = await testSession
+        .delete('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0')
+        .set('Accept', 'application/json')
+        .expect(HttpStatus.OK);
+      const client = await models.Client.findByPk('9db6b601-13fc-4755-906a-c532ce319be0');
+      assert.deepStrictEqual(client, null);
+    });
+  });
+
   describe('PATCH /:id', () => {
     it('updates an existing Client', async () => {
       const response = await testSession

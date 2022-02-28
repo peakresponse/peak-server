@@ -112,6 +112,27 @@ export class ApiService {
     },
   };
 
+  clients = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/clients', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/clients`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/clients/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/clients/${id}`, data);
+    },
+    regenerate: (id: string): Observable<any> => {
+      return this.patch(`/api/clients/${id}/regenerate`);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/clients/${id}`);
+    },
+  };
+
   demographics = {
     agency: {
       index: (params?: HttpParams): Observable<any> => {
