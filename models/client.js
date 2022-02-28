@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const randomString = require('randomstring');
 const { Model } = require('sequelize');
+const sequelizePaginate = require('sequelize-paginate');
 
 module.exports = (sequelize, DataTypes) => {
   class Client extends Model {
@@ -19,6 +20,12 @@ module.exports = (sequelize, DataTypes) => {
       this.clientId = clientId;
       this.hashedClientSecret = bcrypt.hashSync(clientSecret, 12);
       return { clientId, clientSecret };
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      delete attributes.hashedClientSecret;
+      return attributes;
     }
   }
   Client.init(
@@ -46,5 +53,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+  sequelizePaginate.paginate(Client);
   return Client;
 };

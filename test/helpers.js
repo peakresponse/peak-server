@@ -66,6 +66,7 @@ const resetDatabase = async () => {
     DELETE FROM agencies;
     DELETE FROM facilities;
     DELETE FROM agencies;
+    DELETE FROM clients;
     DELETE FROM users;
     DELETE FROM states;
     DELETE FROM counties;
