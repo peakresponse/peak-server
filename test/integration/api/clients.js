@@ -63,7 +63,7 @@ describe('/api/clients', () => {
 
   describe('DELETE /:id', () => {
     it('deletes an existing Client', async () => {
-      const response = await testSession
+      await testSession
         .delete('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0')
         .set('Accept', 'application/json')
         .expect(HttpStatus.OK);
