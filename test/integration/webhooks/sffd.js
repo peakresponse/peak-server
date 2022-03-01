@@ -13,7 +13,18 @@ describe('/webhooks/sffd', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'dispatchers', 'agencies', 'employments']);
+    await helpers.loadFixtures([
+      'users',
+      'clients',
+      'tokens',
+      'states',
+      'counties',
+      'cities',
+      'psaps',
+      'dispatchers',
+      'agencies',
+      'employments',
+    ]);
     testSession = session(app);
   });
 
@@ -25,7 +36,8 @@ describe('/webhooks/sffd', () => {
       await testSession
         .post('/webhooks/sffd/cad')
         .set('Host', `sffd.${process.env.BASE_HOST}`)
-        .set('Authorization', `Bearer 66ced5b6-6ed3-42e3-a11d-ea0d700dee9e`)
+        // .set('Authorization', `Bearer 66ced5b6-6ed3-42e3-a11d-ea0d700dee9e`)
+        .set('Authorization', `Bearer w125HmUqL32RXoeEBZu87kpQeogxLh9qqz4VDFSQ`)
         .set('Accept', 'application/json')
         .send(data)
         .expect(HttpStatus.OK);

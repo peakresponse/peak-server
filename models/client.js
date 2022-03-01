@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     authenticate(clientSecret) {
-      return bcrypt.compare(clientSecret, this.hashedClientSecret);
+      return bcrypt.compareSync(clientSecret, this.hashedClientSecret);
     }
 
     generateClientIdAndSecret() {
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     toJSON() {
       const attributes = { ...this.get() };
       delete attributes.hashedClientSecret;
+      delete attributes.redirectUris;
       return attributes;
     }
   }
@@ -44,6 +45,18 @@ module.exports = (sequelize, DataTypes) => {
       redirectUri: {
         type: DataTypes.TEXT,
         field: 'redirect_uri',
+      },
+      redirectUris: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return [this.redirectUri];
+        },
+      },
+      grants: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return ['authorization_code'];
+        },
       },
     },
     {

@@ -2,7 +2,9 @@ const createError = require('http-errors');
 const HttpStatus = require('http-status-codes');
 const passport = require('passport');
 const passportLocal = require('passport-local');
+
 const models = require('../models');
+const oauth = require('../lib/oauth');
 
 const { Op } = models.Sequelize;
 
@@ -71,7 +73,7 @@ module.exports.loadAgency = async (req, res, next) => {
 
 module.exports.loadApiUser = async (req, res, next) => {
   if (!req.user && req.headers.authorization) {
-    // attempt api key authentication via bearer token
+    // DEPRECATED: attempt api key authentication via bearer token
     const m = req.headers.authorization.match(/Bearer (.+)/);
     if (m) {
       req.user = await models.User.findOne({
@@ -79,6 +81,16 @@ module.exports.loadApiUser = async (req, res, next) => {
           apiKey: m[1],
         },
       });
+    }
+    if (!req.user) {
+      try {
+        const request = new oauth.Request(req);
+        const response = new oauth.Response(res);
+        const token = await oauth.server.authenticate(request, response);
+        req.user = token?.user;
+      } catch {
+        // noop
+      }
     }
   }
   next();
