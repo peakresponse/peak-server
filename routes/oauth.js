@@ -1,6 +1,7 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
 
+const models = require('../models');
 const oauth = require('../lib/oauth');
 
 const interceptors = require('./interceptors');
@@ -18,9 +19,14 @@ router.post('/token', async (req, res) => {
   }
 });
 
-router.get('/authorize', interceptors.requireLogin(), (req, res) => {
-  // TODO: render an authorization approval page
-  res.status(HttpStatus.OK).end();
+router.get('/authorize', interceptors.requireLogin(), async (req, res) => {
+  const locals = { ...req.query };
+  locals.client = await models.Client.findOne({
+    where: {
+      clientId: req.query.client_id,
+    },
+  });
+  res.render('oauth/authorize', locals);
 });
 
 router.post('/authorize', interceptors.requireLogin(), async (req, res) => {
