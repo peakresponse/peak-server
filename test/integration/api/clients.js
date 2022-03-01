@@ -63,10 +63,7 @@ describe('/api/clients', () => {
 
   describe('DELETE /:id', () => {
     it('deletes an existing Client', async () => {
-      await testSession
-        .delete('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0')
-        .set('Accept', 'application/json')
-        .expect(HttpStatus.OK);
+      await testSession.delete('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0').set('Accept', 'application/json').expect(HttpStatus.OK);
       const client = await models.Client.findByPk('9db6b601-13fc-4755-906a-c532ce319be0');
       assert.deepStrictEqual(client, null);
     });
