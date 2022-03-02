@@ -116,9 +116,8 @@ function sendErrorForbidden(req, res) {
 
 async function requireLogin(req, res, next, role) {
   if (req.user) {
-    /// site admins are super users that are allow for all
-    let isAllowed = req.user.isAdmin;
-    if (!isAllowed && req.agency) {
+    let isAllowed = true;
+    if (!req.user.isAdmin && req.agency) {
       /// check for active employment
       const employment = await req.user.isEmployedBy(req.agency);
       isAllowed = employment !== null;

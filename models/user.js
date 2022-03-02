@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Assignment.scope('current'), { as: 'currentAssignment', foreignKey: 'userId' });
       User.hasMany(models.Dispatcher, { as: 'dispatchers', foreignKey: 'userId' });
       User.hasMany(models.Employment, { as: 'employments', foreignKey: 'userId' });
+      User.belongsToMany(models.Agency, { as: 'agencies', through: models.Employment, otherKey: 'agencyId', foreignKey: 'userId' });
       User.hasMany(models.Patient, {
         as: 'createdPatients',
         foreignKey: 'createdById',

@@ -58,7 +58,18 @@ router.get(
     // add any active scenes the user may be a part of
     data.user.activeScenes = (await req.user.getActiveScenes()).map((s) => s.toJSON());
     // add vehicle/unit assignment, if any
-    data.user.currentAssignment = (await req.user.getCurrentAssignment({ include: 'vehicle' }))?.toJSON() ?? null;
+    data.user.currentAssignment =
+      (
+        await req.user.getCurrentAssignment({
+          include: [
+            {
+              model: models.Vehicle,
+              as: 'vehicle',
+              include: 'createdByAgency',
+            },
+          ],
+        })
+      )?.toJSON() ?? null;
     // temporary AWS credentials for use with Transcribe service
     data.user.awsCredentials = await aws.getTemporaryCredentialsForMobileApp();
     // add Agency/Employment info, if any
