@@ -62,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
           'dispositionId',
           'narrativeId',
           'fileIds',
+          'ringdownId',
           'predictions',
         ],
         options
@@ -111,6 +112,10 @@ module.exports = (sequelize, DataTypes) => {
       fileIds: {
         type: DataTypes.JSONB,
         field: 'file_ids',
+      },
+      ringdownId: {
+        type: DataTypes.STRING,
+        field: 'ringdown_id',
       },
       predictions: {
         type: DataTypes.JSONB,
