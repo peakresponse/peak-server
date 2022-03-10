@@ -53,7 +53,7 @@
       "prompt": "Enter the email address you registered with to receive a reset password link.",
       "backToSignIn": "Log In",
       "notFound": "Email not found",
-      "success": "Please check your email in a few momentqs for a password reset link."
+      "success": "Please check your email in a few moments for a password reset link."
     },
     "reset": {
       "title": "Reset Password",
