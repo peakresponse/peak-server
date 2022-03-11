@@ -7,6 +7,8 @@
  * bin/import-list admin@peakresponse.net https://nemsis.org/media/nemsis_v3/master/SuggestedLists/eSituation.11%20and%20eSituation.12%20-%20Provider%20Impression.xlsx eSituation.11,eSituation.12 ICD10CM
  * bin/import-list admin@peakresponse.net https://nemsis.org/media/nemsis_v3/master/SuggestedLists/eHistory.06%20-%20Medication%20Allergies%20-%20ICD10CM%20values.xlsx eHistory.06 ICD10CM 3
  * bin/import-list admin@peakresponse.net https://nemsis.org/media/nemsis_v3/master/SuggestedLists/eHistory.07%20-%20Environmental%20Food%20Allergies.xlsx eHistory.07 SNOMED
+ * (above file resaved below as xlsx library reports it as corrupted)
+ * bin/import-list admin@peakresponse.net https://peakresponseinc.s3.us-west-1.amazonaws.com/eHistory.07+-+Environmental+Food+Allergies.xlsx eHistory.07 SNOMED
  * bin/import-list admin@peakresponse.net https://nemsis.org/media/nemsis_v3/master/SuggestedLists/eHistory.08%20-%20Medical%20Surgical%20History.xlsx eHistory.08 ICD10CM
  * bin/import-list admin@peakresponse.net https://nemsis.org/media/nemsis_v3/master/SuggestedLists/eMedications.03,%20dConfiguration.04,%20and%20dConfiguration.09%20-%20Medications.xlsx eMedications.03,dConfiguration.04,dConfiguration.09 MIX 3
  * bin/import-list admin@peakresponse.net https://nemsis.org/media/nemsis_v3/master/SuggestedLists/eProcedures.03,%20dConfiguration.03,%20dConfiguration.07%20-%20Procedures.xlsx eProcedures.03,dConfiguration.03,dConfiguration.07 SNOMED
