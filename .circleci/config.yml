@@ -18,18 +18,8 @@ jobs:
       - run: docker-compose -f docker-compose.test.yml run server npx sequelize db:create --env=test
       - run: docker-compose -f docker-compose.test.yml run server npx sequelize db:migrate --env=test
       - run: docker-compose -f docker-compose.test.yml run server npm run ci
-      - when:
-          condition:
-            not:
-              equal: [master, << pipeline.git.branch >>]
-          steps:
-            - run: docker tag peakresponse/peak-server:latest peakresponse/peak-server:$CIRCLE_BRANCH
-            - run: docker push peakresponse/peak-server:$CIRCLE_BRANCH
-      - when:
-          condition:
-            equal: [master, << pipeline.git.branch >>]
-          steps:
-            - run: docker push peakresponse/peak-server:latest
+      - run: bin/release
+
 workflows:
   test:
     jobs:
