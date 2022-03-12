@@ -83,15 +83,17 @@ router.get(
   '/:path([^?]+)',
   interceptors.requireLogin(),
   helpers.async(async (req, res) => {
+    const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
+    const keyPath = path.join(assetPrefix, req.params.path);
     if (process.env.AWS_S3_BUCKET) {
       const url = await s3.getSignedUrlPromise('getObject', {
         Bucket: process.env.AWS_S3_BUCKET,
         Expires: 60,
-        Key: req.params.path,
+        Key: keyPath,
       });
       res.redirect(url);
     } else {
-      res.redirect(`/assets/${req.params.path}`);
+      res.redirect(path.join('/assets', keyPath));
     }
   })
 );

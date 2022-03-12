@@ -1,0 +1,14 @@
+<span *ngIf="error" class="invalid-feedback">
+  <span *ngIf="error.data">
+    <span *ngFor="let msg of error.data">{{msg}}</span>
+  </span>
+  <span *ngIf="error.status == 422">
+    Please review the highlighted errors.
+  </span>
+  <span *ngIf="error.status == 403">
+    {{error.detail}}
+  </span>
+  <span *ngIf="!error.data && error.status != 422 && error.status != 403">
+    An unexpected error has occurred.
+  </span>
+</span>

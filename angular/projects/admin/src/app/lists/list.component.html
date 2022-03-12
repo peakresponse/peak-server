@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">List</h1>
+</div>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr class="list">
+        <th>Id</th>
+        <th>Section</th>
+        <th>System</th>
+        <th>Code</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <shared-list type="listItems" [params]="params">
+      <ng-template let-records="records" let-record="record">
+        <tr>
+          <td>{{record.id}}</td>
+          <td>{{record.section?.name}}</td>
+          <td>{{record.system}}</td>
+          <td>{{record.code}}</td>
+          <td>{{record.name}}</td>
+        </tr>
+      </ng-template>
+    </shared-list>
+  </table>
+</div>

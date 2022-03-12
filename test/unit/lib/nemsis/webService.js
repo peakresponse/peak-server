@@ -27,19 +27,19 @@ describe('lib', () => {
 
         describe('.submitDemDataSet()', () => {
           it('submits an invalid (xsd) DemDataSet payload to the SubmitData endpoint', async () => {
-            const payload = readPayload('fail/2020-DEM-FailXsd_v350.xml');
+            const payload = readPayload('fail/2021-DEM-FailXsd_v350.xml');
             const response = await client.submitDemDataSet(payload, '3.5.0');
             assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.FAILED_IMPORT_XSD);
           });
 
           it('submits an invalid (sch) DemDataSet payload to the SubmitData endpoint', async () => {
-            const payload = readPayload('fail/2020-DEM-FailSchematron_v350.xml');
+            const payload = readPayload('fail/2021-DEM-FailSchematron_v350.xml');
             const response = await client.submitDemDataSet(payload, '3.5.0');
             assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR);
           });
 
           it('submits a complete valid payload to the SubmitData endpoint', async () => {
-            const payload = readPayload('full/2020-DEM-1_v350.xml');
+            const payload = readPayload('full/2021-DEM-1_v350.xml');
             const response = await client.submitDemDataSet(payload, '3.5.0');
             assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.SUCCESS);
           });
@@ -47,19 +47,19 @@ describe('lib', () => {
 
         describe('.submitEmsDataSet()', () => {
           it('submits an invalid (xsd) EmsDataSet payload to the SubmitData endpoint', async () => {
-            const payload = readPayload('fail/2020-EMS-FailXsd_v350.xml');
+            const payload = readPayload('fail/2021-EMS-FailXsd_v350.xml');
             const response = await client.submitEmsDataSet(payload, '3.5.0');
             assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.FAILED_IMPORT_XSD);
           });
 
           it('submits an invalid (sch) EmsDataSet payload to the SubmitData endpoint', async () => {
-            const payload = readPayload('fail/2020-EMS-FailSchematron_v350.xml');
+            const payload = readPayload('fail/2021-EMS-FailSchematron_v350.xml');
             const response = await client.submitEmsDataSet(payload, '3.5.0');
             assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR);
           });
 
           it('submits a complete valid payload to the SubmitData endpoint', async () => {
-            const payload = readPayload('full/2020-EMS-1-NoPatient_v350.xml');
+            const payload = readPayload('full/2021-EMS-1-NoPatient_v350.xml');
             const response = await client.submitEmsDataSet(payload, '3.5.0');
             assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.SUCCESS);
           });
@@ -69,7 +69,7 @@ describe('lib', () => {
       describe('NemsisServer', () => {
         describe('.validateXMLWithSchematraon()', () => {
           it('returns null for a valid doc', async () => {
-            const payload = readPayload('full/2020-DEM-1_v350.xml');
+            const payload = readPayload('full/2021-DEM-1_v350.xml');
             const schematronReport = await NemsisServer.validateXMLWithSchematron(
               payload,
               path.resolve(__dirname, '../../../../nemsis/schematron/DEMDataSet.sch.xsl')
@@ -78,7 +78,7 @@ describe('lib', () => {
           });
 
           it('returns a schematronReport for a failed validation', async () => {
-            const payload = readPayload('fail/2020-DEM-FailSchematron_v350.xml');
+            const payload = readPayload('fail/2021-DEM-FailSchematron_v350.xml');
             const schematronReport = await NemsisServer.validateXMLWithSchematron(
               payload,
               path.resolve(__dirname, '../../../../nemsis/schematron/DEMDataSet.sch.xsl')

@@ -17,6 +17,7 @@ module.exports.async = (handler) => {
           messages: originalError.errors.map((e) => _.pick(e, ['path', 'message', 'value'])),
         });
       } else {
+        // console.log(error);
         next(error);
       }
     });
@@ -24,9 +25,12 @@ module.exports.async = (handler) => {
 };
 
 module.exports.setPaginationHeaders = (req, res, pageParam, pages, total) => {
-  const baseURL = `${`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${req.headers?.host}` || process.env.BASE_URL}${
-    req.baseUrl
-  }${req.path}?`;
+  let baseURL = `${process.env.BASE_URL}${req.baseUrl}${req.path}?`;
+  if (req.subdomains.length > 0) {
+    const subdomain = req.subdomains[0].trim();
+    const scheme = baseURL.substring(0, baseURL.indexOf('://') + 3);
+    baseURL = `${scheme}${subdomain}.${baseURL.substring(scheme.length)}`;
+  }
   const query = _.clone(req.query);
   const page = parseInt(pageParam, 10);
   let link = '';

@@ -1,0 +1,11 @@
+.modal-header {
+  flex-direction: row-reverse;
+  button {
+    margin-right: -1rem;
+  }
+}
+
+.modal-body {
+  @include h4-semibold;
+  text-align: center;
+}

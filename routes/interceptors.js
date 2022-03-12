@@ -2,7 +2,9 @@ const createError = require('http-errors');
 const HttpStatus = require('http-status-codes');
 const passport = require('passport');
 const passportLocal = require('passport-local');
+
 const models = require('../models');
+const oauth = require('../lib/oauth');
 
 const { Op } = models.Sequelize;
 
@@ -69,10 +71,35 @@ module.exports.loadAgency = async (req, res, next) => {
   next();
 };
 
+module.exports.loadApiUser = async (req, res, next) => {
+  if (!req.user && req.headers.authorization) {
+    // DEPRECATED: attempt api key authentication via bearer token
+    const m = req.headers.authorization.match(/Bearer (.+)/);
+    if (m) {
+      req.user = await models.User.findOne({
+        where: {
+          apiKey: m[1],
+        },
+      });
+    }
+    if (!req.user) {
+      try {
+        const request = new oauth.Request(req);
+        const response = new oauth.Response(res);
+        const token = await oauth.server.authenticate(request, response);
+        req.user = token?.user;
+      } catch {
+        // noop
+      }
+    }
+  }
+  next();
+};
+
 function sendErrorUnauthorized(req, res) {
   if (req.accepts('html')) {
     req.flash('error', 'You must log in to view the page you visited.');
-    res.redirect(`/login?redirectURI=${encodeURIComponent(req.originalUrl)}`);
+    res.redirect(`/auth/login?redirectURI=${encodeURIComponent(req.originalUrl)}`);
   } else {
     res.status(HttpStatus.UNAUTHORIZED).end();
   }
@@ -89,14 +116,11 @@ function sendErrorForbidden(req, res) {
 
 async function requireLogin(req, res, next, role) {
   if (req.user) {
-    /// site admins are super users that are allow for all
-    let isAllowed = req.user.isAdmin;
-    if (!isAllowed && req.agency) {
+    let isAllowed = true;
+    if (!req.user.isAdmin && req.agency) {
       /// check for active employment
-      const employment = await models.Employment.findOne({
-        where: { userId: req.user.id, agencyId: req.agency.id },
-      });
-      isAllowed = employment && employment.isActive;
+      const employment = await req.user.isEmployedBy(req.agency);
+      isAllowed = employment !== null;
       /// check for role, if any
       if (role) {
         isAllowed = employment.isOwner || employment.roles.include(role);

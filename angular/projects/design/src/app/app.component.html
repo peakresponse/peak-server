@@ -1,0 +1,44 @@
+<shared-command-header [user]="user">
+  <ng-template>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" href="#">Dropdown Link</a>
+    </li>
+  </ng-template>
+</shared-command-header>
+<nav class="sidebar">
+  <ul class="sidebar__nav">
+    <li>
+      <a routerLink="/branding" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Branding
+      </a>
+    </li>
+    <li>
+      <a routerLink="/buttons" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Buttons
+      </a>
+    </li>
+    <li>
+      <a routerLink="/headers" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Headers
+      </a>
+    </li>
+    <li>
+      <a routerLink="/icons" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Icons
+      </a>
+    </li>
+    <li>
+      <a routerLink="/inputs" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Inputs
+      </a>
+    </li>
+    <li>
+      <a routerLink="/navs" routerLinkActive="sidebar__item--active" class="sidebar__item">
+        Navs
+      </a>
+    </li>
+  </ul>
+</nav>
+<main role="main">
+  <router-outlet></router-outlet>
+</main>

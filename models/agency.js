@@ -164,10 +164,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       stateUniqueId: {
+        allowNull: false,
         type: DataTypes.STRING,
         field: 'state_unique_id',
       },
-      number: DataTypes.STRING,
+      number: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
       name: DataTypes.STRING,
       data: DataTypes.JSONB,
       isValid: {

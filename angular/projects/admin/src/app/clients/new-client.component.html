@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">New Client</h1>
+</div>
+<shared-form class="d-block col-xl-6" (create)="onCreate($event)" type="clients">
+  <ng-template let-record="record" let-error="error">
+    <div class="mb-3">
+      <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="redirectUri" label="Redirect URI" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+  </ng-template>
+</shared-form>
+<shared-modal #showSecret confirmLabel="OK" (confirm)="onConfirm()">
+  <div class="modal-body">
+    Client created! Your client id and secret are:<br/>
+    <br />
+    Client ID<br/>
+    {{client?.clientId}}<br />
+    <br />
+    Client Secret:<br />
+    {{client?.clientSecret}}<br />
+    <br />
+    The client secret will not be displayed again, so please record it now!
+  </div>
+</shared-modal>

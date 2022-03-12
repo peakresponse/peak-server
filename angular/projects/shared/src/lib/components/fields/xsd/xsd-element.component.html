@@ -1,0 +1,6 @@
+<ng-container [ngSwitch]="componentType">
+  <shared-xsd-datetime *ngSwitchCase="COMPONENT_TYPES.datetime" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue"></shared-xsd-datetime>
+  <shared-xsd-input *ngSwitchCase="COMPONENT_TYPES.input" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue"></shared-xsd-input>
+  <shared-xsd-select *ngSwitchCase="COMPONENT_TYPES.select" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue"></shared-xsd-select>
+  <shared-xsd-select-state *ngSwitchCase="COMPONENT_TYPES.selectState" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue"></shared-xsd-select-state>
+</ng-container>

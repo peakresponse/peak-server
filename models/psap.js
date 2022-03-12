@@ -1,6 +1,7 @@
 const { Model } = require('sequelize');
 const moment = require('moment');
 const path = require('path');
+const sequelizePaginate = require('sequelize-paginate');
 const tmp = require('tmp');
 
 const { download, parseSpreadsheet } = require('../lib/utils');
@@ -17,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       Psap.belongsTo(models.State, { as: 'state' });
       Psap.belongsTo(models.County, { as: 'county' });
       Psap.belongsTo(models.City, { as: 'city' });
+      Psap.hasMany(models.Dispatcher, { as: 'dispatchers' });
       Psap.belongsToMany(models.User, {
         as: 'users',
         through: models.Dispatcher,
@@ -86,5 +88,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+
+  sequelizePaginate.paginate(Psap);
+
   return Psap;
 };

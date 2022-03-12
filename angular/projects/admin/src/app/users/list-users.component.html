@@ -1,0 +1,30 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <span class="d-flex">
+      <h1 class="h2">Users</h1>
+      <a routerLink="/users/new" class="btn btn--sm btn--secondary ms-3">New User</a>
+    </span>
+    <shared-search-field placeholder="Search" (debouncedValueChange)="onSearch($event)"></shared-search-field>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <shared-list type="users" [search]="search">
+        <ng-template let-record="record">
+          <tr [routerLink]="['/users', record.id]">
+            <td>{{record.lastName}}</td>
+            <td>{{record.firstName}}</td>
+            <td>{{record.email}}</td>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+</div>

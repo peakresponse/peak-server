@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "version": "0.0.0",
+  "name": "peak-server",
+  "version": "2.0.0-alpha1",
   "private": true,
   "scripts": {
     "webpack-dev": "cross-env NODE_ENV=development webpack --mode development",
@@ -9,7 +9,7 @@
     "build:dev": "webpack-dev-server",
     "build:prod": "npm run build:clean && npm run webpack-prod && npm run build:clean",
     "build:clean": "del-cli 'client/**/*.js' '!client/**/*.font.js' 'client/**/*.js.map' 'client/**/*.ngsummary.json' 'client/**/*.metadata.json' 'client/**/**/*.ngfactory.ts' 'client/**/*.ngstyle.ts' 'client/**/*.shim.ts'",
-    "start": "nodemon -V --ignore ./client --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
+    "start": "nodemon -V --ignore ./angular --ignore ./client --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
     "test": "mocha --unhandled-rejections=strict --recursive test/unit test/integration",
     "ci": "prettier --check . && npm run lint && npm run test",
     "lint": "eslint .",
@@ -65,7 +65,8 @@
     },
     "ignorePatterns": [
       "dist",
-      "node_modules"
+      "node_modules",
+      "*.conf.js"
     ],
     "overrides": [
       {
@@ -120,6 +121,7 @@
     "@ng-web-apis/common": "^1.7.0",
     "@ng-web-apis/geolocation": "^1.0.3",
     "@ngtools/webpack": "github:francisli/ngtools-webpack-builds#9.1.x-multiple-entry-modules",
+    "@node-oauth/oauth2-server": "^4.1.1",
     "@zxing/ngx-scanner": "^3.0.1",
     "activestorage": "^5.2.3",
     "agm-overlays": "^2.0.0",
@@ -172,11 +174,12 @@
     "pg": "^8.2.1",
     "popper.js": "~1.16",
     "qrcode": "^1.4.2",
+    "randomstring": "^1.2.2",
     "readline": "^1.3.0",
     "rollbar": "^2.21.1",
     "rxjs": "~6.5",
     "seedrandom": "^3.0.5",
-    "sequelize": "^6.3.4",
+    "sequelize": "^6.7.0",
     "sequelize-cli": "^6.2.0",
     "sequelize-fixtures": "^1.2.0",
     "sequelize-paginate": "^1.1.6",

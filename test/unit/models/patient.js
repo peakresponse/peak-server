@@ -33,7 +33,7 @@ describe('models', () => {
 
       afterEach(() => {
         fs.removeSync(path.resolve(__dirname, `../../../tmp/uploads/${portraitFile}`));
-        fs.removeSync(path.resolve(__dirname, `../../../public/assets/patients/portrait/${portraitFile}`));
+        fs.removeSync(path.resolve(__dirname, `../../../public/assets/test`));
       });
 
       it('creates a new Patient and adds it to the specified scene', async () => {
@@ -58,8 +58,10 @@ describe('models', () => {
         assert.deepStrictEqual(patient.lastName, 'Doe');
         assert.deepStrictEqual(patient.priority, 2);
         assert.deepStrictEqual(patient.portraitFile, portraitFile);
-        assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/portrait/${portraitFile}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, '../../../public/assets/patients/portrait', portraitFile)));
+        assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/${patient.id}/portrait-file/${portraitFile}`);
+        assert(
+          fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/patients/${patient.id}/portrait-file`, portraitFile))
+        );
         assert.deepStrictEqual(patient.updatedAttributes, [
           'id',
           'canonicalId',
@@ -80,7 +82,7 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.lastName, 'Doe');
         assert.deepStrictEqual(canonical.priority, 2);
         assert.deepStrictEqual(canonical.portraitFile, portraitFile);
-        assert.deepStrictEqual(canonical.portraitUrl, `/api/assets/patients/portrait/${portraitFile}`);
+        assert.deepStrictEqual(canonical.portraitUrl, `/api/assets/patients/${patient.id}/portrait-file/${portraitFile}`);
 
         await scene.reload();
         assert.deepStrictEqual(scene.patientsCount, 8);
@@ -92,7 +94,7 @@ describe('models', () => {
 
         const patient = await models.Patient.findByPk('47449282-c48a-4ca1-a719-5117b790fc70');
         assert.deepStrictEqual(patient.priority, 0);
-        assert.deepStrictEqual(patient.portraitUrl, '/api/assets/patients/portrait/man1.jpg');
+        assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/${patient.id}/portrait-file/man1.jpg`);
 
         const id = uuid();
         const [record, created] = await models.Patient.createOrUpdate(user, agency, {
@@ -109,14 +111,14 @@ describe('models', () => {
         assert.deepStrictEqual(record.firstName, 'New');
         assert.deepStrictEqual(record.lastName, 'Name');
         assert.deepStrictEqual(record.priority, 2);
-        assert.deepStrictEqual(record.portraitUrl, '/api/assets/patients/portrait/man1.jpg');
+        assert.deepStrictEqual(record.portraitUrl, `/api/assets/patients/${record.id}/portrait-file/man1.jpg`);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'lastName', 'firstName', 'priority']);
 
         await patient.reload();
         assert.deepStrictEqual(patient.firstName, 'New');
         assert.deepStrictEqual(patient.lastName, 'Name');
         assert.deepStrictEqual(patient.priority, 2);
-        assert.deepStrictEqual(patient.portraitUrl, '/api/assets/patients/portrait/man1.jpg');
+        assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/${record.id}/portrait-file/man1.jpg`);
 
         await scene.reload();
         assert.deepStrictEqual(scene.priorityPatientsCounts, [4, 1, 1, 0, 1, 0]);

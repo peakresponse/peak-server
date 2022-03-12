@@ -19,10 +19,18 @@ router.post(
     });
     if (user) {
       await user.sendPasswordResetEmail(req.agency);
-      res.render('passwords/forgot', { isSent: true });
+      if (req.header('Content-Type') === 'application/json') {
+        res.status(HttpStatus.OK).json({ message: res.__('passwords.forgot.success') });
+      } else {
+        res.render('passwords/forgot', { isSent: true });
+      }
     } else {
       res.locals.errors = [{ path: 'email', message: res.__('passwords.forgot.notFound') }];
-      res.status(HttpStatus.NOT_FOUND).render('passwords/forgot');
+      if (req.header('Content-Type') === 'application/json') {
+        res.status(HttpStatus.NOT_FOUND).json({ messages: res.locals.errors });
+      } else {
+        res.status(HttpStatus.NOT_FOUND).render('passwords/forgot');
+      }
     }
   })
 );
@@ -58,29 +66,41 @@ router.post(
       if (user) {
         /// check token expiration
         if (user.passwordResetTokenExpiresAt.getTime() < Date.now()) {
-          res.status(HttpStatus.GONE).end();
+          res.status(HttpStatus.GONE).json({ messages: [{ path: 'password', message: res.__('passwords.reset.expired') }] });
           return;
         }
         /// update password
         try {
           await user.update({ password: req.body.password });
-          res.render('passwords/reset', {
-            isSaved: true,
-          });
+          if (req.header('Content-Type') === 'application/json') {
+            res.status(HttpStatus.OK).json({ message: res.__('passwords.reset.success') });
+          } else {
+            res.render('passwords/reset', {
+              isSaved: true,
+            });
+          }
         } catch (err) {
           res.locals.errors = err.errors;
-          res.status(HttpStatus.UNPROCESSABLE_ENTITY).render('passwords/reset', {
-            token: req.params.token,
-            isExpired: user.passwordResetTokenExpiresAt.getTime() < Date.now(),
-          });
+          if (req.header('Content-Type') === 'application/json') {
+            res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({ messages: res.locals.errors });
+          } else {
+            res.status(HttpStatus.UNPROCESSABLE_ENTITY).render('passwords/reset', {
+              token: req.params.token,
+              isExpired: user.passwordResetTokenExpiresAt.getTime() < Date.now(),
+            });
+          }
         }
       } else {
         throw new Error();
       }
     } catch (err) {
-      res.status(HttpStatus.NOT_FOUND).render('passwords/reset', {
-        isInvalid: true,
-      });
+      if (req.header('Content-Type') === 'application/json') {
+        res.status(HttpStatus.NOT_FOUND).json({ messages: [{ path: 'password', message: res.__('passwords.reset.invalid') }] });
+      } else {
+        res.status(HttpStatus.NOT_FOUND).render('passwords/reset', {
+          isInvalid: true,
+        });
+      }
     }
   })
 );

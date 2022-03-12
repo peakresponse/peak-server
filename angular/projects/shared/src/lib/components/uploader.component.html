@@ -1,0 +1,5 @@
+<div *ngFor="let uploader of uploaders">
+  <input type="text" readonly [value]="uploader.file.name" />
+  <div *ngIf="uploader.progress != '100%'" class="valid-feedback">Uploading: {{uploader.progress}}</div>  
+</div>
+<input *ngIf="uploaders.length == 0" #fileInput [id]="id" type="file" (change)="onChange($event)" class="form-control" />

@@ -13,6 +13,8 @@ services:
     environment:
       - CI=true
       - DATABASE_URL=postgres://postgres@db/app
+      - AWS_MOBILEAPP_ACCESS_KEY_ID
+      - AWS_MOBILEAPP_SECRET_ACCESS_KEY
       - NEMSIS_VALIDATOR_USERNAME
       - NEMSIS_VALIDATOR_PASSWORD
       - NEMSIS_VALIDATOR_ORGANIZATION

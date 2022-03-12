@@ -23,11 +23,15 @@ router.get(
       ],
     });
     helpers.setPaginationHeaders(req, res, page, pages, total);
-    res.json({
-      dVehicle: {
-        'dVehicle.VehicleGroup': docs.map((d) => d.data),
-      },
-    });
+    if (req.query.format === 'xmljs') {
+      res.json({
+        dVehicle: {
+          'dVehicle.VehicleGroup': docs.map((d) => d.data),
+        },
+      });
+    } else {
+      res.json(docs.map((d) => d.toJSON()));
+    }
   })
 );
 

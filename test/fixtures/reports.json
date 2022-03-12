@@ -4,6 +4,7 @@
     "data": {
       "id": "9242e8de-9d22-457f-96c8-00a43dfc1f3a",
       "canonicalId": null,
+      "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
       "responseId": "50c74d8a-60c3-42af-a2ed-1a12a42f2b69",
       "timeId": "4ee8a6ae-53eb-424f-bec7-bfe702c6d801",
       "situationId": "d7b842f4-383e-4eb3-9e5f-353eac2d6e9b",
@@ -16,6 +17,8 @@
       "procedures": ["34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0"],
       "vitalIds": ["2036119d-4545-4452-a26f-b9ec6a1a323b"],
       "vitals": ["2036119d-4545-4452-a26f-b9ec6a1a323b"],
+      "fileIds": ["7b6ea987-3aee-489a-b2ad-eb455204b5f0"],
+      "files": ["7b6ea987-3aee-489a-b2ad-eb455204b5f0"],
       "data": {
         "eRecord.01": {
           "_text": "9242e8de-9d22-457f-96c8-00a43dfc1f3a"
@@ -45,6 +48,7 @@
     "data": {
       "id": "c19bb731-5e9e-4feb-9192-720782ecf9a8",
       "canonicalId": "9242e8de-9d22-457f-96c8-00a43dfc1f3a",
+      "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
       "responseId": "50c74d8a-60c3-42af-a2ed-1a12a42f2b69",
       "timeId": "4ee8a6ae-53eb-424f-bec7-bfe702c6d801",
       "situationId": "d7b842f4-383e-4eb3-9e5f-353eac2d6e9b",
@@ -57,6 +61,8 @@
       "procedures": ["34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0"],
       "vitalIds": ["2036119d-4545-4452-a26f-b9ec6a1a323b"],
       "vitals": ["2036119d-4545-4452-a26f-b9ec6a1a323b"],
+      "fileIds": ["7b6ea987-3aee-489a-b2ad-eb455204b5f0"],
+      "files": ["7b6ea987-3aee-489a-b2ad-eb455204b5f0"],
       "data": {
         "eRecord.01": {
           "_text": "9242e8de-9d22-457f-96c8-00a43dfc1f3a"
@@ -84,7 +90,8 @@
         "narrativeId",
         "medicationIds",
         "vitalIds",
-        "procedureIds"
+        "procedureIds",
+        "fileIds"
       ],
       "updatedDataAttributes": ["eRecord.01", "eRecord.SoftwareApplicationGroup"],
       "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",

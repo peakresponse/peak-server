@@ -1,0 +1,151 @@
+html,
+body {
+  background: white;
+}
+
+.wizard__header {
+  background-color: $base-100;
+  padding-top: 1rem;
+
+  .container-fluid {
+    padding: 0 1.25rem;
+  }
+
+  shared-logo[type='full'] {
+    display: block;
+    width: 370px;
+    height: auto;
+  }
+
+  shared-logo[type='square'] {
+    display: block;
+    width: 54px;
+    height: auto;
+  }
+
+  h1 {
+    @include h4-semibold;
+    color: $brand-primary-600;
+    margin-top: 2rem;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    background: $gradient-brand-light;
+    height: 3px;
+    margin: 0.5rem 0 1rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .wizard__header {
+    padding-top: 2rem;
+
+    .container-fluid {
+      padding: 0 4rem;
+    }
+
+    h1,
+    p {
+      text-align: center;
+    }
+
+    h1 {
+      @include h2-bold;
+      margin-top: 4rem;
+    }
+    &::after {
+      height: 5px;
+      margin: 2rem 0;
+    }
+  }
+}
+
+.wizard__body-wrapper {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@include media-breakpoint-up(md) {
+  .wizard__body-wrapper {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.wizard__body {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 0 10rem;
+
+  .row {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  .col,
+  [class^='col-'] {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  p {
+    @include h5;
+    margin-bottom: 1rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .wizard__body {
+    .row.narrow {
+      max-width: 1150px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      @include h3;
+      text-align: center;
+    }
+  }
+}
+
+.wizard__footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) -42.11%, rgba(255, 255, 255, 0.7) 86.84%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0.5rem;
+
+  a {
+    @include h5-bold;
+    cursor: pointer;
+    color: $brand-primary-600;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    text-decoration: none;
+  }
+
+  .btn {
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .wizard__footer {
+    padding: 1rem 3rem 2rem;
+
+    a {
+      @include h3-semibold;
+      border-bottom: 2px solid $brand-primary-600;
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+  }
+}

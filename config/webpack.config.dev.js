@@ -47,7 +47,7 @@ module.exports = webpackMerge(commonConfig, {
           'angular2-template-loader',
           'angular-router-loader',
         ],
-        exclude: [/node_modules/],
+        exclude: [/node_modules/, /angular/],
       },
     ],
   },

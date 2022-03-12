@@ -39,6 +39,7 @@ app.set('subdomain offset', process.env.EXPRESS_SUBDOMAIN_OFFSET || 2);
 app.set('trust proxy', 1);
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/angular', express.static(path.join(__dirname, 'angular/dist')));
 app.use('/client', express.static(path.join(__dirname, 'dist')));
 app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 app.use('/libraries/cleave', express.static(path.join(__dirname, 'node_modules/cleave.js/dist')));

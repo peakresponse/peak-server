@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const AWS = require('aws-sdk');
 const fs = require('fs-extra');
+const inflection = require('inflection');
 const jsonpatch = require('fast-json-patch');
 const path = require('path');
 const { Model } = require('sequelize');
@@ -51,7 +52,7 @@ class Base extends Model {
       // check for data patch
       if (data.data_patch && updateAttrs.includes('data')) {
         updatedAttributes.push('data');
-        filteredData.data = jsonpatch.applyPatch(parent.data, data.data_patch).newDocument;
+        filteredData.data = jsonpatch.applyPatch(parent.data || {}, data.data_patch).newDocument;
       }
       // merge the new attributes into the parent attributes
       filteredData = _.assign({ ...parent.get() }, filteredData);
@@ -98,21 +99,34 @@ class Base extends Model {
 
   // MARK: - file attachment helpers
 
-  static assetUrl(pathPrefix, file) {
+  assetUrl(attribute) {
+    const pathPrefix = `${inflection.transform(this.constructor.name, ['tableize', 'dasherize'])}/${
+      this?.currentId ?? this.id
+    }/${inflection.transform(attribute, ['underscore', 'dasherize'])}`;
+    const file = this.get(attribute);
     if (file) {
       return path.resolve('/api/assets/', pathPrefix, file);
     }
     return null;
   }
 
-  static async handleAssetFile(pathPrefix, prevFile, newFile, options) {
+  async handleAssetFile(attribute, options) {
+    if (!this.changed(attribute)) {
+      return;
+    }
+    const pathPrefix = `${inflection.transform(this.constructor.name, ['tableize', 'dasherize'])}/${
+      this.id
+    }/${inflection.transform(attribute, ['underscore', 'dasherize'])}`;
+    const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
+    const prevFile = this.previous(attribute);
+    const newFile = this.get(attribute);
     const handle = async () => {
       if (process.env.AWS_S3_BUCKET) {
         if (prevFile) {
           await s3
             .deleteObject({
               Bucket: process.env.AWS_S3_BUCKET,
-              Key: path.join(pathPrefix, prevFile),
+              Key: path.join(assetPrefix, pathPrefix, prevFile),
             })
             .promise();
         }
@@ -122,7 +136,7 @@ class Base extends Model {
               ACL: 'private',
               Bucket: process.env.AWS_S3_BUCKET,
               CopySource: path.join(process.env.AWS_S3_BUCKET, 'uploads', newFile),
-              Key: path.join(pathPrefix, newFile),
+              Key: path.join(assetPrefix, pathPrefix, newFile),
               ServerSideEncryption: 'AES256',
             })
             .promise();
@@ -135,14 +149,16 @@ class Base extends Model {
         }
       } else {
         if (prevFile) {
-          fs.removeSync(path.resolve(__dirname, '../public/assets', pathPrefix, prevFile));
+          fs.removeSync(path.resolve(__dirname, '../public/assets', assetPrefix, pathPrefix, prevFile));
         }
-        if (newFile && fs.existsSync(path.resolve(__dirname, '../tmp/uploads', newFile))) {
-          fs.moveSync(
-            path.resolve(__dirname, '../tmp/uploads', newFile),
-            path.resolve(__dirname, '../public/assets', pathPrefix, newFile),
-            { overwrite: true }
-          );
+        if (newFile) {
+          const uploadPath = path.resolve(__dirname, '../tmp/uploads', newFile);
+          if (fs.pathExistsSync(uploadPath)) {
+            fs.ensureDirSync(path.resolve(__dirname, '../public/assets'));
+            fs.moveSync(uploadPath, path.resolve(__dirname, '../public/assets', assetPrefix, pathPrefix, newFile), {
+              overwrite: true,
+            });
+          }
         }
       }
     };

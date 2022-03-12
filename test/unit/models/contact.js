@@ -89,7 +89,6 @@ describe('models', () => {
             _.find(originalError.errors, {
               path: 'dContact.02',
               message: 'This is not a valid value.',
-              value: '',
             })
           );
           assert(

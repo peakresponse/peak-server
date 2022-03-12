@@ -1,0 +1,39 @@
+@mixin h2 {
+  @include font-size($h2-font-size);
+  line-height: 3rem;
+}
+
+@mixin h2-bold {
+  @include h2;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin h3 {
+  @include font-size($h3-font-size);
+  line-height: 2rem;
+}
+
+@mixin h3-semibold {
+  @include h3;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin h4 {
+  @include font-size($h4-font-size);
+  line-height: 1.75rem;
+}
+
+@mixin h4-semibold {
+  @include h4;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin h5 {
+  @include font-size($h5-font-size);
+  line-height: 1.125rem;
+}
+
+@mixin h5-bold {
+  @include h5;
+  font-weight: $font-weight-semibold;
+}

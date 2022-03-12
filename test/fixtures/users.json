@@ -128,7 +128,8 @@
       "position": "Integration",
       "email": "sfdem.user@peakresponse.net",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": false
+      "isAdmin": false,
+      "apiKey": "66ced5b6-6ed3-42e3-a11d-ea0d700dee9e"
     }
   }
 ]

@@ -80,63 +80,60 @@ router.post(
   '/accept',
   helpers.async(async (req, res) => {
     const { invitationCode } = req.body;
-    try {
-      let user;
-      let status;
-      await models.sequelize.transaction(async (transaction) => {
-        /// attempt to register
-        user = await models.User.register(req.body, { transaction });
-        let employment;
-        if (invitationCode) {
-          /// look up the corresponding employment record, associate
+    let user;
+    let status;
+    await models.sequelize.transaction(async (transaction) => {
+      /// attempt to register
+      user = await models.User.register(req.body, { transaction });
+      let employment;
+      if (invitationCode) {
+        /// look up the corresponding employment record, associate
+        try {
           employment = await models.Employment.findOne({
             where: {
               invitationCode: req.body.invitationCode,
             },
+            rejectOnEmpty: true,
             transaction,
           });
-          if (!employment) {
-            /// if not found when code provided, this is an error condition case
-            throw new Error();
-          }
-        } else {
-          /// look for an employment with a matching email
-          employment = await models.Employment.findOne({
-            where: {
-              email: user.email,
-            },
-            transaction,
-          });
+        } catch {
+          res.status(HttpStatus.NOT_FOUND).end();
         }
-        if (employment && employment.invitationCode) {
-          /// associate with employment, clear invitation code so it can't re-used
-          employment.userId = user.id;
-          employment.invitationCode = null;
-          await employment.save({ transaction });
-          /// finally, send welcome email
-          await user.sendWelcomeEmail(req.agency, { transaction });
-          status = HttpStatus.CREATED;
-        } else {
-          /// create a pending employment
-          if (!employment) {
-            employment = models.Employment.build();
-            employment.agencyId = req.agency.id;
-            employment.createdById = user.id;
-            employment.updatedById = user.id;
-          }
-          /// mark pending
-          employment.userId = user.id;
-          employment.isPending = true;
-          await employment.save({ transaction });
-          /// finally, send welcome email (will be a pending request email)
-          await user.sendWelcomeEmail(req.agency, { transaction });
-          status = HttpStatus.ACCEPTED;
+      } else {
+        /// look for an employment with a matching email
+        employment = await models.Employment.findOne({
+          where: {
+            email: user.email,
+          },
+          transaction,
+        });
+      }
+      if (employment && employment.invitationCode) {
+        /// associate with employment, clear invitation code so it can't re-used
+        employment.userId = user.id;
+        employment.invitationCode = null;
+        await employment.save({ transaction });
+        /// finally, send welcome email
+        await user.sendWelcomeEmail(req.agency, { transaction });
+        status = HttpStatus.CREATED;
+      } else {
+        /// create a pending employment
+        if (!employment) {
+          employment = models.Employment.build();
+          employment.agencyId = req.agency.id;
+          employment.createdById = user.id;
+          employment.updatedById = user.id;
         }
-      });
-      res.status(status).json(user.toJSON());
-    } catch (err) {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
+        /// mark pending
+        employment.userId = user.id;
+        employment.isPending = true;
+        await employment.save({ transaction });
+        /// finally, send welcome email (will be a pending request email)
+        await user.sendWelcomeEmail(req.agency, { transaction });
+        status = HttpStatus.ACCEPTED;
+      }
+    });
+    res.status(status).json(user.toJSON());
   })
 );
 

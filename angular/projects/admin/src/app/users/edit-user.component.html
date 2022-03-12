@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">Edit User</h1>
+</div>
+<shared-form class="d-block col-xl-6" *ngIf="id" type="users" [id]="id">
+  <ng-template let-record="record" let-error="error">
+    <div class="mb-3">
+      <shared-text-field id="firstName" label="First Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="lastName" label="Last Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="email" label="Email" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="position" label="Position" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <div class="form-field-group">
+        <shared-text-field id="apiKey" label="API Key" [source]="record" [error]="error"></shared-text-field>
+        <button (click)="onGenerate(record)" type="button" class="btn btn--secondary">Generate</button>  
+      </div>
+    </div>
+    <div class="mb-3">
+      <shared-file-field id="iconFile" label="Picture" [source]="record" [target]="record" [error]="error"></shared-file-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field type="password" id="password" label="Password" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-checkbox id="isAdmin" label="Is Site Admin?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+    </div>
+  </ng-template>
+</shared-form>

@@ -16,11 +16,13 @@ services:
     volumes:
       - .:/opt/node/app
       - /opt/node/app/node_modules
+      - /opt/node/app/angular/node_modules
     environment:
       - PORT=3000
       - DATABASE_URL=postgres://postgres@db/app
     ports:
       - 3001:3001
+      - 4200:4200
     depends_on:
       - db
   nginx:

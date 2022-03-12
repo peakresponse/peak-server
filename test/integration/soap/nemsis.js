@@ -69,7 +69,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns XSD validation errors for DEMDataSet', async () => {
-      const payload = readPayload('fail/2020-DEM-FailXsd_v350.xml');
+      const payload = readPayload('fail/2021-DEM-FailXsd_v350.xml');
       const response = await client.submitDemDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_XSD]);
@@ -86,7 +86,7 @@ describe('/soap/nemsis', () => {
                   {
                     elementName: 'dConfiguration.02',
                     elementLocation: {
-                      line: 164,
+                      line: 175,
                     },
                   },
                 ],
@@ -98,7 +98,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns Schematron validation errors for DEMDataSet', async () => {
-      const payload = readPayload('fail/2020-DEM-FailSchematron_v350.xml');
+      const payload = readPayload('fail/2021-DEM-FailSchematron_v350.xml');
       const response = await client.submitDemDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR]);
@@ -110,14 +110,14 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns XSD validation errors for EMSDataSet', async () => {
-      const payload = readPayload('fail/2020-EMS-FailXsd_v350.xml');
+      const payload = readPayload('fail/2021-EMS-FailXsd_v350.xml');
       const response = await client.submitEmsDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_XSD]);
       assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.FAILED_IMPORT_XSD);
       assert.deepStrictEqual(response.reports, {
         xmlValidationErrorReport: {
-          totalErrorCount: 2,
+          totalErrorCount: 1,
           xmlError: [
             {
               desc:
@@ -127,21 +127,7 @@ describe('/soap/nemsis', () => {
                   {
                     elementName: 'eCrew.02',
                     elementLocation: {
-                      line: 97,
-                    },
-                  },
-                ],
-              },
-            },
-            {
-              desc:
-                "Element '{http://www.nemsis.org}eCrew.02': '9925017' is not a valid value of the atomic type '{http://www.nemsis.org}MemberLevel'.",
-              failedElementList: {
-                xmlElementInfo: [
-                  {
-                    elementName: 'eCrew.02',
-                    elementLocation: {
-                      line: 97,
+                      line: 95,
                     },
                   },
                 ],
@@ -153,7 +139,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns Schematron validation errors for EMSDataSet', async () => {
-      const payload = readPayload('fail/2020-EMS-FailSchematron_v350.xml');
+      const payload = readPayload('fail/2021-EMS-FailSchematron_v350.xml');
       const response = await client.submitEmsDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR]);

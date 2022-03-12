@@ -16,6 +16,99 @@ module.exports = (sequelize, DataTypes) => {
       Incident.belongsTo(models.Agency, { as: 'createdByAgency' });
       Incident.belongsTo(models.Agency, { as: 'updatedByAgency' });
       Incident.hasMany(models.Dispatch.scope('canonical'), { as: 'dispatches', foreignKey: 'incidentId' });
+      Incident.hasMany(models.Report.scope('canonical'), { as: 'reports', foreignKey: 'incidentId' });
+    }
+
+    static async paginate(type, obj, options) {
+      const limit = 25;
+      const offset = (parseInt(options?.page ?? 1, 10) - 1) * limit;
+      let searchConditions = '';
+      let joins = '';
+      let search = '';
+      if (options?.search) {
+        search = `%${options.search}%`;
+        joins = `
+         INNER JOIN scenes ON incidents.scene_id=scenes.id
+        `;
+        searchConditions = `
+         AND (incidents.number ILIKE :search
+         OR scenes.address1 ILIKE :search
+         OR scenes.address2 ILIKE :search)
+        `;
+      }
+      let conditions;
+      if (type === 'Agency') {
+        conditions = `
+         INNER JOIN vehicles ON dispatches.vehicle_id=vehicles.id
+         WHERE vehicles.created_by_agency_id=:objId
+        `;
+      } else if (type === 'Vehicle') {
+        conditions = `
+         WHERE dispatches.vehicle_id=:objId
+        `;
+      } else {
+        throw new Error();
+      }
+      const docs = await sequelize.query(
+        `SELECT DISTINCT(incidents.*) FROM incidents ${joins}
+         INNER JOIN dispatches ON incidents.id=dispatches.incident_id
+         ${conditions} ${searchConditions}
+         ORDER BY incidents.number DESC
+         LIMIT :limit OFFSET :offset`,
+        {
+          replacements: {
+            objId: obj.id,
+            search,
+            limit,
+            offset,
+          },
+          model: Incident,
+          mapToModel: true,
+        }
+      );
+      const [{ count }] = await sequelize.query(
+        `SELECT COUNT(DISTINCT(incidents.id)) FROM incidents ${joins}
+         INNER JOIN dispatches ON incidents.id=dispatches.incident_id
+         ${conditions} ${searchConditions}`,
+        {
+          raw: true,
+          replacements: {
+            objId: obj.id,
+            search,
+          },
+          type: sequelize.QueryTypes.SELECT,
+        }
+      );
+      const total = parseInt(count, 10);
+      const pages = Math.round(total / limit) + 1;
+      // manually eager-load scene records
+      const sceneIds = docs.map((incident) => incident.sceneId);
+      const scenes = await sequelize.models.Scene.findAll({
+        include: ['city', 'state'],
+        where: { id: sceneIds },
+      });
+      const sceneMap = scenes.reduce((map, scene) => {
+        map[scene.id] = scene;
+        return map;
+      }, {});
+      // manually eager-load dispatch records
+      const incidentIds = docs.map((incident) => incident.id);
+      const dispatches = await sequelize.models.Dispatch.scope('canonical').findAll({
+        where: {
+          incidentId: incidentIds,
+        },
+        order: [['dispatchedAt', 'ASC']],
+      });
+      const dispatchesMap = dispatches.reduce((map, dispatch) => {
+        map[dispatch.incidentId] = map[dispatch.incidentId] || [];
+        map[dispatch.incidentId].push(dispatch);
+        return map;
+      }, {});
+      docs.forEach((incident) => {
+        incident.setDataValue('scene', sceneMap[incident.sceneId]);
+        incident.setDataValue('dispatches', dispatchesMap[incident.id]);
+      });
+      return { docs, pages, total };
     }
   }
   Incident.init(
@@ -29,6 +122,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         field: 'dispatch_notified_at',
       },
+      reportsCount: {
+        type: DataTypes.INTEGER,
+        field: 'reports_count',
+      },
     },
     {
       sequelize,
@@ -37,5 +134,25 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+  Incident.addScope('agency', (agencyId) => ({
+    attributes: [sequelize.literal('DISTINCT ON("Incident".number) 1')].concat(Object.keys(Incident.rawAttributes)),
+    include: [
+      {
+        model: sequelize.models.Dispatch,
+        as: 'dispatches',
+        required: true,
+        include: [
+          {
+            model: sequelize.models.Vehicle,
+            as: 'vehicle',
+            required: true,
+          },
+        ],
+      },
+    ],
+    where: {
+      '$dispatches.vehicle.created_by_agency_id$': agencyId,
+    },
+  }));
   return Incident;
 };

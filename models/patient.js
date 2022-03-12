@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         return sequelize.transaction((transaction) => Patient.createOrUpdate(user, agency, data, { ...options, transaction }));
       }
       // allow sceneId and pin as an alternative to canonicalId
-      if (data.sceneId && data.pin) {
+      if (!data.canonicalId && data.sceneId && data.pin) {
         const canonical = await Patient.findOne({
           where: {
             canonicalId: null,
@@ -70,16 +70,16 @@ module.exports = (sequelize, DataTypes) => {
       } else if (data.parentId) {
         const parent = await Patient.findByPk(data.parentId, { rejectOnEmpty: true, transaction: options.transaction });
         scene = await parent.getScene(options);
-      } else {
-        throw new Error();
       }
-      // confirm this is a responder on scene
-      const responder = await sequelize.models.Responder.findOne({
-        where: { sceneId: scene.id, userId: user.id, agencyId: agency.id },
-        transaction: options?.transaction,
-      });
-      if (!responder) {
-        throw new Error();
+      if (scene) {
+        // confirm this is a responder on scene
+        const responder = await sequelize.models.Responder.findOne({
+          where: { sceneId: scene.id, userId: user.id, agencyId: agency.id },
+          transaction: options?.transaction,
+        });
+        if (!responder) {
+          throw new Error();
+        }
       }
       const [record, created] = await Base.createOrUpdate(
         Patient,
@@ -121,7 +121,7 @@ module.exports = (sequelize, DataTypes) => {
         ],
         options
       );
-      await scene.updatePatientCounts(options);
+      await scene?.updatePatientCounts(options);
       return [record, created];
     }
 
@@ -141,18 +141,42 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING,
         field: 'last_name',
+        set(newValue) {
+          this.setFieldAndNemsisValue('lastName', ['ePatient.PatientNameGroup', 'ePatient.02'], newValue);
+        },
       },
       firstName: {
         type: DataTypes.STRING,
         field: 'first_name',
+        set(newValue) {
+          this.setFieldAndNemsisValue('firstName', ['ePatient.PatientNameGroup', 'ePatient.03'], newValue);
+        },
       },
-      gender: DataTypes.STRING,
-      age: DataTypes.INTEGER,
+      gender: {
+        type: DataTypes.STRING,
+        set(newValue) {
+          this.setFieldAndNemsisValue('gender', ['ePatient.13'], newValue);
+        },
+      },
+      age: {
+        type: DataTypes.INTEGER,
+        set(newValue) {
+          this.setFieldAndNemsisValue('age', ['ePatient.AgeGroup', 'ePatient.15'], newValue);
+        },
+      },
       ageUnits: {
         type: DataTypes.STRING,
         field: 'age_units',
+        set(newValue) {
+          this.setFieldAndNemsisValue('ageUnits', ['ePatient.AgeGroup', 'ePatient.16'], newValue);
+        },
       },
-      dob: DataTypes.DATEONLY,
+      dob: {
+        type: DataTypes.DATEONLY,
+        set(newValue) {
+          this.setFieldAndNemsisValue('dob', ['ePatient.17'], newValue);
+        },
+      },
       complaint: DataTypes.STRING,
       triageMentalStatus: {
         type: DataTypes.STRING,
@@ -198,19 +222,19 @@ module.exports = (sequelize, DataTypes) => {
       portraitUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patients/portrait', this.portraitFile);
+          return this.assetUrl('portraitFile');
         },
       },
       photoUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patients/photo', this.photoFile);
+          return this.assetUrl('photoFile');
         },
       },
       audioUrl: {
         type: DataTypes.VIRTUAL,
         get() {
-          return Base.assetUrl('patients/audio', this.audioFile);
+          return this.assetUrl('audioFile');
         },
       },
       portraitFile: {
@@ -299,15 +323,9 @@ module.exports = (sequelize, DataTypes) => {
     if (!patient.canonicalId) {
       return;
     }
-    if (patient.changed('portraitFile')) {
-      await Base.handleAssetFile('patients/portrait', patient.previous('portraitFile'), patient.portraitFile, options);
-    }
-    if (patient.changed('photoFile')) {
-      await Base.handleAssetFile('patients/photo', patient.previous('photoFile'), patient.photoFile, options);
-    }
-    if (patient.changed('audioFile')) {
-      await Base.handleAssetFile('patients/audio', patient.previous('audioFile'), patient.audioFile, options);
-    }
+    await patient.handleAssetFile('portraitFile', options);
+    await patient.handleAssetFile('photoFile', options);
+    await patient.handleAssetFile('audioFile', options);
   });
 
   Patient.addScope('canonical', {

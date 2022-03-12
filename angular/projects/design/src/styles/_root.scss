@@ -1,0 +1,19 @@
+:root {
+  // Note: Custom variable values only support SassScript inside `#{}`.
+
+  // Colors
+  //
+  // Generate palettes for full colors, grays, and theme colors.
+
+  @each $color, $value in $bases {
+    --pr-base-#{$color}: #{$value};
+  }
+
+  @each $color, $value in $brand-primaries {
+    --pr-brand-primary-#{$color}: #{$value};
+  }
+
+  @each $color, $value in $brand-secondaries {
+    --pr-brand-secondary-#{$color}: #{$value};
+  }
+}

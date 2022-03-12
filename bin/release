@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+if [[ $BRANCH == 'master' ]]; then
+  TAG=`git describe --tags`
+  if [[ $TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[^-]+)?$ ]]; then
+    docker tag peakresponse/peak-server:latest peakresponse/peak-server:$TAG
+    docker push peakresponse/peak-server:$TAG
+    docker push peakresponse/peak-server:latest
+  fi
+else
+  docker tag peakresponse/peak-server:latest peakresponse/peak-server:$BRANCH
+  docker push peakresponse/peak-server:$BRANCH
+fi

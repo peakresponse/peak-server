@@ -8,9 +8,14 @@ describe('models', () => {
     beforeEach(async () => {
       await helpers.loadFixtures([
         'states',
+        'counties',
+        'cities',
+        'psaps',
         'users',
         'agencies',
         'employments',
+        'scenes',
+        'incidents',
         'responses',
         'times',
         'situations',

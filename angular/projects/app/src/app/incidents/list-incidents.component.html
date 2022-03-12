@@ -1,0 +1,48 @@
+<shared-command-header [user]="user.attributes$|async" [showSearch]="true" (searchValueChange)="search = $event">
+  <ng-template>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>
+    </li>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" href="/logout">Log out</a>
+    </li>
+  </ng-template>
+  <ul class="nav">
+    <li *ngIf="user.currentAssignment?.vehicleId" class="nav__item">
+      <a class="nav__link" [class.nav__link--active]="filter == 'mine'" routerLink="/incidents" fragment="mine">My Dispatches</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" [class.nav__link--active]="filter == 'all'" routerLink="/incidents" fragment="all">All incidents</a>
+    </li>
+  </ul>
+</shared-command-header>
+<main>
+  <div class="table-responsive">
+    <table class="table">
+      <shared-list type="incidents" [params]="params" [search]="search">
+        <ng-template let-record="record">
+          <tr *ngIf="parseDate(record.dispatches[0].dispatchedAt) as datetime" [routerLink]="['/incidents', record.id]">
+            <td>
+              <div class="incident">
+                <div class="d-flex flex-grow-1">
+                  <div class="incident__number">#{{record.number}}</div>
+                  <div class="incident__address">
+                    {{record.scene?.address1|inflection:'titleize'}}<br />
+                    {{record.scene?.address2|inflection:'titleize'}}<br *ngIf="record.scene?.address2" />
+                    {{cityName(record.scene?.city?.featureName)}}<span *ngIf="record.scene?.city && record.scene?.state">, </span>{{record.scene?.state?.abbr}} {{record.scene?.zip}}
+                  </div>
+                  <div class="incident__date">
+                    {{datePart(datetime)}}
+                  </div>  
+                </div>
+                <div class="incident__time">
+                  {{timePart(datetime)}}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+</main>

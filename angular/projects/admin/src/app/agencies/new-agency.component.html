@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">New Agency</h1>
+</div>
+<shared-form class="d-block col-xl-6" (create)="onCreate($event)" type="agencies">
+  <ng-template let-record="record" let-error="error">
+    <div class="mb-3">
+      <shared-select-field id="stateId" label="State" [source]="record" [target]="record" [error]="error">
+        <option *ngFor="let state of states" [value]="state.id">{{state.name}}</option>
+      </shared-select-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="stateUniqueId" label="State Unique Id" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="number" label="Number" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+  </ng-template>
+</shared-form>

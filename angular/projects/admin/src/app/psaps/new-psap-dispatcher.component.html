@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2" i18n>New PSAP Dispatcher</h1>
+</div>
+<shared-form type="dispatchers" [transformRecord]="transformRecord" (create)="onCreate()" class="d-block col-xl-6">
+  <ng-template let-record="record" let-error="error">
+    <div class="mb-3">
+      <ng-template #rt let-r="result" let-t="term">{{r.firstName}} {{r.lastName}} &lt;{{r.email}}&gt;</ng-template>
+      <shared-search-field id="user" label="User" placeholder="Start typing a name or email..." [searchHandler]="searchHandler" [inputFormatter]="formatter" [resultTemplate]="rt" [source]="record" [target]="record" [error]="error"></shared-search-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="callSign" label="Call Sign" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+  </ng-template>
+</shared-form>

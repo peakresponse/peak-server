@@ -2,8 +2,9 @@
 
 /// MUST BE FIRST! set the NODE_ENV to test to disable logging, switch to test db
 process.env.NODE_ENV = 'test';
-/// handle files as local
+/// handle files as local, in a test subdir
 process.env.AWS_S3_BUCKET = '';
+process.env.ASSET_PATH_PREFIX = 'test';
 /// override any custom base host/url
 process.env.BASE_HOST = 'peakresponse.localhost';
 process.env.BASE_URL = 'http://peakresponse.localhost:3000';
@@ -30,10 +31,15 @@ const recordNetworkRequests = () => {
 const resetDatabase = async () => {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
+    DELETE FROM list_items;
+    DELETE FROM list_sections;
+    DELETE FROM lists;
+    DELETE FROM reports_files;
     DELETE FROM reports_medications;
     DELETE FROM reports_procedures;
     DELETE FROM reports_vitals;
     DELETE FROM reports;
+    DELETE FROM files;
     DELETE FROM vitals;
     DELETE FROM medications;
     DELETE FROM procedures;
@@ -46,6 +52,7 @@ const resetDatabase = async () => {
     DELETE FROM patient_observations;
     DELETE FROM patients;
     DELETE FROM dispatches;
+    DELETE FROM assignments;
     DELETE FROM vehicles;
     DELETE FROM incidents;
     DELETE FROM dispatchers;
@@ -59,6 +66,8 @@ const resetDatabase = async () => {
     DELETE FROM agencies;
     DELETE FROM facilities;
     DELETE FROM agencies;
+    DELETE FROM tokens;
+    DELETE FROM clients;
     DELETE FROM users;
     DELETE FROM states;
     DELETE FROM counties;

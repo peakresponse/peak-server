@@ -8,7 +8,6 @@ const xmljs = require('xml-js');
 const cache = require('../lib/cache');
 const mailer = require('../emails/mailer');
 const helpers = require('./helpers');
-const interceptors = require('./interceptors');
 
 const router = express.Router();
 
@@ -36,21 +35,24 @@ if (process.env.MARKETING_ENABLED === 'true') {
         res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
         return;
       }
-      // validate reCAPTCHA response
-      let response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-        method: 'POST',
-        body: querystring.stringify({
-          secret: process.env.GOOGLE_RECAPTCHA_SECRET_KEY,
-          response: req.body['g-recaptcha-response'],
-        }),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-      response = await response.json();
-      if (!response.success) {
-        res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
-        return;
+      // validate reCAPTCHA response if not coming from sign-up flow
+      const referrer = req.headers.referer;
+      if (!referrer?.indexOf('/sign-up/notify')) {
+        let response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+          method: 'POST',
+          body: querystring.stringify({
+            secret: process.env.GOOGLE_RECAPTCHA_SECRET_KEY,
+            response: req.body['g-recaptcha-response'],
+          }),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        });
+        response = await response.json();
+        if (!response.success) {
+          res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+          return;
+        }
       }
       await mailer.send({
         template: 'contact',
@@ -117,10 +119,6 @@ router.get('/', async (req, res, next) => {
   } else {
     res.redirect('/sign-up');
   }
-});
-
-router.get('/*', interceptors.requireLogin(), (req, res) => {
-  res.render('dashboard');
 });
 
 module.exports = router;

@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2" i18n>Edit PSAP</h1>
+</div>
+<div class="d-block col-xl-6">
+  <ul class="nav">
+    <li class="nav__item">
+      <a class="nav__link" [routerLink]="['/psaps', psapId, 'edit']" routerLinkActive="nav__link--active">Edit</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" [routerLink]="['/psaps', psapId, 'dispatchers']" routerLinkActive="nav__link--active">Dispatchers</a>
+    </li>
+  </ul>
+</div>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Call Sign</th>
+      </tr>
+    </thead>
+    <shared-list type="dispatchers" [params]="params" [basePath]="'/psaps/' + psapId + '/dispatchers'">
+      <ng-template let-records="records" let-record="record">
+        <tr class="state" [routerLink]="['/psaps', psapId, 'dispatchers', record.id]">
+          <td>{{record.user.firstName}} {{record.user.lastName}} &lt;{{record.user.email}}&gt;</td>
+          <td>{{record.callSign}}</td>
+        </tr>
+      </ng-template>
+    </shared-list>
+  </table>
+</div>
+<a [routerLink]="['/psaps', psapId, 'dispatchers', 'new']" class="btn btn--sm btn--secondary">New Dispatcher</a>

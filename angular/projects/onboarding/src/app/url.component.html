@@ -1,0 +1,28 @@
+<shared-wizard [isNextEnabled]="isValid" (back)="onBack()" (cancel)="onCancel()" (next)="onNext()">
+  <ng-container class="wizard__header">
+    <h1 i18n>Choose a URL for your agency</h1>
+  </ng-container>
+  <form (submit)="onNext()" class="wizard__body">
+    <div class="row narrow">
+      <div class="col">
+        <p i18n>This URL will be the place where your team goes to log in to Peak Response. We’ve put in a generated URL as a suggestion, but you’re welcome to change it.</p>
+        <div class="mb-3">
+          <div class="row">
+            <div class="col-md-12 offset-lg-1 col-lg-10">
+              <shared-text-field #subdomainEl id="subdomain" label="URL" [source]="data" [target]="data" [shared-debounced] (debouncedValueChange)="validate($event)">
+                <ng-template>
+                  <div *ngIf="isLoading" class="valid-feedback"><shared-loader></shared-loader> Please wait, checking availability...</div>
+                  <div *ngIf="!isLoading && isValid" class="valid-feedback">This URL is available!</div>
+                  <div *ngIf="!isLoading && errorStatus == 409" class="invalid-feedback">This URL is not available.</div>
+                  <div *ngIf="!isLoading && errorStatus == 422" class="invalid-feedback">This is not a valid URL.</div>
+                  <div class="subdomain-host h3-semibold"><span>{{data.subdomain}}</span>.{{baseHost}}</div>
+                </ng-template>
+              </shared-text-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input class="d-none" type="submit" value="Next" />
+  </form>
+</shared-wizard>

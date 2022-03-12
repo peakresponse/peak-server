@@ -1,9 +1,21 @@
 {
+  "admin": {
+    "title": "Administration"
+  },
+  "app": {
+    "title": "Home"
+  },
+  "auth": {
+    "title": "Sign In"
+  },
   "button": {
     "submit": "Submit"
   },
   "common": {
     "pleaseWait": "Please wait..."
+  },
+  "design": {
+    "title": "Design"
   },
   "login": {
     "new": {
@@ -24,6 +36,12 @@
       "email": "Email",
       "password": "Password",
       "newPassword": "New Password"
+    }
+  },
+  "oauth": {
+    "authorize": {
+      "title": "Authorize Access",
+      "submit": "Authorize"
     }
   },
   "onboarding": {

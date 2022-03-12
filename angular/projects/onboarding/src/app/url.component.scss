@@ -1,0 +1,20 @@
+shared-text-field {
+  position: relative;
+}
+
+.subdomain-host {
+  color: var(--pr-base-300);
+  left: 0;
+  margin: 2.25rem 1rem;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  text-overflow: ellipsis;
+  top: 0;
+  white-space: nowrap;
+
+  span {
+    color: transparent;
+  }
+}

@@ -1,0 +1,16 @@
+<div class="form-field"
+  [class.form-field--disabled]="isDisabled"
+  [class.form-field--editing]="isEditing"
+  [class.form-field--focused]="isFocused"
+  [class.form-field--invalid]="isInvalid"
+  [class.form-field--nonempty]="isNonEmpty"
+  [class.form-field--unconfirmed]="isUnconfirmed">
+  <label [for]="derivedId">{{label}}</label>
+  <select #inputEl [id]="derivedId" [name]="derivedName"
+    [disabled]="isDisabled || !isFocusable || !isEditing"
+    [tabindex]="isFocusable && isEditing ? 0 : -1"
+    (focus)="onFocus($event)" (blur)="onBlur($event)"
+    [(ngModel)]="optionValue">
+    <ng-content></ng-content>>
+  </select>
+</div>

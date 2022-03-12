@@ -1,0 +1,26 @@
+[
+  {
+    "model": "List",
+    "data": {
+      "id": "3bda80d0-656d-4b02-82e0-67aaff733e28",
+      "fields": ["eSituation.09", "eSituation.10"],
+      "createdAt": "2021-12-06T23:59:39.599Z",
+      "updatedAt": "2021-12-06T23:59:39.599Z",
+      "agencyId": null,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
+    }
+  },
+  {
+    "model": "List",
+    "data": {
+      "id": "5a008c9d-6836-4a48-9f5f-f243cfbdf34c",
+      "fields": ["eSituation.11", "eSituation.12"],
+      "createdAt": "2021-12-07T00:57:17.886Z",
+      "updatedAt": "2021-12-07T00:57:17.886Z",
+      "agencyId": null,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
+    }
+  }
+]

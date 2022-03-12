@@ -1,6 +1,9 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
+const { Op } = require('sequelize');
+const _ = require('lodash');
 
+const aws = require('../../lib/aws');
 const models = require('../../models');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -11,9 +14,18 @@ router.get(
   '/',
   interceptors.requireAdmin(),
   helpers.async(async (req, res) => {
-    const { page } = req.query;
+    const { page, search } = req.query;
+    const where = {};
+    if (search) {
+      where[Op.or] = [
+        { lastName: { [Op.iLike]: `%${search}%` } },
+        { firstName: { [Op.iLike]: `%${search}%` } },
+        { email: { [Op.iLike]: `%${search}%` } },
+      ];
+    }
     const { docs, pages, total } = await models.User.paginate({
       page: req.query.page || 1,
+      where,
       order: [
         ['last_name', 'ASC'],
         ['first_name', 'ASC'],
@@ -25,6 +37,15 @@ router.get(
   })
 );
 
+router.post(
+  '/',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    const user = await models.User.register(req.body);
+    res.status(HttpStatus.CREATED).json(user.toJSON());
+  })
+);
+
 router.get(
   '/me',
   interceptors.requireLogin(),
@@ -32,10 +53,26 @@ router.get(
     const data = {
       user: req.user.toJSON(),
     };
-    /// add additional privilege info
+    // add additional privilege info
     data.user.isAdmin = req.user.isAdmin;
-    /// add any active scenes the user may be a part of
+    // add any active scenes the user may be a part of
     data.user.activeScenes = (await req.user.getActiveScenes()).map((s) => s.toJSON());
+    // add vehicle/unit assignment, if any
+    data.user.currentAssignment =
+      (
+        await req.user.getCurrentAssignment({
+          include: [
+            {
+              model: models.Vehicle,
+              as: 'vehicle',
+              include: 'createdByAgency',
+            },
+          ],
+        })
+      )?.toJSON() ?? null;
+    // temporary AWS credentials for use with Transcribe service
+    data.user.awsCredentials = await aws.getTemporaryCredentialsForMobileApp();
+    // add Agency/Employment info, if any
     if (req.agency) {
       data.agency = req.agency.toJSON();
       data.employment = (
@@ -54,7 +91,11 @@ router.get(
   helpers.async(async (req, res) => {
     const user = await models.User.findByPk(req.params.id);
     if (user) {
-      res.json(user.toJSON());
+      const data = user.toJSON();
+      /// add additional attributes
+      data.isAdmin = user.isAdmin;
+      data.apiKey = user.apiKey;
+      res.json(data);
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
@@ -69,16 +110,8 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       user = await models.User.findByPk(req.params.id, { transaction });
       if (user) {
-        await user.update(
-          {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            iconFile: req.body.iconFile,
-            password: req.body.password,
-          },
-          { transaction }
-        );
+        const data = _.pick(req.body, ['firstName', 'lastName', 'email', 'iconFile', 'position', 'apiKey', 'password', 'isAdmin']);
+        await user.update(data, { transaction });
       }
     });
     if (user) {
