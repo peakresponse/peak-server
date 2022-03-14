@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# start cron for scheduled jobs
+service cron start
+
+# start the webserver
+bin/www
