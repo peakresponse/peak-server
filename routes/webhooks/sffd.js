@@ -1,5 +1,6 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
+const { DateTime } = require('luxon');
 const uuid = require('uuid');
 
 const models = require('../../models');
@@ -116,6 +117,8 @@ router.post('/cad', async (req, res) => {
           transaction,
         });
         if (!dispatch) {
+          // it appears the datetime stamps are incorrectly formatted as UTC (Z) timezone when they are actually local time
+          const dispatchedAt = DateTime.fromISO(DISPATCH_DTTM).setZone('America/Los_Angeles', { keepLocalTime: true }).setZone('UTC');
           // eslint-disable-next-line no-await-in-loop
           await models.Dispatch.createOrUpdate(
             req.user,
@@ -125,7 +128,7 @@ router.post('/cad', async (req, res) => {
               canonicalId: uuid.v4(),
               incidentId: incidents[INC_NO].id,
               vehicleId: vehicles[UNIT].id,
-              dispatchedAt: DISPATCH_DTTM,
+              dispatchedAt: dispatchedAt.toISO(),
             },
             { transaction }
           );
