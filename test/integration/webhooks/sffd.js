@@ -72,10 +72,10 @@ describe('/webhooks/sffd', () => {
       assert.deepStrictEqual(dispatches.length, 2);
       const vehicle1 = dispatches.find((dispatch) => dispatch.vehicle.number === '59');
       assert(vehicle1);
-      assert.deepStrictEqual(moment(vehicle1.dispatchedAt).toISOString(), '2021-04-26T06:09:30.000Z');
+      assert.deepStrictEqual(moment(vehicle1.dispatchedAt).toISOString(), '2021-04-26T13:09:30.000Z');
       const vehicle2 = dispatches.find((dispatch) => dispatch.vehicle.number === '62');
       assert(vehicle2);
-      assert.deepStrictEqual(moment(vehicle2.dispatchedAt).toISOString(), '2021-04-26T06:06:18.000Z');
+      assert.deepStrictEqual(moment(vehicle2.dispatchedAt).toISOString(), '2021-04-26T13:06:18.000Z');
     });
   });
 });
