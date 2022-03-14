@@ -1,0 +1,124 @@
+#!/usr/bin/env node
+
+/**
+ * To install as a cron job: 
+
+cp bin/generate-demo-data-crontab /etc/cron.d/peak-crontab 
+chmod 0644 /etc/cron.d/peak-crontab
+crontab /etc/cron.d/peak-crontab
+
+ */
+ 
+const randomString = require('randomstring');
+const uuid = require('uuid');
+
+const models = require('../models');
+
+async function generateDemoData() {
+  // get superuser admin user
+  const admin = await models.User.findOne({
+    where: { email: 'admin@peakresponse.net' },
+    rejectOnEmpty: true
+  });
+  // find or create demo psap
+  const [psap] = await models.Psap.findOrCreate({
+    where: { id: '0' },
+    defaults: {
+      name: 'Demo PSAP',
+      stateId: '06',
+      countyId: '06075',
+      cityId: '2411786',
+    }
+  });
+  // find or create the demo dispatcher user
+  const [user] = await models.User.findOrCreate({
+    where: { email: 'demo+psap@peakresponse.net' },
+    defaults: {
+      firstName: 'Demo',
+      lastName: 'Dispatcher',
+      position: 'PSAP Dispatcher',
+      password: randomString.generate({ length: 16 }) + '!'
+    }
+  });
+  const dispatcher = await models.Dispatcher.findOrCreate({
+    where: {
+      userId: user.id,
+      psapId: psap.id
+    },
+    defaults: {
+      updatedById: admin.id,
+      createdById: admin.id,
+    }
+  });
+  // find the demo agency
+  const agency = await models.Agency.scope('claimed').findOne({
+    where: { stateUniqueId: 'DEMO-001' },
+    rejectOnEmpty: true
+  });
+  // get the latest incident from the demo agency
+  const latestDemo = await models.Incident.findOne({
+    where: { psapId: psap.id },
+    order: [['number', 'DESC']]
+  });
+  // get the latest incident from sffd
+  const latestSFFD = await models.Incident.findOne({
+    where: { psapId: '588' },
+    include: ['scene', 'dispatches'],
+    order: [['number', 'DESC']]
+  });
+  if (!latestSFFD) {
+    return;
+  }
+  // create a new record with a random incident id with the same scene/vehicle data
+  await models.sequelize.transaction(async (transaction) => {
+    const [scene] = await models.Scene.createOrUpdate(user, null, {
+      id: uuid.v4(),
+      canonicalId: uuid.v4(),
+      address1: latestSFFD.scene.address1,
+      cityId: latestSFFD.scene.cityId,
+      countyId: latestSFFD.scene.countyId,
+      stateId: latestSFFD.scene.stateId,
+    }, { transaction });
+    const incident = await models.Incident.create({
+      number: `${parseInt(latestDemo?.number ?? '100000', 10) + Math.floor(100 * Math.random())}`,
+      psapId: psap.id,
+      sceneId: scene.id,
+      createdById: user.id,
+      updatedById: user.id
+    }, { transaction });
+    for (const dispatch of latestSFFD.dispatches) {
+      const [vehicle] = await models.Vehicle.findOrCreate({
+        where: { 
+          createdByAgencyId: agency.id,
+          number: (await dispatch.getVehicle({transaction})).number 
+        },
+        defaults: {
+          createdById: user.id,
+          updatedById: user.id,
+        },
+        transaction
+      });
+      await models.Dispatch.createOrUpdate(
+        user,
+        null,
+        {
+          id: uuid.v4(),
+          canonicalId: uuid.v4(),
+          incidentId: incident.id,
+          vehicleId: vehicle.id,
+          dispatchedAt: dispatch.dispatchedAt,
+        },
+        { transaction }
+      );
+    }
+  });
+}
+
+generateDemoData().then(() => {
+  process.exit(0);
+}).catch((error) => {
+  console.error(error);
+  process.exit(1);
+}).finally(() => {
+  models.sequelize.close();
+});
