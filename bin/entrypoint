@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# copy env vars for cron
+printenv > /etc/environment
+
 # start cron for scheduled jobs
 service cron start
 
