@@ -83,7 +83,11 @@ router.get('/', async (req, res, next) => {
       articles = [];
       cache.set('root-index-articles', articles);
       try {
-        const response = await fetch(process.env.MARKETING_BLOG_FEED);
+        const response = await fetch(process.env.MARKETING_BLOG_FEED, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1',
+          },
+        });
         const xml = await response.text();
         const json = xmljs.xml2js(xml, { compact: true });
         for (const item of json.rss.channel.item) {
