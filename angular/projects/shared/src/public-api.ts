@@ -45,6 +45,7 @@ export * from './lib/components/headers/welcome-header.component';
 
 export * from './lib/directives/autoload.directive';
 export * from './lib/directives/debounced.directive';
+export * from './lib/directives/router-link-class.directive';
 
 export * from './lib/pipes/error.pipe';
 export * from './lib/pipes/get.pipe';
