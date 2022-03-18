@@ -29,6 +29,9 @@
       <div *ngIf="record.isClaimed" class="mb-3">
         <shared-text-field id="subdomain" label="Subdomain" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
+      <div *ngIf="record.isClaimed" class="mb-3">
+        <shared-text-field id="routedUrl" label="RoutED URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+      </div>
     </ng-template>
   </shared-form>
 </div>

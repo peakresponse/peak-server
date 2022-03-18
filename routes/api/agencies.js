@@ -139,7 +139,7 @@ router.patch(
       if (agency) {
         const attributes = ['stateId', 'stateUniqueId', 'number', 'name'];
         if (agency.isClaimed) {
-          attributes.push('subdomain');
+          attributes.push('subdomain', 'routedUrl');
         }
         await agency.update(_.pick(req.body, attributes), { transaction });
       }

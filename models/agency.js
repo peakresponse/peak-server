@@ -129,6 +129,7 @@ module.exports = (sequelize, DataTypes) => {
         'isClaimed',
         'subdomain',
         'baseUrl',
+        'routedUrl',
         'stateUniqueId',
         'number',
         'name',
@@ -167,6 +168,10 @@ module.exports = (sequelize, DataTypes) => {
           const baseUrl = url.parse(process.env.BASE_URL);
           return this.subdomain ? `${baseUrl.protocol}//${this.subdomain}.${baseUrl.host}` : null;
         },
+      },
+      routedUrl: {
+        type: DataTypes.STRING(2048),
+        field: 'routed_url',
       },
       stateId: {
         type: DataTypes.STRING,
