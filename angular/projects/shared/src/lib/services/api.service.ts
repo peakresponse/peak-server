@@ -86,6 +86,9 @@ export class ApiService {
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/agencies/${id}`, params);
     },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/agencies/${id}`, data);
+    },
     check: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/agencies/${id}/check`, params);
     },

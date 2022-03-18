@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       Agency.belongsTo(models.Agency, { as: 'canonicalAgency' });
+      Agency.hasOne(models.Agency, { as: 'claimedAgency', foreignKey: 'canonicalAgencyId' });
       Agency.belongsTo(models.Agency, { as: 'createdByAgency' });
       Agency.belongsTo(models.State, { as: 'state' });
       Agency.belongsTo(models.User, { as: 'updatedBy' });
@@ -127,6 +128,7 @@ module.exports = (sequelize, DataTypes) => {
       return _.pick(attributes, [
         'id',
         'canonicalAgencyId',
+        'claimedAgency',
         'stateId',
         'subdomain',
         'baseUrl',
@@ -160,20 +162,44 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.VIRTUAL,
         get() {
           const baseUrl = url.parse(process.env.BASE_URL);
-          return `${baseUrl.protocol}//${this.subdomain}.${baseUrl.host}`;
+          return this.subdomain ? `${baseUrl.protocol}//${this.subdomain}.${baseUrl.host}` : null;
+        },
+      },
+      stateId: {
+        type: DataTypes.STRING,
+        field: 'state_id',
+        set(newValue) {
+          if (this.isClaimed) {
+            this.setFieldAndNemsisValue('stateId', ['dAgency.04'], newValue);
+          } else {
+            this.setDataValue('stateId', newValue);
+          }
         },
       },
       stateUniqueId: {
         allowNull: false,
         type: DataTypes.STRING,
         field: 'state_unique_id',
+        set(newValue) {
+          this.setFieldAndNemsisValue('stateUniqueId', [`${this.isClaimed ? 'dAgency' : 'sAgency'}.01`], newValue);
+        },
       },
       number: {
         allowNull: false,
         type: DataTypes.STRING,
+        set(newValue) {
+          this.setFieldAndNemsisValue('number', [`${this.isClaimed ? 'dAgency' : 'sAgency'}.02`], newValue);
+        },
       },
-      name: DataTypes.STRING,
-      data: DataTypes.JSONB,
+      name: {
+        type: DataTypes.STRING,
+        set(newValue) {
+          this.setFieldAndNemsisValue('name', [`${this.isClaimed ? 'dAgency' : 'sAgency'}.03`], newValue);
+        },
+      },
+      data: {
+        type: DataTypes.JSONB,
+      },
       isValid: {
         type: DataTypes.BOOLEAN,
         field: 'is_valid',
@@ -203,18 +229,16 @@ module.exports = (sequelize, DataTypes) => {
     where: { createdByAgencyId: { [sequelize.Sequelize.Op.col]: 'id' } },
   });
 
-  Agency.beforeSave(async (record) => {
+  Agency.beforeSave((record) => {
     if (!record.id) {
-      let id = record.getNemsisAttributeValue([], 'UUID');
-      if (!id) {
-        id = uuid.v4();
-      }
-      record.setDataValue('id', id);
+      record.setDataValue('id', record.getNemsisAttributeValue([], 'UUID') ?? uuid.v4());
     }
+    const prefix = record.isClaimed ? 'dAgency' : 'sAgency';
+    record.setDataValue('stateUniqueId', record.getFirstNemsisValue([`${prefix}.01`]));
+    record.setDataValue('number', record.getFirstNemsisValue([`${prefix}.02`]));
+    record.setDataValue('name', record.getFirstNemsisValue([`${prefix}.03`]));
     if (record.isClaimed) {
-      record.setDataValue('stateUniqueId', record.getFirstNemsisValue(['dAgency.01']));
-      record.setDataValue('number', record.getFirstNemsisValue(['dAgency.02']));
-      record.setDataValue('name', record.getFirstNemsisValue(['dAgency.03']));
+      record.setDataValue('stateId', record.getFirstNemsisValue([`${prefix}.04`]));
     }
   });
 

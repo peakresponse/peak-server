@@ -11,6 +11,10 @@ tr.router-link {
   }
 }
 
+td .form-check {
+  margin: 0;
+}
+
 .table {
   width: 100%;
   margin-left: -$grid-gutter-width;

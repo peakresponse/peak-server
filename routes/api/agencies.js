@@ -1,13 +1,12 @@
 const express = require('express');
-
 const HttpStatus = require('http-status-codes');
+const _ = require('lodash');
+
 const models = require('../../models');
-
-const { Op } = models.Sequelize;
-
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
+const { Op } = models.Sequelize;
 const router = express.Router();
 
 router.get(
@@ -19,6 +18,9 @@ router.get(
       include: [{ model: models.State, as: 'state' }],
       order: [['name', 'ASC']],
     };
+    if (req.user?.isAdmin) {
+      options.include.push({ model: models.Agency, as: 'claimedAgency', required: false });
+    }
     const conditions = [];
     if (req.query.search && req.query.search !== '') {
       conditions.push({
@@ -41,7 +43,7 @@ router.get(
     }
     const { docs, pages, total } = await models.Agency.scope('canonical').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
-    res.json(docs.map((r) => r.toJSON()));
+    res.json(docs.map((r) => (req.user?.isAdmin ? r.toJSON() : r.toPublicJSON())));
   })
 );
 
@@ -117,6 +119,29 @@ router.get(
   interceptors.requireAdmin(),
   helpers.async(async (req, res) => {
     const agency = await models.Agency.findByPk(req.params.id);
+    if (agency) {
+      res.json(agency.toJSON());
+    } else {
+      res.send(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.patch(
+  '/:id',
+  interceptors.requireAdmin(),
+  helpers.async(async (req, res) => {
+    let agency;
+    await models.sequelize.transaction(async (transaction) => {
+      agency = await models.Agency.findByPk(req.params.id, { transaction });
+      if (agency) {
+        const attributes = ['stateId', 'stateUniqueId', 'number', 'name'];
+        if (agency.isClaimed) {
+          attributes.push('subdomain');
+        }
+        await agency.update(_.pick(req.body, attributes), { transaction });
+      }
+    });
     if (agency) {
       res.json(agency.toJSON());
     } else {

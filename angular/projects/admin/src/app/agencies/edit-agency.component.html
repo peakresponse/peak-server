@@ -4,6 +4,17 @@
 <shared-form *ngIf="id" type="agencies" [id]="id" class="d-block col-xl-6">
   <ng-template let-record="record" let-error="error">
     <div class="mb-3">
+      <shared-select-field id="stateId" label="State" [source]="record" [target]="record" [error]="error">
+        <option *ngFor="let state of states" [value]="state.id">{{state.name}}</option>
+      </shared-select-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="stateUniqueId" label="State Unique Id" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="number" label="Number" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
       <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
     </div>
   </ng-template>
