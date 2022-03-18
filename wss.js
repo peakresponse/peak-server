@@ -157,6 +157,7 @@ const configure = (server, app) => {
           where: { userId: req.user.id, agencyId: req.agency.id },
         });
         if (!employment?.isActive) {
+          socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
           socket.destroy();
           return;
         }
