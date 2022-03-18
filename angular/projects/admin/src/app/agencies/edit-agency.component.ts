@@ -1,21 +1,26 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { NavigationService } from 'shared';
+import { ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './edit-agency.component.html',
 })
 export class EditAgencyComponent {
   id: string = '';
+  states: any = [];
+  canonicalAgencyId: string = '';
+  claimedAgencyId: string = '';
 
-  constructor(private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
+    this.api.states.index().subscribe((res: any) => (this.states = res.body));
+    this.route.paramMap.subscribe((params: ParamMap) => (this.id = params.get('id') ?? ''));
   }
 
-  onDelete() {
-    this.navigation.backTo(`/agencies`);
+  onLoad(agency: any) {
+    this.canonicalAgencyId = agency.canonicalAgencyId;
+    this.claimedAgencyId = agency.claimedAgency?.id;
   }
 }

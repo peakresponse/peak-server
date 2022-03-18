@@ -1,17 +1,17 @@
-import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import { Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { ApiService } from '../services/api.service';
 import { UserService } from '../services/user.service';
 
-import { EMPTY } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'shared-form',
   templateUrl: './form.component.html',
 })
-export class FormComponent {
+export class FormComponent implements OnChanges {
   @Input() id: string | null = null;
   @Input() type: string = '';
   @Input() record: any = {};
@@ -20,6 +20,7 @@ export class FormComponent {
   @Input() createLabel: string = 'Create';
   @Input() updateLabel: string = 'Update';
   @Input() disabled = false;
+  @Output() load = new EventEmitter<any>();
   @Output() create = new EventEmitter<any>();
   @Output() update = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
@@ -31,13 +32,13 @@ export class FormComponent {
 
   constructor(protected api: ApiService, protected currentUser: UserService) {}
 
-  ngOnInit() {
-    if (this.id) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['id']) {
       this.refresh();
     }
   }
 
-  refresh(callback?: any) {
+  refresh() {
     this.loading = true;
     (this.api as any)[this.type]
       .get(this.id)
@@ -51,9 +52,7 @@ export class FormComponent {
       .subscribe((response: HttpResponse<any>) => {
         this.loading = false;
         this.record = response.body;
-        if (callback) {
-          callback();
-        }
+        this.load.emit(this.record);
       });
   }
 

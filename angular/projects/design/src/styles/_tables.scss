@@ -4,11 +4,15 @@ table {
   }
 }
 
-tr[ng-reflect-router-link] {
+tr.router-link {
   cursor: pointer;
   &:hover {
     background-color: $brand-primary-100;
   }
+}
+
+td .form-check {
+  margin: 0;
 }
 
 .table {

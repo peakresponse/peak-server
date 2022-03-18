@@ -120,6 +120,9 @@ describe('models', () => {
           const agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
           assert(agency);
           assert.deepStrictEqual(agency.canonicalAgencyId, canonicalAgency.id);
+          assert.deepStrictEqual(agency.stateId, '06');
+          assert.deepStrictEqual(agency.stateUniqueId, 'S66-50146');
+          assert.deepStrictEqual(agency.number, 'S66-50146');
           assert.deepStrictEqual(agency.subdomain, 'bbfpd');
           assert.deepStrictEqual(agency.createdById, user.id);
           assert.deepStrictEqual(agency.updatedById, user.id);
@@ -143,6 +146,58 @@ describe('models', () => {
           assert(employment.isOwner);
           assert(employment.isActive);
         });
+      });
+    });
+
+    describe('update()', () => {
+      it('syncs columns and Nemsis data on save', async () => {
+        let agency = await models.Agency.findByPk('9466185d-6ad7-429a-9081-4426d2398f9f');
+        await agency.update({
+          stateUniqueId: 'Test Id',
+          number: 'Test Number',
+          name: 'Test Name',
+        });
+        await agency.reload();
+        assert.deepStrictEqual(agency.data, {
+          'sAgency.01': { _text: 'Test Id' },
+          'sAgency.02': { _text: 'Test Number' },
+          'sAgency.03': { _text: 'Test Name' },
+        });
+
+        agency.setNemsisValue(['sAgency.01'], 'Sync Id');
+        agency.setNemsisValue(['sAgency.02'], 'Sync Number');
+        agency.setNemsisValue(['sAgency.03'], 'Sync Name');
+        await agency.save();
+        assert.deepStrictEqual(agency.stateUniqueId, 'Sync Id');
+        assert.deepStrictEqual(agency.number, 'Sync Number');
+        assert.deepStrictEqual(agency.name, 'Sync Name');
+
+        agency = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+        await agency.update({
+          stateId: '01',
+          stateUniqueId: 'Test Id',
+          number: 'Test Number',
+          name: 'Test Name',
+        });
+        assert.deepStrictEqual(agency.data, {
+          'dAgency.01': { _text: 'Test Id' },
+          'dAgency.02': { _text: 'Test Number' },
+          'dAgency.03': { _text: 'Test Name' },
+          'dAgency.04': { _text: '01' },
+          _attributes: {
+            UUID: agency.id,
+          },
+        });
+
+        agency.setNemsisValue(['dAgency.01'], 'Sync Id');
+        agency.setNemsisValue(['dAgency.02'], 'Sync Number');
+        agency.setNemsisValue(['dAgency.03'], 'Sync Name');
+        agency.setNemsisValue(['dAgency.04'], '06');
+        await agency.save();
+        assert.deepStrictEqual(agency.stateUniqueId, 'Sync Id');
+        assert.deepStrictEqual(agency.number, 'Sync Number');
+        assert.deepStrictEqual(agency.name, 'Sync Name');
+        assert.deepStrictEqual(agency.stateId, '06');
       });
     });
   });

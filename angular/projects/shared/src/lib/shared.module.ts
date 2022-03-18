@@ -40,6 +40,7 @@ import { WelcomeHeaderComponent } from './components/headers/welcome-header.comp
 
 import { AutoloadDirective } from './directives/autoload.directive';
 import { DebouncedDirective } from './directives/debounced.directive';
+import { RouterLinkClassDirective } from './directives/router-link-class.directive';
 
 import { ErrorPipe } from './pipes/error.pipe';
 import { GetPipe } from './pipes/get.pipe';
@@ -85,6 +86,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     // directives
     AutoloadDirective,
     DebouncedDirective,
+    RouterLinkClassDirective,
     // pipes
     ErrorPipe,
     GetPipe,
@@ -130,6 +132,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     // directives
     AutoloadDirective,
     DebouncedDirective,
+    RouterLinkClassDirective,
     // pipes
     ErrorPipe,
     GetPipe,

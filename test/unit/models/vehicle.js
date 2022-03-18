@@ -26,6 +26,7 @@ describe('models', () => {
         record.updatedById = user.id;
         await record.save();
 
+        await record.reload();
         assert(record.isValid);
         assert.deepStrictEqual(record.data, {
           _attributes: {
@@ -70,6 +71,8 @@ describe('models', () => {
         };
         await record.save();
 
+        await record.reload();
+        assert(record.isValid);
         assert.deepStrictEqual(record.id, '5c0a380c-0f69-4533-bf6b-5238a2f02d10');
         assert.deepStrictEqual(record.number, 'RC1');
         assert.deepStrictEqual(record.vin, '5XYKU4A12BG001739');

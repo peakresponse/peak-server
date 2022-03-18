@@ -84,6 +84,29 @@ describe('/api/agencies', () => {
     });
   });
 
+  describe('PATCH /:id', () => {
+    it('updates an existing Agency record', async () => {
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      await testSession
+        .patch('/api/agencies/9466185d-6ad7-429a-9081-4426d2398f9f')
+        .send({
+          stateUniqueId: 'Test Id',
+          number: 'Test Number',
+          name: 'Test Name',
+        })
+        .expect(HttpStatus.OK);
+      const agency = await models.Agency.findByPk('9466185d-6ad7-429a-9081-4426d2398f9f');
+      assert.deepStrictEqual(agency.stateUniqueId, 'Test Id');
+      assert.deepStrictEqual(agency.number, 'Test Number');
+      assert.deepStrictEqual(agency.name, 'Test Name');
+      assert.deepStrictEqual(agency.data, {
+        'sAgency.01': { _text: 'Test Id' },
+        'sAgency.02': { _text: 'Test Number' },
+        'sAgency.03': { _text: 'Test Name' },
+      });
+    });
+  });
+
   describe('GET /me', () => {
     beforeEach(async () => {
       await testSession
