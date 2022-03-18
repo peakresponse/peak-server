@@ -8,10 +8,6 @@ const nemsis = require('../lib/nemsis');
 
 module.exports = (sequelize, DataTypes) => {
   class Agency extends Base {
-    get isClaimed() {
-      return this.createdByAgencyId === this.id;
-    }
-
     static associate(models) {
       Agency.belongsTo(models.Agency, { as: 'canonicalAgency' });
       Agency.hasOne(models.Agency, { as: 'claimedAgency', foreignKey: 'canonicalAgencyId' });
@@ -130,6 +126,7 @@ module.exports = (sequelize, DataTypes) => {
         'canonicalAgencyId',
         'claimedAgency',
         'stateId',
+        'isClaimed',
         'subdomain',
         'baseUrl',
         'stateUniqueId',
@@ -152,6 +149,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Agency.init(
     {
+      isClaimed: {
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['id', 'createdByAgencyId']),
+        get() {
+          return this.createdByAgencyId === this.id;
+        },
+      },
       subdomain: {
         type: DataTypes.STRING,
         validate: {

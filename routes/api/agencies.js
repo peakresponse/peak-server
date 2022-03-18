@@ -118,7 +118,9 @@ router.get(
   '/:id',
   interceptors.requireAdmin(),
   helpers.async(async (req, res) => {
-    const agency = await models.Agency.findByPk(req.params.id);
+    const agency = await models.Agency.findByPk(req.params.id, {
+      include: [{ model: models.Agency, as: 'claimedAgency' }],
+    });
     if (agency) {
       res.json(agency.toJSON());
     } else {
