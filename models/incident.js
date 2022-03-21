@@ -110,7 +110,13 @@ module.exports = (sequelize, DataTypes) => {
       });
       return { docs, pages, total };
     }
+
+    async updateReportsCount(options) {
+      const { transaction } = options ?? {};
+      return this.update({ reportsCount: await this.countReports({ transaction }) }, { transaction });
+    }
   }
+
   Incident.init(
     {
       number: DataTypes.STRING,
@@ -134,6 +140,7 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+
   Incident.addScope('agency', (agencyId) => ({
     attributes: [sequelize.literal('DISTINCT ON("Incident".number) 1')].concat(Object.keys(Incident.rawAttributes)),
     include: [
@@ -154,5 +161,6 @@ module.exports = (sequelize, DataTypes) => {
       '$dispatches.vehicle.created_by_agency_id$': agencyId,
     },
   }));
+
   return Incident;
 };

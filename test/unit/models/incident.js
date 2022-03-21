@@ -19,16 +19,35 @@ describe('models', () => {
         'incidents',
         'vehicles',
         'dispatches',
+        'responses',
+        'times',
+        'situations',
+        'dispositions',
+        'histories',
+        'narratives',
+        'medications',
+        'procedures',
+        'vitals',
+        'reports',
       ]);
     });
 
-    describe('paginate', () => {
+    describe('paginate()', () => {
       it('filters records by dispatched agency', async () => {
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
         const { docs, pages, total } = await models.Incident.paginate('Agency', agency);
         assert.deepStrictEqual(docs.length, 1);
         assert.deepStrictEqual(pages, 1);
         assert.deepStrictEqual(total, 1);
+      });
+    });
+
+    describe('updateReportsCount()', () => {
+      it('updates the reportsCount counter cache', async () => {
+        const incident = await models.Incident.findByPk('6621202f-ca09-4ad9-be8f-b56346d1de65');
+        await incident.update({ reportsCount: 0 });
+        await incident.updateReportsCount();
+        assert.deepStrictEqual(incident.reportsCount, 1);
       });
     });
   });

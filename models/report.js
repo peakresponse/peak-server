@@ -89,6 +89,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSONB,
         field: 'updated_data_attributes',
       },
+      isCanonical: {
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['canonicalId', 'parentId']),
+        get() {
+          return !this.canonicalId && !this.parentId;
+        },
+      },
       isValid: {
         type: DataTypes.BOOLEAN,
         field: 'is_valid',
@@ -128,7 +134,7 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       validate: {
         id() {
-          if (!this.canonicalId && !this.parentId) {
+          if (this.isCanonical) {
             // make sure this canonical record has its id set as the record id
             if (this.id !== this.getFirstNemsisValue(['eRecord.01'])) {
               throw new Error();
@@ -148,6 +154,13 @@ module.exports = (sequelize, DataTypes) => {
       canonicalId: null,
       parentId: null,
     },
+  });
+
+  Report.afterCreate(async (record, options) => {
+    if (record.isCanonical) {
+      const incident = await record.getIncident(options);
+      await incident?.updateReportsCount(options);
+    }
   });
 
   return Report;

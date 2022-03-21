@@ -64,6 +64,7 @@ describe('models', () => {
         const data = {
           id: '7bd5e011-8948-4498-93e3-a212272662bb',
           canonicalId: 'aace1af0-aeaf-4020-acca-dbeb7e3295e8',
+          incidentId: '6621202f-ca09-4ad9-be8f-b56346d1de65',
           medicationIds: ['6f43bc3d-1d4e-470a-9568-0c8b50c8281e'],
           procedureIds: ['34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0'],
           vitalIds: ['2036119d-4545-4452-a26f-b9ec6a1a323b'],
@@ -92,12 +93,23 @@ describe('models', () => {
         assert.deepStrictEqual(record.canonicalId, data.canonicalId);
         assert.deepStrictEqual(record.data, data.data);
         assert(record.isValid);
-        assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'data', 'medicationIds', 'vitalIds', 'procedureIds']);
+        assert.deepStrictEqual(record.updatedAttributes, [
+          'id',
+          'canonicalId',
+          'incidentId',
+          'data',
+          'medicationIds',
+          'vitalIds',
+          'procedureIds',
+        ]);
         assert.deepStrictEqual(record.updatedDataAttributes, ['/eRecord.01', '/eRecord.SoftwareApplicationGroup']);
         assert.deepStrictEqual(record.createdById, user.id);
         assert.deepStrictEqual(record.updatedById, user.id);
         assert.deepStrictEqual(record.createdByAgencyId, agency.id);
         assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
+
+        const incident = await record.getIncident();
+        assert.deepStrictEqual(incident.reportsCount, 2);
 
         const medications = await record.getMedications();
         assert(medications.length, 1);
