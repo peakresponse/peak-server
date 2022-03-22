@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const readline = require('readline');
+const semver = require('semver');
+
+const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+if (branch !== 'master') {
+  console.error('Not on master branch');
+  process.exit(1);
+}
+
+// if (execSync('git status --porcelain').toString() !== '') {
+//   console.error('Repo not clean.');
+//   process.exit(1);
+// }
+
+const file = path.resolve(__dirname, '../package.json');
+const pkg = JSON.parse(fs.readFileSync(file));
+console.log('Current version: ', pkg.version);
+
+const version = semver.parse(pkg.version);
+let nextVersion;
+if (version.prerelease.length > 0) {
+  nextVersion = semver.inc(version, 'prerelease');
+} else {
+  nextVersion = semver.inc(version, 'patch');
+}
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+const prompt = (question) => new Promise((resolve) => rl.question(question, resolve));
+(async () => {
+  let response;
+  response = await prompt(`Next version [${nextVersion}]: `);
+  if (response !== '') {
+    nextVersion = response;
+  }
+
+  response = await prompt(`Confirm next version: "${nextVersion}" [y]:`);
+  if (response.trim().toLowerCase() === 'y') {
+    pkg.version = nextVersion;
+    fs.writeFileSync(file, JSON.stringify(pkg, null, 2));
+    execSync('git add .');
+    execSync(`git commit -m "${nextVersion}"`);
+    execSync(`git tag "${nextVersion}"`);
+    execSync(`git push --tag`);
+    execSync(`git push`);
+  }
+  rl.close();
+})();
+
+rl.on('close', () => process.exit(0));
