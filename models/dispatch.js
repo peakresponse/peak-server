@@ -75,7 +75,6 @@ module.exports = (sequelize, DataTypes) => {
   Dispatch.addScope('canonical', {
     where: {
       canonicalId: null,
-      parentId: null,
     },
   });
 

@@ -42,11 +42,10 @@ class Base extends Model {
     let parent;
     let created;
     if (data.parentId) {
-      created = false;
       // this is updating the parent to create a new version and update canonical record
       parent = await model.findByPk(data.parentId, { transaction: options.transaction, rejectOnEmpty: true });
       // sanitize the data by picking only the attributes allowed to be updated
-      filteredData = _.pick(data, ['id', 'parentId'].concat(updateAttrs));
+      filteredData = _.pick(data, ['id', 'canonicalId', 'parentId'].concat(updateAttrs));
       // get a list of the updated attributes
       updatedAttributes = _.keys(filteredData);
       // check for data patch
@@ -56,10 +55,18 @@ class Base extends Model {
       }
       // merge the new attributes into the parent attributes
       filteredData = _.assign({ ...parent.get() }, filteredData);
-      // update the canonical record
-      canonical = await model.findByPk(filteredData.canonicalId, { transaction: options.transaction, rejectOnEmpty: true });
-      // TODO - handle merging parallel and out-of-order updates
-      canonical.set(_.pick(filteredData, updateAttrs));
+      // update or create a new canonical record
+      if (filteredData.canonicalId && filteredData.canonicalId !== parent.canonicalId) {
+        created = true;
+        // create the new canonical record (use case: Report transfer)
+        canonical = model.build({ ...filteredData, id: filteredData.canonicalId, canonicalId: null });
+      } else {
+        created = false;
+        // update the canonical record
+        canonical = await model.findByPk(filteredData.canonicalId, { transaction: options.transaction, rejectOnEmpty: true });
+        // TODO - handle merging parallel and out-of-order updates
+        canonical.set(_.pick(filteredData, updateAttrs));
+      }
     } else {
       created = true;
       // this is creating an entirely new record

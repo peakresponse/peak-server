@@ -331,7 +331,6 @@ module.exports = (sequelize, DataTypes) => {
   Patient.addScope('canonical', {
     where: {
       canonicalId: null,
-      parentId: null,
     },
   });
 

@@ -90,9 +90,9 @@ module.exports = (sequelize, DataTypes) => {
         field: 'updated_data_attributes',
       },
       isCanonical: {
-        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['canonicalId', 'parentId']),
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['canonicalId']),
         get() {
-          return !this.canonicalId && !this.parentId;
+          return !this.canonicalId;
         },
       },
       isValid: {
@@ -152,7 +152,6 @@ module.exports = (sequelize, DataTypes) => {
   Report.addScope('canonical', {
     where: {
       canonicalId: null,
-      parentId: null,
     },
   });
 

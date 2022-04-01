@@ -188,6 +188,45 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.updatedByAgencyId, record.updatedByAgencyId);
         assert.deepStrictEqual(canonical.data, record.data);
       });
+
+      it('creates a new canonical record branching off of the specified parent', async () => {
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const data = {
+          id: '748e785e-fae0-4c9b-924b-06372b060705',
+          canonicalId: 'b5155f81-58f7-48b7-94eb-5ac6b5021a80',
+          parentId: 'c19bb731-5e9e-4feb-9192-720782ecf9a8',
+          data_patch: [
+            {
+              op: 'replace',
+              path: '/eRecord.01/_text',
+              value: 'b5155f81-58f7-48b7-94eb-5ac6b5021a80',
+            },
+            {
+              op: 'replace',
+              path: '/eRecord.SoftwareApplicationGroup/eRecord.04/_text',
+              value: 'Unit test version 2',
+            },
+          ],
+        };
+        const [record, created] = await models.Report.createOrUpdate(user, agency, data);
+        assert(record);
+        assert(created);
+        assert.deepStrictEqual(record.id, data.id);
+        assert.deepStrictEqual(record.parentId, data.parentId);
+        const parent = await record.getParent();
+        assert.notDeepStrictEqual(record.canonicalId, parent.canonicalId);
+
+        const canonical = await record.getCanonical();
+        assert(canonical.isCanonical);
+        assert.deepStrictEqual(canonical.parentId, parent.id);
+        assert.deepStrictEqual(canonical.canonicalId, null);
+        assert.deepStrictEqual(canonical.createdById, record.createdById);
+        assert.deepStrictEqual(canonical.updatedById, record.updatedById);
+        assert.deepStrictEqual(canonical.createdByAgencyId, record.createdByAgencyId);
+        assert.deepStrictEqual(canonical.updatedByAgencyId, record.updatedByAgencyId);
+        assert.deepStrictEqual(canonical.data, record.data);
+      });
     });
   });
 });
