@@ -1,4 +1,5 @@
 const inflection = require('inflection');
+const _ = require('lodash');
 
 const { Base } = require('./base');
 const nemsis = require('../lib/nemsis');
@@ -67,14 +68,54 @@ module.exports = (sequelize, DataTypes) => {
         ],
         options
       );
+      let canonical = await record.getCanonical({ transaction: options.transaction });
+      if (canonical.currentId !== record.id) {
+        canonical = null;
+      }
       for (const prefix of ['medication', 'procedure', 'vital', 'file']) {
         const ids = data[`${prefix}Ids`];
         if (ids) {
           // eslint-disable-next-line no-await-in-loop
           await record[`set${inflection.capitalize(prefix)}s`](ids, { transaction: options.transaction });
+          if (canonical) {
+            // eslint-disable-next-line no-await-in-loop
+            await canonical[`set${inflection.capitalize(prefix)}s`](ids, { transaction: options.transaction });
+          }
         }
       }
       return [record, created];
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'canonicalId',
+        'currentId',
+        'parentId',
+        'incidentId',
+        'sceneId',
+        'responseId',
+        'timeId',
+        'patientId',
+        'situationId',
+        'historyId',
+        'medicationIds',
+        'vitalIds',
+        'procedureIds',
+        'dispositionId',
+        'narrativeId',
+        'fileIds',
+        'ringdownId',
+        'predictions',
+        'data',
+        'isValid',
+        'createdAt',
+        'createdById',
+        'createdByAgencyId',
+        'updatedAt',
+        'updatedById',
+      ]);
     }
   }
 

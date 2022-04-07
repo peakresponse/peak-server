@@ -9,8 +9,11 @@ import { IncidentsRoutingModule } from './incidents-routing.module';
 
 import { ListIncidentsComponent } from './list-incidents.component';
 
+import { ListReportsComponent } from './reports/list-reports.component';
+import { ReportComponent } from './reports/report.component';
+
 @NgModule({
-  declarations: [ListIncidentsComponent],
+  declarations: [ListIncidentsComponent, ListReportsComponent, ReportComponent],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, IncidentsRoutingModule],
   providers: [],
 })

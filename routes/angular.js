@@ -100,22 +100,22 @@ router.get('/sign-up(/*)?', (req, res) => {
   });
 });
 
-router.get('/new(/*)?', interceptors.requireLogin(), (req, res) => {
+router.get('/old(/*)?', interceptors.requireLogin(), (req, res) => {
+  res.render('dashboard');
+});
+
+router.get('/*', interceptors.requireLogin(), (req, res) => {
   res.locals.designWebpackStats = getDesignWebpackStats();
   res.locals.webpackStats = getAppWebpackStats();
   res.render('angular/index', {
     title: 'app.title',
-    baseHref: '/new',
+    baseHref: '/',
     elementRoot: 'app-root',
     environment: {
       GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
     },
     layout: 'angular/layout',
   });
-});
-
-router.get('/*', interceptors.requireLogin(), (req, res) => {
-  res.render('dashboard');
 });
 
 module.exports = router;

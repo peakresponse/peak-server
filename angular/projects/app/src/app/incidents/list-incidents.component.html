@@ -1,4 +1,5 @@
-<shared-command-header [user]="user.attributes$|async" [showSearch]="true" (searchValueChange)="search = $event">
+<router-outlet></router-outlet>
+<shared-command-header [class.d-none]="route.firstChild" [user]="user.attributes$|async" [showSearch]="true" (searchValueChange)="search = $event">
   <ng-template>
     <li class="command-header__dropdown-item">
       <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>
@@ -16,12 +17,12 @@
     </li>
   </ul>
 </shared-command-header>
-<main>
+<main [class.d-none]="route.firstChild">
   <div class="table-responsive">
     <table class="table">
       <shared-list type="incidents" [params]="params" [search]="search">
         <ng-template let-record="record">
-          <tr *ngIf="parseDate(record.dispatches[0].dispatchedAt) as datetime" [routerLink]="['/incidents', record.id]">
+          <tr *ngIf="parseDate(record.dispatches[0].dispatchedAt) as datetime" [routerLink]="['/incidents', record.id, 'reports']">
             <td>
               <div class="incident">
                 <div class="d-flex flex-grow-1">
@@ -32,11 +33,12 @@
                     {{cityName(record.scene?.city?.featureName)}}<span *ngIf="record.scene?.city && record.scene?.state">, </span>{{record.scene?.state?.abbr}} {{record.scene?.zip}}
                   </div>
                   <div class="incident__date">
-                    {{datePart(datetime)}}
+                    {{datePart(datetime)}}<br />
+                    {{timePart(datetime)}}
                   </div>  
                 </div>
                 <div class="incident__time">
-                  {{timePart(datetime)}}
+                  <button *ngIf="record.reportsCount > 0" class="chip readonly chip--lg chip--primary">{{record.reportsCount}}</button>
                 </div>
               </div>
             </td>

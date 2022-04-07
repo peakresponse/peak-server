@@ -1,0 +1,191 @@
+<shared-command-header>
+  <a class="command-header__plain" (click)="onDone()">Done</a>
+</shared-command-header>
+<main>
+  <form *ngIf="report" class="report">
+    <div class="row">
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="incidentNumber" label="Incident #" [source]="report.response"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="address" label="Location" [rows]="2" [source]="report.scene"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="text" label="Narrative" [rows]="4" [source]="report.narrative"></shared-text-field>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="unitNumber" label="Unit #" [source]="report.response"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="unitNotifiedByDispatch" label="Unit Notified by Dispatch" [source]="report.time"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="arrivedAtPatient" label="Arrived at Patient" [source]="report.time"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-select-field id="unitDisposition" label="Unit Disposition" [source]="report.disposition">
+            <option [value]="UnitDisposition.patientContactMade">Patient Contact Made</option>
+            <option [value]="UnitDisposition.noPatientFound">No Patient Found</option>
+            <option [value]="UnitDisposition.noPatientContact">No Patient Contact</option>
+            <option [value]="UnitDisposition.cancelledOnScene">Cancelled on Scene</option>
+            <option [value]="UnitDisposition.cancelledPrior">Cancelled Prior</option>
+            <option [value]="UnitDisposition.nonPatientIncident">Non-Patient Incident</option>
+          </shared-select-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <h4>Patient Information <span>(optional)</span></h4>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="firstName" label="First name" [source]="report.patient"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="dob" label="Date of Birth" [source]="report.patient"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-select-field id="gender" label="Gender" [source]="report.patient">
+            <option [value]="PatientGender.female">Female</option>
+            <option [value]="PatientGender.male">Male</option>
+            <option [value]="PatientGender.transFemale">Trans Female</option>
+            <option [value]="PatientGender.transMale">Trans Male</option>
+            <option [value]="PatientGender.other">Other</option>
+            <option [value]="PatientGender.unknown">Unknown</option>
+          </shared-select-field>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="lastName" label="Last name" [source]="report.patient"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="ageString" label="Age" [source]="report.patient"></shared-text-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <h4>Medical Information <span>(optional)</span></h4>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="chiefComplaint" label="Chief Complaint" [source]="report.situation"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="primarySymptom" label="Primary Symptom" [source]="report.situation"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="otherAssociatedSymptoms" label="Other Associated Symptoms" [source]="report.situation"></shared-text-field>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="medicalSurgicalHistory" label="Medical/Surgical History" [source]="report.history"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="medicationAllergies" label="Medication Allergies" [source]="report.history"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="environmentalFoodAllergies" label="Environmental/Food Allergies" [source]="report.history"></shared-text-field>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let vital of report.vitals" class="row">
+      <div>
+        <h4>Vitals <span>(optional)</span></h4>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="vitalSignsTakenAt" label="Vitals Taken At" [source]="vital"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="cardiacRhythm" label="Cardiac Rhythm" [source]="vital"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <div class="row">
+            <div class="col-6">
+              <shared-text-field id="bpSystolic" label="BP Systolic" [source]="vital"></shared-text-field>
+            </div>
+            <div class="col-6">
+              <shared-text-field id="bpDiastolic" label="Diastolic" [source]="vital"></shared-text-field>  
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="endTidalCarbonDioxide" label="EtCO2" [source]="vital"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="carbonMonoxide" label="Carbon Monoxide (CO)" [source]="vital"></shared-text-field>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="heartRate" label="Heart Rate" [source]="vital"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="pulseOximetry" label="Pulse Oximetry" [source]="vital"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="respiratoryRate" label="Respiratory Rate" [source]="vital"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="bloodGlucoseLevel" label="Blood Glucose Level" [source]="vital"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="totalGlasgowComaScore" label="Total GCS" [source]="vital"></shared-text-field>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let procedure of report.procedures" class="row">
+      <div>
+        <h4>Procedures <span>(optional)</span></h4>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="procedurePerformedAt" label="Procedure Performed At" [source]="procedure"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="procedure" label="Procedure" [source]="procedure"></shared-text-field>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="responseToProcedure" label="Patient Response" [source]="procedure"></shared-text-field>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let medication of report.medications" class="row">
+      <div>
+        <h4>Medications <span>(optional)</span></h4>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="medicationAdministeredAt" label="Medication Administered At" [source]="medication"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="medication" label="Medication" [source]="medication"></shared-text-field>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <shared-text-field id="responseToMedication" label="Patient Response" [source]="medication"></shared-text-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <h4>Recordings</h4>
+      </div>
+      <div *ngFor="let file of report.files; let i = index" class="col-6">
+        <shared-recording-field [title]="recordingTitle(i)" [fileUrl]="file.fileUrl" [timestamp]="file.createdAt" [duration]="file.metadata?.duration">
+          {{report.predictionsFor(file.canonicalId)?.text}}
+        </shared-recording-field>
+      </div>
+    </div>
+  </form>
+</main>

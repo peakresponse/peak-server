@@ -21,6 +21,7 @@ import { LogoSquareLight } from './components/branding/logo.square.light.compone
 
 import { CheckboxComponent } from './components/fields/checkbox.component';
 import { FileFieldComponent } from './components/fields/file-field.component';
+import { RecordingFieldComponent } from './components/fields/recording-field.component';
 import { SearchFieldComponent } from './components/fields/search-field.component';
 import { SelectFieldComponent } from './components/fields/select-field.component';
 import { TextFieldComponent } from './components/fields/text-field.component';
@@ -42,6 +43,7 @@ import { AutoloadDirective } from './directives/autoload.directive';
 import { DebouncedDirective } from './directives/debounced.directive';
 import { RouterLinkClassDirective } from './directives/router-link-class.directive';
 
+import { DurationPipe } from './pipes/duration.pipe';
 import { ErrorPipe } from './pipes/error.pipe';
 import { GetPipe } from './pipes/get.pipe';
 import { InflectionPipe } from './pipes/inflection.pipe';
@@ -67,6 +69,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     // components/fields
     CheckboxComponent,
     FileFieldComponent,
+    RecordingFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
@@ -88,6 +91,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     DebouncedDirective,
     RouterLinkClassDirective,
     // pipes
+    DurationPipe,
     ErrorPipe,
     GetPipe,
     InflectionPipe,
@@ -113,6 +117,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     // components/fields
     CheckboxComponent,
     FileFieldComponent,
+    RecordingFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
@@ -134,6 +139,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     DebouncedDirective,
     RouterLinkClassDirective,
     // pipes
+    DurationPipe,
     ErrorPipe,
     GetPipe,
     InflectionPipe,

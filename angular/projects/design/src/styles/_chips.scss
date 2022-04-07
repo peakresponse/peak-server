@@ -1,0 +1,145 @@
+$chip-border-radius: 1rem;
+$chip-border-radius-lg: 1.25rem;
+$chip-border-radius-sm: 0.75rem;
+$chip-border-width: 0.125rem;
+$chip-font-family: $btn-font-family;
+$chip-font-size: 1rem;
+$chip-font-size-lg: 1.25rem;
+$chip-font-size-sm: 0.75rem;
+$chip-font-weight: $font-weight-semibold;
+$chip-line-height: $btn-line-height;
+$chip-padding-y: 0.125rem;
+$chip-padding-x: 0.75rem;
+$chip-padding-y-lg: 0.1875rem;
+$chip-padding-x-lg: 1rem;
+$chip-padding-y-sm: 0.0625rem;
+$chip-padding-x-sm: 0.5rem;
+$chip-transition: $btn-transition;
+$chip-white-space: $btn-white-space;
+$chip-focus-box-shadow: $btn-focus-box-shadow;
+$chip-active-box-shadow: $btn-active-box-shadow;
+$chip-disabled-opacity: $btn-disabled-opacity;
+
+.chip {
+  display: inline-block;
+  align-self: center;
+  font-family: $chip-font-family;
+  font-weight: $chip-font-weight;
+  line-height: $chip-line-height;
+  color: $body-color;
+  text-align: center;
+  text-decoration: if($link-decoration == none, null, none);
+  text-transform: none;
+  white-space: $chip-white-space;
+  vertical-align: middle;
+  cursor: if($enable-button-pointers, pointer, null);
+  user-select: none;
+  background-color: transparent;
+  border: $chip-border-width solid transparent;
+  @include button-size($chip-padding-y, $chip-padding-x, $chip-font-size, $chip-border-radius);
+  @include transition($chip-transition);
+
+  &:hover {
+    color: $body-color;
+    text-decoration: if($link-hover-decoration == underline, none, null);
+  }
+
+  .chip--check:focus + &,
+  &:focus {
+    outline: 0;
+    box-shadow: $chip-focus-box-shadow;
+  }
+
+  .chip--check:checked + &,
+  .chip--check:active + &,
+  &:active,
+  &.active {
+    @include box-shadow($chip-active-box-shadow);
+
+    &:focus {
+      @include box-shadow($chip-focus-box-shadow, $chip-active-box-shadow);
+    }
+  }
+
+  &:disabled,
+  &.disabled,
+  fieldset:disabled & {
+    pointer-events: none;
+    opacity: $chip-disabled-opacity;
+    @include box-shadow(none);
+  }
+
+  &.readonly {
+    pointer-events: none;
+  }
+}
+
+.chip--primary {
+  @include button-variant(
+    $brand-primary-500,
+    $brand-primary-500,
+    white,
+    $brand-primary-600,
+    $brand-primary-600,
+    white,
+    $brand-primary-700,
+    $brand-primary-700,
+    white,
+    $base-300,
+    $base-300,
+    white
+  );
+}
+
+.chip--danger {
+  @include button-variant(
+    $brand-secondary-500,
+    $brand-secondary-500,
+    white,
+    $brand-secondary-600,
+    $brand-secondary-600,
+    white,
+    $brand-secondary-800,
+    $brand-secondary-800,
+    white,
+    $brand-secondary-400,
+    $brand-secondary-400,
+    white
+  );
+}
+
+.chip--secondary {
+  @include button-outline-variant(
+    $brand-primary-500,
+    $brand-primary-600,
+    $brand-primary-100,
+    $brand-primary-600,
+    $active-color: $brand-primary-900
+  );
+
+  &:disabled,
+  &.disabled {
+    background-color: white;
+    border-color: $base-300;
+    color: $base-300;
+  }
+}
+
+.chip--tertiary {
+  @include button-variant(
+    transparent,
+    transparent,
+    $brand-primary-500,
+    $hover-color: $brand-primary-600,
+    $active-color: $brand-primary-900,
+    $disabled-color: $base-300
+  );
+}
+
+.chip--lg {
+  @include button-size($chip-padding-y-lg, $chip-padding-x-lg, $chip-font-size-lg, $chip-border-radius-lg);
+}
+
+.chip--sm {
+  @include button-size($chip-padding-y-sm, $chip-padding-x-sm, $chip-font-size-sm, $chip-border-radius-sm);
+}

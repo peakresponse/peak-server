@@ -28,12 +28,12 @@
   font-weight: $font-weight-semibold;
 }
 
-@mixin h5 {
+@mixin body14 {
   @include font-size($h5-font-size);
   line-height: 1.125rem;
 }
 
-@mixin h5-bold {
-  @include h5;
+@mixin body14-bold {
+  @include body14;
   font-weight: $font-weight-semibold;
 }

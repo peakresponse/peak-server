@@ -1,0 +1,15 @@
+@import '../../../../../design/src/styles/common';
+
+.report {
+  max-width: 750px;
+  margin: 0 auto 2rem;
+
+  h4 {
+    color: $brand-primary-500;
+    span {
+      color: $base-500;
+    }
+    border-bottom: 2px solid $base-300;
+    margin: 1rem 0;
+  }
+}

@@ -1,0 +1,54 @@
+@import '../../../../../design/src/styles/common';
+
+.reports {
+  max-width: 750px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.reports__report {
+  cursor: pointer;
+  border-bottom: 2px solid $base-300;
+  height: 178px;
+  padding: 20px;
+  position: relative;
+  width: 375px;
+
+  &:nth-child(odd) {
+    border-right: 2px solid $base-300;
+  }
+
+  dl {
+    color: $base-500;
+    display: flex;
+    flex-wrap: wrap;
+    dt {
+      @include h3-semibold;
+    }
+    dd {
+      @include h3;
+      margin: 0;
+      &:before {
+        content: '\a0';
+      }
+    }
+    hr {
+      height: 0;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+  }
+
+  &::after {
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 32L26 20L14 8' stroke='%237E9CA9' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    content: '';
+    display: block;
+    height: 2.5rem;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-1.25rem);
+    width: 2.5rem;
+  }
+}

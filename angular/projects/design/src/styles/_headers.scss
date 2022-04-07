@@ -143,6 +143,13 @@ shared-command-header ~ main {
   margin: 0;
 }
 
+.command-header__plain {
+  @include h3-semibold;
+  color: $base-500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .welcome-header {
   background-color: $brand-primary-300;
   margin-bottom: 1.25rem;

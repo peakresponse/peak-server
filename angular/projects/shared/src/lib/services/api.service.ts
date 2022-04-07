@@ -344,6 +344,15 @@ export class ApiService {
     },
   };
 
+  reports = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/reports', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/reports/${id}`, params);
+    },
+  };
+
   scenes = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/scenes', params);

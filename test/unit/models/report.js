@@ -102,6 +102,9 @@ describe('models', () => {
           'vitalIds',
           'procedureIds',
         ]);
+        assert.deepStrictEqual(record.medicationIds, ['6f43bc3d-1d4e-470a-9568-0c8b50c8281e']);
+        assert.deepStrictEqual(record.procedureIds, ['34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0']);
+        assert.deepStrictEqual(record.vitalIds, ['2036119d-4545-4452-a26f-b9ec6a1a323b']);
         assert.deepStrictEqual(record.updatedDataAttributes, ['/eRecord.01', '/eRecord.SoftwareApplicationGroup']);
         assert.deepStrictEqual(record.createdById, user.id);
         assert.deepStrictEqual(record.updatedById, user.id);
@@ -111,15 +114,15 @@ describe('models', () => {
         const incident = await record.getIncident();
         assert.deepStrictEqual(incident.reportsCount, 2);
 
-        const medications = await record.getMedications();
+        let medications = await record.getMedications();
         assert(medications.length, 1);
         assert(medications[0].id, '6f43bc3d-1d4e-470a-9568-0c8b50c8281e');
 
-        const procedures = await record.getProcedures();
+        let procedures = await record.getProcedures();
         assert(procedures.length, 1);
         assert(procedures[0].id, '34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0');
 
-        const vitals = await record.getVitals();
+        let vitals = await record.getVitals();
         assert(vitals.length, 1);
         assert(vitals[0].id, '2036119d-4545-4452-a26f-b9ec6a1a323b');
 
@@ -128,11 +131,26 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.id, data.canonicalId);
         assert.deepStrictEqual(canonical.parentId, null);
         assert.deepStrictEqual(canonical.canonicalId, null);
+        assert.deepStrictEqual(canonical.medicationIds, ['6f43bc3d-1d4e-470a-9568-0c8b50c8281e']);
+        assert.deepStrictEqual(canonical.procedureIds, ['34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0']);
+        assert.deepStrictEqual(canonical.vitalIds, ['2036119d-4545-4452-a26f-b9ec6a1a323b']);
         assert.deepStrictEqual(canonical.data, data.data);
         assert.deepStrictEqual(canonical.createdById, user.id);
         assert.deepStrictEqual(canonical.updatedById, user.id);
         assert.deepStrictEqual(canonical.createdByAgencyId, agency.id);
         assert.deepStrictEqual(canonical.updatedByAgencyId, agency.id);
+
+        medications = await canonical.getMedications();
+        assert(medications.length, 1);
+        assert(medications[0].id, '6f43bc3d-1d4e-470a-9568-0c8b50c8281e');
+
+        procedures = await canonical.getProcedures();
+        assert(procedures.length, 1);
+        assert(procedures[0].id, '34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0');
+
+        vitals = await canonical.getVitals();
+        assert(vitals.length, 1);
+        assert(vitals[0].id, '2036119d-4545-4452-a26f-b9ec6a1a323b');
       });
 
       it('updates an existing canonical record and creates a corresponding history record', async () => {

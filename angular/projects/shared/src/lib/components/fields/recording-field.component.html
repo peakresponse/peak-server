@@ -1,0 +1,17 @@
+<div class="form-field form-field--nonempty recording-field">
+  <div class="recording-field__header">
+    <audio *ngIf="fileUrl" #audio [src]="fileUrl"></audio>
+    <button (click)="onClick()" class="recording-field__playpause">
+      <i *ngIf="isPaused" class="pr-icon pr-icon-40-record-play"></i>
+      <i *ngIf="!isPaused" class="pr-icon pr-icon-40-record-stop"></i>
+    </button>
+    <div class="recording-field__metadata">
+      <div class="recording-field__title">{{title}}</div>
+      <div class="recording-field__duration">{{(isPaused ? computedDuration : currentTime)|duration}}</div>
+    </div>
+    <button class="chip chip--primary recording-field__timestamp">
+      <i class="pr-icon pr-icon-24-clock"></i> {{timestamp|date:'shortTime'}}
+    </button>
+  </div>
+  <div class="recording-field__body"><ng-content></ng-content></div>
+</div>

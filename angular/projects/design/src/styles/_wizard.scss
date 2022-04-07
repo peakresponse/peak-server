@@ -91,7 +91,7 @@ body {
   }
 
   p {
-    @include h5;
+    @include body14;
     margin-bottom: 1rem;
   }
 }
@@ -123,7 +123,7 @@ body {
   padding: 1rem 0.5rem;
 
   a {
-    @include h5-bold;
+    @include body14-bold;
     cursor: pointer;
     color: $brand-primary-600;
     margin-left: 0.75rem;
