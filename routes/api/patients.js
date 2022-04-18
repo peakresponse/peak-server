@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireLogin(),
+  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     const options = {
       order: [
@@ -72,7 +72,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireLogin(),
+  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     let patient = await models.Patient.findByPk(req.params.id);
     if (!patient) {

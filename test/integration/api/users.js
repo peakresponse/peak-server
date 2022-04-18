@@ -21,15 +21,24 @@ describe('/api/users', () => {
       'responders',
     ]);
     testSession = session(app);
-    await testSession
-      .post('/login')
-      .set('Host', `bmacc.${process.env.BASE_HOST}`)
-      .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
   });
 
   describe('GET /me', () => {
+    it('returns unauthorized for an unauthenticated request', async () => {
+      await testSession
+        .get('/api/users/me')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .set('Accept', 'application/json')
+        .expect(HttpStatus.UNAUTHORIZED);
+    });
+
     it('returns the user record of the logged in user', async () => {
+      await testSession
+        .post('/login')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
+        .expect(HttpStatus.OK);
+
       const response = await testSession.get('/api/users/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
       const data = response.body;
       assert(data.user);

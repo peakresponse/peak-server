@@ -5,6 +5,7 @@
 export * from './lib/services/api.service';
 export * from './lib/services/agency.service';
 export * from './lib/services/navigation.service';
+export * from './lib/services/notification.service';
 export * from './lib/services/schema.service';
 export * from './lib/services/user.service';
 
@@ -32,7 +33,6 @@ export * from './lib/components/fields/select-field.component';
 export * from './lib/components/fields/text-field.component';
 
 export * from './lib/components/fields/xsd/xsd-base.component';
-export * from './lib/components/fields/xsd/xsd-datetime.component';
 export * from './lib/components/fields/xsd/xsd-element-wrapper.component';
 export * from './lib/components/fields/xsd/xsd-element.component';
 export * from './lib/components/fields/xsd/xsd-form-group.component';

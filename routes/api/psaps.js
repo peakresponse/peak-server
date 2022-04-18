@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -42,7 +42,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const psap = await models.Psap.findByPk(req.params.id);
     if (psap) {

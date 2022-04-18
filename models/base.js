@@ -5,6 +5,7 @@ const inflection = require('inflection');
 const jsonpatch = require('fast-json-patch');
 const path = require('path');
 const { Model } = require('sequelize');
+const uuid = require('uuid/v4');
 
 const s3options = {};
 if (process.env.AWS_ACCESS_KEY_ID) {
@@ -220,13 +221,12 @@ class Base extends Model {
 
   setNemsisValue(keyPath, newValue) {
     this.data = this.data || {};
-    _.set(this.data, keyPath, { _text: newValue });
+    if (newValue) {
+      _.set(this.data, keyPath, { _text: newValue });
+    } else {
+      _.unset(this.data, keyPath);
+    }
     this.changed('data', true);
-  }
-
-  setFieldAndNemsisValue(key, keyPath, newValue) {
-    this.setDataValue(key, newValue);
-    this.setNemsisValue(keyPath, newValue);
   }
 
   getNemsisAttributeValue(keyPath, attribute) {
@@ -239,6 +239,47 @@ class Base extends Model {
     const attrPath = [...keyPath, '_attributes', attribute];
     _.set(this.data, attrPath, newValue);
     this.changed('data', true);
+  }
+
+  syncNemsisId(options) {
+    if (!this.id) {
+      this.setDataValue('id', this.getNemsisAttributeValue([], 'UUID'));
+      options.fields = options.fields || [];
+      if (!this.id) {
+        this.id = uuid();
+        this.setNemsisAttributeValue([], 'UUID', this.id);
+        if (options.fields.indexOf('data') < 0) {
+          options.fields.push('data');
+        }
+      }
+      if (options.fields.indexOf('id') < 0) {
+        options.fields.push('id');
+      }
+    } else if (!this.getNemsisAttributeValue([], 'UUID')) {
+      this.setNemsisAttributeValue([], 'UUID', this.id);
+      options.fields = options.fields || [];
+      if (options.fields.indexOf('data') < 0) {
+        options.fields.push('data');
+      }
+    }
+  }
+
+  syncFieldAndNemsisValue(key, keyPath, options) {
+    if (this.changed(key)) {
+      this.setNemsisValue(keyPath, this.getDataValue(key));
+      options.fields = options.fields || [];
+      if (options.fields.indexOf('data') < 0) {
+        options.fields.push('data');
+      }
+    } else {
+      this.setDataValue(key, this.getFirstNemsisValue(keyPath) ?? null);
+      if (this.changed(key)) {
+        options.fields = options.fields || [];
+        if (options.fields.indexOf(key) < 0) {
+          options.fields.push(key);
+        }
+      }
+    }
   }
 }
 

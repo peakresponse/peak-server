@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 
-import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { extend } from 'lodash';
 
 @Component({
@@ -11,6 +11,7 @@ export class ModalComponent {
   @Input() confirmLabel?: string;
   @Input() dangerLabel?: string;
   @Input() dismissLabel?: string;
+  @Input() disabled?: boolean;
   @Output() dismiss = new EventEmitter<any>();
   @Output() confirm = new EventEmitter<any>();
   @Output() danger = new EventEmitter<any>();
@@ -30,18 +31,20 @@ export class ModalComponent {
     this.modalRef = this.modal.open(this.content, extend({ ariaLabelledBy: 'modal-basic-title' }, options));
   }
 
+  close() {
+    this.modalRef?.dismiss();
+  }
+
   onConfirm() {
-    this.modalRef?.close();
     this.confirm.emit(this.data);
   }
 
   onDismiss() {
-    this.modalRef?.dismiss();
+    this.close();
     this.dismiss.emit(this.data);
   }
 
   onDanger() {
-    this.modalRef?.close();
     this.danger.emit(this.data);
   }
 }

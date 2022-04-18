@@ -1,0 +1,29 @@
+<router-outlet></router-outlet>
+<admin-schema-list #list [class.d-none]="route.firstChild"
+                   name="Personnel" [keyPath]="['demographics', 'personnel']" schemaPath="/nemsis/xsd/dPersonnelInvitation_v3.json"
+                   [schemaColumns]="sectionColumns" [addlColumns]="addlColumns">
+  <ng-container class="admin-schema-list-header">
+    <button (click)="bulkInvite.show()" class="btn btn--sm btn--secondary ms-3">Bulk Invite</button>
+  </ng-container>
+  <ng-template let-data="data" let-id="id" let-record="record">
+    <td class="text-muted">
+      <ng-container *ngIf="record.isPending">
+        <button (click)="onApprove($event, record)" class="btn btn--sm btn--primary">Approve</button>&nbsp;
+        <button (click)="onRefuse($event, record)" class="btn btn--sm btn--danger">Refuse</button>&nbsp;
+        Requested on {{record.createdAt|date}}
+      </ng-container>
+      <ng-container *ngIf="!record.isPending && record.refusedAt">Refused access on {{record.refusedAt|date}}</ng-container>
+      <ng-container *ngIf="!record.isPending && !record.userId">
+        <button (click)="onResend($event, record)" class="btn btn--sm btn--primary">Resend</button>&nbsp;
+        Invited on {{record.invitationAt|date}}
+      </ng-container>
+    </td>
+  </ng-template>  
+</admin-schema-list>
+<shared-modal #refuseConfirmation
+  i18n-confirmLabel confirmLabel="Refuse" i18n-dismissLabel dismissLabel="Cancel" (confirm)="onConfirmRefuse(refuseConfirmation.data)">
+  <div class="modal-body">
+    <p i18n>Are you sure you wish to refuse the pending user request from <b>{{refuseConfirmation.data?.firstName}} {{refuseConfirmation.data?.lastName}}</b>?</p>
+  </div>
+</shared-modal>
+<admin-personnel-bulk-invite #bulkInvite (invited)="list.refresh()"></admin-personnel-bulk-invite>

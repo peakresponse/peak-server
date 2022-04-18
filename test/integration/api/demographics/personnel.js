@@ -20,6 +20,175 @@ describe('/api/demographics/personnel', () => {
       .expect(HttpStatus.OK);
   });
 
+  describe('POST /', () => {
+    it('validates required fields', async () => {
+      await testSession
+        .post('/api/demographics/personnel')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({})
+        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
+    });
+
+    it('creates a new Employment and sends an invite', async () => {
+      await testSession
+        .post('/api/demographics/personnel')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          firstName: 'First',
+          lastName: 'Last',
+          email: 'first.last@test.com',
+        })
+        .expect(HttpStatus.CREATED);
+      const employment = await models.Employment.findOne({ where: { email: 'first.last@test.com' } });
+      assert(employment);
+      assert.deepStrictEqual(employment.firstName, 'First');
+      assert.deepStrictEqual(employment.lastName, 'Last');
+      assert.deepStrictEqual(employment.data, {
+        _attributes: { UUID: employment.id },
+        'dPersonnel.NameGroup': {
+          'dPersonnel.01': {
+            _text: 'Last',
+          },
+          'dPersonnel.02': {
+            _text: 'First',
+          },
+        },
+        'dPersonnel.10': {
+          _text: 'first.last@test.com',
+        },
+      });
+      assert(employment.invitationCode);
+      assert(employment.invitationAt);
+
+      const emails = nodemailerMock.mock.getSentMail();
+      assert.deepStrictEqual(emails.length, 1);
+      assert.deepStrictEqual(emails[0].to, 'First Last <first.last@test.com>');
+      assert.deepStrictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+    });
+
+    it('creates a new Employment from data and sends an invite', async () => {
+      await testSession
+        .post('/api/demographics/personnel')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          data: {
+            'dPersonnel.NameGroup': {
+              'dPersonnel.01': {
+                _text: 'Last',
+              },
+              'dPersonnel.02': {
+                _text: 'First',
+              },
+            },
+            'dPersonnel.10': {
+              _text: 'first.last@test.com',
+            },
+          },
+        })
+        .expect(HttpStatus.CREATED);
+      const employment = await models.Employment.findOne({ where: { email: 'first.last@test.com' } });
+      assert(employment);
+      assert.deepStrictEqual(employment.firstName, 'First');
+      assert.deepStrictEqual(employment.lastName, 'Last');
+      assert.deepStrictEqual(employment.data, {
+        _attributes: { UUID: employment.id },
+        'dPersonnel.NameGroup': {
+          'dPersonnel.01': {
+            _text: 'Last',
+          },
+          'dPersonnel.02': {
+            _text: 'First',
+          },
+        },
+        'dPersonnel.10': {
+          _text: 'first.last@test.com',
+        },
+      });
+      assert(employment.invitationCode);
+      assert(employment.invitationAt);
+
+      const emails = nodemailerMock.mock.getSentMail();
+      assert.deepStrictEqual(emails.length, 1);
+      assert.deepStrictEqual(emails[0].to, 'First Last <first.last@test.com>');
+      assert.deepStrictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+    });
+  });
+
+  describe('PUT /:id', () => {
+    it('updates an Employment and associated User', async () => {
+      await testSession
+        .put('/api/demographics/personnel/7939c808-820e-42cc-8331-8e31ff951541')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          data: {
+            'dPersonnel.NameGroup': {
+              'dPersonnel.01': {
+                _text: 'Last',
+              },
+              'dPersonnel.02': {
+                _text: 'First',
+              },
+              'dPersonnel.03': {
+                _text: 'Middle',
+              },
+            },
+            'dPersonnel.10': {
+              _text: 'first.last@test.com',
+            },
+          },
+          user: {
+            position: 'Position',
+          },
+        })
+        .expect(HttpStatus.OK);
+      const employment = await models.Employment.findByPk('7939c808-820e-42cc-8331-8e31ff951541');
+      assert.deepStrictEqual(employment.lastName, 'Last');
+      assert.deepStrictEqual(employment.firstName, 'First');
+      assert.deepStrictEqual(employment.middleName, 'Middle');
+      assert.deepStrictEqual(employment.email, 'first.last@test.com');
+      assert.deepStrictEqual(employment.data, {
+        _attributes: { UUID: employment.id },
+        'dPersonnel.NameGroup': {
+          'dPersonnel.01': {
+            _text: 'Last',
+          },
+          'dPersonnel.02': {
+            _text: 'First',
+          },
+          'dPersonnel.03': {
+            _text: 'Middle',
+          },
+        },
+        'dPersonnel.10': {
+          _text: 'first.last@test.com',
+        },
+      });
+      const user = await employment.getUser();
+      assert.deepStrictEqual(user.lastName, 'Last');
+      assert.deepStrictEqual(user.firstName, 'First');
+      assert.deepStrictEqual(user.middleName, 'Middle');
+      assert.deepStrictEqual(user.email, 'first.last@test.com');
+      assert.deepStrictEqual(user.position, 'Position');
+    });
+  });
+
+  describe('POST /:id/resend-invitation', () => {
+    it('resends the invitation email and updates the sent timestamp', async () => {
+      const employment = await models.Employment.findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
+      const { invitationAt } = employment;
+      await testSession
+        .post('/api/demographics/personnel/50c06caf-9706-4305-bc3a-5462a7d20b6f/resend-invitation')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .expect(HttpStatus.NO_CONTENT);
+      const emails = nodemailerMock.mock.getSentMail();
+      assert.deepStrictEqual(emails.length, 1);
+      assert.deepStrictEqual(emails[0].to, 'Invited Member <invited.member@peakresponse.net>');
+      assert.deepStrictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+      await employment.reload();
+      assert.notDeepStrictEqual(employment.invitationAt, invitationAt);
+    });
+  });
+
   describe('POST /invite', () => {
     it('creates and sends bulk invitations', async () => {
       await testSession
@@ -32,23 +201,36 @@ describe('/api/demographics/personnel', () => {
             { fullName: 'Invitee Two', email: 'invitee.two@peakresponse.net' },
           ],
         })
-        .expect(HttpStatus.NO_CONTENT);
+        .expect(HttpStatus.ACCEPTED);
+
+      /// start polling for completion
+      for (;;) {
+        // eslint-disable-next-line no-await-in-loop
+        const response = await testSession.get(`/api/demographics/personnel/invite-status`).set('Host', `bmacc.${process.env.BASE_HOST}`);
+        if (response.status === 202) {
+          // eslint-disable-next-line no-await-in-loop
+          await helpers.sleep(250);
+        } else {
+          assert.deepStrictEqual(response.status, HttpStatus.OK);
+          break;
+        }
+      }
 
       const employments = await models.Employment.findAll({
         where: {
           email: ['invitee.one@peakresponse.net', 'invitee.two@peakresponse.net'],
         },
       });
-      assert.strictEqual(employments.length, 2);
+      assert.deepStrictEqual(employments.length, 2);
 
       const emails = nodemailerMock.mock.getSentMail();
       // eslint-disable-next-line no-nested-ternary
       emails.sort((e1, e2) => (e1.to < e2.to ? -1 : e1.to > e2.to ? 1 : 0));
-      assert.strictEqual(emails.length, 2);
-      assert.strictEqual(emails[0].to, 'Invitee One <invitee.one@peakresponse.net>');
-      assert.strictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
-      assert.strictEqual(emails[1].to, 'Invitee Two <invitee.two@peakresponse.net>');
-      assert.strictEqual(emails[1].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+      assert.deepStrictEqual(emails.length, 2);
+      assert.deepStrictEqual(emails[0].to, 'Invitee One <invitee.one@peakresponse.net>');
+      assert.deepStrictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+      assert.deepStrictEqual(emails[1].to, 'Invitee Two <invitee.two@peakresponse.net>');
+      assert.deepStrictEqual(emails[1].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
     });
 
     it('allows blank/empty name fields', async () => {
@@ -62,23 +244,36 @@ describe('/api/demographics/personnel', () => {
             { fullName: '', email: 'invitee.two@peakresponse.net' },
           ],
         })
-        .expect(HttpStatus.NO_CONTENT);
+        .expect(HttpStatus.ACCEPTED);
+
+      /// start polling for completion
+      for (;;) {
+        // eslint-disable-next-line no-await-in-loop
+        const response = await testSession.get(`/api/demographics/personnel/invite-status`).set('Host', `bmacc.${process.env.BASE_HOST}`);
+        if (response.status === 202) {
+          // eslint-disable-next-line no-await-in-loop
+          await helpers.sleep(250);
+        } else {
+          assert.deepStrictEqual(response.status, HttpStatus.OK);
+          break;
+        }
+      }
 
       const employments = await models.Employment.findAll({
         where: {
           email: ['invitee.one@peakresponse.net', 'invitee.two@peakresponse.net'],
         },
       });
-      assert.strictEqual(employments.length, 2);
+      assert.deepStrictEqual(employments.length, 2);
 
       const emails = nodemailerMock.mock.getSentMail();
       // eslint-disable-next-line no-nested-ternary
       emails.sort((e1, e2) => (e1.to < e2.to ? -1 : e1.to > e2.to ? 1 : 0));
-      assert.strictEqual(emails.length, 2);
-      assert.strictEqual(emails[0].to, '<invitee.one@peakresponse.net>');
-      assert.strictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
-      assert.strictEqual(emails[1].to, '<invitee.two@peakresponse.net>');
-      assert.strictEqual(emails[1].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+      assert.deepStrictEqual(emails.length, 2);
+      assert.deepStrictEqual(emails[0].to, '<invitee.one@peakresponse.net>');
+      assert.deepStrictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
+      assert.deepStrictEqual(emails[1].to, '<invitee.two@peakresponse.net>');
+      assert.deepStrictEqual(emails[1].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
     });
   });
 
@@ -98,14 +293,14 @@ describe('/api/demographics/personnel', () => {
         })
         .expect(HttpStatus.CREATED);
       const employment = await models.Employment.findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
-      assert.strictEqual(employment.userId, response.body.id);
+      assert.deepStrictEqual(employment.userId, response.body.id);
       assert(!employment.isPending);
-      assert.strictEqual(employment.invitationCode, null);
+      assert.deepStrictEqual(employment.invitationCode, null);
       /// it should have sent out an email
       const emails = nodemailerMock.mock.getSentMail();
-      assert.strictEqual(emails.length, 1);
-      assert.strictEqual(emails[0].subject, 'Welcome to Peak Response');
-      assert.strictEqual(emails[0].to, 'Test User <invited.member@peakresponse.net>');
+      assert.deepStrictEqual(emails.length, 1);
+      assert.deepStrictEqual(emails[0].subject, 'Welcome to Peak Response');
+      assert.deepStrictEqual(emails[0].to, 'Test User <invited.member@peakresponse.net>');
     });
 
     it('creates a new user and associates with agency employment by matching invitation code', async () => {
@@ -123,16 +318,16 @@ describe('/api/demographics/personnel', () => {
         })
         .expect(HttpStatus.CREATED);
       const employment = await models.Employment.findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
-      assert.strictEqual(employment.userId, response.body.id);
-      assert.strictEqual(employment.firstName, 'Different');
-      assert.strictEqual(employment.lastName, 'Email');
+      assert.deepStrictEqual(employment.userId, response.body.id);
+      assert.deepStrictEqual(employment.firstName, 'Different');
+      assert.deepStrictEqual(employment.lastName, 'Email');
       assert(!employment.isPending);
-      assert.strictEqual(employment.invitationCode, null);
+      assert.deepStrictEqual(employment.invitationCode, null);
       /// it should have sent out an email
       const emails = nodemailerMock.mock.getSentMail();
-      assert.strictEqual(emails.length, 1);
-      assert.strictEqual(emails[0].subject, 'Welcome to Peak Response');
-      assert.strictEqual(emails[0].to, 'Different Email <different.email@peakresponse.net>');
+      assert.deepStrictEqual(emails.length, 1);
+      assert.deepStrictEqual(emails[0].subject, 'Welcome to Peak Response');
+      assert.deepStrictEqual(emails[0].to, 'Different Email <different.email@peakresponse.net>');
     });
 
     it('returns not found for an invalid invitation code', async () => {
@@ -172,13 +367,16 @@ describe('/api/demographics/personnel', () => {
         },
       });
       assert(employment);
-      assert.strictEqual(employment.userId, response.body.id);
+      assert.deepStrictEqual(employment.userId, response.body.id);
+      assert.deepStrictEqual(employment.firstName, 'Test');
+      assert.deepStrictEqual(employment.lastName, 'User');
+      assert.deepStrictEqual(employment.email, 'uninvited.member@peakresponse.net');
       assert(employment.isPending);
       /// it should have sent out an email
       const emails = nodemailerMock.mock.getSentMail();
-      assert.strictEqual(emails.length, 3);
-      assert.strictEqual(emails[0].subject, 'Pending Request to Join');
-      assert.strictEqual(emails[0].to, 'Test User <uninvited.member@peakresponse.net>');
+      assert.deepStrictEqual(emails.length, 3);
+      assert.deepStrictEqual(emails[0].subject, 'Pending Request to Join');
+      assert.deepStrictEqual(emails[0].to, 'Test User <uninvited.member@peakresponse.net>');
       for (let i = 1; i <= 2; i += 1) {
         assert.deepStrictEqual(emails[i].subject, 'Test User is requesting to join Bay Medic Ambulance - Contra Costa');
       }

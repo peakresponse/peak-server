@@ -1,3 +1,20 @@
+form {
+  h4 {
+    color: $brand-primary-500;
+    span {
+      color: $base-500;
+    }
+    border-bottom: 2px solid $base-300;
+    margin: 1rem 0;
+  }
+
+  hr {
+    background-color: $base-300;
+    height: 2px !important;
+    opacity: 1;
+  }
+}
+
 .form-field {
   background-color: white;
   border: 2px solid $base-500;
@@ -6,13 +23,14 @@
   flex-direction: column;
   position: relative;
 
-  input,
+  input:not([type='checkbox']),
   select,
   textarea {
     @include h3-semibold;
     background-color: white;
     border: 0;
     color: $base-800;
+    flex-grow: 1;
     margin: 0.375rem 0.875rem;
     padding: 0;
     &::placeholder,
@@ -24,7 +42,7 @@
     }
   }
 
-  label {
+  label:not(.form-check-label) {
     @include h4-semibold;
     margin: 0.375rem 0.875rem 0;
     color: $base-500;
@@ -158,21 +176,31 @@ select:disabled {
   }
 }
 
-.valid-feedback {
+.feedback,
+.valid-feedback,
+.invalid-feedback {
   @include body14-bold;
-  color: $brand-primary-500;
+}
+
+.feedback {
+  color: $base-500;
 }
 
 .invalid-feedback {
-  @include body14-bold;
   color: $brand-secondary-500;
 }
 
+.valid-feedback {
+  color: $brand-primary-500;
+}
+
+.form-field + .feedback,
 .form-field + .invalid-feedback,
 .form-field + .valid-feedback {
   margin: 0.25rem 1rem 0;
 }
 
+.form-field .feedback,
 .form-field .invalid-feedback,
 .form-field .valid-feedback {
   margin: 0 0.875rem 0.25rem;

@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const moment = require('moment');
-const { Op } = require('sequelize');
+const { Op, ValidationError, ValidationErrorItem } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 const uuid = require('uuid/v4');
 
@@ -9,15 +9,19 @@ const nemsis = require('../lib/nemsis');
 
 const { Base } = require('./base');
 
+const Roles = {
+  BILLING: 'BILLING',
+  CONFIGURATION: 'CONFIGURATION',
+  PERSONNEL: 'PERSONNEL',
+  REPORTING: 'REPORTING',
+};
+Roles.ALL_ROLES = [Roles.BILLING, Roles.CONFIGURATION, Roles.PERSONNEL, Roles.REPORTING];
+Object.freeze(Roles);
+
 module.exports = (sequelize, DataTypes) => {
   class Employment extends Base {
     static get Roles() {
-      return {
-        BILLING: 'BILLING',
-        CONFIGURATION: 'CONFIGURATION',
-        PERSONNEL: 'PERSONNEL',
-        REPORTING: 'REPORTING',
-      };
+      return Roles;
     }
 
     static associate(models) {
@@ -74,6 +78,14 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
+    setUser(user) {
+      this.userId = user.id;
+      this.lastName = user.lastName;
+      this.firstName = user.firstName;
+      this.middleName = user.middleName;
+      this.email = user.email;
+    }
+
     async toFullJSON(options) {
       const json = this.toJSON();
       json.user = (this.user || (await this.getUser(options)))?.toJSON();
@@ -82,7 +94,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, [
+      const data = _.pick(attributes, [
         'id',
         'userId',
         'firstName',
@@ -91,17 +103,24 @@ module.exports = (sequelize, DataTypes) => {
         'email',
         'primaryJobRole',
         'isPending',
+        'approvedAt',
+        'refusedAt',
         'roles',
         'isOwner',
         'invitationAt',
-        'hiredAt',
-        'startedAt',
-        'endedAt',
+        'hiredOn',
+        'startedOn',
+        'endedOn',
         'status',
-        'statusAt',
+        'statusOn',
+        'data',
         'createdAt',
         'updatedAt',
       ]);
+      if (this.user) {
+        data.user = this.user.toJSON();
+      }
+      return data;
     }
   }
 
@@ -115,34 +134,18 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING,
         field: 'last_name',
-        set(value) {
-          this.setDataValue('lastName', value);
-          this.setNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.01'], value);
-        },
       },
       firstName: {
         type: DataTypes.STRING,
         field: 'first_name',
-        set(value) {
-          this.setDataValue('firstName', value);
-          this.setNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.02'], value);
-        },
       },
       middleName: {
         type: DataTypes.STRING,
         field: 'middle_name',
-        set(value) {
-          this.setDataValue('middleName', value);
-          this.setNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.03'], value);
-        },
       },
       email: {
         type: DataTypes.CITEXT,
         field: 'email',
-        set(value) {
-          this.setDataValue('email', value);
-          this.setNemsisValue(['dPersonnel.10'], value);
-        },
       },
       fullName: {
         type: DataTypes.VIRTUAL,
@@ -151,7 +154,7 @@ module.exports = (sequelize, DataTypes) => {
           return `${name} ${this.lastName ?? ''}`.trim();
         },
         set(value) {
-          const words = value.split(/\s+/);
+          const words = value?.split(/\s+/) ?? [];
           if (words.length > 0) {
             [this.firstName] = words;
           } else {
@@ -197,31 +200,33 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         field: 'refused_at',
       },
-      status: DataTypes.STRING,
-      statusAt: {
-        type: DataTypes.DATE,
-        field: 'status_at',
+      status: {
+        type: DataTypes.STRING,
+      },
+      statusOn: {
+        type: DataTypes.DATEONLY,
+        field: 'status_on',
       },
       primaryJobRole: {
         type: DataTypes.STRING,
         field: 'primary_job_role',
       },
-      hiredAt: {
-        type: DataTypes.DATE,
-        field: 'hired_at',
+      hiredOn: {
+        type: DataTypes.DATEONLY,
+        field: 'hired_on',
       },
-      startedAt: {
-        type: DataTypes.DATE,
-        field: 'started_at',
+      startedOn: {
+        type: DataTypes.DATEONLY,
+        field: 'started_on',
       },
-      endedAt: {
-        type: DataTypes.DATE,
-        field: 'ended_at',
+      endedOn: {
+        type: DataTypes.DATEONLY,
+        field: 'ended_on',
       },
       isActive: {
-        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['isPending', 'refusedAt', 'endedAt']),
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['isPending', 'refusedAt', 'endedOn']),
         get() {
-          return !this.isPending && !this.refusedAt && (this.endedAt == null || moment(this.endedAt).isAfter(moment()));
+          return !this.isPending && !this.refusedAt && (this.endedOn == null || moment(this.endedOn).isAfter(moment()));
         },
       },
       isOwner: {
@@ -242,8 +247,48 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       validate: {
         async schema() {
-          this.validationError = await nemsis.validateSchema('dPersonnel_v3.xsd', 'dPersonnel', 'dPersonnel.PersonnelGroup', this.data);
-          this.isValid = this.validationError === null;
+          const errors = [];
+          if (this.userId) {
+            this.validationError = await nemsis.validateSchema('dPersonnel_v3.xsd', 'dPersonnel', 'dPersonnel.PersonnelGroup', this.data);
+            this.isValid = this.validationError === null;
+            if (!this.isValid) {
+              throw this.validationError;
+            }
+            // perform some extra validations since EVERYTHING is optional in NEMSIS
+            // require at least first name, last name for existing users
+            if (!this.lastName) {
+              errors.push(new ValidationErrorItem('This field is required.', 'Validation error', 'dPersonnel.01', this.lastName));
+            }
+            if (!this.firstName) {
+              errors.push(new ValidationErrorItem('This field is required.', 'Validation error', 'dPersonnel.02', this.firstName));
+            }
+          }
+          // always require at least email (so that invitation can be sent as needed)
+          if (!this.email) {
+            errors.push(new ValidationErrorItem('This field is required.', 'Validation error', 'dPersonnel.10', this.email));
+          } else {
+            // perform the uniqueness check here so we attach to the NEMSIS field
+            if (this.agencyId) {
+              const employment = await Employment.findOne({
+                where: { agencyId: this.agencyId, email: this.email },
+                transaction: this._validationTransaction,
+              });
+              if (employment && employment.id !== this.id) {
+                errors.push(new ValidationErrorItem('This email has already been used.', 'Validation error', 'dPersonnel.10', this.email));
+              }
+            }
+            if (this.userId) {
+              const user = await sequelize.models.User.findOne({ where: { email: this.email }, transaction: this._validationTransaction });
+              if (user && user.id !== this.userId) {
+                errors.push(new ValidationErrorItem('This email has already been used.', 'Validation error', 'dPersonnel.10', this.email));
+              }
+            }
+          }
+          if (errors.length > 0) {
+            this.isValid = false;
+            throw new ValidationError('Schema validation error', errors);
+          }
+          this.isValid = true;
         },
       },
     }
@@ -251,7 +296,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Employment.addScope('active', {
     where: {
-      endedAt: {
+      endedOn: {
         [Op.or]: [null, { [Op.gt]: sequelize.literal('NOW()') }],
       },
       isPending: false,
@@ -270,43 +315,29 @@ module.exports = (sequelize, DataTypes) => {
     };
   });
 
-  Employment.beforeValidate((record) => {
-    record.data = record.data || {};
-    if (record.getNemsisAttributeValue([], 'UUID') === undefined) {
-      record.setNemsisAttributeValue([], 'UUID', uuid.v4());
-    }
+  Employment.beforeValidate((record, options) => {
+    record.syncNemsisId(options);
+    record.syncFieldAndNemsisValue('lastName', ['dPersonnel.NameGroup', 'dPersonnel.01'], options);
+    record.syncFieldAndNemsisValue('firstName', ['dPersonnel.NameGroup', 'dPersonnel.02'], options);
+    record.syncFieldAndNemsisValue('middleName', ['dPersonnel.NameGroup', 'dPersonnel.03'], options);
+    record.syncFieldAndNemsisValue('email', ['dPersonnel.10'], options);
+    record.syncFieldAndNemsisValue('status', ['dPersonnel.31'], options);
+    record.syncFieldAndNemsisValue('statusOn', ['dPersonnel.32'], options);
+    record.syncFieldAndNemsisValue('hiredOn', ['dPersonnel.33'], options);
+    record.syncFieldAndNemsisValue('primaryJobRole', ['dPersonnel.34'], options);
     if (!record.userId && !record.invitationCode) {
       record.setDataValue('invitationCode', uuid.v4());
       record.setDataValue('invitationAt', new Date());
     }
+    record._validationTransaction = options.transaction;
   });
 
-  Employment.beforeSave(async (record, options) => {
-    if (!record.id) {
-      record.setDataValue('id', record.getNemsisAttributeValue([], 'UUID'));
-    }
-    if (record.userId) {
-      const user = await record.getUser({ transaction: options.transaction });
-      record.setNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.01'], user.lastName);
-      record.setNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.02'], user.firstName);
-      record.addNemsisValue(['dPersonnel.10'], user.email);
-      /// ensure data column is saved after changes: https://github.com/sequelize/sequelize/issues/3534
-      options.fields.push('data');
-    }
-    record.setDataValue('lastName', record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.01']));
-    record.setDataValue('firstName', record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.02']));
-    record.setDataValue('middleName', record.getFirstNemsisValue(['dPersonnel.NameGroup', 'dPersonnel.03']));
-    record.setDataValue('email', record.getFirstNemsisValue(['dPersonnel.10']));
-    record.setDataValue('status', record.getFirstNemsisValue(['dPersonnel.31']));
-    if (record.changed('status')) {
-      record.setDataValue('statusAt', new Date());
-    }
-    record.setDataValue('hiredAt', record.getFirstNemsisValue(['dPersonnel.33']));
-    record.setDataValue('primaryJobRole', record.getFirstNemsisValue(['dPersonnel.34']));
+  Employment.afterValidate((record) => {
+    delete record._validationTransaction;
   });
 
-  Employment.afterCreate(async (record, options) => {
-    if (record.invitationCode) {
+  Employment.afterSave(async (record, options) => {
+    if (record.invitationCode && record.changed('email')) {
       await record.sendInvitationEmail(options);
     }
   });

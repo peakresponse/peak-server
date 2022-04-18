@@ -47,7 +47,7 @@ describe('/api/states', () => {
         if (response.headers['x-status-code'] === '202') {
           await helpers.sleep(1000);
         } else {
-          assert(response.status, HttpStatus.OK);
+          assert.deepStrictEqual(response.status, HttpStatus.OK);
           break;
         }
       }

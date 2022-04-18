@@ -79,21 +79,19 @@ module.exports = (sequelize, DataTypes) => {
       };
       data.data._attributes = { UUID: id };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
-      const agency = await sequelize.models.Agency.create(data, options);
+      const agency = await sequelize.models.Agency.create(data, { transaction: options?.transaction });
       /// associate User to Demographic as owner
       const now = new Date();
-      await sequelize.models.Employment.create(
-        {
-          agencyId: agency.id,
-          userId: user.id,
-          hiredAt: now,
-          startedAt: now,
-          isOwner: true,
-          createdById: user.id,
-          updatedById: user.id,
-        },
-        options
-      );
+      const employment = sequelize.models.Employment.build({
+        agencyId: agency.id,
+        hiredOn: now,
+        startedOn: now,
+        isOwner: true,
+        createdById: user.id,
+        updatedById: user.id,
+      });
+      employment.setUser(user);
+      await employment.save({ transaction: options?.transaction });
       /// done!
       return agency;
     }
@@ -176,34 +174,18 @@ module.exports = (sequelize, DataTypes) => {
       stateId: {
         type: DataTypes.STRING,
         field: 'state_id',
-        set(newValue) {
-          if (this.isClaimed) {
-            this.setFieldAndNemsisValue('stateId', ['dAgency.04'], newValue);
-          } else {
-            this.setDataValue('stateId', newValue);
-          }
-        },
       },
       stateUniqueId: {
         allowNull: false,
         type: DataTypes.STRING,
         field: 'state_unique_id',
-        set(newValue) {
-          this.setFieldAndNemsisValue('stateUniqueId', [`${this.isClaimed ? 'dAgency' : 'sAgency'}.01`], newValue);
-        },
       },
       number: {
         allowNull: false,
         type: DataTypes.STRING,
-        set(newValue) {
-          this.setFieldAndNemsisValue('number', [`${this.isClaimed ? 'dAgency' : 'sAgency'}.02`], newValue);
-        },
       },
       name: {
         type: DataTypes.STRING,
-        set(newValue) {
-          this.setFieldAndNemsisValue('name', [`${this.isClaimed ? 'dAgency' : 'sAgency'}.03`], newValue);
-        },
       },
       data: {
         type: DataTypes.JSONB,
@@ -237,16 +219,16 @@ module.exports = (sequelize, DataTypes) => {
     where: { createdByAgencyId: { [sequelize.Sequelize.Op.col]: 'id' } },
   });
 
-  Agency.beforeSave((record) => {
-    if (!record.id) {
-      record.setDataValue('id', record.getNemsisAttributeValue([], 'UUID') ?? uuid.v4());
+  Agency.beforeValidate((record, options) => {
+    if (record.isClaimed) {
+      record.syncNemsisId(options);
     }
     const prefix = record.isClaimed ? 'dAgency' : 'sAgency';
-    record.setDataValue('stateUniqueId', record.getFirstNemsisValue([`${prefix}.01`]));
-    record.setDataValue('number', record.getFirstNemsisValue([`${prefix}.02`]));
-    record.setDataValue('name', record.getFirstNemsisValue([`${prefix}.03`]));
+    record.syncFieldAndNemsisValue('stateUniqueId', [`${prefix}.01`], options);
+    record.syncFieldAndNemsisValue('number', [`${prefix}.02`], options);
+    record.syncFieldAndNemsisValue('name', [`${prefix}.03`], options);
     if (record.isClaimed) {
-      record.setDataValue('stateId', record.getFirstNemsisValue([`${prefix}.04`]));
+      record.syncFieldAndNemsisValue('stateId', [`${prefix}.04`], options);
     }
   });
 

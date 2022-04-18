@@ -169,7 +169,14 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, ['id', 'firstName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl']);
+      return _.pick(attributes, ['id', 'firstName', 'middleName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl']);
+    }
+
+    setFromEmployment(employment) {
+      this.lastName = employment.lastName;
+      this.firstName = employment.firstName;
+      this.middleName = employment.middleName;
+      this.email = employment.email;
     }
   }
 
@@ -187,6 +194,10 @@ module.exports = (sequelize, DataTypes) => {
             msg: 'First name cannot be blank',
           },
         },
+      },
+      middleName: {
+        type: DataTypes.STRING,
+        field: 'middle_name',
       },
       lastName: {
         type: DataTypes.STRING,

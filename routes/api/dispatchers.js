@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -44,7 +44,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const data = _.pick(req.body, ['psapId', 'userId', 'callSign']);
     data.createdById = req.user.id;
@@ -56,7 +56,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const dispatcher = await models.Dispatcher.findByPk(req.params.id, {
       include: ['user'],
@@ -71,7 +71,7 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const dispatcher = await models.Dispatcher.findByPk(req.params.id, {
       include: ['user'],

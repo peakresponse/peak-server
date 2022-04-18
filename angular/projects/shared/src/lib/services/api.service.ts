@@ -217,8 +217,14 @@ export class ApiService {
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/personnel`, data);
       },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/personnel/${id}`, params);
+      },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/personnel/${id}`, data);
+      },
+      resendInvitation: (id: string): Observable<any> => {
+        return this.post(`/api/demographics/personnel/${id}/resend-invitation`, null);
       },
       invite: (data: any, subdomain?: string): Observable<any> => {
         const options = { headers: new HttpHeaders() };
@@ -226,6 +232,9 @@ export class ApiService {
           options.headers = options.headers.set('X-Agency-Subdomain', subdomain);
         }
         return this.post(`/api/demographics/personnel/invite`, data, options);
+      },
+      inviteStatus: (): Observable<any> => {
+        return this.get(`/api/demographics/personnel/invite-status`);
       },
       accept: (data: any, subdomain?: string): Observable<any> => {
         const options = { headers: new HttpHeaders() };

@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const { page, search } = req.query;
     const where = {};
@@ -39,7 +39,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const user = await models.User.register(req.body);
     res.status(HttpStatus.CREATED).json(user.toJSON());
@@ -48,7 +48,7 @@ router.post(
 
 router.get(
   '/me',
-  interceptors.requireLogin(),
+  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     const data = {
       user: req.user.toJSON(),
@@ -87,7 +87,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const user = await models.User.findByPk(req.params.id);
     if (user) {
@@ -104,7 +104,7 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     let user;
     await models.sequelize.transaction(async (transaction) => {

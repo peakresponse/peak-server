@@ -1,5 +1,4 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
 
 const models = require('../../models');
 const helpers = require('../helpers');
@@ -41,7 +40,7 @@ router.post(
     await models.sequelize.transaction(async (transaction) => {
       const employment = await models.Employment.findByPk(req.params.id, { transaction });
       await employment.approve(req.user, { transaction });
-      res.status(HttpStatus.OK).end();
+      res.json(employment.toJSON());
     });
   })
 );
@@ -53,7 +52,7 @@ router.post(
     await models.sequelize.transaction(async (transaction) => {
       const employment = await models.Employment.findByPk(req.params.id, { transaction });
       await employment.refuse(req.user, { transaction });
-      res.status(HttpStatus.OK).end();
+      res.json(employment.toJSON());
     });
   })
 );

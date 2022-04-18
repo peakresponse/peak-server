@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const lists = await models.List.findAll({
       where: {
@@ -22,7 +22,7 @@ router.get(
 
 router.get(
   '/:id/items',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const { docs, pages, total } = await models.ListItem.paginate({

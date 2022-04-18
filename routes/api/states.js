@@ -17,14 +17,14 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/new', interceptors.requireAdmin(), (req, res) => {
+router.get('/new', interceptors.requireAdmin, (req, res) => {
   /// fetch the list of repos from the NEMSIS states project
   nemsis.getStateRepos().then((json) => res.json(json));
 });
 
 router.post(
   '/:id/configure',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const state = await models.State.findByPk(req.params.id);
     if (!state) {

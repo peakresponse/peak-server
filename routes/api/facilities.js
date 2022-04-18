@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireLogin(),
+  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -41,7 +41,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireLogin(),
+  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     const record = await models.Facility.findByPk(req.params.id);
     if (record) {
@@ -54,7 +54,7 @@ router.get(
 
 router.post(
   '/:id/geocode',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const record = await models.Facility.findByPk(req.params.id);
     if (record) {

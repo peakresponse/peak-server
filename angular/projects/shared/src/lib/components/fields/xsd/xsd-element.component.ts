@@ -8,7 +8,6 @@ import { XsdBaseComponent } from './xsd-base.component';
 })
 export class XsdElementComponent extends XsdBaseComponent {
   COMPONENT_TYPES = {
-    datetime: 'datetime',
     input: 'input',
     select: 'select',
     selectState: 'select-state',
@@ -21,13 +20,12 @@ export class XsdElementComponent extends XsdBaseComponent {
         return this.COMPONENT_TYPES.selectState;
     }
     switch (this.primitiveType) {
-      case 'xs:date':
-        return this.COMPONENT_TYPES.datetime;
       case 'xs:string':
         if (this.type['xs:restriction']['xs:enumeration']) {
           return this.COMPONENT_TYPES.select;
         }
         return this.COMPONENT_TYPES.input;
+      case 'xs:date':
       case 'xs:decimal':
       case 'xs:integer':
       case 'xs:positiveInteger':

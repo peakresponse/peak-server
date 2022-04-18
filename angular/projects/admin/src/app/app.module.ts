@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { AgencyService, NavigationService, SchemaService, UserService } from 'shared';
+import { AgencyService, NavigationService, NotificationService, SchemaService, UserService } from 'shared';
 
 import { AgenciesModule } from './agencies/agencies.module';
 import { ClientsModule } from './clients/clients.module';
@@ -21,6 +22,7 @@ import { UsersModule } from './users/users.module';
   imports: [
     BrowserModule,
     HttpClientModule,
+    NgbModule,
     AppRoutingModule,
     AgenciesModule,
     ClientsModule,
@@ -31,7 +33,7 @@ import { UsersModule } from './users/users.module';
     StatesModule,
     UsersModule,
   ],
-  providers: [AgencyService, NavigationService, SchemaService, UserService],
+  providers: [AgencyService, NavigationService, NotificationService, SchemaService, UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

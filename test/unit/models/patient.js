@@ -72,6 +72,13 @@ describe('models', () => {
           'priority',
           'portraitFile',
         ]);
+        assert.deepStrictEqual(patient.data, {
+          _attributes: { UUID: patient.id },
+          'ePatient.PatientNameGroup': {
+            'ePatient.02': { _text: 'Doe' },
+            'ePatient.03': { _text: 'John' },
+          },
+        });
 
         const canonical = await patient.getCanonical();
         assert.deepStrictEqual(canonical.currentId, patient.id);

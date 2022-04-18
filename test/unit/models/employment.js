@@ -102,15 +102,16 @@ describe('models', () => {
     });
 
     describe('.email', () => {
-      it('also sets the Nemsis data elements when set directly', () => {
+      it('also sets the Nemsis data elements when set directly', async () => {
         const record = models.Employment.build();
         record.email = 'john.doe@peakresponse.net';
+        await record.validate();
         assert.deepStrictEqual(record.data['dPersonnel.10'], { _text: 'john.doe@peakresponse.net' });
       });
     });
 
     describe('.fullName', () => {
-      it('parses out name parts from a string', () => {
+      it('parses out name parts from a string', async () => {
         const record = models.Employment.build();
         record.fullName = 'John Doe';
         assert.strictEqual(record.firstName, 'John');
@@ -121,6 +122,8 @@ describe('models', () => {
         assert.strictEqual(record.middleName, 'Jane');
         assert.strictEqual(record.lastName, 'Watson');
 
+        record.email = 'requiredtopassvalidation@test.com';
+        await record.validate();
         assert.deepStrictEqual(record.data['dPersonnel.NameGroup'], {
           'dPersonnel.01': { _text: 'Watson' },
           'dPersonnel.02': { _text: 'Mary' },

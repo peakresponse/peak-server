@@ -49,7 +49,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const agency = await models.Agency.create({
       stateUniqueId: req.body.stateUniqueId,
@@ -116,7 +116,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const agency = await models.Agency.findByPk(req.params.id, {
       include: [{ model: models.Agency, as: 'claimedAgency' }],
@@ -131,7 +131,7 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     let agency;
     await models.sequelize.transaction(async (transaction) => {

@@ -1,0 +1,9 @@
+<admin-schema-record name="Personnel" [keyPath]="['demographics', 'personnel']" schemaPath="/nemsis/xsd/dPersonnelInvitation_v3.json"
+                     [defaultValues]="defaultValues">
+  <ng-template let-data="data" let-error="error">
+    <hr />
+    <div class="mb-3">
+      <shared-text-field id="position" label="Position" [source]="data.user" [target]="data.user" [error]="error"></shared-text-field>
+    </div>
+  </ng-template>
+</admin-schema-record>

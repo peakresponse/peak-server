@@ -1,3 +1,7 @@
-.input-group-text label {
-  margin-bottom: 0;
+.input-group {
+  display: flex;
+}
+
+.input-group-append {
+  margin: 0 0.875rem;
 }

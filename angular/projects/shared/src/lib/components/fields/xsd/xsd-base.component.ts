@@ -1,8 +1,7 @@
 import { Component, Input, ViewContainerRef } from '@angular/core';
 
 import * as inflection from 'inflection';
-import { find, isEmpty } from 'lodash';
-import { v4 as uuid } from 'uuid';
+import { filter, find, isEmpty } from 'lodash';
 
 import { ApiService } from '../../../services/api.service';
 import { SchemaService } from '../../../services/schema.service';
@@ -59,12 +58,23 @@ export class XsdBaseComponent {
   get isInvalid(): boolean {
     if (this.error?.messages) {
       const predicate: any = { path: this.name };
-      if (!this.isMulti || this.selectedValue !== undefined) {
+      if (this.isMulti || this.selectedValue !== undefined) {
         predicate['value'] = this.value ?? '';
       }
       return find(this.error.messages, predicate) !== undefined;
     }
     return false;
+  }
+
+  get errorMessages(): string[] {
+    if (this.error?.messages) {
+      const predicate: any = { path: this.name };
+      if (this.isMulti || this.selectedValue !== undefined) {
+        predicate['value'] = this.value ?? '';
+      }
+      return filter(this.error.messages, predicate).map((error: any) => error.message);
+    }
+    return [];
   }
 
   get id(): string {
@@ -141,7 +151,7 @@ export class XsdBaseComponent {
       return [this.data[this.name]];
     }
     if (this.isRequired && this.data) {
-      this.addValue({ _attributes: { UUID: uuid() } });
+      this.addValue({});
       return this.values;
     }
     return null;

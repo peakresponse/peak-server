@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
+  <h1 class="h2">{{name}}</h1>
+</div>
+<form *ngIf="data" (submit)="onSubmit()" class="col-md-6 mb-3">
+  <shared-error *ngIf="error" [error]="error"></shared-error>
+  <fieldset [disabled]="isLoading">
+    <ng-container *ngFor="let element of childElements">
+      <shared-xsd-form-group [element]="element" [data]="data.data" [error]="error"></shared-xsd-form-group>
+    </ng-container>
+    <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{data, error}"></ng-template>
+    <div class="form-group">
+      <button *ngIf="isNewRecord" type="submit" class="btn btn--primary">Create</button>
+      <button *ngIf="!isNewRecord" type="submit" class="btn btn--primary">Update</button>
+    </div>
+  </fieldset>
+</form>
+<div *ngIf="isLoading">
+  <shared-loader></shared-loader>
+</div>

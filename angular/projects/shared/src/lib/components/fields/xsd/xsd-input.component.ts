@@ -9,6 +9,8 @@ import { XsdBaseComponent } from './xsd-base.component';
 export class XsdInputComponent extends XsdBaseComponent {
   get inputType(): string {
     switch (this.primitiveType) {
+      case 'xs:date':
+        return 'date';
       case 'xs:decimal':
       case 'xs:integer':
       case 'xs:positiveInteger':

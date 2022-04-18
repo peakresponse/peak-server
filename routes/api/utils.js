@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get(
   '/geocode',
-  interceptors.requireLogin(),
+  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     let data = await (
       await fetch(

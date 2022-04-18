@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
+  <span class="d-flex">
+    <h1 class="h2">{{name}}</h1>
+    <a routerLink="new" class="btn btn--sm btn--secondary ms-3">New</a>
+    <ng-content select=".admin-schema-list-header"></ng-content>
+  </span>
+  <shared-search-field placeholder="Search" (debouncedValueChange)="onSearch($event)"></shared-search-field>
+</div>
+<div class="table-responsive">
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th *ngFor="let column of schemaColumns" [class]="column.class">{{column.name}}</th>
+        <th *ngFor="let column of addlColumns" [class]="column.class">{{column.name}}</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="data">
+      <tr *ngFor="let record of data" [routerLink]="record.id">
+        <td *ngFor="let column of schemaColumns">
+          {{(record.data|get:column.attr)?._text}}
+        </td>
+        <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{records: data, id: record.id, record: record}"></ng-template>
+      </tr>
+      <tr *ngIf="(data?.length ?? 0) === 0"><td [attr.colspan]="schemaColumns.length + addlColumns.length">No records yet.</td></tr>
+    </tbody>
+    <tfoot *ngIf="paginationLink">
+      <tr>
+        <td [attr.colspan]="schemaColumns.length + addlColumns.length">
+          <span #paginationLoader="sharedAutoload" *ngIf="paginationLink" [shared-autoload]="paginationLink" (onLoadMore)="onLoadMore($event)"></span>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<div *ngIf="isLoading">
+  <shared-loader></shared-loader>
+</div>

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 
-import { AgencyService, UserService } from 'shared';
+import { AgencyService, NotificationService, UserService } from 'shared';
 
 @Component({
   selector: 'admin-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public currentAgency: AgencyService, public currentUser: UserService) {}
+  constructor(public currentAgency: AgencyService, public currentUser: UserService, public notification: NotificationService) {}
 }

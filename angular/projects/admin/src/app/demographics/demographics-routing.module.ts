@@ -11,7 +11,8 @@ import { CustomResultsDemographicsComponent } from './custom-results-demographic
 import { DeviceDemographicsComponent } from './device-demographics.component';
 import { FacilityDemographicsComponent } from './facility-demographics.component';
 import { LocationDemographicsComponent } from './location-demographics.component';
-import { PersonnelDemographicsComponent } from './personnel-demographics.component';
+import { PersonnelListDemographicsComponent } from './personnel-list-demographics.component';
+import { PersonnelRecordDemographicsComponent } from './personnel-record-demographics.component';
 import { VehicleDemographicsComponent } from './vehicle-demographics.component';
 
 const appRoutes: Routes = [
@@ -57,7 +58,13 @@ const appRoutes: Routes = [
       },
       {
         path: 'personnel',
-        component: PersonnelDemographicsComponent,
+        component: PersonnelListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: PersonnelRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'vehicles',

@@ -41,8 +41,6 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-module.exports.passport = passport;
-
 function getAgencySubdomain(req) {
   if (req.subdomains.length > 0) {
     return req.subdomains[0].trim();
@@ -53,7 +51,7 @@ function getAgencySubdomain(req) {
   return null;
 }
 
-module.exports.loadAgency = async (req, res, next) => {
+async function loadAgency(req, res, next) {
   /// load demographic, if on subdomain
   const subdomain = getAgencySubdomain(req);
   if (subdomain) {
@@ -69,9 +67,9 @@ module.exports.loadAgency = async (req, res, next) => {
     }
   }
   next();
-};
+}
 
-module.exports.loadApiUser = async (req, res, next) => {
+async function loadApiUser(req, res, next) {
   if (!req.user && req.headers.authorization) {
     // DEPRECATED: attempt api key authentication via bearer token
     const m = req.headers.authorization.match(/Bearer (.+)/);
@@ -94,7 +92,7 @@ module.exports.loadApiUser = async (req, res, next) => {
     }
   }
   next();
-};
+}
 
 function sendErrorUnauthorized(req, res) {
   if (req.accepts('html')) {
@@ -123,7 +121,11 @@ async function requireLogin(req, res, next, role) {
       isAllowed = employment !== null;
       /// check for role, if any
       if (role) {
-        isAllowed = employment.isOwner || employment.roles.include(role);
+        if (Array.isArray(role)) {
+          isAllowed = employment.isOwner || role.filter((r) => employment.roles.include(r)).length > 0;
+        } else {
+          isAllowed = employment.isOwner || employment.roles.include(role);
+        }
       }
     }
     if (isAllowed) {
@@ -136,35 +138,40 @@ async function requireLogin(req, res, next, role) {
   }
 }
 
-module.exports.requireLogin = () => {
-  return async (req, res, next) => {
-    await requireLogin(req, res, next);
-  };
-};
-
-module.exports.requireAgency = (role) => {
-  return async (req, res, next) => {
+function requireAgency(role) {
+  return (req, res, next) => {
     /// require that this request be on an agency subdomain...
     if (!req.agency) {
       sendErrorForbidden(req, res);
-      return;
+    } else {
+      /// ...by an active employed user
+      requireLogin(req, res, next, role);
     }
-    /// ...by an active employed user
-    await requireLogin(req, res, next, role);
   };
-};
+}
 
-module.exports.requireAdmin = () => {
-  return async (req, res, next) => {
-    /// only allow site admins to continue
-    if (req.user) {
-      if (req.user.isAdmin) {
-        next();
-      } else {
-        sendErrorForbidden(req, res);
-      }
-      return;
+function requireAdmin(req, res, next) {
+  /// only allow site admins to continue
+  if (req.user) {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      sendErrorForbidden(req, res);
     }
+  } else {
     sendErrorUnauthorized(req, res);
-  };
+  }
+}
+
+module.exports = {
+  passport,
+  loadAgency,
+  loadApiUser,
+  sendErrorForbidden,
+  sendErrorUnauthorized,
+  requireLogin(req, res, next) {
+    requireLogin(req, res, next, undefined);
+  },
+  requireAgency,
+  requireAdmin,
 };

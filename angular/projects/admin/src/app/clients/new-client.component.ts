@@ -18,6 +18,7 @@ export class NewClientComponent {
   }
 
   onConfirm() {
+    this.showSecret?.close();
     this.navigation.replaceWith(`/clients/${this.client.id}`);
   }
 }

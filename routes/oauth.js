@@ -19,7 +19,7 @@ router.post('/token', async (req, res) => {
   }
 });
 
-router.get('/authorize', interceptors.requireLogin(), async (req, res) => {
+router.get('/authorize', interceptors.requireLogin, async (req, res) => {
   const locals = { ...req.query };
   locals.client = await models.Client.findOne({
     where: {
@@ -29,7 +29,7 @@ router.get('/authorize', interceptors.requireLogin(), async (req, res) => {
   res.render('oauth/authorize', locals);
 });
 
-router.post('/authorize', interceptors.requireLogin(), async (req, res) => {
+router.post('/authorize', interceptors.requireLogin, async (req, res) => {
   try {
     const request = new oauth.Request(req);
     const response = new oauth.Response(res);

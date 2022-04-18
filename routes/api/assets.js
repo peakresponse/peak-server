@@ -26,7 +26,7 @@ const s3 = new AWS.S3(s3options);
 
 router.post(
   '/',
-  interceptors.requireLogin(),
+  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     const id = uuid();
     const response = req.body.blob;
@@ -66,7 +66,7 @@ router.post(
   })
 );
 
-router.put('/:path([^?]+)', interceptors.requireLogin(), (req, res) => {
+router.put('/:path([^?]+)', interceptors.requireLogin, (req, res) => {
   const tmpDir = path.resolve(__dirname, '../../tmp/uploads');
   const tmpFile = path.resolve(tmpDir, `${req.params.path}`);
   mkdirp.sync(path.dirname(tmpFile));
@@ -81,7 +81,7 @@ router.put('/:path([^?]+)', interceptors.requireLogin(), (req, res) => {
 
 router.get(
   '/:path([^?]+)',
-  interceptors.requireLogin(),
+  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
     const keyPath = path.join(assetPrefix, req.params.path);

@@ -27,7 +27,6 @@ import { SelectFieldComponent } from './components/fields/select-field.component
 import { TextFieldComponent } from './components/fields/text-field.component';
 
 import { XsdBaseComponent } from './components/fields/xsd/xsd-base.component';
-import { XsdDateTimeComponent } from './components/fields/xsd/xsd-datetime.component';
 import { XsdElementWrapperComponent } from './components/fields/xsd/xsd-element-wrapper.component';
 import { XsdElementComponent } from './components/fields/xsd/xsd-element.component';
 import { XsdFormGroupComponent } from './components/fields/xsd/xsd-form-group.component';
@@ -75,7 +74,6 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     TextFieldComponent,
     // components/fields/xsd
     XsdBaseComponent,
-    XsdDateTimeComponent,
     XsdElementWrapperComponent,
     XsdElementComponent,
     XsdFormGroupComponent,
@@ -123,7 +121,6 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     TextFieldComponent,
     // components/fields/xsd
     XsdBaseComponent,
-    XsdDateTimeComponent,
     XsdElementWrapperComponent,
     XsdElementComponent,
     XsdFormGroupComponent,

@@ -5,6 +5,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from 'shared';
 
+import { SchemaModule } from '../schema/schema.module';
+
 import { DemographicsRoutingModule } from './demographics-routing.module';
 
 import { AgencyDemographicsComponent } from './agency-demographics.component';
@@ -15,8 +17,11 @@ import { CustomConfigurationDemographicsComponent } from './custom-configuration
 import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
 import { DeviceDemographicsComponent } from './device-demographics.component';
 import { FacilityDemographicsComponent } from './facility-demographics.component';
+import { ListDemographicsComponent } from './list-demographics.component';
 import { LocationDemographicsComponent } from './location-demographics.component';
-import { PersonnelDemographicsComponent } from './personnel-demographics.component';
+import { PersonnelBulkInviteDemographicsComponent } from './personnel-bulk-invite-demographics.component';
+import { PersonnelListDemographicsComponent } from './personnel-list-demographics.component';
+import { PersonnelRecordDemographicsComponent } from './personnel-record-demographics.component';
 import { VehicleDemographicsComponent } from './vehicle-demographics.component';
 
 @NgModule({
@@ -29,11 +34,14 @@ import { VehicleDemographicsComponent } from './vehicle-demographics.component';
     CustomResultsDemographicsComponent,
     DeviceDemographicsComponent,
     FacilityDemographicsComponent,
+    ListDemographicsComponent,
     LocationDemographicsComponent,
-    PersonnelDemographicsComponent,
+    PersonnelBulkInviteDemographicsComponent,
+    PersonnelListDemographicsComponent,
+    PersonnelRecordDemographicsComponent,
     VehicleDemographicsComponent,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, SharedModule, DemographicsRoutingModule],
+  imports: [CommonModule, FormsModule, NgbModule, SchemaModule, SharedModule, DemographicsRoutingModule],
   providers: [],
 })
 export class DemographicsModule {}

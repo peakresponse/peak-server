@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -36,7 +36,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const client = models.Client.build(_.pick(req.body, ['name', 'redirectUri']));
     const { clientSecret } = client.generateClientIdAndSecret();
@@ -51,7 +51,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const client = await models.Client.findByPk(req.params.id);
     if (client) {
@@ -64,7 +64,7 @@ router.get(
 
 router.delete(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     let client;
     await models.sequelize.transaction(async (transaction) => {
@@ -83,7 +83,7 @@ router.delete(
 
 router.patch(
   '/:id/regenerate',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     let client;
     let clientSecret;
@@ -107,7 +107,7 @@ router.patch(
 
 router.patch(
   '/:id',
-  interceptors.requireAdmin(),
+  interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     let client;
     await models.sequelize.transaction(async (transaction) => {

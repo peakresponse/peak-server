@@ -141,41 +141,23 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING,
         field: 'last_name',
-        set(newValue) {
-          this.setFieldAndNemsisValue('lastName', ['ePatient.PatientNameGroup', 'ePatient.02'], newValue);
-        },
       },
       firstName: {
         type: DataTypes.STRING,
         field: 'first_name',
-        set(newValue) {
-          this.setFieldAndNemsisValue('firstName', ['ePatient.PatientNameGroup', 'ePatient.03'], newValue);
-        },
       },
       gender: {
         type: DataTypes.STRING,
-        set(newValue) {
-          this.setFieldAndNemsisValue('gender', ['ePatient.13'], newValue);
-        },
       },
       age: {
         type: DataTypes.INTEGER,
-        set(newValue) {
-          this.setFieldAndNemsisValue('age', ['ePatient.AgeGroup', 'ePatient.15'], newValue);
-        },
       },
       ageUnits: {
         type: DataTypes.STRING,
         field: 'age_units',
-        set(newValue) {
-          this.setFieldAndNemsisValue('ageUnits', ['ePatient.AgeGroup', 'ePatient.16'], newValue);
-        },
       },
       dob: {
         type: DataTypes.DATEONLY,
-        set(newValue) {
-          this.setFieldAndNemsisValue('dob', ['ePatient.17'], newValue);
-        },
       },
       complaint: DataTypes.STRING,
       triageMentalStatus: {
@@ -318,6 +300,16 @@ module.exports = (sequelize, DataTypes) => {
       },
     }
   );
+
+  Patient.beforeValidate((record, options) => {
+    record.syncNemsisId(options);
+    record.syncFieldAndNemsisValue('lastName', ['ePatient.PatientNameGroup', 'ePatient.02'], options);
+    record.syncFieldAndNemsisValue('firstName', ['ePatient.PatientNameGroup', 'ePatient.03'], options);
+    record.syncFieldAndNemsisValue('gender', ['ePatient.13'], options);
+    record.syncFieldAndNemsisValue('age', ['ePatient.AgeGroup', 'ePatient.15'], options);
+    record.syncFieldAndNemsisValue('ageUnits', ['ePatient.AgeGroup', 'ePatient.16'], options);
+    record.syncFieldAndNemsisValue('dob', ['ePatient.17'], options);
+  });
 
   Patient.afterSave(async (patient, options) => {
     if (!patient.canonicalId) {

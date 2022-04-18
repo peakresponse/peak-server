@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
+  <h1 class="h2">{{sectionHeader}}</h1>
+  <a routerLink="new" class="btn btn--sm btn--secondary">New</a>
+</div>
+<div *ngIf="data" class="table-responsive">
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th *ngFor="let column of sectionColumns" [class]="column.class">{{column.name}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of data[groupElementName]" [routerLink]="record._attributes?.UUID">
+        <td *ngFor="let column of sectionColumns">
+          {{(record|get:column.attr)?._text}}
+        </td>
+      </tr>
+      <tr *ngIf="data[groupElementName]?.length == 0 || !data[groupElementName]"><td [attr.colspan]="sectionColumns.length + 1">No records yet.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="isLoading">
+  <shared-loader></shared-loader>
+</div>

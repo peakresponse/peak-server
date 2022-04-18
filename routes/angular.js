@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
+const models = require('../models');
 const interceptors = require('./interceptors');
 
 const router = express.Router();
@@ -60,17 +61,31 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-router.get('/admin(/*)?', interceptors.requireLogin(), (req, res) => {
-  res.locals.designWebpackStats = getDesignWebpackStats();
-  res.locals.webpackStats = getAdminWebpackStats();
-  res.render('angular/index', {
-    title: 'admin.title',
-    baseHref: '/admin',
-    elementRoot: 'admin-root',
-    environment: {},
-    layout: 'angular/layout',
-  });
-});
+router.get(
+  '/admin(/*)?',
+  (req, res, next) => {
+    if (!req.user) {
+      interceptors.sendErrorUnauthorized(req, res);
+      return;
+    }
+    if (!req.user.isAdmin) {
+      interceptors.requireAgency(models.Employment.Roles.ALL_ROLES)(req, res, next);
+    } else {
+      next();
+    }
+  },
+  (req, res) => {
+    res.locals.designWebpackStats = getDesignWebpackStats();
+    res.locals.webpackStats = getAdminWebpackStats();
+    res.render('angular/index', {
+      title: 'admin.title',
+      baseHref: '/admin',
+      elementRoot: 'admin-root',
+      environment: {},
+      layout: 'angular/layout',
+    });
+  }
+);
 
 router.get('/auth(/*)?', (req, res) => {
   req.logout();
@@ -100,11 +115,11 @@ router.get('/sign-up(/*)?', (req, res) => {
   });
 });
 
-router.get('/old(/*)?', interceptors.requireLogin(), (req, res) => {
+router.get('/old(/*)?', interceptors.requireLogin, (req, res) => {
   res.render('dashboard');
 });
 
-router.get('/*', interceptors.requireLogin(), (req, res) => {
+router.get('/*', interceptors.requireLogin, (req, res) => {
   res.locals.designWebpackStats = getDesignWebpackStats();
   res.locals.webpackStats = getAppWebpackStats();
   res.render('angular/index', {
