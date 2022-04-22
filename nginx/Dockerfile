@@ -1,6 +1,7 @@
-FROM nginx:1.21.1
+FROM nginx:1.21.6-alpine
 
-RUN apt update -y && \
-    apt install -y certbot python-certbot-nginx
+RUN apk add --update python3 py3-pip && \
+    apk add certbot && \
+    pip install certbot-nginx
 
 EXPOSE 3000
