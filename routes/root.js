@@ -2,7 +2,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
 const moment = require('moment');
-const querystring = require('querystring');
+const { URLSearchParams } = require('url');
 const xmljs = require('xml-js');
 
 const cache = require('../lib/cache');
@@ -26,12 +26,19 @@ router.get('/logout', (req, res) => {
 });
 
 if (process.env.MARKETING_ENABLED === 'true') {
+  const blacklist = (process.env.MARKETING_BLACKLIST ?? '').split(',');
+
   router.post(
     '/contact-us',
     helpers.async(async (req, res) => {
       // don't allow spammers to use our own domain
       const domain = process.env.MARKETING_EMAIL.substring(process.env.MARKETING_EMAIL.indexOf('@'));
-      if (req.body.email.indexOf(domain) >= 0) {
+      if (
+        req.body.email.indexOf(domain) >= 0 ||
+        blacklist.includes(req.body.firstName?.trim() ?? '') ||
+        blacklist.includes(req.body.lastName?.trim() ?? '') ||
+        blacklist.includes(req.body.email?.trim() ?? '')
+      ) {
         res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
         return;
       }
@@ -40,10 +47,10 @@ if (process.env.MARKETING_ENABLED === 'true') {
       if (!referrer?.indexOf('/sign-up/notify')) {
         let response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
           method: 'POST',
-          body: querystring.stringify({
+          body: new URLSearchParams({
             secret: process.env.GOOGLE_RECAPTCHA_SECRET_KEY,
             response: req.body['g-recaptcha-response'],
-          }),
+          }).toString(),
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
@@ -67,6 +74,7 @@ if (process.env.MARKETING_ENABLED === 'true') {
           message: req.body.message,
           feedback: req.body.feedback ? 'Yes!' : 'No',
           pilot: req.body.pilot ? 'Yes!' : 'No',
+          headers: JSON.stringify(req.headers),
         },
       });
       res.status(HttpStatus.NO_CONTENT).end();
