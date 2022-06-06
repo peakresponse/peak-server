@@ -1,9 +1,8 @@
 const HttpStatus = require('http-status-codes');
 const inflection = require('inflection');
 const _ = require('lodash');
-const querystring = require('querystring');
 
-module.exports.async = (handler) => {
+function async(handler) {
   return (req, res, next) => {
     Promise.resolve(handler(req, res, next)).catch((error) => {
       if (error.name === 'SequelizeValidationError') {
@@ -22,9 +21,9 @@ module.exports.async = (handler) => {
       }
     });
   };
-};
+}
 
-module.exports.setPaginationHeaders = (req, res, pageParam, pages, total) => {
+function setPaginationHeaders(req, res, pageParam, pages, total) {
   let baseURL = `${process.env.BASE_URL}${req.baseUrl}${req.path}?`;
   if (req.subdomains.length > 0) {
     const subdomain = req.subdomains[0].trim();
@@ -36,37 +35,48 @@ module.exports.setPaginationHeaders = (req, res, pageParam, pages, total) => {
   let link = '';
   if (page < pages) {
     query.page = page + 1;
-    link += `<${baseURL}${querystring.stringify(query)}>; rel="next"`;
+    link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="next"`;
   }
   if (page < pages - 1) {
     if (link.length > 0) {
       link += ',';
     }
     query.page = pages;
-    link += `<${baseURL}${querystring.stringify(query)}>; rel="last"`;
+    link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="last"`;
   }
   if (page > 2) {
     if (link.length > 0) {
       link += ',';
     }
     query.page = 1;
-    link += `<${baseURL}${querystring.stringify(query)}>; rel="first"`;
+    link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="first"`;
   }
   if (page > 1) {
     if (link.length > 0) {
       link += ',';
     }
     query.page = page - 1;
-    link += `<${baseURL}${querystring.stringify(query)}>; rel="prev"`;
+    link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="prev"`;
   }
   const headers = {
     'X-Total-Count': total,
     Link: link,
   };
   res.set(headers);
-};
+}
 
-module.exports.register = (req, res, next) => {
+function register(req, res, next) {
+  let minApiLevel = parseInt(process.env.API_LEVEL_MIN, 10);
+  minApiLevel = Number.isNaN(minApiLevel) ? 1 : minApiLevel;
+  req.apiLevel = parseInt(req.header('X-API-Level'), 10);
+  if (Number.isNaN(req.apiLevel)) {
+    req.apiLevel = 1;
+  }
+  if (req.apiLevel < minApiLevel) {
+    res.status(HttpStatus.BAD_REQUEST).end();
+    return;
+  }
+
   res.locals.inflection = inflection;
 
   const hasError = (name) => {
@@ -97,4 +107,10 @@ module.exports.register = (req, res, next) => {
   };
 
   next();
+}
+
+module.exports = {
+  async,
+  register,
+  setPaginationHeaders,
 };
