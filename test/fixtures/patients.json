@@ -4,6 +4,7 @@
     "ignoreSet": true,
     "data": {
       "id": "47449282-c48a-4ca1-a719-5117b790fc70",
+      "currentId": "cb94a8a4-bf8b-4316-8a3f-191aa2df4633",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "125615",
       "version": 2,
@@ -39,6 +40,7 @@
     "ignoreSet": true,
     "data": {
       "id": "a3e7833d-0f55-427d-beea-f0045034340e",
+      "currentId": "6ae0e0b0-db99-49c8-9174-d91234107157",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "362330",
       "version": 1,
@@ -74,6 +76,7 @@
     "ignoreSet": true,
     "data": {
       "id": "8daa0a6b-386e-4c56-b28a-a32542d5c240",
+      "currentId": "1b76259b-d08e-45d2-ba62-983880ef2e4e",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "769855",
       "version": 2,
@@ -109,6 +112,7 @@
     "ignoreSet": true,
     "data": {
       "id": "cbc1250f-d2c3-4955-8837-ae8af547f568",
+      "currentId": "4227c672-2497-44fa-bde6-ca36a7282c13",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "398924",
       "version": 1,
@@ -142,6 +146,7 @@
     "ignoreSet": true,
     "data": {
       "id": "caaba1a2-2f10-403a-b4a0-d36f2ded6abc",
+      "currentId": "01b08bf0-13ac-4c38-94cc-265518fb8604",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "809685",
       "version": 2,
@@ -177,6 +182,7 @@
     "ignoreSet": true,
     "data": {
       "id": "79068107-5a3b-4bc0-af38-7b143c2edd9f",
+      "currentId": "9d6295a1-b2cd-4e01-9425-11a4a01e947e",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "080709",
       "version": 2,
@@ -212,6 +218,7 @@
     "ignoreSet": true,
     "data": {
       "id": "0d0df3dc-ed07-4ddf-9870-cb6fa1938501",
+      "currentId": "54a52c0a-b2f0-49ef-bc8d-9150fb2da654",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "593983",
       "version": 2,

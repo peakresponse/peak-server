@@ -37,6 +37,10 @@ describe('models', () => {
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
         const { docs, pages, total } = await models.Incident.paginate('Agency', agency);
         assert.deepStrictEqual(docs.length, 1);
+        assert(docs[0].scene);
+        assert(docs[0].scene.city);
+        assert(docs[0].scene.state);
+        assert(docs[0].dispatches);
         assert.deepStrictEqual(pages, 1);
         assert.deepStrictEqual(total, 1);
       });

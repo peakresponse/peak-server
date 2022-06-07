@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 
+import { Incident } from '../models/incident';
+import models from '../models';
+
 @Component({
   templateUrl: './list-incidents.component.html',
   styleUrls: ['./list-incidents.component.scss'],
@@ -20,6 +23,22 @@ export class ListIncidentsComponent {
     const fragment = this.route.snapshot.fragment || 'mine';
     this.onFragmentChanged(fragment);
     this.fragmentSubscription = this.route.fragment.subscribe((newFragment: string | null) => this.onFragmentChanged(newFragment));
+  }
+
+  transform(records: any): any[] {
+    let data: any = {};
+    for (const key of Object.keys(records)) {
+      data[key] = {};
+      for (const obj of records[key]) {
+        data[key][obj.id] = obj;
+      }
+    }
+    for (const dispatch of records.Dispatch) {
+      const incident = data.Incident[dispatch.incidentId];
+      incident.dispatchIds = incident.dispatchIds ?? [];
+      incident.dispatchIds.push(dispatch.id);
+    }
+    return records.Incident.map((i: any) => new Incident(i, data, models));
   }
 
   onFragmentChanged(fragment: string | null) {

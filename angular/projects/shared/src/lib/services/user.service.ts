@@ -75,9 +75,9 @@ export class UserService implements Resolve<any> {
         })
       )
       .subscribe((response) => {
-        this.user = response.body.user;
-        this.agency = response.body.agency;
-        this.employment = response.body.employment;
+        this.user = response.body.User;
+        this.agency = response.body.Agency;
+        this.employment = response.body.Employment;
         this.userSubject.next(this.user);
         this.agencySubject.next(this.agency);
         this.employmentSubject.next(this.employmentSubject);
@@ -94,9 +94,9 @@ export class UserService implements Resolve<any> {
         return EMPTY;
       }),
       mergeMap((response) => {
-        this.user = response.body.user;
-        this.agency = response.body.agency;
-        this.employment = response.body.employment;
+        this.user = response.body.User;
+        this.agency = response.body.Agency;
+        this.employment = response.body.Employment;
         return of(this.user);
       })
     );

@@ -40,13 +40,28 @@ describe('/api/incidents', () => {
   });
 
   describe('GET /', () => {
-    it('returns a paginated list of records', async () => {
+    it('returns a paginated list of records (API level 1)', async () => {
       const response = await testSession
         .get('/api/incidents')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .expect(HttpStatus.OK)
         .expect('X-Total-Count', '1');
       assert.deepStrictEqual(response.body.length, 1);
+    });
+
+    it('returns a paginated list of records (API level 2+)', async () => {
+      const response = await testSession
+        .get('/api/incidents')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .set('X-Api-Level', '2')
+        .expect(HttpStatus.OK)
+        .expect('X-Total-Count', '1');
+      const payload = response.body;
+      assert.deepStrictEqual(payload.City?.length, 1);
+      assert.deepStrictEqual(payload.Dispatch?.length, 2);
+      assert.deepStrictEqual(payload.Incident?.length, 1);
+      assert.deepStrictEqual(payload.Scene?.length, 1);
+      assert.deepStrictEqual(payload.State?.length, 1);
     });
   });
 
@@ -56,9 +71,10 @@ describe('/api/incidents', () => {
         .get(`/api/incidents/6621202f-ca09-4ad9-be8f-b56346d1de65`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .expect(HttpStatus.OK);
-      const incident = response.body;
-      assert.deepStrictEqual(incident.number, '12345678');
-      assert.deepStrictEqual(incident.reports?.length, 1);
+      const payload = response.body;
+      assert.deepStrictEqual(payload.Incident?.number, '12345678');
+      assert.deepStrictEqual(payload.Report?.length, 1);
+      assert.deepStrictEqual(payload.Scene?.length, 2);
     });
   });
 });

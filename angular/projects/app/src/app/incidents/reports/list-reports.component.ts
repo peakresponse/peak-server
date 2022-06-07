@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { ApiService, NavigationService } from 'shared';
 
 import { Report } from '../../models/report';
+import models from '../../models';
 
 @Component({
   templateUrl: './list-reports.component.html',
@@ -28,7 +29,7 @@ export class ListReportsComponent implements OnDestroy {
               data[key][obj.id] = obj;
             }
           }
-          this.reports = response.body['Report'].map((r: any) => new Report(r, data));
+          this.reports = response.body['Report'].map((r: any) => new Report(r, data, models));
         });
       }
     });

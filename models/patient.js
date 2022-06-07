@@ -1,5 +1,4 @@
 const seedrandom = require('seedrandom');
-const uuid = require('uuid');
 
 const { Base } = require('./base');
 const nemsis = require('../lib/nemsis');
@@ -50,43 +49,12 @@ module.exports = (sequelize, DataTypes) => {
       if (!options?.transaction) {
         return sequelize.transaction((transaction) => Patient.createOrUpdate(user, agency, data, { ...options, transaction }));
       }
-      // allow sceneId and pin as an alternative to canonicalId
-      if (!data.canonicalId && data.sceneId && data.pin) {
-        const canonical = await Patient.findOne({
-          where: {
-            canonicalId: null,
-            sceneId: data.sceneId,
-            pin: data.pin,
-          },
-          transaction: options.transaction,
-        });
-        data.canonicalId = canonical ? canonical.id : uuid.v4();
-      }
-      // for now, for backwards compatibility until Scene/Incident refactor...
-      // get the scene for this patient
-      let scene;
-      if (data.sceneId) {
-        scene = await sequelize.models.Scene.findByPk(data.sceneId, { rejectOnEmpty: true, transaction: options.transaction });
-      } else if (data.parentId) {
-        const parent = await Patient.findByPk(data.parentId, { rejectOnEmpty: true, transaction: options.transaction });
-        scene = await parent.getScene(options);
-      }
-      if (scene) {
-        // confirm this is a responder on scene
-        const responder = await sequelize.models.Responder.findOne({
-          where: { sceneId: scene.id, userId: user.id, agencyId: agency.id },
-          transaction: options?.transaction,
-        });
-        if (!responder) {
-          throw new Error();
-        }
-      }
       const [record, created] = await Base.createOrUpdate(
         Patient,
         user,
         agency,
         data,
-        ['sceneId', 'pin'],
+        ['pin'],
         [
           'lastName',
           'firstName',
@@ -110,6 +78,7 @@ module.exports = (sequelize, DataTypes) => {
           'lng',
           'geog',
           'portraitFile',
+          'portraitUrl',
           'photoFile',
           'audioFile',
           'predictions',
@@ -121,7 +90,6 @@ module.exports = (sequelize, DataTypes) => {
         ],
         options
       );
-      await scene?.updatePatientCounts(options);
       return [record, created];
     }
 

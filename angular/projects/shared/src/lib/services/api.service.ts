@@ -47,6 +47,7 @@ export class ApiService {
     options.observe = 'response';
     options.headers = options.headers || new HttpHeaders();
     options.headers = options.headers.set('Accept', 'application/json');
+    options.headers = options.headers.set('X-Api-Level', '2');
     return options;
   }
 

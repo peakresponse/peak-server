@@ -1,4 +1,5 @@
-const { Model } = require('sequelize');
+const _ = require('lodash');
+const { Model, Op } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Incident extends Model {
@@ -105,7 +106,9 @@ module.exports = (sequelize, DataTypes) => {
         return map;
       }, {});
       docs.forEach((incident) => {
+        incident.scene = sceneMap[incident.sceneId];
         incident.setDataValue('scene', sceneMap[incident.sceneId]);
+        incident.dispatches = dispatchesMap[incident.id];
         incident.setDataValue('dispatches', dispatchesMap[incident.id]);
       });
       return { docs, pages, total };
@@ -114,6 +117,25 @@ module.exports = (sequelize, DataTypes) => {
     async updateReportsCount(options) {
       const { transaction } = options ?? {};
       return this.update({ reportsCount: await this.countReports({ transaction }) }, { transaction });
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'psapId',
+        'sceneId',
+        'number',
+        'calledAt',
+        'dispatchNotifiedAt',
+        'reportsCount',
+        'createdAt',
+        'createdById',
+        'createdByAgencyId',
+        'updatedAt',
+        'updatedById',
+        'updatedByAgencyId',
+      ]);
     }
   }
 
@@ -159,6 +181,18 @@ module.exports = (sequelize, DataTypes) => {
     ],
     where: {
       '$dispatches.vehicle.created_by_agency_id$': agencyId,
+    },
+  }));
+
+  Incident.addScope('scene', (sceneId) => ({
+    include: [
+      {
+        model: sequelize.models.Scene,
+        as: 'scene',
+      },
+    ],
+    where: {
+      [Op.or]: [{ '$scene.id$': sceneId }, { '$scene.canonical_id$': sceneId }],
     },
   }));
 

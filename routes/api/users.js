@@ -50,38 +50,82 @@ router.get(
   '/me',
   interceptors.requireLogin,
   helpers.async(async (req, res) => {
-    const data = {
-      user: req.user.toJSON(),
-    };
-    // add additional privilege info
-    data.user.isAdmin = req.user.isAdmin;
-    // add any active scenes the user may be a part of
-    data.user.activeScenes = (await req.user.getActiveScenes()).map((s) => s.toJSON());
-    // add vehicle/unit assignment, if any
-    data.user.currentAssignment =
-      (
-        await req.user.getCurrentAssignment({
-          include: [
-            {
-              model: models.Vehicle,
-              as: 'vehicle',
-              include: 'createdByAgency',
-            },
-          ],
-        })
-      )?.toJSON() ?? null;
-    // temporary AWS credentials for use with Transcribe service
-    data.user.awsCredentials = await aws.getTemporaryCredentialsForMobileApp();
-    // add Agency/Employment info, if any
-    if (req.agency) {
-      data.agency = req.agency.toJSON();
-      data.employment = (
-        await models.Employment.findOne({
-          where: { userId: req.user.id, agencyId: req.agency.id },
-        })
-      ).toJSON();
+    if (req.apiLevel > 1) {
+      const data = {
+        User: req.user.toJSON(),
+      };
+      // add additional privilege info
+      data.User.isAdmin = req.user.isAdmin;
+      // temporary AWS credentials for use with Transcribe service
+      data.User.awsCredentials = await aws.getTemporaryCredentialsForMobileApp();
+      // add any active scenes the user may be a part of
+      const scenes = await req.user.getActiveScenes({ include: ['city', 'incident', 'state'] });
+      data.Scene = scenes.map((s) => s.toJSON());
+      data.Incident = scenes.map((s) => s.incident.toJSON());
+      data.City = scenes.map((s) => s.city.toJSON());
+      data.State = scenes.map((s) => s.state.toJSON());
+      // add vehicle/unit assignment, if any
+      const assignment = await req.user.getCurrentAssignment({
+        include: [
+          {
+            model: models.Vehicle,
+            as: 'vehicle',
+            include: 'createdByAgency',
+          },
+        ],
+      });
+      data.Assignment = assignment?.toJSON() ?? null;
+      data.Vehicle = assignment?.vehicle?.toJSON() ?? null;
+      data.Agency = [];
+      if (assignment?.vehicle?.createdByAgency) {
+        data.Agency.push(assignment.vehicle.createdByAgency.toJSON());
+      }
+      // add Agency/Employment info, if any
+      if (req.agency) {
+        if (!data.Agency.find((a) => a.id === req.agency.id)) {
+          data.Agency.push(req.agency.toJSON());
+        }
+        data.Employment = (
+          await models.Employment.findOne({
+            where: { userId: req.user.id, agencyId: req.agency.id },
+          })
+        ).toJSON();
+      }
+      res.json(data);
+    } else {
+      const data = {
+        user: req.user.toJSON(),
+      };
+      // add additional privilege info
+      data.user.isAdmin = req.user.isAdmin;
+      // add any active scenes the user may be a part of
+      data.user.activeScenes = (await req.user.getActiveScenes()).map((s) => s.toJSON());
+      // add vehicle/unit assignment, if any
+      data.user.currentAssignment =
+        (
+          await req.user.getCurrentAssignment({
+            include: [
+              {
+                model: models.Vehicle,
+                as: 'vehicle',
+                include: 'createdByAgency',
+              },
+            ],
+          })
+        )?.toJSON() ?? null;
+      // temporary AWS credentials for use with Transcribe service
+      data.user.awsCredentials = await aws.getTemporaryCredentialsForMobileApp();
+      // add Agency/Employment info, if any
+      if (req.agency) {
+        data.agency = req.agency.toJSON();
+        data.employment = (
+          await models.Employment.findOne({
+            where: { userId: req.user.id, agencyId: req.agency.id },
+          })
+        ).toJSON();
+      }
+      res.json(data);
     }
-    res.json(data);
   })
 );
 

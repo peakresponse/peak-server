@@ -46,7 +46,7 @@ class Base extends Model {
       // this is updating the parent to create a new version and update canonical record
       parent = await model.findByPk(data.parentId, { transaction: options.transaction, rejectOnEmpty: true });
       // sanitize the data by picking only the attributes allowed to be updated
-      filteredData = _.pick(data, ['id', 'canonicalId', 'parentId'].concat(updateAttrs));
+      filteredData = _.pick(data, ['id', 'canonicalId', 'parentId', 'updatedAt'].concat(updateAttrs));
       // get a list of the updated attributes
       updatedAttributes = _.keys(filteredData);
       // check for data patch
@@ -60,18 +60,18 @@ class Base extends Model {
       if (filteredData.canonicalId && filteredData.canonicalId !== parent.canonicalId) {
         created = true;
         // create the new canonical record (use case: Report transfer)
+        filteredData.createdAt = filteredData.updatedAt;
+        filteredData.createdById = user.id;
+        filteredData.createdByAgencyId = agency?.id;
         canonical = model.build({ ...filteredData, id: filteredData.canonicalId, canonicalId: null });
       } else {
         created = false;
-        // update the canonical record
         canonical = await model.findByPk(filteredData.canonicalId, { transaction: options.transaction, rejectOnEmpty: true });
-        // TODO - handle merging parallel and out-of-order updates
-        canonical.set(_.pick(filteredData, updateAttrs));
       }
     } else {
       created = true;
       // this is creating an entirely new record
-      filteredData = _.pick(data, ['id', 'canonicalId'].concat(createAttrs).concat(updateAttrs));
+      filteredData = _.pick(data, ['id', 'canonicalId', 'createdAt'].concat(createAttrs).concat(updateAttrs));
       updatedAttributes = _.keys(filteredData);
       // set createdBy with this user/agency
       filteredData.createdById = user.id;
@@ -79,10 +79,13 @@ class Base extends Model {
       // create the canonical record
       canonical = model.build({ ...filteredData, id: data.canonicalId, canonicalId: null });
     }
-    // create/update the canonical record
+    // create the canonical record
+    canonical.updatedAt = data.updatedAt ?? new Date();
     canonical.updatedById = user.id;
     canonical.updatedByAgencyId = agency?.id;
-    await canonical.save({ transaction: options.transaction });
+    if (created) {
+      await canonical.save({ silent: true, transaction: options.transaction });
+    }
     // create the historical record
     record = model.build(filteredData);
     record.updatedAttributes = updatedAttributes;
@@ -98,10 +101,78 @@ class Base extends Model {
         .filter((p, i, array) => array.indexOf(p) === i);
     }
     record.updatedDataAttributes = updatedDataAttributes;
+    record.updatedAt = data.updatedAt ?? new Date();
     record.updatedById = user.id;
     record.updatedByAgencyId = agency?.id;
-    await record.save({ transaction: options.transaction });
-    await canonical.update({ currentId: record.id }, { transaction: options.transaction });
+    await record.save({ silent: true, transaction: options.transaction });
+    // update the canonical record, handling merging parallel/out-of-order updates
+    if (!created && canonical.currentId !== data.parentId) {
+      // create a diff of the new record from its parent
+      const versions = [record];
+      let current = await canonical.getCurrent({ transaction: options.transaction });
+      const currentJson = jsonpatch.deepClone(current.toJSON());
+      versions.push(current);
+      // TODO, handle finding lowest common ancestor in more complex merges
+      while (current && current.id !== data.parentId) {
+        // eslint-disable-next-line no-await-in-loop
+        current = await current.getParent({ transaction: options.transaction });
+        if (current) {
+          versions.push(current);
+        }
+      }
+      versions.sort((a, b) => a.updatedAt - b.updatedAt);
+      let prev = versions.shift();
+      let json = jsonpatch.deepClone(prev.toJSON());
+      while (versions.length > 0) {
+        // apply diffs
+        current = versions.shift();
+        if (current === record) {
+          const patch = jsonpatch.compare(JSON.parse(JSON.stringify(parent.toJSON())), JSON.parse(JSON.stringify(record.toJSON())));
+          json = jsonpatch.applyPatch(json, patch).newDocument;
+        } else {
+          const patch = jsonpatch.compare(JSON.parse(JSON.stringify(prev.toJSON())), JSON.parse(JSON.stringify(current.toJSON())));
+          json = jsonpatch.applyPatch(json, patch).newDocument;
+          prev = current;
+        }
+      }
+      json.id = uuid();
+      json.parentId = canonical.currentId;
+      json.secondParentId = record.id;
+      json.canonicalId = canonical.id;
+      json.currentId = null;
+      json.updatedAt = new Date();
+      json.updatedById = user.id;
+      json.updatedByAgencyId = agency?.id;
+      record = model.build(json);
+      const patch = jsonpatch.compare(JSON.parse(JSON.stringify(currentJson)), json);
+      record.updatedAttributes = _.uniq(
+        patch.map((p) => {
+          let attr = p.path.substring(1);
+          const index = attr.indexOf('/');
+          if (index > 0) {
+            attr = attr.substring(0, index);
+          }
+          return attr;
+        })
+      );
+      await record.save({ silent: true, transaction: options.transaction });
+      filteredData = json;
+    }
+    if (!created) {
+      canonical.set(_.pick(filteredData, updateAttrs));
+    }
+    canonical.currentId = record.id;
+    await canonical.save({ silent: true, transaction: options.transaction });
+    for (const attr of updateAttrs.filter((a) => a.endsWith('Ids'))) {
+      const ids = data[attr];
+      if (ids) {
+        const prefix = attr.substring(0, attr.length - 3);
+        // eslint-disable-next-line no-await-in-loop
+        await record[`set${inflection.capitalize(prefix)}s`](ids, { transaction: options.transaction });
+        // eslint-disable-next-line no-await-in-loop
+        await canonical[`set${inflection.capitalize(prefix)}s`](ids, { transaction: options.transaction });
+      }
+    }
     return [record, created];
   }
 

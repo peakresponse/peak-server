@@ -13,5 +13,20 @@
       "createdAt": "2020-04-06T21:22:10.102Z",
       "updatedAt": "2020-04-06T21:22:10.102Z"
     }
+  },
+  {
+    "model": "Incident",
+    "data": {
+      "id": "2e73956f-e009-4e3b-b94d-085acc3f47b2",
+      "psapId": "588",
+      "sceneId": "bc69d0d0-1cac-4c11-aa98-7cb1e5e7018c",
+      "number": "12345679",
+      "calledAt": "2020-04-06T21:22:10.102Z",
+      "dispatchNotifiedAt": "2020-04-06T21:22:10.102Z",
+      "createdById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "updatedById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
   }
 ]

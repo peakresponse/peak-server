@@ -20,7 +20,7 @@
 <main [class.d-none]="route.firstChild">
   <div class="table-responsive">
     <table class="table">
-      <shared-list type="incidents" [params]="params" [search]="search">
+      <shared-list type="incidents" [transform]="transform" [params]="params" [search]="search">
         <ng-template let-record="record">
           <tr *ngIf="parseDate(record.dispatches[0].dispatchedAt) as datetime" [routerLink]="['/incidents', record.id, 'reports']">
             <td>

@@ -7,6 +7,7 @@ import { ApiService, NavigationService } from 'shared';
 import { PatientAgeUnits, PatientGender } from '../../models/patient';
 import { UnitDisposition } from '../../models/disposition';
 import { Report } from '../../models/report';
+import models from '../../models';
 
 @Component({
   templateUrl: './report.component.html',
@@ -34,7 +35,7 @@ export class ReportComponent implements OnDestroy {
               data[key][obj.id] = obj;
             }
           }
-          this.report = new Report(response.body['Report'][0], data);
+          this.report = new Report(response.body['Report'][0], data, models);
         });
       }
     });

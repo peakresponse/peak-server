@@ -13,6 +13,7 @@ const randomString = require('randomstring');
 const uuid = require('uuid');
 
 const models = require('../models');
+const { dispatchIncidentUpdate } = require('../wss');
 
 async function generateDemoData() {
   // get superuser admin user
@@ -69,6 +70,7 @@ async function generateDemoData() {
   if (!latestSFFD) {
     return;
   }
+  let incidentId;
   // create a new record with a random incident id with the same scene/vehicle data
   await models.sequelize.transaction(async (transaction) => {
     const [scene] = await models.Scene.createOrUpdate(
@@ -88,12 +90,13 @@ async function generateDemoData() {
       {
         number: `${parseInt(latestDemo?.number ?? '100000', 10) + Math.floor(100 * Math.random())}`,
         psapId: psap.id,
-        sceneId: scene.id,
+        sceneId: scene.canonicalId,
         createdById: user.id,
         updatedById: user.id,
       },
       { transaction }
     );
+    incidentId = incident.id;
     for (const dispatch of latestSFFD.dispatches) {
       const [vehicle] = await models.Vehicle.findOrCreate({
         where: {
@@ -120,6 +123,9 @@ async function generateDemoData() {
       );
     }
   });
+  if (incidentId) {
+    await dispatchIncidentUpdate(incidentId);
+  }
 }
 
 generateDemoData()

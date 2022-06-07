@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const { Base } = require('./base');
 const nemsis = require('../lib/nemsis');
 
@@ -22,6 +24,28 @@ module.exports = (sequelize, DataTypes) => {
 
     static createOrUpdate(user, agency, data, options) {
       return Base.createOrUpdate(Procedure, user, agency, data, [], ['data'], options);
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'canonicalId',
+        'currentId',
+        'parentId',
+        'secondParentId',
+        'data',
+        'updatedAttributes',
+        'updatedDataAttributes',
+        'isValid',
+        'validationErrors',
+        'createdAt',
+        'createdById',
+        'createdByAgencyId',
+        'updatedAt',
+        'updatedById',
+        'updatedByAgencyId',
+      ]);
     }
   }
 

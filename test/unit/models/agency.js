@@ -6,7 +6,7 @@ const models = require('../../../models');
 describe('models', () => {
   describe('Agency', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'states', 'agencies', 'employments', 'scenes']);
+      await helpers.loadFixtures(['users', 'cities', 'states', 'agencies', 'employments', 'scenes']);
     });
 
     describe("scope('canonical')", () => {

@@ -1,131 +1,155 @@
 const i18n = require('i18n');
-const querystring = require('querystring');
 const url = require('url');
 const WebSocket = require('ws');
 const models = require('./models');
 
-const agencyServer = new WebSocket.Server({ noServer: true });
-
-agencyServer.on('connection', async (ws, req) => {
+const incidentsServer = new WebSocket.Server({ noServer: true });
+incidentsServer.on('connection', async (ws, req) => {
   // eslint-disable-next-line no-param-reassign
-  ws.info = { userId: req.user.id, agencyId: req.agency.id };
-  const scenes = await req.agency.getActiveScenes();
-  const agency = req.agency.toJSON();
-  agency.message = req.agency.getLocalizedInvitationMessage(req);
-  const data = JSON.stringify({
-    agency,
-    scenes: scenes.map((s) => s.toJSON()),
-  });
-  ws.send(data);
+  ws.info = { userId: req.user.id, agencyId: req.agency.id, assignmentId: req.assignment.id, vehicleId: req.assignment.vehicleId };
 });
+
+async function dispatchIncidentUpdate(incidentId) {
+  const incident = await models.Incident.findByPk(incidentId, {
+    include: [
+      { model: models.Scene, as: 'scene', include: ['city', 'state'] },
+      {
+        model: models.Dispatch,
+        as: 'dispatches',
+        include: 'vehicle',
+      },
+    ],
+  });
+  if (!incident) {
+    return;
+  }
+  const json = {
+    City: incident.scene.city.toJSON(),
+    Dispatch: incident.dispatches.map((d) => d.toJSON()),
+    Incident: incident.toJSON(),
+    Scene: incident.scene.toJSON(),
+    State: incident.scene.state.toJSON(),
+    Vehicle: incident.dispatches.map((d) => d.vehicle.toJSON()),
+  };
+  const data = JSON.stringify(json);
+  for (const ws of incidentsServer.clients) {
+    if (incident.dispatches.find((d) => d.vehicleId === ws.info.vehicleId)) {
+      // TODO include all reports if not an MCI (MCI will dispatch through Scene updates)
+      ws.send(data);
+    } else if (incident.dispatches.find((d) => d.vehicle.createdByAgencyId === ws.info.agencyId)) {
+      ws.send(data);
+    }
+  }
+}
 
 const sceneServer = new WebSocket.Server({ noServer: true });
 
 sceneServer.on('connection', async (ws, req) => {
   // eslint-disable-next-line no-param-reassign
   ws.info = { userId: req.user.id, sceneId: req.scene.id };
-  const responders = await req.scene.getLatestResponders({
-    include: [
-      { model: models.User, as: 'user' },
-      { model: models.Agency, as: 'agency' },
-    ],
+  let payload;
+  await models.sequelize.transaction(async (transaction) => {
+    const scene = await models.Scene.findByPk(req.scene.id, {
+      include: ['current', 'city', 'incident', 'state'],
+      transaction,
+    });
+    const responders = await scene.getResponders({
+      include: ['user', 'agency', 'vehicle'],
+      transaction,
+    });
+    const reports = await scene.incident.getReports({ transaction });
+    payload = await models.Report.createPayload(reports, { transaction });
+    // during MCI, rewrite all Reports to refer to latest Scene
+    for (const report of payload.Report) {
+      report.sceneId = scene.currentId;
+    }
+    payload.Agency = responders.map((r) => r.agency.toJSON());
+    payload.City = scene.city.toJSON();
+    payload.Incident = scene.incident.toJSON();
+    payload.Responder = responders.map((r) => r.toJSON());
+    payload.Scene = scene.toJSON();
+    payload.State = scene.state.toJSON();
+    payload.User = responders.map((r) => r.user.toJSON());
+    payload.Vehicle = responders
+      .map((r) => r.vehicle)
+      .filter((v) => v)
+      .map((v) => v.toJSON());
   });
-  const patients = await req.scene.getPatients({
-    include: [
-      { model: models.Agency, as: 'transportAgency' },
-      { model: models.Facility, as: 'transportFacility' },
-      { model: models.Patient, as: 'versions' },
-    ],
-    where: {
-      canonicalId: null,
-    },
-  });
-  const pins = await req.scene.getPins();
-  const data = JSON.stringify({
-    scene: req.scene.toJSON(),
-    responders: await Promise.all(responders.map((r) => r.toFullJSON())),
-    patients: await Promise.all(patients.map((p) => p.toFullJSON())),
-    pins: pins.map((p) => p.toJSON()),
-  });
+  const data = JSON.stringify(payload);
   ws.send(data);
 });
 
-const dispatchSceneUpdate = async (sceneId) => {
-  const scene = await models.Scene.findByPk(sceneId);
-  const pins = await scene.getPins();
-  let data = JSON.stringify({
-    scene: scene.toJSON(),
-    pins: pins.map((p) => p.toJSON()),
-  });
-  /// dispatch to all clients watching this specific scene
-  for (const ws of sceneServer.clients) {
-    if (ws.info.sceneId === sceneId) {
-      ws.send(data);
-    }
-  }
-  /// dispatch to all clients watching the agency
-  const agencyIds = [scene.createdByAgencyId];
-  data = JSON.stringify({
-    scenes: [scene.toJSON()],
-  });
-  /// TODO if an MCI, append all agencies in surrounding counties
-  for (const ws of agencyServer.clients) {
-    if (agencyIds.includes(ws.info.agencyId)) {
-      ws.send(data);
-    }
-  }
-};
-
-const dispatchSceneRespondersUpdate = async (responderIds) => {
-  const responders = await models.Responder.findAll({
-    where: {
-      id: responderIds,
-    },
-    include: [
-      { model: models.User, as: 'user' },
-      { model: models.Agency, as: 'agency' },
-    ],
-  });
-  if (responders.length === 0) {
-    return;
-  }
-  const [{ sceneId }] = responders;
-  const scene = await models.Scene.findByPk(sceneId);
-  const data = JSON.stringify({
-    scene: scene.toJSON(),
-    responders: await Promise.all(responders.map((r) => r.toFullJSON())),
-  });
-  for (const ws of sceneServer.clients) {
-    if (ws.info.sceneId === sceneId) {
-      ws.send(data);
-    }
-  }
-};
-
-const dispatchPatientUpdate = async (patientId) => {
-  let scene;
-  let patient;
-  let data;
+async function dispatchSceneUpdate(sceneId) {
+  let payload = {};
   await models.sequelize.transaction(async (transaction) => {
-    patient = await models.Patient.findByPk(patientId, { transaction });
-    scene = await patient.getScene({ transaction });
-    data = JSON.stringify({
-      scene: scene.toJSON(),
-      patients: [await patient.toFullJSON({ transaction })],
+    const scene = await models.Scene.findByPk(sceneId, { transaction });
+    const responders = await scene.getResponders({
+      include: ['user', 'agency', 'vehicle'],
+      transaction,
     });
+    payload.Agency = responders.map((r) => r.agency.toJSON());
+    payload.Responder = responders.map((r) => r.toJSON());
+    payload.Scene = scene.toJSON();
+    payload.User = responders.map((r) => r.user.toJSON());
+    payload.Vehicle = responders
+      .map((r) => r.vehicle)
+      .filter((v) => v)
+      .map((v) => v.toJSON());
+  });
+  payload = JSON.stringify(payload);
+  // dispatch to all clients watching this specific scene
+  for (const ws of sceneServer.clients) {
+    if (ws.info.sceneId === sceneId) {
+      ws.send(payload);
+    }
+  }
+  // dispatch to all clients watching dispatched incidents
+  const incidents = await models.Incident.scope({ method: ['scene', sceneId] }).findAll();
+  await Promise.all(incidents.map((i) => dispatchIncidentUpdate(i.id)));
+}
+
+async function dispatchReportUpdate(reportId) {
+  let report;
+  let scene;
+  let payload;
+  await models.sequelize.transaction(async (transaction) => {
+    report = await models.Report.findByPk(reportId, {
+      include: [
+        'response',
+        { model: models.Scene, as: 'scene', include: ['city', 'state'] },
+        'time',
+        'patient',
+        'situation',
+        'history',
+        'disposition',
+        'narrative',
+        'medications',
+        'procedures',
+        'vitals',
+        'files',
+      ],
+      transaction,
+    });
+    scene = await report.scene.getCanonical({ transaction });
+    payload = await models.Report.createPayload([report], { transaction });
+    // during MCI, rewrite all Reports to refer to latest Scene
+    for (const rep of payload.Report) {
+      rep.sceneId = scene.currentId;
+    }
+    payload = JSON.stringify(payload);
   });
   for (const ws of sceneServer.clients) {
     if (ws.info.sceneId === scene.id) {
-      ws.send(data);
+      ws.send(payload);
     }
   }
-};
+}
 
-const configure = (server, app) => {
+function configure(server, app) {
   server.on('upgrade', (req, socket, head) => {
     i18n.init(req);
     app.sessionParser(req, {}, async () => {
-      const query = querystring.parse(url.parse(req.url).query);
+      const params = new URLSearchParams(url.parse(req.url).query);
       /// ensure agency specified
       const subdomains = req.headers.host.split('.');
       let agency;
@@ -167,15 +191,25 @@ const configure = (server, app) => {
       /// connect based on pathname
       const { pathname } = url.parse(req.url);
       switch (pathname) {
-        case '/agency':
-          agencyServer.handleUpgrade(req, socket, head, (ws) => {
-            agencyServer.emit('connection', ws, req);
+        case '/incidents':
+          if (params.get('assignmentId')) {
+            req.assignment = await models.Assignment.findByPk(params.get('assignmentId'));
+          }
+          if (!req.assignment) {
+            socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');
+            socket.destroy();
+            return;
+          }
+          incidentsServer.handleUpgrade(req, socket, head, (ws) => {
+            incidentsServer.emit('connection', ws, req);
           });
           break;
         case '/scene':
           /// ensure active scene
-          if (query.id) {
-            req.scene = await models.Scene.findByPk(query.id);
+          if (params.get('id')) {
+            req.scene = await models.Scene.findByPk(params.get('id'), {
+              include: ['city', 'incident', 'state'],
+            });
           }
           if (!req.scene) {
             socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');
@@ -192,11 +226,11 @@ const configure = (server, app) => {
       }
     });
   });
-};
+}
 
 module.exports = {
   configure,
+  dispatchIncidentUpdate,
+  dispatchReportUpdate,
   dispatchSceneUpdate,
-  dispatchSceneRespondersUpdate,
-  dispatchPatientUpdate,
 };

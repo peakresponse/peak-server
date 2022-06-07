@@ -1,3 +1,4 @@
+import { capitalize, singularize } from 'inflection';
 import { get } from 'lodash';
 
 export class NemsisValue {
@@ -30,15 +31,45 @@ export class NemsisValueList {
 
 export class Base {
   protected data: any;
-  protected cache: any = {};
+  protected dependencies: any;
+  protected cache: any;
+  protected models: any;
+  protected proxy: any;
 
-  constructor(data: any) {
+  constructor(data: any, dependencies: any = undefined, models: any = {}) {
     this.data = data;
-    return new Proxy(this, {
+    this.dependencies = dependencies;
+    this.cache = {};
+    this.models = models;
+    this.proxy = new Proxy(this, {
       get(target, prop) {
         const propName = String(prop);
         if (prop in target.data) {
           return target.data[prop];
+        } else if (`${propName}Id` in target.data) {
+          const id = target.data[`${propName}Id`];
+          const type = propName[0].toUpperCase() + propName.substring(1);
+          if (models[type]) {
+            if (!target.cache[type]?.[id]) {
+              target.cache[type] ||= {};
+              target.cache[type][id] = new models[type](target.dependencies[type][id], target.dependencies, target.models);
+            }
+            return target.cache[type][id];
+          }
+          return target.dependencies[type][id];
+        } else if (propName.endsWith('s') && `${singularize(propName)}Ids` in target.data) {
+          const ids = target.data[`${singularize(propName)}Ids`];
+          const type = capitalize(singularize(propName));
+          if (models[type]) {
+            return ids.map((id: any) => {
+              if (!target.cache[type]?.[id]) {
+                target.cache[type] ||= {};
+                target.cache[type][id] = new models[type](target.dependencies[type][id], target.dependencies, target.models);
+              }
+              return target.cache[type][id];
+            });
+          }
+          return ids.map((id: any) => target.dependencies[type][id]);
         }
         return (target as any)[prop];
       },
@@ -51,6 +82,7 @@ export class Base {
         return true;
       },
     });
+    return this.proxy;
   }
 
   getFirstNemsisValue(keyPath: string[]): NemsisValue {

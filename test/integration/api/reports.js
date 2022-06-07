@@ -87,8 +87,10 @@ describe('/api/reports', () => {
         Report: {
           id: '2f1b5eb1-4689-41ef-8d88-aeda834a99ac',
           canonicalId: '90cf28b8-a59f-4ca2-8a4b-7756e1c0bd9e',
+          sceneId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
           narrativeId: '89529548-19f7-4a17-b7d3-ad783c575f63',
           patientId: '059efacd-ebf3-486a-b726-9a49912187f9',
+          incidentId: '6621202f-ca09-4ad9-be8f-b56346d1de65',
           data: {
             'eRecord.01': {
               _text: '90cf28b8-a59f-4ca2-8a4b-7756e1c0bd9e',
@@ -112,7 +114,7 @@ describe('/api/reports', () => {
       const report = await models.Report.findByPk('2f1b5eb1-4689-41ef-8d88-aeda834a99ac');
       assert(report);
       assert.deepStrictEqual(report.data, data.Report.data);
-      assert.deepStrictEqual(report.updatedAttributes, ['id', 'canonicalId', 'data', 'patientId', 'narrativeId']);
+      assert.deepStrictEqual(report.updatedAttributes, ['id', 'canonicalId', 'incidentId', 'data', 'sceneId', 'patientId', 'narrativeId']);
       assert.deepStrictEqual(report.updatedDataAttributes, ['/eRecord.01', '/eRecord.SoftwareApplicationGroup']);
 
       const narrative = await report.getNarrative();

@@ -314,5 +314,28 @@ describe('models', () => {
         }
       });
     });
+
+    describe('.getActiveScenes', () => {
+      it('returns all active Scenes the user is a Responder to', async () => {
+        await helpers.loadFixtures([
+          'users',
+          'cities',
+          'states',
+          'agencies',
+          'vehicles',
+          'assignments',
+          'contacts',
+          'employments',
+          'scenes',
+          'responders',
+        ]);
+        const user = await models.User.findOne({
+          where: { email: 'regular@peakresponse.net' },
+        });
+        const scenes = await user.getActiveScenes();
+        assert.deepStrictEqual(scenes.length, 1);
+        assert.deepStrictEqual(scenes[0].id, '25db9094-03a5-4267-8314-bead229eff9d');
+      });
+    });
   });
 });

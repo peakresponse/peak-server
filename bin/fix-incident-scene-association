@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+const inflection = require('inflection');
+const models = require('../models');
+
+models.sequelize
+  .transaction(async (transaction) => {
+    const incidents = await models.Incident.findAll({
+      include: ['scene'],
+      transaction,
+    });
+    for (const incident of incidents) {
+      process.stdout.write('.');
+      if (incident.scene.canonicalId) {
+        await incident.update({ sceneId: incident.scene.canonicalId }, { transaction });
+      }
+    }
+    process.stdout.write(' Done!\n');
+  })
+  .then(() => {
+    models.sequelize.close();
+    process.exit(0);
+  });

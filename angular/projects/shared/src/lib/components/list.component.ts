@@ -17,7 +17,7 @@ import { AutoloadDirective } from '../directives/autoload.directive';
   templateUrl: './list.component.html',
 })
 export class ListComponent {
-  @Input() cls: any = null;
+  @Input() transform: any = null;
   @Input() type: string = '';
   @Input() basePath: string = '';
   @Input() params?: HttpParams;
@@ -90,6 +90,9 @@ export class ListComponent {
     if (this.apiSubscription) {
       this.apiSubscription.unsubscribe();
     }
+    if (!get(this.api, this.type).get) {
+      return;
+    }
     this.apiSubscription = get(this.api, this.type)
       .get(id)
       .pipe(
@@ -123,8 +126,8 @@ export class ListComponent {
   private handleResponse(response: HttpResponse<any>) {
     this.isLoading = false;
     let records = response.body;
-    if (this.cls) {
-      records = records.map((r: any) => new this.cls(r));
+    if (this.transform) {
+      records = this.transform(records);
     }
     if (this.records == null) {
       this.records = records;

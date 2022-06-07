@@ -4,6 +4,7 @@ const { DateTime } = require('luxon');
 const uuid = require('uuid');
 
 const models = require('../../models');
+const { dispatchIncidentUpdate } = require('../../wss');
 
 const router = express.Router();
 
@@ -32,6 +33,7 @@ router.post('/cad', async (req, res) => {
     res.status(HttpStatus.FORBIDDEN).end();
     return;
   }
+  const newIncidentIds = [];
   await models.sequelize.transaction(async (transaction) => {
     const sffd = await models.Agency.scope('claimed').findOne({
       where: {
@@ -101,9 +103,10 @@ router.post('/cad', async (req, res) => {
           }
           // eslint-disable-next-line no-await-in-loop
           const [scene] = await models.Scene.createOrUpdate(req.user, null, newScene, { transaction });
-          incident.sceneId = scene.id;
+          incident.sceneId = scene.canonicalId;
           // eslint-disable-next-line no-await-in-loop
           await incident.save({ transaction });
+          newIncidentIds.push(incident.id);
         }
         incidents[INC_NO] = incident;
       }
@@ -137,6 +140,7 @@ router.post('/cad', async (req, res) => {
     }
   });
   res.status(HttpStatus.OK).end();
+  await Promise.all(newIncidentIds.map((id) => dispatchIncidentUpdate(id)));
 });
 
 module.exports = router;

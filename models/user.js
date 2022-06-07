@@ -23,21 +23,17 @@ module.exports = (sequelize, DataTypes) => {
         as: 'updatedPatients',
         foreignKey: 'updatedById',
       });
-      User.hasMany(models.Responder, { as: 'responders' });
       User.belongsToMany(models.Psap, {
         as: 'psaps',
         through: models.Dispatcher,
         otherKey: 'psapId',
         foreignKey: 'userId',
       });
-      User.belongsToMany(models.Scene, {
-        as: 'scenes',
-        through: models.Responder,
-      });
-      User.belongsToMany(models.Scene.scope('active'), {
-        as: 'activeScenes',
-        through: models.Responder.scope('onScene'),
-      });
+
+      User.hasMany(models.Responder, { as: 'responders', foreignKey: 'userId' });
+      User.hasMany(models.Responder.scope('onscene'), { as: 'activeResponders', foreignKey: 'userId' });
+      User.belongsToMany(models.Scene, { as: 'scenes', through: models.Responder });
+      User.belongsToMany(models.Scene.scope('active'), { as: 'activeScenes', through: models.Responder.scope('onscene') });
     }
 
     static async register(values, options) {

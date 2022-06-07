@@ -1,4 +1,5 @@
 const express = require('express');
+const _ = require('lodash');
 
 // const HttpStatus = require('http-status-codes');
 const models = require('../../models');
@@ -34,7 +35,34 @@ router.get(
     }
     const { docs, pages, total } = await models.Incident.paginate(type, obj, options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
-    res.json(docs.map((r) => r.toJSON()));
+    let payload;
+    if (req.apiLevel > 1) {
+      payload = {};
+      payload.City = _.uniqBy(
+        docs.map((i) => i.scene.city),
+        (c) => c.id
+      ).map((c) => c.toJSON());
+      payload.Dispatch = docs.flatMap((i) => i.dispatches).map((d) => d.toJSON());
+      payload.Incident = docs.map((i) => i.toJSON());
+      payload.Scene = _.uniqBy(
+        docs.map((i) => i.scene.toJSON()),
+        (s) => s.id
+      );
+      payload.State = _.uniqBy(
+        docs.map((i) => i.scene.state),
+        (s) => s.id
+      ).map((s) => s.toJSON());
+    } else {
+      payload = docs.map((incident) => {
+        const json = incident.toJSON();
+        json.scene = incident.scene.toJSON();
+        json.scene.city = incident.scene.city.toJSON();
+        json.scene.state = incident.scene.state.toJSON();
+        json.dispatches = incident.dispatches.map((d) => d.toJSON());
+        return json;
+      });
+    }
+    res.json(payload);
   })
 );
 
@@ -42,29 +70,46 @@ router.get(
   '/:id',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    const incident = await models.Incident.findByPk(req.params.id, {
-      include: [
-        'scene',
-        {
-          model: models.Report,
-          as: 'reports',
-          include: [
-            'response',
-            'time',
-            'patient',
-            'situation',
-            'history',
-            'disposition',
-            'narrative',
-            'medications',
-            'procedures',
-            'vitals',
-          ],
-        },
-      ],
-      rejectOnEmpty: true,
+    // TODO: verify calling user can access this incident
+    let payload;
+    await models.sequelize.transaction(async (transaction) => {
+      const incident = await models.Incident.findByPk(req.params.id, {
+        include: [
+          {
+            model: models.Scene,
+            as: 'scene',
+            include: ['city', 'state'],
+          },
+          {
+            model: models.Report,
+            as: 'reports',
+            include: [
+              'response',
+              'scene',
+              'time',
+              'patient',
+              'situation',
+              'history',
+              'disposition',
+              'narrative',
+              'medications',
+              'procedures',
+              'vitals',
+              'files',
+            ],
+          },
+        ],
+        rejectOnEmpty: true,
+        transaction,
+      });
+      payload = await models.Report.createPayload(incident.reports, { transaction });
+      payload.City = incident.scene.city.toJSON();
+      payload.Incident = incident.toJSON();
+      payload.Scene.push(incident.scene.toJSON());
+      payload.Scene = _.uniqBy(payload.Scene, (s) => s.id);
+      payload.State = incident.scene.state.toJSON();
     });
-    res.json(incident.toJSON());
+    res.json(payload);
   })
 );
 

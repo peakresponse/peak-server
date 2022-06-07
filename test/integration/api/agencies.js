@@ -224,8 +224,12 @@ describe('/api/agencies', () => {
       assert.deepStrictEqual(employment.email, user.email);
 
       /// the new user should also be logged in at this point
-      response = await testSession.get('/api/users/me').set('Host', `baymedicalameda.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
-      assert.deepStrictEqual(response.body.user?.id, user.id);
+      response = await testSession
+        .get('/api/users/me')
+        .set('Host', `baymedicalameda.${process.env.BASE_HOST}`)
+        .set('X-Api-Level', '2')
+        .expect(HttpStatus.OK);
+      assert.deepStrictEqual(response.body.User?.id, user.id);
     });
   });
 });

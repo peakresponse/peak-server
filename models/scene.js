@@ -1,5 +1,5 @@
+const _ = require('lodash');
 const sequelizePaginate = require('sequelize-paginate');
-const uuid = require('uuid');
 
 const nemsis = require('../lib/nemsis');
 const { Base } = require('./base');
@@ -13,16 +13,20 @@ module.exports = (sequelize, DataTypes) => {
       Scene.belongsTo(Scene, { as: 'secondParent' });
       Scene.hasMany(Scene, { as: 'versions', foreignKey: 'canonicalId' });
 
-      Scene.hasMany(models.Responder, { as: 'responders' });
-      Scene.hasMany(models.Responder.scope('latest'), {
-        as: 'latestResponders',
-      });
+      Scene.hasOne(models.Incident, { as: 'incident', foreignKey: 'sceneId' });
+
       Scene.hasMany(models.Patient, { as: 'patients', foreignKey: 'sceneId' });
+      Scene.hasMany(models.Responder, { as: 'responders', foreignKey: 'sceneId' });
       Scene.hasMany(models.ScenePin, { as: 'pins' });
 
       Scene.belongsTo(models.City, { as: 'city' });
       Scene.belongsTo(models.County, { as: 'county' });
       Scene.belongsTo(models.State, { as: 'state' });
+      Scene.belongsTo(models.Responder, { as: 'mgsResponder' });
+      Scene.belongsTo(models.Responder, { as: 'triageResponder' });
+      Scene.belongsTo(models.Responder, { as: 'treatmentResponder' });
+      Scene.belongsTo(models.Responder, { as: 'stagingResponder' });
+      Scene.belongsTo(models.Responder, { as: 'transportResponder' });
       Scene.belongsTo(models.User, { as: 'updatedBy' });
       Scene.belongsTo(models.User, { as: 'createdBy' });
       Scene.belongsTo(models.User, { as: 'incidentCommander' });
@@ -62,6 +66,11 @@ module.exports = (sequelize, DataTypes) => {
           'closedAt',
           'incidentCommanderId',
           'incidentCommanderAgencyId',
+          'mgsResponderId',
+          'triageResponderId',
+          'treatmentResponderId',
+          'stagingResponderId',
+          'transportResponderId',
           'approxPriorityPatientsCounts',
           'data',
         ],
@@ -69,202 +78,46 @@ module.exports = (sequelize, DataTypes) => {
       );
     }
 
-    static async start(user, agency, initialData, options) {
-      if (!options?.transaction) {
-        return sequelize.transaction((transaction) => Scene.start(user, agency, initialData, { ...options, transaction }));
-      }
-      /// confirm there's a corresponding Employment record
-      const employment = await sequelize.models.Employment.findOne({
-        where: { userId: user.id, agencyId: agency.id },
-        transaction: options?.transaction,
-      });
-      if (!employment || !employment.isActive) {
-        throw new Error();
-      }
-      const [scene, created] = await Scene.createOrUpdate(
-        user,
-        agency,
-        {
-          ...initialData,
-          incidentCommanderId: user.id,
-          incidentCommanderAgencyId: agency.id,
-        },
-        options
-      );
-      /// add the user as an arrived first responder
-      await sequelize.models.Responder.create(
-        {
-          sceneId: scene.canonicalId,
-          userId: user.id,
-          agencyId: agency.id,
-          arrivedAt: new Date(),
-          createdById: user.id,
-          updatedById: user.id,
-          createdByAgencyId: agency.id,
-          updatedByAgencyId: agency.id,
-        },
-        options
-      );
-      await Scene.update(
-        { respondersCount: 1 },
-        {
-          where: {
-            id: scene.canonicalId,
-          },
-          transaction: options.transaction,
-        }
-      );
-      return [scene, created];
-    }
-
-    async close(user, agency, options) {
-      if (this.canonicalId || user.id !== this.incidentCommanderId || agency.id !== this.incidentCommanderAgencyId) {
-        throw new Error();
-      }
-      if (!options?.transaction) {
-        return sequelize.transaction((transaction) => this.close(user, agency, { ...options, transaction }));
-      }
-      return Scene.createOrUpdate(
-        user,
-        agency,
-        {
-          id: uuid.v4(),
-          parentId: this.currentId,
-          closedAt: new Date(),
-        },
-        options
-      );
-    }
-
-    async join(user, agency, options) {
-      if (this.canonicalId) {
-        throw new Error();
-      }
-      if (!options?.transaction) {
-        return sequelize.transaction((transaction) => this.join(user, agency, { ...options, transaction }));
-      }
-      const [responder, created] = await sequelize.models.Responder.findOrCreate({
-        where: {
-          sceneId: this.id,
-          userId: user.id,
-          agencyId: agency.id,
-          departedAt: null,
-        },
-        defaults: {
-          arrivedAt: new Date(),
-          createdById: user.id,
-          updatedById: user.id,
-          createdByAgencyId: agency.id,
-          updatedByAgencyId: agency.id,
-        },
-        transaction: options.transaction,
-      });
-      if (created) {
-        await this.updateRespondersCount(options);
-      }
-      return responder;
-    }
-
-    async leave(user, agency, options) {
-      if (this.canonicalId || this.incidentCommanderId === user.id) {
-        throw new Error();
-      }
-      if (!options?.transaction) {
-        return sequelize.transaction((transaction) => this.leave(user, agency, { ...options, transaction }));
-      }
-      const responder = await sequelize.models.Responder.findOne({
-        where: {
-          sceneId: this.id,
-          userId: user.id,
-          agencyId: agency.id,
-          departedAt: null,
-        },
-        rejectOnEmpty: true,
-        transaction: options.transaction,
-      });
-      await responder.update(
-        {
-          departedAt: new Date(),
-          updatedById: user.id,
-          updatedByAgencyId: agency.id,
-        },
-        options
-      );
-      await this.updateRespondersCount(options);
-      return responder;
-    }
-
-    async transferCommandTo(user, agency, options) {
-      if (this.canonicalId) {
-        throw new Error();
-      }
-      if (!options?.transaction) {
-        return sequelize.transaction((transaction) => this.transferCommandTo(user, agency, { ...options, transaction }));
-      }
-      /// confirm this is a responder on scene
-      const responder = await sequelize.models.Responder.findOne({
-        where: { sceneId: this.id, userId: user.id, agencyId: agency.id, departedAt: null },
-        transaction: options.transaction,
-      });
-      if (!responder) {
-        throw new Error();
-      }
-      return Scene.createOrUpdate(
-        user,
-        agency,
-        {
-          id: uuid.v4(),
-          parentId: this.currentId,
-          incidentCommanderId: user.id,
-          incidentCommanderAgencyId: agency.id,
-        },
-        options
-      );
-    }
-
-    async updateRespondersCount(options) {
-      if (this.canonicalId) {
-        throw new Error();
-      }
-      return this.update(
-        {
-          respondersCount: await sequelize.models.Responder.count({
-            where: {
-              sceneId: this.id,
-              departedAt: null,
-            },
-            distinct: true,
-            col: 'user_id',
-            transaction: options.transaction,
-          }),
-        },
-        options
-      );
-    }
-
-    async updatePatientCounts(options) {
-      if (this.canonicalId) {
-        throw new Error();
-      }
-      this.patientsCount = await sequelize.models.Patient.scope('canonical').count({
-        where: { sceneId: this.id },
-        transaction: options.transaction,
-      });
-      const priorityPatientsCounts = [0, 0, 0, 0, 0, 0];
-      const results = await sequelize.models.Patient.scope('canonical').findAll({
-        group: ['priority'],
-        attributes: ['priority', [sequelize.fn('COUNT', '*'), 'count']],
-        where: { sceneId: this.id, isTransported: false },
-        raw: true,
-        transaction: options.transaction,
-      });
-      for (const result of results) {
-        priorityPatientsCounts[result.priority] = parseInt(result.count, 10);
-      }
-      priorityPatientsCounts[5] =
-        this.patientsCount - priorityPatientsCounts.reduce((previousValue, currentValue) => previousValue + currentValue);
-      this.priorityPatientsCounts = priorityPatientsCounts;
-      return this.save(options);
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'canonicalId',
+        'currentId',
+        'parentId',
+        'data',
+        'createdAt',
+        'createdById',
+        'createdByAgencyId',
+        'updatedAt',
+        'updatedById',
+        'updatedByAgencyId',
+        'name',
+        'desc',
+        'urgency',
+        'note',
+        'lat',
+        'lng',
+        'geog',
+        'address1',
+        'address2',
+        'cityId',
+        'countyId',
+        'stateId',
+        'zip',
+        'isMCI',
+        'isActive',
+        'approxPatientsCount',
+        'approxPriorityPatientsCounts',
+        'closedAt',
+        'incidentCommanderId',
+        'incidentCommanderAgencyId',
+        'mgsResponderId',
+        'triageResponderId',
+        'treatmentResponderId',
+        'stagingResponderId',
+        'transportResponderId',
+      ]);
     }
   }
 
@@ -351,6 +204,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSONB,
         field: 'validation_errors',
       },
+      isCanonical: {
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['canonicalId']),
+        get() {
+          return !this.canonicalId;
+        },
+      },
     },
     {
       sequelize,
@@ -374,7 +233,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Scene.addScope('active', {
-    where: { closedAt: null },
+    where: { isMCI: true, closedAt: null },
   });
 
   Scene.addScope('canonical', {
@@ -382,7 +241,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Scene.addScope('closed', {
-    where: { closedAt: { [sequelize.Sequelize.Op.not]: null } },
+    where: { isMCI: true, closedAt: { [sequelize.Sequelize.Op.not]: null } },
   });
 
   Scene.addScope('latest', {

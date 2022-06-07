@@ -6,161 +6,162 @@ const models = require('../../../models');
 describe('models', () => {
   describe('Scene', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'states', 'agencies', 'contacts', 'employments', 'scenes', 'responders']);
+      await helpers.loadFixtures([
+        'cities',
+        'counties',
+        'states',
+        'users',
+        'agencies',
+        'vehicles',
+        'contacts',
+        'employments',
+        'psaps',
+        'dispatchers',
+        'scenes',
+        'responders',
+        'incidents',
+        'vehicles',
+        'assignments',
+        'dispatches',
+        'responses',
+        'times',
+        'situations',
+        'dispositions',
+        'histories',
+        'narratives',
+        'medications',
+        'vitals',
+        'procedures',
+        'files',
+        'reports',
+      ]);
     });
 
-    describe("scope('active')", () => {
-      it('filters out closed scenes', async () => {
-        const scenes = await models.Scene.scope('canonical', 'active').findAll();
-        assert.deepStrictEqual(scenes.length, 1);
-        assert.deepStrictEqual(scenes[0].id, '25db9094-03a5-4267-8314-bead229eff9d');
-      });
-    });
-
-    describe("scope('closed')", () => {
-      it('filters out active scenes', async () => {
-        const scenes = await models.Scene.scope('canonical', 'closed').findAll();
-        assert.deepStrictEqual(scenes.length, 1);
-        assert.deepStrictEqual(scenes[0].id, '7b8ddcc3-63e6-4e6e-a47e-d553289912d1');
-      });
-    });
-
-    describe('start()', () => {
-      it('creates a new Scene', async () => {
+    describe('createOrUpdate()', () => {
+      it('creates a new canonical and corresponding history record', async () => {
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
-        const [scene, created] = await models.Scene.start(user, agency, {
+
+        const data = {
           id: 'fef7d4da-28e7-4423-9975-624eb2d11275',
           canonicalId: '69928e17-c8fb-47db-8597-5591b8dda33a',
           name: 'New Scene',
-        });
-        assert(scene);
+        };
+        const [record, created] = await models.Scene.createOrUpdate(user, agency, data);
+        assert(record);
         assert(created);
-        assert.deepStrictEqual(scene.id, 'fef7d4da-28e7-4423-9975-624eb2d11275');
-        assert.deepStrictEqual(scene.name, 'New Scene');
-        assert.deepStrictEqual(scene.incidentCommanderId, user.id);
-        assert.deepStrictEqual(scene.incidentCommanderAgencyId, agency.id);
-        assert.deepStrictEqual(scene.closedAt, null);
+        assert.deepStrictEqual(record.id, data.id);
+        assert.deepStrictEqual(record.parentId, null);
+        assert.deepStrictEqual(record.canonicalId, data.canonicalId);
+        assert.deepStrictEqual(record.name, 'New Scene');
+        assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'name']);
+        assert.deepStrictEqual(record.createdById, user.id);
+        assert.deepStrictEqual(record.updatedById, user.id);
+        assert.deepStrictEqual(record.createdByAgencyId, agency.id);
+        assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
 
-        const canonical = await scene.getCanonical();
+        const canonical = await record.getCanonical();
         assert(canonical);
-        assert.deepStrictEqual(canonical.currentId, 'fef7d4da-28e7-4423-9975-624eb2d11275');
-        assert.deepStrictEqual(canonical.id, '69928e17-c8fb-47db-8597-5591b8dda33a');
-        assert.deepStrictEqual(canonical.respondersCount, 1);
+        assert.deepStrictEqual(canonical.id, data.canonicalId);
+        assert.deepStrictEqual(canonical.parentId, null);
+        assert.deepStrictEqual(canonical.canonicalId, null);
+        assert.deepStrictEqual(canonical.name, 'New Scene');
+        assert.deepStrictEqual(canonical.createdById, user.id);
+        assert.deepStrictEqual(canonical.updatedById, user.id);
+        assert.deepStrictEqual(canonical.createdByAgencyId, agency.id);
+        assert.deepStrictEqual(canonical.updatedByAgencyId, agency.id);
+      });
 
-        const versions = await canonical.getVersions();
-        assert.deepStrictEqual(versions.length, 1);
-        assert.deepStrictEqual(versions[0].name, 'New Scene');
-        assert.deepStrictEqual(versions[0].updatedAttributes, [
-          'id',
-          'canonicalId',
-          'name',
-          'incidentCommanderId',
-          'incidentCommanderAgencyId',
-        ]);
+      it('updates an existing canonical record and creates a corresponding history record', async () => {
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+
+        await models.Responder.createOrUpdate(user, agency, {
+          id: '79ba407e-66ce-488b-b70c-2231bf38567c',
+          sceneId: 'bc69d0d0-1cac-4c11-aa98-7cb1e5e7018c',
+          userId: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+          arrivedAt: '2020-04-06T21:22:10.102Z',
+        });
+
+        const data = {
+          id: '7f263c9d-5304-4c44-9cce-47b1b3743cdd',
+          parentId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
+          isMCI: true,
+          mgsResponderId: '79ba407e-66ce-488b-b70c-2231bf38567c',
+        };
+        const [record, created] = await models.Scene.createOrUpdate(user, agency, data);
+        assert(record);
+        assert(!created);
+        assert.deepStrictEqual(record.id, data.id);
+        assert.deepStrictEqual(record.parentId, data.parentId);
+        const parent = await record.getParent();
+        assert.deepStrictEqual(record.canonicalId, parent.canonicalId);
+        assert(record.isMCI);
+        assert.deepStrictEqual(record.mgsResponderId, '79ba407e-66ce-488b-b70c-2231bf38567c');
+        assert.deepStrictEqual(record.createdById, parent.createdById);
+        assert.deepStrictEqual(record.updatedById, user.id);
+        assert.deepStrictEqual(record.createdByAgencyId, parent.createdByAgencyId);
+        assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
+        assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'isMCI', 'mgsResponderId']);
+
+        const canonical = await record.getCanonical();
+        assert.deepStrictEqual(canonical.parentId, null);
+        assert.deepStrictEqual(canonical.canonicalId, null);
+        assert(canonical.isMCI);
+        assert.deepStrictEqual(canonical.mgsResponderId, '79ba407e-66ce-488b-b70c-2231bf38567c');
+        assert.deepStrictEqual(canonical.createdById, record.createdById);
+        assert.deepStrictEqual(canonical.updatedById, record.updatedById);
+        assert.deepStrictEqual(canonical.createdByAgencyId, record.createdByAgencyId);
+        assert.deepStrictEqual(canonical.updatedByAgencyId, record.updatedByAgencyId);
 
         const responders = await canonical.getResponders();
         assert.deepStrictEqual(responders.length, 1);
-        assert.deepStrictEqual(responders[0].sceneId, scene.canonicalId);
-        assert.deepStrictEqual(responders[0].userId, user.id);
-        assert.deepStrictEqual(responders[0].agencyId, agency.id);
-      });
-    });
-
-    describe('close()', () => {
-      it('closes a Scene by the Incident Commander', async () => {
-        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
-        assert(scene);
-        assert.deepStrictEqual(scene.closedAt, null);
-
-        const user = await scene.getIncidentCommander();
-        const agency = await scene.getIncidentCommanderAgency();
-        await scene.close(user, agency);
-        await scene.reload();
-        assert(scene.closedAt);
-
-        const versions = await scene.getVersions({
-          order: [['updated_at', 'DESC']],
-        });
-        assert.deepStrictEqual(versions.length, 2);
-        assert.deepStrictEqual(versions[0].updatedAttributes, ['id', 'parentId', 'closedAt']);
-        assert.deepStrictEqual(versions[0].closedAt, scene.closedAt);
-      });
-    });
-
-    describe('join()', () => {
-      it('adds a responder to a Scene', async () => {
-        const user = await models.User.findByPk('6f4a1b45-b465-4ec9-8127-292d87d7952b');
-        const agency = await models.Agency.findByPk('81b433cd-5f48-4458-87f3-0bf4e1591830');
-        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
-        assert(scene);
-        assert.deepStrictEqual(scene.respondersCount, 2);
-        assert.deepStrictEqual((await scene.getResponders()).length, 2);
-
-        const responder = await scene.join(user, agency);
-        assert(responder);
-
-        assert.deepStrictEqual(scene.respondersCount, 3);
-        assert.deepStrictEqual((await scene.getResponders()).length, 3);
-
-        /// join is idempotent- should just return existing record if joining again
-        assert((await scene.join(user, agency)).id, responder.id);
-        assert.deepStrictEqual(scene.respondersCount, 3);
-        assert.deepStrictEqual((await scene.getResponders()).length, 3);
-      });
-    });
-
-    describe('leave()', () => {
-      it('records a departure of a responder from a Scene', async () => {
-        const user = await models.User.findByPk('9c5f542e-f7b0-497d-91ed-1eeefd8ade7f');
-        const agency = await models.Agency.findByPk('81b433cd-5f48-4458-87f3-0bf4e1591830');
-        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
-        assert(scene);
-        assert.deepStrictEqual(scene.respondersCount, 2);
-        assert.deepStrictEqual((await scene.getResponders()).length, 2);
-
-        const responder = await scene.leave(user, agency);
-        assert(responder);
-        assert(responder.departedAt);
-
-        await scene.reload();
-        assert.deepStrictEqual(scene.respondersCount, 1);
-        assert.deepStrictEqual((await models.Responder.scope('latest', 'onScene').findAll({ where: { sceneId: scene.id } })).length, 1);
+        assert.deepStrictEqual(responders[0].id, '79ba407e-66ce-488b-b70c-2231bf38567c');
+        assert.deepStrictEqual(responders[0].userId, 'ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        assert.deepStrictEqual(responders[0].agencyId, '9eeb6591-12f8-4036-8af8-6b235153d444');
       });
 
-      it('prevents marking the current incident commander as departed', async () => {
+      it('merges parallel/out-of-order updates into a new record', async () => {
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
-        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
 
-        await assert.rejects(scene.leave(user, agency));
-      });
-    });
+        let data = {
+          id: '70336540-1d74-40fb-913b-2904a0ba66dc',
+          parentId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
+          approxPatientsCount: 2,
+          approxPriorityPatientsCounts: [2, 0, 0, 0, 0, 0],
+          updatedAt: '2020-04-06T21:23:10.102Z',
+        };
+        let [record, created] = await models.Scene.createOrUpdate(user, agency, data);
+        assert(record);
+        assert.deepStrictEqual(record.approxPatientsCount, 2);
+        assert.deepStrictEqual(record.approxPriorityPatientsCounts, [2, 0, 0, 0, 0, 0]);
+        assert.deepStrictEqual(record.updatedAt, new Date('2020-04-06T21:23:10.102Z'));
+        assert(!created);
 
-    describe('transferCommandTo()', () => {
-      it('records the Incident Commander transfering command to another User/Agency', async () => {
-        const prevUser = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
-        const prevAgency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
-        const user = await models.User.findByPk('9c5f542e-f7b0-497d-91ed-1eeefd8ade7f');
-        const agency = await models.Agency.findByPk('81b433cd-5f48-4458-87f3-0bf4e1591830');
-        const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
-        assert(scene);
-        assert(scene.incidentCommanderId, prevUser.id);
-        assert(scene.incidentCommanderAgencyId, prevAgency.id);
+        let canonical = await record.getCanonical();
+        assert.deepStrictEqual(canonical.approxPatientsCount, 2);
+        assert.deepStrictEqual(canonical.approxPriorityPatientsCounts, [2, 0, 0, 0, 0, 0]);
 
-        await scene.transferCommandTo(user, agency);
-        await scene.reload();
-        assert.deepStrictEqual(scene.incidentCommanderId, user.id);
-        assert.deepStrictEqual(scene.incidentCommanderAgencyId, agency.id);
-        const versions = await scene.getVersions({
-          order: [['updated_at', 'DESC']],
-        });
-        assert.deepStrictEqual(versions.length, 2);
-        assert.deepStrictEqual(versions[0].updatedAttributes, ['id', 'parentId', 'incidentCommanderId', 'incidentCommanderAgencyId']);
-        assert.deepStrictEqual(versions[0].incidentCommanderId, user.id);
-        assert.deepStrictEqual(versions[0].incidentCommanderAgencyId, agency.id);
-        assert.deepStrictEqual(versions[0].createdById, prevUser.id);
-        assert.deepStrictEqual(versions[0].createdByAgencyId, prevAgency.id);
+        data = {
+          id: '7fc6eb46-0660-46c6-8355-5ba94e1b17bf',
+          parentId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
+          approxPatientsCount: 1,
+          approxPriorityPatientsCounts: [0, 1, 0, 0, 0, 0],
+          updatedAt: '2020-04-06T21:23:09.102Z',
+        };
+        [record, created] = await models.Scene.createOrUpdate(user, agency, data);
+        assert(record);
+        assert(!created);
+        assert.deepStrictEqual(record.parentId, '70336540-1d74-40fb-913b-2904a0ba66dc');
+        assert.deepStrictEqual(record.secondParentId, '7fc6eb46-0660-46c6-8355-5ba94e1b17bf');
+        assert.deepStrictEqual(record.approxPatientsCount, 2);
+        assert.deepStrictEqual(record.approxPriorityPatientsCounts, [2, 1, 0, 0, 0, 0]);
+
+        canonical = await record.getCanonical();
+        assert.deepStrictEqual(canonical.approxPatientsCount, 2);
+        assert.deepStrictEqual(canonical.approxPriorityPatientsCounts, [2, 1, 0, 0, 0, 0]);
       });
     });
   });

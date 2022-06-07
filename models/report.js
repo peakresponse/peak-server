@@ -1,4 +1,3 @@
-const inflection = require('inflection');
 const _ = require('lodash');
 
 const { Base } = require('./base');
@@ -40,16 +39,14 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async createOrUpdate(user, agency, data, options) {
-      if (!options?.transaction) {
-        return sequelize.transaction((transaction) => Report.createOrUpdate(user, agency, data, { ...options, transaction }));
-      }
-      const [record, created] = await Base.createOrUpdate(
+      return Base.createOrUpdate(
         Report,
         user,
         agency,
         data,
         ['incidentId'],
         [
+          'pin',
           'data',
           'responseId',
           'sceneId',
@@ -68,22 +65,87 @@ module.exports = (sequelize, DataTypes) => {
         ],
         options
       );
-      let canonical = await record.getCanonical({ transaction: options.transaction });
-      if (canonical.currentId !== record.id) {
-        canonical = null;
+    }
+
+    static async createPayload(reports, options = {}) {
+      const { transaction } = options;
+      const payload = {
+        Report: [],
+      };
+      const ids = {
+        Response: [],
+        Scene: [],
+        Time: [],
+        Patient: [],
+        Situation: [],
+        History: [],
+        Disposition: [],
+        Narrative: [],
+        Medication: [],
+        Procedure: [],
+        Vital: [],
+        File: [],
+      };
+      for (const report of reports) {
+        payload.Report.push(report.toJSON());
+        ids.Response.push(report.responseId);
+        ids.Scene.push(report.sceneId);
+        ids.Time.push(report.timeId);
+        ids.Patient.push(report.patientId);
+        ids.Situation.push(report.situationId);
+        ids.History.push(report.historyId);
+        ids.Disposition.push(report.dispositionId);
+        ids.Narrative.push(report.narrativeId);
+        ids.Medication = ids.Medication.concat(report.medicationIds);
+        ids.Procedure = ids.Procedure.concat(report.procedureIds);
+        ids.Vital = ids.Vital.concat(report.vitalIds);
+        ids.File = ids.File.concat(report.fileIds);
       }
-      for (const prefix of ['medication', 'procedure', 'vital', 'file']) {
-        const ids = data[`${prefix}Ids`];
-        if (ids) {
-          // eslint-disable-next-line no-await-in-loop
-          await record[`set${inflection.capitalize(prefix)}s`](ids, { transaction: options.transaction });
-          if (canonical) {
+      for (const model of [
+        'Response',
+        'Scene',
+        'Time',
+        'Patient',
+        'Situation',
+        'History',
+        'Disposition',
+        'Narrative',
+        'Medication',
+        'Procedure',
+        'Vital',
+        'File',
+      ]) {
+        // eslint-disable-next-line no-await-in-loop
+        const records = await sequelize.models[model].findAll({ where: { id: ids[model] }, transaction });
+        payload[model] = records.map((record) => record.toJSON());
+        if (model === 'Scene') {
+          payload.City = [];
+          payload.State = [];
+          const cityIds = [];
+          const stateIds = [];
+          for (const scene of records) {
+            if (scene.city) {
+              payload.City = scene.city.toJSON();
+            } else if (scene.cityId) {
+              cityIds.push(scene.cityId);
+            }
+            if (scene.state) {
+              payload.State = scene.state.toJSON();
+            } else if (scene.stateId) {
+              stateIds.push(scene.stateId);
+            }
+          }
+          if (cityIds.length > 0) {
             // eslint-disable-next-line no-await-in-loop
-            await canonical[`set${inflection.capitalize(prefix)}s`](ids, { transaction: options.transaction });
+            payload.City = (await sequelize.models.City.findAll({ where: { id: cityIds }, transaction })).map((c) => c.toJSON());
+          }
+          if (stateIds.length > 0) {
+            // eslint-disable-next-line no-await-in-loop
+            payload.State = (await sequelize.models.State.findAll({ where: { id: stateIds }, transaction })).map((s) => s.toJSON());
           }
         }
       }
-      return [record, created];
+      return payload;
     }
 
     toJSON() {
@@ -94,6 +156,7 @@ module.exports = (sequelize, DataTypes) => {
         'currentId',
         'parentId',
         'incidentId',
+        'pin',
         'sceneId',
         'responseId',
         'timeId',
@@ -121,6 +184,9 @@ module.exports = (sequelize, DataTypes) => {
 
   Report.init(
     {
+      pin: {
+        type: DataTypes.STRING,
+      },
       data: DataTypes.JSONB,
       updatedAttributes: {
         type: DataTypes.JSONB,
