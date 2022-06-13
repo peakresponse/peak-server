@@ -95,12 +95,19 @@ router.post('/cad', async (req, res) => {
             canonicalId: uuid.v4(),
             address1: ADDRESS.trim(),
           };
-          if (newScene.address1.endsWith(', SF')) {
+          if (
+            newScene.address1.endsWith(', SF') || // San Francisco
+            newScene.address1.endsWith(', PR') || // Presidio
+            newScene.address1.endsWith(', YB') || // Yerba Buena Island
+            newScene.address1.endsWith(', TI') || // Treasure Island
+            newScene.address1.endsWith(', FM') || // Fort Mason
+            newScene.address1.endsWith(', HP') // Hunters Point
+          ) {
             newScene.address1 = newScene.address1.substring(0, newScene.address1.length - 4);
-            newScene.cityId = '2411786';
-            newScene.countyId = '06075';
-            newScene.stateId = '06';
           }
+          newScene.cityId = '2411786';
+          newScene.countyId = '06075';
+          newScene.stateId = '06';
           // eslint-disable-next-line no-await-in-loop
           const [scene] = await models.Scene.createOrUpdate(req.user, null, newScene, { transaction });
           incident.sceneId = scene.canonicalId;
