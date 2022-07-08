@@ -14,11 +14,13 @@ describe('/api/incidents', () => {
       'counties',
       'cities',
       'users',
+      'facilities',
       'agencies',
       'employments',
       'psaps',
       'dispatchers',
       'scenes',
+      'patients',
       'incidents',
       'vehicles',
       'dispatches',
@@ -73,7 +75,7 @@ describe('/api/incidents', () => {
         .expect(HttpStatus.OK);
       const payload = response.body;
       assert.deepStrictEqual(payload.Incident?.number, '12345678');
-      assert.deepStrictEqual(payload.Report?.length, 1);
+      assert.deepStrictEqual(payload.Report?.length, 2);
       assert.deepStrictEqual(payload.Scene?.length, 2);
     });
   });

@@ -14,6 +14,8 @@ router.get(
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
     const options = {
+      include: ['patient', 'disposition'],
+      order: [['createdAt', 'desc']],
       where: {},
     };
     const { incidentId } = req.query;
@@ -103,39 +105,10 @@ router.get(
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       const report = await models.Report.findByPk(req.params.id, {
-        include: [
-          'response',
-          { model: models.Scene, as: 'scene', include: ['city', 'state'] },
-          'time',
-          'patient',
-          'situation',
-          'history',
-          'disposition',
-          'narrative',
-          'medications',
-          'procedures',
-          'vitals',
-          'files',
-        ],
+        include: ['disposition', 'patient'],
         transaction,
       });
-      const payload = {
-        City: [report.scene.city.toJSON()],
-        State: [report.scene.state.toJSON()],
-        Report: [report.toJSON()],
-        Response: [report.response.toJSON()],
-        Scene: [report.scene.toJSON()],
-        Time: [report.time.toJSON()],
-        Patient: [report.patient.toJSON()],
-        Situation: [report.situation.toJSON()],
-        History: [report.history.toJSON()],
-        Disposition: [report.disposition.toJSON()],
-        Narrative: [report.narrative.toJSON()],
-        Medication: report.medications.map((m) => m.toJSON()),
-        Procedure: report.procedures.map((m) => m.toJSON()),
-        Vital: report.vitals.map((m) => m.toJSON()),
-        File: report.files.map((m) => m.toJSON()),
-      };
+      const payload = await models.Report.createPayload([report], { transaction });
       res.json(payload);
     });
   })

@@ -65,4 +65,21 @@ describe('/api/facilities', () => {
       }
     });
   });
+
+  describe('POST /fetch', () => {
+    it('returns a list of matching Facilities', async () => {
+      const response = await testSession
+        .post('/api/facilities/fetch')
+        .set('Accept', 'application/json')
+        .send({
+          '06': ['20386', '62636'],
+        })
+        .expect(HttpStatus.OK);
+      const facilities = response.body;
+      facilities.sort((a, b) => a.name.localeCompare(b.name));
+      assert.deepStrictEqual(facilities.length, 2);
+      assert.deepStrictEqual(facilities[0].name, 'CPMC-Van Ness');
+      assert.deepStrictEqual(facilities[1].name, 'Zuckerberg San Francisco General Hospital and Trauma Center');
+    });
+  });
 });

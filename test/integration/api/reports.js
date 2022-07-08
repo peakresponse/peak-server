@@ -16,11 +16,13 @@ describe('/api/reports', () => {
       'states',
       'agencies',
       'users',
+      'facilities',
       'contacts',
       'employments',
       'psaps',
       'dispatchers',
       'scenes',
+      'patients',
       'incidents',
       'vehicles',
       'dispatches',
@@ -53,16 +55,23 @@ describe('/api/reports', () => {
         .expect(HttpStatus.OK);
       const data = response.body;
       assert(data.Report);
-      assert.deepStrictEqual(data.Report.length, 1);
-      assert.deepStrictEqual(data.Response?.length, 1);
-      assert.deepStrictEqual(data.Time.length, 1);
-      assert.deepStrictEqual(data.Disposition.length, 1);
-      assert.deepStrictEqual(data.History.length, 1);
-      assert.deepStrictEqual(data.Narrative.length, 1);
-      assert.deepStrictEqual(data.Medication.length, 1);
-      assert.deepStrictEqual(data.Vital.length, 1);
-      assert.deepStrictEqual(data.Procedure.length, 1);
-      assert.deepStrictEqual(data.File.length, 1);
+      assert.deepStrictEqual(data.Report.length, 2);
+      assert.deepStrictEqual(data.Report[0].filterPriority, models.Patient.Priority.DECEASED);
+      assert.deepStrictEqual(data.Report[1].filterPriority, models.Patient.Priority.TRANSPORTED);
+
+      assert.deepStrictEqual(data.Disposition.length, 2);
+      assert.deepStrictEqual(data.Facility.length, 1);
+      assert.deepStrictEqual(data.File.length, 2);
+      assert.deepStrictEqual(data.History.length, 2);
+      assert.deepStrictEqual(data.Narrative.length, 2);
+      assert.deepStrictEqual(data.Medication.length, 2);
+      assert.deepStrictEqual(data.Patient?.length, 2);
+      assert.deepStrictEqual(data.Procedure.length, 2);
+      assert.deepStrictEqual(data.Response?.length, 2);
+      assert.deepStrictEqual(data.Scene?.length, 1);
+      assert.deepStrictEqual(data.Situation?.length, 2);
+      assert.deepStrictEqual(data.Time.length, 2);
+      assert.deepStrictEqual(data.Vital.length, 2);
     });
   });
 
@@ -195,6 +204,56 @@ describe('/api/reports', () => {
 
       const versions = await canonical.getVersions();
       assert.deepStrictEqual(versions.length, 2);
+    });
+  });
+
+  describe('GET /:id', () => {
+    it('returns the specified Report record', async () => {
+      const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed', {
+        include: [
+          'response',
+          { model: models.Scene, as: 'scene', include: ['city', 'state'] },
+          'time',
+          'patient',
+          'situation',
+          'history',
+          { model: models.Disposition, as: 'disposition', include: ['destinationFacility'] },
+          'narrative',
+          'medications',
+          'procedures',
+          'vitals',
+          'files',
+        ],
+      });
+
+      const response = await testSession
+        .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed`)
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .expect(HttpStatus.OK);
+      const payload = response.body;
+      assert.deepStrictEqual(
+        payload,
+        JSON.parse(
+          JSON.stringify({
+            City: [report.scene.city.toJSON()],
+            Disposition: [report.disposition.toJSON()],
+            Facility: [report.disposition.destinationFacility.toJSON()],
+            File: report.files.map((m) => m.toJSON()),
+            History: [report.history.toJSON()],
+            Medication: report.medications.map((m) => m.toJSON()),
+            Narrative: [report.narrative.toJSON()],
+            Patient: [report.patient.toJSON()],
+            Procedure: report.procedures.map((m) => m.toJSON()),
+            Report: [report.toJSON()],
+            Response: [report.response.toJSON()],
+            Scene: [report.scene.toJSON()],
+            Situation: [report.situation.toJSON()],
+            State: [report.scene.state.toJSON()],
+            Time: [report.time.toJSON()],
+            Vital: report.vitals.map((m) => m.toJSON()),
+          })
+        )
+      );
     });
   });
 });

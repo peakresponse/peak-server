@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const { Base } = require('./base');
 const nemsis = require('../lib/nemsis');
 
@@ -18,10 +20,35 @@ module.exports = (sequelize, DataTypes) => {
       Disposition.belongsTo(models.User, { as: 'updatedBy' });
       Disposition.belongsTo(models.Agency, { as: 'createdByAgency' });
       Disposition.belongsTo(models.Agency, { as: 'updatedByAgency' });
+
+      Disposition.belongsTo(models.Facility, { as: 'destinationFacility' });
     }
 
     static createOrUpdate(user, agency, data, options) {
-      return Base.createOrUpdate(Disposition, user, agency, data, [], ['data'], options);
+      return Base.createOrUpdate(Disposition, user, agency, data, [], ['destinationFacilityId', 'data'], options);
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'canonicalId',
+        'currentId',
+        'parentId',
+        'secondParentId',
+        'destinationFacilityId',
+        'data',
+        'updatedAttributes',
+        'updatedDataAttributes',
+        'isValid',
+        'validationErrors',
+        'createdAt',
+        'createdById',
+        'createdByAgencyId',
+        'updatedAt',
+        'updatedById',
+        'updatedByAgencyId',
+      ]);
     }
   }
 

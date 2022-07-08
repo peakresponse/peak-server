@@ -32,11 +32,13 @@ describe('wss', () => {
         'states',
         'agencies',
         'users',
+        'facilities',
         'contacts',
         'employments',
         'psaps',
         'dispatchers',
         'scenes',
+        'patients',
         'incidents',
         'vehicles',
         'assignments',
@@ -71,22 +73,23 @@ describe('wss', () => {
         const responders = await scene.getResponders({
           include: ['user', 'agency', 'vehicle'],
         });
-        const report = (
-          await scene.incident.getReports({
-            include: [
-              'response',
-              'time',
-              'situation',
-              'history',
-              'disposition',
-              'narrative',
-              'medications',
-              'vitals',
-              'procedures',
-              'files',
-            ],
-          })
-        )[0];
+        const reports = await scene.incident.getReports({
+          include: [
+            'scene',
+            'patient',
+            'response',
+            'time',
+            'situation',
+            'history',
+            'disposition',
+            'narrative',
+            'medications',
+            'vitals',
+            'procedures',
+            'files',
+          ],
+        });
+        const payload = JSON.parse(JSON.stringify(await models.Report.createPayload(reports)));
         await request(server)
           .ws(`/scene?id=25db9094-03a5-4267-8314-bead229eff9d`)
           .set('Cookie', testSession.cookies.toValueString())
@@ -109,17 +112,20 @@ describe('wss', () => {
             assert.deepStrictEqual(actual.Incident, JSON.parse(JSON.stringify(scene.incident.toJSON())));
             assert.deepStrictEqual(actual.Scene, JSON.parse(JSON.stringify(scene.toJSON())));
             assert.deepStrictEqual(actual.State, JSON.parse(JSON.stringify(scene.state.toJSON())));
-            assert.deepStrictEqual(actual.Report, JSON.parse(JSON.stringify([report.toJSON()])));
-            assert.deepStrictEqual(actual.Response, JSON.parse(JSON.stringify([report.response.toJSON()])));
-            assert.deepStrictEqual(actual.Time, JSON.parse(JSON.stringify([report.time.toJSON()])));
-            assert.deepStrictEqual(actual.Situation, JSON.parse(JSON.stringify([report.situation.toJSON()])));
-            assert.deepStrictEqual(actual.History, JSON.parse(JSON.stringify([report.history.toJSON()])));
-            assert.deepStrictEqual(actual.Disposition, JSON.parse(JSON.stringify([report.disposition.toJSON()])));
-            assert.deepStrictEqual(actual.Narrative, JSON.parse(JSON.stringify([report.narrative.toJSON()])));
-            assert.deepStrictEqual(actual.Medication, JSON.parse(JSON.stringify(report.medications.map((m) => m.toJSON()))));
-            assert.deepStrictEqual(actual.Vital, JSON.parse(JSON.stringify(report.vitals.map((m) => m.toJSON()))));
-            assert.deepStrictEqual(actual.Procedure, JSON.parse(JSON.stringify(report.procedures.map((m) => m.toJSON()))));
-            assert.deepStrictEqual(actual.File, JSON.parse(JSON.stringify(report.files.map((m) => m.toJSON()))));
+
+            assert.deepStrictEqual(actual.Report, payload.Report);
+            assert.deepStrictEqual(actual.Disposition, payload.Disposition);
+            assert.deepStrictEqual(actual.History, payload.History);
+            assert.deepStrictEqual(actual.Facility, payload.Facility);
+            assert.deepStrictEqual(actual.File, payload.File);
+            assert.deepStrictEqual(actual.Medication, payload.Medication);
+            assert.deepStrictEqual(actual.Narrative, payload.Narrative);
+            assert.deepStrictEqual(actual.Patient, payload.Patient);
+            assert.deepStrictEqual(actual.Procedure, payload.Procedure);
+            assert.deepStrictEqual(actual.Response, payload.Response);
+            assert.deepStrictEqual(actual.Situation, payload.Situation);
+            assert.deepStrictEqual(actual.Time, payload.Time);
+            assert.deepStrictEqual(actual.Vital, payload.Vital);
           })
           .close()
           .expectClosed();
@@ -182,6 +188,26 @@ describe('wss', () => {
             assert.deepStrictEqual(actual.Scene, JSON.parse(JSON.stringify(incident.scene.toJSON())));
             assert.deepStrictEqual(actual.State, JSON.parse(JSON.stringify(incident.scene.state.toJSON())));
             assert.deepStrictEqual(actual.Vehicle, JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))));
+          })
+          .close()
+          .expectClosed();
+      });
+    });
+
+    describe('/scenes', () => {
+      it('is notified when a Report is updated', async () => {
+        await request(server)
+          .ws(`/scene?id=25db9094-03a5-4267-8314-bead229eff9d`)
+          .set('Cookie', testSession.cookies.toValueString())
+          .set('X-Agency-Subdomain', 'bmacc')
+          .expectJson((actual) => {
+            assert.deepStrictEqual(actual.Report.length, 2);
+          })
+          .exec(async () => {
+            await wss.dispatchReportUpdate('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+          })
+          .expectJson((actual) => {
+            assert.deepStrictEqual(actual.Report.length, 1);
           })
           .close()
           .expectClosed();

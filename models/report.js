@@ -73,76 +73,71 @@ module.exports = (sequelize, DataTypes) => {
         Report: [],
       };
       const ids = {
-        Response: [],
-        Scene: [],
-        Time: [],
-        Patient: [],
-        Situation: [],
-        History: [],
-        Disposition: [],
-        Narrative: [],
-        Medication: [],
-        Procedure: [],
-        Vital: [],
-        File: [],
+        Disposition: new Set(),
+        File: new Set(),
+        History: new Set(),
+        Narrative: new Set(),
+        Medication: new Set(),
+        Patient: new Set(),
+        Procedure: new Set(),
+        Response: new Set(),
+        Scene: new Set(),
+        Situation: new Set(),
+        Time: new Set(),
+        Vital: new Set(),
+        // the following are dependencies of above
+        Facility: new Set(),
+        City: new Set(),
+        State: new Set(),
       };
       for (const report of reports) {
         payload.Report.push(report.toJSON());
-        ids.Response.push(report.responseId);
-        ids.Scene.push(report.sceneId);
-        ids.Time.push(report.timeId);
-        ids.Patient.push(report.patientId);
-        ids.Situation.push(report.situationId);
-        ids.History.push(report.historyId);
-        ids.Disposition.push(report.dispositionId);
-        ids.Narrative.push(report.narrativeId);
-        ids.Medication = ids.Medication.concat(report.medicationIds);
-        ids.Procedure = ids.Procedure.concat(report.procedureIds);
-        ids.Vital = ids.Vital.concat(report.vitalIds);
-        ids.File = ids.File.concat(report.fileIds);
+        ids.Response.add(report.responseId);
+        ids.Scene.add(report.sceneId);
+        ids.Time.add(report.timeId);
+        ids.Patient.add(report.patientId);
+        ids.Situation.add(report.situationId);
+        ids.History.add(report.historyId);
+        ids.Disposition.add(report.dispositionId);
+        ids.Narrative.add(report.narrativeId);
+        report.medicationIds.forEach(ids.Medication.add, ids.Medication);
+        report.procedureIds.forEach(ids.Procedure.add, ids.Procedure);
+        report.vitalIds.forEach(ids.Vital.add, ids.Vital);
+        report.fileIds.forEach(ids.File.add, ids.File);
       }
       for (const model of [
-        'Response',
-        'Scene',
-        'Time',
-        'Patient',
-        'Situation',
-        'History',
         'Disposition',
+        'File',
+        'History',
         'Narrative',
         'Medication',
+        'Patient',
         'Procedure',
+        'Response',
+        'Scene',
+        'Situation',
+        'Time',
         'Vital',
-        'File',
+        // order matters, the following are dependencies of above
+        'Facility',
+        'City',
+        'State',
       ]) {
         // eslint-disable-next-line no-await-in-loop
-        const records = await sequelize.models[model].findAll({ where: { id: ids[model] }, transaction });
+        const records = await sequelize.models[model].findAll({ where: { id: [...ids[model]] }, transaction });
         payload[model] = records.map((record) => record.toJSON());
-        if (model === 'Scene') {
-          payload.City = [];
-          payload.State = [];
-          const cityIds = [];
-          const stateIds = [];
-          for (const scene of records) {
-            if (scene.city) {
-              payload.City = scene.city.toJSON();
-            } else if (scene.cityId) {
-              cityIds.push(scene.cityId);
-            }
-            if (scene.state) {
-              payload.State = scene.state.toJSON();
-            } else if (scene.stateId) {
-              stateIds.push(scene.stateId);
-            }
-          }
-          if (cityIds.length > 0) {
-            // eslint-disable-next-line no-await-in-loop
-            payload.City = (await sequelize.models.City.findAll({ where: { id: cityIds }, transaction })).map((c) => c.toJSON());
-          }
-          if (stateIds.length > 0) {
-            // eslint-disable-next-line no-await-in-loop
-            payload.State = (await sequelize.models.State.findAll({ where: { id: stateIds }, transaction })).map((s) => s.toJSON());
-          }
+        switch (model) {
+          case 'Disposition':
+            records.map((d) => d.destinationFacilityId).forEach((id) => ids.Facility.add(id));
+            break;
+          case 'Facility':
+          // fallthrough
+          case 'Scene':
+            records.map((obj) => obj.cityId).forEach((id) => ids.City.add(id));
+            records.map((obj) => obj.stateId).forEach((id) => ids.State.add(id));
+            break;
+          default:
+            break;
         }
       }
       return payload;
@@ -156,6 +151,7 @@ module.exports = (sequelize, DataTypes) => {
         'currentId',
         'parentId',
         'incidentId',
+        'filterPriority',
         'pin',
         'sceneId',
         'responseId',
@@ -184,6 +180,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Report.init(
     {
+      filterPriority: {
+        type: DataTypes.VIRTUAL(DataTypes.INTEGER),
+        get() {
+          return this.disposition?.destinationFacilityId ? sequelize.models.Patient.Priority.TRANSPORTED : this.patient?.priority;
+        },
+      },
       pin: {
         type: DataTypes.STRING,
       },

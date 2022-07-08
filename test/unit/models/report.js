@@ -13,8 +13,10 @@ describe('models', () => {
         'psaps',
         'users',
         'agencies',
+        'facilities',
         'employments',
         'scenes',
+        'patients',
         'incidents',
         'responses',
         'times',
@@ -27,6 +29,37 @@ describe('models', () => {
         'vitals',
         'reports',
       ]);
+    });
+
+    describe('filterPriority', () => {
+      it('returns the patient priority if not transported', async () => {
+        const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
+          include: ['disposition', 'patient'],
+        });
+        assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.DECEASED);
+      });
+
+      it('returns TRANSPORTED if destination facility set', async () => {
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        // update the disposition to include a destination facility
+        const [disposition] = await models.Disposition.createOrUpdate(user, agency, {
+          id: '90cd241e-ae36-4344-8e57-1d33f1057744',
+          parentId: '4f996971-6588-4f86-ac22-85d4eba146ff',
+          destinationFacilityId: '23a7e241-4486-40fb-babb-aaa4c060c659',
+        });
+        // update the report with the new disposition record
+        await models.Report.createOrUpdate(user, agency, {
+          id: 'b8861c9e-a4e3-4322-bc33-750cd5b6081a',
+          parentId: 'c19bb731-5e9e-4feb-9192-720782ecf9a8',
+          dispositionId: disposition.id,
+        });
+        // now check canonical record
+        const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
+          include: ['disposition', 'patient'],
+        });
+        assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.TRANSPORTED);
+      });
     });
 
     describe('createOrUpdate()', () => {
@@ -112,7 +145,7 @@ describe('models', () => {
         assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
 
         const incident = await record.getIncident();
-        assert.deepStrictEqual(incident.reportsCount, 2);
+        assert.deepStrictEqual(incident.reportsCount, 3);
 
         let medications = await record.getMedications();
         assert(medications.length, 1);
@@ -244,6 +277,46 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.createdByAgencyId, record.createdByAgencyId);
         assert.deepStrictEqual(canonical.updatedByAgencyId, record.updatedByAgencyId);
         assert.deepStrictEqual(canonical.data, record.data);
+      });
+    });
+
+    describe('createPayload()', () => {
+      it('generates a JSON payload of all dependencies for a list of Reports', async () => {
+        const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed', {
+          include: [
+            'response',
+            { model: models.Scene, as: 'scene', include: ['city', 'state'] },
+            'time',
+            'patient',
+            'situation',
+            'history',
+            { model: models.Disposition, as: 'disposition', include: ['destinationFacility'] },
+            'narrative',
+            'medications',
+            'procedures',
+            'vitals',
+            'files',
+          ],
+        });
+        const payload = await models.Report.createPayload([report]);
+        assert.deepStrictEqual(payload, {
+          City: [report.scene.city.toJSON()],
+          Disposition: [report.disposition.toJSON()],
+          Facility: [report.disposition.destinationFacility.toJSON()],
+          File: report.files.map((m) => m.toJSON()),
+          History: [report.history.toJSON()],
+          Medication: report.medications.map((m) => m.toJSON()),
+          Narrative: [report.narrative.toJSON()],
+          Patient: [report.patient.toJSON()],
+          Procedure: report.procedures.map((m) => m.toJSON()),
+          Report: [report.toJSON()],
+          Response: [report.response.toJSON()],
+          Scene: [report.scene.toJSON()],
+          Situation: [report.situation.toJSON()],
+          State: [report.scene.state.toJSON()],
+          Time: [report.time.toJSON()],
+          Vital: report.vitals.map((m) => m.toJSON()),
+        });
       });
     });
   });

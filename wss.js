@@ -57,7 +57,10 @@ sceneServer.on('connection', async (ws, req) => {
       include: ['user', 'agency', 'vehicle'],
       transaction,
     });
-    const reports = await scene.incident.getReports({ transaction });
+    const reports = await scene.incident.getReports({
+      include: ['patient', 'disposition'],
+      transaction,
+    });
     payload = await models.Report.createPayload(reports, { transaction });
     // during MCI, rewrite all Reports to refer to latest Scene
     for (const report of payload.Report) {
@@ -114,20 +117,7 @@ async function dispatchReportUpdate(reportId) {
   let payload;
   await models.sequelize.transaction(async (transaction) => {
     report = await models.Report.findByPk(reportId, {
-      include: [
-        'response',
-        { model: models.Scene, as: 'scene', include: ['city', 'state'] },
-        'time',
-        'patient',
-        'situation',
-        'history',
-        'disposition',
-        'narrative',
-        'medications',
-        'procedures',
-        'vitals',
-        'files',
-      ],
+      include: ['disposition', 'patient', 'scene'],
       transaction,
     });
     scene = await report.scene.getCanonical({ transaction });

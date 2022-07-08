@@ -39,6 +39,27 @@ router.get(
   })
 );
 
+router.post(
+  '/fetch',
+  interceptors.requireLogin,
+  helpers.async(async (req, res) => {
+    const states = req.body;
+    let results = [];
+    for (const stateId of Object.keys(states)) {
+      const locationCode = states[stateId];
+      // eslint-disable-next-line no-await-in-loop
+      const facilities = await models.Facility.findAll({
+        where: {
+          stateId,
+          locationCode,
+        },
+      });
+      results = results.concat(facilities.map((f) => f.toJSON()));
+    }
+    res.json(results);
+  })
+);
+
 router.get(
   '/:id',
   interceptors.requireLogin,

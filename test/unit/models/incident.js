@@ -11,11 +11,13 @@ describe('models', () => {
         'counties',
         'cities',
         'users',
+        'facilities',
         'agencies',
         'employments',
         'psaps',
         'dispatchers',
         'scenes',
+        'patients',
         'incidents',
         'vehicles',
         'dispatches',
@@ -51,7 +53,7 @@ describe('models', () => {
         const incident = await models.Incident.findByPk('6621202f-ca09-4ad9-be8f-b56346d1de65');
         await incident.update({ reportsCount: 0 });
         await incident.updateReportsCount();
-        assert.deepStrictEqual(incident.reportsCount, 1);
+        assert.deepStrictEqual(incident.reportsCount, 2);
       });
     });
   });
