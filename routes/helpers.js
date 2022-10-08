@@ -5,6 +5,7 @@ const _ = require('lodash');
 function async(handler) {
   return (req, res, next) => {
     Promise.resolve(handler(req, res, next)).catch((error) => {
+      // console.log(error);
       if (error.name === 'SequelizeValidationError') {
         /// if we've got a schema validation error, extract the individual errors
         let originalError = error;
@@ -16,7 +17,6 @@ function async(handler) {
           messages: originalError.errors.map((e) => _.pick(e, ['path', 'message', 'value'])),
         });
       } else {
-        // console.log(error);
         next(error);
       }
     });

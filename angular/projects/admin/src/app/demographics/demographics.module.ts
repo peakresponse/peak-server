@@ -7,6 +7,7 @@ import { SharedModule } from 'shared';
 
 import { SchemaModule } from '../schema/schema.module';
 
+import { FormsDemographicsModule } from './forms/forms-demographics.module';
 import { DemographicsRoutingModule } from './demographics-routing.module';
 
 import { AgencyDemographicsComponent } from './agency-demographics.component';
@@ -41,7 +42,7 @@ import { VehicleDemographicsComponent } from './vehicle-demographics.component';
     PersonnelRecordDemographicsComponent,
     VehicleDemographicsComponent,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, SchemaModule, SharedModule, DemographicsRoutingModule],
+  imports: [CommonModule, FormsModule, NgbModule, SchemaModule, SharedModule, FormsDemographicsModule, DemographicsRoutingModule],
   providers: [],
 })
 export class DemographicsModule {}

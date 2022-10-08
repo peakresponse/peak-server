@@ -34,11 +34,13 @@ const resetDatabase = async () => {
     DELETE FROM list_items;
     DELETE FROM list_sections;
     DELETE FROM lists;
+    DELETE FROM reports_signatures;
     DELETE FROM reports_files;
     DELETE FROM reports_medications;
     DELETE FROM reports_procedures;
     DELETE FROM reports_vitals;
     DELETE FROM reports;
+    DELETE FROM signatures;
     DELETE FROM files;
     DELETE FROM vitals;
     DELETE FROM medications;
@@ -63,6 +65,7 @@ const resetDatabase = async () => {
     DELETE FROM scenes;
     DELETE FROM contacts;
     DELETE FROM employments;
+    DELETE FROM forms;
     DELETE FROM vehicles;
     DELETE FROM agencies;
     DELETE FROM facilities;

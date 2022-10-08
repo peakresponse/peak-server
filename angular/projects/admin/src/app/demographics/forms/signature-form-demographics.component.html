@@ -1,0 +1,30 @@
+<shared-modal #modal
+  i18n-confirmLabel confirmLabel="Submit"
+  i18n-dismissLabel dismissLabel="Cancel" 
+  (confirm)="onConfirmInternal()">
+  <h3 class="modal-title">
+    <span i18n *ngIf="isEditing">Edit Signature</span>
+    <span i18n *ngIf="!isEditing">New Signature</span>
+  </h3>
+  <div class="modal-body text-start">    
+    <div class="mb-3">
+      <shared-text-field id="title" label="Title" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="body" label="Body" [rows]="2" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-array-field id="types" label="Types" [source]="record" [target]="record" [error]="error">
+        <ng-template #item let-item="item">
+          {{signatureTypes[item]}} ({{item}})
+        </ng-template>
+        <ng-template #form let-addItem="addItem">
+          <shared-select-field #signatureTypesSelect id="signatureTypesSelect" (valueChange)="$event && addItem($event); $event && signatureTypesSelect.onClear()" [target]="{signatureTypesSelect: null}">
+            <option [value]="null">Add a Signature Type...</option>
+            <option *ngFor="let type of signatureTypes | keyvalue" [value]="type.key">{{type.value}} ({{type.key}})</option>
+          </shared-select-field>
+        </ng-template>
+      </shared-array-field>
+    </div>
+  </div>
+</shared-modal>

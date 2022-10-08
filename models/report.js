@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       Report.belongsToMany(models.Procedure, { as: 'procedures', through: 'reports_procedures', timestamps: false });
       Report.belongsToMany(models.Vital, { as: 'vitals', through: 'reports_vitals', timestamps: false });
       Report.belongsToMany(models.File, { as: 'files', through: 'reports_files', timestamps: false });
+      Report.belongsToMany(models.Signature, { as: 'signatures', through: 'reports_signatures', timestamps: false });
 
       Report.hasMany(Report, { as: 'versions', foreignKey: 'canonicalId' });
     }
@@ -60,6 +61,7 @@ module.exports = (sequelize, DataTypes) => {
           'dispositionId',
           'narrativeId',
           'fileIds',
+          'signatureIds',
           'ringdownId',
           'predictions',
         ],
@@ -82,11 +84,13 @@ module.exports = (sequelize, DataTypes) => {
         Procedure: new Set(),
         Response: new Set(),
         Scene: new Set(),
+        Signature: new Set(),
         Situation: new Set(),
         Time: new Set(),
         Vital: new Set(),
         // the following are dependencies of above
         Facility: new Set(),
+        Form: new Set(),
         City: new Set(),
         State: new Set(),
       };
@@ -104,6 +108,7 @@ module.exports = (sequelize, DataTypes) => {
         report.procedureIds.forEach(ids.Procedure.add, ids.Procedure);
         report.vitalIds.forEach(ids.Vital.add, ids.Vital);
         report.fileIds.forEach(ids.File.add, ids.File);
+        report.signatureIds.forEach(ids.Signature.add, ids.Signature);
       }
       for (const model of [
         'Disposition',
@@ -115,11 +120,13 @@ module.exports = (sequelize, DataTypes) => {
         'Procedure',
         'Response',
         'Scene',
+        'Signature',
         'Situation',
         'Time',
         'Vital',
         // order matters, the following are dependencies of above
         'Facility',
+        'Form',
         'City',
         'State',
       ]) {
@@ -130,11 +137,13 @@ module.exports = (sequelize, DataTypes) => {
           case 'Disposition':
             records.map((d) => d.destinationFacilityId).forEach((id) => ids.Facility.add(id));
             break;
-          case 'Facility':
-          // fallthrough
+          case 'Facility': // fallthrough
           case 'Scene':
             records.map((obj) => obj.cityId).forEach((id) => ids.City.add(id));
             records.map((obj) => obj.stateId).forEach((id) => ids.State.add(id));
+            break;
+          case 'Signature':
+            records.map((obj) => obj.formId).forEach((id) => ids.Form.add(id));
             break;
           default:
             break;
@@ -165,6 +174,7 @@ module.exports = (sequelize, DataTypes) => {
         'dispositionId',
         'narrativeId',
         'fileIds',
+        'signatureIds',
         'ringdownId',
         'predictions',
         'data',
@@ -227,6 +237,10 @@ module.exports = (sequelize, DataTypes) => {
       fileIds: {
         type: DataTypes.JSONB,
         field: 'file_ids',
+      },
+      signatureIds: {
+        type: DataTypes.JSONB,
+        field: 'signature_ids',
       },
       ringdownId: {
         type: DataTypes.STRING,

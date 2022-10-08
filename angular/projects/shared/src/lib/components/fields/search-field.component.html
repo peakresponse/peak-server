@@ -14,7 +14,7 @@
     [readonly]="!isFocusable || !isEditing"
     [tabindex]="isFocusable && isEditing ? 0 : -1"
     (focus)="onFocus($event)" (blur)="onBlur($event)"
-    [ngbTypeahead]="search" [inputFormatter]="inputFormatter" [resultTemplate]="resultTemplate ?? rt"
+    [ngbTypeahead]="search" [inputFormatter]="inputFormatter" [resultTemplate]="resultTemplate ?? rt" [editable]="!isSelectOnly"
     [(ngModel)]="value" />
 </div>
 <div class="invalid-feedback" *ngIf="errorMessage as msg">{{msg}}</div>

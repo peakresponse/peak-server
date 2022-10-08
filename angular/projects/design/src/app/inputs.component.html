@@ -1,5 +1,32 @@
 <h1>Inputs</h1>
 <section>
+  <h2>Array Fields</h2>
+  <form>
+    <div class="mb-3">
+      <shared-array-field id="array" label="Array Field" [source]="source" [target]="source">
+        <ng-template #item let-item="item">{{item}}</ng-template>
+        <ng-template #form let-addItem="addItem">
+          <shared-search-field #arraySearch id="array-search" placeholder="Search" [searchHandler]="search" [isSelectOnly]="true" (valueChange)="$event && addItem($event); $event && arraySearch.onClear()"></shared-search-field>
+        </ng-template>
+      </shared-array-field>
+    </div>
+    <div class="mb-3">
+      <shared-array-field id="empty-array" label="Empty Array Field" [source]="source" [target]="source">
+        <ng-template #item let-item="item">{{item}}</ng-template>
+        <ng-template #form let-addItem="addItem">
+          <shared-select-field #arrayDropdown id="array-dropdown" (valueChange)="$event && addItem($event); $event && arrayDropdown.onClear()" [target]="{}">
+            <option value="entry-1">Entry 1</option>
+            <option value="entry-2">Entry 2</option>
+            <option value="entry-3">Entry 3</option>
+            <option value="entry-4">Entry 4</option>
+            <option value="entry-5">Entry 5</option>
+          </shared-select-field>
+        </ng-template>
+      </shared-array-field>
+    </div>
+  </form>
+</section>
+<section>
   <h2>Text Fields</h2>
   <div class="mb-3">
     <shared-text-field id="empty" label="Empty Field" placeholder="Sample Input" [source]="source" [target]="source"></shared-text-field>

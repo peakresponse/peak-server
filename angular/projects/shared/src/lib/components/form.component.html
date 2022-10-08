@@ -1,7 +1,7 @@
 <form #form="ngForm" (submit)="onSubmit()">
   <fieldset [disabled]="loading || disabled">
     <template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{record: record, error: error}"></template>
-    <div *ngIf="!hideButtons && !loading" class="form-group d-flex justify-content-between">
+    <div *ngIf="!hideButtons && !loading" class="mb-3 d-flex justify-content-between">
       <span>
         <button *ngIf="canSave" [disabled]="!form.valid" type="submit" class="btn btn--primary">
           <span *ngIf="!record.id">{{createLabel}}</span>
@@ -12,11 +12,11 @@
           This record has been updated!
         </span>
       </span>
-      <button (click)="deleteConfirmation.show()" type="button" *ngIf="record.id && canDelete" class="btn btn--danger">Delete</button>
+      <button (click)="deleteConfirmation.show()" type="button" *ngIf="record.id && canDelete" class="btn btn--danger">{{deleteLabel}}</button>
     </div>
   </fieldset>
 </form>
 <shared-modal #deleteConfirmation
   dangerLabel="Yes" dismissLabel="No" (danger)="onDelete()">
-  <div class="modal-body">Are you sure you wish to delete this record?</div>
+  <div class="modal-body">Are you sure you wish to {{deleteLabel.toLowerCase()}} this record?</div>
 </shared-modal>

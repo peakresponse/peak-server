@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import { Observable, of, OperatorFunction } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 const states = [
   'Alabama',
@@ -70,6 +69,7 @@ const states = [
 })
 export class InputsComponent {
   source: any = {
+    array: ['California', 'New York'],
     empty: '',
     multiline: 'This is a\nmultiline\ntext field.',
     disabled: 'Input',

@@ -11,11 +11,21 @@ import { HeadersComponent } from './headers.component';
 import { IconsComponent } from './icons.component';
 import { InputsComponent } from './inputs.component';
 import { NavsComponent } from './navs.component';
+import { TypographyComponent } from './typography.component';
 
 import { SharedModule, ApiService, UserService } from 'shared';
 
 @NgModule({
-  declarations: [AppComponent, BrandingComponent, ButtonsComponent, HeadersComponent, IconsComponent, InputsComponent, NavsComponent],
+  declarations: [
+    AppComponent,
+    BrandingComponent,
+    ButtonsComponent,
+    HeadersComponent,
+    IconsComponent,
+    InputsComponent,
+    NavsComponent,
+    TypographyComponent,
+  ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule, SharedModule],
   providers: [ApiService, UserService],
   bootstrap: [AppComponent],

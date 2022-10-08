@@ -1,11 +1,12 @@
 import { Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
+import { get } from 'lodash';
+import { EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 import { ApiService } from '../services/api.service';
 import { UserService } from '../services/user.service';
-
-import { EMPTY, Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'shared-form',
@@ -19,6 +20,7 @@ export class FormComponent implements OnChanges {
   @Input() hideButtons = false;
   @Input() createLabel: string = 'Create';
   @Input() updateLabel: string = 'Update';
+  @Input() deleteLabel: string = 'Delete';
   @Input() disabled = false;
   @Output() load = new EventEmitter<any>();
   @Output() create = new EventEmitter<any>();
@@ -40,7 +42,7 @@ export class FormComponent implements OnChanges {
 
   refresh() {
     this.loading = true;
-    (this.api as any)[this.type]
+    get(this.api, this.type)
       .get(this.id)
       .pipe(
         catchError((response: HttpErrorResponse) => {
@@ -58,9 +60,9 @@ export class FormComponent implements OnChanges {
 
   get canSave(): boolean {
     if (this.id) {
-      return (this.api as any)[this.type].update !== undefined;
+      return get(this.api, this.type).update !== undefined;
     }
-    return (this.api as any)[this.type].create !== undefined;
+    return get(this.api, this.type).create !== undefined;
   }
 
   onSubmit() {
@@ -68,7 +70,7 @@ export class FormComponent implements OnChanges {
     this.updated = false;
     this.error = false;
     if (this.id) {
-      (this.api as any)[this.type]
+      get(this.api, this.type)
         .update(this.id, this.transformRecord(this.record))
         .pipe(
           catchError((response: HttpErrorResponse) => {
@@ -84,7 +86,7 @@ export class FormComponent implements OnChanges {
           this.update.emit(response.body);
         });
     } else {
-      (this.api as any)[this.type]
+      get(this.api, this.type)
         .create(this.transformRecord(this.record))
         .pipe(
           catchError((response: HttpErrorResponse) => {
@@ -102,13 +104,13 @@ export class FormComponent implements OnChanges {
   }
 
   get canDelete(): boolean {
-    return (this.api as any)[this.type].delete !== undefined;
+    return get(this.api, this.type).delete !== undefined;
   }
 
   onDelete() {
     this.loading = true;
     this.error = false;
-    (this.api as any)[this.type]
+    get(this.api, this.type)
       .delete(this.id)
       .pipe(
         catchError((response: HttpErrorResponse) => {

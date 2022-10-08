@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-
-import { Observable, of, OperatorFunction } from 'rxjs';
+import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { BaseFieldComponent } from './base-field.component';
@@ -14,6 +14,7 @@ export class SearchFieldComponent extends BaseFieldComponent {
   @Input() searchHandler: (query: string) => Observable<any[]> = (query: string) => of([]);
   @Input() inputFormatter: (item: any) => string = (item: any) => item;
   @Input() resultTemplate?: TemplateRef<any>;
+  @Input() isSelectOnly: boolean = false;
   @Input() debounceTime?: number;
   @Output() debouncedValueChange = new EventEmitter<string>();
 

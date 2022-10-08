@@ -1,0 +1,32 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <div class="d-flex">
+      <h1 class="h2">Forms</h1>
+      <a routerLink="/demographics/forms/new" class="btn btn--sm btn--secondary ms-3">New Form</a>  
+    </div>
+    <div class="d-flex">
+      <shared-select-field id="filter" class="me-3" [source]="data" [target]="data" (valueChange)="updateParams()">
+        <option value="active">Active</option>
+        <option value="archived">Archived&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+      </shared-select-field>
+      <shared-search-field placeholder="Search" (debouncedValueChange)="search = $event"></shared-search-field>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <shared-list type="demographics.forms" basePath="/demographics/forms" [params]="params" [search]="search">
+        <ng-template let-record="record">
+          <tr [routerLink]="['/demographics/forms', record.id]">
+            <td>{{record.title}}</td>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+</div>

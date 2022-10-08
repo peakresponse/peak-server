@@ -10,8 +10,8 @@ export class BaseFieldComponent {
   @Input() name?: string;
   @Input() label?: string;
   @Input() placeholder?: string;
-  @Input() target: any;
-  @Input() source: any;
+  @Input() source: any = {};
+  @Input() target: any = null;
   @Input() propertyName?: string;
   @Input() error: any;
   @Input() hasError: boolean = false;
@@ -81,7 +81,7 @@ export class BaseFieldComponent {
   }
 
   onClear() {
-    this.value = null;
+    setTimeout(() => (this.value = null), 0);
   }
 
   onConfirm() {

@@ -1,0 +1,57 @@
+[
+  {
+    "model": "Signature",
+    "data": {
+      "id": "16f429c8-9656-432c-a251-3450626d15ba",
+      "canonicalId": null,
+      "currentId": "62e0590e-dc22-431a-9ef3-30a822cc754b",
+      "formId": "7f1488f9-dff8-42dc-8d7b-4b01073c15b9",
+      "formInstanceId": "4cf3c979-c7e3-4a18-854e-324dcf4267da",
+      "data": {
+        "eOther.12": {
+          "_text": "4512015"
+        },
+        "eOther.13": {
+          "_text": "4513009"
+        },
+        "eOther.15": {
+          "_text": "4515019"
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  },
+  {
+    "model": "Signature",
+    "data": {
+      "id": "62e0590e-dc22-431a-9ef3-30a822cc754b",
+      "canonicalId": "16f429c8-9656-432c-a251-3450626d15ba",
+      "formId": "7f1488f9-dff8-42dc-8d7b-4b01073c15b9",
+      "formInstanceId": "4cf3c979-c7e3-4a18-854e-324dcf4267da",
+      "data": {
+        "eOther.12": {
+          "_text": "4512015"
+        },
+        "eOther.13": {
+          "_text": "4513009"
+        },
+        "eOther.15": {
+          "_text": "4515019"
+        }
+      },
+      "updatedAttributes": ["id", "canonicalId", "formId", "formInstanceId", "data"],
+      "updatedDataAttributes": ["/eOther.12", "/eOther.13", "/eOther.15"],
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
+  }
+]

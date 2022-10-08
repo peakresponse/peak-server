@@ -7,6 +7,7 @@ import { HeadersComponent } from './headers.component';
 import { IconsComponent } from './icons.component';
 import { InputsComponent } from './inputs.component';
 import { NavsComponent } from './navs.component';
+import { TypographyComponent } from './typography.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'navs',
     component: NavsComponent,
+  },
+  {
+    path: 'typography',
+    component: TypographyComponent,
   },
   {
     path: '',

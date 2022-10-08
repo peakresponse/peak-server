@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'createdByAgencyId',
       });
       Agency.hasMany(models.Employment, { as: 'employments', foreignKey: 'agencyId' });
+      Agency.hasMany(models.Form.scope('canonical'), {
+        as: 'forms',
+        foreignKey: 'createdByAgencyId',
+      });
       Agency.hasMany(models.Patient, {
         as: 'patients',
         foreignKey: 'transportAgencyId',

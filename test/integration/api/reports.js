@@ -37,6 +37,8 @@ describe('/api/reports', () => {
       'vitals',
       'procedures',
       'files',
+      'forms',
+      'signatures',
       'reports',
     ]);
     testSession = session(app);
@@ -62,6 +64,7 @@ describe('/api/reports', () => {
       assert.deepStrictEqual(data.Disposition.length, 2);
       assert.deepStrictEqual(data.Facility.length, 1);
       assert.deepStrictEqual(data.File.length, 2);
+      assert.deepStrictEqual(data.Form.length, 1);
       assert.deepStrictEqual(data.History.length, 2);
       assert.deepStrictEqual(data.Narrative.length, 2);
       assert.deepStrictEqual(data.Medication.length, 2);
@@ -69,6 +72,7 @@ describe('/api/reports', () => {
       assert.deepStrictEqual(data.Procedure.length, 2);
       assert.deepStrictEqual(data.Response?.length, 2);
       assert.deepStrictEqual(data.Scene?.length, 1);
+      assert.deepStrictEqual(data.Signature?.length, 1);
       assert.deepStrictEqual(data.Situation?.length, 2);
       assert.deepStrictEqual(data.Time.length, 2);
       assert.deepStrictEqual(data.Vital.length, 2);
@@ -223,6 +227,7 @@ describe('/api/reports', () => {
           'procedures',
           'vitals',
           'files',
+          { model: models.Signature, as: 'signatures', include: ['form'] },
         ],
       });
 
@@ -239,6 +244,7 @@ describe('/api/reports', () => {
             Disposition: [report.disposition.toJSON()],
             Facility: [report.disposition.destinationFacility.toJSON()],
             File: report.files.map((m) => m.toJSON()),
+            Form: [report.signatures[0].form.toJSON()],
             History: [report.history.toJSON()],
             Medication: report.medications.map((m) => m.toJSON()),
             Narrative: [report.narrative.toJSON()],
@@ -247,6 +253,7 @@ describe('/api/reports', () => {
             Report: [report.toJSON()],
             Response: [report.response.toJSON()],
             Scene: [report.scene.toJSON()],
+            Signature: report.signatures.map((s) => s.toJSON()),
             Situation: [report.situation.toJSON()],
             State: [report.scene.state.toJSON()],
             Time: [report.time.toJSON()],

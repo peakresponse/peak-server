@@ -22,10 +22,13 @@ describe('models', () => {
         'times',
         'situations',
         'dispositions',
+        'files',
+        'forms',
         'histories',
         'narratives',
         'medications',
         'procedures',
+        'signatures',
         'vitals',
         'reports',
       ]);
@@ -296,6 +299,7 @@ describe('models', () => {
             'procedures',
             'vitals',
             'files',
+            { model: models.Signature, as: 'signatures', include: ['form'] },
           ],
         });
         const payload = await models.Report.createPayload([report]);
@@ -304,6 +308,7 @@ describe('models', () => {
           Disposition: [report.disposition.toJSON()],
           Facility: [report.disposition.destinationFacility.toJSON()],
           File: report.files.map((m) => m.toJSON()),
+          Form: [report.signatures[0].form.toJSON()],
           History: [report.history.toJSON()],
           Medication: report.medications.map((m) => m.toJSON()),
           Narrative: [report.narrative.toJSON()],
@@ -312,6 +317,7 @@ describe('models', () => {
           Report: [report.toJSON()],
           Response: [report.response.toJSON()],
           Scene: [report.scene.toJSON()],
+          Signature: report.signatures.map((s) => s.toJSON()),
           Situation: [report.situation.toJSON()],
           State: [report.scene.state.toJSON()],
           Time: [report.time.toJSON()],

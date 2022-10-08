@@ -1,0 +1,19 @@
+<div class="array-field">
+  <h4>{{label}}</h4>
+  <div *ngIf="value && value.length > 0" class="form-field form-field--noclear"
+    [class.form-field--disabled]="isDisabled"
+    [class.form-field--editing]="isEditing"
+    [class.form-field--focused]="isFocused"
+    [class.form-field--invalid]="isInvalid"
+    [class.form-field--nonempty]="isNonEmpty"
+    [class.form-field--unconfirmed]="isUnconfirmed"
+    (update)="onSorted($event)"
+    [sortablejs]="value">
+    <div *ngFor="let item of value; let i=index" [attr.data-index]="i" class="array-field__item" [class.array-field--noclear]="!showClearButton" (click)="onClick($event)">
+      <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item, removeItem: onRemoveItem, updateItem: onUpdateItem}"></ng-template>
+    </div>
+  </div>
+  <div class="array-field__form">
+    <ng-template [ngTemplateOutlet]="formTemplate" [ngTemplateOutletContext]="{addItem: onAddItem}"></ng-template>
+  </div>
+</div>

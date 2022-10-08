@@ -200,6 +200,23 @@ export class ApiService {
         return this.put(`/api/demographics/facilities/${id}`, data);
       },
     },
+    forms: {
+      index: (params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/forms`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/forms`, data);
+      },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/forms/${id}`, params);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.post(`/api/demographics/forms`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/forms/${id}`);
+      },
+    },
     locations: {
       index: (params?: HttpParams): Observable<any> => {
         return this.get(`/api/demographics/locations`, params);

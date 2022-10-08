@@ -56,6 +56,7 @@ router.post(
         'Procedure',
         'Vital',
         'File',
+        'Signature',
         'Report',
       ]) {
         let records = req.body[model];

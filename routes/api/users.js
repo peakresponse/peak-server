@@ -89,7 +89,7 @@ router.get(
           await models.Employment.findOne({
             where: { userId: req.user.id, agencyId: req.agency.id },
           })
-        ).toJSON();
+        )?.toJSON();
       }
       res.json(data);
     } else {

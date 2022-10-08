@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SortablejsModule } from 'ngx-sortablejs';
 
 import { ErrorComponent } from './components/error.component';
 import { FormComponent } from './components/form.component';
@@ -19,6 +20,7 @@ import { LogoFullWhite } from './components/branding/logo.full.white.component';
 import { LogoSquareDark } from './components/branding/logo.square.dark.component';
 import { LogoSquareLight } from './components/branding/logo.square.light.component';
 
+import { ArrayFieldComponent } from './components/fields/array-field.component';
 import { CheckboxComponent } from './components/fields/checkbox.component';
 import { FileFieldComponent } from './components/fields/file-field.component';
 import { RecordingFieldComponent } from './components/fields/recording-field.component';
@@ -66,6 +68,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     LogoSquareDark,
     LogoSquareLight,
     // components/fields
+    ArrayFieldComponent,
     CheckboxComponent,
     FileFieldComponent,
     RecordingFieldComponent,
@@ -94,7 +97,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     GetPipe,
     InflectionPipe,
   ],
-  imports: [CommonModule, FormsModule, NgbModule],
+  imports: [CommonModule, FormsModule, NgbModule, SortablejsModule.forRoot({ animation: 150 })],
   exports: [
     // components
     ErrorComponent,
@@ -113,6 +116,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     LogoSquareDark,
     LogoSquareLight,
     // components/fields
+    ArrayFieldComponent,
     CheckboxComponent,
     FileFieldComponent,
     RecordingFieldComponent,

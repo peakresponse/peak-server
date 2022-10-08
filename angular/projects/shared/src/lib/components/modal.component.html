@@ -1,9 +1,9 @@
 <ng-template #content>
   <div class="modal-header">                      
-    <ng-content select=".modal-title"></ng-content>
     <button type="button" class="btn btn--sm" aria-label="Close" (click)="onDismiss()">
       <i class="pr-icon pr-icon-24-exit"></i>
     </button>
+    <ng-content select=".modal-title"></ng-content>
   </div>
   <ng-content select=".modal-body"></ng-content>
   <fieldset [disabled]="disabled">

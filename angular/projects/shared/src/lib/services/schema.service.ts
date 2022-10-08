@@ -40,6 +40,21 @@ export class SchemaService implements Resolve<any> {
     return null;
   }
 
+  getEnum(name: string): any | null {
+    const type = this.getType(name);
+    if (type && type['xs:restriction']?.['xs:enumeration']) {
+      return type['xs:restriction']['xs:enumeration'].reduce((current: any, t: any) => {
+        const key = t._attributes?.value;
+        const value = t['xs:annotation']?.['xs:documentation']?._text;
+        if (key && value) {
+          current[key] = value;
+        }
+        return current;
+      }, {});
+    }
+    return null;
+  }
+
   get(schemaPath: string): Observable<any> {
     if (this.schemaCache[schemaPath]) {
       return of(this.schemaCache[schemaPath]);
