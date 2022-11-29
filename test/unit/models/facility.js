@@ -49,7 +49,7 @@ describe('models', () => {
           .get('/maps/api/geocode/json')
           .query({
             address: '3698%20Sacramento%20Street%2C%20City%20of%20San%20Francisco%2C%20California',
-            key: process.env.GOOGLE_MAPS_API_KEY,
+            key: process.env.GOOGLE_MAPS_SERVER_API_KEY,
           })
           .reply(
             200,

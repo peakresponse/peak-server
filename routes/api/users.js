@@ -62,8 +62,8 @@ router.get(
       const scenes = await req.user.getActiveScenes({ include: ['city', 'incident', 'state'] });
       data.Scene = scenes.map((s) => s.toJSON());
       data.Incident = scenes.map((s) => s.incident.toJSON());
-      data.City = scenes.map((s) => s.city.toJSON());
-      data.State = scenes.map((s) => s.state.toJSON());
+      data.City = scenes.map((s) => s.city?.toJSON()).filter(Boolean);
+      data.State = scenes.map((s) => s.state?.toJSON()).filter(Boolean);
       // add vehicle/unit assignment, if any
       const assignment = await req.user.getCurrentAssignment({
         include: [

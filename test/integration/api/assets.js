@@ -14,7 +14,7 @@ describe('/api/assets', () => {
 
   beforeEach(async () => {
     file = `${uuid()}.png`;
-    await helpers.loadFixtures(['states', 'agencies', 'users', 'employments']);
+    await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'users', 'employments']);
     testSession = session(app);
     await testSession
       .post('/login')

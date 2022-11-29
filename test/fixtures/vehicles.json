@@ -91,5 +91,36 @@
       "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444"
     }
+  },
+  {
+    "model": "Vehicle",
+    "ignoreSet": true,
+    "data": {
+      "id": "771aa36a-51ee-4c76-89a4-cc59975bedb8",
+      "number": "M01",
+      "vin": "1BAGNB7A3TF071506",
+      "callSign": "M01",
+      "type": "1404001",
+      "data": {
+        "_attributes": {
+          "UUID": "771aa36a-51ee-4c76-89a4-cc59975bedb8"
+        },
+        "dVehicle.01": {
+          "_text": "M01"
+        },
+        "dVehicle.02": {
+          "_text": "1BAGNB7A3TF071506"
+        },
+        "dVehicle.03": {
+          "_text": "M01"
+        },
+        "dVehicle.04": {
+          "_text": "1404001"
+        }
+      },
+      "createdById": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
+      "updatedById": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
+      "createdByAgencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830"
+    }
   }
 ]

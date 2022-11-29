@@ -1,3 +1,4 @@
+/.circleci
 /.env
 /.git
 /node_modules

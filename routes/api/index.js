@@ -5,6 +5,7 @@ const router = express.Router();
 router.use('/agencies', require('./agencies'));
 router.use('/assets', require('./assets'));
 router.use('/assignments', require('./assignments'));
+router.use('/cities', require('./cities'));
 router.use('/clients', require('./clients'));
 router.use('/demographics', require('./demographics'));
 router.use('/dispatchers', require('./dispatchers'));

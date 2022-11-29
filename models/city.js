@@ -1,4 +1,5 @@
 const { Model, Op } = require('sequelize');
+const sequelizePaginate = require('sequelize-paginate');
 const LineReader = require('line-by-line');
 const _ = require('lodash');
 const path = require('path');
@@ -156,6 +157,11 @@ module.exports = (sequelize, DataTypes) => {
         });
       });
     }
+
+    static findNear(lat, lng, options = {}) {
+      options.order = sequelize.literal(`"City".geog <-> ST_MakePoint(${lng}, ${lat})::geography`);
+      return City.paginate(options);
+    }
   }
 
   City.init(
@@ -212,6 +218,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: 'primary_longitude',
       },
+      geog: {
+        type: DataTypes.GEOGRAPHY,
+      },
       dateCreated: {
         type: DataTypes.STRING,
         field: 'date_created',
@@ -228,6 +237,18 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+
+  City.beforeSave((record) => {
+    if (record.changed('primaryLatitude') || record.changed('primaryLongitude')) {
+      const lng = parseFloat(record.primaryLongitude);
+      const lat = parseFloat(record.primaryLatitude);
+      if (!Number.isNaN(lng) && !Number.isNaN(lat)) {
+        record.geog = { type: 'Point', coordinates: [lng, lat] };
+      }
+    }
+  });
+
+  sequelizePaginate.paginate(City);
 
   return City;
 };

@@ -35,27 +35,18 @@ router.get(
     }
     const { docs, pages, total } = await models.Incident.paginate(type, obj, options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
-    let payload;
-    if (req.apiLevel > 1) {
-      payload = {};
-      payload.City = _.uniqBy(docs.map((i) => i.scene.city).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
-      payload.Dispatch = docs.flatMap((i) => i.dispatches).map((d) => d.toJSON());
-      payload.Incident = docs.map((i) => i.toJSON());
-      payload.Scene = _.uniqBy(
-        docs.map((i) => i.scene.toJSON()),
-        (s) => s.id
-      );
-      payload.State = _.uniqBy(docs.map((i) => i.scene.state).filter(Boolean), (s) => s.id).map((s) => s.toJSON());
-    } else {
-      payload = docs.map((incident) => {
-        const json = incident.toJSON();
-        json.scene = incident.scene.toJSON();
-        json.scene.city = incident.scene.city?.toJSON();
-        json.scene.state = incident.scene.state?.toJSON();
-        json.dispatches = incident.dispatches.map((d) => d.toJSON());
-        return json;
-      });
-    }
+    const payload = {};
+    payload.City = _.uniqBy(docs.map((i) => i.scene.city).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
+    payload.Dispatch = docs
+      .flatMap((i) => i.dispatches)
+      .filter(Boolean)
+      .map((d) => d.toJSON());
+    payload.Incident = docs.map((i) => i.toJSON());
+    payload.Scene = _.uniqBy(
+      docs.map((i) => i.scene.toJSON()),
+      (s) => s.id
+    );
+    payload.State = _.uniqBy(docs.map((i) => i.scene.state).filter(Boolean), (s) => s.id).map((s) => s.toJSON());
     res.json(payload);
   })
 );

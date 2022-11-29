@@ -10,7 +10,7 @@ describe('/api/employments', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'agencies', 'employments']);
+    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'agencies', 'employments']);
     testSession = session(app);
     await testSession
       .post('/login')

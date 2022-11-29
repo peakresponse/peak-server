@@ -10,6 +10,8 @@ describe('models', () => {
         'users',
         'cities',
         'states',
+        'counties',
+        'psaps',
         'agencies',
         'vehicles',
         'assignments',

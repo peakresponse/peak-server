@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       Agency.belongsTo(models.State, { as: 'state' });
       Agency.belongsTo(models.User, { as: 'updatedBy' });
       Agency.belongsTo(models.User, { as: 'createdBy' });
-
+      Agency.belongsTo(models.Psap, { as: 'psap' });
       Agency.hasMany(models.Agency, {
         as: 'customizedAgencies',
         foreignKey: 'createdByAgencyId',
@@ -132,6 +132,7 @@ module.exports = (sequelize, DataTypes) => {
         'subdomain',
         'baseUrl',
         'routedUrl',
+        'psapId',
         'stateUniqueId',
         'number',
         'name',

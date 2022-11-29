@@ -10,7 +10,7 @@ describe('/oauth', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'agencies', 'employments', 'clients', 'tokens']);
+    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'agencies', 'employments', 'clients', 'tokens']);
     testSession = session(app);
     await testSession
       .post('/login')

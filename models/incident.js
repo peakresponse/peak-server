@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async paginate(type, obj, options) {
-      const limit = 25;
+      const limit = options?.paginate ?? 25;
       const offset = (parseInt(options?.page ?? 1, 10) - 1) * limit;
       let searchConditions = '';
       let joins = '';
@@ -40,9 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       let conditions;
       if (type === 'Agency') {
         conditions = `
-         INNER JOIN vehicles ON dispatches.vehicle_id=vehicles.id
+         LEFT JOIN vehicles ON dispatches.vehicle_id=vehicles.id
          WHERE vehicles.created_by_agency_id=:objId
-        `;
+         OR incidents.created_by_agency_id=:objId
+         `;
       } else if (type === 'Vehicle') {
         conditions = `
          WHERE dispatches.vehicle_id=:objId
@@ -52,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       }
       const docs = await sequelize.query(
         `SELECT DISTINCT(incidents.*) FROM incidents ${joins}
-         INNER JOIN dispatches ON incidents.id=dispatches.incident_id
+         LEFT JOIN dispatches ON incidents.id=dispatches.incident_id
          ${conditions} ${searchConditions}
          ORDER BY incidents.number DESC
          LIMIT :limit OFFSET :offset`,
@@ -65,11 +66,12 @@ module.exports = (sequelize, DataTypes) => {
           },
           model: Incident,
           mapToModel: true,
+          transaction: options?.transaction,
         }
       );
       const [{ count }] = await sequelize.query(
         `SELECT COUNT(DISTINCT(incidents.id)) FROM incidents ${joins}
-         INNER JOIN dispatches ON incidents.id=dispatches.incident_id
+         LEFT JOIN dispatches ON incidents.id=dispatches.incident_id
          ${conditions} ${searchConditions}`,
         {
           raw: true,
@@ -78,6 +80,7 @@ module.exports = (sequelize, DataTypes) => {
             search,
           },
           type: sequelize.QueryTypes.SELECT,
+          transaction: options?.transaction,
         }
       );
       const total = parseInt(count, 10);
@@ -87,6 +90,7 @@ module.exports = (sequelize, DataTypes) => {
       const scenes = await sequelize.models.Scene.findAll({
         include: ['city', 'state'],
         where: { id: sceneIds },
+        transaction: options?.transaction,
       });
       const sceneMap = scenes.reduce((map, scene) => {
         map[scene.id] = scene;
@@ -99,6 +103,7 @@ module.exports = (sequelize, DataTypes) => {
           incidentId: incidentIds,
         },
         order: [['dispatchedAt', 'ASC']],
+        transaction: options?.transaction,
       });
       const dispatchesMap = dispatches.reduce((map, dispatch) => {
         map[dispatch.incidentId] = map[dispatch.incidentId] || [];

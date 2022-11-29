@@ -139,7 +139,7 @@ router.patch(
       if (agency) {
         const attributes = ['stateId', 'stateUniqueId', 'number', 'name'];
         if (agency.isClaimed) {
-          attributes.push('subdomain', 'routedUrl');
+          attributes.push('psapId', 'subdomain', 'routedUrl');
         }
         await agency.update(_.pick(req.body, attributes), { transaction });
       }

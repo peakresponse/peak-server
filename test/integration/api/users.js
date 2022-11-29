@@ -13,6 +13,7 @@ describe('/api/users', () => {
       'cities',
       'counties',
       'states',
+      'psaps',
       'agencies',
       'users',
       'vehicles',
@@ -21,7 +22,6 @@ describe('/api/users', () => {
       'employments',
       'scenes',
       'responders',
-      'psaps',
       'incidents',
     ]);
     testSession = session(app);

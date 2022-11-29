@@ -11,7 +11,7 @@ describe('/api/agencies', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['states', 'agencies', 'users', 'employments']);
+    await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'users', 'employments']);
     testSession = session(app);
   });
 

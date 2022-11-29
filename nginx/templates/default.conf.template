@@ -11,8 +11,8 @@ server {
 
     listen       ${PORT} ssl;
     listen  [::]:${PORT} ssl;
-    ssl_certificate /etc/letsencrypt/live/${BASE_HOST}/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/${BASE_HOST}/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/${BASE_HOST}-0001/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/${BASE_HOST}-0001/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
@@ -191,8 +191,8 @@ server {
 
     listen       8080 ssl;
     listen  [::]:8080 ssl;
-    ssl_certificate /etc/letsencrypt/live/${BASE_HOST}/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/${BASE_HOST}/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/${BASE_HOST}-0001/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/${BASE_HOST}-0001/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 

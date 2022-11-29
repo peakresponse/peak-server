@@ -17,6 +17,7 @@ export class BaseFieldComponent {
   @Input() hasError: boolean = false;
   @Input() isDisabled: boolean = false;
   @Input() isFocusable: boolean = true;
+  @Input() isClearable: boolean = true;
   @Output() valueChange = new EventEmitter<any>();
 
   isFocused = false;
@@ -69,7 +70,7 @@ export class BaseFieldComponent {
   }
 
   set value(value: any) {
-    if (!this.isReadOnly) {
+    if (!this.isReadOnly || (this.isClearable && value === null)) {
       this.target[this.derivedPropertyName] = value;
       this.setPredictionStatus('CORRECTED');
       this.valueChange.emit(value);

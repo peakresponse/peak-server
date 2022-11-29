@@ -2,6 +2,8 @@ const express = require('express');
 const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
 
+const models = require('../../models');
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -20,18 +22,30 @@ router.get(
       const { results } = data;
       data = {};
       for (const result of results) {
+        result.address_components.reverse();
+        /* eslint-disable no-await-in-loop */
         for (const addressComponent of result.address_components) {
           const { types } = addressComponent;
           if (types.includes('postal_code')) {
-            data.zip = addressComponent.long_name;
+            data.zip = addressComponent.short_name;
           } else if (types.includes('locality')) {
-            data.city = addressComponent.long_name;
+            data.cityId = await models.City.getCode(addressComponent.long_name, data.stateId);
+            data.city = (await models.City.findByPk(data.cityId))?.toJSON();
           } else if (types.includes('administrative_area_level_2')) {
-            data.county = addressComponent.long_name;
+            data.countyId = await models.County.getCode(addressComponent.long_name, data.stateId);
+            data.county = (await models.County.findByPk(data.countyId))?.toJSON();
           } else if (types.includes('administrative_area_level_1')) {
-            data.state = addressComponent.long_name;
+            data.stateId = models.State.getCodeForAbbr(addressComponent.short_name);
+            data.state = (await models.State.findByPk(data.stateId))?.toJSON();
+          } else if (types.includes('street_number')) {
+            data.address1 = data.address1 ?? '';
+            data.address1 = `${addressComponent.short_name} ${data.address1}`.trim();
+          } else if (types.includes('route')) {
+            data.address1 = data.address1 ?? '';
+            data.address1 = `${data.address1} ${addressComponent.short_name}`.trim();
           }
         }
+        /* eslint-enable no-await-in-loop */
         break;
       }
       res.json(data);

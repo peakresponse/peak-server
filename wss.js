@@ -24,17 +24,16 @@ async function dispatchIncidentUpdate(incidentId) {
     return;
   }
   const json = {
-    City: incident.scene.city.toJSON(),
+    City: incident.scene.city?.toJSON(),
     Dispatch: incident.dispatches.map((d) => d.toJSON()),
     Incident: incident.toJSON(),
     Scene: incident.scene.toJSON(),
-    State: incident.scene.state.toJSON(),
+    State: incident.scene.state?.toJSON(),
     Vehicle: incident.dispatches.map((d) => d.vehicle.toJSON()),
   };
   const data = JSON.stringify(json);
   for (const ws of incidentsServer.clients) {
     if (incident.dispatches.find((d) => d.vehicleId === ws.info.vehicleId)) {
-      // TODO include all reports if not an MCI (MCI will dispatch through Scene updates)
       ws.send(data);
     } else if (incident.dispatches.find((d) => d.vehicle.createdByAgencyId === ws.info.agencyId)) {
       ws.send(data);
@@ -67,11 +66,11 @@ sceneServer.on('connection', async (ws, req) => {
       report.sceneId = scene.currentId;
     }
     payload.Agency = responders.map((r) => r.agency.toJSON());
-    payload.City = scene.city.toJSON();
+    payload.City = scene.city?.toJSON();
     payload.Incident = scene.incident.toJSON();
     payload.Responder = responders.map((r) => r.toJSON());
     payload.Scene = scene.toJSON();
-    payload.State = scene.state.toJSON();
+    payload.State = scene.state?.toJSON();
     payload.User = responders.map((r) => r.user.toJSON());
     payload.Vehicle = responders
       .map((r) => r.vehicle)
@@ -113,13 +112,15 @@ async function dispatchSceneUpdate(sceneId) {
 
 async function dispatchReportUpdate(reportId) {
   let report;
+  let incident;
   let scene;
   let payload;
   await models.sequelize.transaction(async (transaction) => {
     report = await models.Report.findByPk(reportId, {
-      include: ['disposition', 'patient', 'scene'],
+      include: ['disposition', { model: models.Incident, as: 'incident', include: ['dispatches'] }, 'patient', 'scene'],
       transaction,
     });
+    incident = report.incident;
     scene = await report.scene.getCanonical({ transaction });
     payload = await models.Report.createPayload([report], { transaction });
     // during MCI, rewrite all Reports to refer to latest Scene
@@ -130,6 +131,11 @@ async function dispatchReportUpdate(reportId) {
   });
   for (const ws of sceneServer.clients) {
     if (ws.info.sceneId === scene.id) {
+      ws.send(payload);
+    }
+  }
+  for (const ws of incidentsServer.clients) {
+    if (incident.dispatches.find((d) => d.vehicleId === ws.info.vehicleId)) {
       ws.send(payload);
     }
   }

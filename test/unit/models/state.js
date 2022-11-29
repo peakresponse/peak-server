@@ -14,6 +14,12 @@ describe('models', () => {
       });
     });
 
+    describe('.getCodeForAbbr()', () => {
+      it('should return the state code for a given abbreviation', () => {
+        assert.deepStrictEqual(models.State.getCodeForAbbr('ca'), '06');
+      });
+    });
+
     describe('.getCodeForName()', () => {
       it('should return the state code for a given name', () => {
         assert.deepStrictEqual(models.State.getCodeForName('California'), '06');

@@ -13,12 +13,10 @@ jobs:
           docker_layer_caching: true
           version: 20.10.2
       - run: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
-      - run: docker-compose -f docker-compose.test.yml up -d db
       - run: docker-compose -f docker-compose.test.yml build server
-      - run: docker-compose -f docker-compose.test.yml run server npx sequelize db:create --env=test
-      - run: docker-compose -f docker-compose.test.yml run server npx sequelize db:migrate --env=test
-      - run: docker-compose -f docker-compose.test.yml run server npm run ci
+      - run: docker-compose -f docker-compose.test.yml run server bash -l -c "bin/pg_wait && sequelize db:create --env=test && npx sequelize db:migrate --env=test && npm run ci"
       - run: bin/release
+    resource_class: large
 
 workflows:
   test:

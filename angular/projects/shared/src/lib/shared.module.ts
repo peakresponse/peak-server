@@ -23,6 +23,7 @@ import { LogoSquareLight } from './components/branding/logo.square.light.compone
 import { ArrayFieldComponent } from './components/fields/array-field.component';
 import { CheckboxComponent } from './components/fields/checkbox.component';
 import { FileFieldComponent } from './components/fields/file-field.component';
+import { ObjectFieldComponent } from './components/fields/object-field.component';
 import { RecordingFieldComponent } from './components/fields/recording-field.component';
 import { SearchFieldComponent } from './components/fields/search-field.component';
 import { SelectFieldComponent } from './components/fields/select-field.component';
@@ -71,6 +72,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     ArrayFieldComponent,
     CheckboxComponent,
     FileFieldComponent,
+    ObjectFieldComponent,
     RecordingFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
@@ -119,6 +121,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     ArrayFieldComponent,
     CheckboxComponent,
     FileFieldComponent,
+    ObjectFieldComponent,
     RecordingFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,

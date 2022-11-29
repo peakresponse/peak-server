@@ -33,6 +33,7 @@ router.get(
   })
 );
 
+/* eslint-disable no-await-in-loop */
 router.post(
   '/',
   interceptors.requireAgency(),
@@ -41,11 +42,14 @@ router.post(
     const reportIds = [];
     await models.sequelize.transaction(async (transaction) => {
       // TODO: check if logged-in user is authorized to create/update
+      const payload = {};
       let created;
       let obj;
       for (const model of [
-        'Response',
         'Scene',
+        'Incident',
+        'Dispatch',
+        'Response',
         'Time',
         'Patient',
         'Situation',
@@ -65,40 +69,132 @@ router.post(
             records = [records];
           }
           for (const record of records) {
-            if (req.apiLevel === 1) {
-              if (model === 'Scene') {
-                if (!record.canonicalId) {
-                  // eslint-disable-next-line no-continue
-                  continue;
+            if (model === 'Incident') {
+              const incident = models.Incident.build({
+                ..._.pick(record, ['id', 'sceneId', 'number']),
+                psapId: req.agency.psapId,
+                createdById: req.user.id,
+                updatedById: req.user.id,
+                createdByAgencyId: req.agency.id,
+                updatedByAgencyId: req.agency.id,
+              });
+              if (!incident.number) {
+                if (incident.psapId) {
+                  // get the latest incident number, make unique
+                  const prevIncident = await models.Incident.findOne({
+                    where: {
+                      psapId: incident.psapId,
+                    },
+                    order: [['number', 'DESC']],
+                    transaction,
+                  });
+                  if (prevIncident) {
+                    const { number } = prevIncident;
+                    const m = number.match(/^(\d+)-(\d+)$/);
+                    if (m) {
+                      const prevNumber = parseInt(m[2], 10);
+                      incident.number = `${m[1]}-${`${prevNumber + 1}`.padStart(3, '0')}`;
+                    } else {
+                      incident.number = `${number}-001`;
+                    }
+                  } else {
+                    incident.number = '1';
+                  }
+                } else {
+                  // get the latest incident number, increment
+                  const { docs } = await models.Incident.paginate('Agency', req.agency, { paginate: 1, transaction });
+                  if (docs.length === 1) {
+                    const [prevIncident] = docs;
+                    const prevNumber = parseInt(prevIncident.number, 10);
+                    incident.number = `${prevNumber + 1}`;
+                  } else {
+                    incident.number = '1';
+                  }
                 }
-              }
-              if (model === 'Report') {
-                if (record.sceneId) {
-                  // eslint-disable-next-line no-await-in-loop
-                  const scene = await models.Scene.findByPk(record.sceneId, { transaction });
-                  if (scene.isCanonical) {
-                    record.sceneId = scene.currentId;
+              } else {
+                // check if number is a duplicate
+                let options = {
+                  where: {
+                    id: {
+                      [models.Sequelize.Op.ne]: incident.id,
+                    },
+                    number: incident.number,
+                  },
+                  transaction,
+                };
+                if (incident.psapId) {
+                  options.where.psapId = incident.psapId;
+                } else {
+                  options.where.createdByAgencyId = req.agency.id;
+                }
+                const dupeIncident = await models.Incident.findOne(options);
+                if (dupeIncident) {
+                  // de-dupe with a unique suffix
+                  const { number } = dupeIncident;
+                  const m = number.match(/^(\d+)-(\d+)$/);
+                  if (m) {
+                    options = {
+                      where: {
+                        number: {
+                          [models.Sequelize.Op.iLike]: `${m[1]}-%`,
+                        },
+                      },
+                      transaction,
+                    };
+                    if (incident.psapId) {
+                      options.where.psapId = incident.psapId;
+                    } else {
+                      options.where.createdByAgencyId = req.agency.id;
+                    }
+                    const count = await models.Incident.count(options);
+                    incident.number = `${m[1]}-${`${count + 1}`.padStart(3, '0')}`;
+                  } else {
+                    incident.number = `${number}-001`;
                   }
                 }
               }
-            }
-            // eslint-disable-next-line no-await-in-loop
-            [obj, created] = await models[model].createOrUpdate(req.user, req.agency, record, {
-              transaction,
-            });
-            if (model === 'Report') {
-              incidentIds.push(obj.incidentId);
-              reportIds.push(obj.canonicalId);
+              await incident.save({ transaction });
+              payload.Incident = payload.Incident || [];
+              payload.Incident.push(incident.toJSON());
+              // search for the Report(s) that match this Incident, update Response incidentNumber
+              let { Report: reports = [], Response: responses = [] } = req.body;
+              if (!Array.isArray(reports)) {
+                reports = [reports];
+              }
+              if (!Array.isArray(responses)) {
+                responses = [responses];
+              }
+              for (const report of reports) {
+                if (report.incidentId === incident.id) {
+                  for (const response of responses) {
+                    if (response.id === report.responseId) {
+                      _.set(response.data, ['eResponse', 'eResponse.03', '_text'], incident.number);
+                      payload.Response = payload.Response || [];
+                      payload.Response.push(response);
+                      break;
+                    }
+                  }
+                }
+              }
+            } else {
+              [obj, created] = await models[model].createOrUpdate(req.user, req.agency, record, {
+                transaction,
+              });
+              if (model === 'Report') {
+                incidentIds.push(obj.incidentId);
+                reportIds.push(obj.canonicalId);
+              }
             }
           }
         }
       }
-      res.status(created ? HttpStatus.CREATED : HttpStatus.OK).end();
+      res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(payload);
     });
     await Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id)));
     await Promise.all(reportIds.map((id) => dispatchReportUpdate(id)));
   })
 );
+/* eslint-enable no-await-in-loop */
 
 router.get(
   '/:id',

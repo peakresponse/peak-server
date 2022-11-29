@@ -15,9 +15,9 @@ describe('/api/incidents', () => {
       'cities',
       'users',
       'facilities',
+      'psaps',
       'agencies',
       'employments',
-      'psaps',
       'dispatchers',
       'scenes',
       'patients',
@@ -42,15 +42,6 @@ describe('/api/incidents', () => {
   });
 
   describe('GET /', () => {
-    it('returns a paginated list of records (API level 1)', async () => {
-      const response = await testSession
-        .get('/api/incidents')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK)
-        .expect('X-Total-Count', '1');
-      assert.deepStrictEqual(response.body.length, 1);
-    });
-
     it('returns a paginated list of records (API level 2+)', async () => {
       const response = await testSession
         .get('/api/incidents')

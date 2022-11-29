@@ -27,10 +27,13 @@
         <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
       <div *ngIf="record.isClaimed" class="mb-3">
+        <shared-object-field id="psapId" label="PSAP" [source]="record" [target]="record" [error]="error" [objectFetchHandler]="onFetchPsap" [searchHandler]="onSearchPsap"></shared-object-field>
+      </div>
+      <div *ngIf="record.isClaimed" class="mb-3">
         <shared-text-field id="subdomain" label="Subdomain" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
       <div *ngIf="record.isClaimed" class="mb-3">
-        <shared-text-field id="routedUrl" label="RoutED URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+        <shared-text-field id="routedUrl" label="Routed URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
     </ng-template>
   </shared-form>

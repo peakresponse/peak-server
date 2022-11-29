@@ -6,7 +6,19 @@ const models = require('../../../models');
 describe('models', () => {
   describe('Responder', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'cities', 'states', 'agencies', 'vehicles', 'contacts', 'employments', 'scenes', 'responders']);
+      await helpers.loadFixtures([
+        'users',
+        'cities',
+        'states',
+        'counties',
+        'psaps',
+        'agencies',
+        'vehicles',
+        'contacts',
+        'employments',
+        'scenes',
+        'responders',
+      ]);
     });
 
     describe('.toJSON()', () => {

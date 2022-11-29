@@ -57,7 +57,6 @@ const resetDatabase = async () => {
     DELETE FROM assignments;
     DELETE FROM incidents;
     DELETE FROM dispatchers;
-    DELETE FROM psaps;
     UPDATE scenes SET mgs_responder_id=NULL, triage_responder_id=NULL, treatment_responder_id=NULL, staging_responder_id=NULL, transport_responder_id=NULL;
     DELETE FROM responders;    
     DELETE FROM scene_observations;
@@ -68,6 +67,7 @@ const resetDatabase = async () => {
     DELETE FROM forms;
     DELETE FROM vehicles;
     DELETE FROM agencies;
+    DELETE FROM psaps;
     DELETE FROM facilities;
     DELETE FROM agencies;
     DELETE FROM tokens;
