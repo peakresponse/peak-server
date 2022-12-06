@@ -4,6 +4,11 @@
   display: flex;
   margin: 0 auto;
   max-width: map-get($container-max-widths, 'lg');
+
+  .chip {
+    position: relative;
+    top: -3px;
+  }
 }
 
 .incident__number {
@@ -23,6 +28,23 @@
 .incident__time {
   text-align: right;
   width: 5rem;
+  line-height: 3rem;
+}
+
+.incident--mci {
+  background-color: $brand-secondary-300;
+  &:hover {
+    background-color: $brand-secondary-400;
+  }
+
+  .incident__number {
+    color: $brand-secondary-500;
+  }
+
+  .chip {
+    border-color: $brand-secondary-500;
+    background-color: $brand-secondary-500;
+  }
 }
 
 shared-command-header ::ng-deep {

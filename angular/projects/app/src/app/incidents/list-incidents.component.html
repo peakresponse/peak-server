@@ -22,20 +22,27 @@
     <table class="table">
       <shared-list type="incidents" [transform]="transform" [params]="params" [search]="search">
         <ng-template let-record="record">
-          <tr *ngIf="parseDate(record.dispatches[0].dispatchedAt) as datetime" [routerLink]="['/incidents', record.id, 'reports']">
+          <tr [class.incident--mci]="record.scene?.isMCI" [routerLink]="['/incidents', record.id, 'reports']">
             <td>
               <div class="incident">
                 <div class="d-flex flex-grow-1">
-                  <div class="incident__number">#{{record.number}}</div>
+                  <div class="incident__number">
+                    #{{record.number}}
+                    <button *ngIf="record.scene?.isMCI" class="chip readonly chip--lg chip--primary">MCI</button>
+                  </div>
                   <div class="incident__address">
                     {{record.scene?.address1|inflection:'titleize'}}<br />
                     {{record.scene?.address2|inflection:'titleize'}}<br *ngIf="record.scene?.address2" />
                     {{cityName(record.scene?.city?.featureName)}}<span *ngIf="record.scene?.city && record.scene?.state">, </span>{{record.scene?.state?.abbr}} {{record.scene?.zip}}
                   </div>
-                  <div class="incident__date">
+                  <div *ngIf="record.dispatches && parseDate(record.dispatches[0].dispatchedAt) as datetime" class="incident__date">
                     {{datePart(datetime)}}<br />
                     {{timePart(datetime)}}
-                  </div>  
+                  </div>
+                  <div *ngIf="!record.dispatches && parseDate(record.createdAt) as datetime" class="incident__date">
+                    {{datePart(datetime)}}<br />
+                    {{timePart(datetime)}}
+                  </div>
                 </div>
                 <div class="incident__time">
                   <button *ngIf="record.reportsCount > 0" class="chip readonly chip--lg chip--primary">{{record.reportsCount}}</button>
