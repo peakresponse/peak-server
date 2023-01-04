@@ -43,6 +43,21 @@ describe('/api/assignments', () => {
       assert.deepStrictEqual(response.body.vehicleId, '91986460-5a12-426d-9855-93227b47ead5');
     });
 
+    it('creates a new Vehicle with Assignment', async () => {
+      const response = await testSession
+        .post('/api/assignments')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          number: '23',
+        })
+        .expect(HttpStatus.CREATED);
+      assert.deepStrictEqual(response.body.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
+      assert(response.body.vehicleId);
+      const vehicle = await models.Vehicle.findByPk(response.body.vehicleId, { rejectOnEmpty: true });
+      assert.deepStrictEqual(vehicle.number, '23');
+      assert.deepStrictEqual(vehicle.callSign, '23');
+    });
+
     it('creates a new null Assignment', async () => {
       const response = await testSession
         .post('/api/assignments')

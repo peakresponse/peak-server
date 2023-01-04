@@ -19,9 +19,35 @@ router.post(
       } else {
         user = req.user;
       }
-      const vehicle = await models.Vehicle.findByPk(req.body.vehicleId, { rejectOnEmpty: true, transaction });
+      let vehicle;
+      if (req.body.number) {
+        [vehicle] = await models.Vehicle.findOrCreate({
+          where: {
+            createdByAgencyId: req.agency.id,
+            number: {
+              [models.Sequelize.Op.iLike]: req.body.number,
+            },
+          },
+          defaults: {
+            number: req.body.number,
+            callSign: req.body.number,
+            createdById: req.user.id,
+            updatedById: req.user.id,
+          },
+          transaction,
+        });
+      } else {
+        vehicle = await models.Vehicle.findByPk(req.body.vehicleId, { rejectOnEmpty: true, transaction });
+      }
       const assignment = await models.Assignment.assign(req.user, req.agency, user, vehicle, { transaction });
-      res.status(HttpStatus.CREATED).json(assignment.toJSON());
+      if (req.apiLevel >= 3) {
+        res.status(HttpStatus.CREATED).json({
+          Assignment: assignment.toJSON(),
+          Vehicle: vehicle.toJSON(),
+        });
+      } else {
+        res.status(HttpStatus.CREATED).json(assignment.toJSON());
+      }
     });
   })
 );
