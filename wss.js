@@ -59,6 +59,7 @@ sceneServer.on('connection', async (ws, req) => {
     const reports = await scene.incident.getReports({
       include: ['patient', 'disposition'],
       transaction,
+      order: [['id', 'ASC']],
     });
     payload = await models.Report.createPayload(reports, { transaction });
     // during MCI, rewrite all Reports to refer to latest Scene

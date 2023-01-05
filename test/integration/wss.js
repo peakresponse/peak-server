@@ -88,6 +88,7 @@ describe('wss', () => {
             'procedures',
             'files',
           ],
+          order: [['id', 'ASC']],
         });
         const payload = JSON.parse(JSON.stringify(await models.Report.createPayload(reports)));
         await request(server)
