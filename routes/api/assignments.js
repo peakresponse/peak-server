@@ -43,7 +43,7 @@ router.post(
       if (req.apiLevel >= 3) {
         res.status(HttpStatus.CREATED).json({
           Assignment: assignment.toJSON(),
-          Vehicle: vehicle.toJSON(),
+          Vehicle: vehicle?.toJSON(),
         });
       } else {
         res.status(HttpStatus.CREATED).json(assignment.toJSON());
