@@ -1,5 +1,0 @@
-<app-shared-xsd-element-wrapper [element]="element" [data]="data" [index]="index" [selectedValue]="selectedValue">
-  <select [id]="formName" [name]="formName" [(ngModel)]="value" class="custom-select" [class.is-invalid]="isInvalid">
-    <option *ngFor="let state of STATES" [value]="state.id">{{state.name}}</option>
-  </select>
-</app-shared-xsd-element-wrapper>

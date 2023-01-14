@@ -12,10 +12,10 @@
     <title><%= locals.title ? `${title} - ` : '' %><%= process.env.APP_NAME %></title>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/libraries/fontawesome/css/all.css" />
-    <% for (let entry of ['assets']) { %>
-      <% for (let chunk of webpackStats.chunks[entry]) { %>
-        <% if (chunk.name.endsWith('.css')) { %>
-          <link rel="stylesheet" href="<%= chunk.publicPath %>" />
+    <% if (locals.designWebpackStats) { %>
+      <% for (let asset of Object.keys(designWebpackStats.assets)) { %>
+        <% if (asset.endsWith('.css')) { %>
+          <link rel="stylesheet" href="<%= designWebpackStats.assets[asset].publicPath %>" />
         <% } %>
       <% } %>
     <% } %>

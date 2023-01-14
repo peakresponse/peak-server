@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const createError = require('http-errors');
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const cookieSession = require('cookie-session');
 const logger = require('morgan');
@@ -40,12 +39,9 @@ app.set('trust proxy', 1);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/angular', express.static(path.join(__dirname, 'angular/dist')));
-app.use('/client', express.static(path.join(__dirname, 'dist')));
 app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
-app.use('/libraries/cleave', express.static(path.join(__dirname, 'node_modules/cleave.js/dist')));
 app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-app.use('/libraries/qrcode', express.static(path.join(__dirname, 'node_modules/qrcode/build')));
 app.use('/libraries/smoothscroll', express.static(path.join(__dirname, 'node_modules/smoothscroll-polyfill/dist')));
 app.use('/nemsis', express.static(path.join(__dirname, 'nemsis')));
 
@@ -70,7 +66,6 @@ i18n.configure({
 app.use(helpers.register);
 app.use(i18n.init);
 app.use((req, res, next) => {
-  res.locals.webpackStats = JSON.parse(fs.readFileSync(path.join(__dirname, 'client/webpack-stats.json')));
   res.locals.flash = req.flash();
   res.locals.currentUser = req.user;
   next();

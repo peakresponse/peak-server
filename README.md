@@ -60,7 +60,7 @@ emergency responders.
 
    ```
    server_1       | 2:14:26 AM web.1     |  > app@0.0.0 start /opt/node/app
-   server_1       | 2:14:26 AM web.1     |  > nodemon -V --ignore ./client ./bin/www
+   server_1       | 2:14:26 AM web.1     |  > nodemon -V ./bin/www
    server_1       | 2:14:26 AM web.1     |  [nodemon] 1.19.0
    server_1       | 2:14:26 AM web.1     |  [nodemon] to restart at any time, enter `rs`
    server_1       | 2:14:26 AM web.1     |  [nodemon] or send SIGHUP to 57 to restart

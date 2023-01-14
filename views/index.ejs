@@ -13,6 +13,7 @@
   gtag('config', '<%= process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID %>');
 </script>
 <% } %>
+<%- contentFor('bodyClass') %>marketing
 <%- contentFor('body') %>
 <%- include('_header', {top: true}) %>
 <main role="main">
@@ -86,7 +87,7 @@
         <% } %>
       </div>
       <div class="text-center">
-        <a class="btn btn-sm btn-outline-primary" href="<%= process.env.MARKETING_BLOG %>" target="_blank">View More Articles</a>
+        <a class="btn btn-sm btn--secondary" href="<%= process.env.MARKETING_BLOG %>" target="_blank">View More Articles</a>
       </div>
     </div>
   </section>
@@ -157,31 +158,31 @@
       <h3>We would love to hear from you.</h3>
       <p>We’re in the early stages of developing this product and are always looking for feedback from users.  If you’re interested in testing out the product or are just looking for more info, please leave your information and we’ll connect with you.</p>
       <form class="row" method="post" action="/contact-us">
-        <div class="form-group col-md-6 col-lg-5 offset-lg-1">
-          <div class="form-field">
+        <div class="col-md-6 col-lg-5 offset-lg-1">
+          <div class="form-field mb-3">
             <label for="firstName">First Name</label>
             <input required type="text" class="form-control" id="firstName" name="firstName" />
           </div>
         </div>
-        <div class="form-group col-md-6 col-lg-5">
-          <div class="form-field">
+        <div class="col-md-6 col-lg-5">
+          <div class="form-field mb-3">
             <label for="lastName">Last Name</label>
             <input required type="text" class="form-control" id="lastName" name="lastName"/>
           </div>
         </div>
-        <div class="form-group col-lg-10 offset-lg-1">
-          <div class="form-field">
+        <div class="col-lg-10 offset-lg-1">
+          <div class="form-field mb-3">
             <label for="email">Email</label>
             <input required type="email" class="form-control" id="email" name="email" />
           </div>
         </div>
-        <div class="form-group col-lg-10 offset-lg-1">
-          <div class="form-field">
+        <div class="col-lg-10 offset-lg-1">
+          <div class="form-field mb-3">
             <label for="message">Message</label>
             <textarea required class="form-control" id="message" name="message" rows="4"></textarea>
           </div>
         </div>
-        <div class="form-group col-lg-6 offset-lg-1">
+        <div class="col-lg-6 offset-lg-1">
           <div class="form-check">
             <input type="checkbox" class="form-check-input" id="feedback" name="feedback" value="yes">
             <label for="feedback" class="form-check-label">&nbsp;I'm interested in providing feedback on the product.</label>
@@ -191,9 +192,9 @@
             <label for="pilot" class="form-check-label">&nbsp;I'm interested in being part of a pilot program.</label>
           </div>
         </div>
-        <div class="form-group col-lg-4">
+        <div class="col-lg-4">
           <div class="g-recaptcha contact__captcha" data-callback="onRecaptchaCallback" data-sitekey="<%= process.env.GOOGLE_RECAPTCHA_SITE_KEY %>"></div>
-          <button disabled type="submit" class="btn btn-sm btn-block btn-outline-primary">Submit</button>
+          <button disabled type="submit" class="btn btn-sm btn--primary">Submit</button>
         </div>
       </form>
     </div>
@@ -207,7 +208,7 @@
       <div class="modal-body">
         <img src="/images/logo-dark.png" alt="Peak Response Logo" />
         <p>NaTriage is now Peak Response.<br />Please make note of our new web address:<br/>https://peakresponse.net</p>
-        <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Got it!</button>
+        <button type="button" class="btn btn-sm btn--secondary" data-dismiss="modal">Got it!</button>
       </div>
     </div>
   </div>

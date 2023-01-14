@@ -34,11 +34,10 @@ RUN npm install && \
     npm run build -- admin && \
     npm run build -- app
 
-# Build Java dependencies and (legacy) Angular apps
+# Build Server and Java dependencies
 WORKDIR $APP_HOME
-RUN mvn install && \
-    npm install && \
-    npm run build
+RUN npm install && \
+    mvn install
 
 CMD ["bash", "./bin/entrypoint"]
 

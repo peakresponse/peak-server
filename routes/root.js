@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
 const moment = require('moment');
@@ -10,6 +12,20 @@ const mailer = require('../emails/mailer');
 const helpers = require('./helpers');
 
 const router = express.Router();
+
+let designWebpackStats;
+
+function getDesignWebpackStats() {
+  if (!designWebpackStats || process.env.NODE_ENV !== 'production') {
+    designWebpackStats = JSON.parse(fs.readFileSync(path.join(__dirname, '../angular/projects/design/webpack-stats.json')));
+  }
+  return designWebpackStats;
+}
+
+router.use((req, res, next) => {
+  res.locals.designWebpackStats = getDesignWebpackStats();
+  next();
+});
 
 router.get('/privacy', (req, res) => {
   res.render('privacy');

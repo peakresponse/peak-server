@@ -115,10 +115,6 @@ router.get('/sign-up(/*)?', (req, res) => {
   });
 });
 
-router.get('/old(/*)?', interceptors.requireLogin, (req, res) => {
-  res.render('dashboard');
-});
-
 router.get('/*', interceptors.requireLogin, (req, res) => {
   res.locals.designWebpackStats = getDesignWebpackStats();
   res.locals.webpackStats = getAppWebpackStats();
