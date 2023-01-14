@@ -24,7 +24,7 @@
     "bootstrap": "^5.2.3",
     "inflection": "^1.13.1",
     "lodash": "^4.17.21",
-    "luxon": "^2.0.2",
+    "luxon": "^2.5.2",
     "mini-css-extract-plugin": "^2.4.2",
     "ngx-sortablejs": "^11.1.0",
     "rxjs": "~6.6.0",
