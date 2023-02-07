@@ -90,6 +90,7 @@ beforeEach(async () => {
 
 after(async () => {
   /// close all db connections
+  await resetDatabase();
   await models.sequelize.close();
 });
 

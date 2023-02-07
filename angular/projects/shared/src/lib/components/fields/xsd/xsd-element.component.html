@@ -1,5 +1,5 @@
 <ng-container [ngSwitch]="componentType">
-  <shared-xsd-input *ngSwitchCase="COMPONENT_TYPES.input" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue"></shared-xsd-input>
-  <shared-xsd-select *ngSwitchCase="COMPONENT_TYPES.select" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue"></shared-xsd-select>
-  <shared-xsd-select-state *ngSwitchCase="COMPONENT_TYPES.selectState" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue"></shared-xsd-select-state>
+  <shared-xsd-input *ngSwitchCase="COMPONENT_TYPES.input" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue" [displayOnly]="displayOnly"></shared-xsd-input>
+  <shared-xsd-select *ngSwitchCase="COMPONENT_TYPES.select" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue" [displayOnly]="displayOnly"></shared-xsd-select>
+  <shared-xsd-select-state *ngSwitchCase="COMPONENT_TYPES.selectState" [element]="element" [data]="data" [error]="error" [index]="index" [selectedValue]="selectedValue" [displayOnly]="displayOnly"></shared-xsd-select-state>
 </ng-container>

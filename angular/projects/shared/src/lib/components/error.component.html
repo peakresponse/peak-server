@@ -3,7 +3,7 @@
     <span *ngFor="let msg of error.data">{{msg}}</span>
   </span>
   <span *ngIf="error.status == 422">
-    Please review the highlighted errors.
+    Please review the highlighted errors below.
   </span>
   <span *ngIf="error.status == 403">
     {{error.detail}}

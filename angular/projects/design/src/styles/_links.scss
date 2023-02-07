@@ -2,3 +2,7 @@ a {
   @include h4-semibold;
   text-transform: uppercase;
 }
+
+a[tabindex] {
+  cursor: pointer;
+}

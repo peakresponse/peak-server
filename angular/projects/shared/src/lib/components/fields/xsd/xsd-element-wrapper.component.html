@@ -1,8 +1,21 @@
-<div class="input-group">
-  <ng-content *ngIf="!isNil"></ng-content>
-  <select *ngIf="isNil" [(ngModel)]="NV" [id]="formName + '-NV'" [name]="formName + '-NV'" class="custom-select">
-    <option *ngFor="let nv of nilValues" [value]="nv['xs:restriction']['xs:enumeration']._attributes.value">{{nv['xs:restriction']['xs:enumeration']['xs:annotation']['xs:documentation']._text}}</option>
-  </select>
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+<ng-container *ngIf="isDisplayOnly">
+  <div *ngIf="isNil">{{displayNV}}</div>
+  <div *ngIf="!isNil">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </div>
+</ng-container>
+<div *ngIf="!isDisplayOnly" class="input-group">
+  <ng-container *ngIf="!isNil">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+  <div *ngIf="isNil" class="select-wrapper">
+    <select [(ngModel)]="NV" [id]="formName + '-NV'" [name]="formName + '-NV'" class="select-wrapper__select">
+      <option *ngFor="let nv of nilValues" [value]="nv['xs:restriction']['xs:enumeration']._attributes.value">{{nv['xs:restriction']['xs:enumeration']['xs:annotation']['xs:documentation']._text}}</option>
+    </select>
+  </div>
   <div *ngIf="isNillable" class="input-group-append">
     <div class="form-check">
       <input [(ngModel)]="isNil" [id]="formName + '-nil'" tabindex="-1" type="checkbox" class="form-check-input" />
@@ -10,6 +23,6 @@
     </div>
   </div>
   <div *ngIf="index !== undefined && !(isRequired && index == 0)" class="input-group-append">
-    <button (click)="remValue(selectedValue)" tabindex="-1" class="btn btn-danger" type="button">&times;</button>
+    <button (click)="remValue(selectedValue)" tabindex="-1" class="btn btn--remove" type="button">Remove</button>
   </div>
 </div>

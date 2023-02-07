@@ -20,7 +20,7 @@
 <div class="mb-3">
   <shared-array-field id="signatures" label="Signatures" [source]="record" [target]="record" [error]="error" [showClearButton]="false">
     <ng-template #item let-item="item" let-removeItem="removeItem" let-updateItem="updateItem">
-      <div>
+      <div class="array-field__subitem">
         <h5>Title</h5>
         {{item.title}}
       </div>
@@ -34,17 +34,17 @@
       </div>
       <div class="array-field__subitem">
         <admin-demographics-form-signature #editSignatureForm (onConfirm)="updateItem(item, $event)" [isEditing]="true"></admin-demographics-form-signature>
-        <button (click)="editSignatureForm.show(item)" type="button" class="btn btn--sm btn--primary me-2">
+        <button (click)="editSignatureForm.show(item)" type="button" class="btn btn--sm btn--secondary me-2">
           Edit
         </button>
-        <button (click)="removeItem(item)" type="button" class="btn btn--sm btn--danger">
+        <button (click)="removeItem(item)" type="button" class="btn btn--sm btn--secondary--danger">
           Delete
         </button>
       </div>
     </ng-template>
     <ng-template #form let-addItem="addItem">
       <admin-demographics-form-signature #newSignatureForm (onConfirm)="addItem($event)"></admin-demographics-form-signature>
-      <button (click)="newSignatureForm.show()" type="button" class="btn btn--sm btn--secondary">
+      <button (click)="newSignatureForm.show()" type="button" class="btn btn--sm btn--primary">
         New Signature
       </button>
     </ng-template>

@@ -4,20 +4,15 @@ const _ = require('lodash');
 
 function async(handler) {
   return (req, res, next) => {
-    Promise.resolve(handler(req, res, next)).catch((error) => {
-      // console.log(error);
-      if (error.name === 'SequelizeValidationError') {
-        /// if we've got a schema validation error, extract the individual errors
-        let originalError = error;
-        if (error.errors.length === 1 && error.errors[0].path === 'schema') {
-          originalError = error.errors[0].original;
-        }
+    Promise.resolve(handler(req, res, next)).catch((err) => {
+      // console.log(err);
+      if (err.name === 'SchemaValidationError' || err.name === 'SequelizeValidationError') {
         res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
           status: HttpStatus.UNPROCESSABLE_ENTITY,
-          messages: originalError.errors.map((e) => _.pick(e, ['path', 'message', 'value'])),
+          messages: err.errors.map((e) => _.pick(e, ['path', 'message', 'value'])),
         });
       } else {
-        next(error);
+        next(err);
       }
     });
   };

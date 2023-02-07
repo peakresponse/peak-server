@@ -4,13 +4,14 @@ const url = require('url');
 const uuid = require('uuid');
 
 const { Base } = require('./base');
-const nemsis = require('../lib/nemsis');
 
 module.exports = (sequelize, DataTypes) => {
   class Agency extends Base {
     static associate(models) {
       Agency.belongsTo(models.Agency, { as: 'canonicalAgency' });
-      Agency.hasOne(models.Agency, { as: 'claimedAgency', foreignKey: 'canonicalAgencyId' });
+      Agency.hasOne(models.Agency.scope('includeClaimed'), { as: 'claimedAgency', foreignKey: 'canonicalAgencyId' });
+      Agency.belongsTo(models.Agency, { as: 'draftParent' });
+      Agency.hasOne(models.Agency, { as: 'draft', foreignKey: 'draftParentId' });
       Agency.belongsTo(models.Agency, { as: 'createdByAgency' });
       Agency.belongsTo(models.State, { as: 'state' });
       Agency.belongsTo(models.User, { as: 'updatedBy' });
@@ -81,7 +82,6 @@ module.exports = (sequelize, DataTypes) => {
         updatedById: user.id,
         data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
-      data.data._attributes = { UUID: id };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
       const agency = await sequelize.models.Agency.create(data, { transaction: options?.transaction });
       /// associate User to Demographic as owner
@@ -136,7 +136,9 @@ module.exports = (sequelize, DataTypes) => {
         'stateUniqueId',
         'number',
         'name',
+        'isDraft',
         'isValid',
+        'validationErrors',
         'createdAt',
         'createdById',
         'createdByAgencyId',
@@ -154,9 +156,9 @@ module.exports = (sequelize, DataTypes) => {
   Agency.init(
     {
       isClaimed: {
-        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['id', 'createdByAgencyId']),
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['id', 'createdByAgencyId', 'isDraft']),
         get() {
-          return this.createdByAgencyId === this.id;
+          return this.isDraft || this.createdByAgencyId === this.id;
         },
       },
       subdomain: {
@@ -195,9 +197,16 @@ module.exports = (sequelize, DataTypes) => {
       data: {
         type: DataTypes.JSONB,
       },
+      isDraft: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_draft',
+      },
       isValid: {
         type: DataTypes.BOOLEAN,
         field: 'is_valid',
+      },
+      validationErrors: {
+        type: DataTypes.JSONB,
       },
     },
     {
@@ -205,14 +214,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Agency',
       tableName: 'agencies',
       underscored: true,
-      validate: {
-        async schema() {
-          if (this.isClaimed) {
-            this.validationError = await nemsis.validateSchema('dAgency_v3.xsd', 'dAgency', null, this.data);
-            this.isValid = this.validationError === null;
-          }
-        },
-      },
     }
   );
 
@@ -224,16 +225,18 @@ module.exports = (sequelize, DataTypes) => {
     where: { createdByAgencyId: { [sequelize.Sequelize.Op.col]: 'id' } },
   });
 
-  Agency.beforeValidate((record, options) => {
-    if (record.isClaimed) {
-      record.syncNemsisId(options);
-    }
-    const prefix = record.isClaimed ? 'dAgency' : 'sAgency';
+  Agency.addScope('includeClaimed', {
+    where: { createdByAgencyId: { [sequelize.Sequelize.Op.col]: 'claimedAgency.id' } },
+  });
+
+  Agency.beforeValidate(async (record, options) => {
+    const prefix = record.isClaimed || record.isDraft ? 'dAgency' : 'sAgency';
     record.syncFieldAndNemsisValue('stateUniqueId', [`${prefix}.01`], options);
     record.syncFieldAndNemsisValue('number', [`${prefix}.02`], options);
     record.syncFieldAndNemsisValue('name', [`${prefix}.03`], options);
-    if (record.isClaimed) {
+    if (record.isClaimed || record.isDraft) {
       record.syncFieldAndNemsisValue('stateId', [`${prefix}.04`], options);
+      await record.validateNemsisData('dAgency_v3.xsd', 'dAgency', null, options);
     }
   });
 

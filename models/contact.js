@@ -1,5 +1,4 @@
 const sequelizePaginate = require('sequelize-paginate');
-const nemsis = require('../lib/nemsis');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -45,26 +44,18 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Contact',
       tableName: 'contacts',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationError = await nemsis.validateSchema('dContact_v3.xsd', 'dContact', 'dContact.ContactInfoGroup', this.data);
-          this.isValid = this.validationError === null;
-          if (this.validationError) throw this.validationError;
-        },
-      },
     }
   );
 
-  Contact.beforeSave(async (record) => {
-    if (!record.id) {
-      record.setDataValue('id', record.data?._attributes?.UUID);
-    }
-    record.setDataValue('type', record.data?.['dContact.01']?._text);
-    record.setDataValue('lastName', record.data?.['dContact.02']?._text);
-    record.setDataValue('firstName', record.data?.['dContact.03']?._text);
-    record.setDataValue('middleName', record.data?.['dContact.04']?._text);
-    record.setDataValue('primaryPhone', Base.firstValueOf(record.data?.['dContact.10']));
-    record.setDataValue('primaryEmail', Base.firstValueOf(record.data?.['dContact.11']));
+  Contact.beforeValidate(async (record, options) => {
+    record.syncNemsisId(options);
+    record.syncFieldAndNemsisValue('type', ['dContact.01'], options);
+    record.syncFieldAndNemsisValue('lastName', ['dContact.02'], options);
+    record.syncFieldAndNemsisValue('firstName', ['dContact.03'], options);
+    record.syncFieldAndNemsisValue('middleName', ['dContact.04'], options);
+    record.syncFieldAndNemsisValue('primaryPhone', ['dContact.10'], options);
+    record.syncFieldAndNemsisValue('primaryEmail', ['dContact.11'], options);
+    await record.validateNemsisData('dContact_v3.xsd', 'dContact', 'dContact.ContactInfoGroup', options);
   });
 
   sequelizePaginate.paginate(Contact);

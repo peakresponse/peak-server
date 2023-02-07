@@ -7,6 +7,8 @@ const path = require('path');
 const { Model } = require('sequelize');
 const uuid = require('uuid/v4');
 
+const nemsis = require('../lib/nemsis');
+
 const s3options = {};
 if (process.env.AWS_ACCESS_KEY_ID) {
   s3options.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
@@ -20,6 +22,24 @@ if (process.env.AWS_S3_BUCKET_REGION) {
 const s3 = new AWS.S3(s3options);
 
 class Base extends Model {
+  // MARK: - helpers for non-versioned records with drafts
+  async updateDraft(values, options) {
+    if (this.isDraft) {
+      return this.update(values, options);
+    }
+    const draft = this.draft || (await this.getDraft(options));
+    if (!draft) {
+      const mergedValues = _.assign(this.get(), values, {
+        isDraft: true,
+        draftParentId: this.id,
+      });
+      delete mergedValues.id;
+      delete mergedValues.draft;
+      return this.createDraft(mergedValues, options);
+    }
+    return draft.update(values, options);
+  }
+
   // MARK: - record versioning helpers
   static async createOrUpdate(model, user, agency, data, createAttrs, updateAttrs, options) {
     if (!options?.transaction) {
@@ -353,6 +373,22 @@ class Base extends Model {
         if (options.fields.indexOf(key) < 0) {
           options.fields.push(key);
         }
+      }
+    }
+  }
+
+  async validateNemsisData(xsdPath, rootTag, groupTag, options) {
+    this.validationErrors = await nemsis.validateSchema(xsdPath, rootTag, groupTag, this.data);
+    this.isValid = this.validationErrors === null;
+    options.fields = options.fields || [];
+    if (this.changed('validationErrors')) {
+      if (options.fields.indexOf('validationErrors') < 0) {
+        options.fields.push('validationErrors');
+      }
+    }
+    if (this.changed('isValid')) {
+      if (options.fields.indexOf('isValid') < 0) {
+        options.fields.push('isValid');
       }
     }
   }

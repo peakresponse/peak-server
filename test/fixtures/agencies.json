@@ -47,9 +47,6 @@
       "updatedAt": "2021-07-21T22:23:56.159Z",
       "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
       "data": {
-        "_attributes": {
-          "UUID": "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8"
-        },
         "dAgency.01": {
           "_text": "S38-50827"
         },
@@ -251,9 +248,6 @@
       "updatedAt": "2020-04-06T21:22:12.726Z",
       "stateId": "06",
       "data": {
-        "_attributes": {
-          "UUID": "5de082f2-3242-43be-bc2b-6e9396815b4f"
-        },
         "sAgency.01": {
           "_text": "S66-50146"
         },
@@ -324,6 +318,40 @@
         },
         "dAgency.03": {
           "_text": "Bayshore Ambulance"
+        },
+        "dAgency.04": {
+          "_text": "06"
+        }
+      }
+    }
+  },
+  {
+    "model": "Agency",
+    "ignoreSet": true,
+    "data": {
+      "id": "79628733-541b-4386-9e0a-d78929afeb9e",
+      "isDraft": true,
+      "draftParentId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "canonicalAgencyId": "83aa05df-35d2-4902-b479-221ea2d2ae1e",
+      "subdomain": "bayshoreambulance",
+      "stateUniqueId": "S38-50121",
+      "number": "S38-50121",
+      "name": "Bayshore Ambulance Draft",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "stateId": "06",
+      "data": {
+        "dAgency.01": {
+          "_text": "S38-50121"
+        },
+        "dAgency.02": {
+          "_text": "S38-50121"
+        },
+        "dAgency.03": {
+          "_text": "Bayshore Ambulance Draft"
         },
         "dAgency.04": {
           "_text": "06"

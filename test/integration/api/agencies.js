@@ -197,9 +197,6 @@ describe('/api/agencies', () => {
       assert.deepStrictEqual(agency.updatedById, user.id);
       assert.deepStrictEqual(agency.canonicalAgencyId, 'e705f64b-1399-436e-a428-18c8378b3444');
       assert.deepStrictEqual(agency.data, {
-        _attributes: {
-          UUID: id,
-        },
         'dAgency.01': {
           _text: 'S01-50120',
         },
