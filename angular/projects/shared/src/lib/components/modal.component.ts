@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-
+import { first } from 'rxjs/operators';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { extend } from 'lodash';
 
@@ -29,6 +29,9 @@ export class ModalComponent {
 
   open(options?: any) {
     this.modalRef = this.modal.open(this.content, extend({ ariaLabelledBy: 'modal-basic-title' }, options));
+    this.modalRef.shown.pipe(first()).subscribe(() => {
+      document.querySelector('.modal')?.scrollTo(0, 0);
+    });
   }
 
   close() {

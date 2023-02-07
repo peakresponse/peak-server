@@ -81,6 +81,93 @@ describe('models', () => {
         agency.subdomain = 'test_1234';
         await assert.doesNotReject(agency.validate());
       });
+
+      it('validates that the data passes XSD', async () => {
+        const agency = await models.Agency.findByPk('79628733-541b-4386-9e0a-d78929afeb9e');
+        agency.data = {
+          'dAgency.01': { _text: 'S38-50121' },
+          'dAgency.02': { _text: 'S38-50121' },
+          'dAgency.03': { _text: 'Bayshore Ambulance Draft' },
+          'dAgency.04': { _text: '06' },
+          'dAgency.AgencyServiceGroup': {
+            _attributes: { UUID: 'efc2843f-d0aa-4d91-912b-e3a5c10ff7e1' },
+            'dAgency.05': {},
+            'dAgency.06': {},
+            'dAgency.07': {},
+            'dAgency.08': {},
+          },
+          'dAgency.09': {},
+          'dAgency.11': {},
+          'dAgency.12': {},
+          'dAgency.13': {},
+          'dAgency.14': {},
+          'dAgency.25': {},
+          'dAgency.26': {},
+        };
+        await agency.save();
+        await agency.reload();
+        assert(!agency.isValid);
+        assert.deepStrictEqual(agency.validationErrors, {
+          name: 'SchemaValidationError',
+          errors: [
+            {
+              path: `$['dAgency.AgencyServiceGroup']['dAgency.05']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.AgencyServiceGroup']['dAgency.06']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.AgencyServiceGroup']['dAgency.07']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.AgencyServiceGroup']['dAgency.08']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.09']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.11']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.12']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.13']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.14']`,
+              message: 'This field is required.',
+              value: '',
+            },
+            {
+              path: `$['dAgency.25']`,
+              message: 'This field is required.',
+              value: null,
+            },
+            {
+              path: `$['dAgency.26']`,
+              message: 'This field is required.',
+              value: null,
+            },
+          ],
+        });
+      });
     });
 
     describe('generateSubdomain()', () => {
@@ -108,9 +195,6 @@ describe('models', () => {
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const canonicalAgency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
         assert.deepStrictEqual(canonicalAgency.data, {
-          _attributes: {
-            UUID: '5de082f2-3242-43be-bc2b-6e9396815b4f',
-          },
           'sAgency.01': { _text: 'S66-50146' },
           'sAgency.02': { _text: 'S66-50146' },
           'sAgency.03': { _text: 'Bodega Bay Fire Protection District' },
@@ -133,9 +217,6 @@ describe('models', () => {
             'dAgency.02': { _text: 'S66-50146' },
             'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
             'dAgency.04': { _text: '06' },
-            _attributes: {
-              UUID: agency.id,
-            },
           });
 
           const employment = await models.Employment.findOne({
@@ -184,9 +265,6 @@ describe('models', () => {
           'dAgency.02': { _text: 'Test Number' },
           'dAgency.03': { _text: 'Test Name' },
           'dAgency.04': { _text: '01' },
-          _attributes: {
-            UUID: agency.id,
-          },
         });
 
         agency.setNemsisValue(['dAgency.01'], 'Sync Id');
@@ -198,6 +276,77 @@ describe('models', () => {
         assert.deepStrictEqual(agency.number, 'Sync Number');
         assert.deepStrictEqual(agency.name, 'Sync Name');
         assert.deepStrictEqual(agency.stateId, '06');
+      });
+    });
+
+    describe('updateDraft()', () => {
+      it('creates a new draft as needed', async () => {
+        const parent = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+        await parent.updateDraft({
+          stateUniqueId: 'Test Id',
+          number: 'Test Number',
+          name: 'Test Name',
+        });
+        await parent.reload();
+        // parent remains unchanged
+        assert.deepStrictEqual(parent.stateUniqueId, 'S38-50827');
+        assert.deepStrictEqual(parent.number, 'S38-50827');
+        assert.deepStrictEqual(parent.name, 'San Francisco Fire Department');
+        assert.deepStrictEqual(parent.data, {
+          'dAgency.01': { _text: 'S38-50827' },
+          'dAgency.02': { _text: 'S38-50827' },
+          'dAgency.03': { _text: 'San Francisco Fire Department' },
+          'dAgency.04': { _text: '06' },
+        });
+
+        const draft = await parent.getDraft();
+        assert(draft);
+        assert(draft.isDraft);
+        assert.deepStrictEqual(draft.draftParentId, '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+        assert.deepStrictEqual(draft.stateUniqueId, 'Test Id');
+        assert.deepStrictEqual(draft.number, 'Test Number');
+        assert.deepStrictEqual(draft.name, 'Test Name');
+        assert.deepStrictEqual(draft.data, {
+          'dAgency.01': { _text: 'Test Id' },
+          'dAgency.02': { _text: 'Test Number' },
+          'dAgency.03': { _text: 'Test Name' },
+          'dAgency.04': { _text: '06' },
+        });
+      });
+
+      it('updates existing draft', async () => {
+        const parent = await models.Agency.findByPk('81b433cd-5f48-4458-87f3-0bf4e1591830');
+        await parent.updateDraft({
+          stateUniqueId: 'Test Id',
+          number: 'Test Number',
+          name: 'Test Name',
+        });
+        await parent.reload();
+        // parent remains unchanged
+        assert.deepStrictEqual(parent.stateUniqueId, 'S38-50121');
+        assert.deepStrictEqual(parent.number, 'S38-50121');
+        assert.deepStrictEqual(parent.name, 'Bayshore Ambulance');
+        assert.deepStrictEqual(parent.data, {
+          'dAgency.01': { _text: 'S38-50121' },
+          'dAgency.02': { _text: 'S38-50121' },
+          'dAgency.03': { _text: 'Bayshore Ambulance' },
+          'dAgency.04': { _text: '06' },
+        });
+
+        const draft = await parent.getDraft();
+        assert(draft);
+        assert(draft.isDraft);
+        assert.deepStrictEqual(draft.id, '79628733-541b-4386-9e0a-d78929afeb9e');
+        assert.deepStrictEqual(draft.draftParentId, '81b433cd-5f48-4458-87f3-0bf4e1591830');
+        assert.deepStrictEqual(draft.stateUniqueId, 'Test Id');
+        assert.deepStrictEqual(draft.number, 'Test Number');
+        assert.deepStrictEqual(draft.name, 'Test Name');
+        assert.deepStrictEqual(draft.data, {
+          'dAgency.01': { _text: 'Test Id' },
+          'dAgency.02': { _text: 'Test Number' },
+          'dAgency.03': { _text: 'Test Name' },
+          'dAgency.04': { _text: '06' },
+        });
       });
     });
   });

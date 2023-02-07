@@ -8,7 +8,7 @@ if [[ $BRANCH == 'master' ]]; then
     docker push peakresponse/peak-server:$TAG
     docker push peakresponse/peak-server:latest
   fi
-else
+elif [[ $BRANCH != @"dependabot"* ]]; then
   docker tag peakresponse/peak-server:latest peakresponse/peak-server:$BRANCH
   docker push peakresponse/peak-server:$BRANCH
 fi

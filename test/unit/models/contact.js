@@ -1,5 +1,4 @@
 const assert = require('assert');
-const _ = require('lodash');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
@@ -79,26 +78,22 @@ describe('models', () => {
             _text: '4155551234',
           },
         };
-        await assert.rejects(contact.save(), (error) => {
-          assert(error instanceof models.Sequelize.ValidationError);
-          assert.strictEqual(error.errors.length, 1);
-          const [errorItem] = error.errors;
-          assert(errorItem instanceof models.Sequelize.ValidationErrorItem);
-          const originalError = errorItem.original;
-          assert(
-            _.find(originalError.errors, {
-              path: 'dContact.02',
-              message: 'This is not a valid value.',
-            })
-          );
-          assert(
-            _.find(originalError.errors, {
-              path: 'dContact.10',
+        await contact.save();
+        assert(!contact.isValid);
+        assert.deepStrictEqual(contact.validationErrors, {
+          name: 'SchemaValidationError',
+          errors: [
+            {
+              path: `$['dContact.ContactInfoGroup']['dContact.02']`,
+              message: 'This field is required.',
+              value: null,
+            },
+            {
+              path: `$['dContact.ContactInfoGroup']['dContact.10']`,
               message: 'This is not a valid value.',
               value: '4155551234',
-            })
-          );
-          return true;
+            },
+          ],
         });
       });
     });

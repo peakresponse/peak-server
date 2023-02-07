@@ -1,25 +1,31 @@
-<shared-xsd-element-wrapper [element]="element" [data]="data" [index]="index" [selectedValue]="selectedValue">
-  <input *ngIf="!pattern && minLength && maxLength"
-    [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
-    [minLength]="minLength" [maxLength]="maxLength"
-    [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
-  <input *ngIf="pattern && !(minLength && maxLength)"
-    [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
-    [pattern]="pattern"
-    [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
-  <input *ngIf="pattern && minLength && maxLength"
-    [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
-    [pattern]="pattern" [minLength]="minLength" [maxLength]="maxLength"
-    [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
-  <input *ngIf="min && max"
-    [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
-    [min]="min" [max]="max"
-    [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
-  <input *ngIf="fractionDigits && totalDigits"
-    [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
-    [step]="0.1*fractionDigits" [max]="'9'.repeat(totalDigits-fractionDigits) + '.' + '9'.repeat(fractionDigits)"
-    [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
-  <input *ngIf="!pattern && !(minLength && maxLength) && !(min && max) && !(fractionDigits && totalDigits)"
-    [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
-    [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
+<shared-xsd-element-wrapper [element]="element" [data]="data" [index]="index" [selectedValue]="selectedValue" [displayOnly]="displayOnly">
+  <ng-container *ngIf="isDisplayOnly">
+    <ng-container *ngIf="value as val; else noVal">{{val}}</ng-container>
+    <ng-template #noVal>&nbsp;</ng-template>
+  </ng-container>
+  <ng-container *ngIf="!isDisplayOnly">
+      <input *ngIf="!pattern && minLength && maxLength"
+      [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
+      [minLength]="minLength" [maxLength]="maxLength"
+      [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
+    <input *ngIf="pattern && !(minLength && maxLength)"
+      [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
+      [pattern]="pattern"
+      [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
+    <input *ngIf="pattern && minLength && maxLength"
+      [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
+      [pattern]="pattern" [minLength]="minLength" [maxLength]="maxLength"
+      [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
+    <input *ngIf="min && max"
+      [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
+      [min]="min" [max]="max"
+      [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
+    <input *ngIf="fractionDigits && totalDigits"
+      [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
+      [step]="0.1*fractionDigits" [max]="'9'.repeat(totalDigits-fractionDigits) + '.' + '9'.repeat(fractionDigits)"
+      [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
+    <input *ngIf="!pattern && !(minLength && maxLength) && !(min && max) && !(fractionDigits && totalDigits)"
+      [id]="formName" [name]="formName" [(ngModel)]="value" (input)="onInput($event)"
+      [type]="inputType" class="form-control" [class.is-invalid]="isInvalid" />
+  </ng-container>
 </shared-xsd-element-wrapper>

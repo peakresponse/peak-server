@@ -21,4 +21,14 @@ export class XsdSelectStateComponent extends XsdBaseComponent {
       });
     }
   }
+
+  get enumeratedValue(): string | null {
+    let result: string | null = null;
+    for (const state of this.STATES) {
+      if (state.id === this.value) {
+        return state.name;
+      }
+    }
+    return result;
+  }
 }

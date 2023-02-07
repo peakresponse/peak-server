@@ -28,7 +28,7 @@
   color: white;
   display: block;
   margin: 0;
-  padding: 1.1875rem 1rem 1.1875rem 1.625rem;
+  padding: 1.1875rem $grid-gutter-width/2 1.1875rem $grid-gutter-width;
 }
 
 .sidebar__item {

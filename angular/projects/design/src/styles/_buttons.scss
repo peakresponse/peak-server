@@ -165,6 +165,23 @@
   }
 }
 
+.btn--secondary--danger {
+  @include button-outline-variant(
+    $brand-secondary-500,
+    $brand-secondary-600,
+    $brand-secondary-400,
+    $brand-secondary-600,
+    $active-color: $brand-secondary-800
+  );
+
+  &:disabled,
+  &.disabled {
+    background-color: white;
+    border-color: $base-300;
+    color: $base-300;
+  }
+}
+
 .btn--tertiary {
   @include button-variant(
     transparent,
@@ -182,4 +199,22 @@
 
 .btn--sm {
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+}
+
+.btn--remove {
+  color: transparent;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L5.29289 17.2929ZM18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L18.7071 6.70711ZM6.70711 18.7071L18.7071 6.70711L17.2929 5.29289L5.29289 17.2929L6.70711 18.7071Z' fill='%232F4A56'/%3E%3Cpath d='M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L6.70711 5.29289ZM17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L17.2929 18.7071ZM5.29289 6.70711L17.2929 18.7071L18.7071 17.2929L6.70711 5.29289L5.29289 6.70711Z' fill='%232F4A56'/%3E%3C/svg%3E%0A")
+    no-repeat center center/1.5rem 1.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  &:hover,
+  &:focus,
+  &:first-child:active,
+  &:active {
+    color: transparent;
+  }
 }

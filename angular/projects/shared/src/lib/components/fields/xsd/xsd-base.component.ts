@@ -2,6 +2,7 @@ import { Component, Input, ViewContainerRef } from '@angular/core';
 
 import * as inflection from 'inflection';
 import { filter, find, isEmpty } from 'lodash';
+import { v4 as uuid } from 'uuid';
 
 import { ApiService } from '../../../services/api.service';
 import { SchemaService } from '../../../services/schema.service';
@@ -15,6 +16,8 @@ export class XsdBaseComponent {
   @Input() error: any;
   @Input() index?: number;
   @Input() selectedValue: any;
+  @Input() displayOnly = false;
+  @Input() basePath?: string;
   private _type: any;
 
   constructor(protected api: ApiService, private schema: SchemaService, protected viewContainerRef: ViewContainerRef) {}
@@ -43,8 +46,27 @@ export class XsdBaseComponent {
     return this.element?.['xs:complexType']?.['xs:sequence'] !== undefined;
   }
 
+  get isGroupUUIDRequired(): boolean {
+    let attributes = this.element?.['xs:complexType']?.['xs:attribute'];
+    if (attributes) {
+      if (!Array.isArray(attributes)) {
+        attributes = [attributes];
+      }
+      for (const attr of attributes) {
+        if (attr._attributes?.name === 'UUID' && attr._attributes?.type === 'UUID') {
+          return attr._attributes?.use === 'required';
+        }
+      }
+    }
+    return false;
+  }
+
   get groupElements(): any[] {
     return this.element?.['xs:complexType']?.['xs:sequence']?.['xs:element'];
+  }
+
+  get groupText(): string {
+    return this.element?.['xs:annotation']?.['xs:documentation']._text;
   }
 
   get isRequired(): boolean {
@@ -57,10 +79,15 @@ export class XsdBaseComponent {
 
   get isInvalid(): boolean {
     if (this.error?.messages) {
-      const predicate: any = { path: this.name };
-      if (this.isMulti || this.selectedValue !== undefined) {
-        predicate['value'] = this.value ?? '';
-      }
+      const predicate: any = { path: this.path };
+      return find(this.error.messages, predicate) !== undefined;
+    }
+    return false;
+  }
+
+  isInvalidValue(index: number): boolean {
+    if (this.error?.messages) {
+      const predicate: any = { path: `${this.path}[${index}]` };
       return find(this.error.messages, predicate) !== undefined;
     }
     return false;
@@ -68,10 +95,15 @@ export class XsdBaseComponent {
 
   get errorMessages(): string[] {
     if (this.error?.messages) {
-      const predicate: any = { path: this.name };
-      if (this.isMulti || this.selectedValue !== undefined) {
-        predicate['value'] = this.value ?? '';
-      }
+      const predicate: any = { path: this.path };
+      return filter(this.error.messages, predicate).map((error: any) => error.message);
+    }
+    return [];
+  }
+
+  errorMessagesForValue(index: number): string[] {
+    if (this.error?.messages) {
+      const predicate: any = { path: `${this.path}[${index}]` };
       return filter(this.error.messages, predicate).map((error: any) => error.message);
     }
     return [];
@@ -83,6 +115,19 @@ export class XsdBaseComponent {
 
   get name(): string {
     return this.element?._attributes?.name;
+  }
+
+  get path(): string {
+    let path = this.basePath || '$';
+    path = `${path}['${this.name}']`;
+    if (this.index) {
+      path = `${path}[${this.index}]`;
+    }
+    return path;
+  }
+
+  get isDisplayOnly(): boolean {
+    return this.displayOnly;
   }
 
   get displayName(): string {
@@ -120,6 +165,16 @@ export class XsdBaseComponent {
     return value;
   }
 
+  get enumeratedValue(): string | null {
+    let result: string | null = null;
+    for (const item of this.type['xs:restriction']['xs:enumeration']) {
+      if (item._attributes.value === this.value) {
+        return item['xs:annotation']['xs:documentation']._text;
+      }
+    }
+    return result;
+  }
+
   set value(value: string) {
     if (this.selectedValue) {
       this.selectedValue._text = value;
@@ -151,7 +206,13 @@ export class XsdBaseComponent {
       return [this.data[this.name]];
     }
     if (this.isRequired && this.data) {
-      this.addValue({});
+      const value: any = {};
+      if (this.isGroup && this.isGroupUUIDRequired) {
+        value._attributes = {
+          UUID: uuid(),
+        };
+      }
+      this.addValue(value);
       return this.values;
     }
     return null;
@@ -213,6 +274,10 @@ export class XsdBaseComponent {
     }
   }
 
+  get isNillable(): boolean {
+    return this.element?._attributes?.nillable === 'true';
+  }
+
   get isNil(): boolean {
     return this.value === undefined && this.getAttr('xsi:nil') === 'true';
   }
@@ -237,10 +302,6 @@ export class XsdBaseComponent {
     this.setAttr('NV', value);
   }
 
-  get isNillable(): boolean {
-    return this.element?._attributes?.nillable === 'true';
-  }
-
   get nilValues(): any[] {
     if (this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute']) {
       let attributes = this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute'];
@@ -258,5 +319,15 @@ export class XsdBaseComponent {
       }
     }
     return [];
+  }
+
+  get displayNV(): string | null {
+    const NV = this.NV;
+    for (const nv of this.nilValues) {
+      if (nv['xs:restriction']['xs:enumeration']._attributes.value === NV) {
+        return nv['xs:restriction']['xs:enumeration']['xs:annotation']['xs:documentation']._text;
+      }
+    }
+    return null;
   }
 }

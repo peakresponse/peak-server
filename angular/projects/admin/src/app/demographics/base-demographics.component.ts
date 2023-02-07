@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { HttpResponse, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
-import { find, set } from 'lodash';
-import { Subscription, EMPTY } from 'rxjs';
+import { find, get } from 'lodash';
+import { Observable, Subscription, EMPTY } from 'rxjs';
 import { filter, catchError } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 
@@ -26,8 +26,10 @@ export class BaseDemographicsComponent {
   routerSubscription?: Subscription;
   record: any;
   isEditing = false;
+  isEditingDraft = false;
   isNewRecord = false;
   isLoading = false;
+  isSavedErrorFree = false;
   error: any = null;
 
   constructor(
@@ -47,10 +49,12 @@ export class BaseDemographicsComponent {
     });
     let params = new HttpParams();
     params = params.set('format', 'xmljs');
-    (this.api.demographics as any)[this.section].index(params).subscribe((response: HttpResponse<any>) => {
-      this.sectionData = response.body || {};
-      this.subscribeToRouteParams();
-    });
+    get(this.api.demographics, this.section)
+      .index(params)
+      .subscribe((response: HttpResponse<any>) => {
+        this.sectionData = response.body || {};
+        this.subscribeToRouteParams();
+      });
   }
 
   handleRouteParams() {
@@ -71,8 +75,17 @@ export class BaseDemographicsComponent {
     } else {
       /// if this is not a grouped/multiple record section, set the data as the record
       if (!this.isGrouped) {
-        this.record = this.data;
+        this.record = this.sectionData;
         this.isEditing = true;
+        if (this.record.draft) {
+          this.isEditingDraft = true;
+          if (!this.record.draft.isValid) {
+            this.error = {
+              status: 422,
+              messages: this.record.draft.validationErrors.errors,
+            };
+          }
+        }
         this.isNewRecord = false;
       } else {
         this.record = null;
@@ -103,9 +116,11 @@ export class BaseDemographicsComponent {
           const prevUrl = this.navigation.getPreviousUrl();
           if (prevUrl.endsWith('#new')) {
             this.sectionData = undefined;
-            (this.api.demographics as any)[this.section].index().subscribe((response: HttpResponse<any>) => {
-              this.sectionData = response.body || {};
-            });
+            get(this.api.demographics, this.section)
+              .index()
+              .subscribe((response: HttpResponse<any>) => {
+                this.sectionData = response.body || {};
+              });
           }
           this.handleRouteParams();
         });
@@ -165,18 +180,7 @@ export class BaseDemographicsComponent {
     }
   }
 
-  onSubmit() {
-    let request;
-    if (this.isNewRecord) {
-      request = (this.api.demographics as any)[this.section].create(this.record);
-    } else {
-      const id = this.record._attributes?.UUID;
-      if (id) {
-        request = (this.api.demographics as any)[this.section].update(id, this.record);
-      } else {
-        request = (this.api.demographics as any)[this.section].update(this.record);
-      }
-    }
+  get baseUrl(): string {
     let url = this.navigation.getCurrentUrl();
     let index = url.indexOf('?');
     if (index >= 0) {
@@ -186,7 +190,20 @@ export class BaseDemographicsComponent {
     if (index >= 0) {
       url = url.substring(0, index);
     }
+    return url;
+  }
+
+  onSubmit() {
+    let request;
+    if (this.isNewRecord) {
+      request = get(this.api.demographics, this.section).create(this.record);
+    } else if (this.isEditingDraft) {
+      request = get(this.api.demographics, this.section).update(this.record.draft.id, this.record.draft);
+    } else {
+      request = get(this.api.demographics, this.section).update(this.record.id, this.record);
+    }
     this.isLoading = true;
+    this.isSavedErrorFree = false;
     this.error = null;
     request
       .pipe(
@@ -194,17 +211,57 @@ export class BaseDemographicsComponent {
           this.isLoading = false;
           this.error = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
-          set(this.record, ['_attributes', 'pr:isValid'], false);
           return EMPTY;
         })
       )
-      .subscribe(() => {
+      .subscribe((response: HttpResponse<any>) => {
         this.isLoading = false;
-        set(this.record, ['_attributes', 'pr:isValid'], true);
-        if (this.isNewRecord) {
-          this.data[this.groupElementName].push(this.record);
+        if (response.status !== 204) {
+          const record = response.body;
+          if (this.isNewRecord) {
+            this.record = record;
+          } else {
+            this.record.draft = record;
+            this.isEditingDraft = true;
+          }
+          if (record.isValid) {
+            if (this.isNewRecord) {
+              this.data[this.groupElementName].push(record);
+            }
+            if (this.isGrouped) {
+              this.navigation.backTo(this.baseUrl);
+            } else {
+              this.isSavedErrorFree = true;
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          } else {
+            this.error = {
+              status: 422,
+              messages: record.validationErrors.errors,
+            };
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
         }
-        this.navigation.backTo(url);
+      });
+  }
+
+  onDeleteDraft() {
+    this.isLoading = true;
+    this.error = null;
+    get(this.api.demographics, this.section)
+      .delete(this.record.draft.id)
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          this.isLoading = false;
+          this.error = response.error;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return EMPTY;
+        })
+      )
+      .subscribe((response: HttpResponse<any>) => {
+        this.isLoading = false;
+        delete this.record.draft;
+        this.isEditingDraft = false;
       });
   }
 }
