@@ -1,5 +1,6 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
+const _ = require('lodash');
 
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');

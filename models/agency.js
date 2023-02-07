@@ -236,6 +236,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('name', [`${prefix}.03`], options);
     if (record.isClaimed || record.isDraft) {
       record.syncFieldAndNemsisValue('stateId', [`${prefix}.04`], options);
+      await record.validateNemsisData('dAgency_v3.xsd', 'dAgency', null, options);
     }
     await record.validateNemsisData('dAgency_v3.xsd', 'dAgency', null, options);
   });

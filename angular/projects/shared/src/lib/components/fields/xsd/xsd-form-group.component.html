@@ -25,7 +25,11 @@
         <span i18n *ngIf="!isGroupModalEditing">New {{displayName|inflection:'singularize'}}</span>
       </h3>
       <div *ngIf="groupModalValue" class="modal-body text-start">
+<<<<<<< HEAD
         <div *ngFor="let nestedElement of groupElements">
+=======
+        <div *ngFor="let nestedElement of groupElements" class="array-field__subitem">
+>>>>>>> 3d7f467 ([Closes #195] First pass, refactored NEMSIS form editing, admin DEM Agency editing)
           <shared-xsd-form-group [basePath]="groupModalPath" [element]="nestedElement" [data]="groupModalValue" [error]="error"></shared-xsd-form-group>
         </div>
       </div>
