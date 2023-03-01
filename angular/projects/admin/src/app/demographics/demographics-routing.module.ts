@@ -3,17 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AgencyService, SchemaService, UserService } from 'shared';
 
-import { AgencyDemographicsComponent } from './agency-demographics.component';
+import { AgencyRecordDemographicsComponent } from './agency-record-demographics.component';
 import { ConfigurationDemographicsComponent } from './configuration-demographics.component';
 import { ContactDemographicsComponent } from './contact-demographics.component';
 import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
 import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
+import { DashboardDemographicsComponent } from './dashboard-demographics.component';
 import { DeviceDemographicsComponent } from './device-demographics.component';
 import { FacilityDemographicsComponent } from './facility-demographics.component';
 import { LocationDemographicsComponent } from './location-demographics.component';
 import { PersonnelListDemographicsComponent } from './personnel-list-demographics.component';
 import { PersonnelRecordDemographicsComponent } from './personnel-record-demographics.component';
-import { VehicleDemographicsComponent } from './vehicle-demographics.component';
+import { VehiclesListDemographicsComponent } from './vehicles-list-demographics.component';
+import { VehiclesRecordDemographicsComponent } from './vehicles-record-demographics.component';
 
 const appRoutes: Routes = [
   {
@@ -26,7 +28,7 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'agency',
-        component: AgencyDemographicsComponent,
+        component: AgencyRecordDemographicsComponent,
       },
       {
         path: 'configuration',
@@ -67,8 +69,18 @@ const appRoutes: Routes = [
         ],
       },
       {
+        path: 'dashboard',
+        component: DashboardDemographicsComponent,
+      },
+      {
         path: 'vehicles',
-        component: VehicleDemographicsComponent,
+        component: VehiclesListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: VehiclesRecordDemographicsComponent,
+          },
+        ],
       },
     ],
   },

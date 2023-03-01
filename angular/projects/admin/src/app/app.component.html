@@ -2,6 +2,9 @@
   <ul *ngIf="currentAgency.id" class="sidebar__nav">
     <h4 class="sidebar__heading">Agency Admin</h4>    
     <li>
+      <a routerLink="/demographics/dashboard" routerLinkActive="sidebar__item--active" class="sidebar__item">Dashboard</a>
+    </li>
+    <li>
       <a routerLink="/demographics/agency" routerLinkActive="sidebar__item--active" class="sidebar__item">Agency</a>
     </li>
     <!-- <li>
@@ -21,14 +24,14 @@
     </li>
     <!-- <li>
       <a routerLink="/demographics/locations" routerLinkActive="sidebar__item--active" class="sidebar__item">Locations</a>
-    </li> -->
+    </li>
     <li>
       <a routerLink="/demographics/personnel" routerLinkActive="sidebar__item--active" class="sidebar__item">Personnel</a>
-    </li>
-    <!--
+    </li> -->
     <li>
       <a routerLink="/demographics/vehicles" routerLinkActive="sidebar__item--active" class="sidebar__item">Vehicles</a>
     </li>
+    <!--
     <li>
       <a routerLink="/demographics/custom-configuration" routerLinkActive="sidebar__item--active" class="sidebar__item">Demographics</a>
     </li>

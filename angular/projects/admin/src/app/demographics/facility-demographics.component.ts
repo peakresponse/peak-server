@@ -21,12 +21,4 @@ export class FacilityDemographicsComponent extends BaseDemographicsComponent {
     ];
     super.ngOnInit();
   }
-
-  newRecord() {
-    const record = super.newRecord();
-    (record as any)['dFacility.FacilityGroup'] = {
-      _attributes: record._attributes,
-    };
-    return record;
-  }
 }

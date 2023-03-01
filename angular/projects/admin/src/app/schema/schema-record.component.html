@@ -1,16 +1,28 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
   <h1 class="h2">{{name}}</h1>
 </div>
-<form *ngIf="data" (submit)="onSubmit()" class="col-md-6 mb-3">
-  <shared-error *ngIf="error" [error]="error"></shared-error>
+<form *ngIf="record" (submit)="onSubmit()" class="col-md-6 mb-3">
+  <ul *ngIf="hasDraft" class="nav">
+    <li class="nav__item"><a tabIndex="0" class="nav__link" [class.nav__link--active]="isEditingDraft" (click)="isEditingDraft = true">Draft</a></li>
+    <li class="nav__item"><a tabIndex="0" class="nav__link" [class.nav__link--active]="!isEditingDraft" (click)="isEditingDraft = false">Current</a></li>
+  </ul>
+  <div *ngIf="isDraftDeleted" class="alert alert-success">
+    Draft deleted!
+  </div>
+  <div *ngIf="isSavedErrorFree" class="alert alert-success">
+    Draft saved!
+  </div>
+  <div *ngIf="error && (isNewRecord || isEditingDraft)" class="alert alert-danger">
+    <shared-error [error]="error"></shared-error>
+  </div>
   <fieldset [disabled]="isLoading">
     <ng-container *ngFor="let element of childElements">
-      <shared-xsd-form-group [element]="element" [data]="data.data" [error]="error"></shared-xsd-form-group>
+      <shared-xsd-form-group [element]="element" [data]="record.data" [error]="error"></shared-xsd-form-group>
     </ng-container>
-    <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{data, error}"></ng-template>
-    <div class="form-group">
-      <button *ngIf="isNewRecord" type="submit" class="btn btn--primary">Create</button>
-      <button *ngIf="!isNewRecord" type="submit" class="btn btn--primary">Update</button>
+    <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{record, error}"></ng-template>
+    <div class="d-flex justify-content-between mb-3">
+      <button *ngIf="isNewRecord || isEditingDraft || !record.draft" type="submit" class="btn btn--primary">Save Draft</button>
+      <button *ngIf="isEditingDraft" (click)="onDeleteDraft()" type="button" class="btn btn--danger">Delete Draft</button>
     </div>
   </fieldset>
 </form>
