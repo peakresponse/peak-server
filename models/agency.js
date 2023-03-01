@@ -127,6 +127,9 @@ module.exports = (sequelize, DataTypes) => {
         'id',
         'canonicalAgencyId',
         'claimedAgency',
+        'nemsisVersion',
+        'stateDataSetVersion',
+        'stateSchematronVersion',
         'stateId',
         'isClaimed',
         'subdomain',
@@ -177,6 +180,18 @@ module.exports = (sequelize, DataTypes) => {
       routedUrl: {
         type: DataTypes.STRING(2048),
         field: 'routed_url',
+      },
+      nemsisVersion: {
+        type: DataTypes.STRING,
+        field: 'nemsis_version',
+      },
+      stateDataSetVersion: {
+        type: DataTypes.STRING,
+        field: 'state_data_set_version',
+      },
+      stateSchematronVersion: {
+        type: DataTypes.STRING,
+        field: 'state_schematron_version',
       },
       stateId: {
         type: DataTypes.STRING,
