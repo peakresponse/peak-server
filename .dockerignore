@@ -1,6 +1,7 @@
 /.circleci
 /.env
 /.git
+/nemsis/repositories
 /node_modules
 /public/assets
 /target

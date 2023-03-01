@@ -38,7 +38,6 @@ export class ListDemographicsComponent implements OnInit {
       this.isLoading = !this.sectionSchema && !this.sectionData;
     });
     let params = new HttpParams();
-    params = params.set('format', 'xmljs');
     (this.api.demographics as any)[this.section].index(params).subscribe((response: HttpResponse<any>) => {
       this.sectionData = response.body || {};
       this.isLoading = !this.sectionSchema && !this.sectionData;

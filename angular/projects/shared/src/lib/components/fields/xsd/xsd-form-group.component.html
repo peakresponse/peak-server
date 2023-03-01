@@ -25,7 +25,7 @@
         <span i18n *ngIf="!isGroupModalEditing">New {{displayName|inflection:'singularize'}}</span>
       </h3>
       <div *ngIf="groupModalValue" class="modal-body text-start">
-        <div *ngFor="let nestedElement of groupElements" class="array-field__subitem">
+        <div *ngFor="let nestedElement of groupElements">
           <shared-xsd-form-group [basePath]="groupModalPath" [element]="nestedElement" [data]="groupModalValue" [error]="error"></shared-xsd-form-group>
         </div>
       </div>

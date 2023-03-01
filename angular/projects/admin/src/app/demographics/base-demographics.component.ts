@@ -48,7 +48,6 @@ export class BaseDemographicsComponent {
       this.subscribeToRouteParams();
     });
     let params = new HttpParams();
-    params = params.set('format', 'xmljs');
     get(this.api.demographics, this.section)
       .index(params)
       .subscribe((response: HttpResponse<any>) => {
@@ -94,13 +93,11 @@ export class BaseDemographicsComponent {
   }
 
   newRecord() {
-    return { _attributes: { UUID: uuid() } };
+    return { data: { _attributes: { UUID: uuid() } } };
   }
 
   findRecord(id: string) {
-    return find(this.data[this.groupElementName], {
-      _attributes: { UUID: id } as any,
-    });
+    return find(this.sectionData, { id });
   }
 
   subscribeToRouteParams() {
@@ -174,7 +171,7 @@ export class BaseDemographicsComponent {
   }
 
   onSelect(record: any) {
-    const id = record._attributes?.UUID;
+    const { id } = record;
     if (id) {
       this.navigation.goTo(this.navigation.getCurrentUrl(), { id });
     }
@@ -225,10 +222,7 @@ export class BaseDemographicsComponent {
             this.isEditingDraft = true;
           }
           if (record.isValid) {
-            if (this.isNewRecord) {
-              this.data[this.groupElementName].push(record);
-            }
-            if (this.isGrouped) {
+            if (this.isNewRecord || this.isGrouped) {
               this.navigation.backTo(this.baseUrl);
             } else {
               this.isSavedErrorFree = true;

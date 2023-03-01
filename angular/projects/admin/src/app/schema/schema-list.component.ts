@@ -83,6 +83,7 @@ export class SchemaListComponent extends BaseSchemaComponent implements OnDestro
         let found = false;
         for (let record of this.data ?? []) {
           if (record.id == id) {
+            delete record.draft;
             assign(record, response.body);
             found = true;
             break;

@@ -1,6 +1,5 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
-const _ = require('lodash');
 
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
@@ -12,13 +11,7 @@ router.get(
   '/',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
-    const { id, data } = req.agency;
-    const payload = { id, data };
-    const draft = await req.agency.getDraft();
-    if (draft) {
-      payload.draft = _.pick(draft, ['id', 'data', 'isValid', 'validationErrors']);
-    }
-    res.json(payload);
+    res.json(await req.agency.toNemsisJSON());
   })
 );
 
@@ -27,9 +20,9 @@ router.put(
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const { data } = req.body;
-    await req.agency.updateDraft({ data });
+    await req.agency.updateDraft({ data, updatedById: req.user.id });
     const draft = await req.agency.getDraft();
-    res.status(HttpStatus.OK).json(_.pick(draft, ['id', 'data', 'isValid', 'validationErrors']));
+    res.status(HttpStatus.OK).json(await draft.toNemsisJSON());
   })
 );
 

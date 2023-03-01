@@ -275,8 +275,14 @@ export class ApiService {
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/vehicles`, data);
       },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/vehicles/${id}`, params);
+      },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/vehicles/${id}`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/vehicles/${id}`);
       },
     },
   };

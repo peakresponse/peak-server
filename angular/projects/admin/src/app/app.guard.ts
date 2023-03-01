@@ -16,7 +16,7 @@ export class AppGuard implements CanActivate {
         if (user.isAdmin) {
           return of(this.router.parseUrl('/users'));
         } else {
-          return of(this.router.parseUrl('/demographics/personnel'));
+          return of(this.router.parseUrl('/demographics/dashboard'));
         }
       })
     );

@@ -22,20 +22,37 @@ if (process.env.AWS_S3_BUCKET_REGION) {
 const s3 = new AWS.S3(s3options);
 
 class Base extends Model {
-  // MARK: - helpers for non-versioned records with drafts
+  // MARK: - helpers for non-versioned (live/draft only) NEMSIS backed models
+  async toNemsisJSON(options) {
+    const payload = _.pick(this, ['id', 'isDraft', 'data', 'isValid', 'validationErrors', 'createdAt', 'updatedAt']);
+    if (!this.isDraft) {
+      const draft = this.draft || (await this.getDraft(options));
+      if (draft) {
+        payload.draft = await draft.toNemsisJSON(options);
+      }
+    }
+    return payload;
+  }
+
   async updateDraft(values, options) {
     if (this.isDraft) {
       return this.update(values, options);
     }
-    const draft = this.draft || (await this.getDraft(options));
+    if (!options?.transaction) {
+      return this.constructor.sequelize.transaction((transaction) => this.updateDraft(values, { ...options, transaction }));
+    }
+    let draft = this.draft || (await this.getDraft(options));
     if (!draft) {
-      const mergedValues = _.assign(this.get(), values, {
-        isDraft: true,
-        draftParentId: this.id,
-      });
+      const mergedValues = _.assign(
+        { ...this.get() },
+        {
+          isDraft: true,
+          draftParentId: this.id,
+        }
+      );
       delete mergedValues.id;
       delete mergedValues.draft;
-      return this.createDraft(mergedValues, options);
+      draft = await this.constructor.create(mergedValues, options);
     }
     return draft.update(values, options);
   }
@@ -338,13 +355,17 @@ class Base extends Model {
 
   syncNemsisId(options) {
     if (!this.id) {
-      this.setDataValue('id', this.getNemsisAttributeValue([], 'UUID'));
+      if (!this.isDraft || !this.draftParentId) {
+        this.setDataValue('id', this.getNemsisAttributeValue([], 'UUID'));
+      }
       options.fields = options.fields || [];
       if (!this.id) {
         this.id = uuid();
-        this.setNemsisAttributeValue([], 'UUID', this.id);
-        if (options.fields.indexOf('data') < 0) {
-          options.fields.push('data');
+        if (!this.getNemsisAttributeValue([], 'UUID') || (this.isDraft && !this.draftParentId)) {
+          this.setNemsisAttributeValue([], 'UUID', this.id);
+          if (options.fields.indexOf('data') < 0) {
+            options.fields.push('data');
+          }
         }
       }
       if (options.fields.indexOf('id') < 0) {

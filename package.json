@@ -7,7 +7,7 @@
     "test": "mocha --unhandled-rejections=strict --recursive test/unit test/integration",
     "ci": "prettier --check . && npm run lint && npm run test",
     "lint": "eslint .",
-    "lint:changed": "eslint $(git diff --name-only -- *.js; git ls-files -o --exclude-standard -- *.js)",
+    "lint:changed": "eslint $(git diff --name-only -- '*.js'; git ls-files -o --exclude-standard -- '*.js')",
     "pp": "prettier --write .",
     "pp:changed": "prettier --write $(git diff --name-only -- '*.js' '*.ts' '*.css' '*.scss' '*.json'; git ls-files -o --exclude-standard -- '*.js' '*.ts' '*.css' '*.scss' '*.json')"
   },

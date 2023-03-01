@@ -25,14 +25,12 @@ describe('/api/demographics/agency', () => {
         .get('/api/demographics/agency')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .expect(HttpStatus.OK);
-      assert.deepStrictEqual(response.body, {
-        id: '9eeb6591-12f8-4036-8af8-6b235153d444',
-        data: {
-          'dAgency.01': { _text: 'S07-50120' },
-          'dAgency.02': { _text: 'S07-50120' },
-          'dAgency.03': { _text: 'Bay Medic Ambulance - Contra Costa' },
-          'dAgency.04': { _text: '06' },
-        },
+      assert.deepStrictEqual(response.body.id, '9eeb6591-12f8-4036-8af8-6b235153d444');
+      assert.deepStrictEqual(response.body.data, {
+        'dAgency.01': { _text: 'S07-50120' },
+        'dAgency.02': { _text: 'S07-50120' },
+        'dAgency.03': { _text: 'Bay Medic Ambulance - Contra Costa' },
+        'dAgency.04': { _text: '06' },
       });
     });
   });
@@ -133,9 +131,12 @@ describe('/api/demographics/agency', () => {
       });
       assert.deepStrictEqual(response.body, {
         id: draft.id,
+        isDraft: true,
         data: draft.data,
         isValid: draft.isValid,
         validationErrors: draft.validationErrors,
+        updatedAt: response.body.updatedAt,
+        createdAt: response.body.createdAt,
       });
     });
   });

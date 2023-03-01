@@ -10,22 +10,24 @@
   <table class="table table-sm table-hover">
     <thead>
       <tr>
+        <th>&nbsp;</th>
         <th *ngFor="let column of schemaColumns" [class]="column.class">{{column.name}}</th>
         <th *ngFor="let column of addlColumns" [class]="column.class">{{column.name}}</th>
       </tr>
     </thead>
     <tbody *ngIf="data">
       <tr *ngFor="let record of data" [routerLink]="record.id">
+        <td><i *ngIf="record.isDraft || record.draft" class="fas fa-exclamation-triangle"></i></td>
         <td *ngFor="let column of schemaColumns">
-          {{(record.data|get:column.attr)?._text}}
+          {{((record.draft?.data ?? record.data)|get:column.attr)?._text}}
         </td>
         <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{records: data, id: record.id, record: record}"></ng-template>
       </tr>
-      <tr *ngIf="(data?.length ?? 0) === 0"><td [attr.colspan]="schemaColumns.length + addlColumns.length">No records yet.</td></tr>
+      <tr *ngIf="(data?.length ?? 0) === 0"><td [attr.colspan]="1 + schemaColumns.length + addlColumns.length">No records yet.</td></tr>
     </tbody>
     <tfoot *ngIf="paginationLink">
       <tr>
-        <td [attr.colspan]="schemaColumns.length + addlColumns.length">
+        <td [attr.colspan]="1 + schemaColumns.length + addlColumns.length">
           <span #paginationLoader="sharedAutoload" *ngIf="paginationLink" [shared-autoload]="paginationLink" (onLoadMore)="onLoadMore($event)"></span>
         </td>
       </tr>

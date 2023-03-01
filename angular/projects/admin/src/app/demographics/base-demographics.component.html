@@ -8,23 +8,23 @@
       <table class="table table-sm table-hover">
         <thead>
           <tr>
-            <th class="col-1">UUID</th>
+            <th></th>
             <th *ngFor="let column of sectionColumns" [class]="column.class">{{column.name}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let record of data[groupElementName]" (click)="onSelect(record)">
-            <td>{{record._attributes?.UUID}}</td>
+          <tr *ngFor="let record of sectionData" (click)="onSelect(record)">
+            <td><i *ngIf="record.isDraft || record.draft" class="fas fa-exclamation-triangle"></i></td>
             <td *ngFor="let column of sectionColumns">
-              {{(record|get:column.attr)?._text}}
+              {{(record.data|get:column.attr)?._text}}
             </td>
           </tr>
-          <tr *ngIf="data[groupElementName]?.length == 0 || !data[groupElementName]"><td [attr.colspan]="sectionColumns.length + 1">No records yet.</td></tr>
+          <tr *ngIf="sectionData.length === 0"><td [attr.colspan]="sectionColumns.length + 1">No records yet.</td></tr>
         </tbody>
       </table>
     </div>
   </div>
-  <ng-container *ngIf="sectionSchema && sectionData && (!isGrouped || (isGrouped && isEditing))">
+  <ng-container *ngIf="sectionSchema && sectionData && (!isGrouped || isEditing)">
     <div class="col-md-6">
       <ul *ngIf="record.draft" class="nav">
         <li class="nav__item"><a tabIndex="0" class="nav__link" [class.nav__link--active]="isEditingDraft" (click)="isEditingDraft = true">Draft</a></li>
