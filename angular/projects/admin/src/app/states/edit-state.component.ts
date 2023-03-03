@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -11,15 +12,26 @@ import { FormComponent, ApiService, NavigationService } from 'shared';
 export class EditStateComponent {
   id: string = '';
   status: string = '';
+  states?: any[];
   isConfiguring = false;
   isError = false;
   @ViewChild('form') form?: FormComponent;
+
+  repo: any;
 
   constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
+    this.api.states.index().subscribe((response: HttpResponse<any>) => {
+      this.states = response.body;
+    });
+    this.api.states.getRepository(this.id).subscribe((response: HttpResponse<any>) => (this.repo = response.body));
     this.poll();
+  }
+
+  state(id: string): any {
+    return this.states?.find((s) => s.id == id);
   }
 
   onDelete() {

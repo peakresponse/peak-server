@@ -1,7 +1,5 @@
-'use strict';
-
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
@@ -13,7 +11,7 @@ module.exports = {
     await queryInterface.addColumn('agencies', 'state_schematron_version', { type: Sequelize.STRING });
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
@@ -23,5 +21,5 @@ module.exports = {
     await queryInterface.removeColumn('agencies', 'nemsis_version');
     await queryInterface.removeColumn('agencies', 'state_data_set_version');
     await queryInterface.removeColumn('agencies', 'state_schematron_version');
-  }
+  },
 };

@@ -7,7 +7,7 @@ if [ ! -d "nemsis/repositories/nemsis_public/master" ]; then
 fi
 # get latest commits in master
 cd nemsis/repositories/nemsis_public/master
-git fetch
+git pull --ff-only
 # iterate over tagged versions
 TAGS=`git tag -l $1.*`
 cd ../../../..

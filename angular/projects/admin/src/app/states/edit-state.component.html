@@ -1,26 +1,136 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-  <h1 class="h2" i18n>Edit State</h1>
-</div>
-<div class="d-block col-xl-6">
-  <ngb-alert *ngIf="isConfiguring" type="info" [dismissible]="false">
-    <div><shared-loader></shared-loader> {{status || 'Please wait...'}}</div>
-  </ngb-alert>
-  <ngb-alert *ngIf="isError" type="danger" [dismissible]="false">
-    <div>{{status}}</div>
-  </ngb-alert>
-  <shared-form #form *ngIf="id" type="states" [hideButtons]="true" [id]="id">
-    <ng-template let-record="record" let-error="error">
-      <fieldset [disabled]="isConfiguring">
+<shared-form #form *ngIf="id" type="states" [hideButtons]="true" [id]="id">
+  <ng-template let-record="record" let-error="error">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+      <h1 class="h2" i18n>{{record?.name}}</h1>
+    </div>
+    <h3>NEMSIS State Repository Data</h3>
+    <div *ngIf="!repo" class="row text-center m-5">
+      <shared-loader></shared-loader>
+    </div>
+    <div *ngIf="repo && !repo.initialized" class="mb-3">
+      The NEMSIS State Repository has not yet been initialized.
+    </div>
+    <div class="mb-3">
+      <button (click)="onConfigure()" type="button" class="btn btn--primary" i18n>Initialize State Repository</button>
+    </div>
+    <div *ngIf="repo?.initialized" class="row">
+      <div class="col-lg-3">
         <div class="mb-3">
-          <shared-text-field id="name" label="Name" [source]="record" [error]="error"></shared-text-field>
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>State Data Set Versions</label>
+              <div class="array-field__item">
+
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="col-lg-3">
         <div class="mb-3">
-          <shared-checkbox id="isConfigured" label="Is configured?" [source]="record"></shared-checkbox>
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>State Schematron Versions</label>
+              <div class="array-field__item">
+
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="col-lg-3">
         <div class="mb-3">
-          <button (click)="onConfigure()" type="button" class="btn btn--primary" i18n>Configure</button>
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Agencies</label>
+              <div class="array-field__item">
+
+              </div>
+            </div>
+          </div>
         </div>
-      </fieldset>
-    </ng-template>
-  </shared-form>  
-</div>
+      </div>
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Facilities</label>
+              <div class="array-field__item">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>Demographics</h3>
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <shared-array-field id="borderStates" label="Bordering States" [source]="record" [showClearButton]="false">
+            <ng-template #item let-stateId="item">
+              {{state(stateId)?.name}}
+            </ng-template>
+          </shared-array-field>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Cities</label>
+              <div class="array-field__item">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Counties</label>
+              <div class="array-field__item">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>PSAPs</label>
+              <div class="array-field__item">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-lg-6">
+        <ngb-alert *ngIf="isConfiguring" type="info" [dismissible]="false">
+          <div><shared-loader></shared-loader> {{status || 'Please wait...'}}</div>
+        </ngb-alert>
+        <ngb-alert *ngIf="isError" type="danger" [dismissible]="false">
+          <div>{{status}}</div>
+        </ngb-alert>
+        <fieldset [disabled]="isConfiguring">
+          <div class="mb-3">
+            <shared-text-field id="name" label="Name" [source]="record" [error]="error"></shared-text-field>
+          </div>
+          <div class="mb-3">
+            <shared-checkbox id="isConfigured" label="Is configured?" [source]="record"></shared-checkbox>
+          </div>
+          <div class="mb-3">
+            <button (click)="onConfigure()" type="button" class="btn btn--primary" i18n>Configure</button>
+          </div>
+        </fieldset>
+      </div>  
+    </div>
+  </ng-template>
+</shared-form>  

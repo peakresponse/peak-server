@@ -14,7 +14,7 @@
         <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item, removeItem: onRemoveItem, updateItem: onUpdateItem}"></ng-template>
       </div>
     </ng-container>
-    <div class="form-field__content">
+    <div *ngIf="formTemplate" class="form-field__content">
       <ng-template [ngTemplateOutlet]="formTemplate" [ngTemplateOutletContext]="{addItem: onAddItem}"></ng-template>
     </div>
   </div>

@@ -6,6 +6,7 @@ const models = require('../../models');
 const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 const nemsis = require('../../lib/nemsis');
+const nemsisRepositories = require('../../lib/nemsis/repositories');
 
 const router = express.Router();
 
@@ -34,6 +35,19 @@ router.post(
     await state.startConfiguration(req.user);
     /// send back ACCEPTED state while processing continues in background
     res.status(HttpStatus.ACCEPTED).json(state);
+  })
+);
+
+router.get(
+  '/:id/repository',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const repo = nemsisRepositories.getNemsisStateRepo(req.params.id);
+    if (repo) {
+      res.json(repo.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
   })
 );
 

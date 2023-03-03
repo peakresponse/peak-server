@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+VERSION=$1
+STATE=$2
+
+# check if master NEMSIS state repository history has been set up
+if [ ! -d "nemsis/repositories/$STATE/$VERSION" ]; then
+  # clone without any tree or file data, without initial checkout
+  git clone -b release-$VERSION --filter=blob:none --no-checkout https://stash.utahdcc.org/stash/scm/nes/$STATE.git nemsis/repositories/$STATE/$VERSION
+  cd nemsis/repositories/$STATE/$VERSION
+  git sparse-checkout init --cone
+  git sparse-checkout set Resources Schematron
+  git checkout
+  cd ../../../..
+fi
+
+cd nemsis/repositories/$STATE/$VERSION
+git pull --ff-only
