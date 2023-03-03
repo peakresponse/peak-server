@@ -1,18 +1,34 @@
 #!/usr/bin/env bash
 
-VERSION=$1
+NEMSIS_VERSION=$1
 STATE=$2
 
 # check if master NEMSIS state repository history has been set up
-if [ ! -d "nemsis/repositories/$STATE/$VERSION" ]; then
+if [ ! -d "nemsis/repositories/$STATE/$NEMSIS_VERSION/master" ]; then
   # clone without any tree or file data, without initial checkout
-  git clone -b release-$VERSION --filter=blob:none --no-checkout https://stash.utahdcc.org/stash/scm/nes/$STATE.git nemsis/repositories/$STATE/$VERSION
-  cd nemsis/repositories/$STATE/$VERSION
+  git clone -b release-$NEMSIS_VERSION --filter=blob:none --no-checkout https://stash.utahdcc.org/stash/scm/nes/$STATE.git nemsis/repositories/$STATE/$NEMSIS_VERSION/master
+  cd nemsis/repositories/$STATE/$NEMSIS_VERSION/master
   git sparse-checkout init --cone
   git sparse-checkout set Resources Schematron
   git checkout
-  cd ../../../..
+  # get the latest version of the data set and schematron
+  DS_VERSION=`git log -n 1 --format="%H" Resources/*_StateDataSet.xml`
+  SCH_VERSION=`git log -n 1 --format="%H" Schematron/*_EMSDataSet.sch`
+  cd ../../../../..
+  # checkout those versions
+  VERSIONS=( $DS_VERSION $SCH_VERSION )
+  for VER in "${VERSIONS[@]}"
+  do
+    if [ ! -d "nemsis/repositories/$STATE/$NEMSIS_VERSION/$VER" ]; then
+      git clone -b release-$NEMSIS_VERSION --filter=blob:none --no-checkout https://stash.utahdcc.org/stash/scm/nes/$STATE.git nemsis/repositories/$STATE/$NEMSIS_VERSION/$VER
+      cd nemsis/repositories/$STATE/$NEMSIS_VERSION/$VER
+      git sparse-checkout init --cone
+      git sparse-checkout set Resources Schematron
+      git checkout $VER
+      cd ../../../../..
+    fi
+  done
 fi
 
-cd nemsis/repositories/$STATE/$VERSION
+cd nemsis/repositories/$STATE/$NEMSIS_VERSION/master
 git pull --ff-only

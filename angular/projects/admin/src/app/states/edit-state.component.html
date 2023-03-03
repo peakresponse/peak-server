@@ -4,14 +4,15 @@
       <h1 class="h2" i18n>{{record?.name}}</h1>
     </div>
     <h3>NEMSIS State Repository Data</h3>
-    <div *ngIf="!repo" class="row text-center m-5">
+    <div *ngIf="!repo" class="row m-5">
       <shared-loader></shared-loader>
     </div>
     <div *ngIf="repo && !repo.initialized" class="mb-3">
-      The NEMSIS State Repository has not yet been initialized.
-    </div>
-    <div class="mb-3">
-      <button (click)="onConfigure()" type="button" class="btn btn--primary" i18n>Initialize State Repository</button>
+      <p class="mb-3">The NEMSIS State Repository has not yet been initialized.</p>
+      <div>
+        <button [disabled]="isRepoInitializing" (click)="onRepoInit()" type="button" class="btn btn--primary me-3" i18n>Initialize State Repository</button>
+        <span *ngIf="isRepoInitializing"><shared-loader></shared-loader> Please wait...</span>
+      </div>
     </div>
     <div *ngIf="repo?.initialized" class="row">
       <div class="col-lg-3">
@@ -38,6 +39,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <h3>Demographics</h3>
+    <div class="row">
       <div class="col-lg-3">
         <div class="mb-3">
           <div class="array-field array-field--noclear">
@@ -50,21 +54,6 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3">
-        <div class="mb-3">
-          <div class="array-field array-field--noclear">
-            <div class="form-field form-field--noclear form-field--nonempty">
-              <label>Facilities</label>
-              <div class="array-field__item">
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <h3>Demographics</h3>
-    <div class="row">
       <div class="col-lg-3">
         <div class="mb-3">
           <shared-array-field id="borderStates" label="Bordering States" [source]="record" [showClearButton]="false">
@@ -91,6 +80,18 @@
           <div class="array-field array-field--noclear">
             <div class="form-field form-field--noclear form-field--nonempty">
               <label>Counties</label>
+              <div class="array-field__item">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Facilities</label>
               <div class="array-field__item">
 
               </div>

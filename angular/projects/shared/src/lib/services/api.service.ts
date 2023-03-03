@@ -444,6 +444,9 @@ export class ApiService {
     getRepository: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/states/${id}/repository`, params);
     },
+    initRepository: (id: string, params?: HttpParams): Observable<any> => {
+      return this.put(`/api/states/${id}/repository`, params);
+    },
     update: (id: string, data: any): Observable<any> => {
       return this.patch(`/api/states/${id}`, data);
     },

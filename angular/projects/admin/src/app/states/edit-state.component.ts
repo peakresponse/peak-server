@@ -18,6 +18,7 @@ export class EditStateComponent {
   @ViewChild('form') form?: FormComponent;
 
   repo: any;
+  isRepoInitializing = false;
 
   constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
 
@@ -36,6 +37,26 @@ export class EditStateComponent {
 
   onDelete() {
     this.navigation.backTo(`/states`);
+  }
+
+  onRepoInit() {
+    this.isRepoInitializing = true;
+    this.api.states.initRepository(this.id).subscribe(() => {
+      this.pollRepo();
+    });
+  }
+
+  pollRepo() {
+    setTimeout(() => {
+      this.api.states.getRepository(this.id).subscribe((response: HttpResponse<any>) => {
+        this.repo = response.body;
+        if (this.repo?.initialized) {
+          this.isRepoInitializing = false;
+        } else {
+          this.pollRepo();
+        }
+      });
+    }, 1000);
   }
 
   onConfigure() {

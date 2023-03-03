@@ -42,9 +42,23 @@ router.get(
   '/:id/repository',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const repo = nemsisRepositories.getNemsisStateRepo(req.params.id);
+    const repo = nemsisRepositories.getNemsisStateRepo(req.params.id, '3.5.0');
     if (repo) {
       res.json(repo.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.put(
+  '/:id/repository',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const repo = nemsisRepositories.getNemsisStateRepo(req.params.id, '3.5.0');
+    if (repo) {
+      repo.pull();
+      res.status(HttpStatus.OK).end();
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
