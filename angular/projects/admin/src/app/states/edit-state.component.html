@@ -20,8 +20,8 @@
           <div class="array-field array-field--noclear">
             <div class="form-field form-field--noclear form-field--nonempty">
               <label>State Data Set Versions</label>
-              <div class="array-field__item">
-
+              <div *ngFor="let version of repo.dataSetVersionsInstalled" class="array-field__item">
+                {{version|version}}
               </div>
             </div>
           </div>
@@ -32,8 +32,8 @@
           <div class="array-field array-field--noclear">
             <div class="form-field form-field--noclear form-field--nonempty">
               <label>State Schematron Versions</label>
-              <div class="array-field__item">
-
+              <div *ngFor="let version of repo.schematronVersionsInstalled" class="array-field__item">
+                {{version|version}}
               </div>
             </div>
           </div>

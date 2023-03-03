@@ -49,6 +49,7 @@ import { DurationPipe } from './pipes/duration.pipe';
 import { ErrorPipe } from './pipes/error.pipe';
 import { GetPipe } from './pipes/get.pipe';
 import { InflectionPipe } from './pipes/inflection.pipe';
+import { VersionPipe } from './pipes/version.pipe';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     ErrorPipe,
     GetPipe,
     InflectionPipe,
+    VersionPipe,
   ],
   imports: [CommonModule, FormsModule, NgbModule, SortablejsModule.forRoot({ animation: 150 })],
   exports: [
@@ -147,6 +149,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     ErrorPipe,
     GetPipe,
     InflectionPipe,
+    VersionPipe,
   ],
 })
 export class SharedModule {}

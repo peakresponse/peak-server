@@ -54,5 +54,6 @@ export * from './lib/pipes/duration.pipe';
 export * from './lib/pipes/error.pipe';
 export * from './lib/pipes/get.pipe';
 export * from './lib/pipes/inflection.pipe';
+export * from './lib/pipes/version.pipe';
 
 export * from './lib/shared.module';

@@ -12,8 +12,8 @@ if [ ! -d "nemsis/repositories/$STATE/$NEMSIS_VERSION/master" ]; then
   git sparse-checkout set Resources Schematron
   git checkout
   # get the latest version of the data set and schematron
-  DS_VERSION=`git log -n 1 --format="%H" Resources/*_StateDataSet.xml`
-  SCH_VERSION=`git log -n 1 --format="%H" Schematron/*_EMSDataSet.sch`
+  DS_VERSION=`git log -n 1 --format="%as-%H" Resources/*_StateDataSet.xml`
+  SCH_VERSION=`git log -n 1 --format="%as-%H" Schematron/*_EMSDataSet.sch`
   cd ../../../../..
   # checkout those versions
   VERSIONS=( $DS_VERSION $SCH_VERSION )
@@ -24,7 +24,7 @@ if [ ! -d "nemsis/repositories/$STATE/$NEMSIS_VERSION/master" ]; then
       cd nemsis/repositories/$STATE/$NEMSIS_VERSION/$VER
       git sparse-checkout init --cone
       git sparse-checkout set Resources Schematron
-      git checkout $VER
+      git checkout ${VER:11:40}
       cd ../../../../..
     fi
   done
