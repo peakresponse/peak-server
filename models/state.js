@@ -8,33 +8,7 @@ const path = require('path');
 const nemsis = require('../lib/nemsis');
 const CommonTypes = require('../lib/nemsis/commonTypes');
 const nemsisStates = require('../lib/nemsis/states');
-
-const stateCodes = {
-  values: [],
-  codeMapping: {},
-  nameMapping: {},
-  abbrMapping: {},
-};
-// state codes, downloaded from: https://www.census.gov/library/reference/code-lists/ansi/ansi-codes-for-states.html
-// manually modified to include border states data from: https://thefactfile.org/u-s-states-and-their-border-states/
-const psv = fs.readFileSync(path.resolve(__dirname, '../lib/states.txt')).toString();
-const lines = psv.split('\n');
-// remove header row
-lines.shift();
-for (const line of lines) {
-  // parse each line
-  const tokens = line.split('|');
-  const value = {
-    code: tokens[0],
-    abbr: tokens[1],
-    name: tokens[2],
-    gnsid: tokens[3],
-  };
-  stateCodes.values.push(value);
-  stateCodes.codeMapping[value.code] = value;
-  stateCodes.nameMapping[value.name] = value;
-  stateCodes.abbrMapping[value.abbr] = value;
-}
+const States = require('../lib/states');
 
 module.exports = (sequelize, DataTypes) => {
   class State extends Model {
@@ -44,19 +18,19 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static getAbbrForCode(code) {
-      return stateCodes.codeMapping[code]?.abbr;
+      return States.codeMapping[code]?.abbr;
     }
 
     static getCodeForAbbr(abbr) {
-      return stateCodes.abbrMapping[abbr.toUpperCase()]?.code;
+      return States.abbrMapping[abbr.toUpperCase()]?.code;
     }
 
     static getCodeForName(name) {
-      return stateCodes.nameMapping[name]?.code;
+      return States.nameMapping[name]?.code;
     }
 
     static getNameForCode(code) {
-      return stateCodes.codeMapping[code]?.name;
+      return States.codeMapping[code]?.name;
     }
 
     toJSON() {
