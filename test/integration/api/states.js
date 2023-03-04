@@ -41,7 +41,11 @@ describe('/api/states', () => {
       it('returns the initialization status of a state repository', async () => {
         fs.rmSync(repoPath, { force: true, recursive: true });
         const response = await testSession.get('/api/states/10/repository').expect(HttpStatus.OK);
-        assert.deepStrictEqual(response.body, { initialized: false });
+        assert.deepStrictEqual(response.body, {
+          initialized: false,
+          dataSetVersionsInstalled: [],
+          schematronVersionsInstalled: [],
+        });
       });
     });
   });
