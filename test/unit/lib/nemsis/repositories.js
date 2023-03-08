@@ -98,6 +98,26 @@ describe('lib', () => {
               assert.deepStrictEqual(repo.schematronVersionsInstalled, ['2023-02-17-291f15c28180cb073f23ed1e098ed4818ad92083']);
             });
           });
+
+          describe('.parseAgencies()', () => {
+            it('parses sAgency records out of the specified state data set version', async () => {
+              let count = 0;
+              await repo.parseAgencies('2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c', () => {
+                count += 1;
+              });
+              assert.deepStrictEqual(count, 163);
+            });
+          });
+
+          describe('.parseFacilities()', () => {
+            it('parses sFacility records out of the specified state data set version', async () => {
+              let count = 0;
+              await repo.parseFacilities('2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c', () => {
+                count += 1;
+              });
+              assert.deepStrictEqual(count, 388);
+            });
+          });
         });
       });
     });
