@@ -26,7 +26,7 @@ describe('/api/states', () => {
       const response = await testSession.get('/api/states/').expect(HttpStatus.OK);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 8);
+      assert.deepStrictEqual(data.length, 14);
       assert.deepStrictEqual(data[0].name, 'Alabama');
     });
   });
