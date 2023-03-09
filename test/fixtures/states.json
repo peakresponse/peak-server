@@ -20,6 +20,15 @@
   {
     "model": "State",
     "data": {
+      "id": "09",
+      "name": "Connecticut",
+      "createdAt": "2020-04-06T21:21:25.531Z",
+      "updatedAt": "2020-04-06T21:22:29.410Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
       "id": "12",
       "name": "Florida",
       "createdAt": "2020-04-06T21:25:03.495Z",
@@ -38,8 +47,44 @@
   {
     "model": "State",
     "data": {
+      "id": "23",
+      "name": "Maine",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "25",
+      "name": "Massachusetts",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
       "id": "28",
       "name": "Mississippi",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "33",
+      "name": "New Hampshire",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "36",
+      "name": "New York",
       "createdAt": "2020-04-06T21:25:03.495Z",
       "updatedAt": "2020-04-06T21:25:11.116Z"
     }
@@ -58,6 +103,15 @@
     "data": {
       "id": "47",
       "name": "Tennessee",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "50",
+      "name": "Vermont",
       "createdAt": "2020-04-06T21:25:03.495Z",
       "updatedAt": "2020-04-06T21:25:11.116Z"
     }

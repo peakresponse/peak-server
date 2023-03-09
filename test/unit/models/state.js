@@ -1,7 +1,10 @@
 const assert = require('assert');
 
 const helpers = require('../../helpers');
+
 const models = require('../../../models');
+const nemsisRepositories = require('../../../lib/nemsis/repositories');
+
 const fccMocks = require('../../mocks/fcc');
 const geonamesMocks = require('../../mocks/geonames');
 const nemsisMocks = require('../../mocks/nemsis');
@@ -29,6 +32,47 @@ describe('models', () => {
     describe('.getNameForCode()', () => {
       it('should return the state name for a given code', () => {
         assert.deepStrictEqual(models.State.getNameForCode('06'), 'California');
+      });
+    });
+
+    context('repositories', () => {
+      before(async () => {
+        const repo = nemsisRepositories.getNemsisStateRepo('50', '3.5.0');
+        await repo.pull();
+      });
+
+      beforeEach(async () => {
+        await helpers.loadFixtures(['cities', 'counties', 'states', 'users']);
+      });
+
+      describe('.importAgencies()', () => {
+        it('imports Agency records from the specified NEMSIS State Data Set version', async function anon() {
+          if (!process.env.CI) {
+            this.skip();
+          }
+          const state = await models.State.findByPk('50');
+          await state.importAgencies(
+            '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+            '3.5.0',
+            '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c'
+          );
+          assert.deepStrictEqual(await models.Agency.count(), 163);
+        });
+      });
+
+      describe('.importFacilities()', () => {
+        it('imports Facility records from the specified NEMSIS State Data Set version', async function anon() {
+          if (!process.env.CI) {
+            this.skip();
+          }
+          const state = await models.State.findByPk('50');
+          await state.importFacilities(
+            '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+            '3.5.0',
+            '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c'
+          );
+          assert.deepStrictEqual(await models.Facility.count(), 388);
+        });
       });
     });
 

@@ -1,11 +1,12 @@
 /* eslint-disable no-await-in-loop */
-const { Model } = require('sequelize');
+const { Model, Op } = require('sequelize');
 const fs = require('fs');
 const HttpStatus = require('http-status-codes');
 const _ = require('lodash');
 const path = require('path');
 
 const nemsis = require('../lib/nemsis');
+const nemsisRepositories = require('../lib/nemsis/repositories');
 const CommonTypes = require('../lib/nemsis/commonTypes');
 const nemsisStates = require('../lib/nemsis/states');
 const States = require('../lib/states');
@@ -40,6 +41,98 @@ module.exports = (sequelize, DataTypes) => {
       delete attributes.dataSetXml;
       delete attributes.schematronXml;
       return attributes;
+    }
+
+    setStatus(code, message, options) {
+      return this.update(
+        {
+          status: {
+            code,
+            message,
+          },
+        },
+        { transaction: options?.transaction }
+      );
+    }
+
+    async startImportAgencies(user, nemsisVersion, dataSetVersion) {
+      await this.setStatus(HttpStatus.ACCEPTED, 'Importing Agencies...');
+      this.importAgencies(user.id, nemsisVersion, dataSetVersion);
+    }
+
+    async importAgencies(userId, nemsisVersion, dataSetVersion) {
+      const repo = nemsisRepositories.getNemsisStateRepo(this.id, nemsisVersion);
+      let count = 0;
+      await repo.parseAgencies(dataSetVersion, async (dataSetNemsisVersion, agency) => {
+        count += 1;
+        await sequelize.transaction(async (transaction) => {
+          await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count} Agencies...`, { transaction });
+          const [record] = await sequelize.models.Agency.findOrBuild({
+            where: {
+              stateUniqueId: agency['sAgency.01']._text,
+              number: agency['sAgency.02']._text,
+              stateId: this.id,
+            },
+            transaction,
+          });
+          record.name = agency['sAgency.03']._text;
+          record.data = agency;
+          record.stateDataSetVersion = dataSetVersion;
+          record.nemsisVersion = dataSetNemsisVersion ?? nemsisVersion;
+          record.createdById = record.createdById || userId;
+          record.updatedById = userId;
+          await record.save({ transaction });
+        });
+      });
+      await this.setStatus(HttpStatus.OK, `Imported ${count} Agencies`);
+    }
+
+    async importFacilities(userId, nemsisVersion, dataSetVersion) {
+      const repo = nemsisRepositories.getNemsisStateRepo(this.id, nemsisVersion);
+      let count = 0;
+      await repo.parseFacilities(dataSetVersion, async (dataSetNemsisVersion, facilityType, facility) => {
+        count += 1;
+        await sequelize.transaction(async (transaction) => {
+          await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count} Facilities...`, { transaction });
+          let record;
+          if (facility['sFacility.03']?._text) {
+            [record] = await sequelize.models.Facility.findOrBuild({
+              where: {
+                stateId: facility['sFacility.09']?._text || this.id,
+                locationCode: facility['sFacility.03']?._text || null,
+              },
+              transaction,
+            });
+          } else {
+            [record] = await sequelize.models.Facility.findOrBuild({
+              where: {
+                stateId: facility['sFacility.09']?._text || this.id,
+                name: {
+                  [Op.iLike]: facility['sFacility.02']?._text || null,
+                },
+              },
+              defaults: {
+                name: facility['sFacility.02']?._text || null,
+              },
+              transaction,
+            });
+          }
+          record.data = {
+            'sFacility.FacilityGroup': facility,
+          };
+          if (facilityType) {
+            record.data['sFacility.01'] = { _text: facilityType };
+          }
+          if (!facility['sFacility.13'] && process.env.NODE_ENV !== 'test') {
+            /// don't perform in test, so we don't exceed request quotas
+            await record.geocode();
+          }
+          record.createdById = record.createdById || userId;
+          record.updatedById = userId;
+          await record.save({ transaction });
+        });
+      });
+      await this.setStatus(HttpStatus.OK, `Imported ${count} Facilities`);
     }
 
     async startConfiguration(user) {

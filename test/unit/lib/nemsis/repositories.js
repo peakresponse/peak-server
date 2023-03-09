@@ -112,9 +112,12 @@ describe('lib', () => {
           describe('.parseFacilities()', () => {
             it('parses sFacility records out of the specified state data set version', async () => {
               let count = 0;
-              await repo.parseFacilities('2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c', () => {
-                count += 1;
-              });
+              await repo.parseFacilities(
+                '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c',
+                () => {
+                  count += 1;
+                }
+              );
               assert.deepStrictEqual(count, 388);
             });
           });
