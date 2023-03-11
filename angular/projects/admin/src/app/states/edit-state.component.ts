@@ -4,7 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { FormComponent, ApiService, NavigationService } from 'shared';
+import { FormComponent, ApiService, NavigationService, SchemaService } from 'shared';
 
 @Component({
   templateUrl: './edit-state.component.html',
@@ -22,14 +22,22 @@ export class EditStateComponent {
   isRepoInitializing = false;
 
   agencyStats: any;
+  facilityStats: any;
+  facilityTypes: any;
 
-  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+    private schema: SchemaService
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.api.states.get(this.id).subscribe((response: HttpResponse<any>) => {
       this.state = response.body;
       this.refreshAgencyStats();
+      this.refreshFacilityStats();
       if (this.state.status?.code === 202) {
         this.pollImport();
       }
@@ -38,6 +46,9 @@ export class EditStateComponent {
       this.states = response.body;
     });
     this.api.states.getRepository(this.id).subscribe((response: HttpResponse<any>) => (this.repo = response.body));
+    this.schema.get('/nemsis/xsd/sFacility_v3.json').subscribe(() => {
+      this.facilityTypes = this.schema.getEnum('TypeOfFacility') ?? {};
+    });
     this.poll();
   }
 
@@ -51,6 +62,13 @@ export class EditStateComponent {
 
   refreshAgencyStats() {
     this.api.states.getAgencies(this.id).subscribe((response: HttpResponse<any>) => (this.agencyStats = response.body));
+  }
+
+  refreshFacilityStats() {
+    this.api.states.getFacilities(this.id).subscribe((response: HttpResponse<any>) => {
+      this.facilityStats = response.body;
+      this.facilityStats.total = this.facilityStats.reduce((sum: number, stat: any) => (sum += stat.count), 0);
+    });
   }
 
   onRepoInit() {

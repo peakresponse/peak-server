@@ -101,8 +101,11 @@
       <div class="array-field array-field--noclear">
         <div class="form-field form-field--noclear form-field--nonempty">
           <label>Facilities</label>
-          <div class="array-field__item">
-
+          <div *ngFor="let stat of facilityStats" class="array-field__item">
+            <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{facilityTypes?.[stat.type]}}:</span> {{stat.count}}
+          </div>
+          <div *ngIf="facilityStats" class="array-field__item">
+            Total: {{facilityStats.total}}
           </div>
         </div>
       </div>

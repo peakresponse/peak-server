@@ -139,6 +139,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Facility.addScope('canonical', {
+    where: { createdByAgencyId: null },
+  });
+
   Facility.beforeSave(async (record, options) => {
     if (!record.id) {
       record.setDataValue('id', record.data?._attributes?.UUID);

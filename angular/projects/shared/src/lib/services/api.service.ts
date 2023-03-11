@@ -444,6 +444,9 @@ export class ApiService {
     getAgencies: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/states/${id}/agencies`, params);
     },
+    getFacilities: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/states/${id}/facilities`, params);
+    },
     getRepository: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/states/${id}/repository`, params);
     },
