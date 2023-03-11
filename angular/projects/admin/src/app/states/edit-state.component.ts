@@ -21,12 +21,15 @@ export class EditStateComponent {
   repo: any;
   isRepoInitializing = false;
 
+  agencyStats: any;
+
   constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.api.states.get(this.id).subscribe((response: HttpResponse<any>) => {
       this.state = response.body;
+      this.refreshAgencyStats();
       if (this.state.status?.code === 202) {
         this.pollImport();
       }
@@ -44,6 +47,10 @@ export class EditStateComponent {
 
   onDelete() {
     this.navigation.backTo(`/states`);
+  }
+
+  refreshAgencyStats() {
+    this.api.states.getAgencies(this.id).subscribe((response: HttpResponse<any>) => (this.agencyStats = response.body));
   }
 
   onRepoInit() {
