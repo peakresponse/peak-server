@@ -11,6 +11,7 @@ import { FormComponent, ApiService, NavigationService } from 'shared';
 })
 export class EditStateComponent {
   id: string = '';
+  state: any;
   status: string = '';
   states?: any[];
   isConfiguring = false;
@@ -24,6 +25,12 @@ export class EditStateComponent {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
+    this.api.states.get(this.id).subscribe((response: HttpResponse<any>) => {
+      this.state = response.body;
+      if (this.state.status?.code === 202) {
+        this.pollImport();
+      }
+    });
     this.api.states.index().subscribe((response: HttpResponse<any>) => {
       this.states = response.body;
     });
@@ -31,7 +38,7 @@ export class EditStateComponent {
     this.poll();
   }
 
-  state(id: string): any {
+  stateById(id: string): any {
     return this.states?.find((s) => s.id == id);
   }
 
@@ -54,6 +61,38 @@ export class EditStateComponent {
           this.isRepoInitializing = false;
         } else {
           this.pollRepo();
+        }
+      });
+    }, 1000);
+  }
+
+  get isImportingDataSet(): boolean {
+    return this.state?.status?.code === 202;
+  }
+
+  onDataSetImport(dataSetVersion: string) {
+    if (!this.isImportingDataSet) {
+      this.api.states.importDataSet(this.id, dataSetVersion).subscribe((response: HttpResponse<any>) => {
+        this.state = response.body;
+        if (this.state.status?.code === 202) {
+          this.pollImport();
+        }
+      });
+    }
+  }
+
+  onCancelDataSetImport() {
+    this.api.states.cancelImportDataSet(this.id).subscribe((response: HttpResponse<any>) => {
+      this.state = response.body;
+    });
+  }
+
+  pollImport() {
+    setTimeout(() => {
+      this.api.states.get(this.id).subscribe((response: HttpResponse<any>) => {
+        this.state = response.body;
+        if (this.state.status?.code === 202) {
+          this.pollImport();
         }
       });
     }, 1000);

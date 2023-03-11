@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       return this.update(
         {
           status: {
+            ...this.status,
             code,
             message,
           },
@@ -55,19 +56,56 @@ module.exports = (sequelize, DataTypes) => {
       );
     }
 
-    async startImportAgencies(user, nemsisVersion, dataSetVersion) {
+    async startImportDataSet(user, nemsisVersion, dataSetVersion) {
       await this.setStatus(HttpStatus.ACCEPTED, 'Importing Agencies...');
-      this.importAgencies(user.id, nemsisVersion, dataSetVersion);
+      // perform the following in the background
+      this.importAgencies(user.id, nemsisVersion, dataSetVersion)
+        .then(() => this.reload())
+        .then(() => {
+          if (this.status?.isCancelled) {
+            return Promise.resolve();
+          }
+          return this.importFacilities(user.id, nemsisVersion, dataSetVersion);
+        })
+        .then(() => this.reload())
+        .then(() => {
+          if (this.status?.isCancelled) {
+            return this.setStatus(HttpStatus.OK, 'Import cancelled');
+          }
+          return this.setStatus(HttpStatus.OK, 'Import completed');
+        });
+    }
+
+    cancelImportDataSet(options) {
+      let status;
+      if (this.status?.isCancelled || this.status?.code === HttpStatus.OK) {
+        status = {};
+      } else {
+        status = {
+          code: HttpStatus.OK,
+          message: 'Import cancelled',
+          isCancelled: true,
+        };
+      }
+      return this.update({ status }, { transaction: options?.transaction });
     }
 
     async importAgencies(userId, nemsisVersion, dataSetVersion) {
       const repo = nemsisRepositories.getNemsisStateRepo(this.id, nemsisVersion);
+      let total = 0;
+      await repo.parseAgencies(dataSetVersion, () => {
+        total += 1;
+      });
       let count = 0;
       await repo.parseAgencies(dataSetVersion, async (dataSetNemsisVersion, agency) => {
+        await this.reload();
+        if (this.status?.isCancelled) {
+          return;
+        }
         count += 1;
         await sequelize.transaction(async (transaction) => {
-          await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count} Agencies...`, { transaction });
-          const [record] = await sequelize.models.Agency.findOrBuild({
+          await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count}/${total} Agencies...`, { transaction });
+          const [record] = await sequelize.models.Agency.scope('canonical').findOrBuild({
             where: {
               stateUniqueId: agency['sAgency.01']._text,
               number: agency['sAgency.02']._text,
@@ -84,16 +122,24 @@ module.exports = (sequelize, DataTypes) => {
           await record.save({ transaction });
         });
       });
-      await this.setStatus(HttpStatus.OK, `Imported ${count} Agencies`);
+      await this.setStatus(HttpStatus.ACCEPTED, `Imported ${count} Agencies`);
     }
 
     async importFacilities(userId, nemsisVersion, dataSetVersion) {
       const repo = nemsisRepositories.getNemsisStateRepo(this.id, nemsisVersion);
+      let total = 0;
+      await repo.parseFacilities(dataSetVersion, () => {
+        total += 1;
+      });
       let count = 0;
       await repo.parseFacilities(dataSetVersion, async (dataSetNemsisVersion, facilityType, facility) => {
+        await this.reload();
+        if (this.status?.isCancelled) {
+          return;
+        }
         count += 1;
         await sequelize.transaction(async (transaction) => {
-          await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count} Facilities...`, { transaction });
+          await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count}/${total} Facilities...`, { transaction });
           let record;
           if (facility['sFacility.03']?._text) {
             [record] = await sequelize.models.Facility.findOrBuild({
@@ -132,7 +178,7 @@ module.exports = (sequelize, DataTypes) => {
           await record.save({ transaction });
         });
       });
-      await this.setStatus(HttpStatus.OK, `Imported ${count} Facilities`);
+      await this.setStatus(HttpStatus.ACCEPTED, `Imported ${count} Facilities`);
     }
 
     async startConfiguration(user) {
@@ -304,6 +350,9 @@ module.exports = (sequelize, DataTypes) => {
       borderStates: {
         type: DataTypes.JSONB,
         field: 'border_states',
+      },
+      status: {
+        type: DataTypes.JSONB,
       },
       isConfigured: DataTypes.BOOLEAN,
       dataSet: {

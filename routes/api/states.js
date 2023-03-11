@@ -51,6 +51,35 @@ router.get(
   })
 );
 
+router.delete(
+  '/:id/repository/import',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const state = await models.State.findByPk(req.params.id);
+    if (state) {
+      await state.cancelImportDataSet();
+      await state.reload();
+      res.json(state.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.put(
+  '/:id/repository/import',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const { dataSetVersion } = req.query;
+    const state = await models.State.findByPk(req.params.id);
+    if (state) {
+      await state.startImportDataSet(req.user, '3.5.0', dataSetVersion);
+      res.json(state.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
 router.put(
   '/:id/repository',
   interceptors.requireAdmin,

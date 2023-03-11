@@ -447,6 +447,14 @@ export class ApiService {
     initRepository: (id: string, params?: HttpParams): Observable<any> => {
       return this.put(`/api/states/${id}/repository`, params);
     },
+    importDataSet: (id: string, dataSetVersion: string): Observable<any> => {
+      return this.put(`/api/states/${id}/repository/import`, null, {
+        params: new HttpParams({ fromObject: { dataSetVersion } }),
+      });
+    },
+    cancelImportDataSet: (id: string): Observable<any> => {
+      return this.delete(`/api/states/${id}/repository/import`);
+    },
     update: (id: string, data: any): Observable<any> => {
       return this.patch(`/api/states/${id}`, data);
     },

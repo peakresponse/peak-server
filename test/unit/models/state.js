@@ -57,6 +57,8 @@ describe('models', () => {
             '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c'
           );
           assert.deepStrictEqual(await models.Agency.count(), 163);
+          await state.reload();
+          assert.deepStrictEqual(state.status, { code: 202, message: 'Imported 163 Agencies' });
         });
       });
 
@@ -72,6 +74,8 @@ describe('models', () => {
             '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c'
           );
           assert.deepStrictEqual(await models.Facility.count(), 388);
+          await state.reload();
+          assert.deepStrictEqual(state.status, { code: 202, message: 'Imported 388 Facilities' });
         });
       });
     });
