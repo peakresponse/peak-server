@@ -23,6 +23,7 @@ export class EditStateComponent {
 
   agencyStats: any;
   cityStats: any;
+  countyStats: any;
   facilityStats: any;
   facilityTypes: any;
 
@@ -39,6 +40,7 @@ export class EditStateComponent {
       this.state = response.body;
       this.refreshAgencyStats();
       this.refreshCityStats();
+      this.refreshCountyStats();
       this.refreshFacilityStats();
       if (this.state.status?.code === 202) {
         this.pollImport();
@@ -71,6 +73,10 @@ export class EditStateComponent {
       this.cityStats = response.body;
       this.cityStats.total = this.cityStats.reduce((sum: number, stat: any) => (sum += stat.count), 0);
     });
+  }
+
+  refreshCountyStats() {
+    this.api.states.getCounties(this.id).subscribe((response: HttpResponse<any>) => (this.countyStats = response.body));
   }
 
   refreshFacilityStats() {
