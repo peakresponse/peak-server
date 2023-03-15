@@ -77,8 +77,11 @@
       <div class="array-field array-field--noclear">
         <div class="form-field form-field--noclear form-field--nonempty">
           <label>Cities</label>
-          <div class="array-field__item">
-
+          <div *ngFor="let stat of cityStats" class="array-field__item">
+            {{stat.featureClass}}: {{stat.count}}
+          </div>
+          <div *ngIf="cityStats" class="array-field__item">
+            Total: {{cityStats.total}}
           </div>
         </div>
       </div>

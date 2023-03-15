@@ -53,9 +53,28 @@ router.get(
           stateId: state.id,
         },
         group: ['type'],
-        order: [['type', 'ASC']],
       });
       results.sort((a, b) => (a.type ?? '').localeCompare(b.type ?? ''));
+      res.json(results);
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.get(
+  '/:id/cities',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const state = await models.State.findByPk(req.params.id);
+    if (state) {
+      const results = await models.City.count({
+        where: {
+          stateNumeric: state.id,
+        },
+        group: ['featureClass'],
+      });
+      results.sort((a, b) => (a.featureClass ?? '').localeCompare(b.featureClass ?? ''));
       res.json(results);
     } else {
       res.status(HttpStatus.NOT_FOUND).end();

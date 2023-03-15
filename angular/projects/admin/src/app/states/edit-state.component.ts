@@ -22,6 +22,7 @@ export class EditStateComponent {
   isRepoInitializing = false;
 
   agencyStats: any;
+  cityStats: any;
   facilityStats: any;
   facilityTypes: any;
 
@@ -37,6 +38,7 @@ export class EditStateComponent {
     this.api.states.get(this.id).subscribe((response: HttpResponse<any>) => {
       this.state = response.body;
       this.refreshAgencyStats();
+      this.refreshCityStats();
       this.refreshFacilityStats();
       if (this.state.status?.code === 202) {
         this.pollImport();
@@ -62,6 +64,13 @@ export class EditStateComponent {
 
   refreshAgencyStats() {
     this.api.states.getAgencies(this.id).subscribe((response: HttpResponse<any>) => (this.agencyStats = response.body));
+  }
+
+  refreshCityStats() {
+    this.api.states.getCities(this.id).subscribe((response: HttpResponse<any>) => {
+      this.cityStats = response.body;
+      this.cityStats.total = this.cityStats.reduce((sum: number, stat: any) => (sum += stat.count), 0);
+    });
   }
 
   refreshFacilityStats() {
