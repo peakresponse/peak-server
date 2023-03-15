@@ -101,6 +101,25 @@ router.get(
   })
 );
 
+router.get(
+  '/:id/psaps',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const state = await models.State.findByPk(req.params.id);
+    if (state) {
+      res.json({
+        count: await models.Psap.count({
+          where: {
+            stateId: state.id,
+          },
+        }),
+      });
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
 router.post(
   '/:id/configure',
   interceptors.requireAdmin,

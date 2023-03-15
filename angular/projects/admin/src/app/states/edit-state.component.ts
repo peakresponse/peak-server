@@ -26,6 +26,7 @@ export class EditStateComponent {
   countyStats: any;
   facilityStats: any;
   facilityTypes: any;
+  psapStats: any;
 
   constructor(
     private api: ApiService,
@@ -42,6 +43,7 @@ export class EditStateComponent {
       this.refreshCityStats();
       this.refreshCountyStats();
       this.refreshFacilityStats();
+      this.refreshPsapStats();
       if (this.state.status?.code === 202) {
         this.pollImport();
       }
@@ -84,6 +86,10 @@ export class EditStateComponent {
       this.facilityStats = response.body;
       this.facilityStats.total = this.facilityStats.reduce((sum: number, stat: any) => (sum += stat.count), 0);
     });
+  }
+
+  refreshPsapStats() {
+    this.api.states.getPsaps(this.id).subscribe((response: HttpResponse<any>) => (this.psapStats = response.body));
   }
 
   onRepoInit() {
