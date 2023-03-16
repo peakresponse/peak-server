@@ -2,6 +2,7 @@ const assert = require('assert');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const nemsisRepositories = require('../../../lib/nemsis/repositories');
 
 describe('models', () => {
   describe('Agency', () => {
@@ -192,6 +193,9 @@ describe('models', () => {
 
     describe('register()', () => {
       it('creates a new demographic Agency record for a given Agency/User', async () => {
+        const repo = nemsisRepositories.getNemsisStateRepo('06', '3.5.0');
+        await repo.pull();
+
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const canonicalAgency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
         assert.deepStrictEqual(canonicalAgency.data, {
@@ -212,6 +216,9 @@ describe('models', () => {
           assert.deepStrictEqual(agency.updatedById, user.id);
           assert.deepStrictEqual(agency.createdById, user.id);
           assert.deepStrictEqual(agency.updatedById, user.id);
+          assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
+          assert.deepStrictEqual(agency.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
+          assert.deepStrictEqual(agency.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
           assert.deepStrictEqual(agency.data, {
             'dAgency.01': { _text: 'S66-50146' },
             'dAgency.02': { _text: 'S66-50146' },

@@ -3,6 +3,7 @@ const sequelizePaginate = require('sequelize-paginate');
 const url = require('url');
 const uuid = require('uuid');
 
+const nemsisRepositories = require('../lib/nemsis/repositories');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -67,6 +68,11 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async register(user, canonicalAgency, subdomain, options) {
+      // get a reference to the NEMSIS State repo for this Agency
+      const repo = nemsisRepositories.getNemsisStateRepo(canonicalAgency.stateId, canonicalAgency.baseNemsisVersion);
+      if (!repo.exists) {
+        await repo.pull();
+      }
       /// create the Demographic Agency record clone
       const id = uuid.v4();
       const data = {
@@ -80,6 +86,9 @@ module.exports = (sequelize, DataTypes) => {
         createdByAgencyId: id,
         createdById: user.id,
         updatedById: user.id,
+        nemsisVersion: canonicalAgency.nemsisVersion,
+        stateDataSetVersion: canonicalAgency.stateDataSetVersion,
+        stateSchematronVersion: repo.schematronVersionsInstalled?.[0],
         data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
@@ -184,6 +193,12 @@ module.exports = (sequelize, DataTypes) => {
       nemsisVersion: {
         type: DataTypes.STRING,
         field: 'nemsis_version',
+      },
+      baseNemsisVersion: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['nemsisVersion']),
+        get() {
+          return this.nemsisVersion?.match(/^\d+\.\d+\.\d+/)?.[0];
+        },
       },
       stateDataSetVersion: {
         type: DataTypes.STRING,
