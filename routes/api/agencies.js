@@ -119,7 +119,7 @@ router.get(
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const agency = await models.Agency.findByPk(req.params.id, {
-      include: [{ model: models.Agency, as: 'claimedAgency' }],
+      include: [{ model: models.Agency, as: 'claimedAgency', required: false }],
     });
     if (agency) {
       res.json(agency.toJSON());
@@ -137,7 +137,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       agency = await models.Agency.findByPk(req.params.id, { transaction });
       if (agency) {
-        const attributes = ['stateId', 'stateUniqueId', 'number', 'name'];
+        const attributes = ['nemsisVersion', 'stateDataSetVersion', 'stateSchematronVersion', 'stateId', 'stateUniqueId', 'number', 'name'];
         if (agency.isClaimed) {
           attributes.push('psapId', 'subdomain', 'routedUrl');
         }
