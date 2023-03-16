@@ -74,15 +74,23 @@ router.post(
   })
 );
 
-router.get('/me', (req, res) => {
-  if (!req.agency) {
-    res.status(HttpStatus.NOT_FOUND).end();
-  } else {
-    const data = req.agency.toJSON();
-    data.message = req.agency.getLocalizedInvitationMessage(res);
-    res.json(data);
-  }
-});
+router.get(
+  '/me',
+  interceptors.requireLogin,
+  helpers.async(async (req, res) => {
+    if (!req.agency) {
+      res.status(HttpStatus.NOT_FOUND).end();
+    } else {
+      const data = req.agency.toJSON();
+      data.message = req.agency.getLocalizedInvitationMessage(res);
+      const draft = await req.agency.getDraft();
+      if (draft) {
+        data.draft = draft.toJSON();
+      }
+      res.json(data);
+    }
+  })
+);
 
 router.get(
   '/validate',

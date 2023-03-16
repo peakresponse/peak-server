@@ -27,6 +27,10 @@ const appRoutes: Routes = [
     },
     children: [
       {
+        path: 'dashboard',
+        component: DashboardDemographicsComponent,
+      },
+      {
         path: 'agency',
         component: AgencyRecordDemographicsComponent,
       },
@@ -67,10 +71,6 @@ const appRoutes: Routes = [
             component: PersonnelRecordDemographicsComponent,
           },
         ],
-      },
-      {
-        path: 'dashboard',
-        component: DashboardDemographicsComponent,
       },
       {
         path: 'vehicles',
