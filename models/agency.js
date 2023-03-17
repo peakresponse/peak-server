@@ -142,6 +142,34 @@ module.exports = (sequelize, DataTypes) => {
       return versions.length > 0 ? versions[0] : null;
     }
 
+    async getOrCreateDraftVersion(user, options) {
+      let version = await this.getDraftVersion(options);
+      if (!version) {
+        // clone current version to start
+        version = await this.getVersion({ transaction: options?.transaction });
+        version = await sequelize.models.Version.create(
+          {
+            ..._.pick(version, [
+              'nemsisVersion',
+              'stateDataSetVersion',
+              'stateSchematronVersion',
+              'demCustomConfiguration',
+              'emsCustomConfiguration',
+              'demDataSet',
+              'isValid',
+              'validationErrors',
+            ]),
+            agencyId: this.id,
+            isDraft: true,
+            createdById: user.id,
+            updatedById: user.id,
+          },
+          { transaction: options?.transaction }
+        );
+      }
+      return version;
+    }
+
     async generateSubdomain() {
       /// count the number of words
       const tokens = this.name.replace(/[^\w ]|_/g, '').split(/\s+/);

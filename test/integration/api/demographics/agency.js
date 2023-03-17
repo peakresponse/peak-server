@@ -138,6 +138,7 @@ describe('/api/demographics/agency', () => {
         updatedAt: response.body.updatedAt,
         createdAt: response.body.createdAt,
       });
+      assert.notDeepStrictEqual(draft.versionId, agency.versionId);
     });
   });
 

@@ -68,5 +68,40 @@
       "updatedAt": "2021-07-21T23:23:56.159Z",
       "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
     }
+  },
+  {
+    "model": "Version",
+    "data": {
+      "id": "c680282e-8756-4b02-82f3-2437c22ecade",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "isDraft": false,
+      "nemsisVersion": "3.5.0.211008CP3",
+      "stateDataSetVersion": "2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632",
+      "stateSchematronVersion": "2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4",
+      "demDataSet": {
+        "DEMDataSet": {
+          "DemographicReport": {
+            "dAgency": {
+              "dAgency.01": {
+                "_text": "S07-50120"
+              },
+              "dAgency.02": {
+                "_text": "S07-50120"
+              },
+              "dAgency.03": {
+                "_text": "Bay Medic Ambulance - Contra Costa"
+              },
+              "dAgency.04": {
+                "_text": "06"
+              }
+            }
+          }
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z"
+    }
   }
 ]

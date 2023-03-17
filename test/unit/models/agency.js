@@ -173,13 +173,14 @@ describe('models', () => {
 
     describe('getDraftVersion()', () => {
       it('returns null if no draft Version for an Agency', async () => {
-        const agency = await models.Agency.findByPk('6b7ceef6-0be4-4791-848d-f115e8f15182');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
         assert.deepStrictEqual(await agency.getDraftVersion(), null);
       });
 
       it('returns the draft Version for an Agency', async () => {
         const agency = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
-        assert(await agency.getDraftVersion());
+        const version = await agency.getDraftVersion();
+        assert.deepStrictEqual(version?.id, '77df80da-09c6-484b-a5b7-04b1fd180c50');
       });
 
       it('cannot have more than one draft Version for an Agency', async () => {
@@ -194,6 +195,22 @@ describe('models', () => {
             updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
           })
         );
+      });
+    });
+
+    describe('getOrCreateDraftVersion()', () => {
+      it('returns the existing draft Version for an Agency', async () => {
+        const user = await models.User.findByPk('7f666fe4-dbdd-4c7f-ab44-d9157379a680');
+        const agency = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+        const version = await agency.getOrCreateDraftVersion(user);
+        assert.deepStrictEqual(version?.id, '77df80da-09c6-484b-a5b7-04b1fd180c50');
+      });
+
+      it('creates a new draft Version as needed', async () => {
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const version = await agency.getOrCreateDraftVersion(user);
+        assert.deepStrictEqual(version?.isDraft, true);
       });
     });
 
