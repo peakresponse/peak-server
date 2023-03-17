@@ -16,6 +16,10 @@ module.exports = {
           key: 'id',
         },
       },
+      is_draft: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+      },
       nemsis_version: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -74,6 +78,8 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    // create a partial unique index that enforces only one draft version per agency
+    await queryInterface.sequelize.query('CREATE UNIQUE INDEX versions_agency_id_uk ON versions (agency_id) WHERE is_draft=TRUE');
     await queryInterface.addColumn('agencies', 'version_id', {
       type: Sequelize.UUID,
       references: {
@@ -81,6 +87,7 @@ module.exports = {
           tableName: 'versions',
         },
         key: 'id',
+        deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
       },
     });
   },

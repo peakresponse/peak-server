@@ -7,7 +7,7 @@ const nemsisRepositories = require('../../../lib/nemsis/repositories');
 describe('models', () => {
   describe('Agency', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'cities', 'states', 'counties', 'psaps', 'agencies', 'employments', 'scenes']);
+      await helpers.loadFixtures(['users', 'cities', 'states', 'counties', 'psaps', 'agencies', 'versions', 'employments', 'scenes']);
     });
 
     describe("scope('canonical')", () => {
@@ -171,6 +171,32 @@ describe('models', () => {
       });
     });
 
+    describe('getDraftVersion()', () => {
+      it('returns null if no draft Version for an Agency', async () => {
+        const agency = await models.Agency.findByPk('6b7ceef6-0be4-4791-848d-f115e8f15182');
+        assert.deepStrictEqual(await agency.getDraftVersion(), null);
+      });
+
+      it('returns the draft Version for an Agency', async () => {
+        const agency = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+        assert(await agency.getDraftVersion());
+      });
+
+      it('cannot have more than one draft Version for an Agency', async () => {
+        assert.rejects(
+          models.Version.create({
+            agencyId: '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8',
+            isDraft: true,
+            nemsisVersion: '3.5.0.211008CP3',
+            stateDataSetVersion: '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632',
+            stateSchematronVersion: '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4',
+            createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+            updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+          })
+        );
+      });
+    });
+
     describe('generateSubdomain()', () => {
       it('should generate a unique, unused subdomain from a short name (less than 4 words)', async () => {
         const agency = await models.Agency.findByPk('6b7ceef6-0be4-4791-848d-f115e8f15182');
@@ -230,6 +256,7 @@ describe('models', () => {
 
         const version = await agency.getVersion();
         assert(version);
+        assert.deepStrictEqual(version.isDraft, false);
         assert.deepStrictEqual(version.nemsisVersion, '3.5.0.211008CP3');
         assert.deepStrictEqual(version.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
         assert.deepStrictEqual(version.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');

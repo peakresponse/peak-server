@@ -15,6 +15,7 @@ describe('/api/users', () => {
       'states',
       'psaps',
       'agencies',
+      'versions',
       'users',
       'vehicles',
       'assignments',

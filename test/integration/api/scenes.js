@@ -16,6 +16,7 @@ describe('/api/scenes', () => {
       'states',
       'psaps',
       'agencies',
+      'versions',
       'users',
       'facilities',
       'contacts',

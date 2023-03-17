@@ -16,6 +16,7 @@ describe('/api/lists', () => {
       'users',
       'psaps',
       'agencies',
+      'versions',
       'employments',
       'lists',
       'listSections',

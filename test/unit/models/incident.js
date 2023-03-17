@@ -14,6 +14,7 @@ describe('models', () => {
         'facilities',
         'psaps',
         'agencies',
+        'versions',
         'employments',
         'dispatchers',
         'scenes',

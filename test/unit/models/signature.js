@@ -10,7 +10,18 @@ const models = require('../../../models');
 describe('models', () => {
   describe('Signature', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['states', 'counties', 'cities', 'users', 'psaps', 'agencies', 'employments', 'forms', 'signatures']);
+      await helpers.loadFixtures([
+        'states',
+        'counties',
+        'cities',
+        'users',
+        'psaps',
+        'agencies',
+        'versions',
+        'employments',
+        'forms',
+        'signatures',
+      ]);
     });
 
     describe('createOrUpdate()', () => {

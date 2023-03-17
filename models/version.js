@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Version.init(
     {
+      isDraft: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_draft',
+      },
       nemsisVersion: {
         type: DataTypes.STRING,
         field: 'nemsis_version',

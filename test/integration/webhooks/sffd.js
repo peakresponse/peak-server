@@ -23,6 +23,7 @@ describe('/webhooks/sffd', () => {
       'psaps',
       'dispatchers',
       'agencies',
+      'versions',
       'employments',
     ]);
     testSession = session(app);

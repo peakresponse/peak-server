@@ -16,6 +16,7 @@ describe('models', () => {
         'counties',
         'psaps',
         'agencies',
+        'versions',
         'vehicles',
         'contacts',
         'employments',

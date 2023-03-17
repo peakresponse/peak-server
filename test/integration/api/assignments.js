@@ -18,6 +18,7 @@ describe('/api/assignments', () => {
       'psaps',
       'dispatchers',
       'agencies',
+      'versions',
       'employments',
       'vehicles',
       'assignments',

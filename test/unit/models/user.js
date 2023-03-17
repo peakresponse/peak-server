@@ -236,7 +236,7 @@ describe('models', () => {
       });
 
       it('generates a password reset on the specified agency domain', async () => {
-        await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'users', 'employments']);
+        await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'versions', 'users', 'employments']);
         const agency = await models.Agency.findOne({
           where: { subdomain: 'bmacc' },
         });
@@ -258,7 +258,7 @@ describe('models', () => {
       });
 
       it('should raise an exception if the user is not an employee of the specified agency', async () => {
-        await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'users', 'employments']);
+        await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'versions', 'users', 'employments']);
         const agency = await models.Agency.findOne({
           where: { subdomain: 'bayshoreambulance' },
         });
@@ -271,7 +271,7 @@ describe('models', () => {
 
     describe('.sendWelcomeEmail()', () => {
       it('sends a welcome email for the user in the specified agency', async () => {
-        await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'users', 'employments']);
+        await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'versions', 'users', 'employments']);
         const user = await models.User.findOne({
           where: { email: 'regular@peakresponse.net' },
         });
@@ -290,7 +290,7 @@ describe('models', () => {
       });
 
       it('sends a pending approval email when employment pending', async () => {
-        await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'users', 'employments']);
+        await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'versions', 'users', 'employments']);
         const user = await models.User.findOne({
           where: { email: 'pending@peakresponse.net' },
         });
@@ -324,6 +324,7 @@ describe('models', () => {
           'counties',
           'psaps',
           'agencies',
+          'versions',
           'vehicles',
           'assignments',
           'contacts',

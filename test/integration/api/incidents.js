@@ -17,6 +17,7 @@ describe('/api/incidents', () => {
       'facilities',
       'psaps',
       'agencies',
+      'versions',
       'employments',
       'dispatchers',
       'scenes',

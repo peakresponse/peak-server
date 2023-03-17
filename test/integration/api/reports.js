@@ -16,6 +16,7 @@ describe('/api/reports', () => {
       'states',
       'psaps',
       'agencies',
+      'versions',
       'users',
       'facilities',
       'contacts',

@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       Agency.belongsTo(models.User, { as: 'createdBy' });
       Agency.belongsTo(models.Psap, { as: 'psap' });
       Agency.belongsTo(models.Version, { as: 'version' });
+      Agency.hasMany(models.Version, { as: 'versions', foreignKey: 'agencyId' });
       Agency.hasMany(models.Agency, {
         as: 'customizedAgencies',
         foreignKey: 'createdByAgencyId',
@@ -98,6 +99,7 @@ module.exports = (sequelize, DataTypes) => {
       const version = await sequelize.models.Version.create(
         {
           agencyId: agency.id,
+          isDraft: false,
           nemsisVersion: agency.nemsisVersion,
           stateDataSetVersion: agency.stateDataSetVersion,
           stateSchematronVersion: agency.stateSchematronVersion,
@@ -128,6 +130,16 @@ module.exports = (sequelize, DataTypes) => {
       await employment.save({ transaction: options?.transaction });
       // done!
       return agency;
+    }
+
+    async getDraftVersion(options) {
+      const versions = await this.getVersions({
+        where: {
+          isDraft: true,
+        },
+        transaction: options?.transaction,
+      });
+      return versions.length > 0 ? versions[0] : null;
     }
 
     async generateSubdomain() {
