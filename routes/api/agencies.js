@@ -83,10 +83,10 @@ router.get(
     } else {
       const data = req.agency.toJSON();
       data.message = req.agency.getLocalizedInvitationMessage(res);
-      const draft = await req.agency.getDraft();
-      if (draft) {
-        data.draft = draft.toJSON();
-      }
+      const version = await req.agency.getVersion();
+      data.version = version?.toJSON();
+      const draftVersion = await req.agency.getDraftVersion();
+      data.draftVersion = draftVersion?.toJSON();
       res.json(data);
     }
   })

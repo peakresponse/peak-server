@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -12,6 +13,24 @@ module.exports = (sequelize, DataTypes) => {
       Version.belongsTo(models.User, { as: 'createdBy' });
       Version.belongsTo(models.User, { as: 'updatedBy' });
       Version.belongsTo(models.Agency, { as: 'agency' });
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'agencyId',
+        'isDraft',
+        'nemsisVersion',
+        'stateDataSetVersion',
+        'stateSchematronVersion',
+        'isValid',
+        'validationErrors',
+        'createdAt',
+        'createdById',
+        'updatedAt',
+        'updatedById',
+      ]);
     }
   }
   Version.init(

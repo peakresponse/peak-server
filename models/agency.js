@@ -115,7 +115,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         { transaction: options?.transaction }
       );
-      agency.update({ versionId: version.id }, { transaction: options?.transaction });
+      await agency.update({ versionId: version.id }, { transaction: options?.transaction });
       // associate User to Demographic as owner
       const now = new Date();
       const employment = sequelize.models.Employment.build({

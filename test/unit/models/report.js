@@ -91,7 +91,7 @@ describe('models', () => {
             },
           },
         };
-        assert.rejects(models.Report.createOrUpdate(user, agency, data));
+        await assert.rejects(models.Report.createOrUpdate(user, agency, data));
       });
 
       it('creates a new canonical and corresponding history record', async () => {

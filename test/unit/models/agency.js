@@ -184,7 +184,7 @@ describe('models', () => {
       });
 
       it('cannot have more than one draft Version for an Agency', async () => {
-        assert.rejects(
+        await assert.rejects(
           models.Version.create({
             agencyId: '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8',
             isDraft: true,
