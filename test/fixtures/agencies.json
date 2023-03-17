@@ -79,6 +79,9 @@
       "createdAt": "2020-04-06T21:22:10.102Z",
       "updatedAt": "2020-04-06T21:22:10.102Z",
       "stateId": "06",
+      "nemsisVersion": "3.5.0.211008CP3",
+      "stateDataSetVersion": "2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632",
+      "stateSchematronVersion": "2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4",
       "data": {
         "sAgency.01": {
           "_text": "S01-50120"
