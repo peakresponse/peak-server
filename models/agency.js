@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       Agency.belongsTo(models.User, { as: 'updatedBy' });
       Agency.belongsTo(models.User, { as: 'createdBy' });
       Agency.belongsTo(models.Psap, { as: 'psap' });
+      Agency.belongsTo(models.Version, { as: 'version' });
       Agency.hasMany(models.Agency, {
         as: 'customizedAgencies',
         foreignKey: 'createdByAgencyId',
@@ -73,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       if (!repo.exists) {
         await repo.pull();
       }
-      /// create the Demographic Agency record clone
+      // create the Demographic Agency record clone
       const id = uuid.v4();
       const data = {
         id,
@@ -93,7 +94,27 @@ module.exports = (sequelize, DataTypes) => {
       };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
       const agency = await sequelize.models.Agency.create(data, { transaction: options?.transaction });
-      /// associate User to Demographic as owner
+      // create a first Version for the Agency
+      const version = await sequelize.models.Version.create(
+        {
+          agencyId: agency.id,
+          nemsisVersion: agency.nemsisVersion,
+          stateDataSetVersion: agency.stateDataSetVersion,
+          stateSchematronVersion: agency.stateSchematronVersion,
+          demDataSet: {
+            DEMDataSet: {
+              DemographicReport: {
+                dAgency: agency.data,
+              },
+            },
+          },
+          createdById: user.id,
+          updatedById: user.id,
+        },
+        { transaction: options?.transaction }
+      );
+      agency.update({ versionId: version.id }, { transaction: options?.transaction });
+      // associate User to Demographic as owner
       const now = new Date();
       const employment = sequelize.models.Employment.build({
         agencyId: agency.id,
@@ -105,7 +126,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       employment.setUser(user);
       await employment.save({ transaction: options?.transaction });
-      /// done!
+      // done!
       return agency;
     }
 

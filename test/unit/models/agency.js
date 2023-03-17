@@ -204,36 +204,42 @@ describe('models', () => {
           'sAgency.03': { _text: 'Bodega Bay Fire Protection District' },
         });
 
+        let agency;
         await models.sequelize.transaction(async (transaction) => {
-          const agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
-          assert(agency);
-          assert.deepStrictEqual(agency.canonicalAgencyId, canonicalAgency.id);
-          assert.deepStrictEqual(agency.stateId, '06');
-          assert.deepStrictEqual(agency.stateUniqueId, 'S66-50146');
-          assert.deepStrictEqual(agency.number, 'S66-50146');
-          assert.deepStrictEqual(agency.subdomain, 'bbfpd');
-          assert.deepStrictEqual(agency.createdById, user.id);
-          assert.deepStrictEqual(agency.updatedById, user.id);
-          assert.deepStrictEqual(agency.createdById, user.id);
-          assert.deepStrictEqual(agency.updatedById, user.id);
-          assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
-          assert.deepStrictEqual(agency.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
-          assert.deepStrictEqual(agency.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
-          assert.deepStrictEqual(agency.data, {
-            'dAgency.01': { _text: 'S66-50146' },
-            'dAgency.02': { _text: 'S66-50146' },
-            'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
-            'dAgency.04': { _text: '06' },
-          });
-
-          const employment = await models.Employment.findOne({
-            where: { agencyId: agency.id, userId: user.id },
-            transaction,
-          });
-          assert(employment);
-          assert(employment.isOwner);
-          assert(employment.isActive);
+          agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
         });
+        assert(agency);
+        assert.deepStrictEqual(agency.canonicalAgencyId, canonicalAgency.id);
+        assert.deepStrictEqual(agency.stateId, '06');
+        assert.deepStrictEqual(agency.stateUniqueId, 'S66-50146');
+        assert.deepStrictEqual(agency.number, 'S66-50146');
+        assert.deepStrictEqual(agency.subdomain, 'bbfpd');
+        assert.deepStrictEqual(agency.createdById, user.id);
+        assert.deepStrictEqual(agency.updatedById, user.id);
+        assert.deepStrictEqual(agency.createdById, user.id);
+        assert.deepStrictEqual(agency.updatedById, user.id);
+        assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
+        assert.deepStrictEqual(agency.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
+        assert.deepStrictEqual(agency.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
+        assert.deepStrictEqual(agency.data, {
+          'dAgency.01': { _text: 'S66-50146' },
+          'dAgency.02': { _text: 'S66-50146' },
+          'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
+          'dAgency.04': { _text: '06' },
+        });
+
+        const version = await agency.getVersion();
+        assert(version);
+        assert.deepStrictEqual(version.nemsisVersion, '3.5.0.211008CP3');
+        assert.deepStrictEqual(version.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
+        assert.deepStrictEqual(version.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
+
+        const employment = await models.Employment.findOne({
+          where: { agencyId: agency.id, userId: user.id },
+        });
+        assert(employment);
+        assert(employment.isOwner);
+        assert(employment.isActive);
       });
     });
 
