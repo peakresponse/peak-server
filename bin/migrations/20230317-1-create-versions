@@ -1,0 +1,75 @@
+#!/usr/bin/env node
+
+const models = require('../../models');
+
+/* eslint-disable no-console, no-await-in-loop */
+async function createVersions() {
+  await models.sequelize.transaction(async (transaction) => {
+    const agencies = await models.Agency.scope('claimed').findAll({ transaction });
+    for (const agency of agencies) {
+      if (!agency.versionId) {
+        // fix some old records
+        if (agency.data['sAgency.01']) {
+          await agency.update(
+            {
+              data: {
+                'dAgency.01': agency.data['sAgency.01'],
+                'dAgency.02': agency.data['sAgency.02'],
+                'dAgency.03': agency.data['sAgency.03'],
+                'dAgency.04': {
+                  _text: agency.stateId,
+                },
+              },
+            },
+            { transaction }
+          );
+        }
+        // set NEMSIS and State Data Set versions
+        if (agency.stateId === '06') {
+          await agency.update(
+            {
+              nemsisVersion: agency.nemsisVersion ?? '3.5.0.211008CP3',
+              stateDataSetVersion: agency.stateDataSetVersion ?? '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632',
+              stateSchematronVersion: agency.stateSchematronVersion ?? '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4',
+            },
+            { transaction }
+          );
+        } else if (agency.stateId === '53') {
+          await agency.update(
+            {
+              nemsisVersion: agency.nemsisVersion ?? '3.5.0.191130CP1',
+              stateDataSetVersion: agency.stateDataSetVersion ?? '2022-11-14-a3125654bf5bfd4feee0363731000ff1a430aef8',
+              stateSchematronVersion: agency.stateSchematronVersion ?? '2023-01-25-42a113f2aee3d9072816f32e22ae6f35b250514e',
+            },
+            { transaction }
+          );
+        }
+        const version = await models.Version.create(
+          {
+            agencyId: agency.id,
+            isDraft: false,
+            nemsisVersion: agency.nemsisVersion,
+            stateDataSetVersion: agency.stateDataSetVersion,
+            stateSchematronVersion: agency.stateSchematronVersion,
+            demDataSet: {
+              DEMDataSet: {
+                DemographicReport: {
+                  dAgency: agency.data,
+                },
+              },
+            },
+            createdById: agency.createdById,
+            updatedById: agency.createdById,
+          },
+          { transaction }
+        );
+        await agency.update({ versionId: version.id }, { transaction });
+      }
+    }
+  });
+}
+
+createVersions()
+  .then(() => console.log('Done!'))
+  .catch((error) => console.error(error))
+  .finally(() => models.sequelize.close());
