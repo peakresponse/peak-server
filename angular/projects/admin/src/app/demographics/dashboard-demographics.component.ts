@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AgencyService } from 'shared';
 
 @Component({
   templateUrl: './dashboard-demographics.component.html',
@@ -7,9 +8,10 @@ import { ActivatedRoute } from '@angular/router';
 export class DashboardDemographicsComponent implements OnInit {
   agency: any;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private agencyService: AgencyService, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.agencyService.refresh();
     this.route?.parent?.data.subscribe((data: any) => (this.agency = data?.agency));
   }
 }

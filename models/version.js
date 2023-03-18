@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { DateTime } = require('luxon');
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -19,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       const attributes = { ...this.get() };
       return _.pick(attributes, [
         'id',
+        'name',
         'agencyId',
         'isDraft',
         'nemsisVersion',
@@ -38,6 +40,12 @@ module.exports = (sequelize, DataTypes) => {
       isDraft: {
         type: DataTypes.BOOLEAN,
         field: 'is_draft',
+      },
+      name: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['id', 'createdAt']),
+        get() {
+          return `${DateTime.fromJSDate(this.createdAt).toFormat('yyyy-MM-dd')}-${this.id?.replace(/-/g, '')}`;
+        },
       },
       nemsisVersion: {
         type: DataTypes.STRING,

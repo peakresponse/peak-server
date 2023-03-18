@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
@@ -16,16 +17,24 @@ export class AgencyService implements Resolve<any> {
     if (this.agency) {
       return of(this.agency);
     }
+    return this.fetch();
+  }
+
+  fetch(): Observable<any> {
     return this.api.agencies.me().pipe(
-      catchError((error) => {
+      catchError(() => {
         this.agency = {};
         return of(this.agency);
       }),
-      mergeMap((response) => {
+      mergeMap((response: HttpResponse<any>) => {
         this.agency = response.body;
         return of(this.agency);
       })
     );
+  }
+
+  refresh() {
+    this.fetch().subscribe();
   }
 
   get id(): string | null {
