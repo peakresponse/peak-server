@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  templateUrl: './edit-version-demographics.component.html',
+  templateUrl: './preview-version-demographics.component.html',
 })
-export class EditVersionDemographicsComponent {
+export class PreviewVersionDemographicsComponent {
   id: string = '';
 
   constructor(private route: ActivatedRoute) {}

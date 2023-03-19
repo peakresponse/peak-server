@@ -4,10 +4,10 @@
 <div class="row">
   <div class="col-md-6">
     <ul class="nav">
-      <li class="nav__item"><a tabIndex="0" class="nav__link nav__link--active">Details</a></li>
-      <li class="nav__item"><a tabIndex="0" class="nav__link">XML</a></li>
+      <li class="nav__item"><a tabIndex="0" class="nav__link nav__link--active" routerLink="">Details</a></li>
+      <li class="nav__item"><a tabIndex="0" class="nav__link" routerLink="preview">XML</a></li>
     </ul>  
-    <shared-form #form *ngIf="id" type="versions" [id]="id" [transformRecord]="onSubmit" (update)="onUpdate()" deleteLabel="Archive">
+    <shared-form *ngIf="id" type="versions" [id]="id">
       <ng-template let-record="record" let-error="error">
         <div class="mb-3 d-flex align-items-center">
           <shared-text-field id="name" class="flex-grow-1 me-3" label="Name" [source]="record" [error]="error"></shared-text-field>
