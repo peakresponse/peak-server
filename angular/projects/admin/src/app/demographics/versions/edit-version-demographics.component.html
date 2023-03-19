@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">Version</h1>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <ul class="nav">
+      <li class="nav__item"><a tabIndex="0" class="nav__link nav__link--active">Details</a></li>
+      <li class="nav__item"><a tabIndex="0" class="nav__link">XML</a></li>
+    </ul>  
+    <shared-form #form *ngIf="id" type="versions" [id]="id" [transformRecord]="onSubmit" (update)="onUpdate()" deleteLabel="Archive">
+      <ng-template let-record="record" let-error="error">
+        <div class="mb-3 d-flex align-items-center">
+          <shared-text-field id="name" class="flex-grow-1 me-3" label="Name" [source]="record" [error]="error"></shared-text-field>
+          <shared-checkbox id="isDraft" label="Draft?" [source]="record" [error]="error"></shared-checkbox>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="nemsisVersion" label="NEMSIS Version" [source]="record" [error]="error"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="stateDataSetVersion" label="State Data Set Version" [source]="record" [error]="error"></shared-text-field>
+        </div>
+        <div class="mb-3">
+          <shared-text-field id="stateSchematronVersion" label="State Schematron Version" [source]="record" [error]="error"></shared-text-field>
+        </div>
+      </ng-template>
+    </shared-form>
+  </div>
+</div>

@@ -500,4 +500,13 @@ export class ApiService {
       return this.get(`/api/utils/geocode`, params);
     },
   };
+
+  versions = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/versions', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/versions/${id}`, params);
+    },
+  };
 }

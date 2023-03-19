@@ -19,5 +19,6 @@ router.use('/scenes', require('./scenes'));
 router.use('/states', require('./states'));
 router.use('/users', require('./users'));
 router.use('/utils', require('./utils'));
+router.use('/versions', require('./versions'));
 
 module.exports = router;

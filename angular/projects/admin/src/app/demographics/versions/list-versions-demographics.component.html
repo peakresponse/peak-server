@@ -1,0 +1,28 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <div class="d-flex">
+      <h1 class="h2">Versions</h1>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Version</th>
+          <th>Draft?</th>
+        </tr>
+      </thead>
+      <shared-list type="versions" basePath="/demographics/versions" [params]="params" [search]="search">
+        <ng-template let-record="record">
+          <tr [routerLink]="['/demographics/versions', record.id]">
+            <td>{{record.name|version}}</td>
+            <td>
+              <shared-checkbox [id]="record.id" name="isDraft" [source]="record"></shared-checkbox>
+            </td>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+</div>

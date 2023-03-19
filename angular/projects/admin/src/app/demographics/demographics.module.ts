@@ -8,6 +8,8 @@ import { SharedModule } from 'shared';
 import { SchemaModule } from '../schema/schema.module';
 
 import { FormsDemographicsModule } from './forms/forms-demographics.module';
+import { VersionsDemographicsModule } from './versions/versions-demographics.module';
+
 import { DemographicsRoutingModule } from './demographics-routing.module';
 
 import { AgencyRecordDemographicsComponent } from './agency-record-demographics.component';
@@ -46,7 +48,16 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
     VehiclesListDemographicsComponent,
     VehiclesRecordDemographicsComponent,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, SchemaModule, SharedModule, FormsDemographicsModule, DemographicsRoutingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgbModule,
+    SchemaModule,
+    SharedModule,
+    FormsDemographicsModule,
+    VersionsDemographicsModule,
+    DemographicsRoutingModule,
+  ],
   providers: [],
 })
 export class DemographicsModule {}
