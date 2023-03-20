@@ -1,5 +1,4 @@
 const sequelizePaginate = require('sequelize-paginate');
-const nemsis = require('../lib/nemsis');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -28,24 +27,16 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Location',
       tableName: 'locations',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationError = await nemsis.validateSchema('dLocation_v3.xsd', 'dLocation', 'dLocation.LocationGroup', this.data);
-          this.isValid = this.validationError === null;
-          if (this.validationError) throw this.validationError;
-        },
-      },
     }
   );
 
-  Location.beforeSave(async (record) => {
-    if (!record.id) {
-      record.setDataValue('id', record.data?._attributes?.UUID);
-    }
-    record.setDataValue('type', record.data?.['dLocation.01']?._text);
-    record.setDataValue('name', record.data?.['dLocation.02']?._text);
-    record.setDataValue('number', record.data?.['dLocation.03']?._text);
+  Location.beforeSave(async (record, options) => {
+    record.syncNemsisId(options);
+    record.syncFieldAndNemsisValue('type', ['dLocation.01'], options);
+    record.syncFieldAndNemsisValue('name', ['dLocation.02'], options);
+    record.syncFieldAndNemsisValue('number', ['dLocation.03'], options);
     record.setDataValue('geog', Base.geometryFor(record.data?.['dLocation.04']?._text));
+    await record.validateNemsisData('dLocation_v3.xsd', 'dLocation', 'dLocation.LocationGroup', options);
   });
 
   sequelizePaginate.paginate(Location);

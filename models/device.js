@@ -1,5 +1,4 @@
 const sequelizePaginate = require('sequelize-paginate');
-const nemsis = require('../lib/nemsis');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -33,23 +32,15 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Device',
       tableName: 'devices',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationError = await nemsis.validateSchema('dDevice_v3.xsd', 'dDevice', 'dDevice.DeviceGroup', this.data);
-          this.isValid = this.validationError === null;
-          if (this.validationError) throw this.validationError;
-        },
-      },
     }
   );
 
-  Device.beforeSave(async (record) => {
-    if (!record.id) {
-      record.setDataValue('id', record.data?._attributes?.UUID);
-    }
-    record.setDataValue('serialNumber', record.data?.['dDevice.01']?._text);
-    record.setDataValue('name', record.data?.['dDevice.02']?._text);
-    record.setDataValue('primaryType', Base.firstValueOf(record.data?.['dDevice.03']));
+  Device.beforeSave(async (record, options) => {
+    record.syncNemsisId(options);
+    record.syncFieldAndNemsisValue('serialNumber', ['dDevice.01'], options);
+    record.syncFieldAndNemsisValue('name', ['dDevice.02'], options);
+    record.syncFieldAndNemsisValue('primaryType', ['dDevice.03'], options);
+    await record.validateNemsisData('dDevice_v3.xsd', 'dDevice', 'dDevice.DeviceGroup', options);
   });
 
   sequelizePaginate.paginate(Device);

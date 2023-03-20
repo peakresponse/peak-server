@@ -34,6 +34,15 @@ module.exports = (sequelize, DataTypes) => {
         'updatedById',
       ]);
     }
+
+    // async regenerate(options) {
+    //   if (!options?.transaction) {
+    //     return sequelize.transaction((transaction) => this.regenerate({ ...(options ?? {}), transaction }));
+    //   }
+    //   const { transaction } = options;
+    //   const agency = await this.getAgency({ transaction });
+    //   return;
+    // }
   }
   Version.init(
     {

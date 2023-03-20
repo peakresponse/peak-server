@@ -108,7 +108,7 @@ router.get(
         /// check if it already exists
         agency = await models.Agency.findOne({
           attributes: ['id'],
-          where: { subdomain },
+          where: { subdomain, isDraft: false },
         });
         if (agency) {
           res.status(HttpStatus.CONFLICT).end();

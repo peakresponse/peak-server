@@ -1,7 +1,6 @@
 const seedrandom = require('seedrandom');
 
 const { Base } = require('./base');
-const nemsis = require('../lib/nemsis');
 
 const PatientPriority = {
   IMMEDIATE: 0,
@@ -261,22 +260,18 @@ module.exports = (sequelize, DataTypes) => {
             throw new Error();
           }
         },
-        async schema() {
-          this.validationErrors = await nemsis.validateSchema('ePatient_v3.xsd', 'ePatient', null, this.data);
-          this.isValid = this.validationErrors === null;
-        },
       },
     }
   );
 
-  Patient.beforeValidate((record, options) => {
-    record.syncNemsisId(options);
+  Patient.beforeValidate(async (record, options) => {
     record.syncFieldAndNemsisValue('lastName', ['ePatient.PatientNameGroup', 'ePatient.02'], options);
     record.syncFieldAndNemsisValue('firstName', ['ePatient.PatientNameGroup', 'ePatient.03'], options);
     record.syncFieldAndNemsisValue('gender', ['ePatient.13'], options);
     record.syncFieldAndNemsisValue('age', ['ePatient.AgeGroup', 'ePatient.15'], options);
     record.syncFieldAndNemsisValue('ageUnits', ['ePatient.AgeGroup', 'ePatient.16'], options);
     record.syncFieldAndNemsisValue('dob', ['ePatient.17'], options);
+    await record.validateNemsisData('ePatient_v3.xsd', 'ePatient', null, options);
   });
 
   Patient.afterSave(async (patient, options) => {

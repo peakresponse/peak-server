@@ -1,7 +1,6 @@
 const _ = require('lodash');
 
 const { Base } = require('./base');
-const nemsis = require('../lib/nemsis');
 
 module.exports = (sequelize, DataTypes) => {
   class Disposition extends Base {
@@ -77,13 +76,12 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Disposition',
       tableName: 'dispositions',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationErrors = await nemsis.validateSchema('eDisposition_v3.xsd', 'eDisposition', null, this.data);
-          this.isValid = this.validationErrors === null;
-        },
-      },
     }
   );
+
+  Disposition.beforeSave(async (record, options) => {
+    await record.validateNemsisData('eDisposition_v3.xsd', 'eDisposition', null, options);
+  });
+
   return Disposition;
 };

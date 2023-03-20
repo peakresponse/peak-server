@@ -157,7 +157,7 @@ function configure(server, app) {
       }
       if (agency) {
         req.agency = await models.Agency.findOne({
-          where: { subdomain: agency },
+          where: { subdomain: agency, isDraft: false },
         });
       }
       if (!req.agency) {

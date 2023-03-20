@@ -1,5 +1,4 @@
 const sequelizePaginate = require('sequelize-paginate');
-const nemsis = require('../lib/nemsis');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -29,25 +28,13 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Configuration',
       tableName: 'configurations',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationError = await nemsis.validateSchema(
-            'dConfiguration_v3.xsd',
-            'dConfiguration',
-            'dConfiguration.ConfigurationGroup',
-            this.data
-          );
-          this.isValid = this.validationError === null;
-        },
-      },
     }
   );
 
-  Configuration.beforeSave(async (record) => {
-    if (!record.id) {
-      record.setDataValue('id', record.data?._attributes?.UUID);
-    }
-    record.setDataValue('stateId', record.data?.['dConfiguration.01']?._text);
+  Configuration.beforeSave(async (record, options) => {
+    record.syncNemsisId(options);
+    record.syncFieldAndNemsisValue('stateId', ['dConfiguration.01'], options);
+    await record.validateNemsisData('dConfiguration_v3.xsd', 'dConfiguration', 'dConfiguration.ConfigurationGroup', options);
   });
 
   sequelizePaginate.paginate(Configuration);

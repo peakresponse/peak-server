@@ -1,8 +1,6 @@
 const sequelizePaginate = require('sequelize-paginate');
 const GoogleMapsClient = require('@googlemaps/google-maps-services-js').Client;
 
-const nemsis = require('../lib/nemsis');
-
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -130,12 +128,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Facility',
       tableName: 'facilities',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationError = await nemsis.validateSchema('dFacility_v3.xsd', 'dFacility', 'dFacilityGroup', this.data);
-          this.isValid = this.validationError === null;
-        },
-      },
     }
   );
 
@@ -144,17 +136,15 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Facility.beforeSave(async (record, options) => {
-    if (!record.id) {
-      record.setDataValue('id', record.data?._attributes?.UUID);
-    }
+    record.syncNemsisId(options);
     const type = record.createdByAgencyId ? 'dFacility' : 'sFacility';
-    record.setDataValue('type', record.getFirstNemsisValue([`${type}.01`]));
-    record.setDataValue('name', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.02`]));
-    record.setDataValue('locationCode', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.03`]));
-    record.setDataValue('primaryDesignation', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.04`]));
-    record.setDataValue('primaryNationalProviderId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.05`]));
-    record.setDataValue('unit', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.06`]));
-    record.setDataValue('address', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.07`]));
+    record.syncFieldAndNemsisValue('type', [`${type}.01`], options);
+    record.syncFieldAndNemsisValue('name', [`${type}.FacilityGroup`, `${type}.02`], options);
+    record.syncFieldAndNemsisValue('locationCode', [`${type}.FacilityGroup`, `${type}.03`], options);
+    record.syncFieldAndNemsisValue('primaryDesignation', [`${type}.FacilityGroup`, `${type}.04`], options);
+    record.syncFieldAndNemsisValue('primaryNationalProviderId', [`${type}.FacilityGroup`, `${type}.05`], options);
+    record.syncFieldAndNemsisValue('unit', [`${type}.FacilityGroup`, `${type}.06`], options);
+    record.syncFieldAndNemsisValue('address', [`${type}.FacilityGroup`, `${type}.07`], options);
     record.setDataValue(
       'cityName',
       await sequelize.models.City.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]), options)
@@ -169,7 +159,7 @@ module.exports = (sequelize, DataTypes) => {
     if (record.stateName) {
       record.setDataValue('stateId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]));
     }
-    record.setDataValue('zip', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.10`]));
+    record.syncFieldAndNemsisValue('zip', [`${type}.FacilityGroup`, `${type}.10`], options);
     record.setDataValue(
       'countyName',
       await sequelize.models.County.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]), options)
@@ -177,9 +167,10 @@ module.exports = (sequelize, DataTypes) => {
     if (record.countyName) {
       record.setDataValue('countyId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]));
     }
-    record.setDataValue('country', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.12`]));
+    record.syncFieldAndNemsisValue('country', [`${type}.FacilityGroup`, `${type}.12`], options);
     record.setDataValue('geog', Base.geometryFor(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.13`])));
-    record.setDataValue('primaryPhone', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.15`]));
+    record.syncFieldAndNemsisValue('primaryPhone', [`${type}.FacilityGroup`, `${type}.15`], options);
+    await record.validateNemsisData('dFacility_v3.xsd', 'dFacility', 'dFacilityGroup', options);
   });
 
   sequelizePaginate.paginate(Facility);

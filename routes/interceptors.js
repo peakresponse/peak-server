@@ -56,7 +56,7 @@ async function loadAgency(req, res, next) {
   const subdomain = getAgencySubdomain(req);
   if (subdomain) {
     req.agency = await models.Agency.findOne({
-      where: { subdomain: { [Op.iLike]: subdomain } },
+      where: { subdomain: { [Op.iLike]: subdomain }, isDraft: false },
     });
     if (!req.agency) {
       if (req.accepts('html')) {

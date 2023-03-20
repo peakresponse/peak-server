@@ -80,7 +80,6 @@ describe('models', () => {
           'portraitFile',
         ]);
         assert.deepStrictEqual(patient.data, {
-          _attributes: { UUID: patient.id },
           'ePatient.PatientNameGroup': {
             'ePatient.02': { _text: 'Doe' },
             'ePatient.03': { _text: 'John' },

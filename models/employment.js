@@ -5,7 +5,6 @@ const sequelizePaginate = require('sequelize-paginate');
 const uuid = require('uuid/v4');
 
 const mailer = require('../emails/mailer');
-const nemsis = require('../lib/nemsis');
 
 const { Base } = require('./base');
 
@@ -246,14 +245,9 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'employments',
       underscored: true,
       validate: {
-        async schema() {
+        async extra() {
           const errors = [];
           if (this.userId) {
-            this.validationError = await nemsis.validateSchema('dPersonnel_v3.xsd', 'dPersonnel', 'dPersonnel.PersonnelGroup', this.data);
-            this.isValid = this.validationError === null;
-            if (!this.isValid) {
-              throw this.validationError;
-            }
             // perform some extra validations since EVERYTHING is optional in NEMSIS
             // require at least first name, last name for existing users
             if (!this.lastName) {
@@ -315,7 +309,7 @@ module.exports = (sequelize, DataTypes) => {
     };
   });
 
-  Employment.beforeValidate((record, options) => {
+  Employment.beforeValidate(async (record, options) => {
     record.syncNemsisId(options);
     record.syncFieldAndNemsisValue('lastName', ['dPersonnel.NameGroup', 'dPersonnel.01'], options);
     record.syncFieldAndNemsisValue('firstName', ['dPersonnel.NameGroup', 'dPersonnel.02'], options);
@@ -330,6 +324,7 @@ module.exports = (sequelize, DataTypes) => {
       record.setDataValue('invitationAt', new Date());
     }
     record._validationTransaction = options.transaction;
+    await record.validateNemsisData('dPersonnel_v3.xsd', 'dPersonnel', 'dPersonnel.PersonnelGroup', options);
   });
 
   Employment.afterValidate((record) => {
