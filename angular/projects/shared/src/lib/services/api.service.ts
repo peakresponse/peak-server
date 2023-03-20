@@ -508,5 +508,8 @@ export class ApiService {
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/versions/${id}`, params);
     },
+    preview: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/versions/${id}/preview`, params, { responseType: 'text' });
+    },
   };
 }
