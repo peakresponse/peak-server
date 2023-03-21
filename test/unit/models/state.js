@@ -49,6 +49,7 @@ describe('models', () => {
         it('imports Agency records from the specified NEMSIS State Data Set version', async function anon() {
           if (!process.env.CI) {
             this.skip();
+            return;
           }
           const state = await models.State.findByPk('50');
           await state.importAgencies(
@@ -66,6 +67,7 @@ describe('models', () => {
         it('imports Facility records from the specified NEMSIS State Data Set version', async function anon() {
           if (!process.env.CI) {
             this.skip();
+            return;
           }
           const state = await models.State.findByPk('50');
           await state.importFacilities(
@@ -85,6 +87,7 @@ describe('models', () => {
       it('should configure a Washington State record and associated Agency and Facility records', async function () {
         if (!process.env.CI) {
           this.skip();
+          return;
         }
 
         await helpers.loadFixtures(['cities', 'counties', 'states', 'users']);

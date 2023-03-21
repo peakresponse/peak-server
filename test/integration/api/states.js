@@ -54,6 +54,7 @@ describe('/api/states', () => {
     it('should configure a Washington State record and associated Agency and Facility records', async function () {
       if (!process.env.CI) {
         this.skip();
+        return;
       }
       fccMocks.mockPsapRegistryDownloads();
       geonamesMocks.mockWashingtonDownloads();
@@ -82,6 +83,7 @@ describe('/api/states', () => {
     it('should configure a California State record and associated Agency and Facility records', async function () {
       if (!process.env.CI) {
         this.skip();
+        return;
       }
       fccMocks.mockPsapRegistryDownloads();
       geonamesMocks.mockCaliforniaDownloads();

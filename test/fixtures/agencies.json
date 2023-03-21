@@ -322,6 +322,10 @@
       "createdAt": "2020-04-06T21:22:10.158Z",
       "updatedAt": "2020-04-06T21:22:10.158Z",
       "stateId": "06",
+      "nemsisVersion": "3.5.0.211008CP3",
+      "stateDataSetVersion": "2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632",
+      "stateSchematronVersion": "2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4",
+      "versionId": "d81a5359-0799-4167-aad9-b0f8a12145b4",
       "data": {
         "dAgency.01": {
           "_text": "S38-50121"
@@ -356,6 +360,10 @@
       "createdAt": "2020-04-06T21:22:10.158Z",
       "updatedAt": "2020-04-06T21:22:10.158Z",
       "stateId": "06",
+      "nemsisVersion": "3.5.0.211008CP3",
+      "stateDataSetVersion": "2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632",
+      "stateSchematronVersion": "2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4",
+      "versionId": "9a53c10e-6ade-4c1e-a1b3-464ce4a69719",
       "data": {
         "dAgency.01": {
           "_text": "S38-50121"

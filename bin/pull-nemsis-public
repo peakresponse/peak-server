@@ -9,18 +9,18 @@ fi
 # get latest commits in master
 cd nemsis/repositories/nemsis_public/master
 git pull --ff-only
-# iterate over tagged versions
-TAGS=`git tag -l $1.*`
 cd ../../../..
-pwd
-for tag in $(echo $TAGS); do
-  if [ ! -d "nemsis/repositories/nemsis_public/$tag" ]; then
+
+# clone specific version if specified
+TAG=$1
+if [ -n "$TAG" ]; then
+  if [ ! -d "nemsis/repositories/nemsis_public/$TAG" ]; then
     # clone without any tree or file data, without initial checkout
-    git clone --filter=blob:none --filter=tree:0 --no-checkout https://stash.utahdcc.org/stash/scm/nep/nemsis_public.git nemsis/repositories/nemsis_public/$tag
-    cd nemsis/repositories/nemsis_public/$tag
+    git clone --filter=blob:none --filter=tree:0 --no-checkout https://stash.utahdcc.org/stash/scm/nep/nemsis_public.git nemsis/repositories/nemsis_public/$TAG
+    cd nemsis/repositories/nemsis_public/$TAG
     git sparse-checkout init --cone
     git sparse-checkout set XSDs/NEMSIS_XSDs WSDL Schematron/rules Translation
-    git checkout $tag
+    git checkout $TAG
     cd ../../../..
   fi
-done
+fi

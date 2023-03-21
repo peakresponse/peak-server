@@ -424,6 +424,27 @@ class Base extends Model {
     return doc[rootTag];
   }
 
+  async xsdValidate(options) {
+    const { transaction } = options ?? {};
+    const { xsdPath, rootTag, groupTag } = this.constructor;
+    const version = this.version ?? (await this.getVersion({ transaction }));
+    if (version?.nemsisVersion) {
+      this.validationErrors = await nemsisXsd.validateElement(version.nemsisVersion, xsdPath, rootTag, groupTag, this.data);
+      this.isValid = this.validationErrors === null;
+      options.fields = options.fields || [];
+      if (this.changed('validationErrors')) {
+        if (options.fields.indexOf('validationErrors') < 0) {
+          options.fields.push('validationErrors');
+        }
+      }
+      if (this.changed('isValid')) {
+        if (options.fields.indexOf('isValid') < 0) {
+          options.fields.push('isValid');
+        }
+      }
+    }
+  }
+
   async validateNemsisData(xsdPath, rootTag, groupTag, options) {
     this.validationErrors = await nemsis.validateSchema(xsdPath, rootTag, groupTag, this.data);
     this.isValid = this.validationErrors === null;

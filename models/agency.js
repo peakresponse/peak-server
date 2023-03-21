@@ -332,7 +332,9 @@ module.exports = (sequelize, DataTypes) => {
       record.syncFieldAndNemsisValue('stateId', [`${prefix}.04`], options);
       await record.validateNemsisData('dAgency_v3.xsd', 'dAgency', null, options);
     }
-    await record.validateNemsisData('dAgency_v3.xsd', 'dAgency', null, options);
+    if (record.isClaimed || record.isDraft) {
+      await record.xsdValidate(options);
+    }
   });
 
   sequelizePaginate.paginate(Agency);

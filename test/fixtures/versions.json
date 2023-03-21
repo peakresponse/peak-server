@@ -43,5 +43,35 @@
       "createdAt": "2020-04-06T21:22:10.158Z",
       "updatedAt": "2020-04-06T21:22:10.158Z"
     }
+  },
+  {
+    "model": "Version",
+    "data": {
+      "id": "d81a5359-0799-4167-aad9-b0f8a12145b4",
+      "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "isDraft": false,
+      "nemsisVersion": "3.5.0.211008CP3",
+      "stateDataSetVersion": "2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632",
+      "stateSchematronVersion": "2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z"
+    }
+  },
+  {
+    "model": "Version",
+    "data": {
+      "id": "9a53c10e-6ade-4c1e-a1b3-464ce4a69719",
+      "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "isDraft": true,
+      "nemsisVersion": "3.5.0.211008CP3",
+      "stateDataSetVersion": "2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632",
+      "stateSchematronVersion": "2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z"
+    }
   }
 ]
