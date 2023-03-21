@@ -123,7 +123,7 @@ export class SchemaRecordComponent extends BaseSchemaComponent implements OnDest
     this.isDraftDeleted = false;
     this.error = null;
     get(this.api, this.keyPath)
-      .delete(this.data.draft.id)
+      .delete(this.data.isDraft ? this.data.id : this.data.draft.id)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           this.isLoading = false;
@@ -134,10 +134,17 @@ export class SchemaRecordComponent extends BaseSchemaComponent implements OnDest
       )
       .subscribe((response: HttpResponse<any>) => {
         this.isLoading = false;
-        delete this.data.draft;
-        this.isEditingDraft = false;
-        this.isDraftDeleted = true;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (this.data.isDraft) {
+          let url = this.navigation.getCurrentUrl();
+          url = url.substring(0, url.lastIndexOf('/'));
+          this.navigation.backTo(url);
+          this.notification.push('Deleted!');
+        } else {
+          delete this.data.draft;
+          this.isEditingDraft = false;
+          this.isDraftDeleted = true;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       });
   }
 }
