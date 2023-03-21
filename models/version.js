@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const { DateTime } = require('luxon');
 const { Model } = require('sequelize');
+const xmlFormatter = require('xml-formatter');
+const xmljs = require('xml-js');
 
 module.exports = (sequelize, DataTypes) => {
   class Version extends Model {
@@ -41,19 +43,27 @@ module.exports = (sequelize, DataTypes) => {
       }
       const { transaction } = options;
       let agency = await this.getAgency({ include: 'draft', transaction });
-      agency = agency.draft ?? agency;
-      return this.update(
-        {
-          demDataSet: {
-            DEMDataSet: {
-              DemographicReport: {
-                dAgency: agency.getData(this),
-              },
-            },
+      if (this.isDraft) {
+        agency = agency.draft ?? agency;
+      }
+      const doc = {
+        DEMDataSet: {
+          _attributes: {
+            xmlns: 'http://www.nemsis.org',
+            'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+            'xsi:schemaLocation': `http://www.nemsis.org https://nemsis.org/media/nemsis_v3/${this.nemsisVersion}/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd`,
+          },
+          DemographicReport: {
+            dAgency: agency.getData(this),
           },
         },
-        { transaction }
-      );
+      };
+      const demDataSet = xmlFormatter(xmljs.js2xml(doc, { compact: true }), {
+        collapseContent: true,
+        lineSeparator: '\n',
+        indentation: '\t',
+      });
+      return this.update({ demDataSet }, { transaction });
     }
   }
   Version.init(
@@ -89,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
         field: 'ems_custom_configuration',
       },
       demDataSet: {
-        type: DataTypes.JSONB,
+        type: DataTypes.TEXT,
       },
       isValid: {
         type: DataTypes.BOOLEAN,

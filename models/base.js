@@ -412,17 +412,16 @@ class Base extends Model {
   }
 
   getData(version) {
-    const doc = nemsisXsd.generate(
-      version.nemsisVersion,
-      this.constructor.xsdPath,
-      this.constructor.rootTag,
-      this.constructor.groupTag,
-      this.data
-    );
-    if (this.constructor.groupTag) {
-      return doc[this.constructor.rootTag][this.constructor.groupTag];
+    const { xsdPath, rootTag, groupTag } = this.constructor;
+    const doc = nemsisXsd.generate(version.nemsisVersion, xsdPath, rootTag, groupTag, this.data);
+    // remove the xml namespace attributes
+    delete doc[rootTag]._attributes.xmlns;
+    delete doc[rootTag]._attributes['xmlns:xsi'];
+    // return the updated data
+    if (groupTag) {
+      return doc[rootTag][groupTag];
     }
-    return doc[this.constructor.rootTag];
+    return doc[rootTag];
   }
 
   async validateNemsisData(xsdPath, rootTag, groupTag, options) {

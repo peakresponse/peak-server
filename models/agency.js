@@ -78,6 +78,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async register(user, canonicalAgency, subdomain, options) {
+      const { transaction } = options ?? {};
       // get a reference to the NEMSIS State repo for this Agency
       const repo = nemsisRepositories.getNemsisStateRepo(canonicalAgency.stateId, canonicalAgency.baseNemsisVersion);
       if (!repo.exists) {
@@ -102,7 +103,7 @@ module.exports = (sequelize, DataTypes) => {
         data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
-      const agency = await sequelize.models.Agency.create(data, { transaction: options?.transaction });
+      const agency = await sequelize.models.Agency.create(data, { transaction });
       // create a first Version for the Agency
       const version = await sequelize.models.Version.create(
         {
@@ -111,19 +112,13 @@ module.exports = (sequelize, DataTypes) => {
           nemsisVersion: agency.nemsisVersion,
           stateDataSetVersion: agency.stateDataSetVersion,
           stateSchematronVersion: agency.stateSchematronVersion,
-          demDataSet: {
-            DEMDataSet: {
-              DemographicReport: {
-                dAgency: agency.data,
-              },
-            },
-          },
           createdById: user.id,
           updatedById: user.id,
         },
-        { transaction: options?.transaction }
+        { transaction }
       );
-      await agency.update({ versionId: version.id }, { transaction: options?.transaction });
+      await version.regenerate({ transaction });
+      await agency.update({ versionId: version.id }, { transaction });
       // associate User to Demographic as owner
       const now = new Date();
       const employment = sequelize.models.Employment.build({
@@ -135,7 +130,7 @@ module.exports = (sequelize, DataTypes) => {
         updatedById: user.id,
       });
       employment.setUser(user);
-      await employment.save({ transaction: options?.transaction });
+      await employment.save({ transaction });
       // done!
       return agency;
     }

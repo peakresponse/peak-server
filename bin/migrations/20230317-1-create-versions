@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
+const _ = require('lodash');
 const models = require('../../models');
+const uuid = require('uuid/v4');
 
 /* eslint-disable no-console, no-await-in-loop */
 async function createVersions() {
@@ -23,6 +25,37 @@ async function createVersions() {
             },
             { transaction }
           );
+        }
+        if (agency.data?._attributes?.UUID) {
+          const data = _.cloneDeep(agency.data);
+          delete data._attributes.UUID;
+          await agency.update({ data }, { transaction });
+        }
+        if (agency.data['dAgency.AgencyServiceGroup'] && !agency.data['dAgency.AgencyServiceGroup']?._attributes?.UUID) {
+          const data = _.cloneDeep(agency.data);
+          let groups = data['dAgency.AgencyServiceGroup'];
+          if (!Array.isArray(groups)) {
+            groups = [groups];
+          }
+          for (const group of groups) {
+            if (!group?._attributes?.UUID) {
+              _.set(group, ['_attributes', 'UUID'], uuid());
+            }
+          }
+          await agency.update({ data }, { transaction });
+        }
+        if (agency.data['dAgency.AgencyYearGroup'] && !agency.data['dAgency.AgencyYearGroup']?._attributes?.UUID) {
+          const data = _.cloneDeep(agency.data);
+          let groups = data['dAgency.AgencyYearGroup'];
+          if (!Array.isArray(groups)) {
+            groups = [groups];
+          }
+          for (const group of groups) {
+            if (!group?._attributes?.UUID) {
+              _.set(group, ['_attributes', 'UUID'], uuid());
+            }
+          }
+          await agency.update({ data }, { transaction });
         }
         // set NEMSIS and State Data Set versions
         if (agency.stateId === '06') {
@@ -51,18 +84,12 @@ async function createVersions() {
             nemsisVersion: agency.nemsisVersion,
             stateDataSetVersion: agency.stateDataSetVersion,
             stateSchematronVersion: agency.stateSchematronVersion,
-            demDataSet: {
-              DEMDataSet: {
-                DemographicReport: {
-                  dAgency: agency.data,
-                },
-              },
-            },
             createdById: agency.createdById,
             updatedById: agency.createdById,
           },
           { transaction }
         );
+        await version.regenerate({ transaction });
         await agency.update({ versionId: version.id }, { transaction });
       }
     }

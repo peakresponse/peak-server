@@ -39,7 +39,7 @@ module.exports = {
         type: Sequelize.JSONB,
       },
       dem_data_set: {
-        type: Sequelize.JSONB,
+        type: Sequelize.TEXT,
       },
       is_valid: {
         allowNull: false,

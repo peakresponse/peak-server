@@ -1,7 +1,5 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
-const xmlFormatter = require('xml-formatter');
-const xmljs = require('xml-js');
 
 const models = require('../../models');
 
@@ -31,14 +29,11 @@ router.get(
     const version = await models.Version.findByPk(req.params.id);
     if (version) {
       if (version.agencyId === req.agency.id) {
+        if (version.isDraft) {
+          await version.regenerate();
+        }
         res.set('Content-Type', 'application/xml');
-        await version.regenerate();
-        const xml = xmlFormatter(xmljs.js2xml(version.demDataSet, { compact: true }), {
-          collapseContent: true,
-          lineSeparator: '\n',
-          indentation: '\t',
-        });
-        res.send(xml);
+        res.send(version.demDataSet);
       } else {
         res.status(HttpStatus.FORBIDDEN).end();
       }
