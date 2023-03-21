@@ -35,14 +35,26 @@ module.exports = (sequelize, DataTypes) => {
       ]);
     }
 
-    // async regenerate(options) {
-    //   if (!options?.transaction) {
-    //     return sequelize.transaction((transaction) => this.regenerate({ ...(options ?? {}), transaction }));
-    //   }
-    //   const { transaction } = options;
-    //   const agency = await this.getAgency({ transaction });
-    //   return;
-    // }
+    async regenerate(options) {
+      if (!options?.transaction) {
+        return sequelize.transaction((transaction) => this.regenerate({ ...(options ?? {}), transaction }));
+      }
+      const { transaction } = options;
+      let agency = await this.getAgency({ include: 'draft', transaction });
+      agency = agency.draft ?? agency;
+      return this.update(
+        {
+          demDataSet: {
+            DEMDataSet: {
+              DemographicReport: {
+                dAgency: agency.getData(this),
+              },
+            },
+          },
+        },
+        { transaction }
+      );
+    }
   }
   Version.init(
     {

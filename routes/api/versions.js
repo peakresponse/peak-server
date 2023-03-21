@@ -32,6 +32,7 @@ router.get(
     if (version) {
       if (version.agencyId === req.agency.id) {
         res.set('Content-Type', 'application/xml');
+        await version.regenerate();
         const xml = xmlFormatter(xmljs.js2xml(version.demDataSet, { compact: true }), {
           collapseContent: true,
           lineSeparator: '\n',

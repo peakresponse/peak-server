@@ -8,6 +8,7 @@ const { Model } = require('sequelize');
 const uuid = require('uuid/v4');
 
 const nemsis = require('../lib/nemsis');
+const nemsisXsd = require('../lib/nemsis/xsd');
 
 const s3options = {};
 if (process.env.AWS_ACCESS_KEY_ID) {
@@ -396,6 +397,32 @@ class Base extends Model {
         }
       }
     }
+  }
+
+  static get xsdPath() {
+    return null;
+  }
+
+  static get rootTag() {
+    return null;
+  }
+
+  static get groupTag() {
+    return null;
+  }
+
+  getData(version) {
+    const doc = nemsisXsd.generate(
+      version.nemsisVersion,
+      this.constructor.xsdPath,
+      this.constructor.rootTag,
+      this.constructor.groupTag,
+      this.data
+    );
+    if (this.constructor.groupTag) {
+      return doc[this.constructor.rootTag][this.constructor.groupTag];
+    }
+    return doc[this.constructor.rootTag];
   }
 
   async validateNemsisData(xsdPath, rootTag, groupTag, options) {

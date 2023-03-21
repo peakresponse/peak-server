@@ -8,6 +8,14 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Agency extends Base {
+    static get xsdPath() {
+      return 'dAgency_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dAgency';
+    }
+
     static associate(models) {
       Agency.belongsTo(models.Agency, { as: 'canonicalAgency' });
       Agency.hasOne(models.Agency.scope('includeClaimed'), { as: 'claimedAgency', foreignKey: 'canonicalAgencyId' });
