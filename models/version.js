@@ -51,7 +51,14 @@ module.exports = (sequelize, DataTypes) => {
         where: { createdByAgencyId: agency.id },
         transaction,
       });
-      records = records.map((r) => (r.draft ? r.draft.getData(this) : r.getData(this)));
+      records = records
+        .map((r) => {
+          if (r.draft) {
+            return r.draft.archivedAt ? null : r.draft.getData(this);
+          }
+          return r.getData(this);
+        })
+        .filter(Boolean);
       const doc = {
         DEMDataSet: {
           _attributes: {

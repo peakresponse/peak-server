@@ -20,8 +20,13 @@ export class SchemaRecordComponent extends BaseSchemaComponent implements OnDest
   isEditingDraft = false;
   isSavedErrorFree = false;
   isDraftDeleted = false;
+  isUnarchived = false;
 
   clone: any;
+
+  get isArchivable(): boolean {
+    return true;
+  }
 
   get isNewRecord(): boolean {
     return this.id === 'new';
@@ -75,6 +80,7 @@ export class SchemaRecordComponent extends BaseSchemaComponent implements OnDest
     this.isLoading = true;
     this.isSavedErrorFree = false;
     this.isDraftDeleted = false;
+    this.isUnarchived = false;
     this.error = null;
     request
       .pipe(
@@ -117,10 +123,38 @@ export class SchemaRecordComponent extends BaseSchemaComponent implements OnDest
       });
   }
 
+  onArchive() {
+    this.isLoading = true;
+    this.isSavedErrorFree = false;
+    this.isDraftDeleted = false;
+    this.isUnarchived = false;
+    this.error = null;
+    const data = cloneDeep(this.data);
+    data.archivedAt = new Date();
+    get(this.api, this.keyPath)
+      .update(data.id, data)
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          this.isLoading = false;
+          this.error = response.error;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return EMPTY;
+        })
+      )
+      .subscribe(() => {
+        this.isLoading = false;
+        let url = this.navigation.getCurrentUrl();
+        url = url.substring(0, url.lastIndexOf('/'));
+        this.navigation.backTo(url);
+        this.notification.push('Archived!');
+      });
+  }
+
   onDeleteDraft() {
     this.isLoading = true;
     this.isSavedErrorFree = false;
     this.isDraftDeleted = false;
+    this.isUnarchived = false;
     this.error = null;
     get(this.api, this.keyPath)
       .delete(this.data.isDraft ? this.data.id : this.data.draft.id)
@@ -140,9 +174,11 @@ export class SchemaRecordComponent extends BaseSchemaComponent implements OnDest
           this.navigation.backTo(url);
           this.notification.push('Deleted!');
         } else {
-          delete this.data.draft;
           this.isEditingDraft = false;
-          this.isDraftDeleted = true;
+          this.isDraftDeleted = !this.data.draft.archivedAt;
+          this.isUnarchived = !!this.data.draft.archivedAt;
+          delete this.data.draft;
+          this.clone = cloneDeep(this.data);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });

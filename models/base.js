@@ -25,7 +25,7 @@ const s3 = new AWS.S3(s3options);
 class Base extends Model {
   // MARK: - helpers for non-versioned (live/draft only) NEMSIS backed models
   async toNemsisJSON(options) {
-    const payload = _.pick(this, ['id', 'isDraft', 'data', 'isValid', 'validationErrors', 'createdAt', 'updatedAt']);
+    const payload = _.pick(this, ['id', 'isDraft', 'data', 'isValid', 'validationErrors', 'createdAt', 'updatedAt', 'archivedAt']);
     if (!this.isDraft) {
       const draft = this.draft || (await this.getDraft(options));
       if (draft) {
