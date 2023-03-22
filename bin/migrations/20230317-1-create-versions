@@ -93,6 +93,17 @@ async function createVersions() {
         await agency.update({ versionId: version.id }, { transaction });
       }
     }
+    const modelsToProcess = ['Vehicle'];
+    for (const model of modelsToProcess) {
+      const records = await models[model].findAll({
+        include: 'createdByAgency',
+        transaction,
+      });
+      for (const record of records) {
+        const { versionId } = record.createdByAgency;
+        await record.update({ versionId }, { transaction });
+      }
+    }
   });
 }
 

@@ -25,6 +25,7 @@ describe('models', () => {
         record.createdByAgencyId = agency.id;
         record.createdById = user.id;
         record.updatedById = user.id;
+        record.versionId = agency.versionId;
         await record.save();
 
         await record.reload();
@@ -54,6 +55,7 @@ describe('models', () => {
         record.createdByAgencyId = agency.id;
         record.createdById = user.id;
         record.updatedById = user.id;
+        record.versionId = agency.versionId;
         record.data = {
           _attributes: {
             UUID: '5c0a380c-0f69-4533-bf6b-5238a2f02d10',

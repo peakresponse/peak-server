@@ -5,12 +5,25 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Vehicle extends Base {
+    static get xsdPath() {
+      return 'dVehicle_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dVehicle';
+    }
+
+    static get groupTag() {
+      return 'dVehicle.VehicleGroup';
+    }
+
     static associate(models) {
       Vehicle.belongsTo(Vehicle, { as: 'draftParent' });
       Vehicle.hasOne(Vehicle, { as: 'draft', foreignKey: 'draftParentId' });
       Vehicle.belongsTo(models.User, { as: 'updatedBy' });
       Vehicle.belongsTo(models.User, { as: 'createdBy' });
       Vehicle.belongsTo(models.Agency, { as: 'createdByAgency' });
+      Vehicle.belongsTo(models.Version, { as: 'version' });
     }
   }
 
@@ -77,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('vin', ['dVehicle.02'], options);
     record.syncFieldAndNemsisValue('callSign', ['dVehicle.03'], options);
     record.syncFieldAndNemsisValue('type', ['dVehicle.04'], options);
-    await record.validateNemsisData('dVehicle_v3.xsd', 'dVehicle', 'dVehicle.VehicleGroup', options);
+    await record.xsdValidate(options);
   });
 
   sequelizePaginate.paginate(Vehicle);

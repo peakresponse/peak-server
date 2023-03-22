@@ -32,7 +32,9 @@ router.post(
   '/',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
+    const version = await req.agency.getOrCreateDraftVersion(req.user);
     const record = await models.Vehicle.create({
+      versionId: version.id,
       isDraft: true,
       createdByAgencyId: req.agency.id,
       data: req.body.data,
@@ -73,7 +75,8 @@ router.put(
     });
     if (record) {
       const { data } = req.body;
-      record = await record.updateDraft({ data });
+      const version = await req.agency.getOrCreateDraftVersion(req.user);
+      record = await record.updateDraft({ versionId: version.id, data });
       res.status(HttpStatus.OK).json(await record.toNemsisJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();

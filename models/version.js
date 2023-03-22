@@ -38,14 +38,20 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async regenerate(options) {
+      if (!this.isDraft) {
+        return Promise.resolve();
+      }
       if (!options?.transaction) {
         return sequelize.transaction((transaction) => this.regenerate({ ...(options ?? {}), transaction }));
       }
       const { transaction } = options;
-      let agency = await this.getAgency({ include: 'draft', transaction });
-      if (this.isDraft) {
-        agency = agency.draft ?? agency;
-      }
+      const agency = await this.getAgency({ include: 'draft', transaction });
+      let records = await sequelize.models.Vehicle.scope('finalOrNew').findAll({
+        include: 'draft',
+        where: { createdByAgencyId: agency.id },
+        transaction,
+      });
+      records = records.map((r) => (r.draft ? r.draft.getData(this) : r.getData(this)));
       const doc = {
         DEMDataSet: {
           _attributes: {
@@ -54,7 +60,10 @@ module.exports = (sequelize, DataTypes) => {
             'xsi:schemaLocation': `http://www.nemsis.org https://nemsis.org/media/nemsis_v3/${this.nemsisVersion}/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd`,
           },
           DemographicReport: {
-            dAgency: agency.getData(this),
+            dAgency: (agency.draft ?? agency).getData(this),
+            dVehicle: {
+              'dVehicle.VehicleGroup': records,
+            },
           },
         },
       };
