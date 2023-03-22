@@ -22,7 +22,7 @@ describe('/api/versions', () => {
     it('returns a list of Versions for the Agency', async () => {
       const response = await testSession.get('/api/versions').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
       const versions = response.body;
-      assert.deepStrictEqual(versions?.length, 1);
+      assert.deepStrictEqual(versions?.length, 2);
     });
   });
 
