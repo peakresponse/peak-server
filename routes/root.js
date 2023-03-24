@@ -27,8 +27,16 @@ router.use((req, res, next) => {
   next();
 });
 
+router.get('/mass-casualty', (req, res) => {
+  res.render('mass-casualty');
+});
+
 router.get('/privacy', (req, res) => {
   res.render('privacy');
+});
+
+router.get('/run-reporting', (req, res) => {
+  res.render('run-reporting');
 });
 
 router.get('/terms', (req, res) => {

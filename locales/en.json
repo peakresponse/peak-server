@@ -28,6 +28,9 @@
       "forbidden": "You are not allowed to log in"
     }
   },
+  "mass-casualty": {
+    "title": "Mass Casualty Incidents (MCIs)"
+  },
   "models": {
     "agency": {
       "invitationMessage": "Please join the {{name}} Peak Response account. We’ll be using this new software to help organize and document MCIs."
@@ -70,6 +73,9 @@
   },
   "privacy": {
     "title": "Privacy Policy"
+  },
+  "run-reporting": {
+    "title": "Run Reporting"
   },
   "terms": {
     "title": "Terms of Service"

@@ -1,0 +1,71 @@
+<%- contentFor('title') %><%= __('run-reporting.title') %>
+<%- contentFor('head') %>
+<link rel="stylesheet" href="/stylesheets/home.css" />
+<script type="application/javascript" src="/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
+<%- contentFor('body') %>
+<%- include('_header') %>
+<main id="solution" role="main">
+  <section class="container">
+    <h1 class="mb-5">Peak Response Daily Run Reporting</h1>
+    <div class="solution">
+      <div class="row">
+        <div class="col-lg-4">
+          <h3 class="mt-lg-5">Still Using Pen-and-Paper Run Sheets?</h3>
+          <p>Peak Response is a mobile-first application designed to capture patient observations from the first moments on scene. Dictate your observations into the narrative using <b>Voice-to-Text</b> to have Peak Response perform data extraction and fill in form fields automatically.</p>    
+        </div>
+        <div class="col-lg-4 position-relative">
+          <img class="solution__iphone" src="/images/iphone04.png" alt="Peak Response mobile app Voice-to-Text">
+        </div>
+        <div class="col-lg-4 col-xl-3 position-relative">
+          <img class="solution__iphone" src="/images/iphone01.png" alt="Peak Response mobile app form automatically filled">
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-alternate py-5">
+    <div class="solution container">
+      <div class="row">
+        <div class="col-lg-4 order-lg-3">
+          <h3 class="mt-lg-5">Avoid Crowds and Minimize Offload Times with Routed</h3>
+          <p>Routed is a <b>real-time ER bed tracking</b> network being developed to help providers choose the least busy destination and distribute patient load across hospitals. Give nurses advance notice of your arrival by sending an electronic ringdown notice with your patient record.</p>
+          <div class="text-center text-lg-start mb-3">
+            <a class="btn btn--primary" href="https://routedapp.org" target="_blank">Learn More at routedapp.org</a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xl-3 order-lg-1 position-relative">
+          <img class="solution__iphone" src="/images/iphone07.png" alt="Peak Response mobile app Routed">
+        </div>
+        <div class="col-lg-4 order-lg-2 position-relative">
+          <img class="solution__iphone" src="/images/iphone08.png" alt="Peak Response mobile app Ringdown">
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="container">
+    <div class="solution">
+      <div class="row">
+        <div class="col-lg-4">
+          <h3 class="mt-lg-5">Capture Signatures From the Palm of Your Hand</h3>
+          <p>Patient changed their mind? Stop running back and forth from your rig to grab your paperwork or laptop just to capture a patient refusal.</p>
+          <p>Peak Response lets you configure and present any form or release notice and <b>capture electronic signatures</b> with a swipe of a finger.</p>
+        </div>
+        <div class="col-lg-4 position-relative">
+          <img class="solution__iphone" src="/images/iphone05.png" alt="Peak Response mobile app release form">
+        </div>
+        <div class="col-lg-4 col-xl-3 position-relative">
+          <img class="solution__iphone" src="/images/iphone06.png" alt="Peak Response mobile app signed release form">
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="bg-alternate py-5">
+    <div class="container">
+      <h3>Next: Real-time Mass Casualty Incident Coordination</h3>
+      <div class="text-center text-lg-start">
+        <a class="btn btn--primary me-3" href="/mass-casualty">Learn More</a>
+        <a class="btn btn--secondary" href="/#contact">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('_footer') %>
