@@ -55,7 +55,13 @@ describe('lib', () => {
 
         describe('.versions', () => {
           it('returns all the tagged version releases of the NEMSIS public repo', () => {
-            assert.deepStrictEqual(nemsisPublic.versions, ['3.5.0.211008CP3', '3.5.0.191130CP1', '3.5.0.190930', '3.5.0.190522']);
+            assert.deepStrictEqual(nemsisPublic.versions, [
+              '3.5.0.230317CP4',
+              '3.5.0.211008CP3',
+              '3.5.0.191130CP1',
+              '3.5.0.190930',
+              '3.5.0.190522',
+            ]);
           });
         });
 
