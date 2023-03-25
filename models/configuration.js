@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       Configuration.belongsTo(models.User, { as: 'updatedBy' });
       Configuration.belongsTo(models.User, { as: 'createdBy' });
       Configuration.belongsTo(models.Agency, { as: 'createdByAgency' });
+      Configuration.belongsTo(models.Version, { as: 'version' });
     }
   }
 

@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgencyService, SchemaService, UserService } from 'shared';
 
 import { AgencyRecordDemographicsComponent } from './agency-record-demographics.component';
-import { ConfigurationDemographicsComponent } from './configuration-demographics.component';
+import { ConfigurationsListDemographicsComponent } from './configurations-list-demographics.component';
+import { ConfigurationsRecordDemographicsComponent } from './configurations-record-demographics.component';
 import { ContactDemographicsComponent } from './contact-demographics.component';
 import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
 import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
@@ -35,8 +36,14 @@ const appRoutes: Routes = [
         component: AgencyRecordDemographicsComponent,
       },
       {
-        path: 'configuration',
-        component: ConfigurationDemographicsComponent,
+        path: 'configurations',
+        component: ConfigurationsListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: ConfigurationsRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'contacts',

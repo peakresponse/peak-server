@@ -14,7 +14,8 @@ import { DemographicsRoutingModule } from './demographics-routing.module';
 
 import { AgencyRecordDemographicsComponent } from './agency-record-demographics.component';
 import { BaseDemographicsComponent } from './base-demographics.component';
-import { ConfigurationDemographicsComponent } from './configuration-demographics.component';
+import { ConfigurationsListDemographicsComponent } from './configurations-list-demographics.component';
+import { ConfigurationsRecordDemographicsComponent } from './configurations-record-demographics.component';
 import { ContactDemographicsComponent } from './contact-demographics.component';
 import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
 import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
@@ -33,7 +34,8 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
   declarations: [
     AgencyRecordDemographicsComponent,
     BaseDemographicsComponent,
-    ConfigurationDemographicsComponent,
+    ConfigurationsListDemographicsComponent,
+    ConfigurationsRecordDemographicsComponent,
     ContactDemographicsComponent,
     CustomConfigurationDemographicsComponent,
     CustomResultsDemographicsComponent,

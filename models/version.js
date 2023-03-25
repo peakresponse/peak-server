@@ -46,19 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       }
       const { transaction } = options;
       const agency = await this.getAgency({ include: 'draft', transaction });
-      let records = await sequelize.models.Vehicle.scope('finalOrNew').findAll({
-        include: 'draft',
-        where: { createdByAgencyId: agency.id },
-        transaction,
-      });
-      records = records
-        .map((r) => {
-          if (r.draft) {
-            return r.draft.archivedAt ? null : r.draft.getData(this);
-          }
-          return r.getData(this);
-        })
-        .filter(Boolean);
       const doc = {
         DEMDataSet: {
           _attributes: {
@@ -68,12 +55,30 @@ module.exports = (sequelize, DataTypes) => {
           },
           DemographicReport: {
             dAgency: (agency.draft ?? agency).getData(this),
-            dVehicle: {
-              'dVehicle.VehicleGroup': records,
-            },
           },
         },
       };
+      for (const modelName of ['Configuration', 'Vehicle']) {
+        // eslint-disable-next-line no-await-in-loop
+        let records = await sequelize.models[modelName].scope('finalOrNew').findAll({
+          include: 'draft',
+          where: { createdByAgencyId: agency.id },
+          transaction,
+        });
+        records = records
+          .map((r) => {
+            if (r.draft) {
+              return r.draft.archivedAt ? null : r.draft.getData(this);
+            }
+            return r.getData(this);
+          })
+          .filter(Boolean);
+        const path = [sequelize.models[modelName].rootTag];
+        if (sequelize.models[modelName].groupTag) {
+          path.push(sequelize.models[modelName].groupTag);
+        }
+        _.set(doc.DEMDataSet.DemographicReport, path, records);
+      }
       const demDataSet = xmlFormatter(xmljs.js2xml(doc, { compact: true }), {
         collapseContent: true,
         lineSeparator: '\n',

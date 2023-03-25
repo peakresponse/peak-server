@@ -149,15 +149,21 @@ export class ApiService {
         return this.delete(`/api/demographics/agency`);
       },
     },
-    configuration: {
+    configurations: {
       index: (params?: HttpParams): Observable<any> => {
         return this.get(`/api/demographics/configurations`, params);
       },
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/configurations`, data);
       },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/configurations/${id}`, params);
+      },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/configurations/${id}`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/configurations/${id}`);
       },
     },
     contacts: {
