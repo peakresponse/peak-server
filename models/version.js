@@ -63,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         let records = await sequelize.models[modelName].scope('finalOrNew').findAll({
           include: 'draft',
           where: { createdByAgencyId: agency.id },
+          order: [['id', 'ASC']],
           transaction,
         });
         records = records
