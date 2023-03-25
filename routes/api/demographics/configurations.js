@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const { docs, pages, total } = await models.Configuration.paginate({

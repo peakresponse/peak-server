@@ -1,9 +1,25 @@
+const { Op } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
+
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Configuration extends Base {
+    static get xsdPath() {
+      return 'dConfiguration_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dConfiguration';
+    }
+
+    static get groupTag() {
+      return 'dConfiguration.ConfigurationGroup';
+    }
+
     static associate(models) {
+      Configuration.belongsTo(Configuration, { as: 'draftParent' });
+      Configuration.hasOne(Configuration, { as: 'draft', foreignKey: 'draftParentId' });
       Configuration.belongsTo(models.State, { as: 'state' });
       Configuration.belongsTo(models.User, { as: 'updatedBy' });
       Configuration.belongsTo(models.User, { as: 'createdBy' });
@@ -13,14 +29,20 @@ module.exports = (sequelize, DataTypes) => {
 
   Configuration.init(
     {
-      stateName: {
-        type: DataTypes.STRING,
-        field: 'state_name',
+      isDraft: {
+        type: DataTypes.BOOLEAN,
       },
-      data: DataTypes.JSONB,
+      data: {
+        type: DataTypes.JSONB,
+      },
       isValid: {
         type: DataTypes.BOOLEAN,
-        field: 'is_valid',
+      },
+      validationErrors: {
+        type: DataTypes.JSONB,
+      },
+      archivedAt: {
+        type: DataTypes.DATE,
       },
     },
     {
@@ -31,10 +53,28 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Configuration.beforeSave(async (record, options) => {
+  Configuration.addScope('finalOrNew', {
+    where: {
+      [Op.or]: {
+        isDraft: false,
+        [Op.and]: {
+          isDraft: true,
+          draftParentId: null,
+        },
+      },
+    },
+  });
+
+  Configuration.addScope('final', {
+    where: {
+      isDraft: false,
+    },
+  });
+
+  Configuration.beforeValidate(async (record, options) => {
     record.syncNemsisId(options);
     record.syncFieldAndNemsisValue('stateId', ['dConfiguration.01'], options);
-    await record.validateNemsisData('dConfiguration_v3.xsd', 'dConfiguration', 'dConfiguration.ConfigurationGroup', options);
+    await record.xsdValidate(options);
   });
 
   sequelizePaginate.paginate(Configuration);
