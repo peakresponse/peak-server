@@ -112,22 +112,22 @@ describe('models', () => {
           name: 'SchemaValidationError',
           errors: [
             {
-              path: `$['dAgency.AgencyServiceGroup']['dAgency.05']`,
+              path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.05']`,
               message: 'This field is required.',
               value: '',
             },
             {
-              path: `$['dAgency.AgencyServiceGroup']['dAgency.06']`,
+              path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.06']`,
               message: 'This field is required.',
               value: '',
             },
             {
-              path: `$['dAgency.AgencyServiceGroup']['dAgency.07']`,
+              path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.07']`,
               message: 'This field is required.',
               value: '',
             },
             {
-              path: `$['dAgency.AgencyServiceGroup']['dAgency.08']`,
+              path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.08']`,
               message: 'This field is required.',
               value: '',
             },
