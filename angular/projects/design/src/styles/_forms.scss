@@ -327,6 +327,9 @@ select:disabled {
 
   .invalid-feedback {
     margin-left: 0;
+    span {
+      color: $brand-secondary-500;
+    }
   }
 }
 
