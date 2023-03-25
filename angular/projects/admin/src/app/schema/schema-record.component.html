@@ -28,7 +28,7 @@
   </ng-container>
   <fieldset *ngIf="!(isEditingDraft && record.archivedAt)" [disabled]="isLoading">
     <ng-container *ngFor="let element of childElements">
-      <shared-xsd-form-group [element]="element" [data]="record.data" [error]="error"></shared-xsd-form-group>
+      <shared-xsd-form-group [element]="element" [data]="record.data" [error]="error" [basePath]="basePath"></shared-xsd-form-group>
     </ng-container>
     <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{record, error}"></ng-template>
     <div class="d-flex justify-content-between mb-3">

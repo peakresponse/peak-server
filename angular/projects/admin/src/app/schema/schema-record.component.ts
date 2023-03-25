@@ -24,6 +24,13 @@ export class SchemaRecordComponent extends BaseSchemaComponent implements OnDest
 
   clone: any;
 
+  get basePath(): string | undefined {
+    if (this.isGrouped) {
+      return `$['${this.groupElementName}']`;
+    }
+    return undefined;
+  }
+
   get isArchivable(): boolean {
     return true;
   }
