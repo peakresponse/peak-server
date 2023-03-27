@@ -339,7 +339,7 @@ section .row {
   font-size: 0.625rem;
   font-weight: 600;
   position: absolute;
-  bottom: 1rem;
+  top: 6rem;
   right: 1rem;
   color: #507d9e;
 }
