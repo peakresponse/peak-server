@@ -2,7 +2,7 @@ const assert = require('assert');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
-const nemsisRepositories = require('../../../lib/nemsis/repositories');
+const nemsisStates = require('../../../lib/nemsis/states');
 
 describe('models', () => {
   describe('Agency', () => {
@@ -236,7 +236,7 @@ describe('models', () => {
 
     describe('register()', () => {
       it('creates a new demographic Agency record for a given Agency/User', async () => {
-        const repo = nemsisRepositories.getNemsisStateRepo('06', '3.5.0');
+        const repo = nemsisStates.getNemsisStateRepo('06', '3.5.0');
         await repo.pull();
 
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');

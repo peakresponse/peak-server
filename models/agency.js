@@ -3,7 +3,7 @@ const sequelizePaginate = require('sequelize-paginate');
 const url = require('url');
 const uuid = require('uuid');
 
-const nemsisRepositories = require('../lib/nemsis/repositories');
+const nemsisStates = require('../lib/nemsis/states');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
     static async register(user, canonicalAgency, subdomain, options) {
       const { transaction } = options ?? {};
       // get a reference to the NEMSIS State repo for this Agency
-      const repo = nemsisRepositories.getNemsisStateRepo(canonicalAgency.stateId, canonicalAgency.baseNemsisVersion);
+      const repo = nemsisStates.getNemsisStateRepo(canonicalAgency.stateId, canonicalAgency.baseNemsisVersion);
       if (!repo.exists) {
         await repo.pull();
       }

@@ -6,7 +6,7 @@ const models = require('../../models');
 const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 const nemsis = require('../../lib/nemsis');
-const nemsisRepositories = require('../../lib/nemsis/repositories');
+const nemsisStates = require('../../lib/nemsis/states');
 
 const router = express.Router();
 
@@ -120,26 +120,11 @@ router.get(
   })
 );
 
-router.post(
-  '/:id/configure',
-  interceptors.requireAdmin,
-  helpers.async(async (req, res) => {
-    const state = await models.State.findByPk(req.params.id);
-    if (!state) {
-      res.status(HttpStatus.NOT_FOUND).end();
-      return;
-    }
-    await state.startConfiguration(req.user);
-    /// send back ACCEPTED state while processing continues in background
-    res.status(HttpStatus.ACCEPTED).json(state);
-  })
-);
-
 router.get(
   '/:id/repository',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const repo = nemsisRepositories.getNemsisStateRepo(req.params.id, '3.5.0');
+    const repo = nemsisStates.getNemsisStateRepo(req.params.id, '3.5.0');
     if (repo) {
       res.json(repo.toJSON());
     } else {
@@ -181,7 +166,7 @@ router.put(
   '/:id/repository',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const repo = nemsisRepositories.getNemsisStateRepo(req.params.id, '3.5.0');
+    const repo = nemsisStates.getNemsisStateRepo(req.params.id, '3.5.0');
     if (repo) {
       repo.pull();
       res.status(HttpStatus.OK).end();

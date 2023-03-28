@@ -2,14 +2,14 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const nemsisRepositories = require('../../../../lib/nemsis/repositories');
+const nemsisStates = require('../../../../lib/nemsis/states');
 
 describe('lib', () => {
   describe('nemsis', () => {
     describe('repositories', () => {
       describe('getNemsisStateRepo', () => {
         it('returns a NemsisStateRepo instance for a valid State code', () => {
-          const repo = nemsisRepositories.getNemsisStateRepo('50', '3.5.0');
+          const repo = nemsisStates.getNemsisStateRepo('50', '3.5.0');
           assert.deepStrictEqual(repo?.state.name, 'Vermont');
         });
       });
@@ -18,7 +18,7 @@ describe('lib', () => {
         let repo;
         let repoPath;
         before(() => {
-          repo = nemsisRepositories.getNemsisStateRepo('50', '3.5.0');
+          repo = nemsisStates.getNemsisStateRepo('50', '3.5.0');
           repoPath = path.resolve(__dirname, '../../../../nemsis/repositories/vermont/3.5.0');
         });
 

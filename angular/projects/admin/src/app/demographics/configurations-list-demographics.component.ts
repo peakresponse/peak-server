@@ -12,4 +12,6 @@ export class ConfigurationsListDemographicsComponent {
   sectionColumns = [{ name: 'State ID', attr: ['dConfiguration.01'], class: 'col-3' }];
 
   constructor(public route: ActivatedRoute) {}
+
+  onImport() {}
 }

@@ -6,9 +6,8 @@ const _ = require('lodash');
 const path = require('path');
 
 const nemsis = require('../lib/nemsis');
-const nemsisRepositories = require('../lib/nemsis/repositories');
-const CommonTypes = require('../lib/nemsis/commonTypes');
 const nemsisStates = require('../lib/nemsis/states');
+const CommonTypes = require('../lib/nemsis/commonTypes');
 const States = require('../lib/states');
 
 module.exports = (sequelize, DataTypes) => {
@@ -91,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async importAgencies(userId, nemsisVersion, dataSetVersion) {
-      const repo = nemsisRepositories.getNemsisStateRepo(this.id, nemsisVersion);
+      const repo = nemsisStates.getNemsisStateRepo(this.id, nemsisVersion);
       let total = 0;
       await repo.parseAgencies(dataSetVersion, () => {
         total += 1;
@@ -126,7 +125,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async importFacilities(userId, nemsisVersion, dataSetVersion) {
-      const repo = nemsisRepositories.getNemsisStateRepo(this.id, nemsisVersion);
+      const repo = nemsisStates.getNemsisStateRepo(this.id, nemsisVersion);
       let total = 0;
       await repo.parseFacilities(dataSetVersion, () => {
         total += 1;
@@ -179,13 +178,6 @@ module.exports = (sequelize, DataTypes) => {
         });
       });
       await this.setStatus(HttpStatus.ACCEPTED, `Imported ${count} Facilities`);
-    }
-
-    async startConfiguration(user) {
-      // synchronously set starting status state...
-      await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Starting state configuration...');
-      // configure in background...
-      this.configure(user.id);
     }
 
     setConfigurationStatus(code, message) {
@@ -241,9 +233,9 @@ module.exports = (sequelize, DataTypes) => {
           return;
         }
         // special-case handling for states
-        if (nemsisStates[repo.slug] && nemsisStates[repo.slug].processStateRepoFiles) {
-          await nemsisStates[repo.slug].processStateRepoFiles(sequelize.models, tmpDir, files.values, dataSet);
-        }
+        // if (nemsisStates[repo.slug] && nemsisStates[repo.slug].processStateRepoFiles) {
+        //   await nemsisStates[repo.slug].processStateRepoFiles(sequelize.models, tmpDir, files.values, dataSet);
+        // }
         // add associated Agencies from the state data set
         if (dataSet.json.StateDataSet.sAgency && dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
           if (!Array.isArray(dataSet.json.StateDataSet.sAgency.sAgencyGroup)) {
