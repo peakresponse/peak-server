@@ -58,11 +58,11 @@ router.get(
   })
 );
 
-router.put(
-  '/:id/import',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
-  helpers.async(async (req, res) => {})
-);
+// router.put(
+//   '/:id/import',
+//   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+//   helpers.async(async (req, res) => {})
+// );
 
 router.put(
   '/:id',
