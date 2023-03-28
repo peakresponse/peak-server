@@ -156,6 +156,9 @@ export class ApiService {
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/configurations`, data);
       },
+      import: (): Observable<any> => {
+        return this.post(`/api/demographics/configurations/import`, null);
+      },
       get: (id: string, params?: HttpParams): Observable<any> => {
         return this.get(`/api/demographics/configurations/${id}`, params);
       },
