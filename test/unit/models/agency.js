@@ -358,6 +358,7 @@ describe('models', () => {
       before(async () => {
         const repo = nemsisStates.getNemsisStateRepo('06', '3.5.0');
         await repo.pull();
+        await repo.install('2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
       });
 
       describe('register()', () => {
