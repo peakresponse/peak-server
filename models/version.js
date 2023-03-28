@@ -104,6 +104,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: 'nemsis_version',
       },
+      baseNemsisVersion: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['nemsisVersion']),
+        get() {
+          const m = this.nemsisVersion.match(/^(\d+\.\d+\.\d+)/);
+          return m?.length > 1 ? m[1] : null;
+        },
+      },
       stateDataSetVersion: {
         type: DataTypes.STRING,
         field: 'state_data_set_version',

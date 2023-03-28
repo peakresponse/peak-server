@@ -66,6 +66,7 @@ const resetDatabase = async () => {
     DELETE FROM employments;
     DELETE FROM forms;
     DELETE FROM vehicles;
+    DELETE FROM configurations;
     UPDATE agencies SET version_id=NULL;
     DELETE FROM versions;
     DELETE FROM agencies;

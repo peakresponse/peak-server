@@ -173,6 +173,63 @@ module.exports = (sequelize, DataTypes) => {
       return version;
     }
 
+    async importConfiguration(user, options) {
+      if (!options?.transaction) {
+        return sequelize.transaction((transaction) => this.importConfiguration(user, { transaction }));
+      }
+      const { transaction } = options;
+      const version = await this.getOrCreateDraftVersion(user, { transaction });
+      const repo = nemsisStates.getNemsisStateRepo(this.stateId, version.baseNemsisVersion);
+      let record;
+      await repo.parseConfiguration(version.stateDataSetVersion, async (dataSetNemsisVersion, configuration) => {
+        record = await sequelize.models.Configuration.scope('finalOrNew').findOne({
+          where: {
+            createdByAgencyId: this.id,
+            stateId: this.stateId,
+          },
+          include: ['draft'],
+          transaction,
+        });
+        const data = record ? _.cloneDeep(record.data) : {};
+        const scpgs = Array.isArray(configuration['sConfiguration.ProcedureGroup'])
+          ? configuration['sConfiguration.ProcedureGroup']
+          : [configuration['sConfiguration.ProcedureGroup']];
+        data['dConfiguration.ProcedureGroup'] = scpgs.map((scpg) => ({
+          _attributes: { UUID: uuid() },
+          'dConfiguration.06': scpg['sConfiguration.02'],
+          'dConfiguration.07': scpg['sConfiguration.03'],
+        }));
+        const scmgs = Array.isArray(configuration['sConfiguration.MedicationGroup'])
+          ? configuration['sConfiguration.MedicationGroup']
+          : [configuration['sConfiguration.MedicationGroup']];
+        data['dConfiguration.MedicationGroup'] = scmgs.map((scmg) => ({
+          _attributes: { UUID: uuid() },
+          'dConfiguration.08': scmg['sConfiguration.04'],
+          'dConfiguration.09': scmg['sConfiguration.05'],
+        }));
+        data['dConfiguration.10'] = configuration['sConfiguration.06'];
+        if (record) {
+          record = await record.updateDraft({ versionId: version.id, data, updatedById: user.id }, { transaction });
+        } else {
+          data['dConfiguration.13'] = { _text: '' };
+          data['dConfiguration.16'] = { _text: '' };
+          record = await sequelize.models.Configuration.create(
+            {
+              versionId: version.id,
+              isDraft: true,
+              createdByAgencyId: this.id,
+              stateId: this.stateId,
+              data,
+              createdById: user.id,
+              updatedById: user.id,
+            },
+            { transaction }
+          );
+        }
+      });
+      return record;
+    }
+
     async generateSubdomain() {
       /// count the number of words
       const tokens = this.name.replace(/[^\w ]|_/g, '').split(/\s+/);

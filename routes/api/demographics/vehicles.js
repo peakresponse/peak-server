@@ -76,7 +76,7 @@ router.put(
     if (record) {
       const { archivedAt, data } = req.body;
       const version = await req.agency.getOrCreateDraftVersion(req.user);
-      record = await record.updateDraft({ versionId: version.id, archivedAt, data });
+      record = await record.updateDraft({ versionId: version.id, archivedAt, data, updatedById: req.user.id });
       res.status(HttpStatus.OK).json(await record.toNemsisJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();

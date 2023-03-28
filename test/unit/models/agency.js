@@ -234,59 +234,6 @@ describe('models', () => {
       });
     });
 
-    describe('register()', () => {
-      it('creates a new demographic Agency record for a given Agency/User', async () => {
-        const repo = nemsisStates.getNemsisStateRepo('06', '3.5.0');
-        await repo.pull();
-
-        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
-        const canonicalAgency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
-        assert.deepStrictEqual(canonicalAgency.data, {
-          'sAgency.01': { _text: 'S66-50146' },
-          'sAgency.02': { _text: 'S66-50146' },
-          'sAgency.03': { _text: 'Bodega Bay Fire Protection District' },
-        });
-
-        let agency;
-        await models.sequelize.transaction(async (transaction) => {
-          agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
-        });
-        assert(agency);
-        assert.deepStrictEqual(agency.canonicalAgencyId, canonicalAgency.id);
-        assert.deepStrictEqual(agency.stateId, '06');
-        assert.deepStrictEqual(agency.stateUniqueId, 'S66-50146');
-        assert.deepStrictEqual(agency.number, 'S66-50146');
-        assert.deepStrictEqual(agency.subdomain, 'bbfpd');
-        assert.deepStrictEqual(agency.createdById, user.id);
-        assert.deepStrictEqual(agency.updatedById, user.id);
-        assert.deepStrictEqual(agency.createdById, user.id);
-        assert.deepStrictEqual(agency.updatedById, user.id);
-        assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
-        assert.deepStrictEqual(agency.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
-        assert.deepStrictEqual(agency.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
-        assert.deepStrictEqual(agency.data, {
-          'dAgency.01': { _text: 'S66-50146' },
-          'dAgency.02': { _text: 'S66-50146' },
-          'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
-          'dAgency.04': { _text: '06' },
-        });
-
-        const version = await agency.getVersion();
-        assert(version);
-        assert.deepStrictEqual(version.isDraft, false);
-        assert.deepStrictEqual(version.nemsisVersion, '3.5.0.211008CP3');
-        assert.deepStrictEqual(version.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
-        assert.deepStrictEqual(version.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
-
-        const employment = await models.Employment.findOne({
-          where: { agencyId: agency.id, userId: user.id },
-        });
-        assert(employment);
-        assert(employment.isOwner);
-        assert(employment.isActive);
-      });
-    });
-
     describe('update()', () => {
       it('syncs columns and Nemsis data on save', async () => {
         let agency = await models.Agency.findByPk('9466185d-6ad7-429a-9081-4426d2398f9f');
@@ -403,6 +350,84 @@ describe('models', () => {
           'dAgency.02': { _text: 'Test Number' },
           'dAgency.03': { _text: 'Test Name' },
           'dAgency.04': { _text: '06' },
+        });
+      });
+    });
+
+    context('with NEMSIS State repo', () => {
+      before(async () => {
+        const repo = nemsisStates.getNemsisStateRepo('06', '3.5.0');
+        await repo.pull();
+      });
+
+      describe('register()', () => {
+        it('creates a new demographic Agency record for a given Agency/User', async () => {
+          const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+          const canonicalAgency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
+          assert.deepStrictEqual(canonicalAgency.data, {
+            'sAgency.01': { _text: 'S66-50146' },
+            'sAgency.02': { _text: 'S66-50146' },
+            'sAgency.03': { _text: 'Bodega Bay Fire Protection District' },
+          });
+
+          let agency;
+          await models.sequelize.transaction(async (transaction) => {
+            agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
+          });
+          assert(agency);
+          assert.deepStrictEqual(agency.canonicalAgencyId, canonicalAgency.id);
+          assert.deepStrictEqual(agency.stateId, '06');
+          assert.deepStrictEqual(agency.stateUniqueId, 'S66-50146');
+          assert.deepStrictEqual(agency.number, 'S66-50146');
+          assert.deepStrictEqual(agency.subdomain, 'bbfpd');
+          assert.deepStrictEqual(agency.createdById, user.id);
+          assert.deepStrictEqual(agency.updatedById, user.id);
+          assert.deepStrictEqual(agency.createdById, user.id);
+          assert.deepStrictEqual(agency.updatedById, user.id);
+          assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
+          assert.deepStrictEqual(agency.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
+          assert.deepStrictEqual(agency.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
+          assert.deepStrictEqual(agency.data, {
+            'dAgency.01': { _text: 'S66-50146' },
+            'dAgency.02': { _text: 'S66-50146' },
+            'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
+            'dAgency.04': { _text: '06' },
+          });
+
+          const version = await agency.getVersion();
+          assert(version);
+          assert.deepStrictEqual(version.isDraft, false);
+          assert.deepStrictEqual(version.nemsisVersion, '3.5.0.211008CP3');
+          assert.deepStrictEqual(version.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
+          assert.deepStrictEqual(version.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
+
+          const employment = await models.Employment.findOne({
+            where: { agencyId: agency.id, userId: user.id },
+          });
+          assert(employment);
+          assert(employment.isOwner);
+          assert(employment.isActive);
+        });
+      });
+
+      describe('.importConfiguration()', () => {
+        it('imports a Configuration from the NEMSIS State Data Set', async () => {
+          const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+          const user = await agency.getCreatedBy();
+          const configuration = await agency.importConfiguration(user);
+          assert.deepStrictEqual(configuration.isDraft, true);
+          assert.deepStrictEqual(configuration.isValid, false);
+          assert.deepStrictEqual(configuration.data?.['dConfiguration.ProcedureGroup']?.length, 12);
+          assert.deepStrictEqual(configuration.data?.['dConfiguration.MedicationGroup']?.length, 12);
+          assert.deepStrictEqual(configuration.data?.['dConfiguration.10']?.length, 112);
+          assert.deepStrictEqual(
+            configuration.validationErrors?.errors?.[0]?.path,
+            "$['dConfiguration.ConfigurationGroup']['dConfiguration.13']"
+          );
+          assert.deepStrictEqual(
+            configuration.validationErrors?.errors?.[1]?.path,
+            "$['dConfiguration.ConfigurationGroup']['dConfiguration.16']"
+          );
         });
       });
     });

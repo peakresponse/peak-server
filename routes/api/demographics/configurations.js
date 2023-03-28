@@ -40,6 +40,23 @@ router.post(
   })
 );
 
+router.post(
+  '/import',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  helpers.async(async (req, res) => {
+    let payload;
+    await models.sequelize.transaction(async (transaction) => {
+      const record = await req.agency.importConfiguration(req.user, { transaction });
+      payload = await record.toNemsisJSON({ transaction });
+    });
+    if (payload) {
+      res.json(payload);
+    } else {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+    }
+  })
+);
+
 router.get(
   '/:id',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
@@ -58,12 +75,6 @@ router.get(
   })
 );
 
-// router.put(
-//   '/:id/import',
-//   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
-//   helpers.async(async (req, res) => {})
-// );
-
 router.put(
   '/:id',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
@@ -77,7 +88,7 @@ router.put(
     if (record) {
       const { archivedAt, data } = req.body;
       const version = await req.agency.getOrCreateDraftVersion(req.user);
-      record = await record.updateDraft({ versionId: version.id, archivedAt, data });
+      record = await record.updateDraft({ versionId: version.id, archivedAt, data, updatedById: req.user.id });
       res.status(HttpStatus.OK).json(await record.toNemsisJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
