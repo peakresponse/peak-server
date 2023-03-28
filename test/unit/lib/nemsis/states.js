@@ -6,7 +6,7 @@ const nemsisStates = require('../../../../lib/nemsis/states');
 
 describe('lib', () => {
   describe('nemsis', () => {
-    describe('repositories', () => {
+    describe('states', () => {
       describe('getNemsisStateRepo', () => {
         it('returns a NemsisStateRepo instance for a valid State code', () => {
           const repo = nemsisStates.getNemsisStateRepo('50', '3.5.0');
@@ -106,6 +106,23 @@ describe('lib', () => {
                 count += 1;
               });
               assert.deepStrictEqual(count, 163);
+            });
+          });
+
+          describe('.parseConfiguration()', () => {
+            it('parses the sConfiguration of the specified state data set version', async () => {
+              await repo.parseConfiguration('2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c', (nemsisVersion, data) => {
+                assert.deepStrictEqual(nemsisVersion, '3.5.0.191130CP1');
+                assert.deepStrictEqual(data['sConfiguration.01']?.length, 9);
+                assert.deepStrictEqual(data['sConfiguration.ProcedureGroup']?.length, 7);
+                assert.deepStrictEqual(data['sConfiguration.MedicationGroup']?.length, 7);
+                assert.deepStrictEqual(data['sConfiguration.MedicationGroup']?.[0]['sConfiguration.05']?.length, 42);
+                assert.deepStrictEqual(data['sConfiguration.MedicationGroup']?.[0]['sConfiguration.05']?.[0], {
+                  _attributes: { CodeType: '9924003' },
+                  _text: '1159826',
+                });
+                assert.deepStrictEqual(data['sConfiguration.06']?.length, 69);
+              });
             });
           });
 
