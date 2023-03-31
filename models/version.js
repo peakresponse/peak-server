@@ -4,6 +4,8 @@ const { Model } = require('sequelize');
 const xmlFormatter = require('xml-formatter');
 const xmljs = require('xml-js');
 
+const nemsisXsd = require('../lib/nemsis/xsd');
+
 module.exports = (sequelize, DataTypes) => {
   class Version extends Model {
     /**
@@ -86,6 +88,11 @@ module.exports = (sequelize, DataTypes) => {
         indentation: '\t',
       });
       return this.update({ demDataSet }, { transaction });
+    }
+
+    async validate() {
+      // run the DEM Data Set through XSD validation
+      return nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet);
     }
   }
   Version.init(
