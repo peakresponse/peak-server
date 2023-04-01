@@ -90,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ demDataSet }, { transaction });
     }
 
-    async validate() {
+    async nemsisValidate() {
       // run the DEM Data Set through XSD validation
       return nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet);
     }
