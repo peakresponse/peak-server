@@ -5,6 +5,7 @@ const xmlFormatter = require('xml-formatter');
 const xmljs = require('xml-js');
 
 const nemsisXsd = require('../lib/nemsis/xsd');
+const nemsisSchematron = require('../lib/nemsis/schematron');
 
 module.exports = (sequelize, DataTypes) => {
   class Version extends Model {
@@ -56,6 +57,9 @@ module.exports = (sequelize, DataTypes) => {
             'xsi:schemaLocation': `http://www.nemsis.org https://nemsis.org/media/nemsis_v3/${this.nemsisVersion}/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd`,
           },
           DemographicReport: {
+            _attributes: {
+              timeStamp: DateTime.now().toISO(),
+            },
             dAgency: (agency.draft ?? agency).getData(this),
           },
         },
@@ -92,7 +96,15 @@ module.exports = (sequelize, DataTypes) => {
 
     async nemsisValidate() {
       // run the DEM Data Set through XSD validation
-      return nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet);
+      let error = await nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet);
+      if (error) {
+        return error;
+      }
+      // run the DEM Data Set through national Schematron validation
+      error = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet);
+      // run the DEM Data Set through state Schematron validation
+      // run the DEM Data Set through any additonal configured Schematron validation
+      return error;
     }
   }
   Version.init(
