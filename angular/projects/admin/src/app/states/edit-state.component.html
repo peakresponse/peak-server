@@ -19,7 +19,7 @@
         <div class="form-field form-field--noclear form-field--nonempty">
           <label>State Data Set Versions</label>
           <div *ngFor="let version of repo.dataSetVersionsInstalled" class="array-field__item d-flex justify-content-between align-items-center">
-            {{version|version}} 
+            {{version|version}}
             <i (click)="onDataSetImport(version)" class="fas fa-file-import"></i>
           </div>
         </div>
@@ -45,7 +45,7 @@
       <div class="d-flex justify-content-between align-items-center">
         <div><shared-loader *ngIf="state.status?.code === 202"></shared-loader> {{state.status?.message}}</div>
         <i (click)="onCancelDataSetImport()" class="far fa-times-circle"></i>
-      </div>    
+      </div>
     </div>
   </div>
 </div>
