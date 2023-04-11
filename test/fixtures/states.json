@@ -11,6 +11,15 @@
   {
     "model": "State",
     "data": {
+      "id": "05",
+      "name": "Arkansas",
+      "createdAt": "2020-04-06T21:21:25.531Z",
+      "updatedAt": "2020-04-06T21:22:29.410Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
       "id": "06",
       "name": "California",
       "createdAt": "2020-04-06T21:21:25.531Z",

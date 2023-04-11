@@ -180,8 +180,9 @@ module.exports = (sequelize, DataTypes) => {
       const { transaction } = options;
       const version = await this.getOrCreateDraftVersion(user, { transaction });
       const repo = nemsisStates.getNemsisStateRepo(this.stateId, version.baseNemsisVersion);
+      const stateDataSet = repo.getDataSet(version.stateDataSetVersion);
       let record;
-      await repo.parseConfiguration(version.stateDataSetVersion, async (dataSetNemsisVersion, configuration) => {
+      await stateDataSet.parseConfiguration(async (dataSetNemsisVersion, configuration) => {
         record = await sequelize.models.Configuration.scope('finalOrNew').findOne({
           where: {
             createdByAgencyId: this.id,
