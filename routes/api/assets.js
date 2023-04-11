@@ -3,7 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const HttpStatus = require('http-status-codes');
 const mime = require('mime-types');
-const mkdirp = require('mkdirp');
+const { mkdirp } = require('mkdirp');
 const path = require('path');
 const uuid = require('uuid/v4');
 
@@ -66,18 +66,21 @@ router.post(
   })
 );
 
-router.put('/:path([^?]+)', interceptors.requireLogin, (req, res) => {
-  const tmpDir = path.resolve(__dirname, '../../tmp/uploads');
-  const tmpFile = path.resolve(tmpDir, `${req.params.path}`);
-  mkdirp.sync(path.dirname(tmpFile));
-  fs.writeFile(tmpFile, req.body, (err) => {
-    if (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
-    } else {
+router.put(
+  '/:path([^?]+)',
+  interceptors.requireLogin,
+  helpers.async(async (req, res) => {
+    const tmpDir = path.resolve(__dirname, '../../tmp/uploads');
+    const tmpFile = path.resolve(tmpDir, `${req.params.path}`);
+    try {
+      await mkdirp(path.dirname(tmpFile));
+      await fs.promises.writeFile(tmpFile, req.body);
       res.status(HttpStatus.OK).end();
+    } catch (err) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     }
-  });
-});
+  })
+);
 
 router.get(
   '/:path([^?]+)',

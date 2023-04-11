@@ -1,12 +1,17 @@
 /* eslint-disable no-await-in-loop */
 const express = require('express');
+const fs = require('fs');
 const HttpStatus = require('http-status-codes');
+const { mkdirp } = require('mkdirp');
+const path = require('path');
+const uuid = require('uuid/v4');
 
 const models = require('../../models');
 const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 const nemsis = require('../../lib/nemsis');
 const nemsisStates = require('../../lib/nemsis/states');
+const { NemsisStateDataSet } = require('../../lib/nemsis/stateDataSet');
 
 const router = express.Router();
 
@@ -120,6 +125,28 @@ router.get(
   })
 );
 
+router.post(
+  '/:id/import',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const tmpDir = path.resolve(__dirname, '../../tmp/uploads/import');
+    const tmpFile = path.resolve(tmpDir, `${uuid()}.xml`);
+    try {
+      await mkdirp(path.dirname(tmpFile));
+      await fs.promises.writeFile(tmpFile, req.body);
+      const state = await models.State.findByPk(req.params.id);
+      if (state) {
+        await state.startImportDataSet(req.user, new NemsisStateDataSet(null, tmpFile));
+        res.json(state.toJSON());
+      } else {
+        res.status(HttpStatus.NOT_FOUND).end();
+      }
+    } catch (err) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+    }
+  })
+);
+
 router.get(
   '/:id/repository',
   interceptors.requireAdmin,
@@ -155,13 +182,16 @@ router.put(
     const { dataSetVersion } = req.query;
     const state = await models.State.findByPk(req.params.id);
     if (state) {
-      await state.startImportDataSet(req.user, '3.5.0', dataSetVersion);
+      const repo = nemsisStates.getNemsisStateRepo(this.state.id, '3.5.0');
+      const stateDataSet = repo.getDataSet(dataSetVersion);
+      await state.startImportDataSet(req.user, stateDataSet);
       res.json(state.toJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
   })
 );
+
 router.put(
   '/:id/repository',
   interceptors.requireAdmin,

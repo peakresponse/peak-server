@@ -116,6 +116,17 @@ export class EditStateComponent {
     return this.state?.status?.code === 202;
   }
 
+  onExternalDataSetImport(event: any) {
+    if (!this.isImportingDataSet) {
+      this.api.states.importExternalDataSet(this.id, event.addedFiles[0]).subscribe((response: HttpResponse<any>) => {
+        this.state = response.body;
+        if (this.state.status?.code === 202) {
+          this.pollImport();
+        }
+      });
+    }
+  }
+
   onDataSetImport(dataSetVersion: string) {
     if (!this.isImportingDataSet) {
       this.api.states.importDataSet(this.id, dataSetVersion).subscribe((response: HttpResponse<any>) => {
@@ -139,6 +150,9 @@ export class EditStateComponent {
         this.state = response.body;
         if (this.state.status?.code === 202) {
           this.pollImport();
+        } else {
+          this.refreshAgencyStats();
+          this.refreshFacilityStats();
         }
       });
     }, 1000);

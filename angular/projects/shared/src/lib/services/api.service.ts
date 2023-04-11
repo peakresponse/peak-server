@@ -476,6 +476,9 @@ export class ApiService {
         params: new HttpParams({ fromObject: { dataSetVersion } }),
       });
     },
+    importExternalDataSet: (id: string, file: File): Observable<any> => {
+      return this.post(`/api/states/${id}/import`, file);
+    },
     cancelImportDataSet: (id: string): Observable<any> => {
       return this.delete(`/api/states/${id}/repository/import`);
     },

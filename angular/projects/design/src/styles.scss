@@ -59,3 +59,11 @@
 @import 'styles/sidebar';
 @import 'styles/tables';
 @import 'styles/wizard';
+
+ngx-dropzone {
+  height: revert !important;
+  background: revert !important;
+  color: revert !important;
+  border: revert !important;
+  border-radius: revert !important;
+}

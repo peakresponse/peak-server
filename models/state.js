@@ -6,7 +6,6 @@ const _ = require('lodash');
 const path = require('path');
 
 const nemsis = require('../lib/nemsis');
-const nemsisStates = require('../lib/nemsis/states');
 const CommonTypes = require('../lib/nemsis/commonTypes');
 const States = require('../lib/states');
 
@@ -55,16 +54,16 @@ module.exports = (sequelize, DataTypes) => {
       );
     }
 
-    async startImportDataSet(user, nemsisVersion, dataSetVersion) {
+    async startImportDataSet(user, stateDataSet) {
       await this.setStatus(HttpStatus.ACCEPTED, 'Importing Agencies...');
       // perform the following in the background
-      this.importAgencies(user.id, nemsisVersion, dataSetVersion)
+      this.importAgencies(user.id, stateDataSet)
         .then(() => this.reload())
         .then(() => {
           if (this.status?.isCancelled) {
             return Promise.resolve();
           }
-          return this.importFacilities(user.id, nemsisVersion, dataSetVersion);
+          return this.importFacilities(user.id, stateDataSet);
         })
         .then(() => this.reload())
         .then(() => {
@@ -89,14 +88,13 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ status }, { transaction: options?.transaction });
     }
 
-    async importAgencies(userId, nemsisVersion, dataSetVersion) {
-      const repo = nemsisStates.getNemsisStateRepo(this.id, nemsisVersion);
+    async importAgencies(userId, stateDataSet) {
       let total = 0;
-      await repo.parseAgencies(dataSetVersion, () => {
+      await stateDataSet.parseAgencies(() => {
         total += 1;
       });
       let count = 0;
-      await repo.parseAgencies(dataSetVersion, async (dataSetNemsisVersion, agency) => {
+      await stateDataSet.parseAgencies(async (dataSetNemsisVersion, stateId, agency) => {
         await this.reload();
         if (this.status?.isCancelled) {
           return;
@@ -108,14 +106,14 @@ module.exports = (sequelize, DataTypes) => {
             where: {
               stateUniqueId: agency['sAgency.01']._text,
               number: agency['sAgency.02']._text,
-              stateId: this.id,
+              stateId,
             },
             transaction,
           });
           record.name = agency['sAgency.03']._text;
           record.data = agency;
-          record.stateDataSetVersion = dataSetVersion;
-          record.nemsisVersion = dataSetNemsisVersion ?? nemsisVersion;
+          record.stateDataSetVersion = stateDataSet.version;
+          record.nemsisVersion = dataSetNemsisVersion;
           record.createdById = record.createdById || userId;
           record.updatedById = userId;
           await record.save({ transaction });
@@ -124,14 +122,13 @@ module.exports = (sequelize, DataTypes) => {
       await this.setStatus(HttpStatus.ACCEPTED, `Imported ${count} Agencies`);
     }
 
-    async importFacilities(userId, nemsisVersion, dataSetVersion) {
-      const repo = nemsisStates.getNemsisStateRepo(this.id, nemsisVersion);
+    async importFacilities(userId, stateDataSet) {
       let total = 0;
-      await repo.parseFacilities(dataSetVersion, () => {
+      await stateDataSet.parseFacilities(() => {
         total += 1;
       });
       let count = 0;
-      await repo.parseFacilities(dataSetVersion, async (dataSetNemsisVersion, facilityType, facility) => {
+      await stateDataSet.parseFacilities(async (dataSetNemsisVersion, facilityType, facility) => {
         await this.reload();
         if (this.status?.isCancelled) {
           return;

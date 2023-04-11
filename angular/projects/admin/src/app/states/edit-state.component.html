@@ -1,7 +1,17 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
   <h1 class="h2" i18n>{{state?.name}}</h1>
 </div>
-<h3>NEMSIS State Repository Data</h3>
+<div *ngIf="state?.status?.message" class="row">
+  <div class="col-lg-6">
+    <div class="alert alert-info">
+      <div class="d-flex justify-content-between align-items-center">
+        <div><shared-loader *ngIf="state.status?.code === 202"></shared-loader> {{state.status?.message}}</div>
+        <i (click)="onCancelDataSetImport()" class="far fa-times-circle"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<h3>NEMSIS State Repository</h3>
 <div *ngIf="!repo" class="row m-5">
   <shared-loader></shared-loader>
 </div>
@@ -39,17 +49,14 @@
     </div>
   </div>
 </div>
-<div *ngIf="state?.status?.message" class="row">
-  <div class="col-lg-6">
-    <div class="alert alert-info">
-      <div class="d-flex justify-content-between align-items-center">
-        <div><shared-loader *ngIf="state.status?.code === 202"></shared-loader> {{state.status?.message}}</div>
-        <i (click)="onCancelDataSetImport()" class="far fa-times-circle"></i>
-      </div>
-    </div>
-  </div>
-</div>
 <h3>Demographics</h3>
+<div class="mb-3">
+  <ngx-dropzone #dropzone class="d-inline-block" (change)="onExternalDataSetImport($event)" [multiple]="false">
+  </ngx-dropzone>
+  <button (click)="dropzone.showFileSelector()" type="button" class="btn btn--sm btn--primary" [disabled]="isImportingDataSet">
+    Import External Data Set
+  </button>
+</div>
 <div class="row">
   <div class="col-lg-3">
     <div class="mb-3">

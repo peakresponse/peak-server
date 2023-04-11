@@ -32,8 +32,9 @@ describe('models', () => {
     });
 
     context('repositories', () => {
+      let repo;
       before(async () => {
-        const repo = nemsisStates.getNemsisStateRepo('50', '3.5.0');
+        repo = nemsisStates.getNemsisStateRepo('50', '3.5.0');
         await repo.pull();
       });
 
@@ -47,12 +48,9 @@ describe('models', () => {
             this.skip();
             return;
           }
+          const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
           const state = await models.State.findByPk('50');
-          await state.importAgencies(
-            '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
-            '3.5.0',
-            '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c'
-          );
+          await state.importAgencies('7f666fe4-dbdd-4c7f-ab44-d9157379a680', stateDataSet);
           assert.deepStrictEqual(await models.Agency.count(), 163);
           await state.reload();
           assert.deepStrictEqual(state.status, { code: 202, message: 'Imported 163 Agencies' });
@@ -65,15 +63,12 @@ describe('models', () => {
             this.skip();
             return;
           }
+          const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
           const state = await models.State.findByPk('50');
-          await state.importFacilities(
-            '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
-            '3.5.0',
-            '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c'
-          );
-          assert.deepStrictEqual(await models.Facility.count(), 388);
+          await state.importFacilities('7f666fe4-dbdd-4c7f-ab44-d9157379a680', stateDataSet);
+          assert.deepStrictEqual(await models.Facility.count(), 390);
           await state.reload();
-          assert.deepStrictEqual(state.status, { code: 202, message: 'Imported 388 Facilities' });
+          assert.deepStrictEqual(state.status, { code: 202, message: 'Imported 390 Facilities' });
         });
       });
     });

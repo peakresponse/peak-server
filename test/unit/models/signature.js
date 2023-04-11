@@ -1,6 +1,6 @@
 const assert = require('assert');
 const fs = require('fs-extra');
-const mkdirp = require('mkdirp');
+const { mkdirp } = require('mkdirp');
 const path = require('path');
 const uuid = require('uuid/v4');
 
