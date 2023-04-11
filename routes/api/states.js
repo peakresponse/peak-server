@@ -2,6 +2,7 @@
 const express = require('express');
 const fs = require('fs');
 const HttpStatus = require('http-status-codes');
+const _ = require('lodash');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
 const uuid = require('uuid/v4');
@@ -200,6 +201,26 @@ router.put(
     if (repo) {
       repo.pull();
       res.status(HttpStatus.OK).end();
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.patch(
+  '/:id',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const { id } = req.params;
+    let state;
+    await models.sequelize.transaction(async (transaction) => {
+      state = await models.State.findByPk(id, { transaction });
+      if (state) {
+        await state.update(_.pick(req.body, ['isConfigured']));
+      }
+    });
+    if (state) {
+      res.json(state.toJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }

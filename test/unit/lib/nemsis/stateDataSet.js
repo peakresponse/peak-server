@@ -28,6 +28,7 @@ describe('lib', () => {
               const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
               let count = 0;
               await stateDataSet.parseAgencies((dataSetNemsisVersion, stateId) => {
+                assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.191130CP1');
                 assert.deepStrictEqual(stateId, '50');
                 count += 1;
               });

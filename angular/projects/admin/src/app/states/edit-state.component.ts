@@ -92,6 +92,10 @@ export class EditStateComponent {
     this.api.states.getPsaps(this.id).subscribe((response: HttpResponse<any>) => (this.psapStats = response.body));
   }
 
+  onSignupsEnabledChange(value: boolean) {
+    this.api.states.update(this.id, { isConfigured: value }).subscribe();
+  }
+
   onRepoInit() {
     this.isRepoInitializing = true;
     this.api.states.initRepository(this.id).subscribe(() => {
