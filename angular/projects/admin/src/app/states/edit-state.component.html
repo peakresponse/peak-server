@@ -65,7 +65,7 @@
   </div>
   <div class="col-lg-3">
     <div class="mb-3">
-      <shared-array-field id="borderStates" label="Bordering States" [source]="state" [showClearButton]="false">
+      <shared-array-field id="borderStates" label="Bordering States" [source]="state" [isFocusable]="false" [showClearButton]="false">
         <ng-template #item let-stateId="item">
           {{stateById(stateId)?.name}}
         </ng-template>
