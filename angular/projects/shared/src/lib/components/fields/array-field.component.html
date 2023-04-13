@@ -8,7 +8,9 @@
     [class.form-field--unconfirmed]="isUnconfirmed"
     (update)="onSorted($event)"
     [sortablejs]="value" [sortablejsOptions]="{ sort: isEditing }">
-    <label>{{label}}</label>
+    <label>{{label}} <ng-container *ngIf="headerTemplate">
+      <ng-template [ngTemplateOutlet]="headerTemplate"></ng-template>
+    </ng-container></label>
     <ng-container *ngIf="value && value.length > 0">
       <div *ngFor="let item of value; let i=index" [attr.data-index]="i" class="array-field__item" (click)="onClick($event)">
         <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item, removeItem: onRemoveItem, updateItem: onUpdateItem}"></ng-template>

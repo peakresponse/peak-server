@@ -360,6 +360,18 @@ export class ApiService {
     },
   };
 
+  nemsis = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/nemsis', params);
+    },
+    pull: (): Observable<any> => {
+      return this.post('/api/nemsis/refresh', null);
+    },
+    install: (version: string): Observable<any> => {
+      return this.post('/api/nemsis/install', { version });
+    },
+  };
+
   patients = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/patients', params);
