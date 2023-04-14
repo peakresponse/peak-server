@@ -23,7 +23,18 @@ describe('/soap/nemsis', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'agencies', 'versions', 'contacts', 'employments']);
+    await helpers.loadFixtures([
+      'users',
+      'states',
+      'counties',
+      'cities',
+      'psaps',
+      'nemsisStateDataSets',
+      'agencies',
+      'versions',
+      'contacts',
+      'employments',
+    ]);
     testSession = session(app);
 
     nock('http://peakresponse.localhost:3000')

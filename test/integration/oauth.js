@@ -16,6 +16,7 @@ describe('/oauth', () => {
       'counties',
       'cities',
       'psaps',
+      'nemsisStateDataSets',
       'agencies',
       'versions',
       'employments',

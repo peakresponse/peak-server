@@ -22,6 +22,7 @@ describe('/webhooks/sffd', () => {
       'cities',
       'psaps',
       'dispatchers',
+      'nemsisStateDataSets',
       'agencies',
       'versions',
       'employments',

@@ -13,6 +13,7 @@ describe('models', () => {
         'users',
         'facilities',
         'psaps',
+        'nemsisStateDataSets',
         'agencies',
         'versions',
         'employments',

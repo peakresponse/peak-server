@@ -9,7 +9,18 @@ describe('models', () => {
     let agency;
 
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'agencies', 'versions', 'employments', 'vehicles']);
+      await helpers.loadFixtures([
+        'users',
+        'states',
+        'counties',
+        'cities',
+        'psaps',
+        'nemsisStateDataSets',
+        'agencies',
+        'versions',
+        'employments',
+        'vehicles',
+      ]);
       user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
       agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
     });

@@ -9,7 +9,18 @@ describe('/api/versions', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'dispatchers', 'agencies', 'versions', 'employments']);
+    await helpers.loadFixtures([
+      'users',
+      'states',
+      'counties',
+      'cities',
+      'psaps',
+      'dispatchers',
+      'nemsisStateDataSets',
+      'agencies',
+      'versions',
+      'employments',
+    ]);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -38,7 +49,7 @@ describe('/api/versions', () => {
         agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
         isDraft: false,
         nemsisVersion: '3.5.0.211008CP3',
-        stateDataSetVersion: '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632',
+        stateDataSetId: '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae',
         stateSchematronVersion: '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4',
         isValid: false,
         validationErrors: null,

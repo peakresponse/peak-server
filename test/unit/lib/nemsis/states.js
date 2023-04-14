@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const nemsisStates = require('../../../../lib/nemsis/states');
-const { NemsisStateDataSet } = require('../../../../lib/nemsis/stateDataSet');
+const { NemsisStateDataSetParser } = require('../../../../lib/nemsis/stateDataSetParser');
 
 describe('lib', () => {
   describe('nemsis', () => {
@@ -102,10 +102,10 @@ describe('lib', () => {
           });
 
           describe('.getDataSet()', () => {
-            it('returns a NemsisStateDataSet instance for the specified version', () => {
-              const stateDataSet = repo.getDataSet('2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c');
-              assert(stateDataSet instanceof NemsisStateDataSet);
-              assert.deepStrictEqual(stateDataSet.version, '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c');
+            it('returns a NemsisStateDataSetParser instance for the specified version', () => {
+              const stateDataSetParser = repo.getDataSetParser('2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c');
+              assert(stateDataSetParser instanceof NemsisStateDataSetParser);
+              assert.deepStrictEqual(stateDataSetParser.version, '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c');
             });
           });
         });

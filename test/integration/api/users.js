@@ -15,6 +15,7 @@ describe('/api/users', () => {
       'states',
       'psaps',
       'users',
+      'nemsisStateDataSets',
       'agencies',
       'versions',
       'vehicles',

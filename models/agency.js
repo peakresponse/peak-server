@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       Agency.belongsTo(models.Agency, { as: 'draftParent' });
       Agency.hasOne(models.Agency, { as: 'draft', foreignKey: 'draftParentId' });
       Agency.belongsTo(models.Agency, { as: 'createdByAgency' });
+      Agency.belongsTo(models.NemsisStateDataSet, { as: 'stateDataSet' });
       Agency.belongsTo(models.State, { as: 'state' });
       Agency.belongsTo(models.User, { as: 'updatedBy' });
       Agency.belongsTo(models.User, { as: 'createdBy' });
@@ -98,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
         createdById: user.id,
         updatedById: user.id,
         nemsisVersion: canonicalAgency.nemsisVersion,
-        stateDataSetVersion: canonicalAgency.stateDataSetVersion,
+        stateDataSetId: canonicalAgency.stateDataSetId,
         stateSchematronVersion: repo.schematronVersionsInstalled?.[0],
         data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
@@ -110,7 +111,7 @@ module.exports = (sequelize, DataTypes) => {
           agencyId: agency.id,
           isDraft: false,
           nemsisVersion: agency.nemsisVersion,
-          stateDataSetVersion: agency.stateDataSetVersion,
+          stateDataSetId: agency.stateDataSetId,
           stateSchematronVersion: agency.stateSchematronVersion,
           createdById: user.id,
           updatedById: user.id,
@@ -154,7 +155,7 @@ module.exports = (sequelize, DataTypes) => {
           {
             ..._.pick(version, [
               'nemsisVersion',
-              'stateDataSetVersion',
+              'stateDataSetId',
               'stateSchematronVersion',
               'demCustomConfiguration',
               'emsCustomConfiguration',
@@ -179,8 +180,7 @@ module.exports = (sequelize, DataTypes) => {
       }
       const { transaction } = options;
       const version = await this.getOrCreateDraftVersion(user, { transaction });
-      const repo = nemsisStates.getNemsisStateRepo(this.stateId, version.baseNemsisVersion);
-      const stateDataSet = repo.getDataSet(version.stateDataSetVersion);
+      const stateDataSet = await version.getStateDataSet({ transaction });
       let record;
       await stateDataSet.parseConfiguration(async (dataSetNemsisVersion, configuration) => {
         record = await sequelize.models.Configuration.scope('finalOrNew').findOne({
@@ -259,7 +259,7 @@ module.exports = (sequelize, DataTypes) => {
         'canonicalAgencyId',
         'claimedAgency',
         'nemsisVersion',
-        'stateDataSetVersion',
+        'stateDataSetId',
         'stateSchematronVersion',
         'stateId',
         'isClaimed',
@@ -321,10 +321,6 @@ module.exports = (sequelize, DataTypes) => {
         get() {
           return this.nemsisVersion?.match(/^\d+\.\d+\.\d+/)?.[0];
         },
-      },
-      stateDataSetVersion: {
-        type: DataTypes.STRING,
-        field: 'state_data_set_version',
       },
       stateSchematronVersion: {
         type: DataTypes.STRING,

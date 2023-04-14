@@ -24,9 +24,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      state_data_set_version: {
+      state_data_set_id: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'nemsis_state_data_sets',
+          },
+          key: 'id',
+        },
       },
       state_schematron_version: {
         allowNull: false,

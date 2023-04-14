@@ -16,6 +16,7 @@ describe('/api/incidents', () => {
       'users',
       'facilities',
       'psaps',
+      'nemsisStateDataSets',
       'agencies',
       'versions',
       'employments',

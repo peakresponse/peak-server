@@ -21,7 +21,17 @@ describe('/api/nemsis', () => {
   });
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['states', 'counties', 'cities', 'users', 'psaps', 'agencies', 'versions', 'employments']);
+    await helpers.loadFixtures([
+      'states',
+      'counties',
+      'cities',
+      'users',
+      'psaps',
+      'nemsisStateDataSets',
+      'agencies',
+      'versions',
+      'employments',
+    ]);
     testSession = session(app);
     await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
   });

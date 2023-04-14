@@ -32,6 +32,7 @@ describe('wss', () => {
         'states',
         'psaps',
         'users',
+        'nemsisStateDataSets',
         'agencies',
         'versions',
         'facilities',

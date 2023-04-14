@@ -9,7 +9,18 @@ describe('/api/psaps', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'dispatchers', 'agencies', 'versions', 'employments']);
+    await helpers.loadFixtures([
+      'users',
+      'states',
+      'counties',
+      'cities',
+      'psaps',
+      'nemsisStateDataSets',
+      'dispatchers',
+      'agencies',
+      'versions',
+      'employments',
+    ]);
     testSession = session(app);
     await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
   });

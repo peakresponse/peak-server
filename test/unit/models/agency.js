@@ -7,7 +7,18 @@ const nemsisStates = require('../../../lib/nemsis/states');
 describe('models', () => {
   describe('Agency', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'cities', 'states', 'counties', 'psaps', 'agencies', 'versions', 'employments', 'scenes']);
+      await helpers.loadFixtures([
+        'users',
+        'cities',
+        'states',
+        'counties',
+        'psaps',
+        'nemsisStateDataSets',
+        'agencies',
+        'versions',
+        'employments',
+        'scenes',
+      ]);
     });
 
     describe("scope('canonical')", () => {
@@ -189,7 +200,7 @@ describe('models', () => {
             agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
             isDraft: true,
             nemsisVersion: '3.5.0.211008CP3',
-            stateDataSetVersion: '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632',
+            stateDataSetId: '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae',
             stateSchematronVersion: '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4',
             createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
             updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
@@ -386,7 +397,7 @@ describe('models', () => {
           assert.deepStrictEqual(agency.createdById, user.id);
           assert.deepStrictEqual(agency.updatedById, user.id);
           assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
-          assert.deepStrictEqual(agency.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
+          assert.deepStrictEqual(agency.stateDataSetId, '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae');
           assert.deepStrictEqual(agency.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
           assert.deepStrictEqual(agency.data, {
             'dAgency.01': { _text: 'S66-50146' },
@@ -399,7 +410,7 @@ describe('models', () => {
           assert(version);
           assert.deepStrictEqual(version.isDraft, false);
           assert.deepStrictEqual(version.nemsisVersion, '3.5.0.211008CP3');
-          assert.deepStrictEqual(version.stateDataSetVersion, '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
+          assert.deepStrictEqual(version.stateDataSetId, '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae');
           assert.deepStrictEqual(version.stateSchematronVersion, '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
 
           const employment = await models.Employment.findOne({

@@ -10,7 +10,18 @@ const models = require('../../../models');
 describe('models', () => {
   describe('File', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['states', 'counties', 'cities', 'users', 'psaps', 'agencies', 'versions', 'employments', 'files']);
+      await helpers.loadFixtures([
+        'states',
+        'counties',
+        'cities',
+        'users',
+        'psaps',
+        'nemsisStateDataSets',
+        'agencies',
+        'versions',
+        'employments',
+        'files',
+      ]);
     });
 
     describe('createOrUpdate()', () => {

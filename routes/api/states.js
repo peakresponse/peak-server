@@ -12,7 +12,6 @@ const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 const nemsis = require('../../lib/nemsis');
 const nemsisStates = require('../../lib/nemsis/states');
-const { NemsisStateDataSet } = require('../../lib/nemsis/stateDataSet');
 
 const router = express.Router();
 
@@ -137,7 +136,7 @@ router.post(
       await fs.promises.writeFile(tmpFile, req.body);
       const state = await models.State.findByPk(req.params.id);
       if (state) {
-        await state.startImportDataSet(req.user, new NemsisStateDataSet(null, tmpFile));
+        // await state.startImportDataSet(req.user, new NemsisStateDataSet(null, tmpFile));
         res.json(state.toJSON());
       } else {
         res.status(HttpStatus.NOT_FOUND).end();
@@ -183,9 +182,9 @@ router.put(
     const { dataSetVersion } = req.query;
     const state = await models.State.findByPk(req.params.id);
     if (state) {
-      const repo = nemsisStates.getNemsisStateRepo(this.state.id, '3.5.0');
-      const stateDataSet = repo.getDataSet(dataSetVersion);
-      await state.startImportDataSet(req.user, stateDataSet);
+      // const repo = nemsisStates.getNemsisStateRepo(this.state.id, '3.5.0');
+      // const stateDataSet = repo.getDataSet(dataSetVersion);
+      // await state.startImportDataSet(req.user, stateDataSet);
       res.json(state.toJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();

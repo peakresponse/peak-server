@@ -5,7 +5,7 @@ const nemsisStates = require('../../../../lib/nemsis/states');
 describe('lib', () => {
   describe('nemsis', () => {
     describe('states', () => {
-      describe('NemsisStateDataSet', () => {
+      describe('NemsisStateDataSetParser', () => {
         let repo;
         before(() => {
           repo = nemsisStates.getNemsisStateRepo('50', '3.5.0');
@@ -18,16 +18,16 @@ describe('lib', () => {
 
           describe('.version', () => {
             it('returns the version id of the state data set, if from the repo', () => {
-              const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
-              assert.deepStrictEqual(stateDataSet.version, '2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+              const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+              assert.deepStrictEqual(stateDataSetParser.version, '2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
             });
           });
 
           describe('.parseAgencies()', () => {
             it('parses sAgency records out of the specified state data set version', async () => {
-              const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+              const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
               let count = 0;
-              await stateDataSet.parseAgencies((dataSetNemsisVersion, stateId) => {
+              await stateDataSetParser.parseAgencies((dataSetNemsisVersion, stateId) => {
                 assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.191130CP1');
                 assert.deepStrictEqual(stateId, '50');
                 count += 1;
@@ -38,8 +38,8 @@ describe('lib', () => {
 
           describe('.parseConfiguration()', () => {
             it('parses the sConfiguration of the specified state data set version', async () => {
-              const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
-              await stateDataSet.parseConfiguration((nemsisVersion, data) => {
+              const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+              await stateDataSetParser.parseConfiguration((nemsisVersion, data) => {
                 assert.deepStrictEqual(nemsisVersion, '3.5.0.191130CP1');
                 assert.deepStrictEqual(data['sConfiguration.01']?.length, 9);
                 assert.deepStrictEqual(data['sConfiguration.ProcedureGroup']?.length, 7);
@@ -56,9 +56,9 @@ describe('lib', () => {
 
           describe('.parseFacilities()', () => {
             it('parses sFacility records out of the specified state data set version', async () => {
-              const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+              const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
               let count = 0;
-              await stateDataSet.parseFacilities(() => {
+              await stateDataSetParser.parseFacilities(() => {
                 count += 1;
               });
               assert.deepStrictEqual(count, 390);

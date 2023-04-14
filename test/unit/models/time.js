@@ -6,7 +6,18 @@ const models = require('../../../models');
 describe('models', () => {
   describe('Time', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['states', 'counties', 'cities', 'users', 'psaps', 'agencies', 'versions', 'employments', 'times']);
+      await helpers.loadFixtures([
+        'states',
+        'counties',
+        'cities',
+        'users',
+        'psaps',
+        'nemsisStateDataSets',
+        'agencies',
+        'versions',
+        'employments',
+        'times',
+      ]);
     });
 
     describe('createOrUpdate()', () => {
