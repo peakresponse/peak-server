@@ -88,7 +88,7 @@ describe('models', () => {
 
       describe('.importFacilities()', () => {
         it('imports Facility records from the specified NEMSIS State Data Set version', async () => {
-          const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+          const stateDataSet = await models.NemsisStateDataSet.findByPk('1301f4e2-87b9-486a-b3d0-61a46d703b44');
           const state = await models.State.findByPk('50');
           await state.importFacilities('7f666fe4-dbdd-4c7f-ab44-d9157379a680', stateDataSet);
           assert.deepStrictEqual(await models.Facility.count(), 390);
