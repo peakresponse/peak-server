@@ -22,7 +22,7 @@ describe('/api/states', () => {
       const response = await testSession.get('/api/states/').expect(HttpStatus.OK);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 15);
+      assert.deepStrictEqual(data.length, 16);
       assert.deepStrictEqual(data[0].name, 'Alabama');
     });
   });

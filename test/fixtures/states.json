@@ -119,6 +119,15 @@
   {
     "model": "State",
     "data": {
+      "id": "48",
+      "name": "Texas",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
       "id": "50",
       "name": "Vermont",
       "createdAt": "2020-04-06T21:25:03.495Z",
