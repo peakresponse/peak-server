@@ -233,10 +233,10 @@ class Base extends Model {
   }
 
   getAssetFilePrefix(attribute) {
+    const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
     const modelPrefix = inflection.transform(this.constructor.name, ['tableize', 'dasherize']);
     const attrPrefix = inflection.transform(attribute, ['underscore', 'dasherize']);
-    const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
-    return path.join(modelPrefix, this.id, attrPrefix, assetPrefix);
+    return path.join(assetPrefix, modelPrefix, this.id, attrPrefix);
   }
 
   async downloadAssetFile(attribute) {
