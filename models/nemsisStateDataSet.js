@@ -1,6 +1,7 @@
 const { Base } = require('./base');
 
 const nemsisStates = require('../lib/nemsis/states');
+const { NemsisStateDataSetParser } = require('../lib/nemsis/stateDataSetParser');
 
 module.exports = (sequelize, DataTypes) => {
   class NemsisStateDataSet extends Base {
@@ -17,15 +18,32 @@ module.exports = (sequelize, DataTypes) => {
       NemsisStateDataSet.belongsTo(models.User, { as: 'updatedBy' });
     }
 
-    parseConfiguration(callback) {
+    async getParser() {
       let parser;
       if (this.version) {
         const repo = nemsisStates.getNemsisStateRepo(this.stateId, this.baseNemsisVersion);
         parser = repo.getDataSetParser(this.version);
       } else {
         // download attached file into tmp file, then set up parser
+        const tmpFilePath = await this.downloadAssetFile('file');
+        parser = new NemsisStateDataSetParser(null, tmpFilePath);
       }
+      return parser;
+    }
+
+    async parseAgencies(callback) {
+      const parser = await this.getParser();
+      return parser.parseAgencies(callback);
+    }
+
+    async parseConfiguration(callback) {
+      const parser = await this.getParser();
       return parser.parseConfiguration(callback);
+    }
+
+    async parseFacilities(callback) {
+      const parser = await this.getParser();
+      return parser.parseFacilities(callback);
     }
   }
 

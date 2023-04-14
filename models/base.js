@@ -3,6 +3,7 @@ const AWS = require('aws-sdk');
 const fs = require('fs-extra');
 const inflection = require('inflection');
 const jsonpatch = require('fast-json-patch');
+const { mkdirp } = require('mkdirp');
 const path = require('path');
 const { Model } = require('sequelize');
 const uuid = require('uuid/v4');
@@ -231,14 +232,33 @@ class Base extends Model {
     return null;
   }
 
+  getAssetFilePrefix(attribute) {
+    const modelPrefix = inflection.transform(this.constructor.name, ['tableize', 'dasherize']);
+    const attrPrefix = inflection.transform(attribute, ['underscore', 'dasherize']);
+    const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
+    return path.join(modelPrefix, this.id, attrPrefix, assetPrefix);
+  }
+
+  async downloadAssetFile(attribute) {
+    const file = this.get(attribute);
+    const filePrefix = this.getAssetFilePrefix(attribute);
+    const tmpDir = path.resolve(__dirname, '../../tmp/downloads');
+    const tmpFilePath = path.resolve(tmpDir, filePrefix, file);
+    await mkdirp(path.dirname(tmpFilePath));
+    if (process.env.AWS_S3_BUCKET) {
+      // TODO
+    } else {
+      const filePath = path.resolve(__dirname, '../public/assets', filePrefix, file);
+      await fs.promises.copyFile(filePath, tmpFilePath);
+    }
+    return tmpFilePath;
+  }
+
   async handleAssetFile(attribute, options) {
     if (!this.changed(attribute)) {
       return;
     }
-    const pathPrefix = `${inflection.transform(this.constructor.name, ['tableize', 'dasherize'])}/${
-      this.id
-    }/${inflection.transform(attribute, ['underscore', 'dasherize'])}`;
-    const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
+    const filePrefix = this.getAssetFilePrefix(attribute);
     const prevFile = this.previous(attribute);
     const newFile = this.get(attribute);
     const handle = async () => {
@@ -247,7 +267,7 @@ class Base extends Model {
           await s3
             .deleteObject({
               Bucket: process.env.AWS_S3_BUCKET,
-              Key: path.join(assetPrefix, pathPrefix, prevFile),
+              Key: path.join(filePrefix, prevFile),
             })
             .promise();
         }
@@ -257,7 +277,7 @@ class Base extends Model {
               ACL: 'private',
               Bucket: process.env.AWS_S3_BUCKET,
               CopySource: path.join(process.env.AWS_S3_BUCKET, 'uploads', newFile),
-              Key: path.join(assetPrefix, pathPrefix, newFile),
+              Key: path.join(filePrefix, newFile),
               ServerSideEncryption: 'AES256',
             })
             .promise();
@@ -270,13 +290,13 @@ class Base extends Model {
         }
       } else {
         if (prevFile) {
-          fs.removeSync(path.resolve(__dirname, '../public/assets', assetPrefix, pathPrefix, prevFile));
+          fs.removeSync(path.resolve(__dirname, '../public/assets', filePrefix, prevFile));
         }
         if (newFile) {
           const uploadPath = path.resolve(__dirname, '../tmp/uploads', newFile);
           if (fs.pathExistsSync(uploadPath)) {
             fs.ensureDirSync(path.resolve(__dirname, '../public/assets'));
-            fs.moveSync(uploadPath, path.resolve(__dirname, '../public/assets', assetPrefix, pathPrefix, newFile), {
+            fs.moveSync(uploadPath, path.resolve(__dirname, '../public/assets', filePrefix, newFile), {
               overwrite: true,
             });
           }

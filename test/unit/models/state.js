@@ -1,11 +1,13 @@
 const assert = require('assert');
+const fs = require('fs-extra');
+const { mkdirp } = require('mkdirp');
 const path = require('path');
+const uuid = require('uuid/v4');
 
 const helpers = require('../../helpers');
 
 const models = require('../../../models');
 const nemsisStates = require('../../../lib/nemsis/states');
-const { NemsisStateDataSet } = require('../../../lib/nemsis/stateDataSet');
 
 describe('models', () => {
   describe('State', () => {
@@ -41,12 +43,12 @@ describe('models', () => {
       });
 
       beforeEach(async () => {
-        await helpers.loadFixtures(['cities', 'counties', 'states', 'users']);
+        await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'nemsisStateDataSets']);
       });
 
       describe('.importAgencies()', () => {
         it('imports Agency records from the specified NEMSIS State Data Set version', async () => {
-          const stateDataSet = repo.getDataSet('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+          const stateDataSet = await models.NemsisStateDataSet.findByPk('1301f4e2-87b9-486a-b3d0-61a46d703b44');
           const state = await models.State.findByPk('50');
           await state.importAgencies('7f666fe4-dbdd-4c7f-ab44-d9157379a680', stateDataSet);
           assert.deepStrictEqual(await models.Agency.count(), 163);
@@ -55,8 +57,19 @@ describe('models', () => {
         });
 
         it('imports Agency records from the specified external State Data Set', async () => {
-          const filePath = path.resolve(__dirname, '../../fixtures/nemsis/full/2023-STATE-1_v350.xml');
-          const stateDataSet = new NemsisStateDataSet(null, filePath);
+          const file = `${uuid()}.png`;
+          mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
+          fs.copySync(
+            path.resolve(__dirname, '../../fixtures/nemsis/full/2023-STATE-1_v350.xml'),
+            path.resolve(__dirname, `../../../tmp/uploads/${file}`)
+          );
+          const stateDataSet = await models.NemsisStateDataSet.create({
+            stateId: '05',
+            nemsisVersion: '3.5.0.211008CP3',
+            file,
+            createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+            updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          });
           const state = await models.State.findByPk('05');
           await state.importAgencies('7f666fe4-dbdd-4c7f-ab44-d9157379a680', stateDataSet);
           assert.deepStrictEqual(await models.Agency.count(), 4);
@@ -69,6 +82,7 @@ describe('models', () => {
             },
           });
           assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
+          assert.deepStrictEqual(agency.stateDataSetId, stateDataSet.id);
         });
       });
 

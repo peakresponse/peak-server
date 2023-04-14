@@ -179,9 +179,19 @@ router.put(
   '/:id/repository/import',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const { dataSetVersion } = req.query;
+    // const { dataSetVersion } = req.query;
     const state = await models.State.findByPk(req.params.id);
     if (state) {
+      // const stateDataSet = await models.NemsisStateDataSet.findOrCreate({
+      //   where: {
+      //     stateId: state.id,
+      //     version: dataSetVersion,
+      //   },
+      //   defaults: {
+      //     createdById: req.user.id,
+      //     updatedById: req.user.id,
+      //   }
+      // });
       // const repo = nemsisStates.getNemsisStateRepo(this.state.id, '3.5.0');
       // const stateDataSet = repo.getDataSet(dataSetVersion);
       // await state.startImportDataSet(req.user, stateDataSet);

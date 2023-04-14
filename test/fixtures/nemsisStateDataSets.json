@@ -10,5 +10,17 @@
       "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
     }
+  },
+  {
+    "model": "NemsisStateDataSet",
+    "ignoreSet": true,
+    "data": {
+      "id": "1301f4e2-87b9-486a-b3d0-61a46d703b44",
+      "stateId": "50",
+      "nemsisVersion": "3.5.0.191130CP1",
+      "version": "2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
   }
 ]
