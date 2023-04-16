@@ -23,6 +23,14 @@ describe('lib', () => {
             });
           });
 
+          describe('.getNemsisVersion()', () => {
+            it('returns the specific Nemsis version referenced by the data set', async () => {
+              const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+              const dataSetNemsisVersion = await stateDataSetParser.getNemsisVersion();
+              assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.191130CP1');
+            });
+          });
+
           describe('.parseAgencies()', () => {
             it('parses sAgency records out of the specified state data set version', async () => {
               const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');

@@ -1,7 +1,10 @@
-const { Base } = require('./base');
+const { DateTime } = require('luxon');
+const sequelizePaginate = require('sequelize-paginate');
 
 const nemsisStates = require('../lib/nemsis/states');
 const { NemsisStateDataSetParser } = require('../lib/nemsis/stateDataSetParser');
+
+const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class NemsisStateDataSet extends Base {
@@ -62,7 +65,19 @@ module.exports = (sequelize, DataTypes) => {
       version: {
         type: DataTypes.STRING,
       },
+      displayVersion: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['version', 'createdAt']),
+        get() {
+          if (this.version) {
+            return this.version;
+          }
+          return `${DateTime.fromJSDate(this.createdAt).toISODate()}-${this.id}`;
+        },
+      },
       file: {
+        type: DataTypes.STRING,
+      },
+      fileName: {
         type: DataTypes.STRING,
       },
       fileUrl: {
@@ -83,6 +98,8 @@ module.exports = (sequelize, DataTypes) => {
   NemsisStateDataSet.afterSave(async (record, options) => {
     await record.handleAssetFile('file', options);
   });
+
+  sequelizePaginate.paginate(NemsisStateDataSet);
 
   return NemsisStateDataSet;
 };

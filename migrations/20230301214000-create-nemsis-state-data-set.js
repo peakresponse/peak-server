@@ -26,6 +26,9 @@ module.exports = {
       file: {
         type: Sequelize.STRING,
       },
+      file_name: {
+        type: Sequelize.STRING,
+      },
       created_by_id: {
         allowNull: false,
         type: Sequelize.UUID,
