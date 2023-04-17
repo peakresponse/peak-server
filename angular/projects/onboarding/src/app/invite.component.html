@@ -11,7 +11,7 @@
           <shared-text-field id="message" label="Message" [rows]="4" [source]="data" [target]="data" [error]="error"></shared-text-field>
         </div>
         <div class="mb-3">
-          <shared-text-field #firstEl id="emails" label="Emails" i18n-placeholder placeholder="Type emails here, with a comma between each email." [rows]="4" [source]="data" [target]="data" [error]="error"></shared-text-field>
+          <shared-text-field #firstEl id="emails" label="Emails" i18n-placeholder placeholder="Type emails here, with a comma between each email, or one per line." [rows]="4" [source]="data" [target]="data" [error]="error"></shared-text-field>
         </div>
         <div class="mb-3 d-md-none text-right">
           <a (click)="onSkip()" class="skip">Skip this step...</a>

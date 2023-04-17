@@ -52,8 +52,8 @@ export class InviteComponent {
 
   get rows() {
     return this.data.emails
-      .split(',')
-      .map((e) => ({ email: e.trim() }))
+      .split(/\n|,/)
+      .map((email) => ({ email: email.trim() }))
       .filter((row) => row.email != '');
   }
 
