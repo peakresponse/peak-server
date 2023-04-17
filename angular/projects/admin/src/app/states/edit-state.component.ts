@@ -1,10 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
-import { EMPTY } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
-import { FormComponent, ApiService, NavigationService, SchemaService } from 'shared';
+import { ApiService, NavigationService, SchemaService } from 'shared';
 
 @Component({
   templateUrl: './edit-state.component.html',
@@ -12,14 +10,7 @@ import { FormComponent, ApiService, NavigationService, SchemaService } from 'sha
 export class EditStateComponent {
   id: string = '';
   state: any;
-  status: string = '';
   states?: any[];
-  isConfiguring = false;
-  isError = false;
-  @ViewChild('form') form?: FormComponent;
-
-  repo: any;
-  isRepoInitializing = false;
 
   agencyStats: any;
   cityStats: any;
@@ -31,31 +22,24 @@ export class EditStateComponent {
   constructor(
     private api: ApiService,
     private navigation: NavigationService,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private schema: SchemaService
   ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.api.states.get(this.id).subscribe((response: HttpResponse<any>) => {
-      this.state = response.body;
-      this.refreshAgencyStats();
-      this.refreshCityStats();
-      this.refreshCountyStats();
-      this.refreshFacilityStats();
-      this.refreshPsapStats();
-      if (this.state.status?.code === 202) {
-        this.pollImport();
-      }
-    });
+    this.state = this.route.snapshot.data['state'];
+    this.refreshAgencyStats();
+    this.refreshCityStats();
+    this.refreshCountyStats();
+    this.refreshFacilityStats();
+    this.refreshPsapStats();
     this.api.states.index().subscribe((response: HttpResponse<any>) => {
       this.states = response.body;
     });
-    this.api.states.getRepository(this.id).subscribe((response: HttpResponse<any>) => (this.repo = response.body));
     this.schema.get('/nemsis/xsd/sFacility_v3.json').subscribe(() => {
       this.facilityTypes = this.schema.getEnum('TypeOfFacility') ?? {};
     });
-    this.poll();
   }
 
   stateById(id: string): any {
@@ -94,110 +78,5 @@ export class EditStateComponent {
 
   onSignupsEnabledChange(value: boolean) {
     this.api.states.update(this.id, { isConfigured: value }).subscribe();
-  }
-
-  onRepoInit() {
-    this.isRepoInitializing = true;
-    this.api.states.initRepository(this.id).subscribe(() => {
-      this.pollRepo();
-    });
-  }
-
-  pollRepo() {
-    setTimeout(() => {
-      this.api.states.getRepository(this.id).subscribe((response: HttpResponse<any>) => {
-        this.repo = response.body;
-        if (this.repo?.initialized) {
-          this.isRepoInitializing = false;
-        } else {
-          this.pollRepo();
-        }
-      });
-    }, 1000);
-  }
-
-  get isImportingDataSet(): boolean {
-    return this.state?.status?.code === 202;
-  }
-
-  onExternalDataSetImport(event: any) {
-    if (!this.isImportingDataSet) {
-      this.api.states.importExternalDataSet(this.id, event.addedFiles[0]).subscribe((response: HttpResponse<any>) => {
-        this.state = response.body;
-        if (this.state.status?.code === 202) {
-          this.pollImport();
-        }
-      });
-    }
-  }
-
-  onDataSetImport(dataSetVersion: string) {
-    if (!this.isImportingDataSet) {
-      this.api.states.importDataSet(this.id, dataSetVersion).subscribe((response: HttpResponse<any>) => {
-        this.state = response.body;
-        if (this.state.status?.code === 202) {
-          this.pollImport();
-        }
-      });
-    }
-  }
-
-  onCancelDataSetImport() {
-    this.api.states.cancelImportDataSet(this.id).subscribe((response: HttpResponse<any>) => {
-      this.state = response.body;
-    });
-  }
-
-  pollImport() {
-    setTimeout(() => {
-      this.api.states.get(this.id).subscribe((response: HttpResponse<any>) => {
-        this.state = response.body;
-        if (this.state.status?.code === 202) {
-          this.pollImport();
-        } else {
-          this.refreshAgencyStats();
-          this.refreshFacilityStats();
-        }
-      });
-    }, 1000);
-  }
-
-  onConfigure() {
-    this.isConfiguring = true;
-    this.isError = false;
-    this.api.states.configure(this.id).subscribe(() => {
-      this.poll();
-    });
-  }
-
-  poll() {
-    setTimeout(() => {
-      this.api.states
-        .get(this.id)
-        .pipe(
-          catchError((res) => {
-            this.status = res.headers.get('X-Status');
-            this.isConfiguring = false;
-            this.isError = true;
-            return EMPTY;
-          })
-        )
-        .subscribe((res) => {
-          this.status = res.headers.get('X-Status');
-          const statusCode = res.headers.get('X-Status-Code');
-          if (statusCode === '202') {
-            this.isConfiguring = true;
-            this.isError = false;
-            this.poll();
-          } else {
-            this.isConfiguring = false;
-            if (statusCode && statusCode !== '200') {
-              this.isError = true;
-            } else {
-              this.form?.refresh();
-            }
-          }
-        });
-    }, 1000);
   }
 }

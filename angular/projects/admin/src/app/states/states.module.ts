@@ -6,13 +6,15 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { SharedModule } from 'shared';
 
+import { StateResolver } from './state.resolver';
 import { StatesRoutingModule } from './states-routing.module';
 import { EditStateComponent } from './edit-state.component';
 import { ListStatesComponent } from './list-states.component';
+import { NemsisStateComponent } from './nemsis-state.component';
 
 @NgModule({
-  declarations: [EditStateComponent, ListStatesComponent],
+  declarations: [EditStateComponent, ListStatesComponent, NemsisStateComponent],
   imports: [CommonModule, FormsModule, NgbModule, NgxDropzoneModule, SharedModule, StatesRoutingModule],
-  providers: [],
+  providers: [StateResolver],
 })
 export class StatesModule {}

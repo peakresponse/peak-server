@@ -1,136 +1,90 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-  <h1 class="h2" i18n>{{state?.name}}</h1>
-</div>
-<h3>Status</h3>
-<div *ngIf="state" class="mb-3">
-  <shared-checkbox [id]="state.id" label="Sign-ups Enabled" name="isConfigured" [source]="state" [target]="state" (valueChange)="onSignupsEnabledChange($event)"></shared-checkbox>
-  <div *ngIf="state?.status?.message" class="row">
-    <div class="col-lg-6">
-      <div class="alert alert-info">
-        <div class="d-flex justify-content-between align-items-center">
-          <div><shared-loader *ngIf="state.status?.code === 202"></shared-loader> {{state.status?.message}}</div>
-          <i (click)="onCancelDataSetImport()" class="far fa-times-circle"></i>
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2" i18n>{{state?.name}}</h1>
+  </div>
+  <form>
+    <h4>Status</h4>
+    <div *ngIf="state" class="mb-3">
+      <shared-checkbox [id]="state.id" label="Sign-ups Enabled" name="isConfigured" [source]="state" [target]="state" (valueChange)="onSignupsEnabledChange($event)"></shared-checkbox>
+    </div>
+    <h4>NEMSIS</h4>
+    <div class="mb-3">
+      <a [routerLink]="['nemsis']" class="btn btn--sm btn--primary me-3">Manage NEMSIS Configuration</a>
+    </div>
+    <h4>Demographics</h4>
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Agencies</label>
+              <div class="array-field__item">
+                Total: {{agencyStats?.count}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3" *ngIf="state?.borderStates?.length">
+          <shared-array-field id="borderStates" label="Bordering States" [source]="state" [isFocusable]="false" [showClearButton]="false">
+            <ng-template #item let-stateId="item">
+              {{stateById(stateId)?.name}}
+            </ng-template>
+          </shared-array-field>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<h3>NEMSIS State Repository</h3>
-<div *ngIf="!repo" class="row m-5">
-  <shared-loader></shared-loader>
-</div>
-<div *ngIf="repo && !repo.initialized" class="mb-3">
-  <p class="mb-3">The NEMSIS State Repository has not yet been initialized.</p>
-  <div>
-    <button [disabled]="isRepoInitializing" (click)="onRepoInit()" type="button" class="btn btn--primary me-3" i18n>Initialize State Repository</button>
-    <span *ngIf="isRepoInitializing"><shared-loader></shared-loader> Please wait...</span>
-  </div>
-</div>
-<div *ngIf="repo?.initialized" class="row">
-  <div class="col-lg-3">
-    <div class="mb-3">
-      <div class="array-field array-field--noclear">
-        <div class="form-field form-field--noclear form-field--nonempty">
-          <label>State Data Set Versions</label>
-          <div *ngFor="let version of repo.dataSetVersionsInstalled" class="array-field__item d-flex justify-content-between align-items-center">
-            {{version|version}}
-            <i (click)="onDataSetImport(version)" class="fas fa-file-import"></i>
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Cities</label>
+              <div *ngFor="let stat of cityStats" class="array-field__item">
+                {{stat.featureClass}}: {{stat.count}}
+              </div>
+              <div *ngIf="cityStats" class="array-field__item">
+                Total: {{cityStats.total}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Counties</label>
+              <div class="array-field__item">
+                Total: {{countyStats?.count}}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="col-lg-3">
-    <div class="mb-3">
-      <div class="array-field array-field--noclear">
-        <div class="form-field form-field--noclear form-field--nonempty">
-          <label>State Schematron Versions</label>
-          <div *ngFor="let version of repo.schematronVersionsInstalled" class="array-field__item">
-            {{version|version}}
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>Facilities</label>
+              <div *ngFor="let stat of facilityStats" class="array-field__item">
+                <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{facilityTypes?.[stat.type]}}:</span> {{stat.count}}
+              </div>
+              <div *ngIf="facilityStats" class="array-field__item">
+                Total: {{facilityStats.total}}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<h3>Demographics</h3>
-<div class="mb-3">
-  <ngx-dropzone #dropzone class="d-inline-block" (change)="onExternalDataSetImport($event)" [multiple]="false">
-  </ngx-dropzone>
-  <button (click)="dropzone.showFileSelector()" type="button" class="btn btn--sm btn--primary" [disabled]="isImportingDataSet">
-    Import External Data Set
-  </button>
-</div>
-<div class="row">
-  <div class="col-lg-3">
-    <div class="mb-3">
-      <div class="array-field array-field--noclear">
-        <div class="form-field form-field--noclear form-field--nonempty">
-          <label>Agencies</label>
-          <div class="array-field__item">
-            Total: {{agencyStats?.count}}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="mb-3">
-      <shared-array-field id="borderStates" label="Bordering States" [source]="state" [isFocusable]="false" [showClearButton]="false">
-        <ng-template #item let-stateId="item">
-          {{stateById(stateId)?.name}}
-        </ng-template>
-      </shared-array-field>
-    </div>
-  </div>
-  <div class="col-lg-3">
-    <div class="mb-3">
-      <div class="array-field array-field--noclear">
-        <div class="form-field form-field--noclear form-field--nonempty">
-          <label>Cities</label>
-          <div *ngFor="let stat of cityStats" class="array-field__item">
-            {{stat.featureClass}}: {{stat.count}}
-          </div>
-          <div *ngIf="cityStats" class="array-field__item">
-            Total: {{cityStats.total}}
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <div class="array-field array-field--noclear">
+            <div class="form-field form-field--noclear form-field--nonempty">
+              <label>PSAPs</label>
+              <div class="array-field__item">
+                Total: {{psapStats?.count}}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="mb-3">
-      <div class="array-field array-field--noclear">
-        <div class="form-field form-field--noclear form-field--nonempty">
-          <label>Counties</label>
-          <div class="array-field__item">
-            Total: {{countyStats?.count}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-3">
-    <div class="mb-3">
-      <div class="array-field array-field--noclear">
-        <div class="form-field form-field--noclear form-field--nonempty">
-          <label>Facilities</label>
-          <div *ngFor="let stat of facilityStats" class="array-field__item">
-            <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{facilityTypes?.[stat.type]}}:</span> {{stat.count}}
-          </div>
-          <div *ngIf="facilityStats" class="array-field__item">
-            Total: {{facilityStats.total}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-3">
-    <div class="mb-3">
-      <div class="array-field array-field--noclear">
-        <div class="form-field form-field--noclear form-field--nonempty">
-          <label>PSAPs</label>
-          <div class="array-field__item">
-            Total: {{psapStats?.count}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </form>
 </div>
