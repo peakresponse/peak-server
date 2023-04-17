@@ -62,12 +62,6 @@ form {
   }
 }
 
-@-moz-document url-prefix() {
-  .form-field select {
-    text-indent: -2px;
-  }
-}
-
 .form-field--nonempty {
   border-color: $brand-primary-300;
 }
