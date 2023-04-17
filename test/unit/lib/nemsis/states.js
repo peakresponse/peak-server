@@ -38,8 +38,8 @@ describe('lib', () => {
             it('returns a JSON object representation of the repo', () => {
               assert.deepStrictEqual(repo.toJSON(), {
                 initialized: false,
-                dataSetVersionsInstalled: [],
-                schematronVersionsInstalled: [],
+                dataSetVersions: [],
+                schematronVersions: [],
               });
             });
           });
