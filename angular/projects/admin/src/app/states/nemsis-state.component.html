@@ -19,7 +19,12 @@
             <label>Repository Data Sets</label>
             <div *ngFor="let version of repo?.dataSetVersions" class="array-field__item d-flex justify-content-between align-items-center">
               {{version|version}}
-              <i (click)="onDataSetImport(version)" class="fas fa-file-import"></i>
+              <span>
+                <i *ngIf="isDataSetInstalled(version); let dataSet" (click)="onDataSetImport(dataSet.id)" class="fas fa-file-import clickable me-3"></i>
+                <i *ngIf="isDataSetInstalled(version)" class="fas fa-check-circle text-success"></i>
+                <i *ngIf="!isDataSetInstalled(version) && !isDataSetInstalling" (click)="onDataSetInstall(version)" class="far fa-circle clickable"></i>
+                <shared-loader *ngIf="!isDataSetInstalled(version) && isDataSetInstalling === version"></shared-loader>
+              </span>
             </div>
             <div *ngIf="(repo?.dataSetVersions.length ?? 0) == 0" class="array-field__item">
               <span *ngIf="!(repo?.initialized ?? false)">Repository not initialized</span>
@@ -32,13 +37,13 @@
     <div class="col-lg-6 col-xl-4">
       <div class="mb-3">
         <div class="array-field array-field--noclear">
-          <div class="form-field form-field--noclear form-field--nonempty">
+          <div *ngIf="externalDataSets; let dataSets" class="form-field form-field--noclear form-field--nonempty">
             <label>External Data Sets</label>
-            <div *ngFor="let version of repo?.dataSetVersions" class="array-field__item d-flex justify-content-between align-items-center">
-              {{version|version}}
-              <i (click)="onDataSetImport(version)" class="fas fa-file-import"></i>
+            <div *ngFor="let dataSet of dataSets" class="array-field__item d-flex justify-content-between align-items-center">
+              {{dataSet.displayVersion|version}}
+              <i (click)="onDataSetImport(dataSet.id)" class="fas fa-file-import"></i>
             </div>
-            <div *ngIf="(repo?.dataSetVersions.length ?? 0) == 0" class="array-field__item">
+            <div *ngIf="(dataSets.length ?? 0) == 0" class="array-field__item">
               <span>None</span>
             </div>
           </div>
@@ -67,12 +72,12 @@
     <div class="col-lg-6 col-xl-4">
       <div class="mb-3">
         <div class="array-field array-field--noclear">
-          <div class="form-field form-field--noclear form-field--nonempty">
+          <div *ngIf="externalSchematrons; let schematrons" class="form-field form-field--noclear form-field--nonempty">
             <label>External Schematrons</label>
-            <div *ngFor="let version of repo?.schematronVersions" class="array-field__item">
-              {{version|version}}
+            <div *ngFor="let schematron of schematrons" class="array-field__item">
+              {{schematron.version|version}}
             </div>
-            <div *ngIf="(repo?.schematronVersions.length ?? 0) == 0" class="array-field__item">
+            <div *ngIf="(schematrons.length ?? 0) == 0" class="array-field__item">
               <span>None</span>
             </div>
           </div>

@@ -372,6 +372,15 @@ export class ApiService {
     },
   };
 
+  nemsisStateDataSets = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/nemsis/state-data-sets', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post('/api/nemsis/state-data-sets', data);
+    },
+  };
+
   patients = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/patients', params);

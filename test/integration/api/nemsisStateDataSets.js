@@ -5,6 +5,7 @@ const session = require('supertest-session');
 const helpers = require('../../helpers');
 
 const app = require('../../../app');
+const models = require('../../../models');
 
 describe('/api/nemsis/state-data-sets', () => {
   let testSession;
@@ -41,6 +42,22 @@ describe('/api/nemsis/state-data-sets', () => {
       assert(data);
       assert.deepStrictEqual(data.length, 1);
       assert.deepStrictEqual(data[0].stateId, '50');
+    });
+  });
+
+  describe('POST /', () => {
+    it('creates a new Nemsis State Data Set record', async () => {
+      const response = await testSession
+        .post('/api/nemsis/state-data-sets')
+        .send({ stateId: '50', version: '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c' })
+        .expect(HttpStatus.CREATED);
+      assert(response.body.id);
+      const record = await models.NemsisStateDataSet.findByPk(response.body.id);
+      assert.deepStrictEqual(record.stateId, '50');
+      assert.deepStrictEqual(record.nemsisVersion, '3.5.0.191130CP1');
+      assert.deepStrictEqual(record.version, '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c');
+      assert.deepStrictEqual(record.createdById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
+      assert.deepStrictEqual(record.updatedById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
     });
   });
 });

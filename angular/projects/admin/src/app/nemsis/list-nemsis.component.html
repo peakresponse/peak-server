@@ -19,7 +19,7 @@
                 <i class="fas fa-check-circle text-success"></i>
               </span>
               <span *ngIf="!nemsis.versionsInstalled.includes(version) && !isInstalling && !isRefreshing">
-                <i (click)="onInstallVersion(version)" class="fas fa-file-import clickable"></i>
+                <i (click)="onInstallVersion(version)" class="far fa-circle clickable"></i>
               </span>
               <span *ngIf="isInstalling === version">
                 <shared-loader></shared-loader>
