@@ -45,9 +45,14 @@ export class AccountComponent {
       this.agency = this.app.agency;
       if (!this.agency) {
         this.isLoading = true;
-        this.api.agencies.check(this.data.agencyId).subscribe((res) => {
+        this.api.agencies.check(this.data.agencyId).subscribe((res: HttpResponse<any>) => {
           this.isLoading = false;
           this.agency = res.body;
+        });
+      }
+      if (this.data.invitationCode) {
+        this.api.demographics.personnel.getInvite(this.data.invitationCode).subscribe((res: HttpResponse<any>) => {
+          this.data.email = this.data.email || res.body.email;
         });
       }
     } else {

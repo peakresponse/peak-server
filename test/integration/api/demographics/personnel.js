@@ -277,6 +277,22 @@ describe('/api/demographics/personnel', () => {
     });
   });
 
+  describe('GET /invite/:invitationCode', () => {
+    it('returns the email and invitation timestamp for the specified code', async () => {
+      const response = await session(app)
+        .get('/api/demographics/personnel/invite/eb9f6468-df4e-45d2-801f-c8e45d2fedea')
+        .expect(HttpStatus.OK);
+      assert.deepStrictEqual(response.body, {
+        email: 'invited.member@peakresponse.net',
+        invitationAt: '2020-04-06T21:22:10.158Z',
+      });
+    });
+
+    it('returns not found for an invalid code', async () => {
+      await session(app).get('/api/demographics/personnel/invite/asdfasdfasdf').expect(HttpStatus.NOT_FOUND);
+    });
+  });
+
   describe('POST /accept', () => {
     it('creates a new user and associates with agency employment by matching email', async () => {
       const response = await testSession

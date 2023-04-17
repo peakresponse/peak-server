@@ -56,6 +56,27 @@ router.post(
   })
 );
 
+router.get(
+  '/invite/:invitationCode',
+  helpers.async(async (req, res) => {
+    const { invitationCode } = req.params;
+    let record;
+    try {
+      record = await models.Employment.findOne({
+        where: { invitationCode },
+      });
+    } catch {
+      // no-op
+    }
+    if (record) {
+      const { email, invitationAt } = record;
+      res.json({ email, invitationAt });
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
 router.post(
   '/invite',
   interceptors.requireAgency(models.Employment.Roles.PERSONNEL),

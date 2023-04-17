@@ -254,6 +254,9 @@ export class ApiService {
       inviteStatus: (): Observable<any> => {
         return this.get(`/api/demographics/personnel/invite-status`);
       },
+      getInvite: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/personnel/invite/${id}`, params);
+      },
       accept: (data: any, subdomain?: string): Observable<any> => {
         const options = { headers: new HttpHeaders() };
         if (subdomain) {
