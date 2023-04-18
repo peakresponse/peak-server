@@ -29,6 +29,9 @@ module.exports = {
       file_name: {
         type: Sequelize.STRING,
       },
+      status: {
+        type: Sequelize.JSONB,
+      },
       created_by_id: {
         allowNull: false,
         type: Sequelize.UUID,

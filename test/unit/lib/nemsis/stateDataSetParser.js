@@ -66,7 +66,9 @@ describe('lib', () => {
             it('parses sFacility records out of the specified state data set version', async () => {
               const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
               let count = 0;
-              await stateDataSetParser.parseFacilities(() => {
+              await stateDataSetParser.parseFacilities((dataSetNemsisVersion, stateId) => {
+                assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.191130CP1');
+                assert.deepStrictEqual(stateId, '50');
                 count += 1;
               });
               assert.deepStrictEqual(count, 390);

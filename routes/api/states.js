@@ -1,11 +1,7 @@
 /* eslint-disable no-await-in-loop */
 const express = require('express');
-const fs = require('fs');
 const HttpStatus = require('http-status-codes');
 const _ = require('lodash');
-const { mkdirp } = require('mkdirp');
-const path = require('path');
-const uuid = require('uuid/v4');
 
 const models = require('../../models');
 const interceptors = require('../interceptors');
@@ -125,28 +121,6 @@ router.get(
   })
 );
 
-router.post(
-  '/:id/import',
-  interceptors.requireAdmin,
-  helpers.async(async (req, res) => {
-    const tmpDir = path.resolve(__dirname, '../../tmp/uploads/import');
-    const tmpFile = path.resolve(tmpDir, `${uuid()}.xml`);
-    try {
-      await mkdirp(path.dirname(tmpFile));
-      await fs.promises.writeFile(tmpFile, req.body);
-      const state = await models.State.findByPk(req.params.id);
-      if (state) {
-        // await state.startImportDataSet(req.user, new NemsisStateDataSet(null, tmpFile));
-        res.json(state.toJSON());
-      } else {
-        res.status(HttpStatus.NOT_FOUND).end();
-      }
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
-    }
-  })
-);
-
 router.get(
   '/:id/repository',
   interceptors.requireAdmin,
@@ -154,58 +128,6 @@ router.get(
     const repo = nemsisStates.getNemsisStateRepo(req.params.id, '3.5.0');
     if (repo) {
       res.json(repo.toJSON());
-    } else {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
-  })
-);
-
-router.delete(
-  '/:id/repository/import',
-  interceptors.requireAdmin,
-  helpers.async(async (req, res) => {
-    const state = await models.State.findByPk(req.params.id);
-    if (state) {
-      await state.cancelImportDataSet();
-      await state.reload();
-      res.json(state.toJSON());
-    } else {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
-  })
-);
-
-router.put(
-  '/:id/repository/import',
-  interceptors.requireAdmin,
-  helpers.async(async (req, res) => {
-    const { dataSetVersion } = req.query;
-    const state = await models.State.findByPk(req.params.id);
-    if (state) {
-      let stateDataSet = await models.NemsisStateDataSet.findOne({
-        where: {
-          stateId: state.id,
-          version: dataSetVersion,
-        },
-      });
-      if (!stateDataSet) {
-        const repo = nemsisStates.getNemsisStateRepo(this.state.id, '3.5.0');
-        const stateDataSetParser = repo.getDataSetParser(dataSetVersion);
-        try {
-          const dataSetNemsisVersion = await stateDataSetParser.getNemsisVersion();
-          stateDataSet = await models.NemsisStateDataSet.create({
-            stateId: state.id,
-            nemsisVersion: dataSetNemsisVersion,
-            version: dataSetVersion,
-            createdById: req.user.id,
-            updatedById: req.user.id,
-          });
-        } catch {
-          res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
-        }
-      }
-      await state.startImportDataSet(req.user, stateDataSet);
-      res.json(state.toJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }

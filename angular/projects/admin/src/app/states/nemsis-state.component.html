@@ -11,6 +11,16 @@
     <span *ngIf="!repo || isRepoInitializing"><shared-loader></shared-loader> Please wait...</span>
   </div>
   <h4>Data Sets</h4>
+  <div *ngIf="state?.status?.message" class="row">
+    <div class="col-lg-6">
+      <div class="alert alert-info">
+        <div class="d-flex justify-content-between align-items-center">
+          <div><shared-loader *ngIf="state.status?.code === 202"></shared-loader> {{state.status?.message}}</div>
+          <i (click)="onCancelDataSetImport()" class="far fa-times-circle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-lg-6 col-xl-4">
       <div class="mb-3">
@@ -36,7 +46,7 @@
     </div>
     <div class="col-lg-6 col-xl-4">
       <div class="mb-3">
-        <div class="array-field array-field--noclear">
+        <div class="array-field array-field--noclear mb-3">
           <div *ngIf="externalDataSets; let dataSets" class="form-field form-field--noclear form-field--nonempty">
             <label>External Data Sets</label>
             <div *ngFor="let dataSet of dataSets" class="array-field__item d-flex justify-content-between align-items-center">
@@ -48,6 +58,7 @@
             </div>
           </div>
         </div>
+        <button type="button" class="btn btn--sm btn--primary">Import Data Set</button>
       </div>
     </div>
   </div>
@@ -71,7 +82,7 @@
     </div>
     <div class="col-lg-6 col-xl-4">
       <div class="mb-3">
-        <div class="array-field array-field--noclear">
+        <div class="array-field array-field--noclear mb-3">
           <div *ngIf="externalSchematrons; let schematrons" class="form-field form-field--noclear form-field--nonempty">
             <label>External Schematrons</label>
             <div *ngFor="let schematron of schematrons" class="array-field__item">
@@ -82,6 +93,7 @@
             </div>
           </div>
         </div>
+        <button type="button" class="btn btn--sm btn--primary">Import Schematron</button>
       </div>
     </div>
   </div>

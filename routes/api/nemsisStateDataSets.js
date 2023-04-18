@@ -59,4 +59,46 @@ router.post(
   })
 );
 
+router.post(
+  '/:id/import',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const stateDataSet = await models.NemsisStateDataSet.findByPk(req.params.id);
+    if (stateDataSet) {
+      await stateDataSet.startImportDataSet(req.user, stateDataSet);
+      res.json(stateDataSet.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.delete(
+  '/:id/repository/import',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const stateDataSet = await models.NemsisStateDataSet.findByPk(req.params.id);
+    if (stateDataSet) {
+      await stateDataSet.cancelImportDataSet();
+      await stateDataSet.reload();
+      res.json(stateDataSet.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.get(
+  '/:id',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const stateDataSet = await models.NemsisStateDataSet.findByPk(req.params.id);
+    if (stateDataSet) {
+      res.json(stateDataSet.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
 module.exports = router;

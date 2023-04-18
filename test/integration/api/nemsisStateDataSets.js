@@ -60,4 +60,27 @@ describe('/api/nemsis/state-data-sets', () => {
       assert.deepStrictEqual(record.updatedById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
     });
   });
+
+  describe('POST /:id/import', () => {
+    it('starts importing from the specified NEMSIS State Data Set', async () => {
+      let response = await testSession
+        .post('/api/nemsis/state-data-sets/1301f4e2-87b9-486a-b3d0-61a46d703b44/import')
+        .expect(HttpStatus.OK);
+      assert.deepStrictEqual(response.body.status?.code, HttpStatus.ACCEPTED);
+      // start polling for completion
+      for (;;) {
+        // eslint-disable-next-line no-await-in-loop
+        response = await testSession.get(`/api/nemsis/state-data-sets/1301f4e2-87b9-486a-b3d0-61a46d703b44`);
+        if (response.body.status?.code === HttpStatus.ACCEPTED) {
+          // eslint-disable-next-line no-await-in-loop
+          await helpers.sleep(250);
+        } else {
+          assert.deepStrictEqual(response.status, HttpStatus.OK);
+          break;
+        }
+      }
+      assert.deepStrictEqual(await models.Agency.count({ where: { stateId: '50' } }), 163);
+      assert.deepStrictEqual(await models.Facility.count(), 390);
+    });
+  });
 });
