@@ -23,6 +23,7 @@ export class ListComponent {
   @Input() params?: HttpParams;
   @Input() search: string = '';
   @ContentChild(TemplateRef) template: TemplateRef<any> | null = null;
+  @ContentChild('empty') emptyTemplate: TemplateRef<any> | null = null;
 
   records: any[] | null = null;
   paginationLink: string | null = null;
