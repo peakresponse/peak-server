@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       } else {
         // download attached file into tmp file, then set up parser
         const tmpFilePath = await this.downloadAssetFile('file');
-        parser = new NemsisStateDataSetParser(null, tmpFilePath);
+        parser = new NemsisStateDataSetParser(tmpFilePath);
       }
       return parser;
     }

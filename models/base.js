@@ -239,7 +239,7 @@ class Base extends Model {
     return path.join(assetPrefix, modelPrefix, this.id, attrPrefix);
   }
 
-  async downloadAssetFile(attribute) {
+  async downloadAssetFile(attribute, isNewInTransaction) {
     const file = this.get(attribute);
     const filePrefix = this.getAssetFilePrefix(attribute);
     const tmpDir = path.resolve(__dirname, '../../tmp/downloads');
@@ -248,7 +248,12 @@ class Base extends Model {
     if (process.env.AWS_S3_BUCKET) {
       // TODO
     } else {
-      const filePath = path.resolve(__dirname, '../public/assets', filePrefix, file);
+      let filePath;
+      if (isNewInTransaction) {
+        filePath = path.resolve(__dirname, '../tmp/uploads', file);
+      } else {
+        filePath = path.resolve(__dirname, '../public/assets', filePrefix, file);
+      }
       await fs.promises.copyFile(filePath, tmpFilePath);
     }
     return tmpFilePath;

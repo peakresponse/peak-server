@@ -31,6 +31,14 @@ describe('lib', () => {
             });
           });
 
+          describe('.getStateId()', () => {
+            it('returns the state id referenced by the data set', async () => {
+              const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+              const stateId = await stateDataSetParser.getStateId();
+              assert.deepStrictEqual(stateId, '50');
+            });
+          });
+
           describe('.parseAgencies()', () => {
             it('parses sAgency records out of the specified state data set version', async () => {
               const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');

@@ -1,10 +1,12 @@
 const express = require('express');
+const fs = require('fs');
 const HttpStatus = require('http-status-codes');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
 const nemsisStates = require('../../lib/nemsis/states');
+const { NemsisStateDataSetParser } = require('../../lib/nemsis/stateDataSetParser');
 
 const router = express.Router();
 
@@ -35,7 +37,7 @@ router.post(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const { stateId, version } = req.body;
+    const { stateId, version, file, fileName } = req.body;
     let record;
     if (stateId && version) {
       const repo = nemsisStates.getNemsisStateRepo(stateId, '3.5.0');
@@ -50,6 +52,40 @@ router.post(
         createdById: req.user.id,
         updatedById: req.user.id,
       });
+    } else if (stateId && file && fileName) {
+      let tmpPath;
+      try {
+        await models.sequelize.transaction(async (transaction) => {
+          record = await models.NemsisStateDataSet.create(
+            {
+              stateId,
+              file,
+              fileName,
+              createdById: req.user.id,
+              updatedById: req.user.id,
+            },
+            { transaction }
+          );
+          tmpPath = await record.downloadAssetFile('file', true);
+          const stateDataSetParser = new NemsisStateDataSetParser(tmpPath);
+          const nemsisVersion = await stateDataSetParser.getNemsisVersion();
+          const fileStateId = await stateDataSetParser.getStateId();
+          if (stateId !== fileStateId) {
+            throw new Error('stateId');
+          }
+          await record.update({ nemsisVersion }, { transaction });
+        });
+      } catch (err) {
+        if (err.message === 'stateId') {
+          res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+          return;
+        }
+        record = null;
+      } finally {
+        if (tmpPath) {
+          await fs.promises.rm(tmpPath, { force: true });
+        }
+      }
     }
     if (record) {
       res.status(HttpStatus.CREATED).json(record.toJSON());
