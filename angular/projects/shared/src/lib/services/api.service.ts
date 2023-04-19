@@ -379,6 +379,15 @@ export class ApiService {
     create: (data: any): Observable<any> => {
       return this.post('/api/nemsis/state-data-sets', data);
     },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/nemsis/state-data-sets/${id}`, params);
+    },
+    import: (id: string): Observable<any> => {
+      return this.post(`/api/nemsis/state-data-sets/${id}/import`, null);
+    },
+    cancelImport: (id: string): Observable<any> => {
+      return this.delete(`/api/nemsis/state-data-sets/${id}/import`);
+    },
   };
 
   patients = {
@@ -491,17 +500,6 @@ export class ApiService {
     },
     initRepository: (id: string, params?: HttpParams): Observable<any> => {
       return this.put(`/api/states/${id}/repository`, params);
-    },
-    importDataSet: (id: string, dataSetVersion: string): Observable<any> => {
-      return this.put(`/api/states/${id}/repository/import`, null, {
-        params: new HttpParams({ fromObject: { dataSetVersion } }),
-      });
-    },
-    importExternalDataSet: (id: string, file: File): Observable<any> => {
-      return this.post(`/api/states/${id}/import`, file);
-    },
-    cancelImportDataSet: (id: string): Observable<any> => {
-      return this.delete(`/api/states/${id}/repository/import`);
     },
     update: (id: string, data: any): Observable<any> => {
       return this.patch(`/api/states/${id}`, data);

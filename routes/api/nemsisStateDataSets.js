@@ -74,13 +74,18 @@ router.post(
 );
 
 router.delete(
-  '/:id/repository/import',
+  '/:id/import',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const stateDataSet = await models.NemsisStateDataSet.findByPk(req.params.id);
+    let stateDataSet;
+    await models.sequelize.transaction(async (transaction) => {
+      stateDataSet = await models.NemsisStateDataSet.findByPk(req.params.id, { transaction });
+      if (stateDataSet) {
+        await stateDataSet.cancelImportDataSet({ transaction });
+        await stateDataSet.reload({ transaction });
+      }
+    });
     if (stateDataSet) {
-      await stateDataSet.cancelImportDataSet();
-      await stateDataSet.reload();
       res.json(stateDataSet.toJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();

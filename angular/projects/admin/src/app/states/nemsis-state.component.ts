@@ -9,18 +9,16 @@ import { ApiService } from 'shared';
 export class NemsisStateComponent implements OnInit {
   id: string = '';
   state: any;
-  get isImportingDataSet(): boolean {
-    return this.state?.status?.code === 202;
-  }
 
-  repo: any;
   isRepoInitializing = false;
+  repo: any;
 
+  isDataSetImporting?: any;
+  isDataSetInstalling?: string;
   dataSetsInstalled: any[] = [];
   get externalDataSets(): any[] {
     return this.dataSetsInstalled.filter((ds) => ds.version === null);
   }
-  isDataSetInstalling?: string;
 
   schematronsInstalled: any[] = [];
   get externalSchematrons(): any[] {
@@ -33,9 +31,13 @@ export class NemsisStateComponent implements OnInit {
     this.id = this.route.snapshot.parent?.params['id'] ?? '';
     this.state = this.route.snapshot.parent?.data['state'];
     this.api.states.getRepository(this.id).subscribe((response: HttpResponse<any>) => (this.repo = response.body));
-    this.api.nemsisStateDataSets
-      .index(new HttpParams({ fromObject: { stateId: this.id } }))
-      .subscribe((response: HttpResponse<any>) => (this.dataSetsInstalled = response.body));
+    this.api.nemsisStateDataSets.index(new HttpParams({ fromObject: { stateId: this.id } })).subscribe((response: HttpResponse<any>) => {
+      this.dataSetsInstalled = response.body;
+      this.isDataSetImporting = this.dataSetsInstalled.find((ds) => ds.status?.code === 202);
+      if (this.isDataSetImporting) {
+        this.pollImport(this.isDataSetImporting.id);
+      }
+    });
   }
 
   onRepoInit() {
@@ -78,31 +80,37 @@ export class NemsisStateComponent implements OnInit {
       });
   }
 
-  onDataSetImport(dataSetVersion: string) {
-    if (!this.isImportingDataSet) {
-      this.api.states.importDataSet(this.id, dataSetVersion).subscribe((response: HttpResponse<any>) => {
-        this.state = response.body;
-        if (this.state.status?.code === 202) {
-          this.pollImport();
+  onDataSetImport(dataSet: any) {
+    if (!this.isDataSetImporting) {
+      this.isDataSetImporting = dataSet;
+      this.api.nemsisStateDataSets.import(dataSet.id).subscribe((response: HttpResponse<any>) => {
+        this.isDataSetImporting = response.body;
+        if (this.isDataSetImporting.status?.code === 202) {
+          this.pollImport(dataSet.id);
         }
       });
     }
   }
 
-  onCancelDataSetImport() {
-    this.api.states.cancelImportDataSet(this.id).subscribe((response: HttpResponse<any>) => {
-      this.state = response.body;
-    });
-  }
-
-  pollImport() {
+  pollImport(dataSetId: string) {
     setTimeout(() => {
-      this.api.states.get(this.id).subscribe((response: HttpResponse<any>) => {
-        this.state = response.body;
-        if (this.state.status?.code === 202) {
-          this.pollImport();
+      this.api.nemsisStateDataSets.get(dataSetId).subscribe((response: HttpResponse<any>) => {
+        this.isDataSetImporting = response.body;
+        if (this.isDataSetImporting.status?.code === 202) {
+          this.pollImport(dataSetId);
         }
       });
     }, 1000);
+  }
+
+  onCancelDataSetImport() {
+    if (this.isDataSetImporting) {
+      this.api.nemsisStateDataSets.cancelImport(this.isDataSetImporting.id).subscribe((response: HttpResponse<any>) => {
+        this.isDataSetImporting = response.body;
+        if (!this.isDataSetImporting.status) {
+          this.isDataSetImporting = null;
+        }
+      });
+    }
   }
 }

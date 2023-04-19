@@ -32,6 +32,10 @@ module.exports = {
       status: {
         type: Sequelize.JSONB,
       },
+      is_cancelled: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       created_by_id: {
         allowNull: false,
         type: Sequelize.UUID,

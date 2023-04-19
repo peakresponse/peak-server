@@ -65,19 +65,20 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async startImportDataSet(user, stateDataSet) {
+      await this.update({ isCancelled: false });
       await this.setStatus(HttpStatus.ACCEPTED, 'Importing Agencies...');
       // perform the following in the background
       this.importAgencies(user.id, stateDataSet)
         .then(() => this.reload())
         .then(() => {
-          if (this.status?.isCancelled) {
+          if (this.isCancelled) {
             return Promise.resolve();
           }
           return this.importFacilities(user.id, stateDataSet);
         })
         .then(() => this.reload())
         .then(() => {
-          if (this.status?.isCancelled) {
+          if (this.isCancelled) {
             return this.setStatus(HttpStatus.OK, 'Import cancelled');
           }
           return this.setStatus(HttpStatus.OK, 'Import completed');
@@ -86,16 +87,15 @@ module.exports = (sequelize, DataTypes) => {
 
     cancelImportDataSet(options) {
       let status;
-      if (this.status?.isCancelled || this.status?.code === HttpStatus.OK) {
-        status = {};
+      if (this.isCancelled || this.status?.code === HttpStatus.OK) {
+        status = null;
       } else {
         status = {
           code: HttpStatus.OK,
           message: 'Import cancelled',
-          isCancelled: true,
         };
       }
-      return this.update({ status }, { transaction: options?.transaction });
+      return this.update({ status, isCancelled: true }, { transaction: options?.transaction });
     }
 
     async importAgencies(userId) {
@@ -105,12 +105,12 @@ module.exports = (sequelize, DataTypes) => {
       });
       let count = 0;
       await this.parseAgencies(async (dataSetNemsisVersion, stateId, agency) => {
-        await this.reload();
-        if (this.status?.isCancelled) {
-          return;
-        }
-        count += 1;
         await sequelize.transaction(async (transaction) => {
+          await this.reload({ transaction });
+          if (this.isCancelled) {
+            return;
+          }
+          count += 1;
           await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count}/${total} Agencies...`, { transaction });
           const [record] = await sequelize.models.Agency.scope('canonical').findOrBuild({
             where: {
@@ -128,6 +128,7 @@ module.exports = (sequelize, DataTypes) => {
           record.updatedById = userId;
           await record.save({ transaction });
         });
+        return this.isCancelled;
       });
       await this.setStatus(HttpStatus.ACCEPTED, `Imported ${count} Agencies`);
     }
@@ -139,12 +140,12 @@ module.exports = (sequelize, DataTypes) => {
       });
       let count = 0;
       await this.parseFacilities(async (dataSetNemsisVersion, stateId, facilityType, facility) => {
-        await this.reload();
-        if (this.status?.isCancelled) {
-          return;
-        }
-        count += 1;
         await sequelize.transaction(async (transaction) => {
+          await this.reload({ transaction });
+          if (this.isCancelled) {
+            return;
+          }
+          count += 1;
           await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count}/${total} Facilities...`, { transaction });
           let record;
           if (facility['sFacility.03']?._text) {
@@ -183,6 +184,7 @@ module.exports = (sequelize, DataTypes) => {
           record.updatedById = userId;
           await record.save({ transaction });
         });
+        return this.isCancelled;
       });
       await this.setStatus(HttpStatus.ACCEPTED, `Imported ${count} Facilities`);
     }
@@ -226,6 +228,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.JSONB,
+      },
+      isCancelled: {
+        type: DataTypes.BOOLEAN,
       },
     },
     {
