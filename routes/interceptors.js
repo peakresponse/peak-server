@@ -141,7 +141,7 @@ async function requireLogin(req, res, next, role) {
 function requireAgency(role) {
   return (req, res, next) => {
     /// require that this request be on an agency subdomain...
-    if (!req.agency) {
+    if (!req.agency && !req.user?.isAdmin) {
       sendErrorForbidden(req, res);
     } else {
       /// ...by an active employed user

@@ -48,7 +48,7 @@ router.get(
   '/:id',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    const version = await models.Version.findByPk(req.params.id, { include: ['stateDataSet'] });
+    const version = await models.Version.findByPk(req.params.id);
     if (version) {
       if (version.agencyId === req.agency.id) {
         res.json(version.toJSON());
