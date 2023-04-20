@@ -1,7 +1,7 @@
 <div *ngIf="isGroup" class="array-field array-field--noclear mb-3">
   <div class="form-field form-field--noclear">
     <label [for]="formName">
-      {{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small>
+      <span>{{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small></span>
     </label>
     <span class="feedback">{{groupText}}</span>
     <div *ngFor="let selectedValue of values; index as i" class="array-field__item">
@@ -47,7 +47,7 @@
     </div>
     <div *ngIf="!isDisplayOnly" class="form-field mb-3" [class.form-field--invalid]="isInvalid" [class.form-field--nonempty]="value">
       <label [for]="formName">
-        {{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small>
+        <span>{{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small></span>
       </label>
       <shared-xsd-element [basePath]="basePath" [element]="element" [data]="data" [error]="error"></shared-xsd-element>
       <span [class.feedback]="!isInvalid" [class.invalid-feedback]="isInvalid">
@@ -68,7 +68,7 @@
     </ng-container>
     <div *ngIf="!isDisplayOnly" class="form-field mb-3" [class.form-field--invalid]="isInvalid">
       <label [for]="formName">
-        {{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small>
+        <span>{{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small></span>
       </label>
       <div *ngFor="let selectedValue of values; index as i" class="array-field__item" [class.array-field__item--invalid]="isInvalidValue(i)">
         <shared-xsd-element [basePath]="basePath" [element]="element" [data]="data" [error]="error" [index]="i" [selectedValue]="selectedValue"></shared-xsd-element>
