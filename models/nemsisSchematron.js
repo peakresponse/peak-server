@@ -4,7 +4,7 @@ const sequelizePaginate = require('sequelize-paginate');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
-  class NemsisStateSchematron extends Base {
+  class NemsisSchematron extends Base {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      NemsisStateSchematron.belongsTo(models.State, { as: 'state' });
-      NemsisStateSchematron.belongsTo(models.Agency, { as: 'createdByAgency' });
-      NemsisStateSchematron.belongsTo(models.User, { as: 'createdBy' });
-      NemsisStateSchematron.belongsTo(models.User, { as: 'updatedBy' });
+      NemsisSchematron.belongsTo(models.State, { as: 'state' });
+      NemsisSchematron.belongsTo(models.Agency, { as: 'createdByAgency' });
+      NemsisSchematron.belongsTo(models.User, { as: 'createdBy' });
+      NemsisSchematron.belongsTo(models.User, { as: 'updatedBy' });
     }
   }
 
-  NemsisStateSchematron.init(
+  NemsisSchematron.init(
     {
       nemsisVersion: {
         type: DataTypes.STRING,
@@ -58,17 +58,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'NemsisStateSchematron',
-      tableName: 'nemsis_state_schematrons',
+      modelName: 'NemsisSchematron',
+      tableName: 'nemsis_schematrons',
       underscored: true,
     }
   );
 
-  NemsisStateSchematron.afterSave(async (record, options) => {
+  NemsisSchematron.afterSave(async (record, options) => {
     await record.handleAssetFile('file', options);
   });
 
-  sequelizePaginate.paginate(NemsisStateSchematron);
+  sequelizePaginate.paginate(NemsisSchematron);
 
-  return NemsisStateSchematron;
+  return NemsisSchematron;
 };

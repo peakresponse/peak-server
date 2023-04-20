@@ -20,7 +20,7 @@ module.exports = {
       type: Sequelize.UUID,
       references: {
         model: {
-          tableName: 'nemsis_state_schematrons',
+          tableName: 'nemsis_schematrons',
         },
         key: 'id',
       },

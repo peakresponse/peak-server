@@ -1,6 +1,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('nemsis_state_schematrons', {
+    await queryInterface.createTable('nemsis_schematrons', {
       id: {
         allowNull: false,
         defaultValue: Sequelize.literal('gen_random_uuid()'),
@@ -8,7 +8,6 @@ module.exports = {
         type: Sequelize.UUID,
       },
       state_id: {
-        allowNull: false,
         type: Sequelize.STRING,
         references: {
           model: {
@@ -69,6 +68,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('nemsis_state_schematrons');
+    await queryInterface.dropTable('nemsis_schematrons');
   },
 };
