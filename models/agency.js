@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       Agency.hasOne(models.Agency, { as: 'draft', foreignKey: 'draftParentId' });
       Agency.belongsTo(models.Agency, { as: 'createdByAgency' });
       Agency.belongsTo(models.NemsisStateDataSet, { as: 'stateDataSet' });
+      Agency.belongsTo(models.NemsisStateSchematron, { as: 'stateSchematron' });
       Agency.belongsTo(models.State, { as: 'state' });
       Agency.belongsTo(models.User, { as: 'updatedBy' });
       Agency.belongsTo(models.User, { as: 'createdBy' });
@@ -326,10 +327,6 @@ module.exports = (sequelize, DataTypes) => {
         get() {
           return this.nemsisVersion?.match(/^\d+\.\d+\.\d+/)?.[0];
         },
-      },
-      stateSchematronVersion: {
-        type: DataTypes.STRING,
-        field: 'state_schematron_version',
       },
       stateId: {
         type: DataTypes.STRING,

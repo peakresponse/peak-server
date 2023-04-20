@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Version.belongsTo(models.NemsisStateDataSet, { as: 'stateDataSet' });
+      Version.belongsTo(models.NemsisStateSchematron, { as: 'stateSchematron' });
       Version.belongsTo(models.User, { as: 'createdBy' });
       Version.belongsTo(models.User, { as: 'updatedBy' });
       Version.belongsTo(models.Agency, { as: 'agency' });
@@ -134,10 +135,6 @@ module.exports = (sequelize, DataTypes) => {
           const m = this.nemsisVersion.match(/^(\d+\.\d+\.\d+)/);
           return m?.length > 1 ? m[1] : null;
         },
-      },
-      stateSchematronVersion: {
-        type: DataTypes.STRING,
-        field: 'state_schematron_version',
       },
       demCustomConfiguration: {
         type: DataTypes.JSONB,
