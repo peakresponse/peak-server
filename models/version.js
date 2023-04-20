@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Version.belongsTo(models.NemsisStateDataSet, { as: 'stateDataSet' });
-      Version.belongsTo(models.NemsisStateSchematron, { as: 'stateSchematron' });
+      Version.belongsTo(models.NemsisSchematron, { as: 'stateSchematron' });
       Version.belongsTo(models.User, { as: 'createdBy' });
       Version.belongsTo(models.User, { as: 'updatedBy' });
       Version.belongsTo(models.Agency, { as: 'agency' });
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         'isDraft',
         'nemsisVersion',
         'stateDataSetId',
-        'stateSchematronVersion',
+        'stateSchematronId',
         'isValid',
         'validationErrors',
         'createdAt',

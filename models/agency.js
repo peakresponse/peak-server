@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       Agency.hasOne(models.Agency, { as: 'draft', foreignKey: 'draftParentId' });
       Agency.belongsTo(models.Agency, { as: 'createdByAgency' });
       Agency.belongsTo(models.NemsisStateDataSet, { as: 'stateDataSet' });
-      Agency.belongsTo(models.NemsisStateSchematron, { as: 'stateSchematron' });
+      Agency.belongsTo(models.NemsisSchematron, { as: 'stateSchematron' });
       Agency.belongsTo(models.State, { as: 'state' });
       Agency.belongsTo(models.User, { as: 'updatedBy' });
       Agency.belongsTo(models.User, { as: 'createdBy' });
@@ -101,7 +101,7 @@ module.exports = (sequelize, DataTypes) => {
         updatedById: user.id,
         nemsisVersion: canonicalAgency.nemsisVersion,
         stateDataSetId: canonicalAgency.stateDataSetId,
-        stateSchematronVersion: repo.schematronVersionsInstalled?.[0],
+        stateSchematronId: repo.schematronVersionsInstalled?.[0],
         data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
@@ -113,7 +113,7 @@ module.exports = (sequelize, DataTypes) => {
           isDraft: false,
           nemsisVersion: agency.nemsisVersion,
           stateDataSetId: agency.stateDataSetId,
-          stateSchematronVersion: agency.stateSchematronVersion,
+          stateSchematronId: agency.stateSchematronId,
           createdById: user.id,
           updatedById: user.id,
         },
@@ -158,7 +158,7 @@ module.exports = (sequelize, DataTypes) => {
             ..._.pick(version, [
               'nemsisVersion',
               'stateDataSetId',
-              'stateSchematronVersion',
+              'stateSchematronId',
               'demCustomConfiguration',
               'emsCustomConfiguration',
               'demDataSet',
@@ -262,7 +262,7 @@ module.exports = (sequelize, DataTypes) => {
         'claimedAgency',
         'nemsisVersion',
         'stateDataSetId',
-        'stateSchematronVersion',
+        'stateSchematronId',
         'stateId',
         'isClaimed',
         'subdomain',

@@ -145,7 +145,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       agency = await models.Agency.findByPk(req.params.id, { transaction });
       if (agency) {
-        const attributes = ['nemsisVersion', 'stateDataSetId', 'stateSchematronVersion', 'stateId', 'stateUniqueId', 'number', 'name'];
+        const attributes = ['nemsisVersion', 'stateDataSetId', 'stateSchematronId', 'stateId', 'stateUniqueId', 'number', 'name'];
         if (agency.isClaimed) {
           attributes.push('psapId', 'subdomain', 'routedUrl');
         }
