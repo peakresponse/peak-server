@@ -83,9 +83,9 @@ router.get(
     } else {
       const data = req.agency.toJSON();
       data.message = req.agency.getLocalizedInvitationMessage(res);
-      const version = await req.agency.getVersion();
+      const version = await req.agency.getVersion({ include: ['stateDataSet'] });
       data.version = version?.toJSON();
-      const draftVersion = await req.agency.getDraftVersion();
+      const draftVersion = await req.agency.getDraftVersion({ include: ['stateDataSet'] });
       data.draftVersion = draftVersion?.toJSON();
       res.json(data);
     }
@@ -127,7 +127,7 @@ router.get(
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const agency = await models.Agency.findByPk(req.params.id, {
-      include: [{ model: models.Agency, as: 'claimedAgency', required: false }],
+      include: [{ model: models.Agency, as: 'claimedAgency', required: false }, 'stateDataSet'],
     });
     if (agency) {
       res.json(agency.toJSON());

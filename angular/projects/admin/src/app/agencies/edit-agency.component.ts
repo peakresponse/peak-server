@@ -26,14 +26,4 @@ export class EditAgencyComponent {
     this.canonicalAgencyId = agency.canonicalAgencyId;
     this.claimedAgencyId = agency.claimedAgency?.id;
   }
-
-  onFetchPsap = (id: string): Observable<any> => {
-    return this.api.psaps.get(id).pipe(map((response: HttpResponse<any>) => response.body));
-  };
-
-  onSearchPsap = (search: string): Observable<any[]> => {
-    return this.api.psaps
-      .index(new HttpParams({ fromObject: { search } }))
-      .pipe(map((response: HttpResponse<any[]>) => response.body ?? []));
-  };
 }

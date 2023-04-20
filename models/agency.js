@@ -254,7 +254,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, [
+      const payload = _.pick(attributes, [
         'id',
         'canonicalAgencyId',
         'claimedAgency',
@@ -279,6 +279,10 @@ module.exports = (sequelize, DataTypes) => {
         'updatedAt',
         'updatedById',
       ]);
+      if (this.stateDataSet) {
+        payload.stateDataSet = this.stateDataSet.toJSON();
+      }
+      return payload;
     }
 
     toPublicJSON() {

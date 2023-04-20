@@ -21,11 +21,11 @@
         <shared-text-field id="nemsisVersion" label="NEMSIS Version" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
       <div class="mb-3">
-        <!-- <shared-text-field id="stateDataSetVersion" label="State Data Set Version" [source]="record" [target]="record" [error]="error"></shared-text-field> -->
+        <shared-object-field id="stateDataSetId" label="State Data Set" [source]="record" [target]="record" [error]="error" objectNameProperty="displayVersion" objectApiPath="nemsisStateDataSets"></shared-object-field>
       </div>
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <shared-text-field id="stateSchematronVersion" label="State Schematron Version" [source]="record" [target]="record" [error]="error"></shared-text-field>
-      </div>
+      </div> -->
       <div class="mb-3">
         <shared-text-field id="stateUniqueId" label="State Unique Id" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
@@ -36,7 +36,7 @@
         <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
       <div *ngIf="record.isClaimed" class="mb-3">
-        <shared-object-field id="psapId" label="PSAP" [source]="record" [target]="record" [error]="error" [objectFetchHandler]="onFetchPsap" [searchHandler]="onSearchPsap"></shared-object-field>
+        <shared-object-field id="psapId" label="PSAP" [source]="record" [target]="record" [error]="error" objectApiPath="psaps"></shared-object-field>
       </div>
       <div *ngIf="record.isClaimed" class="mb-3">
         <shared-text-field id="subdomain" label="Subdomain" [source]="record" [target]="record" [error]="error"></shared-text-field>
