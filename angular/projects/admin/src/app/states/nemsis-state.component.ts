@@ -15,6 +15,7 @@ export class NemsisStateComponent implements OnInit {
 
   isDataSetImporting?: any;
   isDataSetInstalling?: string;
+  isExternalDataSetInstalling = false;
   dataSetsInstalled: any[] = [];
   get externalDataSets(): any[] {
     return this.dataSetsInstalled.filter((ds) => ds.version === null);
@@ -76,7 +77,28 @@ export class NemsisStateComponent implements OnInit {
       })
       .subscribe((response: HttpResponse<any>) => {
         this.isDataSetInstalling = undefined;
-        this.dataSetsInstalled.push(response.body);
+        const dataSetsInstalled = [...this.dataSetsInstalled];
+        dataSetsInstalled.push(response.body);
+        this.dataSetsInstalled = dataSetsInstalled;
+      });
+  }
+
+  onExternalDataSetDrop() {
+    this.isExternalDataSetInstalling = true;
+  }
+
+  onExternalDataSetUploaded(upload: any) {
+    this.api.nemsisStateDataSets
+      .create({
+        stateId: this.id,
+        file: upload.href,
+        fileName: upload.name,
+      })
+      .subscribe((response: HttpResponse<any>) => {
+        this.isExternalDataSetInstalling = false;
+        const dataSetsInstalled = [...this.dataSetsInstalled];
+        dataSetsInstalled.push(response.body);
+        this.dataSetsInstalled = dataSetsInstalled;
       });
   }
 

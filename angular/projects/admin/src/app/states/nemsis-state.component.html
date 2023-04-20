@@ -51,15 +51,22 @@
           <div *ngIf="externalDataSets; let dataSets" class="form-field form-field--noclear form-field--nonempty">
             <label>External Data Sets</label>
             <div *ngFor="let dataSet of dataSets" class="array-field__item d-flex justify-content-between align-items-center">
-              {{dataSet.displayVersion|version}}
-              <i (click)="onDataSetImport(dataSet.id)" class="fas fa-file-import"></i>
+              <div>
+                {{dataSet.fileName}}<br />
+                <span class="small">{{dataSet.displayVersion|version}}</span>
+              </div>
+              <shared-loader *ngIf="dataSet.id === isDataSetImporting?.id && isDataSetImporting.status?.code === 202"></shared-loader>
+              <i *ngIf="!isDataSetImporting" (click)="onDataSetImport(dataSet)" (click)="onDataSetImport(dataSet)" class="fas fa-file-import clickable"></i>
             </div>
             <div *ngIf="(dataSets.length ?? 0) == 0" class="array-field__item">
               <span>None</span>
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn--sm btn--primary">Import Data Set</button>
+        <shared-dropzone (onDrop)="onExternalDataSetDrop()" (onUploaded)="onExternalDataSetUploaded($event)" [multiple]="false" [disabled]="isExternalDataSetInstalling">
+          <button [disabled]="isExternalDataSetInstalling" type="button" class="btn btn--sm btn--primary me-3">Import Data Set</button>
+          <shared-loader *ngIf="isExternalDataSetInstalling"></shared-loader>
+        </shared-dropzone>
       </div>
     </div>
   </div>

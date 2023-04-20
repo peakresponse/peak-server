@@ -9,6 +9,7 @@ export * from './lib/services/notification.service';
 export * from './lib/services/schema.service';
 export * from './lib/services/user.service';
 
+export * from './lib/components/dropzone.component';
 export * from './lib/components/error.component';
 export * from './lib/components/form.component';
 export * from './lib/components/list.component';

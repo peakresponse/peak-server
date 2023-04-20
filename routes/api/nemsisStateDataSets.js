@@ -21,6 +21,7 @@ router.get(
       order: [
         ['state', 'name', 'ASC'],
         ['version', 'DESC'],
+        ['createdAt', 'DESC'],
       ],
     };
     const { stateId } = req.query ?? {};

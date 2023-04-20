@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { SharedModule } from 'shared';
 
@@ -14,7 +13,7 @@ import { NemsisStateComponent } from './nemsis-state.component';
 
 @NgModule({
   declarations: [EditStateComponent, ListStatesComponent, NemsisStateComponent],
-  imports: [CommonModule, FormsModule, NgbModule, NgxDropzoneModule, SharedModule, StatesRoutingModule],
+  imports: [CommonModule, FormsModule, NgbModule, SharedModule, StatesRoutingModule],
   providers: [StateResolver],
 })
 export class StatesModule {}

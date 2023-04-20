@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SortablejsModule } from 'ngx-sortablejs';
 
+import { DropzoneComponent } from './components/dropzone.component';
 import { ErrorComponent } from './components/error.component';
 import { FormComponent } from './components/form.component';
 import { ListComponent } from './components/list.component';
@@ -54,6 +56,7 @@ import { VersionPipe } from './pipes/version.pipe';
 @NgModule({
   declarations: [
     // components
+    DropzoneComponent,
     ErrorComponent,
     FormComponent,
     ListComponent,
@@ -101,9 +104,10 @@ import { VersionPipe } from './pipes/version.pipe';
     InflectionPipe,
     VersionPipe,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, SortablejsModule.forRoot({ animation: 150 })],
+  imports: [CommonModule, FormsModule, NgbModule, NgxDropzoneModule, SortablejsModule.forRoot({ animation: 150 })],
   exports: [
     // components
+    DropzoneComponent,
     ErrorComponent,
     FormComponent,
     ListComponent,

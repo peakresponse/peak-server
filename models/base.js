@@ -242,11 +242,23 @@ class Base extends Model {
   async downloadAssetFile(attribute, isNewInTransaction) {
     const file = this.get(attribute);
     const filePrefix = this.getAssetFilePrefix(attribute);
-    const tmpDir = path.resolve(__dirname, '../../tmp/downloads');
+    const tmpDir = path.resolve(__dirname, '../tmp/downloads');
     const tmpFilePath = path.resolve(tmpDir, filePrefix, file);
     await mkdirp(path.dirname(tmpFilePath));
     if (process.env.AWS_S3_BUCKET) {
-      // TODO
+      let Key;
+      if (isNewInTransaction) {
+        Key = path.join('uploads', file);
+      } else {
+        Key = path.join(filePrefix, file);
+      }
+      const data = await s3
+        .getObject({
+          Bucket: process.env.AWS_S3_BUCKET,
+          Key,
+        })
+        .promise();
+      await fs.promises.writeFile(tmpFilePath, data.Body);
     } else {
       let filePath;
       if (isNewInTransaction) {
