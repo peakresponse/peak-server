@@ -1,5 +1,6 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
+const _ = require('lodash');
 
 const models = require('../../models');
 
@@ -56,6 +57,25 @@ router.get(
       }
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.patch(
+  '/:id',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  helpers.async(async (req, res) => {
+    let version;
+    await models.sequelize.transaction(async (transaction) => {
+      version = await models.Version.findByPk(req.params.id, { transaction });
+      if (version) {
+        await version.update(_.pick(req.body, ['nemsisVersion', 'stateDataSetId']));
+      }
+    });
+    if (version) {
+      res.json(version.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND);
     }
   })
 );

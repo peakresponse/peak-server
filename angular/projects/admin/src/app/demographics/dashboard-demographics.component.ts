@@ -11,7 +11,8 @@ export class DashboardDemographicsComponent implements OnInit {
   constructor(private agencyService: AgencyService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.agencyService.refresh();
-    this.route?.parent?.data.subscribe((data: any) => (this.agency = data?.agency));
+    this.route?.parent?.data.subscribe((data: any) => {
+      this.agency = data?.agency;
+    });
   }
 }

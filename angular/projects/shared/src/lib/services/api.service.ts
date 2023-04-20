@@ -542,5 +542,8 @@ export class ApiService {
     preview: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/versions/${id}/preview`, params, { responseType: 'text' });
     },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/versions/${id}`, data);
+    },
   };
 }

@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAdmin,
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -132,7 +132,7 @@ router.delete(
 
 router.get(
   '/:id',
-  interceptors.requireAdmin,
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const stateDataSet = await models.NemsisStateDataSet.findByPk(req.params.id);
     if (stateDataSet) {
