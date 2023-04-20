@@ -85,7 +85,7 @@ router.get(
       data.message = req.agency.getLocalizedInvitationMessage(res);
       const version = await req.agency.getVersion({ include: ['stateDataSet'] });
       data.version = version?.toJSON();
-      const draftVersion = await req.agency.getDraftVersion({ include: ['stateDataSet'] });
+      const draftVersion = await req.agency.getDraftVersion();
       data.draftVersion = draftVersion?.toJSON();
       res.json(data);
     }

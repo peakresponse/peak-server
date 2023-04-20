@@ -138,6 +138,7 @@ module.exports = (sequelize, DataTypes) => {
 
     async getDraftVersion(options) {
       const versions = await this.getVersions({
+        include: ['stateDataSet'],
         where: {
           isDraft: true,
         },
