@@ -17,6 +17,7 @@ describe('/api/demographics/vehicles', () => {
       'cities',
       'psaps',
       'nemsisStateDataSets',
+      'nemsisSchematrons',
       'agencies',
       'versions',
       'employments',

@@ -1,9 +1,9 @@
 const _ = require('lodash');
+const { Op } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 const url = require('url');
 const uuid = require('uuid');
 
-const nemsisStates = require('../lib/nemsis/states');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -81,11 +81,17 @@ module.exports = (sequelize, DataTypes) => {
 
     static async register(user, canonicalAgency, subdomain, options) {
       const { transaction } = options ?? {};
-      // get a reference to the NEMSIS State repo for this Agency
-      const repo = nemsisStates.getNemsisStateRepo(canonicalAgency.stateId, canonicalAgency.baseNemsisVersion);
-      if (!repo.exists) {
-        await repo.pull();
-      }
+      // get the latest Schematron for the state
+      const schematron = await sequelize.models.NemsisSchematron.findOne({
+        where: {
+          stateId: canonicalAgency.stateId,
+          version: {
+            [Op.not]: null,
+          },
+        },
+        order: [['version', 'DESC']],
+        transaction,
+      });
       // create the Demographic Agency record clone
       const id = uuid.v4();
       const data = {
@@ -101,7 +107,7 @@ module.exports = (sequelize, DataTypes) => {
         updatedById: user.id,
         nemsisVersion: canonicalAgency.nemsisVersion,
         stateDataSetId: canonicalAgency.stateDataSetId,
-        stateSchematronId: repo.schematronVersionsInstalled?.[0],
+        stateSchematronId: schematron?.id,
         data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };

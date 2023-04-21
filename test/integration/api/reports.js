@@ -17,6 +17,7 @@ describe('/api/reports', () => {
       'psaps',
       'users',
       'nemsisStateDataSets',
+      'nemsisSchematrons',
       'agencies',
       'versions',
       'facilities',

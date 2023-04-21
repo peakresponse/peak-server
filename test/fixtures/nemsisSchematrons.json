@@ -1,0 +1,14 @@
+[
+  {
+    "model": "NemsisSchematron",
+    "ignoreSet": true,
+    "data": {
+      "id": "dabc90e5-b8fa-4dac-bcfd-be659ba46b54",
+      "stateId": "06",
+      "nemsisVersion": "3.5.0.211008CP3",
+      "version": "2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
+  }
+]

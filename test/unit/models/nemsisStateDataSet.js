@@ -19,7 +19,7 @@ describe('models', () => {
       });
 
       beforeEach(async () => {
-        await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'nemsisStateDataSets']);
+        await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'nemsisStateDataSets', 'nemsisSchematrons']);
       });
 
       describe('.importAgencies()', () => {
@@ -48,7 +48,7 @@ describe('models', () => {
       let stateDataSet;
 
       beforeEach(async () => {
-        await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'nemsisStateDataSets']);
+        await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'nemsisStateDataSets', 'nemsisSchematrons']);
         file = `${uuid()}.xml`;
         mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
         fs.copySync(

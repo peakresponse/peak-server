@@ -17,6 +17,7 @@ describe('/api/scenes', () => {
       'psaps',
       'users',
       'nemsisStateDataSets',
+      'nemsisSchematrons',
       'agencies',
       'versions',
       'facilities',

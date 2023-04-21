@@ -22,6 +22,7 @@ describe('/api/nemsis/state-data-sets', () => {
       'users',
       'psaps',
       'nemsisStateDataSets',
+      'nemsisSchematrons',
       'agencies',
       'versions',
       'employments',

@@ -16,6 +16,7 @@ describe('/api/lists', () => {
       'users',
       'psaps',
       'nemsisStateDataSets',
+      'nemsisSchematrons',
       'agencies',
       'versions',
       'employments',

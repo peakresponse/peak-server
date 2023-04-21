@@ -71,6 +71,7 @@ const resetDatabase = async () => {
     DELETE FROM versions;
     DELETE FROM agencies;
     DELETE FROM nemsis_state_data_sets;
+    DELETE FROM nemsis_schematrons;
     DELETE FROM psaps;
     DELETE FROM facilities;
     DELETE FROM agencies;

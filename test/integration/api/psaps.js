@@ -16,6 +16,7 @@ describe('/api/psaps', () => {
       'cities',
       'psaps',
       'nemsisStateDataSets',
+      'nemsisSchematrons',
       'dispatchers',
       'agencies',
       'versions',
