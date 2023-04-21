@@ -77,8 +77,13 @@
         <div class="array-field array-field--noclear">
           <div class="form-field form-field--noclear form-field--nonempty">
             <label>Repository Schematrons</label>
-            <div *ngFor="let version of repo?.schematronVersions" class="array-field__item">
+            <div *ngFor="let version of repo?.schematronVersions" class="array-field__item d-flex justify-content-between align-items-center">
               {{version|version}}
+              <span>
+                <i *ngIf="isSchematronInstalled(version)" class="fas fa-check-circle text-success"></i>
+                <i *ngIf="!isSchematronInstalled(version) && !isSchematronInstalling" (click)="onSchematronInstall(version)" class="far fa-circle clickable"></i>
+                <shared-loader *ngIf="!isSchematronInstalled(version) && isSchematronInstalling === version"></shared-loader>
+              </span>
             </div>
             <div *ngIf="(repo?.schematronVersions.length ?? 0) == 0" class="array-field__item">
               <span *ngIf="!(repo?.initialized ?? false)">Repository not initialized</span>

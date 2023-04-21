@@ -372,6 +372,18 @@ export class ApiService {
     },
   };
 
+  nemsisSchematrons = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/nemsis/schematrons', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post('/api/nemsis/schematrons', data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/nemsis/schematrons/${id}`, params);
+    },
+  };
+
   nemsisStateDataSets = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/nemsis/state-data-sets', params);
