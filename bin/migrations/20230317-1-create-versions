@@ -63,6 +63,7 @@ async function createVersions() {
           await agency.update({ data }, { transaction });
         }
         // set NEMSIS and State Data Set versions
+        let emsSchematronIds;
         if (agency.stateId === '06') {
           if (!caDataSet) {
             caDataSet = await models.NemsisStateDataSet.create(
@@ -80,6 +81,7 @@ async function createVersions() {
             caSchematron = await models.NemsisSchematron.create(
               {
                 stateId: '06',
+                dataSet: 'EMSDataSet',
                 nemsisVersion: '3.5.0.211008CP3',
                 version: '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4',
                 createdById: agency.createdById,
@@ -88,11 +90,11 @@ async function createVersions() {
               { transaction }
             );
           }
+          emsSchematronIds = [caSchematron.id];
           await agency.update(
             {
               nemsisVersion: agency.nemsisVersion ?? '3.5.0.211008CP3',
               stateDataSetId: agency.stateDataSetId ?? caDataSet.id,
-              stateSchematronId: agency.stateSchematronId ?? caSchematron.id,
             },
             { transaction }
           );
@@ -113,6 +115,7 @@ async function createVersions() {
             waSchematron = await models.NemsisSchematron.create(
               {
                 stateId: '53',
+                dataSet: 'EMSDataSet',
                 nemsisVersion: '3.5.0.191130CP1',
                 version: '2023-01-25-42a113f2aee3d9072816f32e22ae6f35b250514e',
                 createdById: agency.createdById,
@@ -121,11 +124,11 @@ async function createVersions() {
               { transaction }
             );
           }
+          emsSchematronIds = [waSchematron.id];
           await agency.update(
             {
               nemsisVersion: agency.nemsisVersion ?? '3.5.0.191130CP1',
               stateDataSetId: agency.stateDataSetId ?? waDataSet.id,
-              stateSchematronId: agency.stateSchematronId ?? waSchematron.id,
             },
             { transaction }
           );
@@ -136,7 +139,7 @@ async function createVersions() {
             isDraft: false,
             nemsisVersion: agency.nemsisVersion,
             stateDataSetId: agency.stateDataSetId,
-            stateSchematronId: agency.stateSchematronId,
+            emsSchematronIds,
             createdById: agency.createdById,
             updatedById: agency.createdById,
           },

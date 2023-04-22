@@ -202,7 +202,7 @@ describe('models', () => {
             isDraft: true,
             nemsisVersion: '3.5.0.211008CP3',
             stateDataSetId: '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae',
-            stateSchematronId: 'dabc90e5-b8fa-4dac-bcfd-be659ba46b54',
+            emsSchematronIds: ['dabc90e5-b8fa-4dac-bcfd-be659ba46b54'],
             createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
             updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
           })
@@ -399,7 +399,6 @@ describe('models', () => {
           assert.deepStrictEqual(agency.updatedById, user.id);
           assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
           assert.deepStrictEqual(agency.stateDataSetId, '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae');
-          assert.deepStrictEqual(agency.stateSchematronId, 'dabc90e5-b8fa-4dac-bcfd-be659ba46b54');
           assert.deepStrictEqual(agency.data, {
             'dAgency.01': { _text: 'S66-50146' },
             'dAgency.02': { _text: 'S66-50146' },
@@ -412,7 +411,7 @@ describe('models', () => {
           assert.deepStrictEqual(version.isDraft, false);
           assert.deepStrictEqual(version.nemsisVersion, '3.5.0.211008CP3');
           assert.deepStrictEqual(version.stateDataSetId, '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae');
-          assert.deepStrictEqual(version.stateSchematronId, 'dabc90e5-b8fa-4dac-bcfd-be659ba46b54');
+          assert.deepStrictEqual(version.emsSchematronIds, ['dabc90e5-b8fa-4dac-bcfd-be659ba46b54']);
 
           const employment = await models.Employment.findOne({
             where: { agencyId: agency.id, userId: user.id },

@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       Agency.hasOne(models.Agency, { as: 'draft', foreignKey: 'draftParentId' });
       Agency.belongsTo(models.Agency, { as: 'createdByAgency' });
       Agency.belongsTo(models.NemsisStateDataSet, { as: 'stateDataSet' });
-      Agency.belongsTo(models.NemsisSchematron, { as: 'stateSchematron' });
       Agency.belongsTo(models.State, { as: 'state' });
       Agency.belongsTo(models.User, { as: 'updatedBy' });
       Agency.belongsTo(models.User, { as: 'createdBy' });
@@ -84,6 +83,7 @@ module.exports = (sequelize, DataTypes) => {
       // get the latest Schematron for the state
       const schematron = await sequelize.models.NemsisSchematron.findOne({
         where: {
+          dataSet: 'EMSDataSet',
           stateId: canonicalAgency.stateId,
           version: {
             [Op.not]: null,
@@ -107,7 +107,6 @@ module.exports = (sequelize, DataTypes) => {
         updatedById: user.id,
         nemsisVersion: canonicalAgency.nemsisVersion,
         stateDataSetId: canonicalAgency.stateDataSetId,
-        stateSchematronId: schematron?.id,
         data: JSON.parse(JSON.stringify(canonicalAgency.data).replace(/"sAgency\.(0\d)"/g, '"dAgency.$1"')),
       };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
@@ -119,7 +118,7 @@ module.exports = (sequelize, DataTypes) => {
           isDraft: false,
           nemsisVersion: agency.nemsisVersion,
           stateDataSetId: agency.stateDataSetId,
-          stateSchematronId: agency.stateSchematronId,
+          emsSchematronIds: [schematron.id],
           createdById: user.id,
           updatedById: user.id,
         },
@@ -164,7 +163,6 @@ module.exports = (sequelize, DataTypes) => {
             ..._.pick(version, [
               'nemsisVersion',
               'stateDataSetId',
-              'stateSchematronId',
               'demCustomConfiguration',
               'emsCustomConfiguration',
               'demDataSet',
@@ -268,7 +266,6 @@ module.exports = (sequelize, DataTypes) => {
         'claimedAgency',
         'nemsisVersion',
         'stateDataSetId',
-        'stateSchematronId',
         'stateId',
         'isClaimed',
         'subdomain',

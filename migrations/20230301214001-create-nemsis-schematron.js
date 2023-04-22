@@ -16,7 +16,12 @@ module.exports = {
           key: 'id',
         },
       },
+      dataSet: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       nemsis_version: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       version: {
@@ -26,6 +31,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       file_name: {
+        type: Sequelize.STRING,
+      },
+      file_version: {
         type: Sequelize.STRING,
       },
       created_by_id: {

@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
 
   NemsisSchematron.init(
     {
+      dataSet: {
+        type: DataTypes.STRING,
+      },
       nemsisVersion: {
         type: DataTypes.STRING,
       },
@@ -46,14 +49,17 @@ module.exports = (sequelize, DataTypes) => {
       file: {
         type: DataTypes.STRING,
       },
-      fileName: {
-        type: DataTypes.STRING,
-      },
       fileUrl: {
         type: DataTypes.VIRTUAL(DataTypes.STRING, ['file']),
         get() {
           return this.assetUrl('file');
         },
+      },
+      fileName: {
+        type: DataTypes.STRING,
+      },
+      fileVersion: {
+        type: DataTypes.STRING,
       },
     },
     {

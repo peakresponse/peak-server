@@ -25,7 +25,6 @@ module.exports = {
         type: Sequelize.STRING,
       },
       state_data_set_id: {
-        allowNull: false,
         type: Sequelize.UUID,
         references: {
           model: {
@@ -34,15 +33,13 @@ module.exports = {
           key: 'id',
         },
       },
-      state_schematron_id: {
-        allowNull: false,
-        type: Sequelize.UUID,
-        references: {
-          model: {
-            tableName: 'nemsis_schematrons',
-          },
-          key: 'id',
-        },
+      dem_schematron_ids: {
+        type: Sequelize.JSONB,
+        defaultValue: [],
+      },
+      ems_schematron_ids: {
+        type: Sequelize.JSONB,
+        defaultValue: [],
       },
       dem_custom_configuration: {
         type: Sequelize.JSONB,

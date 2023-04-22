@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Version.belongsTo(models.NemsisStateDataSet, { as: 'stateDataSet' });
-      Version.belongsTo(models.NemsisSchematron, { as: 'stateSchematron' });
       Version.belongsTo(models.User, { as: 'createdBy' });
       Version.belongsTo(models.User, { as: 'updatedBy' });
       Version.belongsTo(models.Agency, { as: 'agency' });
@@ -32,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
         'isDraft',
         'nemsisVersion',
         'stateDataSetId',
-        'stateSchematronId',
+        'demSchematronIds',
+        'emsSchematronIds',
         'isValid',
         'validationErrors',
         'createdAt',
@@ -117,7 +117,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       isDraft: {
         type: DataTypes.BOOLEAN,
-        field: 'is_draft',
       },
       name: {
         type: DataTypes.VIRTUAL(DataTypes.STRING, ['id', 'createdAt']),
@@ -127,7 +126,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       nemsisVersion: {
         type: DataTypes.STRING,
-        field: 'nemsis_version',
       },
       baseNemsisVersion: {
         type: DataTypes.VIRTUAL(DataTypes.STRING, ['nemsisVersion']),
@@ -136,24 +134,26 @@ module.exports = (sequelize, DataTypes) => {
           return m?.length > 1 ? m[1] : null;
         },
       },
+      demSchematronIds: {
+        type: DataTypes.JSONB,
+      },
+      emsSchematronIds: {
+        type: DataTypes.JSONB,
+      },
       demCustomConfiguration: {
         type: DataTypes.JSONB,
-        field: 'dem_custom_configuration',
       },
       emsCustomConfiguration: {
         type: DataTypes.JSONB,
-        field: 'ems_custom_configuration',
       },
       demDataSet: {
         type: DataTypes.TEXT,
       },
       isValid: {
         type: DataTypes.BOOLEAN,
-        field: 'is_valid',
       },
       validationErrors: {
         type: DataTypes.JSONB,
-        field: 'validation_errors',
       },
     },
     {
