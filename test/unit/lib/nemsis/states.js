@@ -40,6 +40,7 @@ describe('lib', () => {
               assert.deepStrictEqual(repo.toJSON(), {
                 initialized: false,
                 dataSetVersions: [],
+                demSchematronVersions: [],
                 emsSchematronVersions: [],
               });
             });
