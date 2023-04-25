@@ -22,6 +22,7 @@ export class NemsisStateComponent implements OnInit {
   }
 
   isSchematronInstalling?: string;
+  isExternalSchematronInstalling = false;
   schematronsInstalled: any[] = [];
   get externalDemSchematrons(): any[] {
     return this.schematronsInstalled.filter((st) => st.dataSet === 'DEMDataSet' && st.version === null);
@@ -147,7 +148,7 @@ export class NemsisStateComponent implements OnInit {
     return this.schematronsInstalled.find((st) => st.version === version);
   }
 
-  onSchematronInstall(version: string) {
+  onSchematronInstall(dataSet: string, version: string) {
     if (this.isSchematronInstalling) {
       return;
     }
@@ -155,10 +156,31 @@ export class NemsisStateComponent implements OnInit {
     this.api.nemsisSchematrons
       .create({
         stateId: this.id,
+        dataSet,
         version,
       })
       .subscribe((response: HttpResponse<any>) => {
         this.isSchematronInstalling = undefined;
+        const schematronsInstalled = [...this.schematronsInstalled];
+        schematronsInstalled.push(response.body);
+        this.schematronsInstalled = schematronsInstalled;
+      });
+  }
+
+  onExternalSchematronDrop() {
+    this.isExternalSchematronInstalling = true;
+  }
+
+  onExternalSchematronUploaded(dataSet: string, upload: any) {
+    this.api.nemsisSchematrons
+      .create({
+        stateId: this.id,
+        dataSet,
+        file: upload.href,
+        fileName: upload.name,
+      })
+      .subscribe((response: HttpResponse<any>) => {
+        this.isExternalSchematronInstalling = false;
         const schematronsInstalled = [...this.schematronsInstalled];
         schematronsInstalled.push(response.body);
         this.schematronsInstalled = schematronsInstalled;

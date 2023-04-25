@@ -81,7 +81,7 @@
               {{version|version}}
               <span>
                 <i *ngIf="isSchematronInstalled(version)" class="fas fa-check-circle text-success"></i>
-                <i *ngIf="!isSchematronInstalled(version) && !isSchematronInstalling" (click)="onSchematronInstall(version)" class="far fa-circle clickable"></i>
+                <i *ngIf="!isSchematronInstalled(version) && !isSchematronInstalling" (click)="onSchematronInstall('DEMDataSet', version)" class="far fa-circle clickable"></i>
                 <shared-loader *ngIf="!isSchematronInstalled(version) && isSchematronInstalling === version"></shared-loader>
               </span>
             </div>
@@ -99,14 +99,19 @@
           <div *ngIf="externalDemSchematrons; let schematrons" class="form-field form-field--noclear form-field--nonempty">
             <label>External DEM Schematrons</label>
             <div *ngFor="let schematron of schematrons" class="array-field__item">
-              {{schematron.version|version}}
-            </div>
+              {{schematron.fileName}}<br />
+              <ng-container *ngIf="schematron.fileVersion"><span class="small">{{schematron.fileVersion}}</span><br /></ng-container>
+              <span class="small">{{schematron.displayVersion|version}}</span>
+          </div>
             <div *ngIf="(schematrons.length ?? 0) == 0" class="array-field__item">
               <span>None</span>
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn--sm btn--primary">Import DEM Schematron</button>
+        <shared-dropzone (onDrop)="onExternalSchematronDrop()" (onUploaded)="onExternalSchematronUploaded('DEMDataSet', $event)" [multiple]="false" [disabled]="isExternalSchematronInstalling">
+          <button [disabled]="isExternalSchematronInstalling" type="button" class="btn btn--sm btn--primary me-3">Import DEM Schematron</button>
+          <shared-loader *ngIf="isExternalSchematronInstalling"></shared-loader>
+        </shared-dropzone>
       </div>
     </div>
   </div>
@@ -120,7 +125,7 @@
               {{version|version}}
               <span>
                 <i *ngIf="isSchematronInstalled(version)" class="fas fa-check-circle text-success"></i>
-                <i *ngIf="!isSchematronInstalled(version) && !isSchematronInstalling" (click)="onSchematronInstall(version)" class="far fa-circle clickable"></i>
+                <i *ngIf="!isSchematronInstalled(version) && !isSchematronInstalling" (click)="onSchematronInstall('EMSDataSet', version)" class="far fa-circle clickable"></i>
                 <shared-loader *ngIf="!isSchematronInstalled(version) && isSchematronInstalling === version"></shared-loader>
               </span>
             </div>
@@ -138,14 +143,19 @@
           <div *ngIf="externalEmsSchematrons; let schematrons" class="form-field form-field--noclear form-field--nonempty">
             <label>External EMS Schematrons</label>
             <div *ngFor="let schematron of schematrons" class="array-field__item">
-              {{schematron.version|version}}
+              {{schematron.fileName}}<br />
+              <ng-container *ngIf="schematron.fileVersion"><span class="small">{{schematron.fileVersion}}</span><br /></ng-container>
+              <span class="small">{{schematron.displayVersion|version}}</span>
             </div>
             <div *ngIf="(schematrons.length ?? 0) == 0" class="array-field__item">
               <span>None</span>
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn--sm btn--primary">Import EMS Schematron</button>
+        <shared-dropzone (onDrop)="onExternalSchematronDrop()" (onUploaded)="onExternalSchematronUploaded('EMSDataSet', $event)" [multiple]="false" [disabled]="isExternalSchematronInstalling">
+          <button [disabled]="isExternalSchematronInstalling" type="button" class="btn btn--sm btn--primary me-3">Import EMS Schematron</button>
+          <shared-loader *ngIf="isExternalSchematronInstalling"></shared-loader>
+        </shared-dropzone>
       </div>
     </div>
   </div>
