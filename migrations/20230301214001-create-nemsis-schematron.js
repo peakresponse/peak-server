@@ -21,7 +21,6 @@ module.exports = {
         type: Sequelize.STRING,
       },
       nemsis_version: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       version: {

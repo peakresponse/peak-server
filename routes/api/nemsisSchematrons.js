@@ -6,7 +6,7 @@ const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
 const nemsisStates = require('../../lib/nemsis/states');
-const { NemsisStateDataSetParser } = require('../../lib/nemsis/stateDataSetParser');
+const { NemsisSchematronParser } = require('../../lib/nemsis/schematronParser');
 
 const router = express.Router();
 
@@ -38,28 +38,30 @@ router.post(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const { stateId, version, file, fileName } = req.body;
+    const { stateId, dataSet, version, file, fileName } = req.body;
     let record;
-    if (stateId && version) {
+    if (stateId && dataSet && version) {
       const repo = nemsisStates.getNemsisStateRepo(stateId, '3.5.0');
       await repo.pull();
       await repo.install(version);
-      const stateDataSetParser = repo.getDataSetParser(version);
-      const nemsisVersion = await stateDataSetParser.getNemsisVersion();
-      record = await models.NemsisStateDataSet.create({
+      const schematronParser = repo.getSchematronParser(dataSet, version);
+      const nemsisVersion = await schematronParser.getNemsisVersion();
+      record = await models.NemsisSchematron.create({
         stateId,
+        dataSet,
         nemsisVersion,
         version,
         createdById: req.user.id,
         updatedById: req.user.id,
       });
-    } else if (stateId && file && fileName) {
+    } else if (stateId && dataSet && file && fileName) {
       let tmpPath;
       try {
         await models.sequelize.transaction(async (transaction) => {
-          record = await models.NemsisStateDataSet.create(
+          record = await models.NemsisSchematron.create(
             {
               stateId,
+              dataSet,
               file,
               fileName,
               createdById: req.user.id,
@@ -68,16 +70,17 @@ router.post(
             { transaction }
           );
           tmpPath = await record.downloadAssetFile('file', true);
-          const stateDataSetParser = new NemsisStateDataSetParser(tmpPath);
-          const nemsisVersion = await stateDataSetParser.getNemsisVersion();
-          const fileStateId = await stateDataSetParser.getStateId();
-          if (stateId !== fileStateId) {
-            throw new Error('stateId');
+          const schematronParser = new NemsisSchematronParser(tmpPath);
+          const nemsisVersion = await schematronParser.getNemsisVersion();
+          const fileVersion = await schematronParser.getFileVersion();
+          const fileDataSet = await schematronParser.getDataSet();
+          if (dataSet !== fileDataSet) {
+            throw new Error('dataSet');
           }
-          await record.update({ nemsisVersion }, { transaction });
+          await record.update({ nemsisVersion, fileVersion }, { transaction });
         });
       } catch (err) {
-        if (err.message === 'stateId') {
+        if (err.message === 'dataSet') {
           res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
           return;
         }
