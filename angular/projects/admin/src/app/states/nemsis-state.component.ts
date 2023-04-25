@@ -23,6 +23,9 @@ export class NemsisStateComponent implements OnInit {
 
   isSchematronInstalling?: string;
   schematronsInstalled: any[] = [];
+  get externalDemSchematrons(): any[] {
+    return this.schematronsInstalled.filter((st) => st.dataSet === 'DEMDataSet' && st.version === null);
+  }
   get externalEmsSchematrons(): any[] {
     return this.schematronsInstalled.filter((st) => st.dataSet === 'EMSDataSet' && st.version === null);
   }
