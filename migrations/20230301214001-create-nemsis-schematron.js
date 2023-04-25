@@ -16,7 +16,7 @@ module.exports = {
           key: 'id',
         },
       },
-      dataSet: {
+      data_set: {
         allowNull: false,
         type: Sequelize.STRING,
       },
