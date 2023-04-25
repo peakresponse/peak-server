@@ -76,8 +76,8 @@
       <div class="mb-3">
         <div class="array-field array-field--noclear">
           <div class="form-field form-field--noclear form-field--nonempty">
-            <label>Repository Schematrons</label>
-            <div *ngFor="let version of repo?.schematronVersions" class="array-field__item d-flex justify-content-between align-items-center">
+            <label>Repository EMS Schematrons</label>
+            <div *ngFor="let version of repo?.emsSchematronVersions" class="array-field__item d-flex justify-content-between align-items-center">
               {{version|version}}
               <span>
                 <i *ngIf="isSchematronInstalled(version)" class="fas fa-check-circle text-success"></i>
@@ -85,7 +85,7 @@
                 <shared-loader *ngIf="!isSchematronInstalled(version) && isSchematronInstalling === version"></shared-loader>
               </span>
             </div>
-            <div *ngIf="(repo?.schematronVersions.length ?? 0) == 0" class="array-field__item">
+            <div *ngIf="(repo?.emsSchematronVersions.length ?? 0) == 0" class="array-field__item">
               <span *ngIf="!(repo?.initialized ?? false)">Repository not initialized</span>
               <span *ngIf="repo?.initialized">None</span>
             </div>
@@ -96,8 +96,8 @@
     <div class="col-lg-6 col-xl-4">
       <div class="mb-3">
         <div class="array-field array-field--noclear mb-3">
-          <div *ngIf="externalSchematrons; let schematrons" class="form-field form-field--noclear form-field--nonempty">
-            <label>External Schematrons</label>
+          <div *ngIf="externalEmsSchematrons; let schematrons" class="form-field form-field--noclear form-field--nonempty">
+            <label>External EMS Schematrons</label>
             <div *ngFor="let schematron of schematrons" class="array-field__item">
               {{schematron.version|version}}
             </div>

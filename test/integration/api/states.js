@@ -43,7 +43,7 @@ describe('/api/states', () => {
         assert.deepStrictEqual(response.body, {
           initialized: false,
           dataSetVersions: [],
-          schematronVersions: [],
+          emsSchematronVersions: [],
         });
       });
     });
@@ -62,7 +62,7 @@ describe('/api/states', () => {
             '2019-09-30-ffa327cf250d2065d0840724176bf7dcb77cfadc',
             '2019-04-26-b40131057feb8406ab0d1948eab992c1b42ccd36',
           ],
-          schematronVersions: [
+          emsSchematronVersions: [
             '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
             '2019-03-05-33a41c3727ae4a37943f2524bc3243f78a8c523c',
             '2017-10-04-2a6a2b7cfd26e0d380c62762348de2751896bade',
@@ -93,7 +93,7 @@ describe('/api/states', () => {
             '2019-09-30-ffa327cf250d2065d0840724176bf7dcb77cfadc',
             '2019-04-26-b40131057feb8406ab0d1948eab992c1b42ccd36',
           ],
-          schematronVersions: [
+          emsSchematronVersions: [
             '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
             '2019-03-05-33a41c3727ae4a37943f2524bc3243f78a8c523c',
             '2017-10-04-2a6a2b7cfd26e0d380c62762348de2751896bade',
