@@ -76,7 +76,6 @@ router.post(
 
 router.get(
   '/me',
-  interceptors.requireLogin,
   helpers.async(async (req, res) => {
     if (!req.agency) {
       res.status(HttpStatus.NOT_FOUND).end();
