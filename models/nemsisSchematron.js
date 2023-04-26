@@ -40,10 +40,12 @@ module.exports = (sequelize, DataTypes) => {
       displayVersion: {
         type: DataTypes.VIRTUAL(DataTypes.STRING, ['version', 'createdAt']),
         get() {
-          if (this.version) {
-            return this.version;
+          const version = this.version ?? `${DateTime.fromJSDate(this.createdAt).toISODate()}-${this.id}`;
+          const m = version.match(/^(\d\d\d\d-\d\d-\d\d)-([\da-f\-]+)$/);
+          if (m) {
+            return `${m[1]} (${m[2].substring(0, 8)})`;
           }
-          return `${DateTime.fromJSDate(this.createdAt).toISODate()}-${this.id}`;
+          return version;
         },
       },
       file: {
