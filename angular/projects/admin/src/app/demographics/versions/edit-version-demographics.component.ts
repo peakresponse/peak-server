@@ -8,11 +8,16 @@ import { AgencyService } from 'shared';
 })
 export class EditVersionDemographicsComponent {
   id: string = '';
+  isDraft = false;
 
   constructor(private agency: AgencyService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
+  }
+
+  onLoad(record: any) {
+    this.isDraft = record?.isDraft;
   }
 
   onUpdate() {

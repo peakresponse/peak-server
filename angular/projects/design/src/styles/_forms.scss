@@ -146,10 +146,10 @@ form {
 }
 
 .form-field--disabled,
-fieldset:disabled .form-field {
+fieldset[disabled] .form-field {
   border-color: $base-300;
   &::after {
-    display: none;
+    display: none !important;
   }
 }
 
