@@ -36,7 +36,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAdmin,
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const { stateId, version, file, fileName } = req.body;
     let record;
@@ -63,6 +63,7 @@ router.post(
               file,
               fileName,
               createdById: req.user.id,
+              createdByAgencyId: req.agency?.id,
               updatedById: req.user.id,
             },
             { transaction }

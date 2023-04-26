@@ -80,18 +80,6 @@ module.exports = (sequelize, DataTypes) => {
 
     static async register(user, canonicalAgency, subdomain, options) {
       const { transaction } = options ?? {};
-      // get the latest Schematron for the state
-      const schematron = await sequelize.models.NemsisSchematron.findOne({
-        where: {
-          dataSet: 'EMSDataSet',
-          stateId: canonicalAgency.stateId,
-          version: {
-            [Op.not]: null,
-          },
-        },
-        order: [['version', 'DESC']],
-        transaction,
-      });
       // create the Demographic Agency record clone
       const id = uuid.v4();
       const data = {
@@ -111,6 +99,29 @@ module.exports = (sequelize, DataTypes) => {
       };
       data.data['dAgency.04'] = { _text: canonicalAgency.stateId };
       const agency = await sequelize.models.Agency.create(data, { transaction });
+      // get the latest Schematrons for the state
+      const demSchematron = await sequelize.models.NemsisSchematron.findOne({
+        where: {
+          dataSet: 'DEMDataSet',
+          stateId: canonicalAgency.stateId,
+          version: {
+            [Op.not]: null,
+          },
+        },
+        order: [['version', 'DESC']],
+        transaction,
+      });
+      const emsSchematron = await sequelize.models.NemsisSchematron.findOne({
+        where: {
+          dataSet: 'EMSDataSet',
+          stateId: canonicalAgency.stateId,
+          version: {
+            [Op.not]: null,
+          },
+        },
+        order: [['version', 'DESC']],
+        transaction,
+      });
       // create a first Version for the Agency
       const version = await sequelize.models.Version.create(
         {
@@ -118,7 +129,8 @@ module.exports = (sequelize, DataTypes) => {
           isDraft: false,
           nemsisVersion: agency.nemsisVersion,
           stateDataSetId: agency.stateDataSetId,
-          emsSchematronIds: [schematron.id],
+          demSchematronIds: demSchematron ? [demSchematron.id] : [],
+          emsSchematronIds: emsSchematron ? [emsSchematron.id] : [],
           createdById: user.id,
           updatedById: user.id,
         },
