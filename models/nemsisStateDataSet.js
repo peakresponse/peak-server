@@ -209,7 +209,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.VIRTUAL(DataTypes.STRING, ['version', 'createdAt']),
         get() {
           const version = this.version ?? `${DateTime.fromJSDate(this.createdAt).toISODate()}-${this.id}`;
-          const m = version.match(/^(\d\d\d\d-\d\d-\d\d)-([\da-f\-]+)$/);
+          const m = version.match(/^(\d\d\d\d-\d\d-\d\d)-([\da-f-]+)$/);
           if (m) {
             return `${m[1]} (${m[2].substring(0, 8)})`;
           }
