@@ -175,6 +175,8 @@ module.exports = (sequelize, DataTypes) => {
             ..._.pick(version, [
               'nemsisVersion',
               'stateDataSetId',
+              'demSchematronIds',
+              'emsSchematronIds',
               'demCustomConfiguration',
               'emsCustomConfiguration',
               'demDataSet',

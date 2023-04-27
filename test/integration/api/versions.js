@@ -4,6 +4,7 @@ const session = require('supertest-session');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
+const models = require('../../../models');
 
 describe('/api/versions', () => {
   let testSession;
@@ -26,7 +27,7 @@ describe('/api/versions', () => {
     await testSession
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
-      .send({ email: 'personnel.admin@peakresponse.net', password: 'abcd1234' })
+      .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
       .expect(HttpStatus.OK);
   });
 
@@ -35,6 +36,23 @@ describe('/api/versions', () => {
       const response = await testSession.get('/api/versions').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
       const versions = response.body;
       assert.deepStrictEqual(versions?.length, 2);
+    });
+  });
+
+  describe('POST /', () => {
+    it('returns a new draft Version for the Agency if needed', async () => {
+      const oldDraft = await models.Version.findByPk('682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
+      await oldDraft.destroy();
+      const response = await testSession.post('/api/versions').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+
+      assert(response.body?.id);
+      const draft = await models.Version.findByPk(response.body.id);
+      assert.deepStrictEqual(draft.isDraft, true);
+    });
+
+    it('returns the current draft Version for the Agency if it exists', async () => {
+      const response = await testSession.post('/api/versions').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      assert.deepStrictEqual(response.body?.id, '682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
     });
   });
 
@@ -60,6 +78,17 @@ describe('/api/versions', () => {
         updatedAt: response.body.updatedAt,
         updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
       });
+    });
+  });
+
+  describe('DELETE /:id', () => {
+    it('deletes the specified Version', async () => {
+      await testSession
+        .delete('/api/versions/682d5860-c11e-4a40-bfcc-b2dadec9e7d4')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .expect(HttpStatus.OK);
+      const record = await models.Version.findByPk('682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
+      assert.deepStrictEqual(record, null);
     });
   });
 });

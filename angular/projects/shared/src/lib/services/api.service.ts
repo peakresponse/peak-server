@@ -548,6 +548,9 @@ export class ApiService {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/versions', params);
     },
+    create: (): Observable<any> => {
+      return this.post('/api/versions', null);
+    },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/versions/${id}`, params);
     },
@@ -556,6 +559,9 @@ export class ApiService {
     },
     update: (id: string, data: any): Observable<any> => {
       return this.patch(`/api/versions/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/versions/${id}`);
     },
   };
 }

@@ -1,4 +1,4 @@
-import { Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { get } from 'lodash';
@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
 
 import { ApiService } from '../services/api.service';
 import { UserService } from '../services/user.service';
+import { ModalComponent } from './modal.component';
 
 @Component({
   selector: 'shared-form',
@@ -27,6 +28,7 @@ export class FormComponent implements OnChanges {
   @Output() update = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @ContentChild(TemplateRef) template: TemplateRef<any> | null = null;
+  @ViewChild('deleteConfirmation') deleteModal?: ModalComponent;
 
   loading = false;
   updated = false;
@@ -108,6 +110,7 @@ export class FormComponent implements OnChanges {
   }
 
   onDelete() {
+    this.deleteModal?.close();
     this.loading = true;
     this.error = false;
     get(this.api, this.type)

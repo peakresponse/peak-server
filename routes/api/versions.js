@@ -23,6 +23,15 @@ router.get(
   })
 );
 
+router.post(
+  '/',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  helpers.async(async (req, res) => {
+    const version = await req.agency.getOrCreateDraftVersion(req.user);
+    res.json(version.toJSON());
+  })
+);
+
 router.get(
   '/:id/preview',
   interceptors.requireAgency(),
@@ -69,11 +78,32 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       version = await models.Version.findByPk(req.params.id, { transaction });
       if (version) {
-        await version.update(_.pick(req.body, ['nemsisVersion', 'stateDataSetId']));
+        await version.update(_.pick(req.body, ['nemsisVersion', 'stateDataSetId']), { transaction });
       }
     });
     if (version) {
       res.json(version.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND);
+    }
+  })
+);
+
+router.delete(
+  '/:id',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  helpers.async(async (req, res) => {
+    let version;
+    await models.sequelize.transaction(async (transaction) => {
+      version = await models.Version.findByPk(req.params.id, { transaction });
+      if (version?.isDraft) {
+        await version.destroy({ transaction });
+      }
+    });
+    if (version?.isDraft) {
+      res.status(HttpStatus.OK).end();
+    } else if (version) {
+      res.status(HttpStatus.NOT_ALLOWED).end();
     } else {
       res.status(HttpStatus.NOT_FOUND);
     }

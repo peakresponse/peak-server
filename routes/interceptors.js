@@ -122,9 +122,9 @@ async function requireLogin(req, res, next, role) {
       /// check for role, if any
       if (role) {
         if (Array.isArray(role)) {
-          isAllowed = employment.isOwner || role.filter((r) => employment.roles.include(r)).length > 0;
+          isAllowed = employment.isOwner || role.filter((r) => employment.roles.includes(r)).length > 0;
         } else {
-          isAllowed = employment.isOwner || employment.roles.include(role);
+          isAllowed = employment.isOwner || employment.roles.includes(role);
         }
       }
     }
