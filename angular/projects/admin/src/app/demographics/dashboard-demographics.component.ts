@@ -10,6 +10,11 @@ export class DashboardDemographicsComponent implements OnInit {
   record: any;
   isCreatingNewVersion = false;
 
+  schematronsInstalled: any[] = [];
+  schematronById(id: string): any {
+    return this.schematronsInstalled.find((st) => st.id === id);
+  }
+
   constructor(
     private agency: AgencyService,
     private api: ApiService,
@@ -20,6 +25,9 @@ export class DashboardDemographicsComponent implements OnInit {
   ngOnInit() {
     this.route?.parent?.data.subscribe((data: any) => {
       this.record = data?.agency;
+    });
+    this.api.nemsisSchematrons.index().subscribe((response: HttpResponse<any>) => {
+      this.schematronsInstalled = response.body;
     });
   }
 

@@ -1,3 +1,3 @@
-<shared-text-field *ngIf="search.object" [id]="id" [label]="label" [name]="objectNameProperty" [source]="search.object" [target]="search.object" [isFocusable]="false" (valueChange)="onClear()"></shared-text-field>
+<shared-text-field *ngIf="search.object" [id]="id" [label]="label" [name]="objectNameProperty" [source]="search.object" [target]="target ? search.object : null" [isFocusable]="false" (valueChange)="onClear()"></shared-text-field>
 <ng-template #rt let-r="result" let-t="term">{{inputFormatter(r)}}</ng-template>
 <shared-search-field *ngIf="!search.object" [id]="id" [label]="label" name="object" [source]="search" [target]="search" [searchHandler]="searchHandler" [resultTemplate]="rt" [isSelectOnly]="true" [inputFormatter]="inputFormatter" (valueChange)="onSelect($event)"></shared-search-field>

@@ -7,17 +7,43 @@
       <li class="nav__item"><a tabIndex="0" class="nav__link nav__link--active" routerLink="">Details</a></li>
       <li class="nav__item"><a tabIndex="0" class="nav__link" routerLink="preview">XML</a></li>
     </ul>
-    <shared-form *ngIf="id" type="versions" [id]="id" [disabled]="!isDraft" (load)="onLoad($event)" (update)="onUpdate()" (delete)="onDelete()">
+    <shared-form *ngIf="id" type="versions" [id]="id" [hideButtons]="!isDraft" (load)="onLoad($event)" (update)="onUpdate()" (delete)="onDelete()">
       <ng-template let-record="record" let-error="error">
         <div class="mb-3 d-flex align-items-center">
           <shared-text-field id="name" class="flex-grow-1 me-3" label="Name" [source]="record" [error]="error"></shared-text-field>
           <shared-checkbox id="isDraft" label="Draft?" [source]="record" [error]="error"></shared-checkbox>
         </div>
         <div class="mb-3">
-          <shared-text-field id="nemsisVersion" label="NEMSIS Version" [source]="record" [target]="record" [error]="error"></shared-text-field>
+          <shared-text-field id="nemsisVersion" label="NEMSIS Version" [source]="record" [target]="isDraft ? record : null" [error]="error"></shared-text-field>
         </div>
         <div class="mb-3">
-          <shared-object-field id="stateDataSetId" label="State Data Set" [source]="record" [target]="record" [error]="error" objectNameProperty="displayVersion" objectApiPath="nemsisStateDataSets"></shared-object-field>
+          <shared-object-field id="stateDataSetId" label="State Data Set" [source]="record" [target]="isDraft ? record : null" [error]="error" objectNameProperty="displayVersion" objectApiPath="nemsisStateDataSets"></shared-object-field>
+        </div>
+        <div class="mb-3">
+          <shared-array-field id="demSchematronIds" label="DEM Schematrons" [source]="record" [target]="isDraft ? record : null" [error]="error">
+            <ng-template #item let-schematronId="item">
+              {{schematronById(schematronId)?.displayVersion}}
+            </ng-template>
+            <ng-template #form let-addItem="addItem">
+              <shared-select-field #demSchematrons id="demSchematrons" (valueChange)="$event && addItem($event); $event && demSchematrons.onClear()" [target]="{demSchematrons: null}">
+                <option [value]="null">Add a DEM Schematron...</option>
+                <option *ngFor="let schematron of demSchematronsInstalled" [value]="schematron.id">{{schematron.displayVersion}}</option>
+              </shared-select-field>
+            </ng-template>    
+          </shared-array-field>
+        </div>
+        <div class="mb-3">
+          <shared-array-field id="emsSchematronIds" label="EMS Schematrons" [source]="record" [target]="isDraft ? record : null" [error]="error">
+            <ng-template #item let-schematronId="item">
+              {{schematronById(schematronId)?.displayVersion}}
+            </ng-template>
+            <ng-template #form let-addItem="addItem">
+              <shared-select-field #emsSchematrons id="emsSchematrons" (valueChange)="$event && addItem($event); $event && emsSchematrons.onClear()" [target]="{emsSchematrons: null}">
+                <option [value]="null">Add an EMS Schematron...</option>
+                <option *ngFor="let schematron of emsSchematronsInstalled" [value]="schematron.id">{{schematron.displayVersion}}</option>
+              </shared-select-field>
+            </ng-template>    
+          </shared-array-field>
         </div>
       </ng-template>
     </shared-form>

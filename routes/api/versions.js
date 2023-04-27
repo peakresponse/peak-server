@@ -78,7 +78,9 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       version = await models.Version.findByPk(req.params.id, { transaction });
       if (version) {
-        await version.update(_.pick(req.body, ['nemsisVersion', 'stateDataSetId']), { transaction });
+        await version.update(_.pick(req.body, ['nemsisVersion', 'stateDataSetId', 'demSchematronIds', 'emsSchematronIds']), {
+          transaction,
+        });
       }
     });
     if (version) {
