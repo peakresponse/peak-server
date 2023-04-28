@@ -1,0 +1,8 @@
+<router-outlet></router-outlet>
+<admin-schema-list #list
+                   name="Devices" 
+                   [class.d-none]="route.firstChild"
+                   [keyPath]="['demographics', 'devices']"
+                   schemaPath="/nemsis/xsd/dDevice_v3.json"
+                   [schemaColumns]="sectionColumns">
+</admin-schema-list>

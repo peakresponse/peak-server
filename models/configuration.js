@@ -1,4 +1,3 @@
-const { Op } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 
 const { Base } = require('./base');
@@ -54,23 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Configuration.addScope('finalOrNew', {
-    where: {
-      [Op.or]: {
-        isDraft: false,
-        [Op.and]: {
-          isDraft: true,
-          draftParentId: null,
-        },
-      },
-    },
-  });
-
-  Configuration.addScope('final', {
-    where: {
-      isDraft: false,
-    },
-  });
+  Configuration.addDraftScopes();
 
   Configuration.beforeValidate(async (record, options) => {
     record.syncNemsisId(options);

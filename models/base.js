@@ -5,7 +5,7 @@ const inflection = require('inflection');
 const jsonpatch = require('fast-json-patch');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
-const { Model } = require('sequelize');
+const { Model, Op } = require('sequelize');
 const uuid = require('uuid/v4');
 
 const nemsis = require('../lib/nemsis');
@@ -25,6 +25,26 @@ const s3 = new AWS.S3(s3options);
 
 class Base extends Model {
   // MARK: - helpers for non-versioned (live/draft only) NEMSIS backed models
+  static addDraftScopes() {
+    this.addScope('finalOrNew', {
+      where: {
+        [Op.or]: {
+          isDraft: false,
+          [Op.and]: {
+            isDraft: true,
+            draftParentId: null,
+          },
+        },
+      },
+    });
+
+    this.addScope('final', {
+      where: {
+        isDraft: false,
+      },
+    });
+  }
+
   async toNemsisJSON(options) {
     const payload = _.pick(this, ['id', 'isDraft', 'data', 'isValid', 'validationErrors', 'createdAt', 'updatedAt', 'archivedAt']);
     if (!this.isDraft) {

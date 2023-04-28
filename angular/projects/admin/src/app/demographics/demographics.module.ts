@@ -21,7 +21,8 @@ import { ContactsRecordDemographicsComponent } from './contacts-record-demograph
 import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
 import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
 import { DashboardDemographicsComponent } from './dashboard-demographics.component';
-import { DeviceDemographicsComponent } from './device-demographics.component';
+import { DevicesListDemographicsComponent } from './devices-list-demographics.component';
+import { DevicesRecordDemographicsComponent } from './devices-record-demographics.component';
 import { FacilityDemographicsComponent } from './facility-demographics.component';
 import { ListDemographicsComponent } from './list-demographics.component';
 import { LocationDemographicsComponent } from './location-demographics.component';
@@ -42,7 +43,8 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
     CustomConfigurationDemographicsComponent,
     CustomResultsDemographicsComponent,
     DashboardDemographicsComponent,
-    DeviceDemographicsComponent,
+    DevicesListDemographicsComponent,
+    DevicesRecordDemographicsComponent,
     FacilityDemographicsComponent,
     ListDemographicsComponent,
     LocationDemographicsComponent,
