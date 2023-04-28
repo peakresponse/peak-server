@@ -16,7 +16,8 @@ import { AgencyRecordDemographicsComponent } from './agency-record-demographics.
 import { BaseDemographicsComponent } from './base-demographics.component';
 import { ConfigurationsListDemographicsComponent } from './configurations-list-demographics.component';
 import { ConfigurationsRecordDemographicsComponent } from './configurations-record-demographics.component';
-import { ContactDemographicsComponent } from './contact-demographics.component';
+import { ContactsListDemographicsComponent } from './contacts-list-demographics.component';
+import { ContactsRecordDemographicsComponent } from './contacts-record-demographics.component';
 import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
 import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
 import { DashboardDemographicsComponent } from './dashboard-demographics.component';
@@ -36,7 +37,8 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
     BaseDemographicsComponent,
     ConfigurationsListDemographicsComponent,
     ConfigurationsRecordDemographicsComponent,
-    ContactDemographicsComponent,
+    ContactsListDemographicsComponent,
+    ContactsRecordDemographicsComponent,
     CustomConfigurationDemographicsComponent,
     CustomResultsDemographicsComponent,
     DashboardDemographicsComponent,

@@ -1,0 +1,8 @@
+<router-outlet></router-outlet>
+<admin-schema-list #list
+                   name="Contacts" 
+                   [class.d-none]="route.firstChild"
+                   [keyPath]="['demographics', 'contacts']"
+                   schemaPath="/nemsis/xsd/dContact_v3.json"
+                   [schemaColumns]="sectionColumns">
+</admin-schema-list>

@@ -6,7 +6,8 @@ import { AgencyService, SchemaService, UserService } from 'shared';
 import { AgencyRecordDemographicsComponent } from './agency-record-demographics.component';
 import { ConfigurationsListDemographicsComponent } from './configurations-list-demographics.component';
 import { ConfigurationsRecordDemographicsComponent } from './configurations-record-demographics.component';
-import { ContactDemographicsComponent } from './contact-demographics.component';
+import { ContactsListDemographicsComponent } from './contacts-list-demographics.component';
+import { ContactsRecordDemographicsComponent } from './contacts-record-demographics.component';
 import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
 import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
 import { DashboardDemographicsComponent } from './dashboard-demographics.component';
@@ -47,7 +48,13 @@ const appRoutes: Routes = [
       },
       {
         path: 'contacts',
-        component: ContactDemographicsComponent,
+        component: ContactsListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: ContactsRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'custom-configuration',

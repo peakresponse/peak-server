@@ -40,22 +40,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       callSign: {
         type: DataTypes.STRING,
-        field: 'call_sign',
       },
       type: {
         type: DataTypes.STRING,
       },
-      data: DataTypes.JSONB,
+      data: {
+        type: DataTypes.JSONB,
+      },
       isValid: {
         type: DataTypes.BOOLEAN,
-        field: 'is_valid',
       },
       validationErrors: {
         type: DataTypes.JSONB,
       },
       archivedAt: {
         type: DataTypes.DATE,
-        field: 'archived_at',
       },
     },
     {
