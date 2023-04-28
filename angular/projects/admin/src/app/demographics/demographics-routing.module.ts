@@ -14,7 +14,8 @@ import { DashboardDemographicsComponent } from './dashboard-demographics.compone
 import { DevicesListDemographicsComponent } from './devices-list-demographics.component';
 import { DevicesRecordDemographicsComponent } from './devices-record-demographics.component';
 import { FacilityDemographicsComponent } from './facility-demographics.component';
-import { LocationDemographicsComponent } from './location-demographics.component';
+import { LocationsListDemographicsComponent } from './locations-list-demographics.component';
+import { LocationsRecordDemographicsComponent } from './locations-record-demographics.component';
 import { PersonnelListDemographicsComponent } from './personnel-list-demographics.component';
 import { PersonnelRecordDemographicsComponent } from './personnel-record-demographics.component';
 import { VehiclesListDemographicsComponent } from './vehicles-list-demographics.component';
@@ -81,7 +82,13 @@ const appRoutes: Routes = [
       },
       {
         path: 'locations',
-        component: LocationDemographicsComponent,
+        component: LocationsListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: LocationsRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'personnel',

@@ -25,7 +25,8 @@ import { DevicesListDemographicsComponent } from './devices-list-demographics.co
 import { DevicesRecordDemographicsComponent } from './devices-record-demographics.component';
 import { FacilityDemographicsComponent } from './facility-demographics.component';
 import { ListDemographicsComponent } from './list-demographics.component';
-import { LocationDemographicsComponent } from './location-demographics.component';
+import { LocationsListDemographicsComponent } from './locations-list-demographics.component';
+import { LocationsRecordDemographicsComponent } from './locations-record-demographics.component';
 import { PersonnelBulkInviteDemographicsComponent } from './personnel-bulk-invite-demographics.component';
 import { PersonnelListDemographicsComponent } from './personnel-list-demographics.component';
 import { PersonnelRecordDemographicsComponent } from './personnel-record-demographics.component';
@@ -47,7 +48,8 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
     DevicesRecordDemographicsComponent,
     FacilityDemographicsComponent,
     ListDemographicsComponent,
-    LocationDemographicsComponent,
+    LocationsListDemographicsComponent,
+    LocationsRecordDemographicsComponent,
     PersonnelBulkInviteDemographicsComponent,
     PersonnelListDemographicsComponent,
     PersonnelRecordDemographicsComponent,

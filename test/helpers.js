@@ -62,12 +62,13 @@ const resetDatabase = async () => {
     DELETE FROM scene_observations;
     DELETE FROM scene_pins;
     DELETE FROM scenes;
+    DELETE FROM configurations;
     DELETE FROM contacts;
     DELETE FROM devices;
     DELETE FROM employments;
     DELETE FROM forms;
+    DELETE FROM locations;
     DELETE FROM vehicles;
-    DELETE FROM configurations;
     UPDATE agencies SET version_id=NULL;
     DELETE FROM versions;
     DELETE FROM agencies;
