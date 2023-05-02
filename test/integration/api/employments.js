@@ -58,7 +58,7 @@ describe('/api/employments', () => {
 
   describe('POST /:id/approve', () => {
     it('approves a pending Employment record', async () => {
-      const record = await models.Employment.findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
+      const record = await models.Employment.scope('finalOrNew').findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
       assert(record.isPending);
       assert.deepStrictEqual(record.approvedAt, null);
       assert.deepStrictEqual(record.approvedById, null);
@@ -75,7 +75,7 @@ describe('/api/employments', () => {
 
   describe('POST /:id/refuse', () => {
     it('refuses a pending Employment record', async () => {
-      const record = await models.Employment.findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
+      const record = await models.Employment.scope('finalOrNew').findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
       assert(record.isPending);
       assert.deepStrictEqual(record.refusedAt, null);
       assert.deepStrictEqual(record.refusedById, null);

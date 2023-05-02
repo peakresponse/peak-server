@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'contacts',
         foreignKey: 'createdByAgencyId',
       });
-      Agency.hasMany(models.Employment, { as: 'employments', foreignKey: 'agencyId' });
+      Agency.hasMany(models.Employment.scope('finalOrNew'), { as: 'employments', foreignKey: 'createdByAgencyId' });
       Agency.hasMany(models.Form.scope('canonical'), {
         as: 'forms',
         foreignKey: 'createdByAgencyId',
@@ -60,21 +60,21 @@ module.exports = (sequelize, DataTypes) => {
       });
       Agency.belongsToMany(models.User, {
         as: 'users',
-        through: models.Employment,
+        through: models.Employment.scope('finalOrNew'),
         otherKey: 'userId',
-        foreignKey: 'agencyId',
+        foreignKey: 'createdByAgencyId',
       });
       Agency.belongsToMany(models.User, {
         as: 'activeUsers',
-        through: models.Employment.scope('active'),
+        through: models.Employment.scope('finalOrNew', 'active'),
         otherKey: 'userId',
-        foreignKey: 'agencyId',
+        foreignKey: 'createdByAgencyId',
       });
       Agency.belongsToMany(models.User, {
         as: 'activePersonnelAdminUsers',
-        through: models.Employment.scope({ method: ['role', models.Employment.Roles.PERSONNEL] }, 'active'),
+        through: models.Employment.scope('finalOrNew', { method: ['role', models.Employment.Roles.PERSONNEL] }, 'active'),
         otherKey: 'userId',
-        foreignKey: 'agencyId',
+        foreignKey: 'createdByAgencyId',
       });
     }
 
@@ -141,7 +141,7 @@ module.exports = (sequelize, DataTypes) => {
       // associate User to Demographic as owner
       const now = new Date();
       const employment = sequelize.models.Employment.build({
-        agencyId: agency.id,
+        createdByAgencyId: agency.id,
         hiredOn: now,
         startedOn: now,
         isOwner: true,

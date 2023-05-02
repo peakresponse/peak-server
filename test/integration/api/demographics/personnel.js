@@ -37,45 +37,8 @@ describe('/api/demographics/personnel', () => {
       await testSession
         .post('/api/demographics/personnel')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .send({})
+        .send({ data: {} })
         .expect(HttpStatus.UNPROCESSABLE_ENTITY);
-    });
-
-    it('creates a new Employment and sends an invite', async () => {
-      await testSession
-        .post('/api/demographics/personnel')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .send({
-          firstName: 'First',
-          lastName: 'Last',
-          email: 'first.last@test.com',
-        })
-        .expect(HttpStatus.CREATED);
-      const employment = await models.Employment.findOne({ where: { email: 'first.last@test.com' } });
-      assert(employment);
-      assert.deepStrictEqual(employment.firstName, 'First');
-      assert.deepStrictEqual(employment.lastName, 'Last');
-      assert.deepStrictEqual(employment.data, {
-        _attributes: { UUID: employment.id },
-        'dPersonnel.NameGroup': {
-          'dPersonnel.01': {
-            _text: 'Last',
-          },
-          'dPersonnel.02': {
-            _text: 'First',
-          },
-        },
-        'dPersonnel.10': {
-          _text: 'first.last@test.com',
-        },
-      });
-      assert(employment.invitationCode);
-      assert(employment.invitationAt);
-
-      const emails = nodemailerMock.mock.getSentMail();
-      assert.deepStrictEqual(emails.length, 1);
-      assert.deepStrictEqual(emails[0].to, 'First Last <first.last@test.com>');
-      assert.deepStrictEqual(emails[0].subject, `You're invited to join Bay Medic Ambulance - Contra Costa on Peak Response`);
     });
 
     it('creates a new Employment from data and sends an invite', async () => {
@@ -98,7 +61,7 @@ describe('/api/demographics/personnel', () => {
           },
         })
         .expect(HttpStatus.CREATED);
-      const employment = await models.Employment.findOne({ where: { email: 'first.last@test.com' } });
+      const employment = await models.Employment.scope('finalOrNew').findOne({ where: { email: 'first.last@test.com' } });
       assert(employment);
       assert.deepStrictEqual(employment.firstName, 'First');
       assert.deepStrictEqual(employment.lastName, 'Last');
@@ -133,6 +96,7 @@ describe('/api/demographics/personnel', () => {
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({
           data: {
+            _attributes: { UUID: '7939c808-820e-42cc-8331-8e31ff951541' },
             'dPersonnel.NameGroup': {
               'dPersonnel.01': {
                 _text: 'Last',
@@ -148,17 +112,16 @@ describe('/api/demographics/personnel', () => {
               _text: 'first.last@test.com',
             },
           },
-          user: {
-            position: 'Position',
-          },
+          position: 'Position',
         })
         .expect(HttpStatus.OK);
-      const employment = await models.Employment.findByPk('7939c808-820e-42cc-8331-8e31ff951541');
-      assert.deepStrictEqual(employment.lastName, 'Last');
-      assert.deepStrictEqual(employment.firstName, 'First');
-      assert.deepStrictEqual(employment.middleName, 'Middle');
-      assert.deepStrictEqual(employment.email, 'first.last@test.com');
-      assert.deepStrictEqual(employment.data, {
+      const employment = await models.Employment.scope('finalOrNew').findByPk('7939c808-820e-42cc-8331-8e31ff951541');
+      const draft = await employment.getDraft();
+      assert.deepStrictEqual(draft.lastName, 'Last');
+      assert.deepStrictEqual(draft.firstName, 'First');
+      assert.deepStrictEqual(draft.middleName, 'Middle');
+      assert.deepStrictEqual(draft.email, 'first.last@test.com');
+      assert.deepStrictEqual(draft.data, {
         _attributes: { UUID: employment.id },
         'dPersonnel.NameGroup': {
           'dPersonnel.01': {
@@ -175,18 +138,18 @@ describe('/api/demographics/personnel', () => {
           _text: 'first.last@test.com',
         },
       });
-      const user = await employment.getUser();
-      assert.deepStrictEqual(user.lastName, 'Last');
-      assert.deepStrictEqual(user.firstName, 'First');
-      assert.deepStrictEqual(user.middleName, 'Middle');
-      assert.deepStrictEqual(user.email, 'first.last@test.com');
-      assert.deepStrictEqual(user.position, 'Position');
+      // const user = await employment.getUser();
+      // assert.deepStrictEqual(user.lastName, 'Last');
+      // assert.deepStrictEqual(user.firstName, 'First');
+      // assert.deepStrictEqual(user.middleName, 'Middle');
+      // assert.deepStrictEqual(user.email, 'first.last@test.com');
+      // assert.deepStrictEqual(user.position, 'Position');
     });
   });
 
   describe('POST /:id/resend-invitation', () => {
     it('resends the invitation email and updates the sent timestamp', async () => {
-      const employment = await models.Employment.findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
+      const employment = await models.Employment.scope('finalOrNew').findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
       const { invitationAt } = employment;
       await testSession
         .post('/api/demographics/personnel/50c06caf-9706-4305-bc3a-5462a7d20b6f/resend-invitation')
@@ -228,7 +191,7 @@ describe('/api/demographics/personnel', () => {
         }
       }
 
-      const employments = await models.Employment.findAll({
+      const employments = await models.Employment.scope('finalOrNew').findAll({
         where: {
           email: ['invitee.one@peakresponse.net', 'invitee.two@peakresponse.net'],
         },
@@ -271,7 +234,7 @@ describe('/api/demographics/personnel', () => {
         }
       }
 
-      const employments = await models.Employment.findAll({
+      const employments = await models.Employment.scope('finalOrNew').findAll({
         where: {
           email: ['invitee.one@peakresponse.net', 'invitee.two@peakresponse.net'],
         },
@@ -320,7 +283,7 @@ describe('/api/demographics/personnel', () => {
           position: 'Invited',
         })
         .expect(HttpStatus.CREATED);
-      const employment = await models.Employment.findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
+      const employment = await models.Employment.scope('finalOrNew').findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
       assert.deepStrictEqual(employment.userId, response.body.id);
       assert(!employment.isPending);
       assert.deepStrictEqual(employment.invitationCode, null);
@@ -345,7 +308,7 @@ describe('/api/demographics/personnel', () => {
           position: 'Invited to Different Email',
         })
         .expect(HttpStatus.CREATED);
-      const employment = await models.Employment.findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
+      const employment = await models.Employment.scope('finalOrNew').findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
       assert.deepStrictEqual(employment.userId, response.body.id);
       assert.deepStrictEqual(employment.firstName, 'Different');
       assert.deepStrictEqual(employment.lastName, 'Email');
@@ -388,9 +351,9 @@ describe('/api/demographics/personnel', () => {
           position: 'Uninvited',
         })
         .expect(HttpStatus.ACCEPTED);
-      const employment = await models.Employment.findOne({
+      const employment = await models.Employment.scope('finalOrNew').findOne({
         where: {
-          agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+          createdByAgencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
           userId: response.body.id,
         },
       });

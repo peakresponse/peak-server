@@ -5,10 +5,7 @@ const _ = require('lodash');
 function async(handler) {
   return (req, res, next) => {
     Promise.resolve(handler(req, res, next)).catch((err) => {
-      if (process.env.NODE_ENV === 'test') {
-        // eslint-disable-next-line no-console
-        console.error(err);
-      }
+      // console.error(err);
       if (err.name === 'SchemaValidationError' || err.name === 'SequelizeValidationError') {
         res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
           status: HttpStatus.UNPROCESSABLE_ENTITY,

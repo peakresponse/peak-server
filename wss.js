@@ -176,8 +176,8 @@ function configure(server, app) {
       }
       /// ensure user is actively employed by agency (or is superuser admin)
       if (!req.user.isAdmin) {
-        const employment = await models.Employment.findOne({
-          where: { userId: req.user.id, agencyId: req.agency.id },
+        const employment = await models.Employment.scope('finalOrNew').findOne({
+          where: { userId: req.user.id, createdByAgencyId: req.agency.id },
         });
         if (!employment?.isActive) {
           socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');

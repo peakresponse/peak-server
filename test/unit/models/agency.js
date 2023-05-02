@@ -413,8 +413,8 @@ describe('models', () => {
           assert.deepStrictEqual(version.stateDataSetId, '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae');
           assert.deepStrictEqual(version.emsSchematronIds, ['dabc90e5-b8fa-4dac-bcfd-be659ba46b54']);
 
-          const employment = await models.Employment.findOne({
-            where: { agencyId: agency.id, userId: user.id },
+          const employment = await models.Employment.scope('finalOrNew').findOne({
+            where: { createdByAgencyId: agency.id, userId: user.id },
           });
           assert(employment);
           assert(employment.isOwner);

@@ -27,19 +27,19 @@ describe('models', () => {
 
     describe("scope('active')", () => {
       it('returns only active employments', async () => {
-        const records = await models.Employment.scope('active').findAll();
+        const records = await models.Employment.scope('final', 'active').findAll();
         assert.deepStrictEqual(records.length, 5);
       });
     });
 
     describe("scope('role')", () => {
       it('returns only employments that satisfy the given role (owner satisfies all implicitly)', async () => {
-        const records = await models.Employment.scope({ method: ['role', models.Employment.Roles.PERSONNEL] }).findAll();
+        const records = await models.Employment.scope('final', { method: ['role', models.Employment.Roles.PERSONNEL] }).findAll();
         assert.deepStrictEqual(records.length, 4);
       });
 
       it('returns only active employments that satisfy the given role (owner satisfies all implicitly)', async () => {
-        const records = await models.Employment.scope({ method: ['role', models.Employment.Roles.PERSONNEL] }, 'active').findAll();
+        const records = await models.Employment.scope('final', { method: ['role', models.Employment.Roles.PERSONNEL] }, 'active').findAll();
         assert.deepStrictEqual(records.length, 3);
       });
     });
@@ -47,7 +47,7 @@ describe('models', () => {
     describe('.save()', () => {
       it('generates an invitation code for new personnal', async () => {
         const record = models.Employment.build();
-        record.agencyId = agency.id;
+        record.createdByAgencyId = agency.id;
         record.createdById = user.id;
         record.updatedById = user.id;
         record.data = {
@@ -88,7 +88,7 @@ describe('models', () => {
 
     describe('.approve()', () => {
       it('approves a pending employment', async () => {
-        const record = await models.Employment.findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
+        const record = await models.Employment.scope('finalOrNew').findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
         assert(record.isPending);
         assert(!record.isActive);
         await record.approve(user);
@@ -101,7 +101,7 @@ describe('models', () => {
 
     describe('.refuse()', () => {
       it('refuses a pending employment', async () => {
-        const record = await models.Employment.findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
+        const record = await models.Employment.scope('finalOrNew').findByPk('0544b426-2969-4f98-a458-e090cd3487e2');
         assert(record.isPending);
         assert(!record.isActive);
         await record.refuse(user);

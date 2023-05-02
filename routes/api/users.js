@@ -86,8 +86,8 @@ router.get(
           data.Agency.push(req.agency.toJSON());
         }
         data.Employment = (
-          await models.Employment.findOne({
-            where: { userId: req.user.id, agencyId: req.agency.id },
+          await models.Employment.scope('finalOrNew').findOne({
+            where: { userId: req.user.id, createdByAgencyId: req.agency.id },
           })
         )?.toJSON();
       }
@@ -119,8 +119,8 @@ router.get(
       if (req.agency) {
         data.agency = req.agency.toJSON();
         data.employment = (
-          await models.Employment.findOne({
-            where: { userId: req.user.id, agencyId: req.agency.id },
+          await models.Employment.scope('finalOrNew').findOne({
+            where: { userId: req.user.id, createdByAgencyId: req.agency.id },
           })
         ).toJSON();
       }

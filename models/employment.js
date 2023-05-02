@@ -23,9 +23,24 @@ module.exports = (sequelize, DataTypes) => {
       return Roles;
     }
 
+    static get xsdPath() {
+      return 'dPersonnel_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dPersonnel';
+    }
+
+    static get groupTag() {
+      return 'dPersonnel.PersonnelGroup';
+    }
+
     static associate(models) {
       // associations can be defined here
-      Employment.belongsTo(models.Agency, { as: 'agency' });
+      Employment.belongsTo(models.Version, { as: 'version' });
+      Employment.belongsTo(Employment, { as: 'draftParent' });
+      Employment.hasOne(Employment, { as: 'draft', foreignKey: 'draftParentId' });
+      Employment.belongsTo(models.Agency, { as: 'createdByAgency' });
       Employment.belongsTo(models.User, { as: 'user' });
       Employment.belongsTo(models.User, { as: 'updatedBy' });
       Employment.belongsTo(models.User, { as: 'createdBy' });
@@ -62,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async sendInvitationEmail(options) {
-      const agency = await this.getAgency(options);
+      const agency = await this.getCreatedByAgency(options);
       const user = await this.getCreatedBy(options);
       await mailer.send({
         template: 'invitation',
@@ -125,6 +140,9 @@ module.exports = (sequelize, DataTypes) => {
 
   Employment.init(
     {
+      isDraft: {
+        type: DataTypes.BOOLEAN,
+      },
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -132,19 +150,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       lastName: {
         type: DataTypes.STRING,
-        field: 'last_name',
       },
       firstName: {
         type: DataTypes.STRING,
-        field: 'first_name',
       },
       middleName: {
         type: DataTypes.STRING,
-        field: 'middle_name',
       },
       email: {
         type: DataTypes.CITEXT,
-        field: 'email',
       },
       fullName: {
         type: DataTypes.VIRTUAL,
@@ -179,48 +193,38 @@ module.exports = (sequelize, DataTypes) => {
       },
       invitationCode: {
         type: DataTypes.UUID,
-        field: 'invitation_code',
       },
       invitationAt: {
         type: DataTypes.DATE,
-        field: 'invitation_at',
       },
       isPending: {
         type: DataTypes.BOOLEAN,
-        field: 'is_pending',
         allowNull: false,
         defaultValue: false,
       },
       approvedAt: {
         type: DataTypes.DATE,
-        field: 'approved_at',
       },
       refusedAt: {
         type: DataTypes.DATE,
-        field: 'refused_at',
       },
       status: {
         type: DataTypes.STRING,
       },
       statusOn: {
         type: DataTypes.DATEONLY,
-        field: 'status_on',
       },
       primaryJobRole: {
         type: DataTypes.STRING,
-        field: 'primary_job_role',
       },
       hiredOn: {
         type: DataTypes.DATEONLY,
-        field: 'hired_on',
       },
       startedOn: {
         type: DataTypes.DATEONLY,
-        field: 'started_on',
       },
       endedOn: {
         type: DataTypes.DATEONLY,
-        field: 'ended_on',
       },
       isActive: {
         type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['isPending', 'refusedAt', 'endedOn']),
@@ -230,13 +234,17 @@ module.exports = (sequelize, DataTypes) => {
       },
       isOwner: {
         type: DataTypes.BOOLEAN,
-        field: 'is_owner',
       },
       roles: DataTypes.ARRAY(DataTypes.ENUM('BILLING', 'CONFIGURATION', 'PERSONNEL', 'REPORTING')),
       data: DataTypes.JSONB,
       isValid: {
         type: DataTypes.BOOLEAN,
-        field: 'is_valid',
+      },
+      validationErrors: {
+        type: DataTypes.JSONB,
+      },
+      archivedAt: {
+        type: DataTypes.DATE,
       },
     },
     {
@@ -288,6 +296,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Employment.addDraftScopes();
+
   Employment.addScope('active', {
     where: {
       endedOn: {
@@ -324,7 +334,7 @@ module.exports = (sequelize, DataTypes) => {
       record.setDataValue('invitationAt', new Date());
     }
     record._validationTransaction = options.transaction;
-    await record.validateNemsisData('dPersonnel_v3.xsd', 'dPersonnel', 'dPersonnel.PersonnelGroup', options);
+    await record.xsdValidate(options);
   });
 
   Employment.afterValidate((record) => {

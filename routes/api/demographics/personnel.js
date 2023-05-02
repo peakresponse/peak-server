@@ -1,81 +1,13 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
-const _ = require('lodash');
-const { Op } = require('sequelize');
 
 const cache = require('../../../lib/cache');
 const models = require('../../../models');
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
+const base = require('./base');
 
 const router = express.Router();
-
-router.get(
-  '/',
-  interceptors.requireAgency(models.Employment.Roles.PERSONNEL),
-  helpers.async(async (req, res) => {
-    const page = req.query.page || 1;
-    const options = {
-      page,
-      where: { agencyId: req.agency.id },
-      order: [
-        ['last_name', 'ASC NULLS FIRST'],
-        ['first_name', 'ASC NULLS FIRST'],
-        ['middle_name', 'ASC NULLS FIRST'],
-        ['email', 'ASC'],
-      ],
-    };
-    if (req.query.search) {
-      const search = req.query.search.trim();
-      if (search !== '') {
-        options.where[Op.or] = {
-          firstName: { [Op.iLike]: `%${search}%` },
-          lastName: { [Op.iLike]: `%${search}%` },
-          middleName: { [Op.iLike]: `%${search}%` },
-          email: { [Op.iLike]: `%${search}%` },
-        };
-      }
-    }
-    const { docs, pages, total } = await models.Employment.paginate(options);
-    helpers.setPaginationHeaders(req, res, page, pages, total);
-    res.json(docs.map((d) => d.toJSON()));
-  })
-);
-
-router.post(
-  '/',
-  interceptors.requireAgency(models.Employment.Roles.PERSONNEL),
-  helpers.async(async (req, res) => {
-    const record = await models.Employment.create({
-      ..._.pick(req.body, ['firstName', 'lastName', 'email', 'data']),
-      agencyId: req.agency.id,
-      createdById: req.user.id,
-      updatedById: req.user.id,
-    });
-    res.status(HttpStatus.CREATED).json(record.toJSON());
-  })
-);
-
-router.get(
-  '/invite/:invitationCode',
-  helpers.async(async (req, res) => {
-    const { invitationCode } = req.params;
-    let record;
-    try {
-      record = await models.Employment.findOne({
-        where: { invitationCode },
-      });
-    } catch {
-      // no-op
-    }
-    if (record) {
-      const { email, invitationAt } = record;
-      res.json({ email, invitationAt });
-    } else {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
-  })
-);
 
 router.post(
   '/invite',
@@ -97,7 +29,7 @@ router.post(
           await models.Employment.create({
             fullName: row.fullName,
             email: row.email,
-            agencyId: req.agency.id,
+            createdByAgencyId: req.agency.id,
             createdById: req.user.id,
             updatedById: req.user.id,
           });
@@ -141,7 +73,7 @@ router.post(
       if (invitationCode) {
         /// look up the corresponding employment record, associate
         try {
-          employment = await models.Employment.findOne({
+          employment = await models.Employment.scope('finalOrNew').findOne({
             where: {
               invitationCode: req.body.invitationCode,
             },
@@ -154,7 +86,7 @@ router.post(
         }
       } else {
         /// look for an employment with a matching email
-        employment = await models.Employment.findOne({
+        employment = await models.Employment.scope('finalOrNew').findOne({
           where: {
             email: user.email,
           },
@@ -174,7 +106,7 @@ router.post(
         /// create a pending employment
         if (!employment) {
           employment = models.Employment.build();
-          employment.agencyId = req.agency.id;
+          employment.createdByAgencyId = req.agency.id;
           employment.createdById = user.id;
         }
         /// mark pending
@@ -191,60 +123,6 @@ router.post(
   })
 );
 
-router.get(
-  '/:id',
-  interceptors.requireAgency(),
-  helpers.async(async (req, res) => {
-    const record = await models.Employment.findOne({
-      where: {
-        id: req.params.id,
-        agencyId: req.agency.id,
-      },
-      include: ['user'],
-    });
-    if (record) {
-      res.json(record.toJSON());
-    } else {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
-  })
-);
-
-router.put(
-  '/:id',
-  interceptors.requireAgency(),
-  helpers.async(async (req, res) => {
-    let record;
-    await models.sequelize.transaction(async (transaction) => {
-      record = await models.Employment.findOne({
-        where: {
-          id: req.params.id,
-          agencyId: req.agency.id,
-        },
-        include: ['user'],
-        transaction,
-      });
-      if (record) {
-        record = await record.update(_.pick(req.body, ['data']), { transaction });
-        if (!record.isValid) {
-          throw record.validationError;
-        }
-        const { user } = record;
-        if (user) {
-          user.setFromEmployment(record);
-          user.set(_.pick(req.body.user, ['position']));
-          await user.save({ transaction });
-        }
-      }
-    });
-    if (record) {
-      res.json(record.toJSON());
-    } else {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
-  })
-);
-
 router.post(
   '/:id/resend-invitation',
   interceptors.requireAgency(),
@@ -254,7 +132,7 @@ router.post(
       record = await models.Employment.findOne({
         where: {
           id: req.params.id,
-          agencyId: req.agency.id,
+          createdByAgencyId: req.agency.id,
         },
         include: ['user'],
         transaction,
@@ -271,5 +149,12 @@ router.post(
     }
   })
 );
+
+base.addAllRoutes(router, models.Employment, [
+  ['last_name', 'ASC NULLS FIRST'],
+  ['first_name', 'ASC NULLS FIRST'],
+  ['middle_name', 'ASC NULLS FIRST'],
+  ['email', 'ASC'],
+]);
 
 module.exports = router;

@@ -222,8 +222,8 @@ describe('/api/agencies', () => {
         },
       });
 
-      const employment = await models.Employment.findOne({
-        where: { agencyId: agency.id, userId: user.id },
+      const employment = await models.Employment.scope('finalOrNew').findOne({
+        where: { createdByAgencyId: agency.id, userId: user.id },
       });
       assert(employment);
       assert(employment.isOwner);

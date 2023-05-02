@@ -26,6 +26,18 @@ const s3 = new AWS.S3(s3options);
 class Base extends Model {
   // MARK: - helpers for non-versioned (live/draft only) NEMSIS backed models
   static addDraftScopes() {
+    this.addScope('draft', {
+      where: {
+        isDraft: true,
+      },
+    });
+
+    this.addScope('final', {
+      where: {
+        isDraft: false,
+      },
+    });
+
     this.addScope('finalOrNew', {
       where: {
         [Op.or]: {
@@ -35,12 +47,6 @@ class Base extends Model {
             draftParentId: null,
           },
         },
-      },
-    });
-
-    this.addScope('final', {
-      where: {
-        isDraft: false,
       },
     });
   }

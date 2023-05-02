@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       };
-      for (const modelName of ['Configuration', 'Vehicle']) {
+      for (const modelName of ['Configuration', 'Contact', 'Device', 'Location', 'Vehicle']) {
         // eslint-disable-next-line no-await-in-loop
         let records = await sequelize.models[modelName].scope('finalOrNew').findAll({
           include: 'draft',
@@ -86,11 +86,13 @@ module.exports = (sequelize, DataTypes) => {
             return r.getData(this);
           })
           .filter(Boolean);
-        const path = [sequelize.models[modelName].rootTag];
-        if (sequelize.models[modelName].groupTag) {
-          path.push(sequelize.models[modelName].groupTag);
+        if (records.length) {
+          const path = [sequelize.models[modelName].rootTag];
+          if (sequelize.models[modelName].groupTag) {
+            path.push(sequelize.models[modelName].groupTag);
+          }
+          _.set(doc.DEMDataSet.DemographicReport, path, records);
         }
-        _.set(doc.DEMDataSet.DemographicReport, path, records);
       }
       const demDataSet = xmlFormatter(xmljs.js2xml(doc, { compact: true }), {
         collapseContent: true,
