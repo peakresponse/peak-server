@@ -110,6 +110,7 @@ module.exports = (sequelize, DataTypes) => {
       const attributes = { ...this.get() };
       const data = _.pick(attributes, [
         'id',
+        'isDraft',
         'userId',
         'firstName',
         'middleName',
@@ -128,9 +129,15 @@ module.exports = (sequelize, DataTypes) => {
         'status',
         'statusOn',
         'data',
+        'isValid',
+        'validationErrors',
         'createdAt',
         'updatedAt',
+        'archivedAt',
       ]);
+      if (this.draft) {
+        data.draft = this.draft.toJSON();
+      }
       if (this.user) {
         data.user = this.user.toJSON();
       }

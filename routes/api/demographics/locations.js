@@ -5,10 +5,14 @@ const base = require('./base');
 
 const router = express.Router();
 
-base.addAllRoutes(router, models.Location, [
-  ['type', 'ASC'],
-  ['name', 'ASC'],
-  ['number', 'ASC'],
-]);
+base.addAllRoutes(router, models.Location, {
+  index: {
+    order: [
+      ['type', 'ASC'],
+      ['name', 'ASC'],
+      ['number', 'ASC'],
+    ],
+  },
+});
 
 module.exports = router;

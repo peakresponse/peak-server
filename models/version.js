@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       };
-      for (const modelName of ['Configuration', 'Contact', 'Device', 'Location', 'Vehicle']) {
+      for (const modelName of ['Contact', 'Configuration', 'Location', 'Vehicle', 'Employment', 'Device']) {
         // eslint-disable-next-line no-await-in-loop
         let records = await sequelize.models[modelName].scope('finalOrNew').findAll({
           include: 'draft',

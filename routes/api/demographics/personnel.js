@@ -150,11 +150,18 @@ router.post(
   })
 );
 
-base.addAllRoutes(router, models.Employment, [
-  ['last_name', 'ASC NULLS FIRST'],
-  ['first_name', 'ASC NULLS FIRST'],
-  ['middle_name', 'ASC NULLS FIRST'],
-  ['email', 'ASC'],
-]);
+base.addAllRoutes(router, models.Employment, {
+  index: {
+    order: [
+      ['last_name', 'ASC NULLS FIRST'],
+      ['first_name', 'ASC NULLS FIRST'],
+      ['middle_name', 'ASC NULLS FIRST'],
+      ['email', 'ASC'],
+    ],
+    serializer(docs) {
+      return docs.map((d) => d.toJSON());
+    },
+  },
+});
 
 module.exports = router;

@@ -25,6 +25,11 @@ router.post(
   })
 );
 
-base.addAllRoutes(router, models.Configuration, { include: ['state'], order: [['state', 'name', 'ASC']] });
+base.addAllRoutes(router, models.Configuration, {
+  index: {
+    include: ['state'],
+    order: [['state', 'name', 'ASC']],
+  },
+});
 
 module.exports = router;

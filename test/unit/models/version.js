@@ -127,6 +127,52 @@ describe('models', () => {
 				<dVehicle.04>1404001</dVehicle.04>
 			</dVehicle.VehicleGroup>
 		</dVehicle>
+		<dPersonnel>
+			<dPersonnel.PersonnelGroup UUID="0544b426-2969-4f98-a458-e090cd3487e2">
+				<dPersonnel.NameGroup>
+					<dPersonnel.01>User</dPersonnel.01>
+					<dPersonnel.02>Pending</dPersonnel.02>
+				</dPersonnel.NameGroup>
+				<dPersonnel.10>pending.user@test.com</dPersonnel.10>
+			</dPersonnel.PersonnelGroup>
+			<dPersonnel.PersonnelGroup UUID="50c06caf-9706-4305-bc3a-5462a7d20b6f">
+				<dPersonnel.NameGroup>
+					<dPersonnel.01>Member</dPersonnel.01>
+					<dPersonnel.02>Invited</dPersonnel.02>
+				</dPersonnel.NameGroup>
+				<dPersonnel.10>invited.member@peakresponse.net</dPersonnel.10>
+			</dPersonnel.PersonnelGroup>
+			<dPersonnel.PersonnelGroup UUID="7939c808-820e-42cc-8331-8e31ff951541">
+				<dPersonnel.NameGroup>
+					<dPersonnel.01>Admin</dPersonnel.01>
+					<dPersonnel.02>Personnel</dPersonnel.02>
+				</dPersonnel.NameGroup>
+				<dPersonnel.10>personnel.admin@peakresponse.net</dPersonnel.10>
+				<dPersonnel.33>2020-04-06</dPersonnel.33>
+			</dPersonnel.PersonnelGroup>
+			<dPersonnel.PersonnelGroup UUID="8abdb57e-cebf-455c-8148-2ef16d383d55">
+				<dPersonnel.NameGroup>
+					<dPersonnel.01>User</dPersonnel.01>
+					<dPersonnel.02>Regular</dPersonnel.02>
+				</dPersonnel.NameGroup>
+				<dPersonnel.10>regular@peakresponse.net</dPersonnel.10>
+				<dPersonnel.33>2020-04-06</dPersonnel.33>
+			</dPersonnel.PersonnelGroup>
+			<dPersonnel.PersonnelGroup UUID="ab7f0729-0506-4f80-931d-5456a29cacef">
+				<dPersonnel.NameGroup>
+					<dPersonnel.01>User</dPersonnel.01>
+					<dPersonnel.02>Refused</dPersonnel.02>
+				</dPersonnel.NameGroup>
+				<dPersonnel.10>refused@peakresponse.net</dPersonnel.10>
+			</dPersonnel.PersonnelGroup>
+			<dPersonnel.PersonnelGroup UUID="b0c2b79e-5905-417f-a790-ba77c1134d92">
+				<dPersonnel.NameGroup>
+					<dPersonnel.01>User</dPersonnel.01>
+					<dPersonnel.02>Ended</dPersonnel.02>
+				</dPersonnel.NameGroup>
+				<dPersonnel.10>ended@peakresponse.net</dPersonnel.10>
+			</dPersonnel.PersonnelGroup>
+		</dPersonnel>
 	</DemographicReport>
 </DEMDataSet>`
           )

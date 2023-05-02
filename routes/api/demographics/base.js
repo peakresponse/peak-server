@@ -5,7 +5,7 @@ const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
 
 function addIndex(router, model, options) {
-  const { include = [], order } = options ?? {};
+  const { include = [], order = [] } = options?.index ?? {};
 
   router.get(
     '/',
@@ -19,7 +19,13 @@ function addIndex(router, model, options) {
         order,
       });
       helpers.setPaginationHeaders(req, res, page, pages, total);
-      res.json(await Promise.all(docs.map((d) => d.toNemsisJSON())));
+      let payload;
+      if (options?.index?.serializer) {
+        payload = await options.index.serializer(docs);
+      } else {
+        payload = await Promise.all(docs.map((d) => d.toNemsisJSON()));
+      }
+      res.json(payload);
     })
   );
 }

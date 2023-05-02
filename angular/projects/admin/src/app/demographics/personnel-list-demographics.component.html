@@ -5,7 +5,7 @@
   <ng-container class="admin-schema-list-header">
     <button (click)="bulkInvite.show()" class="btn btn--sm btn--secondary ms-3">Bulk Invite</button>
   </ng-container>
-  <ng-template let-data="data" let-id="id" let-record="record">
+  <ng-template let-id="id" let-record="record">
     <td class="text-muted">
       <ng-container *ngIf="record.isPending">
         <button (click)="onApprove($event, record)" class="btn btn--sm btn--primary">Approve</button>&nbsp;
