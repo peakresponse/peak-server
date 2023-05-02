@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const Sequelize = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const mailer = require('../emails/mailer');
 const { Base } = require('./base');
@@ -100,7 +100,7 @@ module.exports = (sequelize, DataTypes) => {
       const baseUrl = agency ? agency.baseUrl : process.env.BASE_URL;
       await this.update(
         {
-          passwordResetToken: uuid(),
+          passwordResetToken: uuidv4(),
           passwordResetTokenExpiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
         },
         options

@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs-extra');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
@@ -37,7 +37,7 @@ describe('models', () => {
     describe('createOrUpdate()', () => {
       let portraitFile;
       beforeEach(() => {
-        portraitFile = `${uuid()}.png`;
+        portraitFile = `${uuidv4()}.png`;
         mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
         fs.copySync(
           path.resolve(__dirname, '../../fixtures/files/512x512.png'),
@@ -51,10 +51,10 @@ describe('models', () => {
       });
 
       it('creates a new Patient record', async () => {
-        const id = uuid();
+        const id = uuidv4();
         const [patient, created] = await models.Patient.createOrUpdate(user, agency, {
           id,
-          canonicalId: uuid(),
+          canonicalId: uuidv4(),
           pin: '123456',
           firstName: 'John',
           lastName: 'Doe',
@@ -104,7 +104,7 @@ describe('models', () => {
         assert.deepStrictEqual(patient.priority, 0);
         assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/cb94a8a4-bf8b-4316-8a3f-191aa2df4633/portrait-file/man1.jpg`);
 
-        const id = uuid();
+        const id = uuidv4();
         const [record, created] = await models.Patient.createOrUpdate(user, agency, {
           id,
           parentId: 'cb94a8a4-bf8b-4316-8a3f-191aa2df4633',

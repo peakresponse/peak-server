@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const _ = require('lodash');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const models = require('../../models');
 
 /* eslint-disable no-console, no-await-in-loop */
@@ -44,7 +44,7 @@ async function createVersions() {
           }
           for (const group of groups) {
             if (!group?._attributes?.UUID) {
-              _.set(group, ['_attributes', 'UUID'], uuid());
+              _.set(group, ['_attributes', 'UUID'], uuidv4());
             }
           }
           await agency.update({ data }, { transaction });
@@ -57,7 +57,7 @@ async function createVersions() {
           }
           for (const group of groups) {
             if (!group?._attributes?.UUID) {
-              _.set(group, ['_attributes', 'UUID'], uuid());
+              _.set(group, ['_attributes', 'UUID'], uuidv4());
             }
           }
           await agency.update({ data }, { transaction });

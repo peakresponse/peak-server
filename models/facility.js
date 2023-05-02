@@ -1,11 +1,27 @@
 const sequelizePaginate = require('sequelize-paginate');
 const GoogleMapsClient = require('@googlemaps/google-maps-services-js').Client;
+const { v5: uuidv5 } = require('uuid');
 
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Facility extends Base {
+    static get xsdPath() {
+      return 'dFacility_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dFacility';
+    }
+
+    static get groupTag() {
+      return 'dFacilityGroup';
+    }
+
     static associate(models) {
+      Facility.belongsTo(models.Version, { as: 'version' });
+      Facility.belongsTo(Facility, { as: 'draftParent' });
+      Facility.hasOne(Facility, { as: 'draft', foreignKey: 'draftParentId' });
       Facility.belongsTo(models.Facility, { as: 'canonicalFacility' });
       Facility.belongsTo(models.City, { as: 'city' });
       Facility.belongsTo(models.County, { as: 'county' });
@@ -56,35 +72,18 @@ module.exports = (sequelize, DataTypes) => {
 
   Facility.init(
     {
+      isDraft: DataTypes.BOOLEAN,
       type: DataTypes.STRING,
       name: DataTypes.STRING,
-      locationCode: {
-        type: DataTypes.STRING,
-        field: 'location_code',
-      },
-      primaryDesignation: {
-        type: DataTypes.STRING,
-        field: 'primary_designation',
-      },
-      primaryNationalProviderId: {
-        type: DataTypes.STRING,
-        field: 'primary_national_provider_id',
-      },
+      locationCode: DataTypes.STRING,
+      primaryDesignation: DataTypes.STRING,
+      primaryNationalProviderId: DataTypes.STRING,
       unit: DataTypes.STRING,
       address: DataTypes.STRING,
-      cityName: {
-        type: DataTypes.STRING,
-        field: 'city_name',
-      },
-      stateName: {
-        type: DataTypes.STRING,
-        field: 'state_name',
-      },
+      cityName: DataTypes.STRING,
+      stateName: DataTypes.STRING,
       zip: DataTypes.STRING,
-      countyName: {
-        type: DataTypes.STRING,
-        field: 'county_name',
-      },
+      countyName: DataTypes.STRING,
       country: DataTypes.STRING,
       lat: {
         type: DataTypes.VIRTUAL(DataTypes.STRING),
@@ -113,15 +112,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       geog: DataTypes.GEOGRAPHY,
-      primaryPhone: {
-        type: DataTypes.STRING,
-        field: 'primary_phone',
-      },
+      primaryPhone: DataTypes.STRING,
       data: DataTypes.JSONB,
-      isValid: {
-        type: DataTypes.BOOLEAN,
-        field: 'is_valid',
-      },
+      isValid: DataTypes.BOOLEAN,
+      validationErrors: DataTypes.JSONB,
+      archivedAt: DataTypes.DATE,
     },
     {
       sequelize,
@@ -131,14 +126,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Facility.addDraftScopes();
+
   Facility.addScope('canonical', {
     where: { createdByAgencyId: null },
   });
 
   Facility.beforeSave(async (record, options) => {
-    record.syncNemsisId(options);
     const type = record.createdByAgencyId ? 'dFacility' : 'sFacility';
     record.syncFieldAndNemsisValue('type', [`${type}.01`], options);
+    if (record.createdByAgencyId) {
+      // generate a deterministic but unique id for this agency and facility type
+      record.setNemsisAttributeValue([], 'UUID', uuidv5(record.getDataValue('type') ?? '', record.createdByAgencyId));
+      // sync the facility id into the inner group
+      record.syncNemsisId(options, [`${type}.FacilityGroup`]);
+    }
     record.syncFieldAndNemsisValue('name', [`${type}.FacilityGroup`, `${type}.02`], options);
     record.syncFieldAndNemsisValue('locationCode', [`${type}.FacilityGroup`, `${type}.03`], options);
     record.syncFieldAndNemsisValue('primaryDesignation', [`${type}.FacilityGroup`, `${type}.04`], options);
@@ -170,7 +172,9 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('country', [`${type}.FacilityGroup`, `${type}.12`], options);
     record.setDataValue('geog', Base.geometryFor(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.13`])));
     record.syncFieldAndNemsisValue('primaryPhone', [`${type}.FacilityGroup`, `${type}.15`], options);
-    await record.validateNemsisData('dFacility_v3.xsd', 'dFacility', 'dFacilityGroup', options);
+    if (record.createdByAgencyId) {
+      await record.xsdValidate(options);
+    }
   });
 
   sequelizePaginate.paginate(Facility);

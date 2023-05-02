@@ -5,7 +5,7 @@ const HttpStatus = require('http-status-codes');
 const mime = require('mime-types');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -28,7 +28,7 @@ router.post(
   '/',
   interceptors.requireLogin,
   helpers.async(async (req, res) => {
-    const id = uuid();
+    const id = uuidv4();
     const response = req.body.blob;
     response.id = id;
     response.key = id;

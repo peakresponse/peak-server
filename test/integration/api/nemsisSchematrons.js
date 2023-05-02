@@ -4,7 +4,7 @@ const HttpStatus = require('http-status-codes');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
 const session = require('supertest-session');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../../helpers');
 
@@ -74,7 +74,7 @@ describe('/api/nemsis/schematrons', () => {
       let file;
 
       beforeEach(() => {
-        file = `${uuid()}.xml`;
+        file = `${uuidv4()}.xml`;
         mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
         fs.copySync(
           path.resolve(__dirname, '../../fixtures/nemsis/schematron/DEMDataSet.sch'),

@@ -1,6 +1,6 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const models = require('../../../models');
 const helpers = require('../../helpers');
@@ -82,7 +82,7 @@ router.delete(
           req.user,
           req.agency,
           {
-            id: uuid(),
+            id: uuidv4(),
             parentId: record.currentId,
             archivedAt: new Date(),
           },

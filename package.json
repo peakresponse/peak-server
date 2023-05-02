@@ -159,7 +159,7 @@
     "supertest-session": "^4.0.0",
     "tmp": "^0.1.0",
     "utf-8-validate": "^5.0.2",
-    "uuid": "^3.3.2",
+    "uuid": "^9.0.0",
     "validate-with-xmllint": "^1.2.0",
     "ws": "^7.5.0",
     "xlsx": "^0.18.4",

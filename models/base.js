@@ -6,7 +6,7 @@ const jsonpatch = require('fast-json-patch');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
 const { Model, Op } = require('sequelize');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const nemsis = require('../lib/nemsis');
 const nemsisXsd = require('../lib/nemsis/xsd');
@@ -204,7 +204,7 @@ class Base extends Model {
           prev = current;
         }
       }
-      json.id = uuid();
+      json.id = uuidv4();
       json.parentId = canonical.currentId;
       json.secondParentId = record.id;
       json.canonicalId = canonical.id;
@@ -417,16 +417,16 @@ class Base extends Model {
     this.changed('data', true);
   }
 
-  syncNemsisId(options) {
+  syncNemsisId(options, keyPath = []) {
     if (!this.id) {
       if (!this.isDraft || !this.draftParentId) {
-        this.setDataValue('id', this.getNemsisAttributeValue([], 'UUID'));
+        this.setDataValue('id', this.getNemsisAttributeValue(keyPath, 'UUID'));
       }
       options.fields = options.fields || [];
       if (!this.id) {
-        this.id = uuid();
-        if (!this.getNemsisAttributeValue([], 'UUID') || (this.isDraft && !this.draftParentId)) {
-          this.setNemsisAttributeValue([], 'UUID', this.id);
+        this.id = uuidv4();
+        if (!this.getNemsisAttributeValue(keyPath, 'UUID') || (this.isDraft && !this.draftParentId)) {
+          this.setNemsisAttributeValue(keyPath, 'UUID', this.id);
           if (options.fields.indexOf('data') < 0) {
             options.fields.push('data');
           }
@@ -435,8 +435,8 @@ class Base extends Model {
       if (options.fields.indexOf('id') < 0) {
         options.fields.push('id');
       }
-    } else if (!this.getNemsisAttributeValue([], 'UUID')) {
-      this.setNemsisAttributeValue([], 'UUID', this.id);
+    } else if (!this.getNemsisAttributeValue(keyPath, 'UUID')) {
+      this.setNemsisAttributeValue(keyPath, 'UUID', this.id);
       options.fields = options.fields || [];
       if (options.fields.indexOf('data') < 0) {
         options.fields.push('data');

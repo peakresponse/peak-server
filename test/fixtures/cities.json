@@ -44,5 +44,28 @@
       "createdAt": "2020-04-07T19:59:21.446Z",
       "updatedAt": "2020-04-07T19:59:21.446Z"
     }
+  },
+  {
+    "model": "City",
+    "data": {
+      "id": "1660804",
+      "featureName": "Irvine",
+      "featureClass": "Populated Place",
+      "censusCode": "36770",
+      "censusClassCode": "P1",
+      "gsaCode": "1713",
+      "opmCode": "061713059",
+      "stateNumeric": "06",
+      "stateAlpha": "CA",
+      "countySequence": "1",
+      "countyNumeric": "059",
+      "countyName": "Orange",
+      "primaryLatitude": "33.6694649",
+      "primaryLongitude": "-117.8231107",
+      "dateCreated": "01/19/1981",
+      "dateEdited": "10/28/2015",
+      "createdAt": "2020-04-07T19:59:21.446Z",
+      "updatedAt": "2020-04-07T19:59:21.446Z"
+    }
   }
 ]

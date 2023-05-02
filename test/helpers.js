@@ -66,6 +66,7 @@ const resetDatabase = async () => {
     DELETE FROM contacts;
     DELETE FROM devices;
     DELETE FROM employments;
+    DELETE FROM facilities;
     DELETE FROM forms;
     DELETE FROM locations;
     DELETE FROM vehicles;
@@ -75,7 +76,6 @@ const resetDatabase = async () => {
     DELETE FROM nemsis_state_data_sets;
     DELETE FROM nemsis_schematrons;
     DELETE FROM psaps;
-    DELETE FROM facilities;
     DELETE FROM agencies;
     DELETE FROM tokens;
     DELETE FROM clients;

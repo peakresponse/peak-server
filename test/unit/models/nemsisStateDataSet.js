@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs-extra');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../../helpers');
 
@@ -49,7 +49,7 @@ describe('models', () => {
 
       beforeEach(async () => {
         await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'nemsisStateDataSets', 'nemsisSchematrons']);
-        file = `${uuid()}.xml`;
+        file = `${uuidv4()}.xml`;
         mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
         fs.copySync(
           path.resolve(__dirname, '../../fixtures/nemsis/full/2023-STATE-1_v350.xml'),

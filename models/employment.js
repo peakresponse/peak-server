@@ -2,7 +2,7 @@ const _ = require('lodash');
 const moment = require('moment');
 const { Op, ValidationError, ValidationErrorItem } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const mailer = require('../emails/mailer');
 
@@ -337,7 +337,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('hiredOn', ['dPersonnel.33'], options);
     record.syncFieldAndNemsisValue('primaryJobRole', ['dPersonnel.34'], options);
     if (!record.userId && !record.invitationCode) {
-      record.setDataValue('invitationCode', uuid.v4());
+      record.setDataValue('invitationCode', uuidv4());
       record.setDataValue('invitationAt', new Date());
     }
     record._validationTransaction = options.transaction;

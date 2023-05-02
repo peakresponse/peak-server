@@ -13,7 +13,8 @@ import { CustomResultsDemographicsComponent } from './custom-results-demographic
 import { DashboardDemographicsComponent } from './dashboard-demographics.component';
 import { DevicesListDemographicsComponent } from './devices-list-demographics.component';
 import { DevicesRecordDemographicsComponent } from './devices-record-demographics.component';
-import { FacilityDemographicsComponent } from './facility-demographics.component';
+import { FacilitiesListDemographicsComponent } from './facilities-list-demographics.component';
+import { FacilitiesRecordDemographicsComponent } from './facilities-record-demographics.component';
 import { LocationsListDemographicsComponent } from './locations-list-demographics.component';
 import { LocationsRecordDemographicsComponent } from './locations-record-demographics.component';
 import { PersonnelListDemographicsComponent } from './personnel-list-demographics.component';
@@ -78,7 +79,13 @@ const appRoutes: Routes = [
       },
       {
         path: 'facilities',
-        component: FacilityDemographicsComponent,
+        component: FacilitiesListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: FacilitiesRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'locations',

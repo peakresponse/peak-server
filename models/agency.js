@@ -2,7 +2,7 @@ const _ = require('lodash');
 const { Op } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 const url = require('url');
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const { Base } = require('./base');
 
@@ -81,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
     static async register(user, canonicalAgency, subdomain, options) {
       const { transaction } = options ?? {};
       // create the Demographic Agency record clone
-      const id = uuid.v4();
+      const id = uuidv4();
       const data = {
         id,
         canonicalAgencyId: canonicalAgency.id,
@@ -216,7 +216,7 @@ module.exports = (sequelize, DataTypes) => {
           ? configuration['sConfiguration.ProcedureGroup']
           : [configuration['sConfiguration.ProcedureGroup']];
         data['dConfiguration.ProcedureGroup'] = scpgs.map((scpg) => ({
-          _attributes: { UUID: uuid() },
+          _attributes: { UUID: uuidv4() },
           'dConfiguration.06': scpg['sConfiguration.02'],
           'dConfiguration.07': scpg['sConfiguration.03'],
         }));
@@ -224,7 +224,7 @@ module.exports = (sequelize, DataTypes) => {
           ? configuration['sConfiguration.MedicationGroup']
           : [configuration['sConfiguration.MedicationGroup']];
         data['dConfiguration.MedicationGroup'] = scmgs.map((scmg) => ({
-          _attributes: { UUID: uuid() },
+          _attributes: { UUID: uuidv4() },
           'dConfiguration.08': scmg['sConfiguration.04'],
           'dConfiguration.09': scmg['sConfiguration.05'],
         }));
