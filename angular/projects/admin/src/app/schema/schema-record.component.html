@@ -27,10 +27,10 @@
     </div>
   </ng-container>
   <fieldset *ngIf="!(isEditingDraft && record.archivedAt)" [disabled]="isLoading">
-    <ng-container *ngFor="let element of childElements">
-      <shared-xsd-form-group [element]="element" [data]="record.data" [error]="error" [basePath]="basePath"></shared-xsd-form-group>
+    <ng-container *ngIf="!template">
+      <shared-xsd-form-group *ngFor="let element of childElements" [element]="element" [data]="record.data" [error]="error" [basePath]="basePath"></shared-xsd-form-group>
     </ng-container>
-    <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{record, error}"></ng-template>
+    <ng-template *ngIf="template" [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{childElements, record, error}"></ng-template>
     <div class="d-flex justify-content-between mb-3">
       <button *ngIf="isNewRecord || isEditingDraft || !record.draft" type="submit" class="btn btn--primary">Save Draft</button>
       <button *ngIf="isEditingDraft || record.isDraft" (click)="onDeleteDraft()" type="button" class="btn btn--danger">Delete Draft</button>
