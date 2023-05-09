@@ -16,6 +16,7 @@ describe('models', () => {
       before(async () => {
         repo = nemsisStates.getNemsisStateRepo('50', '3.5.0');
         await repo.pull();
+        await repo.install('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
       });
 
       beforeEach(async () => {
