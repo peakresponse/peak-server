@@ -12,7 +12,7 @@
       <div>
         <button *ngIf="dismissLabel" ngbAutofocus type="button" class="btn btn--sm btn--secondary" (click)="onDismiss()">{{dismissLabel}}</button>
       </div>
-      <div>
+      <div *ngIf="dangerLabel || confirmLabel">
         <button *ngIf="dangerLabel" ngbAutofocus type="button" class="btn btn--sm btn--danger" (click)="onDanger()">{{dangerLabel}}</button>
         <button *ngIf="confirmLabel" ngbAutofocus type="button" class="btn btn--sm btn--primary" (click)="onConfirm()">{{confirmLabel}}</button>
       </div>
