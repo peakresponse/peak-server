@@ -9,8 +9,5 @@
         <shared-xsd-form-group *ngFor="let nestedElement of groupElements(element)" [element]="nestedElement" [data]="nestedData(record.data)" [error]="error"></shared-xsd-form-group>
       </ng-container>
     </ng-container>
-    <div>
-      {{record|json}}
-    </div>
   </ng-template>
 </admin-schema-record>
