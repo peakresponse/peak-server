@@ -64,6 +64,7 @@ describe('lib', () => {
           describe('.dataSetVersions()', () => {
             it('returns a list of state data set versions', () => {
               assert.deepStrictEqual(repo.dataSetVersions, [
+                '2023-05-06-95fbbd77f3e828512041f51d08281d051a5a5711',
                 '2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576',
                 '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c',
                 '2023-02-21-cdd1a71dd5d225ae255a0129f29c192dbbe659ba',

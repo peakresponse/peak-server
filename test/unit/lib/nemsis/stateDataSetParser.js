@@ -14,6 +14,7 @@ describe('lib', () => {
         context('initialized', () => {
           before(async () => {
             await repo.pull();
+            await repo.install('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
           });
 
           describe('.version', () => {
