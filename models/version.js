@@ -70,14 +70,21 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       };
-      for (const modelName of ['Contact', 'Configuration', 'Location', 'Vehicle', 'Employment', 'Device']) {
-        // eslint-disable-next-line no-await-in-loop
-        let records = await sequelize.models[modelName].scope('finalOrNew').findAll({
+      for (const modelName of ['Contact', 'Configuration', 'Location', 'Vehicle', 'Employment', 'Device', 'Facility']) {
+        const queryOptions = {
           include: 'draft',
           where: { createdByAgencyId: agency.id },
           order: [['id', 'ASC']],
           transaction,
-        });
+        };
+        if (modelName === 'Facility') {
+          queryOptions.order = [
+            ['type', 'ASC'],
+            ['id', 'ASC'],
+          ];
+        }
+        // eslint-disable-next-line no-await-in-loop
+        let records = await sequelize.models[modelName].scope('finalOrNew').findAll(queryOptions);
         records = records
           .map((r) => {
             if (r.draft) {
@@ -86,6 +93,23 @@ module.exports = (sequelize, DataTypes) => {
             return r.getData(this);
           })
           .filter(Boolean);
+        if (modelName === 'Facility') {
+          const newRecords = [];
+          let prevRecord;
+          // process dFacility records into type groups
+          for (const record of records) {
+            if (prevRecord?._attributes.UUID === record._attributes.UUID) {
+              if (!Array.isArray(prevRecord['dFacility.FacilityGroup'])) {
+                prevRecord['dFacility.FacilityGroup'] = [prevRecord['dFacility.FacilityGroup']];
+              }
+              prevRecord['dFacility.FacilityGroup'] = prevRecord['dFacility.FacilityGroup'].concat(record['dFacility.FacilityGroup']);
+            } else {
+              newRecords.push(record);
+              prevRecord = record;
+            }
+          }
+          records = newRecords;
+        }
         if (records.length) {
           const path = [sequelize.models[modelName].rootTag];
           if (sequelize.models[modelName].groupTag) {
