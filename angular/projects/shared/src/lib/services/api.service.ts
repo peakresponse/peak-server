@@ -186,9 +186,24 @@ export class ApiService {
         return this.delete(`/api/demographics/contacts/${id}`);
       },
     },
-    customConfiguration: {
+    customConfigurations: {
       index: (params?: HttpParams): Observable<any> => {
-        return this.get(`/api/demographics/custom-configuration`, params);
+        return this.get(`/api/demographics/custom-configurations`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/custom-configurations`, data);
+      },
+      import: (): Observable<any> => {
+        return this.post(`/api/demographics/custom-configurations/import`, null);
+      },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/custom-configurations/${id}`, params);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/custom-configurations/${id}`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/custom-configurations/${id}`);
       },
     },
     customResults: {

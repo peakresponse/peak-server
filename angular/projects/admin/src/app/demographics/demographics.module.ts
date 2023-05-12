@@ -18,8 +18,8 @@ import { ConfigurationsListDemographicsComponent } from './configurations-list-d
 import { ConfigurationsRecordDemographicsComponent } from './configurations-record-demographics.component';
 import { ContactsListDemographicsComponent } from './contacts-list-demographics.component';
 import { ContactsRecordDemographicsComponent } from './contacts-record-demographics.component';
-import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
-import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
+import { CustomConfigurationsListDemographicsComponent } from './custom-configurations-list-demographics.component';
+import { CustomConfigurationsRecordDemographicsComponent } from './custom-configurations-record-demographics.component';
 import { DashboardDemographicsComponent } from './dashboard-demographics.component';
 import { DevicesListDemographicsComponent } from './devices-list-demographics.component';
 import { DevicesRecordDemographicsComponent } from './devices-record-demographics.component';
@@ -42,8 +42,8 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
     ConfigurationsRecordDemographicsComponent,
     ContactsListDemographicsComponent,
     ContactsRecordDemographicsComponent,
-    CustomConfigurationDemographicsComponent,
-    CustomResultsDemographicsComponent,
+    CustomConfigurationsListDemographicsComponent,
+    CustomConfigurationsRecordDemographicsComponent,
     DashboardDemographicsComponent,
     DevicesListDemographicsComponent,
     DevicesRecordDemographicsComponent,

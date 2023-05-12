@@ -1,0 +1,11 @@
+<router-outlet></router-outlet>
+<admin-schema-list #list
+                   name="Custom Configurations"
+                   [class.d-none]="route.firstChild"
+                   [keyPath]="['demographics', 'customConfigurations']"
+                   schemaPath="/nemsis/xsd/dCustom_v3.json"
+                   [schemaColumns]="sectionColumns">
+  <ng-container class="admin-schema-list-header">
+    <button (click)="onImport()" class="btn btn--sm btn--secondary ms-3">Import from State Data Set</button>
+  </ng-container>
+</admin-schema-list>
