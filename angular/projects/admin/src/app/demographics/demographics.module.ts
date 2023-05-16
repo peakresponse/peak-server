@@ -13,7 +13,6 @@ import { VersionsDemographicsModule } from './versions/versions-demographics.mod
 import { DemographicsRoutingModule } from './demographics-routing.module';
 
 import { AgencyRecordDemographicsComponent } from './agency-record-demographics.component';
-import { BaseDemographicsComponent } from './base-demographics.component';
 import { ConfigurationsListDemographicsComponent } from './configurations-list-demographics.component';
 import { ConfigurationsRecordDemographicsComponent } from './configurations-record-demographics.component';
 import { ContactsListDemographicsComponent } from './contacts-list-demographics.component';
@@ -25,7 +24,6 @@ import { DevicesListDemographicsComponent } from './devices-list-demographics.co
 import { DevicesRecordDemographicsComponent } from './devices-record-demographics.component';
 import { FacilitiesListDemographicsComponent } from './facilities-list-demographics.component';
 import { FacilitiesRecordDemographicsComponent } from './facilities-record-demographics.component';
-import { ListDemographicsComponent } from './list-demographics.component';
 import { LocationsListDemographicsComponent } from './locations-list-demographics.component';
 import { LocationsRecordDemographicsComponent } from './locations-record-demographics.component';
 import { PersonnelBulkInviteDemographicsComponent } from './personnel-bulk-invite-demographics.component';
@@ -37,7 +35,6 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
 @NgModule({
   declarations: [
     AgencyRecordDemographicsComponent,
-    BaseDemographicsComponent,
     ConfigurationsListDemographicsComponent,
     ConfigurationsRecordDemographicsComponent,
     ContactsListDemographicsComponent,
@@ -49,7 +46,6 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
     DevicesRecordDemographicsComponent,
     FacilitiesListDemographicsComponent,
     FacilitiesRecordDemographicsComponent,
-    ListDemographicsComponent,
     LocationsListDemographicsComponent,
     LocationsRecordDemographicsComponent,
     PersonnelBulkInviteDemographicsComponent,
