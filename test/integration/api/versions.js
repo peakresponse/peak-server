@@ -71,6 +71,7 @@ describe('/api/versions', () => {
         stateDataSetId: '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae',
         demSchematronIds: [],
         emsSchematronIds: ['dabc90e5-b8fa-4dac-bcfd-be659ba46b54'],
+        demCustomConfiguration: [],
         isValid: false,
         validationErrors: null,
         createdAt: '2020-04-06T21:22:10.158Z',
