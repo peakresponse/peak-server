@@ -522,9 +522,6 @@ export class ApiService {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/states', params);
     },
-    new: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/states/new', params);
-    },
     create: (data: any): Observable<any> => {
       return this.post(`/api/states`, data);
     },

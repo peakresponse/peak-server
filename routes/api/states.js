@@ -6,7 +6,6 @@ const _ = require('lodash');
 const models = require('../../models');
 const interceptors = require('../interceptors');
 const helpers = require('../helpers');
-const nemsis = require('../../lib/nemsis');
 const nemsisStates = require('../../lib/nemsis/states');
 
 const router = express.Router();
@@ -17,11 +16,6 @@ router.get('/', (req, res) => {
   }).then((records) => {
     res.json(records.map((r) => r.toJSON()));
   });
-});
-
-router.get('/new', interceptors.requireAdmin, (req, res) => {
-  /// fetch the list of repos from the NEMSIS states project
-  nemsis.getStateRepos().then((json) => res.json(json));
 });
 
 router.get(
