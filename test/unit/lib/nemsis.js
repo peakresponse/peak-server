@@ -1,13 +1,10 @@
 /* eslint-disable func-names, no-await-in-loop */
 const assert = require('assert');
-const fs = require('fs');
-const path = require('path');
 const xmlFormatter = require('xml-formatter');
 const xmljs = require('xml-js');
 
 require('../../helpers');
 const nemsis = require('../../../lib/nemsis');
-const nemsisMocks = require('../../mocks/nemsis');
 
 describe('lib', () => {
   describe('nemsis', () => {
