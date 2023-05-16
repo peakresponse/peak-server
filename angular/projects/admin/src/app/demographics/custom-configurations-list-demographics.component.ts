@@ -11,16 +11,13 @@ import { SchemaListComponent } from '../schema/schema-list.component';
 export class CustomConfigurationsListDemographicsComponent {
   @ViewChild('list') list?: SchemaListComponent;
 
-  sectionColumns = [{ name: 'Title', attr: ['dCustomConfiguration.01'], class: 'col-3' }];
+  sectionColumns = [{ name: 'Title', attr: ['dCustomConfiguration.01'], class: 'col-9' }];
 
   constructor(private api: ApiService, private navigation: NavigationService, public route: ActivatedRoute) {}
 
   onImport() {
-    this.api.demographics.configurations.import().subscribe((response: HttpResponse<any>) => {
-      const { id } = response.body ?? {};
-      if (id) {
-        this.navigation.goTo(`/demographics/configurations/${id}`);
-      }
+    this.api.demographics.customConfigurations.import().subscribe((response: HttpResponse<any>) => {
+      this.list?.refresh();
     });
   }
 }
