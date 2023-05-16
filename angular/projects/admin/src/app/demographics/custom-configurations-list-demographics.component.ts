@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
-import { ApiService, NavigationService } from 'shared';
+import { AgencyService, ApiService } from 'shared';
 
 import { SchemaListComponent } from '../schema/schema-list.component';
 
@@ -13,11 +13,12 @@ export class CustomConfigurationsListDemographicsComponent {
 
   sectionColumns = [{ name: 'Title', attr: ['dCustomConfiguration.01'], class: 'col-9' }];
 
-  constructor(private api: ApiService, private navigation: NavigationService, public route: ActivatedRoute) {}
+  constructor(private api: ApiService, private agency: AgencyService, public route: ActivatedRoute) {}
 
   onImport() {
     this.api.demographics.customConfigurations.import().subscribe((response: HttpResponse<any>) => {
       this.list?.refresh();
+      this.agency.refresh();
     });
   }
 }

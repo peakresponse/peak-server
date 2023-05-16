@@ -50,4 +50,12 @@ export class AgencyService implements Resolve<any> {
     }
     return false;
   }
+
+  get version(): any {
+    return this.agency?.version;
+  }
+
+  get draftVersion(): any {
+    return this.agency?.draftVersion;
+  }
 }
