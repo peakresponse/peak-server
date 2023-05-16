@@ -30,21 +30,31 @@ function addIndex(router, model, options) {
   );
 }
 
-function addCreate(router, model) {
+function addCreate(router, model, options) {
+  const { afterCreate } = options?.create ?? {};
   router.post(
     '/',
     interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
     helpers.async(async (req, res) => {
-      const version = await req.agency.getOrCreateDraftVersion(req.user);
-      const record = await model.create({
-        versionId: version.id,
-        isDraft: true,
-        createdByAgencyId: req.agency.id,
-        data: req.body.data,
-        createdById: req.user.id,
-        updatedById: req.user.id,
+      let record;
+      await models.sequelize.transaction(async (transaction) => {
+        const version = await req.agency.getOrCreateDraftVersion(req.user, { transaction });
+        record = await model.create(
+          {
+            versionId: version.id,
+            isDraft: true,
+            createdByAgencyId: req.agency.id,
+            data: req.body.data,
+            createdById: req.user.id,
+            updatedById: req.user.id,
+          },
+          { transaction }
+        );
+        if (afterCreate) {
+          await Promise.resolve(afterCreate(version, record, { transaction }));
+        }
       });
-      res.status(HttpStatus.CREATED).json(await record.toNemsisJSON());
+      res.status(HttpStatus.CREATED).json(await record?.toNemsisJSON());
     })
   );
 }
@@ -69,21 +79,31 @@ function addGet(router, model) {
   );
 }
 
-function addUpdate(router, model) {
+function addUpdate(router, model, options) {
+  const { afterSave } = options?.update ?? {};
   router.put(
     '/:id',
     interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
     helpers.async(async (req, res) => {
-      let record = await model.findOne({
-        where: {
-          id: req.params.id,
-          createdByAgencyId: req.agency.id,
-        },
+      let record;
+      await models.sequelize.transaction(async (transaction) => {
+        record = await model.findOne({
+          where: {
+            id: req.params.id,
+            createdByAgencyId: req.agency.id,
+          },
+          transaction,
+        });
+        if (record) {
+          const { archivedAt, data } = req.body;
+          const version = await req.agency.getOrCreateDraftVersion(req.user, { transaction });
+          record = await record.updateDraft({ versionId: version.id, archivedAt, data, updatedById: req.user.id }, { transaction });
+          if (afterSave) {
+            await Promise.resolve(afterSave(version, record, { transaction }));
+          }
+        }
       });
       if (record) {
-        const { archivedAt, data } = req.body;
-        const version = await req.agency.getOrCreateDraftVersion(req.user);
-        record = await record.updateDraft({ versionId: version.id, archivedAt, data, updatedById: req.user.id });
         res.status(HttpStatus.OK).json(await record.toNemsisJSON());
       } else {
         res.status(HttpStatus.NOT_FOUND).end();
@@ -92,7 +112,8 @@ function addUpdate(router, model) {
   );
 }
 
-function addDelete(router, model) {
+function addDelete(router, model, options) {
+  const { afterDestroy } = options?.delete ?? {};
   router.delete(
     '/:id',
     interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
@@ -109,7 +130,11 @@ function addDelete(router, model) {
           record = await record.getDraft({ transaction });
         }
         if (record) {
+          const version = await record.getVersion({ transaction });
           await record.destroy({ transaction });
+          if (afterDestroy) {
+            await Promise.resolve(afterDestroy(version, record, { transaction }));
+          }
         }
       });
       res.status(HttpStatus.NO_CONTENT).end();
@@ -119,10 +144,10 @@ function addDelete(router, model) {
 
 function addAllRoutes(router, model, options) {
   addIndex(router, model, options);
-  addCreate(router, model);
+  addCreate(router, model, options);
   addGet(router, model);
-  addUpdate(router, model);
-  addDelete(router, model);
+  addUpdate(router, model, options);
+  addDelete(router, model, options);
 }
 
 module.exports = {

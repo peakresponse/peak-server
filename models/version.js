@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         'stateDataSetId',
         'demSchematronIds',
         'emsSchematronIds',
+        'demCustomConfiguration',
         'isValid',
         'validationErrors',
         'createdAt',
@@ -46,12 +47,41 @@ module.exports = (sequelize, DataTypes) => {
       return payload;
     }
 
+    async updateDEMCustomConfiguration(options) {
+      if (!this.isDraft) {
+        return Promise.resolve();
+      }
+      if (!options?.transaction) {
+        return sequelize.transaction((transaction) => this.regenerate({ ...options, transaction }));
+      }
+      const { transaction } = options;
+      // get all final/draft (but not archived)/new DEMDataSet Custom Configurations
+      let records = await sequelize.models.CustomConfiguration.scope('finalOrNew').findAll({
+        include: ['draft'],
+        where: {
+          dataSet: 'DEMDataSet',
+          createdByAgencyId: this.agencyId,
+        },
+        order: [['customElementId', 'ASC']],
+        transaction,
+      });
+      records = records
+        .map((r) => {
+          if (r.draft) {
+            return r.draft.archivedAt ? null : r.draft.data;
+          }
+          return r.data;
+        })
+        .filter(Boolean);
+      return this.update({ demCustomConfiguration: records }, { transaction });
+    }
+
     async regenerate(options) {
       if (!this.isDraft) {
         return Promise.resolve();
       }
       if (!options?.transaction) {
-        return sequelize.transaction((transaction) => this.regenerate({ ...(options ?? {}), transaction }));
+        return sequelize.transaction((transaction) => this.regenerate({ ...options, transaction }));
       }
       const { transaction } = options;
       const agency = await this.getAgency({ include: 'draft', transaction });

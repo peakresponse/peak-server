@@ -1,0 +1,29 @@
+[
+  {
+    "model": "CustomConfiguration",
+    "ignoreSet": true,
+    "data": {
+      "id": "a8d82dff-941b-41b4-859e-1b12fb617221",
+      "isDraft": true,
+      "versionId": "682d5860-c11e-4a40-bfcc-b2dadec9e7d4",
+      "customElementId": "dFacility.01",
+      "data": {
+        "_attributes": { "CustomElementID": "dFacility.01" },
+        "dCustomConfiguration.01": { "_text": "Type of Facility", "_attributes": { "nemsisElement": "dFacility.01" } },
+        "dCustomConfiguration.02": {
+          "_text": "The type of facility (healthcare or other) that the EMS agency transports patients to or from."
+        },
+        "dCustomConfiguration.03": { "_text": "9902009" },
+        "dCustomConfiguration.04": { "_text": "9923001" },
+        "dCustomConfiguration.05": { "_text": "9903007" },
+        "dCustomConfiguration.06": {
+          "_text": "1701037",
+          "_attributes": { "nemsisCode": "1701009", "customValueDescription": "Alternate Care Site" }
+        }
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444"
+    }
+  }
+]

@@ -15,6 +15,8 @@ router.post(
     let payload;
     await models.sequelize.transaction(async (transaction) => {
       const records = await req.agency.importDEMCustomConfigurations(req.user, { transaction });
+      const draftVersion = await req.agency.getDraftVersion({ transaction });
+      await draftVersion.updateDEMCustomConfiguration({ transaction });
       payload = await Promise.all(records.map((r) => r.toNemsisJSON({ transaction })));
     });
     if (payload) {
@@ -31,6 +33,21 @@ base.addAllRoutes(router, models.CustomConfiguration, {
       ['dataSet', 'ASC'],
       ['id', 'ASC'],
     ],
+  },
+  create: {
+    async afterCreate(version, record, options) {
+      return version.updateDEMCustomConfiguration({ transaction: options?.transaction });
+    },
+  },
+  update: {
+    async afterSave(version, record, options) {
+      return version.updateDEMCustomConfiguration({ transaction: options?.transaction });
+    },
+  },
+  delete: {
+    async afterDestroy(version, record, options) {
+      return version.updateDEMCustomConfiguration({ transaction: options?.transaction });
+    },
   },
 });
 
