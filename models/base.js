@@ -444,6 +444,24 @@ class Base extends Model {
     }
   }
 
+  syncFieldAndNemsisAttributeValue(key, keyPath, attribute, options) {
+    if (this.changed(key)) {
+      this.setNemsisAttributeValue(keyPath, attribute, this.getDataValue(key));
+      options.fields = options.fields || [];
+      if (options.fields.indexOf('data') < 0) {
+        options.fields.push('data');
+      }
+    } else {
+      this.setDataValue(key, this.getNemsisAttributeValue(keyPath, attribute) ?? null);
+      if (this.changed(key)) {
+        options.fields = options.fields || [];
+        if (options.fields.indexOf(key) < 0) {
+          options.fields.push(key);
+        }
+      }
+    }
+  }
+
   syncFieldAndNemsisValue(key, keyPath, options) {
     if (this.changed(key)) {
       this.setNemsisValue(keyPath, this.getDataValue(key));

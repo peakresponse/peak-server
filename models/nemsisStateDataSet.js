@@ -46,6 +46,11 @@ module.exports = (sequelize, DataTypes) => {
       return parser.parseConfiguration(callback);
     }
 
+    async parseDEMCustomConfiguration(callback) {
+      const parser = await this.getParser();
+      return parser.parseDEMCustomConfiguration(callback);
+    }
+
     async parseFacilities(callback) {
       const parser = await this.getParser();
       return parser.parseFacilities(callback);

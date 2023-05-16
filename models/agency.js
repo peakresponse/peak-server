@@ -196,7 +196,7 @@ module.exports = (sequelize, DataTypes) => {
 
     async importConfiguration(user, options) {
       if (!options?.transaction) {
-        return sequelize.transaction((transaction) => this.importConfiguration(user, { transaction }));
+        return sequelize.transaction((transaction) => this.importConfiguration(user, { ...options, transaction }));
       }
       const { transaction } = options;
       const version = await this.getOrCreateDraftVersion(user, { transaction });
@@ -211,7 +211,7 @@ module.exports = (sequelize, DataTypes) => {
           include: ['draft'],
           transaction,
         });
-        const data = record ? _.cloneDeep(record.data) : {};
+        const data = record ? _.cloneDeep(record.draft ? record.draft.data : record.data) : {};
         const scpgs = Array.isArray(configuration['sConfiguration.ProcedureGroup'])
           ? configuration['sConfiguration.ProcedureGroup']
           : [configuration['sConfiguration.ProcedureGroup']];
@@ -249,6 +249,49 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
       return record;
+    }
+
+    async importDEMCustomConfigurations(user, options) {
+      if (!options?.transaction) {
+        return sequelize.transaction((transaction) => this.importDEMCustomConfigurations(user, { ...options, transaction }));
+      }
+      const { transaction } = options;
+      const version = await this.getOrCreateDraftVersion(user, { transaction });
+      const stateDataSet = await version.getStateDataSet({ transaction });
+      const records = [];
+      await stateDataSet.parseDEMCustomConfiguration(async (dataSetNemsisVersion, customConfiguration) => {
+        let record = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOne({
+          where: {
+            customElementId: customConfiguration?._attributes?.CustomElementID,
+            dataSet: 'DEMDataSet',
+            createdByAgencyId: this.id,
+          },
+          include: ['draft'],
+          transaction,
+        });
+        let data = record ? _.cloneDeep(record.draft ? record.draft.data : record.data) : {};
+        data = {
+          ...data,
+          ...JSON.parse(JSON.stringify(customConfiguration).replace(/"sdCustomConfiguration\./g, '"dCustomConfiguration.')),
+        };
+        if (record) {
+          record = await record.updateDraft({ versionId: version.id, data, updatedById: user.id }, { transaction });
+        } else {
+          record = await sequelize.models.CustomConfiguration.create(
+            {
+              versionId: version.id,
+              isDraft: true,
+              createdByAgencyId: this.id,
+              data,
+              createdById: user.id,
+              updatedById: user.id,
+            },
+            { transaction }
+          );
+        }
+        records.push(record);
+      });
+      return records;
     }
 
     async generateSubdomain() {

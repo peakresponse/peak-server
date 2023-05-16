@@ -31,6 +31,10 @@ module.exports = {
         },
         unique: true,
       },
+      custom_element_id: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       data_set: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -85,6 +89,9 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.sequelize.query(
+      'CREATE UNIQUE INDEX custom_configurations_custom_element_id_uk ON custom_configurations (created_by_agency_id, custom_element_id) WHERE created_by_agency_id IS NOT NULL AND is_draft=FALSE'
+    );
   },
 
   async down(queryInterface, Sequelize) {

@@ -71,6 +71,47 @@ describe('lib', () => {
             });
           });
 
+          describe('.parseDEMCustomConfiguration()', () => {
+            it('parses sdCustomConfiguration records out of the specified state data set version', async () => {
+              const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
+              let count = 0;
+              await stateDataSetParser.parseDEMCustomConfiguration((nemsisVersion, data) => {
+                assert.deepStrictEqual(nemsisVersion, '3.5.0.191130CP1');
+                if (count === 0) {
+                  assert.deepStrictEqual(data, {
+                    _attributes: { CustomElementID: 'dAgency.11' },
+                    'sdCustomConfiguration.01': { _attributes: { nemsisElement: 'dAgency.11' }, _text: 'dAgency.11' },
+                    'sdCustomConfiguration.02': {
+                      _text:
+                        'The level of service which the agency provides EMS care for every request for service (the minimum certification level). This may be the license level granted by the state EMS office.',
+                    },
+                    'sdCustomConfiguration.03': { _text: '9902009' },
+                    'sdCustomConfiguration.04': { _text: '9923001' },
+                    'sdCustomConfiguration.05': { _text: '9903001' },
+                    'sdCustomConfiguration.06': [
+                      {
+                        _attributes: {
+                          customValueDescription: 'First Responder',
+                          nemsisCode: '9917003',
+                        },
+                        _text: 'it9917.186',
+                      },
+                      {
+                        _attributes: {
+                          customValueDescription: 'Nurse',
+                          nemsisCode: '9917031',
+                        },
+                        _text: 'it9917.189',
+                      },
+                    ],
+                  });
+                }
+                count += 1;
+              });
+              assert.deepStrictEqual(count, 1);
+            });
+          });
+
           describe('.parseFacilities()', () => {
             it('parses sFacility records out of the specified state data set version', async () => {
               const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');

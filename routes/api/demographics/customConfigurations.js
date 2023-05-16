@@ -14,8 +14,8 @@ router.post(
   helpers.async(async (req, res) => {
     let payload;
     await models.sequelize.transaction(async (transaction) => {
-      const record = await req.agency.importConfiguration(req.user, { transaction });
-      payload = await record.toNemsisJSON({ transaction });
+      const records = await req.agency.importDEMCustomConfigurations(req.user, { transaction });
+      payload = await Promise.all(records.map((r) => r.toNemsisJSON({ transaction })));
     });
     if (payload) {
       res.json(payload);

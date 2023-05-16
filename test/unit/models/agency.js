@@ -442,6 +442,17 @@ describe('models', () => {
           );
         });
       });
+
+      describe('.importDEMCustomConfigurations()', () => {
+        it('imports DEM Custom Configurations from the NEMSIS State Data Set', async () => {
+          const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+          const user = await agency.getCreatedBy();
+          const customConfigurations = await agency.importDEMCustomConfigurations(user);
+          assert.deepStrictEqual(customConfigurations.length, 2);
+          assert.deepStrictEqual(customConfigurations[0].customElementId, 'dAgency.11');
+          assert.deepStrictEqual(customConfigurations[1].customElementId, 'dAgency.13');
+        });
+      });
     });
   });
 });
