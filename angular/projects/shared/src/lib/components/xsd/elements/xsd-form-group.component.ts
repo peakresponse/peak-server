@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { assign, cloneDeep } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { XsdBaseComponent } from './xsd-base.component';
+import { XsdElementBaseComponent } from './xsd-element-base.component';
 
 import { ModalComponent } from '../../modal.component';
 
@@ -12,7 +12,7 @@ import { ModalComponent } from '../../modal.component';
   templateUrl: './xsd-form-group.component.html',
   styleUrls: ['./xsd-form-group.component.scss'],
 })
-export class XsdFormGroupComponent extends XsdBaseComponent {
+export class XsdFormGroupComponent extends XsdElementBaseComponent {
   isGroupModalEditing = false;
   groupModalPath?: string;
   groupModalValue: any = null;

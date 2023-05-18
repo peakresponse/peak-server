@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { XsdBaseComponent } from './xsd-base.component';
+import { XsdElementBaseComponent } from './xsd-element-base.component';
 
 @Component({
   selector: 'shared-xsd-input',
   templateUrl: './xsd-input.component.html',
 })
-export class XsdInputComponent extends XsdBaseComponent {
+export class XsdInputComponent extends XsdElementBaseComponent {
   get inputType(): string {
     switch (this.primitiveType) {
       case 'xs:date':

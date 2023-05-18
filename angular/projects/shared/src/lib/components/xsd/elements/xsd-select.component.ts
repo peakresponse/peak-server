@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { XsdBaseComponent } from './xsd-base.component';
+import { XsdElementBaseComponent } from './xsd-element-base.component';
 
 @Component({
   selector: 'shared-xsd-select',
   templateUrl: './xsd-select.component.html',
 })
-export class XsdSelectComponent extends XsdBaseComponent {
+export class XsdSelectComponent extends XsdElementBaseComponent {
   get minLength(): number | null {
     if (this.type?.['xs:restriction']?.['xs:minLength']?._attributes?.value) {
       return parseInt(this.type['xs:restriction']['xs:minLength']._attributes.value);

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { XsdBaseComponent } from './xsd-base.component';
+import { XsdElementBaseComponent } from './xsd-element-base.component';
 
 @Component({
   selector: 'shared-xsd-element',
   templateUrl: './xsd-element.component.html',
 })
-export class XsdElementComponent extends XsdBaseComponent {
+export class XsdElementComponent extends XsdElementBaseComponent {
   COMPONENT_TYPES = {
     input: 'input',
     select: 'select',

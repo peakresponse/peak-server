@@ -122,31 +122,49 @@ export class SchemaService {
     if (this.schemaCache[schemaPath]) {
       return of(this.schemaCache[schemaPath]);
     }
-    return this.api.get(schemaPath).pipe(
-      mergeMap((response) => {
-        /// normalize schema response structure a bit
-        const schema = response.body;
-        let complexTypes = schema['xs:schema']['xs:complexType'];
-        if (!Array.isArray(complexTypes)) {
-          complexTypes = [complexTypes];
-        }
-        for (let complexType of complexTypes) {
-          if (!Array.isArray(complexType['xs:sequence']['xs:element'])) {
-            complexType['xs:sequence']['xs:element'] = [complexType['xs:sequence']['xs:element']];
-          }
-        }
-        this.schemaCache[schemaPath] = schema;
-        /// look for and add any additional type definitions and add in...
-        let simpleTypes = schema['xs:schema']['xs:simpleType'];
-        if (simpleTypes) {
-          if (!Array.isArray(simpleTypes)) {
-            simpleTypes = [simpleTypes];
-          }
-          for (let simpleType of simpleTypes) {
+    let observable: Observable<any>;
+    if (this.commonTypes) {
+      observable = of(this.commonTypes);
+    } else {
+      observable = this.api.get(`/nemsis/xsd/commonTypes_v3.json`).pipe(
+        mergeMap((response) => {
+          this.commonTypes = {};
+          for (let simpleType of response.body['xs:schema']['xs:simpleType']) {
             this.commonTypes[simpleType._attributes.name] = simpleType;
           }
-        }
-        return of(schema);
+          return of(this.commonTypes);
+        })
+      );
+    }
+    return observable.pipe(
+      mergeMap(() => {
+        return this.api.get(schemaPath).pipe(
+          mergeMap((response) => {
+            /// normalize schema response structure a bit
+            const schema = response.body;
+            let complexTypes = schema['xs:schema']['xs:complexType'];
+            if (!Array.isArray(complexTypes)) {
+              complexTypes = [complexTypes];
+            }
+            for (let complexType of complexTypes) {
+              if (!Array.isArray(complexType['xs:sequence']['xs:element'])) {
+                complexType['xs:sequence']['xs:element'] = [complexType['xs:sequence']['xs:element']];
+              }
+            }
+            this.schemaCache[schemaPath] = schema;
+            /// look for and add any additional type definitions and add in...
+            let simpleTypes = schema['xs:schema']['xs:simpleType'];
+            if (simpleTypes) {
+              if (!Array.isArray(simpleTypes)) {
+                simpleTypes = [simpleTypes];
+              }
+              for (let simpleType of simpleTypes) {
+                this.commonTypes[simpleType._attributes.name] = simpleType;
+              }
+            }
+            return of(schema);
+          })
+        );
       })
     );
   }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { XsdBaseComponent } from './xsd-base.component';
+import { XsdElementBaseComponent } from './xsd-element-base.component';
 
 @Component({
   selector: 'shared-xsd-element-wrapper',
   templateUrl: './xsd-element-wrapper.component.html',
   styleUrls: ['./xsd-element-wrapper.component.scss'],
 })
-export class XsdElementWrapperComponent extends XsdBaseComponent {}
+export class XsdElementWrapperComponent extends XsdElementBaseComponent {}

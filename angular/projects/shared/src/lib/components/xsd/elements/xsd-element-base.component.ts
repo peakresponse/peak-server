@@ -10,7 +10,7 @@ import { SchemaService } from '../../../services/schema.service';
 @Component({
   template: '',
 })
-export class XsdBaseComponent {
+export class XsdElementBaseComponent {
   @Input() element: any;
   @Input() data: any;
   @Input() error: any;

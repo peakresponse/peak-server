@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { XsdBaseComponent } from './xsd-base.component';
+import { XsdElementBaseComponent } from './xsd-element-base.component';
 
 let STATES: any[];
 
@@ -8,7 +8,7 @@ let STATES: any[];
   selector: 'shared-xsd-select-state',
   templateUrl: './xsd-select-state.component.html',
 })
-export class XsdSelectStateComponent extends XsdBaseComponent {
+export class XsdSelectStateComponent extends XsdElementBaseComponent {
   STATES: any[] = [];
 
   ngOnInit() {

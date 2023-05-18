@@ -31,13 +31,13 @@ import { SearchFieldComponent } from './components/fields/search-field.component
 import { SelectFieldComponent } from './components/fields/select-field.component';
 import { TextFieldComponent } from './components/fields/text-field.component';
 
-import { XsdBaseComponent } from './components/fields/xsd/xsd-base.component';
-import { XsdElementWrapperComponent } from './components/fields/xsd/xsd-element-wrapper.component';
-import { XsdElementComponent } from './components/fields/xsd/xsd-element.component';
-import { XsdFormGroupComponent } from './components/fields/xsd/xsd-form-group.component';
-import { XsdInputComponent } from './components/fields/xsd/xsd-input.component';
-import { XsdSelectStateComponent } from './components/fields/xsd/xsd-select-state.component';
-import { XsdSelectComponent } from './components/fields/xsd/xsd-select.component';
+import { XsdElementBaseComponent } from './components/xsd/elements/xsd-element-base.component';
+import { XsdElementWrapperComponent } from './components/xsd/elements/xsd-element-wrapper.component';
+import { XsdElementComponent } from './components/xsd/elements/xsd-element.component';
+import { XsdFormGroupComponent } from './components/xsd/elements/xsd-form-group.component';
+import { XsdInputComponent } from './components/xsd/elements/xsd-input.component';
+import { XsdSelectStateComponent } from './components/xsd/elements/xsd-select-state.component';
+import { XsdSelectComponent } from './components/xsd/elements/xsd-select.component';
 
 import { CommandFooterComponent } from './components/headers/command-footer.component';
 import { CommandHeaderComponent } from './components/headers/command-header.component';
@@ -81,18 +81,18 @@ import { VersionPipe } from './pipes/version.pipe';
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
-    // components/fields/xsd
-    XsdBaseComponent,
+    // components/headers
+    CommandFooterComponent,
+    CommandHeaderComponent,
+    WelcomeHeaderComponent,
+    // components/xsd/elements
+    XsdElementBaseComponent,
     XsdElementWrapperComponent,
     XsdElementComponent,
     XsdFormGroupComponent,
     XsdInputComponent,
     XsdSelectStateComponent,
     XsdSelectComponent,
-    // components/headers
-    CommandFooterComponent,
-    CommandHeaderComponent,
-    WelcomeHeaderComponent,
     // directives
     AutoloadDirective,
     DebouncedDirective,
@@ -132,8 +132,8 @@ import { VersionPipe } from './pipes/version.pipe';
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
-    // components/fields/xsd
-    XsdBaseComponent,
+    // components/xsd/elements
+    XsdElementBaseComponent,
     XsdElementWrapperComponent,
     XsdElementComponent,
     XsdFormGroupComponent,

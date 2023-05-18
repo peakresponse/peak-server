@@ -35,13 +35,13 @@ export * from './lib/components/fields/search-field.component';
 export * from './lib/components/fields/select-field.component';
 export * from './lib/components/fields/text-field.component';
 
-export * from './lib/components/fields/xsd/xsd-base.component';
-export * from './lib/components/fields/xsd/xsd-element-wrapper.component';
-export * from './lib/components/fields/xsd/xsd-element.component';
-export * from './lib/components/fields/xsd/xsd-form-group.component';
-export * from './lib/components/fields/xsd/xsd-input.component';
-export * from './lib/components/fields/xsd/xsd-select-state.component';
-export * from './lib/components/fields/xsd/xsd-select.component';
+export * from './lib/components/xsd/elements/xsd-element-base.component';
+export * from './lib/components/xsd/elements/xsd-element-wrapper.component';
+export * from './lib/components/xsd/elements/xsd-element.component';
+export * from './lib/components/xsd/elements/xsd-form-group.component';
+export * from './lib/components/xsd/elements/xsd-input.component';
+export * from './lib/components/xsd/elements/xsd-select-state.component';
+export * from './lib/components/xsd/elements/xsd-select.component';
 
 export * from './lib/components/headers/command-footer.component';
 export * from './lib/components/headers/command-header.component';
