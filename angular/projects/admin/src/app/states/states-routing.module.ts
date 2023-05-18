@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AgencyService, SchemaService, UserService } from 'shared';
+import { AgencyService, UserService } from 'shared';
 
 import { StateResolver } from './state.resolver';
 import { EditStateComponent } from './edit-state.component';
@@ -14,7 +14,6 @@ const appRoutes: Routes = [
     component: ListStatesComponent,
     resolve: {
       agency: AgencyService,
-      schema: SchemaService,
       user: UserService,
     },
     children: [

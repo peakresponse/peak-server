@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AgencyService, SchemaService, UserService } from 'shared';
+import { AgencyService, UserService } from 'shared';
 
 import { EditFormDemographicsComponent } from './edit-form-demographics.component';
 import { ListFormsDemographicsComponent } from './list-forms-demographics.component';
@@ -14,7 +14,6 @@ const appRoutes: Routes = [
     resolve: {
       agency: AgencyService,
       user: UserService,
-      schema: SchemaService,
     },
     children: [
       {
