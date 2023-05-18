@@ -5,7 +5,8 @@ import { NavigationEnd } from '@angular/router';
 import { assign, clone, get, remove } from 'lodash';
 import { EMPTY, Subscription } from 'rxjs';
 import { catchError, filter } from 'rxjs/operators';
-import { AutoloadDirective } from 'shared';
+
+import { AutoloadDirective } from '../../directives/autoload.directive';
 
 import { XsdBaseComponent } from './xsd-base.component';
 

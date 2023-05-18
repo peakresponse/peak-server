@@ -35,6 +35,10 @@ export * from './lib/components/fields/search-field.component';
 export * from './lib/components/fields/select-field.component';
 export * from './lib/components/fields/text-field.component';
 
+export * from './lib/components/xsd/xsd-base.component';
+export * from './lib/components/xsd/xsd-list.component';
+export * from './lib/components/xsd/xsd-record.component';
+
 export * from './lib/components/xsd/elements/xsd-element-base.component';
 export * from './lib/components/xsd/elements/xsd-element-wrapper.component';
 export * from './lib/components/xsd/elements/xsd-element.component';

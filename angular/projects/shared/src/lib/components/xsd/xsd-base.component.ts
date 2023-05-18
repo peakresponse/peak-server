@@ -3,7 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 
 import { find } from 'lodash';
 
-import { ApiService, AgencyService, NavigationService, NotificationService, SchemaService, UserService } from 'shared';
+import { ApiService } from '../../services/api.service';
+import { AgencyService } from '../../services/agency.service';
+import { NavigationService } from '../../services/navigation.service';
+import { NotificationService } from '../../services/notification.service';
+import { SchemaService } from '../../services/schema.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   template: '',

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SortablejsModule } from 'ngx-sortablejs';
@@ -30,6 +31,10 @@ import { RecordingFieldComponent } from './components/fields/recording-field.com
 import { SearchFieldComponent } from './components/fields/search-field.component';
 import { SelectFieldComponent } from './components/fields/select-field.component';
 import { TextFieldComponent } from './components/fields/text-field.component';
+
+import { XsdBaseComponent } from './components/xsd/xsd-base.component';
+import { XsdListComponent } from './components/xsd/xsd-list.component';
+import { XsdRecordComponent } from './components/xsd/xsd-record.component';
 
 import { XsdElementBaseComponent } from './components/xsd/elements/xsd-element-base.component';
 import { XsdElementWrapperComponent } from './components/xsd/elements/xsd-element-wrapper.component';
@@ -85,6 +90,10 @@ import { VersionPipe } from './pipes/version.pipe';
     CommandFooterComponent,
     CommandHeaderComponent,
     WelcomeHeaderComponent,
+    // components/xsd
+    XsdBaseComponent,
+    XsdListComponent,
+    XsdRecordComponent,
     // components/xsd/elements
     XsdElementBaseComponent,
     XsdElementWrapperComponent,
@@ -104,7 +113,7 @@ import { VersionPipe } from './pipes/version.pipe';
     InflectionPipe,
     VersionPipe,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, NgxDropzoneModule, SortablejsModule.forRoot({ animation: 150 })],
+  imports: [CommonModule, FormsModule, NgbModule, NgxDropzoneModule, RouterModule, SortablejsModule.forRoot({ animation: 150 })],
   exports: [
     // components
     DropzoneComponent,
@@ -132,6 +141,10 @@ import { VersionPipe } from './pipes/version.pipe';
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
+    // components/xsd
+    XsdBaseComponent,
+    XsdListComponent,
+    XsdRecordComponent,
     // components/xsd/elements
     XsdElementBaseComponent,
     XsdElementWrapperComponent,
