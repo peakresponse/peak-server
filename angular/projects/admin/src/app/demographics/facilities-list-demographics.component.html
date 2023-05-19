@@ -1,14 +1,17 @@
 <router-outlet></router-outlet>
-<admin-schema-list #list
+<shared-xsd-list #list
                    name="Facilities" 
                    [class.d-none]="route.firstChild"
                    [keyPath]="['demographics', 'facilities']"
-                   schemaPath="/nemsis/xsd/dFacility_v3.json"
+                   [nemsisVersion]="agency.version?.nemsisVersion"
+                   xsd="dFacility_v3.xsd"
+                   [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+                   draftXsd="dFacility_v3.xsd"
                    [schemaColumns]="sectionColumns">
   <ng-container class="admin-schema-list-header">
     <button (click)="importModal.show(null, {size: 'lg'})" class="btn btn--sm btn--secondary ms-3">Import from State Data Set</button>
   </ng-container>
-</admin-schema-list>
+</shared-xsd-list>
 <shared-modal #importModal dismissLabel="Close">
   <h3 class="modal-title">Import Facility</h3>
   <div class="modal-body">

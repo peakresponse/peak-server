@@ -1,6 +1,9 @@
-<admin-schema-record name="Facility"
+<shared-xsd-record name="Facility"
                      [keyPath]="['demographics', 'facilities']"
-                     schemaPath="/nemsis/xsd/dFacility_v3.json"
+                     [nemsisVersion]="agency.version?.nemsisVersion"
+                     xsd="dFacility_v3.xsd"
+                     [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+                     draftXsd="dFacility_v3.xsd"
                      [defaultValues]="defaultValues">
   <ng-template let-childElements="childElements" let-record="record" let-error="error">
     <ng-container *ngFor="let element of childElements">
@@ -10,4 +13,4 @@
       </ng-container>
     </ng-container>
   </ng-template>
-</admin-schema-record>
+</shared-xsd-record>

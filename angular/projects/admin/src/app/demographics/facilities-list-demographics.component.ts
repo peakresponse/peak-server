@@ -3,7 +3,7 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { ApiService } from 'shared';
+import { AgencyService, ApiService } from 'shared';
 
 import { SchemaListComponent } from '../schema/schema-list.component';
 
@@ -31,7 +31,7 @@ export class FacilitiesListDemographicsComponent implements OnInit {
   isImporting?: string;
   isImported: string[] = [];
 
-  constructor(private api: ApiService, public route: ActivatedRoute) {}
+  constructor(public agency: AgencyService, private api: ApiService, public route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route?.parent?.data.subscribe((data: any) => {

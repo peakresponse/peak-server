@@ -6,6 +6,7 @@ import { cloneDeep, get } from 'lodash';
 
 import { XsdBaseComponent } from './xsd-base.component';
 import { catchError } from 'rxjs/operators';
+import { XsdSchema } from './xsd-schema';
 
 @Component({
   selector: 'shared-xsd-record',
@@ -24,13 +25,6 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
 
   clone: any;
 
-  get basePath(): string | undefined {
-    if (this.isGrouped) {
-      return `$['${this.groupElementName}']`;
-    }
-    return undefined;
-  }
-
   get isArchivable(): boolean {
     return true;
   }
@@ -45,6 +39,10 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
 
   get record(): any {
     return this.isEditingDraft ? this.clone.draft : this.clone;
+  }
+
+  get recordSchema(): XsdSchema | undefined {
+    return this.isNewRecord || this.isEditingDraft ? this.draftSchemaData : this.schemaData;
   }
 
   ngOnInit(): void {
