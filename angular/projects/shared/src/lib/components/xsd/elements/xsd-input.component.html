@@ -1,4 +1,4 @@
-<shared-xsd-element-wrapper [element]="element" [data]="data" [index]="index" [selectedValue]="selectedValue" [displayOnly]="displayOnly">
+<shared-xsd-element-wrapper [xsd]="xsd" [element]="element" [data]="data" [index]="index" [selectedValue]="selectedValue" [displayOnly]="displayOnly">
   <ng-container *ngIf="isDisplayOnly">
     <ng-container *ngIf="value as val; else noVal">{{val}}</ng-container>
     <ng-template #noVal>&nbsp;</ng-template>

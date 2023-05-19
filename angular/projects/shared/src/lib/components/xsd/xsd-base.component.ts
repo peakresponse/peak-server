@@ -22,10 +22,12 @@ export class XsdBaseComponent implements OnInit {
   @Input() nemsisVersion?: string;
   @Input() xsd?: string;
   @Input() schemaRootElementName: string = '';
+  @Input() customConfiguration?: any[];
 
   @Input() draftNemsisVersion?: string;
   @Input() draftXsd?: string;
   @Input() draftSchemaRootElementName: string = '';
+  @Input() draftCustomConfiguration?: any[];
 
   @Input() data: any;
 
@@ -49,13 +51,18 @@ export class XsdBaseComponent implements OnInit {
     this.isLoading = true;
     if (this.nemsisVersion && this.xsd) {
       this.schema.getXsd(false, this.nemsisVersion, this.xsd).subscribe((schema: any) => {
-        this.schemaData = new XsdSchema(schema, this.schemaRootElementName);
+        this.schemaData = new XsdSchema(schema, this.schema.getCommonTypes(false), this.customConfiguration, this.schemaRootElementName);
         this.isLoading = !this.schemaData && !(!this.draftNemsisVersion || this.draftSchemaData) && !this.data;
       });
     }
     if (this.draftNemsisVersion && this.draftXsd) {
       this.schema.getXsd(true, this.draftNemsisVersion, this.draftXsd).subscribe((schema: any) => {
-        this.draftSchemaData = new XsdSchema(schema, this.draftSchemaRootElementName);
+        this.draftSchemaData = new XsdSchema(
+          schema,
+          this.schema.getCommonTypes(true),
+          this.draftCustomConfiguration,
+          this.draftSchemaRootElementName
+        );
         this.isLoading = !this.schemaData && !(!this.draftNemsisVersion || this.draftSchemaData) && !this.data;
       });
     }

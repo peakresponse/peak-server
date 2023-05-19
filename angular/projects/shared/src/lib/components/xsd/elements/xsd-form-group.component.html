@@ -6,7 +6,7 @@
     <span class="feedback">{{groupText}}</span>
     <div *ngFor="let selectedValue of values; index as i" class="array-field__item">
       <div *ngFor="let nestedElement of groupElements" class="array-field__subitem">
-        <shared-xsd-form-group [basePath]="path + '[' + i + ']'" [element]="nestedElement" [data]="selectedValue" [displayOnly]="true" [error]="error"></shared-xsd-form-group>
+        <shared-xsd-form-group [xsd]="xsd" [basePath]="path + '[' + i + ']'" [element]="xsd?.customizeElement(nestedElement)" [data]="selectedValue" [displayOnly]="true" [error]="error"></shared-xsd-form-group>
       </div>
       <div class="array-field__subitem">
         <button (click)="showGroupModal(modal, selectedValue, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
@@ -25,12 +25,8 @@
         <span i18n *ngIf="!isGroupModalEditing">New {{displayName|inflection:'singularize'}}</span>
       </h3>
       <div *ngIf="groupModalValue" class="modal-body text-start">
-<<<<<<< HEAD
-        <div *ngFor="let nestedElement of groupElements">
-=======
         <div *ngFor="let nestedElement of groupElements" class="array-field__subitem">
->>>>>>> 3d7f467 ([Closes #195] First pass, refactored NEMSIS form editing, admin DEM Agency editing)
-          <shared-xsd-form-group [basePath]="groupModalPath" [element]="nestedElement" [data]="groupModalValue" [error]="error"></shared-xsd-form-group>
+          <shared-xsd-form-group [xsd]="xsd" [basePath]="groupModalPath" [element]="xsd?.customizeElement(nestedElement)" [data]="groupModalValue" [error]="error"></shared-xsd-form-group>
         </div>
       </div>
     </shared-modal>
@@ -40,7 +36,7 @@
   <ng-container *ngIf="!isMulti">
     <div *ngIf="isDisplayOnly">
       <h5 [class.text-danger]="isInvalid">{{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small></h5>
-      <shared-xsd-element [basePath]="basePath" [element]="element" [data]="data" [displayOnly]="true" [error]="error"></shared-xsd-element>
+      <shared-xsd-element [xsd]="xsd" [basePath]="basePath" [element]="element" [data]="data" [displayOnly]="true" [error]="error"></shared-xsd-element>
       <div *ngIf="isInvalid" class="invalid-feedback">
         <span >{{errorMessages.join(' ')}}</span>
       </div>
@@ -49,7 +45,7 @@
       <label [for]="formName">
         <span>{{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small></span>
       </label>
-      <shared-xsd-element [basePath]="basePath" [element]="element" [data]="data" [error]="error"></shared-xsd-element>
+      <shared-xsd-element [xsd]="xsd" [basePath]="basePath" [element]="element" [data]="data" [error]="error"></shared-xsd-element>
       <span [class.feedback]="!isInvalid" [class.invalid-feedback]="isInvalid">
         {{displayText}}
         <span *ngIf="isInvalid">{{errorMessages.join(' ')}}</span>
@@ -60,7 +56,7 @@
     <ng-container *ngIf="isDisplayOnly">
       <h5 [class.text-danger]="isInvalid">{{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small></h5>
       <div *ngFor="let selectedValue of values; index as i">
-        <shared-xsd-element [basePath]="basePath" [element]="element" [data]="data" [error]="error" [index]="i" [selectedValue]="selectedValue" [displayOnly]="true"></shared-xsd-element>
+        <shared-xsd-element [xsd]="xsd" [basePath]="basePath" [element]="element" [data]="data" [error]="error" [index]="i" [selectedValue]="selectedValue" [displayOnly]="true"></shared-xsd-element>
       </div>
       <div *ngIf="isInvalid" class="invalid-feedback">
         <span >{{errorMessages.join(' ')}}</span>
@@ -71,7 +67,7 @@
         <span>{{displayName}}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{name}})</small></span>
       </label>
       <div *ngFor="let selectedValue of values; index as i" class="array-field__item" [class.array-field__item--invalid]="isInvalidValue(i)">
-        <shared-xsd-element [basePath]="basePath" [element]="element" [data]="data" [error]="error" [index]="i" [selectedValue]="selectedValue"></shared-xsd-element>
+        <shared-xsd-element [xsd]="xsd" [basePath]="basePath" [element]="element" [data]="data" [error]="error" [index]="i" [selectedValue]="selectedValue"></shared-xsd-element>
         <div [class.feedback]="!isInvalidValue(i)" [class.invalid-feedback]="isInvalidValue(i)">
           <span *ngIf="isInvalidValue(i)">{{errorMessagesForValue(i).join(' ')}}</span>
         </div>

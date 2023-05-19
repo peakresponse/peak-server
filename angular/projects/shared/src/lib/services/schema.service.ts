@@ -96,6 +96,10 @@ export class SchemaService {
     return observable;
   }
 
+  getCommonTypes(isDraft: boolean): any {
+    return isDraft ? this.draftCommonTypes : this.commonTypes;
+  }
+
   getType(name: string): any {
     if (this.commonTypes) {
       return this.commonTypes[name];

@@ -2,10 +2,14 @@ import { find } from 'lodash';
 
 export class XsdSchema {
   private data: any;
+  private commonTypes: any;
+  private customConfiguration?: any[];
   private rootElementNameInternal?: string;
 
-  constructor(data: any, rootElementName?: string) {
+  constructor(data: any, commonTypes: any, customConfiguration?: any[], rootElementName?: string) {
     this.data = data;
+    this.commonTypes = commonTypes;
+    this.customConfiguration = customConfiguration;
     this.rootElementNameInternal = rootElementName;
   }
 
@@ -47,5 +51,25 @@ export class XsdSchema {
       return childElements[0]?.['xs:complexType']?.['xs:sequence']?.['xs:element'];
     }
     return childElements;
+  }
+
+  getType(name: string): any {
+    return this.commonTypes?.[name];
+  }
+
+  customizeElement(element: any): any {
+    if (this.customConfiguration) {
+      const elementName = element?._attributes?.name;
+      const prefix = this.customConfiguration.find((cc) => cc['dCustomConfiguration.01']) ? 'dCustomConfiguration' : 'eCustomConfiguration';
+      const config = this.customConfiguration.find((cc) => cc[`${prefix}.01`]?._attributes?.nemsisElement === elementName);
+      if (config) {
+        if (config._attributes?.CustomElementID === elementName) {
+          // modify the existing element
+        } else {
+          // add to the element group
+        }
+      }
+    }
+    return element;
   }
 }

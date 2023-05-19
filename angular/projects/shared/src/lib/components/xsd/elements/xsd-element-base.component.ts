@@ -1,16 +1,17 @@
-import { Component, Input, ViewContainerRef } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import * as inflection from 'inflection';
 import { filter, find, isEmpty } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { ApiService } from '../../../services/api.service';
-import { SchemaService } from '../../../services/schema.service';
+import { XsdSchema } from '../xsd-schema';
 
 @Component({
   template: '',
 })
 export class XsdElementBaseComponent {
+  @Input() xsd?: XsdSchema;
   @Input() element: any;
   @Input() data: any;
   @Input() error: any;
@@ -20,7 +21,7 @@ export class XsdElementBaseComponent {
   @Input() basePath?: string;
   private _type: any;
 
-  constructor(protected api: ApiService, private schema: SchemaService, protected viewContainerRef: ViewContainerRef) {}
+  constructor(protected api: ApiService) {}
 
   get type(): any {
     if (this._type !== undefined) {
@@ -33,7 +34,7 @@ export class XsdElementBaseComponent {
       name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
     }
     if (name) {
-      this._type = this.schema.getType(name);
+      this._type = this.xsd?.getType(name);
     }
     return this._type;
   }
@@ -312,7 +313,7 @@ export class XsdElementBaseComponent {
         if (attribute._attributes?.name == 'NV') {
           if (attribute['xs:simpleType']?.['xs:union']?._attributes?.memberTypes) {
             const types = attribute['xs:simpleType']['xs:union']._attributes.memberTypes.split(' ');
-            return types.map((t: any) => this.schema.getType(t));
+            return types.map((t: any) => this.xsd?.getType(t));
           }
           break;
         }

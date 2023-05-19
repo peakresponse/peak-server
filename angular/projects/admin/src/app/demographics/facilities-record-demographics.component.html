@@ -2,14 +2,16 @@
                      [keyPath]="['demographics', 'facilities']"
                      [nemsisVersion]="agency.version?.nemsisVersion"
                      xsd="dFacility_v3.xsd"
+                     [customConfiguration]="agency.version?.demCustomConfiguration"
                      [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
                      draftXsd="dFacility_v3.xsd"
+                     [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
                      [defaultValues]="defaultValues">
-  <ng-template let-childElements="childElements" let-record="record" let-error="error">
-    <ng-container *ngFor="let element of childElements">
-      <shared-xsd-form-group *ngIf="!isGroup(element)" [element]="element" [data]="record.data" [error]="error"></shared-xsd-form-group>
+  <ng-template let-recordSchema="recordSchema" let-record="record" let-error="error">
+    <ng-container *ngFor="let element of recordSchema?.childElements">
+      <shared-xsd-form-group *ngIf="!isGroup(element)" [xsd]="recordSchema" [element]="recordSchema?.customizeElement(element)" [data]="record.data" [error]="error"></shared-xsd-form-group>
       <ng-container *ngIf="isGroup(element)">
-        <shared-xsd-form-group *ngFor="let nestedElement of groupElements(element)" [element]="nestedElement" [data]="nestedData(record.data)" [error]="error"></shared-xsd-form-group>
+        <shared-xsd-form-group *ngFor="let nestedElement of groupElements(element)" [xsd]="recordSchema" [element]="recordSchema?.customizeElement(nestedElement)" [data]="nestedData(record.data)" [error]="error"></shared-xsd-form-group>
       </ng-container>
     </ng-container>
   </ng-template>
