@@ -9,9 +9,9 @@
                      [defaultValues]="defaultValues">
   <ng-template let-recordSchema="recordSchema" let-record="record" let-error="error">
     <ng-container *ngFor="let element of recordSchema?.childElements">
-      <shared-xsd-form-group *ngIf="!isGroup(element)" [xsd]="recordSchema" [element]="recordSchema?.customizeElement(element)" [data]="record.data" [error]="error"></shared-xsd-form-group>
+      <shared-xsd-form-group *ngIf="!isGroup(element)" [xsd]="recordSchema" [element]="element" [data]="record.data" [error]="error"></shared-xsd-form-group>
       <ng-container *ngIf="isGroup(element)">
-        <shared-xsd-form-group *ngFor="let nestedElement of groupElements(element)" [xsd]="recordSchema" [element]="recordSchema?.customizeElement(nestedElement)" [data]="nestedData(record.data)" [error]="error"></shared-xsd-form-group>
+        <shared-xsd-form-group *ngFor="let nestedElement of groupElements(element)" [xsd]="recordSchema" [element]="nestedElement" [data]="nestedData(record.data)" [error]="error"></shared-xsd-form-group>
       </ng-container>
     </ng-container>
   </ng-template>

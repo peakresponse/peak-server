@@ -6,7 +6,7 @@
     <span class="feedback">{{groupText}}</span>
     <div *ngFor="let selectedValue of values; index as i" class="array-field__item">
       <div *ngFor="let nestedElement of groupElements" class="array-field__subitem">
-        <shared-xsd-form-group [xsd]="xsd" [basePath]="path + '[' + i + ']'" [element]="xsd?.customizeElement(nestedElement)" [data]="selectedValue" [displayOnly]="true" [error]="error"></shared-xsd-form-group>
+        <shared-xsd-form-group [xsd]="xsd" [basePath]="path + '[' + i + ']'" [element]="nestedElement" [data]="selectedValue" [displayOnly]="true" [error]="error"></shared-xsd-form-group>
       </div>
       <div class="array-field__subitem">
         <button (click)="showGroupModal(modal, selectedValue, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
@@ -25,8 +25,8 @@
         <span i18n *ngIf="!isGroupModalEditing">New {{displayName|inflection:'singularize'}}</span>
       </h3>
       <div *ngIf="groupModalValue" class="modal-body text-start">
-        <div *ngFor="let nestedElement of groupElements" class="array-field__subitem">
-          <shared-xsd-form-group [xsd]="xsd" [basePath]="groupModalPath" [element]="xsd?.customizeElement(nestedElement)" [data]="groupModalValue" [error]="error"></shared-xsd-form-group>
+        <div *ngFor="let nestedElement of groupElements">
+          <shared-xsd-form-group [xsd]="xsd" [basePath]="groupModalPath" [element]="nestedElement" [data]="groupModalValue" [error]="error"></shared-xsd-form-group>
         </div>
       </div>
     </shared-modal>

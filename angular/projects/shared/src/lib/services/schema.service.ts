@@ -27,9 +27,9 @@ export class SchemaService {
       this.schemaCache = {};
       this.nemsisVersion = nemsisVersion;
     }
-    if (isDraft && this.draftNemsisVersion === this.nemsisVersion) {
-      isDraft = false;
-    }
+    // if (isDraft && this.draftNemsisVersion === this.nemsisVersion) {
+    //   isDraft = false;
+    // }
     let observable: Observable<any>;
     let commonTypes = isDraft ? this.draftCommonTypes : this.commonTypes;
     if (commonTypes) {
