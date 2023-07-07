@@ -3,13 +3,30 @@ import { find } from 'lodash';
 export class XsdSchema {
   private data: any;
   private commonTypes: any;
-  private customConfiguration?: any[];
   private rootElementNameInternal?: string;
+  private customConfiguration?: any[];
+  private customElements?: { [key: string]: any };
+  private customElementsForGroup?: { [key: string]: any[] };
 
   constructor(data: any, commonTypes: any, customConfiguration?: any[], rootElementName?: string) {
     this.data = data;
     this.commonTypes = commonTypes;
     this.customConfiguration = customConfiguration;
+    if (customConfiguration) {
+      this.customElements = {};
+      for (const element of customConfiguration) {
+        const { CustomElementID } = element._attributes ?? {};
+        if (CustomElementID) {
+          this.customElements[CustomElementID] = element;
+          const { nemsisElement } = (element['dCustomConfiguration.01'] ?? element['eCustomConfiguration.01'])?._attributes ?? {};
+          if (nemsisElement && nemsisElement !== CustomElementID) {
+            this.customElementsForGroup ||= {};
+            this.customElementsForGroup[nemsisElement] ||= [];
+            this.customElementsForGroup[nemsisElement].push(element);
+          }
+        }
+      }
+    }
     this.rootElementNameInternal = rootElementName;
   }
 
@@ -55,6 +72,14 @@ export class XsdSchema {
 
   getType(name: string): any {
     return this.commonTypes?.[name];
+  }
+
+  getCustomConfiguration(element: any): any {
+    const elementName = element?._attributes?.name;
+    if (elementName) {
+      return this.customElements?.[elementName];
+    }
+    return undefined;
   }
 
   customizeElement(element: any): any {

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import * as inflection from 'inflection';
-import { filter, find, isEmpty } from 'lodash';
+import { cloneDeep, filter, find, isEmpty } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { ApiService } from '../../../services/api.service';
@@ -28,7 +28,7 @@ export class XsdElementBaseComponent {
       return this._type;
     }
     this._type = null;
-    /// check for a type attribute
+    // check for a type attribute
     let name = this.element?._attributes?.type;
     if (!name) {
       name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
@@ -36,7 +36,38 @@ export class XsdElementBaseComponent {
     if (name) {
       this._type = this.xsd?.getType(name);
     }
+    // customize type per custom configuration, if any
+    const config = this.xsd?.getCustomConfiguration(this.element);
+    if (config) {
+      // check for enumerated type values to add
+      if (this._type?.['xs:restriction']?.['xs:enumeration']) {
+        let values = config['eCustomConfiguration.06'] ?? config['dCustomConfiguration.06'];
+        if (values) {
+          if (!Array.isArray(values)) {
+            values = [values];
+          }
+          this._type = cloneDeep(this._type);
+          const enumeration = this._type?.['xs:restriction']?.['xs:enumeration'];
+          for (const value of values) {
+            enumeration.push({
+              _attributes: {
+                value: value._text,
+              },
+              'xs:annotation': {
+                'xs:documentation': {
+                  _text: value._attributes?.customValueDescription,
+                },
+              },
+            });
+          }
+        }
+      }
+    }
     return this._type;
+  }
+
+  get isEnumeratedType(): boolean {
+    return !!this.type?.['xs:restriction']?.['xs:enumeration'];
   }
 
   get primitiveType(): string {
