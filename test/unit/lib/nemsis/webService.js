@@ -20,6 +20,7 @@ describe('lib', () => {
         let client;
         beforeEach(async () => {
           client = await NemsisClient.create('https://validator.nemsis.org/nemsisWs.wsdl');
+          client.setEndpoint('https://validator.nemsis.org');
           client.username = process.env.NEMSIS_VALIDATOR_USERNAME;
           client.password = process.env.NEMSIS_VALIDATOR_PASSWORD;
           client.organization = process.env.NEMSIS_VALIDATOR_ORGANIZATION;
