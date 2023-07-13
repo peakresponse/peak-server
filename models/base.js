@@ -55,7 +55,7 @@ class Base extends Model {
         filteredData.data = jsonpatch.applyPatch(parent.data || {}, data.data_patch).newDocument;
       }
       // merge the new attributes into the parent attributes
-      filteredData = _.assign({ ...parent.get() }, filteredData);
+      filteredData = _.assign({ ...parent.get(), secondParentId: null }, filteredData);
       // update or create a new canonical record
       if (filteredData.canonicalId && filteredData.canonicalId !== parent.canonicalId) {
         created = true;
@@ -66,7 +66,11 @@ class Base extends Model {
         canonical = model.build({ ...filteredData, id: filteredData.canonicalId, canonicalId: null });
       } else {
         created = false;
-        canonical = await model.findByPk(filteredData.canonicalId, { transaction: options.transaction, rejectOnEmpty: true });
+        canonical = await model.findByPk(filteredData.canonicalId, {
+          transaction: options.transaction,
+          lock: options.transaction?.LOCK?.UPDATE,
+          rejectOnEmpty: true,
+        });
       }
     } else {
       created = true;
