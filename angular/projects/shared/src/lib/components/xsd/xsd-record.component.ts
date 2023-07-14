@@ -100,7 +100,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
         this.isLoading = false;
         if (response.status !== 204) {
           const data = response.body;
-          if (this.isNewRecord) {
+          if (this.isNewRecord || this.data.isDraft) {
             this.data = data;
           } else {
             this.data.draft = data;
