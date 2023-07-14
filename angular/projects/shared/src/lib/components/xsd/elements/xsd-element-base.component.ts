@@ -12,6 +12,7 @@ import { XsdSchema } from '../xsd-schema';
 })
 export class XsdElementBaseComponent {
   @Input() xsd?: XsdSchema;
+  @Input() record: any;
   @Input() element: any;
   @Input() data: any;
   @Input() error: any;
@@ -188,10 +189,10 @@ export class XsdElementBaseComponent {
   }
 
   get value(): string {
-    const correlationId = this.getAttr('CorrelationID');
+    const correlationId = this.correlationId;
     if (correlationId) {
       const rg = this.data.eCustomResults?.['dCustomResults.ResultsGroup']?.find(
-        (rg: any) => rg['dCustomResults.03']?._text === correlationId
+        (rg: any) => rg['dCustomResults.02']?._text === this.name && rg['dCustomResults.03']?._text === correlationId
       );
       if (rg) {
         return rg['dCustomResults.01']?._text;
@@ -218,16 +219,24 @@ export class XsdElementBaseComponent {
   }
 
   set value(value: string) {
-    const correlationId = this.getAttr('CorrelationID');
+    const correlationId = this.correlationId;
     if (correlationId) {
-      this.delAttr('CorrelationID');
-      const index = this.data.eCustomResults?.['dCustomResults.ResultsGroup']?.findIndex(
-        (rg: any) => rg['dCustomResults.03']?._text === correlationId
+      const index = this.record.data.eCustomResults?.['dCustomResults.ResultsGroup']?.findIndex(
+        (rg: any) => rg['dCustomResults.02']?._text === this.name && rg['dCustomResults.03']?._text === correlationId
       );
       if (index >= 0) {
-        this.data.eCustomResults['dCustomResults.ResultsGroup'].splice(index, 1);
-        if (this.data.eCustomResults['dCustomResults.ResultsGroup'].length === 0) {
-          delete this.data.eCustomResults;
+        this.record.data.eCustomResults['dCustomResults.ResultsGroup'].splice(index, 1);
+        if (this.record.data.eCustomResults['dCustomResults.ResultsGroup'].length === 0) {
+          delete this.record.data.eCustomResults;
+          this.correlationId = undefined;
+        } else {
+          if (
+            !this.record.data.eCustomResults?.['dCustomResults.ResultsGroup']?.find(
+              (rg: any) => rg['dCustomResults.03']?._text === correlationId
+            )
+          ) {
+            this.correlationId = undefined;
+          }
         }
       }
     }
@@ -239,13 +248,52 @@ export class XsdElementBaseComponent {
     }
   }
 
+  get correlationId(): string | undefined {
+    if (this.isMulti) {
+      return this.getAttr('CorrelationID');
+    } else {
+      let basePath = this.basePath || '$';
+      if (basePath === '$') {
+        return this.record.data._attributes?.CorrelationID;
+      } else {
+        // TODO: find closest parent multi-group element
+      }
+    }
+    return undefined;
+  }
+
+  set correlationId(id: string | undefined) {
+    if (this.isMulti) {
+      if (id) {
+        this.setAttr('CorrelationID', id);
+      } else {
+        this.delAttr('CorrelationID');
+      }
+    } else {
+      let basePath = this.basePath || '$';
+      if (basePath === '$') {
+        if (id) {
+          this.record.data._attributes ||= {};
+          this.record.data._attributes.CorrelationID = id;
+        } else {
+          delete this.record.data._attributes?.CorrelationID;
+        }
+      } else {
+        // TODO: find closest parent multi-group element
+      }
+    }
+  }
+
   setCustomValue(value: string, customValue: string) {
     this.value = value;
-    const correlationId = uuid();
-    this.setAttr('CorrelationID', correlationId);
-    this.data.eCustomResults ||= {};
-    this.data.eCustomResults['dCustomResults.ResultsGroup'] ||= [];
-    this.data.eCustomResults['dCustomResults.ResultsGroup'].push({
+    let correlationId = this.correlationId;
+    if (!correlationId) {
+      correlationId = uuid();
+      this.correlationId = correlationId;
+    }
+    this.record.data.eCustomResults ||= {};
+    this.record.data.eCustomResults['dCustomResults.ResultsGroup'] ||= [];
+    this.record.data.eCustomResults['dCustomResults.ResultsGroup'].push({
       'dCustomResults.01': { _text: customValue },
       'dCustomResults.02': { _text: this.name },
       'dCustomResults.03': { _text: correlationId },

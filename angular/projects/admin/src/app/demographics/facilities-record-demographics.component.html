@@ -14,6 +14,7 @@
       <shared-xsd-form-group
         *ngIf="!isGroup(element)"
         [xsd]="recordSchema"
+        [record]="record"
         [element]="element"
         [data]="record.data"
         [error]="error"
@@ -22,6 +23,7 @@
         <shared-xsd-form-group
           *ngFor="let nestedElement of groupElements(element)"
           [xsd]="recordSchema"
+          [record]="record"
           [element]="nestedElement"
           [data]="nestedData(record.data)"
           [error]="error"

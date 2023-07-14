@@ -28,6 +28,7 @@
         <shared-xsd-form-group
           *ngFor="let element of recordSchema?.childElements"
           [xsd]="recordSchema"
+          [record]="record"
           [element]="element"
           [data]="record.data"
           [error]="error"

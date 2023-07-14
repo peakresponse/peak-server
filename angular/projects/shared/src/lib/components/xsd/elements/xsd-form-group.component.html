@@ -10,6 +10,7 @@
       <div *ngFor="let nestedElement of groupElements" class="array-field__subitem">
         <shared-xsd-form-group
           [xsd]="xsd"
+          [record]="record"
           [basePath]="path + '[' + i + ']'"
           [element]="nestedElement"
           [data]="selectedValue"
@@ -45,6 +46,7 @@
         <div *ngFor="let nestedElement of groupElements">
           <shared-xsd-form-group
             [xsd]="xsd"
+            [record]="record"
             [basePath]="groupModalPath"
             [element]="nestedElement"
             [data]="groupModalValue"
@@ -63,6 +65,7 @@
       </h5>
       <shared-xsd-element
         [xsd]="xsd"
+        [record]="record"
         [basePath]="basePath"
         [element]="element"
         [data]="data"
@@ -79,7 +82,14 @@
           >{{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small></span
         >
       </label>
-      <shared-xsd-element [xsd]="xsd" [basePath]="basePath" [element]="element" [data]="data" [error]="error"></shared-xsd-element>
+      <shared-xsd-element
+        [xsd]="xsd"
+        [record]="record"
+        [basePath]="basePath"
+        [element]="element"
+        [data]="data"
+        [error]="error"
+      ></shared-xsd-element>
       <span [class.feedback]="!isInvalid" [class.invalid-feedback]="isInvalid">
         {{ displayText }}
         <span *ngIf="isInvalid">{{ errorMessages.join(' ') }}</span>
@@ -94,6 +104,7 @@
       <div *ngFor="let selectedValue of values; index as i">
         <shared-xsd-element
           [xsd]="xsd"
+          [record]="record"
           [basePath]="basePath"
           [element]="element"
           [data]="data"
@@ -120,6 +131,7 @@
       >
         <shared-xsd-element
           [xsd]="xsd"
+          [record]="record"
           [basePath]="basePath"
           [element]="element"
           [data]="data"

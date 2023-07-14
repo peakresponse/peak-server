@@ -2,6 +2,7 @@
   <shared-xsd-input
     *ngSwitchCase="COMPONENT_TYPES.input"
     [xsd]="xsd"
+    [record]="record"
     [basePath]="basePath"
     [element]="element"
     [data]="data"
@@ -14,6 +15,7 @@
   <shared-xsd-select
     *ngSwitchCase="COMPONENT_TYPES.select"
     [xsd]="xsd"
+    [record]="record"
     [basePath]="basePath"
     [element]="element"
     [data]="data"
@@ -26,6 +28,7 @@
   <shared-xsd-select-state
     *ngSwitchCase="COMPONENT_TYPES.selectState"
     [xsd]="xsd"
+    [record]="record"
     [basePath]="basePath"
     [element]="element"
     [data]="data"
