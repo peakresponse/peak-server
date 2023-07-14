@@ -4,7 +4,12 @@
 <shared-form type="dispatchers" [id]="id" (update)="onUpdate()" class="d-block col-xl-6">
   <ng-template let-record="record" let-error="error">
     <div class="mb-3">
-      <shared-text-field id="user" label="User" [isPlaintext]="true" [source]="{user: record.user?.firstName + ' ' + record.user?.lastName + '  &lt;' + record.user?.email + '&gt;'}"></shared-text-field>
+      <shared-text-field
+        id="user"
+        label="User"
+        [isPlaintext]="true"
+        [source]="{ user: record.user?.firstName + ' ' + record.user?.lastName + '  &lt;' + record.user?.email + '&gt;' }"
+      ></shared-text-field>
     </div>
     <div class="mb-3">
       <shared-text-field id="callSign" label="Call Sign" [source]="record" [target]="record" [error]="error"></shared-text-field>

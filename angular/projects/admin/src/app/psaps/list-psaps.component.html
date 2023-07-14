@@ -16,9 +16,9 @@
       <shared-list type="psaps" [search]="search">
         <ng-template let-records="records" let-record="record">
           <tr class="state" [routerLink]="['/psaps', record.id]">
-            <td>{{record.id}}</td>
-            <td>{{record.name}}</td>
-            <td class="text-muted">{{record.comments}}</td>
+            <td>{{ record.id }}</td>
+            <td>{{ record.name }}</td>
+            <td class="text-muted">{{ record.comments }}</td>
           </tr>
         </ng-template>
       </shared-list>

@@ -16,7 +16,7 @@
       <shared-list type="versions" basePath="/demographics/versions" [params]="params" [search]="search">
         <ng-template let-record="record">
           <tr [routerLink]="['/demographics/versions', record.id]">
-            <td>{{record.name|version}}</td>
+            <td>{{ record.name | version }}</td>
             <td>
               <shared-checkbox [id]="record.id" name="isDraft" [source]="record"></shared-checkbox>
             </td>

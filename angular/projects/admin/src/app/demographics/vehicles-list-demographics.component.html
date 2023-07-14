@@ -1,8 +1,10 @@
 <router-outlet></router-outlet>
-<admin-schema-list #list
-                   name="Vehicles" 
-                   [class.d-none]="route.firstChild"
-                   [keyPath]="['demographics', 'vehicles']"
-                   schemaPath="/nemsis/xsd/dVehicle_v3.json"
-                   [schemaColumns]="sectionColumns">
+<admin-schema-list
+  #list
+  name="Vehicles"
+  [class.d-none]="route.firstChild"
+  [keyPath]="['demographics', 'vehicles']"
+  schemaPath="/nemsis/xsd/dVehicle_v3.json"
+  [schemaColumns]="sectionColumns"
+>
 </admin-schema-list>

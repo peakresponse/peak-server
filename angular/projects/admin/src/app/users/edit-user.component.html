@@ -18,14 +18,21 @@
     <div class="mb-3">
       <div class="form-field-group">
         <shared-text-field id="apiKey" label="API Key" [source]="record" [error]="error"></shared-text-field>
-        <button (click)="onGenerate(record)" type="button" class="btn btn--secondary">Generate</button>  
+        <button (click)="onGenerate(record)" type="button" class="btn btn--secondary">Generate</button>
       </div>
     </div>
     <div class="mb-3">
       <shared-file-field id="iconFile" label="Picture" [source]="record" [target]="record" [error]="error"></shared-file-field>
     </div>
     <div class="mb-3">
-      <shared-text-field type="password" id="password" label="Password" [source]="record" [target]="record" [error]="error"></shared-text-field>
+      <shared-text-field
+        type="password"
+        id="password"
+        label="Password"
+        [source]="record"
+        [target]="record"
+        [error]="error"
+      ></shared-text-field>
     </div>
     <div class="mb-3">
       <shared-checkbox id="isAdmin" label="Is Site Admin?" [source]="record" [target]="record" [error]="error"></shared-checkbox>

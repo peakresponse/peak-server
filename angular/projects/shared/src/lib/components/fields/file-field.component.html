@@ -1,15 +1,20 @@
-<div class="form-field"
+<div
+  class="form-field"
   [class.form-field--disabled]="isDisabled"
   [class.form-field--editing]="isEditing"
   [class.form-field--focused]="isFocused"
   [class.form-field--invalid]="isInvalid"
   [class.form-field--nonempty]="isNonEmpty"
   [class.form-field--unconfirmed]="isUnconfirmed"
-  (click)="onClick($event)">
-  <label [for]="derivedId">{{label}}</label>
+  (click)="onClick($event)"
+>
+  <label [for]="derivedId">{{ label }}</label>
   <input *ngIf="upload" type="text" readonly [value]="upload.name" />
   <input *ngIf="!upload && value" type="text" readonly [value]="value" />
   <shared-uploader *ngIf="!value" [id]="derivedId" (onUploaded)="onUploaded($event)"></shared-uploader>
 </div>
-<div class="invalid-feedback" *ngIf="errorMessage as msg">{{msg}}</div>
-<ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{isEditing: isEditing, isFocusable: isFocusable, isFocused: isFocused, source: source, target: target}"></ng-template>
+<div class="invalid-feedback" *ngIf="errorMessage as msg">{{ msg }}</div>
+<ng-template
+  [ngTemplateOutlet]="template"
+  [ngTemplateOutletContext]="{ isEditing: isEditing, isFocusable: isFocusable, isFocused: isFocused, source: source, target: target }"
+></ng-template>

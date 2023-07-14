@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "lint:changed": "eslint $(git diff --name-only -- '*.js'; git ls-files -o --exclude-standard -- '*.js')",
     "pp": "prettier --write .",
-    "pp:changed": "prettier --write $(git diff --name-only -- '*.js' '*.ts' '*.css' '*.scss' '*.json'; git ls-files -o --exclude-standard -- '*.js' '*.ts' '*.css' '*.scss' '*.json')"
+    "pp:changed": "prettier --write $(git diff --name-only -- '*.js' '*.ts' '*.html' '*.css' '*.scss' '*.json'; git ls-files -o --exclude-standard -- '*.js' '*.ts' '*.html' '*.css' '*.scss' '*.json')"
   },
   "eslintConfig": {
     "parserOptions": {

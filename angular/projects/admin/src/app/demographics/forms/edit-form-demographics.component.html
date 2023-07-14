@@ -2,7 +2,16 @@
   <h1 class="h2">Edit Form</h1>
 </div>
 <div class="row">
-  <shared-form #form *ngIf="id" type="demographics.forms" [id]="id" [transformRecord]="onSubmit" (update)="onUpdate()" deleteLabel="Archive" class="col-md-6">
+  <shared-form
+    #form
+    *ngIf="id"
+    type="demographics.forms"
+    [id]="id"
+    [transformRecord]="onSubmit"
+    (update)="onUpdate()"
+    deleteLabel="Archive"
+    class="col-md-6"
+  >
     <ng-template let-record="record" let-error="error">
       <admin-demographics-form [record]="record" [error]="error"></admin-demographics-form>
     </ng-template>

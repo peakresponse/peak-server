@@ -120,7 +120,7 @@ async function requireLogin(req, res, next, role) {
       const employment = await req.user.isEmployedBy(req.agency);
       isAllowed = employment !== null;
       /// check for role, if any
-      if (role) {
+      if (isAllowed && role) {
         if (Array.isArray(role)) {
           isAllowed = employment.isOwner || role.filter((r) => employment.roles.includes(r)).length > 0;
         } else {

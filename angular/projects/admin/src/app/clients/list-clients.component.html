@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <span class="d-flex">
       <h1 class="h2">Clients</h1>
-      <a routerLink="/clients/new" class="btn btn--sm btn--secondary ms-3">New Client</a>  
+      <a routerLink="/clients/new" class="btn btn--sm btn--secondary ms-3">New Client</a>
     </span>
     <shared-search-field placeholder="Search" (debouncedValueChange)="search = $event"></shared-search-field>
   </div>
@@ -18,8 +18,8 @@
       <shared-list type="clients" [search]="search">
         <ng-template let-record="record">
           <tr [routerLink]="['/clients', record.id]">
-            <td>{{record.name}}</td>
-            <td>{{record.redirectUri}}</td>
+            <td>{{ record.name }}</td>
+            <td>{{ record.redirectUri }}</td>
           </tr>
         </ng-template>
       </shared-list>

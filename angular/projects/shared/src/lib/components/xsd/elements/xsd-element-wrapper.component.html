@@ -2,7 +2,7 @@
   <ng-content></ng-content>
 </ng-template>
 <ng-container *ngIf="isDisplayOnly">
-  <div *ngIf="isNil">{{displayNV}}</div>
+  <div *ngIf="isNil">{{ displayNV }}</div>
   <div *ngIf="!isNil">
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
@@ -13,7 +13,9 @@
   </ng-container>
   <div *ngIf="isNil" class="select-wrapper">
     <select [(ngModel)]="NV" [id]="formName + '-NV'" [name]="formName + '-NV'" class="select-wrapper__select">
-      <option *ngFor="let nv of nilValues" [value]="nv['xs:restriction']['xs:enumeration']._attributes.value">{{nv['xs:restriction']['xs:enumeration']['xs:annotation']['xs:documentation']._text}}</option>
+      <option *ngFor="let nv of nilValues" [value]="nv['xs:restriction']['xs:enumeration']._attributes.value">
+        {{ nv['xs:restriction']['xs:enumeration']['xs:annotation']['xs:documentation']._text }}
+      </option>
     </select>
   </div>
   <div *ngIf="isNillable" class="input-group-append">

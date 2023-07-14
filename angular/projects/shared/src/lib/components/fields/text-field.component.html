@@ -1,4 +1,5 @@
-<div class="form-field"
+<div
+  class="form-field"
   [class.form-field--disabled]="isDisabled"
   [class.form-field--editing]="isEditing"
   [class.form-field--focused]="isFocused"
@@ -7,25 +8,44 @@
   [class.form-field--nonempty]="isNonEmpty"
   [class.form-field--plaintext]="isPlaintext"
   [class.form-field--unconfirmed]="isUnconfirmed"
-  (click)="onClick($event)">
-  <label [for]="derivedId">{{label}}</label>
-  <input *ngIf="rows == 1" #inputEl [type]="type" [id]="derivedId" [name]="derivedName"
+  (click)="onClick($event)"
+>
+  <label [for]="derivedId">{{ label }}</label>
+  <input
+    *ngIf="rows == 1"
+    #inputEl
+    [type]="type"
+    [id]="derivedId"
+    [name]="derivedName"
     [placeholder]="placeholder || ''"
     [disabled]="isDisabled"
     [readonly]="isReadOnly"
     [tabindex]="isFocusable && isEditing ? 0 : -1"
-    (focus)="onFocus($event)" (blur)="onBlur($event)"
-    [shared-debounced]="debounceTime" (debouncedValueChange)="this.debouncedValueChange.emit($event)"
-    [(ngModel)]="value" />
-  <textarea *ngIf="rows > 1" #inputEl [id]="derivedId" [name]="derivedName"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+    [shared-debounced]="debounceTime"
+    (debouncedValueChange)="this.debouncedValueChange.emit($event)"
+    [(ngModel)]="value"
+  />
+  <textarea
+    *ngIf="rows > 1"
+    #inputEl
+    [id]="derivedId"
+    [name]="derivedName"
     [rows]="rows"
     [placeholder]="placeholder || ''"
     [disabled]="isDisabled"
     [readonly]="!isFocusable || !isEditing"
     [tabindex]="isFocusable && isEditing ? 0 : -1"
-    (focus)="onFocus($event)" (blur)="onBlur($event)"
-    [shared-debounced]="debounceTime" (debouncedValueChange)="this.debouncedValueChange.emit($event)"
-    [(ngModel)]="value"></textarea>
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+    [shared-debounced]="debounceTime"
+    (debouncedValueChange)="this.debouncedValueChange.emit($event)"
+    [(ngModel)]="value"
+  ></textarea>
 </div>
-<div class="invalid-feedback" *ngIf="errorMessage as msg">{{msg}}</div>
-<ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{isEditing: isEditing, isFocusable: isFocusable, isFocused: isFocused, source: source, target: target}"></ng-template>
+<div class="invalid-feedback" *ngIf="errorMessage as msg">{{ msg }}</div>
+<ng-template
+  [ngTemplateOutlet]="template"
+  [ngTemplateOutletContext]="{ isEditing: isEditing, isFocusable: isFocusable, isFocused: isFocused, source: source, target: target }"
+></ng-template>

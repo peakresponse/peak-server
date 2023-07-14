@@ -14,7 +14,7 @@
           </ng-template>
           <ng-template #item let-version="item">
             <div class="d-flex justify-content-between">
-              {{version}}
+              {{ version }}
               <span *ngIf="nemsis.versionsInstalled.includes(version)">
                 <i class="fas fa-check-circle text-success"></i>
               </span>
@@ -28,6 +28,6 @@
           </ng-template>
         </shared-array-field>
       </div>
-    </div>  
+    </div>
   </form>
 </div>

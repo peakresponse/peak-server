@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <div class="d-flex">
       <h1 class="h2">Forms</h1>
-      <a routerLink="/demographics/forms/new" class="btn btn--sm btn--secondary ms-3">New Form</a>  
+      <a routerLink="/demographics/forms/new" class="btn btn--sm btn--secondary ms-3">New Form</a>
     </div>
     <div class="d-flex">
       <shared-select-field id="filter" class="me-3" [source]="data" [target]="data" (valueChange)="updateParams()">
@@ -23,7 +23,7 @@
       <shared-list type="demographics.forms" basePath="/demographics/forms" [params]="params" [search]="search">
         <ng-template let-record="record">
           <tr [routerLink]="['/demographics/forms', record.id]">
-            <td>{{record.title}}</td>
+            <td>{{ record.title }}</td>
           </tr>
         </ng-template>
       </shared-list>

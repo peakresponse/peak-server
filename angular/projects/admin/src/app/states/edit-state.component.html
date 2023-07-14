@@ -1,12 +1,19 @@
 <router-outlet></router-outlet>
 <div [class.d-none]="route.firstChild">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <h1 class="h2" i18n>{{state?.name}}</h1>
+    <h1 class="h2" i18n>{{ state?.name }}</h1>
   </div>
   <form>
     <h4>Status</h4>
     <div *ngIf="state" class="mb-3">
-      <shared-checkbox [id]="state.id" label="Sign-ups Enabled" name="isConfigured" [source]="state" [target]="state" (valueChange)="onSignupsEnabledChange($event)"></shared-checkbox>
+      <shared-checkbox
+        [id]="state.id"
+        label="Sign-ups Enabled"
+        name="isConfigured"
+        [source]="state"
+        [target]="state"
+        (valueChange)="onSignupsEnabledChange($event)"
+      ></shared-checkbox>
     </div>
     <h4>NEMSIS</h4>
     <div class="mb-3">
@@ -19,16 +26,14 @@
           <div class="array-field array-field--noclear">
             <div class="form-field form-field--noclear form-field--nonempty">
               <label>Agencies</label>
-              <div class="array-field__item">
-                Total: {{agencyStats?.count}}
-              </div>
+              <div class="array-field__item">Total: {{ agencyStats?.count }}</div>
             </div>
           </div>
         </div>
         <div class="mb-3" *ngIf="state?.borderStates?.length">
           <shared-array-field id="borderStates" label="Bordering States" [source]="state" [isFocusable]="false" [showClearButton]="false">
             <ng-template #item let-stateId="item">
-              {{stateById(stateId)?.name}}
+              {{ stateById(stateId)?.name }}
             </ng-template>
           </shared-array-field>
         </div>
@@ -38,12 +43,8 @@
           <div class="array-field array-field--noclear">
             <div class="form-field form-field--noclear form-field--nonempty">
               <label>Cities</label>
-              <div *ngFor="let stat of cityStats" class="array-field__item">
-                {{stat.featureClass}}: {{stat.count}}
-              </div>
-              <div *ngIf="cityStats" class="array-field__item">
-                Total: {{cityStats.total}}
-              </div>
+              <div *ngFor="let stat of cityStats" class="array-field__item">{{ stat.featureClass }}: {{ stat.count }}</div>
+              <div *ngIf="cityStats" class="array-field__item">Total: {{ cityStats.total }}</div>
             </div>
           </div>
         </div>
@@ -51,9 +52,7 @@
           <div class="array-field array-field--noclear">
             <div class="form-field form-field--noclear form-field--nonempty">
               <label>Counties</label>
-              <div class="array-field__item">
-                Total: {{countyStats?.count}}
-              </div>
+              <div class="array-field__item">Total: {{ countyStats?.count }}</div>
             </div>
           </div>
         </div>
@@ -64,11 +63,9 @@
             <div class="form-field form-field--noclear form-field--nonempty">
               <label>Facilities</label>
               <div *ngFor="let stat of facilityStats" class="array-field__item">
-                <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{facilityTypes?.[stat.type]}}:</span> {{stat.count}}
+                <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{facilityTypes?.[stat.type]}}:</span> {{ stat.count }}
               </div>
-              <div *ngIf="facilityStats" class="array-field__item">
-                Total: {{facilityStats.total}}
-              </div>
+              <div *ngIf="facilityStats" class="array-field__item">Total: {{ facilityStats.total }}</div>
             </div>
           </div>
         </div>
@@ -78,9 +75,7 @@
           <div class="array-field array-field--noclear">
             <div class="form-field form-field--noclear form-field--nonempty">
               <label>PSAPs</label>
-              <div class="array-field__item">
-                Total: {{psapStats?.count}}
-              </div>
+              <div class="array-field__item">Total: {{ psapStats?.count }}</div>
             </div>
           </div>
         </div>

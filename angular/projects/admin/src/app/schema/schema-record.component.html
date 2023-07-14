@@ -1,40 +1,49 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
-  <h1 class="h2">{{name}}</h1>
+  <h1 class="h2">{{ name }}</h1>
 </div>
 <form *ngIf="record" (submit)="onSubmit()" class="col-md-6 mb-3">
   <ul *ngIf="hasDraft" class="nav">
-    <li class="nav__item"><a tabIndex="0" class="nav__link" [class.nav__link--active]="isEditingDraft" (click)="isEditingDraft = true">Draft</a></li>
-    <li class="nav__item"><a tabIndex="0" class="nav__link" [class.nav__link--active]="!isEditingDraft" (click)="isEditingDraft = false">Current</a></li>
+    <li class="nav__item">
+      <a tabIndex="0" class="nav__link" [class.nav__link--active]="isEditingDraft" (click)="isEditingDraft = true">Draft</a>
+    </li>
+    <li class="nav__item">
+      <a tabIndex="0" class="nav__link" [class.nav__link--active]="!isEditingDraft" (click)="isEditingDraft = false">Current</a>
+    </li>
   </ul>
-  <div *ngIf="isUnarchived" class="alert alert-success">
-    Record restored!
-  </div>
-  <div *ngIf="isDraftDeleted" class="alert alert-success">
-    Draft deleted!
-  </div>
-  <div *ngIf="isSavedErrorFree" class="alert alert-success">
-    Draft saved!
-  </div>
+  <div *ngIf="isUnarchived" class="alert alert-success">Record restored!</div>
+  <div *ngIf="isDraftDeleted" class="alert alert-success">Draft deleted!</div>
+  <div *ngIf="isSavedErrorFree" class="alert alert-success">Draft saved!</div>
   <div *ngIf="error && (isNewRecord || isEditingDraft)" class="alert alert-danger">
     <shared-error [error]="error"></shared-error>
   </div>
   <ng-container *ngIf="isEditingDraft && record.archivedAt">
-    <div class="alert alert-danger">
-      This record has been marked for achival.
-    </div>
+    <div class="alert alert-danger">This record has been marked for achival.</div>
     <div class="d-flex justify-content-between mb-3">
       <button (click)="onDeleteDraft()" type="button" class="btn btn--primary">Undo Archive</button>
     </div>
   </ng-container>
   <fieldset *ngIf="!(isEditingDraft && record.archivedAt)" [disabled]="isLoading">
     <ng-container *ngIf="!template">
-      <shared-xsd-form-group *ngFor="let element of childElements" [element]="element" [data]="record.data" [error]="error" [basePath]="basePath"></shared-xsd-form-group>
+      <shared-xsd-form-group
+        *ngFor="let element of childElements"
+        [element]="element"
+        [data]="record.data"
+        [error]="error"
+        [basePath]="basePath"
+      ></shared-xsd-form-group>
     </ng-container>
     <ng-template *ngIf="template" [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{childElements, record, error}"></ng-template>
     <div class="d-flex justify-content-between mb-3">
       <button *ngIf="isNewRecord || isEditingDraft || !record.draft" type="submit" class="btn btn--primary">Save Draft</button>
       <button *ngIf="isEditingDraft || record.isDraft" (click)="onDeleteDraft()" type="button" class="btn btn--danger">Delete Draft</button>
-      <button *ngIf="!(isNewRecord || isEditingDraft || record.isDraft) && !record.draft" (click)="onArchive()" type="button" class="btn btn--danger">Archive</button>
+      <button
+        *ngIf="!(isNewRecord || isEditingDraft || record.isDraft) && !record.draft"
+        (click)="onArchive()"
+        type="button"
+        class="btn btn--danger"
+      >
+        Archive
+      </button>
     </div>
   </fieldset>
 </form>

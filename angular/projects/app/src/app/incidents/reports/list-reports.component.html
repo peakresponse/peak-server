@@ -5,10 +5,13 @@
 <main [class.d-none]="route.firstChild">
   <div class="reports">
     <div *ngFor="let report of reports" [routerLink]="['/incidents', incidentId, 'reports', report.id]" class="reports__report">
-      <h3>Unit #: {{report.response.unitNumber}}</h3>
+      <h3>Unit #: {{ report.response.unitNumber }}</h3>
       <dl>
-        <dt>Age:</dt><dd>{{report.patient.ageString}}</dd><hr />
-        <dt>Gender:</dt><dd>{{report.patient.genderString}}</dd>
+        <dt>Age:</dt>
+        <dd>{{ report.patient.ageString }}</dd>
+        <hr />
+        <dt>Gender:</dt>
+        <dd>{{ report.patient.genderString }}</dd>
       </dl>
     </div>
     <div *ngIf="reports?.length === 0">
