@@ -27,4 +27,15 @@ export class XsdSelectComponent extends XsdElementBaseComponent {
     }
     return null;
   }
+
+  onChange(newValue: string) {
+    for (let item of this.type?.['xs:restriction']?.['xs:enumeration']) {
+      const { value, nemsisCode } = item._attributes ?? {};
+      if (value === newValue && nemsisCode) {
+        this.setCustomValue(nemsisCode, value);
+        return;
+      }
+    }
+    this.value = newValue;
+  }
 }

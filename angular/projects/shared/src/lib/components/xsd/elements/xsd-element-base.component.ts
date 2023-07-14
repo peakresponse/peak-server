@@ -52,6 +52,7 @@ export class XsdElementBaseComponent {
             enumeration.push({
               _attributes: {
                 value: value._text,
+                nemsisCode: value._attributes?.nemsisCode,
               },
               'xs:annotation': {
                 'xs:documentation': {
@@ -187,6 +188,15 @@ export class XsdElementBaseComponent {
   }
 
   get value(): string {
+    const correlationId = this.getAttr('CorrelationID');
+    if (correlationId) {
+      const rg = this.data.eCustomResults?.['dCustomResults.ResultsGroup']?.find(
+        (rg: any) => rg['dCustomResults.03']?._text === correlationId
+      );
+      if (rg) {
+        return rg['dCustomResults.01']?._text;
+      }
+    }
     if (this.selectedValue) {
       return this.selectedValue._text;
     }
@@ -208,12 +218,38 @@ export class XsdElementBaseComponent {
   }
 
   set value(value: string) {
+    const correlationId = this.getAttr('CorrelationID');
+    if (correlationId) {
+      this.delAttr('CorrelationID');
+      const index = this.data.eCustomResults?.['dCustomResults.ResultsGroup']?.findIndex(
+        (rg: any) => rg['dCustomResults.03']?._text === correlationId
+      );
+      if (index >= 0) {
+        this.data.eCustomResults['dCustomResults.ResultsGroup'].splice(index, 1);
+        if (this.data.eCustomResults['dCustomResults.ResultsGroup'].length === 0) {
+          delete this.data.eCustomResults;
+        }
+      }
+    }
     if (this.selectedValue) {
       this.selectedValue._text = value;
     } else {
       this.data[this.name] = this.data[this.name] || {};
       this.data[this.name]._text = value;
     }
+  }
+
+  setCustomValue(value: string, customValue: string) {
+    this.value = value;
+    const correlationId = uuid();
+    this.setAttr('CorrelationID', correlationId);
+    this.data.eCustomResults ||= {};
+    this.data.eCustomResults['dCustomResults.ResultsGroup'] ||= [];
+    this.data.eCustomResults['dCustomResults.ResultsGroup'].push({
+      'dCustomResults.01': { _text: customValue },
+      'dCustomResults.02': { _text: this.name },
+      'dCustomResults.03': { _text: correlationId },
+    });
   }
 
   delValue() {

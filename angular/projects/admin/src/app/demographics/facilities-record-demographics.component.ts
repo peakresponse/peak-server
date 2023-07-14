@@ -6,6 +6,7 @@ import { AgencyService } from 'shared';
 })
 export class FacilitiesRecordDemographicsComponent {
   defaultValues = {
+    isDraft: true,
     data: {
       'dFacility.FacilityGroup': {},
     },
