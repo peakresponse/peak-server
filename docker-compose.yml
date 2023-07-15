@@ -14,6 +14,8 @@ services:
     image: peakresponse/peak-server
     command: bash -l -c "bin/init; nf start -j Procfile.dev"
     volumes:
+      - ~/.ssh:/root/.ssh
+      - ~/.gitconfig:/root/.gitconfig
       - .:/opt/node/app
       - /opt/node/app/node_modules
       - /opt/node/app/angular/node_modules
