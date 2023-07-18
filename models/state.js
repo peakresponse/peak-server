@@ -87,26 +87,27 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async configure(userId) {
-      // populate cities for the state and bordering states
-      const stateIds = [this.id, ...this.borderStates];
-      for (const stateId of stateIds) {
-        await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating city database for ${State.getNameForCode(stateId)}...`);
-        await sequelize.models.City.importCitiesForState(stateId);
-      }
-      // import PSAPs for the state
-      await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating PSAP database for ${this.name}...`);
-      await sequelize.models.Psap.importPsapsForState(this.id);
-      // fetch NEMSIS state repositories list and find state repository
-      const repos = await nemsis.getStateRepos();
-      const repo = _.find(repos.values, { name: this.name });
-      if (!repo) {
-        await this.setConfigurationStatus(HttpStatus.NOT_FOUND, 'NEMSIS state data repository not found.');
-        return;
-      }
-      // download all the files in the state repository
-      const files = await nemsis.getStateRepoFiles(repo.slug);
-      const tmpDir = await nemsis.downloadRepoFiles(repo.slug, files.values);
+      let tmpDir;
       try {
+        // populate cities for the state and bordering states
+        const stateIds = [this.id, ...this.borderStates];
+        for (const stateId of stateIds) {
+          await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating city database for ${State.getNameForCode(stateId)}...`);
+          await sequelize.models.City.importCitiesForState(stateId);
+        }
+        // import PSAPs for the state
+        await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating PSAP database for ${this.name}...`);
+        await sequelize.models.Psap.importPsapsForState(this.id);
+        // fetch NEMSIS state repositories list and find state repository
+        const repos = await nemsis.getStateRepos();
+        const repo = _.find(repos.values, { name: this.name });
+        if (!repo) {
+          await this.setConfigurationStatus(HttpStatus.NOT_FOUND, 'NEMSIS state data repository not found.');
+          return;
+        }
+        // download all the files in the state repository
+        const files = await nemsis.getStateRepoFiles(repo.slug);
+        tmpDir = await nemsis.downloadRepoFiles(repo.slug, files.values);
         await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Processing downloaded NEMSIS state data...');
         // find the NEMSIS state data set and schematron files
         let dataSet = null;
@@ -216,9 +217,10 @@ module.exports = (sequelize, DataTypes) => {
           schematronXml,
         });
       } catch (error) {
+        // console.log(error);
         await this.setConfigurationStatus(HttpStatus.INTERNAL_SERVER_ERROR, error.toString());
       } finally {
-        tmpDir.removeCallback();
+        tmpDir?.removeCallback();
       }
     }
   }

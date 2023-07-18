@@ -5,49 +5,52 @@ const path = require('path');
 // nock.recorder.rec();
 
 const mockReposRequest = () => {
-  nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
-    .get('/stash/rest/api/1.0/projects/NES/repos')
+  nock('https://git.nemsis.org:443', { encodedQueryParams: true })
+    .get('/rest/api/1.0/projects/NES/repos')
     .query({ limit: '100' })
     .reply(
       200,
       [
-        '1f8b0800000000000000',
-        'ecdd5f53db381000f0afe2f1d3dd0c21010a49783a8e726dae0498a6077373d307e388588dff642c1b483b7cf7936d59ab10293577fb628f66fa40b3ca6ec8feb2a3c4027eb88c7e27eee9f168cf0d694433f7f46030d87329bbf45876e32d782c4b73b2e73e7a614e987bfacf0f9785f9c23d75bdd0bbf722cfe5abe7fc6e458ad88bf81ddc3319617e34e14177c133f3ff655e56c66fcf269767bf5f5e88db7236258c95c5dcb3478ff2bb8784c71e9274597e291ec32a4dbe119f3fc61fee92acf9e2ab8b99287f7228ab5f918851362b6a311e9d13e6a77495d124e6c19bfc3ea4be939255c26896a49430879771ca87d6632be2d38732ce923cf545300b8873e51519bcd0b98848ba20b1bf76a6644e7d7ecb8ca48fb4583b89f9eaa85ce8ccd62c2391f3cbd5c5743699fd5a1488e75e3adfe70f69553e88fabbcad6abf2615f7f9e9e5dba451fe2252bbe4746c287f2090f52c2bf70832c5bb1d37e9fa762c17e9e79c1dcf7f7937451ddd2174f0feb174fcbcbd79717a8f4e0858c28a9fd3089c95b72f346f663c2faa2e9fb5543c5335edcd97dd993c9180b782abee4b7ad74a7c3f1786ccec4efc91ff9defffad6fb6573ebfcfdfb347962a47a3e54bb6c0974c72add2a60e5b6446e536cbcad1a6b7bffe515b095aa7a01a0b9e5f90d6c790779e3e21ef3a2a4e67b385026af58e0ccc402cbb8258c1bf3db2080',
-        '31877724c41cc71b650cbc53fa9db7b81ecb2703702d2316744b4037c357f5156730eb72a14ee6aa80c9eed28b99c724de0305af0c59bdddd25b351689af2e19aedfaa821e30ef1ce5ed8a29cc5f3074ae062de296206e4a0f5a8fb09f302543dc4b400903e5244c526f9ec80df20940869065dc35c6a2b71888b5a930098b0226c071ccef40fd3c93c3f84831ac462de3ce3196ed45916cc8868a59d6d07b9e93d07bf2522231bf930fe33d84ace496486e04afee39cae6589f0c73735c573000a62c4ba99ff592871e1fdd79744fe1e3b7216016cb9ce4c13987651676a7606b2ce020ff696254f09a6a7afc243bead5e8c4003f38862df5c59723e74686adf596586faa52e93ec276c4980d713ba2d4d0837ee07b6f3a87cf398ee5a3f84346ace38e39164d4730accd84e857e4d7db5d107e5fe5333a98c31f64c4daed985dd17404bbda4c8876457e83dddc8be4ae19ce5c7ca86eb66a5ba2b61934de54945df17622cc5d70915d8f35e06f0729957316dee47dac03166c4bc036a556b51c61caea12210ed92abd9e2ddf380489540b278326e2768bb66368cb862398d5e441245b6637880df99390503839013b830984acdb96b86d864d34166587a04f86b94ba82b1800c773eac1b1b5211c5b9bc888e5db29be555f71f4ea72a1e2ad0a18ec264f00178eac4daa9badda4ea9e54dc521bb9508d52bcfaec7ba79c272',
-        '08663ed9f3952d03db949af94ce41bb7b7c6939a3868779dac5c9238cbfde55ac285a33c9f2064e9768daee82d065e6d2a4cbea2801e7098e4946d6c71e1fccea512b3845b42b8113ad975943d83211be6c64196d02b8e3c1acb136843b8e63b15b75bbd5dd25b761b45ae2613a6da32bd496cba0e792b24da1305ad0c59b7dd725b351689ae2e19aedeaa82093027e70739235906efdb868ae2cdb8a5dc12cacd012a0d46d808efc887b81bdea862904dfd802ebc58a2862b6d530859cf5df32c7a8b41599b0a53b12860021cf3479164f09e6eac08869825dc39c2a2b92886b5b950118b0a26c58c15ff562b79526734501cab512bb925921bd293bdc5d92a9bf2a1ee96a188d9336f36603ed8c02c4256724b24bf055fd15b9491ac4b853a91ab0206c0499c291f148f00d054462cdfaef1ad5a8ba1579709136f955f6f3716ddecf939cb92a847421291183eb83838864f2e64e7cfcbb5ce05acb5bc3bc6dbe402c17bb3d4882f005341c32b82dca7ea2fca1c1d29e264c8826f09f8662445635176d5fa64985beaba8209f0a3073fe8397aa7f811018bb725789b932b3a8b319b358930277199dec4f6a91778d18a05147e69cae85801f4e47c54e21671e7102b00502c1bf3a19256aa98657f232923f234dce86483f59f75d09aeea0e9aaf548a075c990355725cc9423f24c7df9e376a3e106e5691db4945b42b931bd',
-        'aaef485b647d3adc4d725dc34c79cd9949c8a30dc87f5721cbb8258cdf42af683bd23cde4e853c8d8b0206c0499a053ddf4b13feacc0fb3db8a47d552c70ce6181c5dc12cccdf86df41f672eef48893a9b37eaece23df796ca798df1e015eef775d8d2ee1eedaaf788b07509f159575576a02669dc8bbcb438b5dfa3ac38495a5f6e393c78059c2f75a6d5526722975aec9dc3ae318107ffa7c9d15f049a8afa17441250f956720c073faeab9b2df42e412f7a8d827a3b1126e022bb01eb32f48204fefce318d45c43c8a2ed145ad1581cb8da64a878450503e0942c12797e7f0c57b6afeb80c5db12bc8dc9959d45f8b4439708f1b38e2abd9eed8ac4315b878f9ef2879ac6705dfb66336c09b7847023766aef5166b03921e61c56ab1850e724cd925e0ad7520e0f60037c53469dcff6624aab48374608cd4718cdc66c88f359a9a1f79c06c99c88377b7248c3f18dcf45587c866145b7477423806aef5186b43921e69056abe851f3666baeb18ce1f8c6ac5860afb1b41076538a9b0410a6f5ae8488037bb3cc2edeafaeb10c5fe1b6d758da46fb0d0c11afb1981362ce6cb58a1e75468a1f9f65441e221dc3c98e2f4acc726e09e7a60065e31186b42117e27c96154c8a9fe1d77e8ec78ae067fb5b3fdba4b721b767a43fa9aec984397ecbf47ab139eb3dd27441e3ad8bda20e8af99735baeb157b33b2a794b018aea9f',
-        '64c514be55caa09de712ae8e14dfd5ad96744b4837f6c72308bb8aed34881b8a6291deea23498b1f02afe7f1000e19ddca8825db31b2a2e9086ab59910e18afc06bbe52c56fef2345c23b98590d5db35bda2b7187cb5a930fd8a027ac04ffc5e345e64f2dcc5e1000cdda9418bb86388a1f5088c4dc9102143090365c2b2ded640865344773ceed8a9dc61d02a000cd3e67c98acd52a06d994f949cc28cc68385e74a7c4ace8ae89ae9b8ba1599f0b53725dc1a0789d447c7e4bc370fae24e46ace0ae09ae5a8be1579709536f955fb5fbb5e496724083977f010000ffff',
-        '03008b8aca2e98a10000',
+        '1f8b0800000000000000ec9d5d6fdb461686ff8aa0ab5d208e87f33db9da6c9a6dbd1b2741dd26582c7a319f166b49344839895be4bfef50a234244d5ac20e17300da245e1ea0c5f523a8f5e1cce99a1fe9c17e91f76fe8af017f365ba4a37f35709002fe669f14e169b8ff2dac736f99d7d31ff229777b698bffacf9ff36279773d7f35974ba9e44acefd68e30f8398be98afe5ca1f317f7d082d529bcb5c2fee2ffc98b9a68268a7a8232401090589ffc30f2af46a1bbef6e7f7ffb7919badc8a7d717ef5efffddddbeab5bbe2d216c5f692e6afbfc8d49f63697dcc65f9cdf6cfea4a6ff3ec77abfd3bf9737e63effde0f76fafaa8b84801caef1bd5d156971559eacf061630b9da7b79b345bfbe0c73bb54cf52cb7b759916eb23cb5c5cc9f67b6bdb6b3e2d6ead46de3457697eb2ab859d8d97b592ac8e5ecedcae6d776adef6797d6a4dabf7265f32f6939f662ed47afb6036757f7c5c6ae667f79fff6f2eae2eaafe509d646e6e6a5bfa4dbed45ecdfd6e6fe767bd91f7ebe7cfd6e5ea66b7d53946fb2b04bb7cdcb22b7fe8ff962b3b92d5e9d9ffb4ff3e57afb265f66f9f579f5b114e7e5c7f1fdb7efdfc3099c5c16b6a6a897d9da9e20e9f376beb6c57945c2cb5dfeaacfb73c66fefdc541a328163b85bf35555e312144bf8c3fcc5fed8bffe55d9e6fd3b7973d5779f6b5b0bbb75e87b8b8a931ccea0cef222d841d37182945b1338201048d8613c2cf01619fed01087ea03208c05eb5875f9f239f9af5592157598d631e38ae46ccaeaa114d9e154bacc6101345a1e71a3a2e274b7e063c37b888e6fa11b501f86ea8f7709ea77ff82406c04500fc106a92edadd925d6ff9720c4b136567231913d7eb277e98e46ba4b66009677b27d10dfc875218b03c504d4283ec49a185b022832d6971cc2029908cd149d307e0618eff21dcf7197ce1020ef74bb49f6b9497d42d6697064921ccefea61e6dd24c89363a118c52ad91300e4006269a474f73e02196e73ea578a283720fd3d932cba5c902d130101d624d9ea1f763a10020162bc0122d1d3213cf4f9fe71340ac52de81e18b93bf169d1abb2f451ccb95701fc9ebb53f20d5779b0033aac15c0f3779c6c670cdb01636a11e6ba10d5713cf4f9fe7a3201e521e6dd07d5203387490ee06dbd8a5fc2a731ba8c687d3ff1062ad021a32a20927883a8124600a3139213d7aa4f72cc4f2dcad130ff35eb787e4b4d8e4a9de9c65eecc9bf9dd4ad54be900cc0fd5b859e6666fc2b8d69cb4715a51603447543bcb2886d34cc708083f01ce0e4c620a92e37a0314275d27e9fe16d80d3adb7375803fb411dffe82661f0fe126f3d26a419076c2218929d616dba9f01e01f34700ad11116becbd52f1de5e93ee06dbf9f23c3535470f7dc57f1c422d134710384c94800a32e3b8932499801e3dd01509b13077cac4835cc976437c6dfd51f5b22434157f3c845a10138a954bb8b409218a5223989d207efa101f07b08221a6f8e89418a0dea8747b20be93ab4070e81afeb87bbd89af43d830c9389009c34e72e71236e1fbf4f13d069ecf75ac013fd48877df52b39bda85bf754cd303b734f4097fda475ae5b0048a26182be510e31648a1a7727804e41e076f87428cef76290c60bb3bd96e7e7d4db1088d141a5a831755a05536580413ca05168980005044dc54fb8e80de23e06d298835de0e9178e7dd8af6a0bbf4ef374bc3220d1ada801721d6041830840cc7d05999280c00946202f819005ce53b9ae14e9d0130ae747b485e9b54d6d6ccd1d002bc38849a1c332b81d322e1dc220704722a7113c74f9fe31310dc653ca68ee89418a090a8747b20cebed6080eedbe8bddebadd5455851a721911824502a6decd4bd7e26f8fa7447b1fbe0f821c0f5a2ddd4b6d679d280c5bfba577942621293102030318042eb90990a8811907b04bb61d678fe7f56783eb6bef3c6ae3777fae63e101cba72ff0ab1d6da21c820d4de782111d80a67904613c34f9fe11300ac521ee3c0dd1a03b8f05eb89be465769716cd3238f4e2ded582ad19096dad8182696285af87ada07a5a523102968f4078a021d6927b84e25df920dc8df34aa6ebb0fc8d868edc651568622c88d28253564eaa716b2db36cba9f1b3fc65b0a6211ee1089c7772bda876e7ebff41f76a057d4e83dc45a77741a718d10355421622d35584d7774cf01e05dbee319eed21902e39d6e1fc99e2abdb82bec66136ef218a8e1dc1cd064da2498012ea949a0c5d802aef1b42079044c9f82632def31c5f223420354cc0df51ec453bd48afe53ad01d7a789721d65ec2060c40ca300e04374463a3a7adaa2300fb188c55bea3cdba536700b3ae74fb485efb93679b7003c8600de5106c2d05c29c3b90688e2563d409a8e5c4f208583e05c32ae75106dd2d328439ef95fb702e8af2dfdbdbb03c88a11ad0f5706b8ed908ea49665c018cb9e14ccbe9667004481f45f190f27887ee911ac2a40fd2fd60fb74d6a8c60daaab58ebf6902a489ce6460862b0167a9aa67b2e4897f91e82e7873ac3c05ceaf6909cad37f509671618b93c845aeb87a4a2481b9a082d59f9dc2229a7698e11707c0282bb8c47d51a5d1243541a3bdd6e88d755becef45db1c95667766957765d9fee081dc1436edf6cc7cede86b1ad0a04506128f7c722cd299642da09f311607e04d03e5662edfb34dd783bef3b4fcf37c3aabcf1d050c66a501d62ad87d195937c5227d0422981300ad969ce6f04e49f006995f21887efd618c0e2f7c27d247f91b54daa8cd710a922ade5a1183908a1b44c20a930471ce889e2a74ff151fcca6c47bb7587ca00debc55ede3f7ebd942ae6e8b455a7b260c133546bece7eaa0d683d18c622eab02218e044258209c5a767d18d80e65350ac811167ccbd4283b8734dbd1ff1df6d5ed8b0148f8306dfffdc479b7027c2394620c6944943a5860c4c937d2380fb0420773cc4db75b7d21096bd57ee677a65bfa53aec10e44983e9cb7db435db8728b089e5da485f453be7123d6dcf7e1e4cef781882e92ea56198de29f7337def490a44c306d1ffdec55a9bb69d92b05c282da40558306fd35301f23c782e591882e6873ac3b05ceaf6909ce59bc5999679e63f807073c8438ff17d3962f6268c68cd65537f7388128a8c2e0b0f23209d7e516204549f0064038da8bafa11a5210aeb86fc639c1b79535f1ac2718bf21ff6f1d65697f239e60028cc213452324ba75f4d1903e32761b96322dabd7bb50670f09af62374db7c7db69279b99be02c2dcaf5aca17dc34993743f7676b91b3bbb388c6d4f98382150828db11251241225a70d5e23a0fe44583b7089f6f8a39a43b97dc789babf19d922addd778626e687ddeb4de209e2823890706b80144e19a9a60a7d04c41f41b36420d6df1f6ac4fb7aa9d943edcd522eb2daaf6df2d074fc1062ad35ac44489e204c0cc60227d48269f3cc18e83d01be2ae531fedcad31801fef857b48ceed7516f615f0d074fcb08fb4aa0e059c4b0c4a14c39068e6109dd6f88d80e263f86db31dedc21d2a03f8f056b59bdf5bbb5e17f7cb2fb2fee3573cf41c3f36e3ad196c88b0a526d108424b12c35032d513e367b9ce442cd1fd5af15cd7b57be8beb3f9263bcbebcd19111a8e1fb7e1d9cf5ddd19230cb722718944ce72839453d32f233f03b60311d168f7490d407690ee063b5f64c656778681ecd076fcb98c57331f0fd0860c220900b08aca847184299c1e6b3e02b48f2359c722a698eed719a0a0ae8b77d3edd3d9d5b411a10979558ee86fdad8845b4978c289200612a280e113e14f9ff0235836b988f5efc7d4e22dbca9fe18e7ada68d402dca7b9a364c206d38d49a282c14819c92e919e92360fc54307b7b2d27bb78bfce002e5e17efa67b63cbadbf850d6b5945e847fe520bb6a6f96cd96837c8d7dfca3a48b803533372045c1f81f14043ac6df708c53bf641b80fe76fb567a00a5243f95bc723508d0508118021074a608209e5d313174680f129007eeb7c7ce9c9bedc213080216f55bbd1bd2bcebea4f975ba7ed03717a163f8ebd5ecd376506fc39c82843b4a01400a22036102f0b45f6604481fc1f1011db10e7d4430dea91f9ca007fb8d5c04d24387f1d7ddebad757ed096d5b45232b19271aa219efa32cf006e9feb689e1f680c80b0d7eca6f68bcdcbadec01dcd052fc7408b59e8b8a18560a034b90a2c42aa3f4b41d77fcec5624c4e2db29134f7025db03f1d69e6b2d45115a8a9f42acb581005b8998af960d0089060e723dcd4b3f038cab7c4773dca93300c8956e37c95f65b148d7d79bb0c80381d041fc5c8fb67f058e72273196227198396a1c9d96978e9fe6c0432ccf7d4af14407e51ea66db1396b5b3402a17df8d90f98f5fab411c6428535311452205842a7c7b08f81ec1390ac831133c5f188d000531d0df51ec4d34267eb22adb976e81e7eae055b95b4734241a1adc20448eefcede0b4c67404681fc3719ff068cfee161ac0b2f7c23d38df672befe801e6d024fc7c08b566eb18159010631491caf97fac9c26349e01cabb744783dc253300c63bd93ac4bf6d89ca3d23e0fb7f010000ffff',
+        '0300450af1a0a1a30000',
       ],
       [
-        'X-AREQUESTID',
-        '@1ALC98Jx696x856908x0',
-        'X-ASEN',
-        'SEN-13891561',
-        'Cache-Control',
-        'no-cache, no-transform',
-        'Vary',
-        'accept-encoding,x-auserid,cookie,x-ausername,accept-encoding',
-        'X-Content-Type-Options',
-        'nosniff',
-        'Content-Encoding',
-        'gzip',
         'Content-Type',
         'application/json;charset=UTF-8',
         'Transfer-Encoding',
         'chunked',
-        'Date',
-        'Mon, 06 Apr 2020 17:36:34 GMT',
         'Connection',
         'close',
+        'Date',
+        'Tue, 18 Jul 2023 17:45:28 GMT',
+        'X-AREQUESTID',
+        '@1HW1YL4x1065x473848x0',
+        'Cache-Control',
+        'no-cache, no-transform',
+        'X-Content-Type-Options',
+        'nosniff',
+        'Content-Encoding',
+        'gzip',
+        'Vary',
+        'cookie,accept-encoding',
+        'X-Cache',
+        'Miss from cloudfront',
+        'Via',
+        '1.1 a282f7d4f5ae65b33d809fbc6ea8641c.cloudfront.net (CloudFront)',
+        'X-Amz-Cf-Pop',
+        'SFO5-P1',
+        'X-Amz-Cf-Id',
+        'fBP7x8Kpojexu7XlyWVxigiLgpun5cBS_XffLAFnXSwZzETNpjeNrw==',
+        'Vary',
+        'Origin',
       ]
     );
 };
 
 const mockAlabamaFilesRequest = () => {
-  nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
-    .get('/stash/rest/api/1.0/projects/NES/repos/alabama/files')
-    .query({ limit: '100' })
+  nock('https://git.nemsis.org:443', { encodedQueryParams: true })
+    .get('/rest/api/1.0/projects/NES/repos/alabama/files')
+    .query({ at: 'refs%2Fheads%2Frelease-3.5.0', limit: '100' })
     .reply(
       200,
       [
@@ -82,16 +85,17 @@ const mockAlabamaFilesRequest = () => {
 
 const mockAlabamaDownloads = () => {
   for (const filePath of ['Resources/AL_StateDataSet.xml', 'Schematron/AL_EMSDataSet.sch.xml']) {
-    nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
-      .get(`/stash/projects/NES/repos/alabama/raw/${filePath}`)
+    nock('https://git.nemsis.org:443', { encodedQueryParams: true })
+      .get(`/projects/NES/repos/alabama/raw/${filePath}`)
+      .query({ at: 'refs%2Fheads%2Frelease-3.5.0' })
       .replyWithFile(200, path.resolve(__dirname, 'nemsis/alabama', filePath));
   }
 };
 
 const mockCaliforniaFilesRequest = () => {
-  nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
-    .get('/stash/rest/api/1.0/projects/NES/repos/california/files')
-    .query({ limit: '100' })
+  nock('https://git.nemsis.org:443', { encodedQueryParams: true })
+    .get('/rest/api/1.0/projects/NES/repos/california/files')
+    .query({ at: 'refs%2Fheads%2Frelease-3.5.0', limit: '100' })
     .reply(
       200,
       [
@@ -126,50 +130,60 @@ const mockCaliforniaFilesRequest = () => {
 
 const mockCaliforniaDownloads = () => {
   for (const filePath of ['Resources/CA_StateDataSet.xml', 'Resources/CA_Facilities.xlsx', 'Schematron/CA_EMSDataSet.sch.xml']) {
-    nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
-      .get(`/stash/projects/NES/repos/california/raw/${filePath}`)
+    nock('https://git.nemsis.org:443', { encodedQueryParams: true })
+      .get(`/projects/NES/repos/california/raw/${filePath}`)
+      .query({ at: 'refs%2Fheads%2Frelease-3.5.0' })
       .replyWithFile(200, path.resolve(__dirname, 'nemsis/california', filePath));
   }
 };
 
 const mockWashingtonFilesRequest = () => {
-  nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
-    .get('/stash/rest/api/1.0/projects/NES/repos/washington/files')
-    .query({ limit: '100' })
+  nock('https://git.nemsis.org:443', { encodedQueryParams: true })
+    .get('/rest/api/1.0/projects/NES/repos/washington/files')
+    .query({ limit: '100', at: 'refs%2Fheads%2Frelease-3.5.0' })
     .reply(
       200,
       [
-        '1f8b0800000000000000',
-        '848cb10a02311005ff65eba02776e904ed14c42d2c4464098b17d8e420bb390ec57f379e58dbcd6386f78491a4b282bfc08975a825b02ecf9b1b1a196fc908d91653127080a1e7445686fc097607fc690dfd1f3d3f5c1d687c30f8b583a87b523bd2bd4d2b959b322a06be732031c546abae71e669aef06b731579bd010000ffff',
-        '0300f0998ab6b4000000',
+        '1f8b0800000000000000848cb10a02311005ff65eba02776e904ed14c42d2c4464098b17d8e420bb390ec57f379e58dbcd6386f78491a4b282bfc08975a825b02ecf9b1b1a196fc908d91653127080a1e7445686fc097607fc690dfd1f3d3f5c1d687c30f8b583a87b523bd2bd4d2b959b322a06be732031c546abae71e669aef06b731579bd010000ffff0300f0998ab6b4000000',
       ],
       [
-        'X-AREQUESTID',
-        '@1XB8LJMx1051x95866x0',
-        'Cache-Control',
-        'no-cache, no-transform',
-        'Vary',
-        'accept-encoding,x-auserid,cookie,x-ausername,accept-encoding',
-        'X-Content-Type-Options',
-        'nosniff',
-        'Content-Encoding',
-        'gzip',
         'Content-Type',
         'application/json;charset=UTF-8',
         'Transfer-Encoding',
         'chunked',
-        'Date',
-        'Tue, 06 Apr 2021 23:31:03 GMT',
         'Connection',
         'close',
+        'Date',
+        'Tue, 18 Jul 2023 17:45:28 GMT',
+        'X-AREQUESTID',
+        '@1HW1YL4x1065x473849x0',
+        'Cache-Control',
+        'no-cache, no-transform',
+        'X-Content-Type-Options',
+        'nosniff',
+        'Content-Encoding',
+        'gzip',
+        'Vary',
+        'cookie,accept-encoding',
+        'X-Cache',
+        'Miss from cloudfront',
+        'Via',
+        '1.1 e2d7efb4a6fe4a49c212c47079f43f9c.cloudfront.net (CloudFront)',
+        'X-Amz-Cf-Pop',
+        'SFO5-P1',
+        'X-Amz-Cf-Id',
+        'qTr9GR8R2x9BAe6AJdNJ2GXvXed0cuoKOqGxGB1jr1b9_mUcjOOz4A==',
+        'Vary',
+        'Origin',
       ]
     );
 };
 
 const mockWashingtonDownloads = () => {
   for (const filePath of ['Resources/WA_StateDataSet.xml', 'Schematron/WA_EMSDataSet.sch.xml']) {
-    nock('https://stash.utahdcc.org:443', { encodedQueryParams: true })
-      .get(`/stash/projects/NES/repos/washington/raw/${filePath}`)
+    nock('https://git.nemsis.org:443', { encodedQueryParams: true })
+      .get(`/projects/NES/repos/washington/raw/${filePath}`)
+      .query({ at: 'refs%2Fheads%2Frelease-3.5.0' })
       .replyWithFile(200, path.resolve(__dirname, 'nemsis/washington', filePath));
   }
 };
