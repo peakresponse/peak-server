@@ -52,10 +52,11 @@ module.exports = (sequelize, DataTypes) => {
         throw new Error();
       }
       const docs = await sequelize.query(
-        `SELECT DISTINCT(incidents.*) FROM incidents ${joins}
+        `SELECT DISTINCT(incidents.*), NULLIF(regexp_replace(incidents.number, '\\D', '', 'g'), '')::int AS sort
+         FROM incidents ${joins}
          LEFT JOIN dispatches ON incidents.id=dispatches.incident_id
          ${conditions} ${searchConditions}
-         ORDER BY incidents.number DESC
+         ORDER BY sort DESC
          LIMIT :limit OFFSET :offset`,
         {
           replacements: {
