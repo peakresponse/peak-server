@@ -50,8 +50,7 @@ const mockReposRequest = () => {
 const mockAlabamaFilesRequest = () => {
   nock('https://git.nemsis.org:443', { encodedQueryParams: true })
     .get('/rest/api/1.0/projects/NES/repos/alabama/files')
-    .query({ at: 'refs%2Fheads%2Frelease-3.5.0' })
-    .query({ limit: '100' })
+    .query({ at: 'refs%2Fheads%2Frelease-3.5.0', limit: '100' })
     .reply(
       200,
       [
@@ -96,8 +95,7 @@ const mockAlabamaDownloads = () => {
 const mockCaliforniaFilesRequest = () => {
   nock('https://git.nemsis.org:443', { encodedQueryParams: true })
     .get('/rest/api/1.0/projects/NES/repos/california/files')
-    .query({ at: 'refs%2Fheads%2Frelease-3.5.0' })
-    .query({ limit: '100' })
+    .query({ at: 'refs%2Fheads%2Frelease-3.5.0', limit: '100' })
     .reply(
       200,
       [
