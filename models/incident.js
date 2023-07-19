@@ -52,11 +52,11 @@ module.exports = (sequelize, DataTypes) => {
         throw new Error();
       }
       const docs = await sequelize.query(
-        `SELECT DISTINCT(incidents.*), NULLIF(regexp_replace(incidents.number, '\\D', '', 'g'), '')::int AS sort
+        `SELECT DISTINCT(incidents.*)
          FROM incidents ${joins}
          LEFT JOIN dispatches ON incidents.id=dispatches.incident_id
          ${conditions} ${searchConditions}
-         ORDER BY sort DESC
+         ORDER BY sort DESC, number DESC
          LIMIT :limit OFFSET :offset`,
         {
           replacements: {
@@ -132,6 +132,7 @@ module.exports = (sequelize, DataTypes) => {
         'psapId',
         'sceneId',
         'number',
+        'sort',
         'calledAt',
         'dispatchNotifiedAt',
         'reportsCount',
@@ -147,7 +148,26 @@ module.exports = (sequelize, DataTypes) => {
 
   Incident.init(
     {
-      number: DataTypes.STRING,
+      number: {
+        type: DataTypes.STRING,
+        set(newValue) {
+          this.setDataValue('number', newValue);
+          let rawValue = newValue;
+          if (rawValue) {
+            const index = rawValue.indexOf('-');
+            if (index >= 0) {
+              rawValue = rawValue.substring(0, index);
+            }
+            rawValue = rawValue.replace(/\D/g, '');
+          }
+          if (rawValue?.length) {
+            this.setDataValue('sort', parseInt(rawValue, 10));
+          } else {
+            this.setDataValue('sort', 0);
+          }
+        },
+      },
+      sort: DataTypes.INTEGER,
       calledAt: {
         type: DataTypes.DATE,
         field: 'called_at',
