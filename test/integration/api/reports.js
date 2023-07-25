@@ -55,6 +55,7 @@ describe('/api/reports', () => {
 
     describe('POST /', () => {
       it('creates a new Report, generating a new Incident number', async () => {
+        // first data payload- no incident number, server generates
         let data = {
           Scene: {
             id: 'dc3b005e-020d-4cbc-a09c-b7358387902b',
@@ -92,11 +93,12 @@ describe('/api/reports', () => {
             },
           },
         };
-        await testSession
+        const response = await testSession
           .post(`/api/reports`)
           .set('Host', `bayshoreambulance.${process.env.BASE_HOST}`)
           .send(data)
           .expect(HttpStatus.CREATED);
+        assert.deepStrictEqual(response.body.Incident?.[0]?.reportsCount, 1);
 
         let report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
         assert(report);
@@ -110,6 +112,7 @@ describe('/api/reports', () => {
         assert.deepStrictEqual(incident.psapId, null);
         assert.deepStrictEqual(incident.number, '1');
 
+        // second payload, no incident number, server generates increment
         data = {
           Scene: {
             id: '65b2ef4e-f6db-49c5-90da-9bcfed7bd9cd',
@@ -164,6 +167,7 @@ describe('/api/reports', () => {
         assert.deepStrictEqual(incident.sceneId, data.Incident.sceneId);
         assert.deepStrictEqual(incident.psapId, null);
         assert.deepStrictEqual(incident.number, '2');
+        // third payload, duplicate incident number, server generates unique suffix
         data = {
           Scene: {
             id: '4cbe7e77-3834-49ca-aad3-db5fe499de20',
@@ -263,7 +267,7 @@ describe('/api/reports', () => {
     });
 
     describe('POST /', () => {
-      it('creates a new Report, generating a new Incident number', async () => {
+      it('creates a new Report, generating a new interleaved Incident number', async () => {
         const data = {
           Scene: {
             id: 'dc3b005e-020d-4cbc-a09c-b7358387902b',

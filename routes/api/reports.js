@@ -154,8 +154,6 @@ router.post(
                 }
               }
               await incident.save({ transaction });
-              payload.Incident = payload.Incident || [];
-              payload.Incident.push(incident.toJSON());
               // search for the Report(s) that match this Incident, update Response incidentNumber
               let { Report: reports = [], Response: responses = [] } = req.body;
               if (!Array.isArray(reports)) {
@@ -164,8 +162,10 @@ router.post(
               if (!Array.isArray(responses)) {
                 responses = [responses];
               }
+              let reportsCount = 0;
               for (const report of reports) {
                 if (report.incidentId === incident.id) {
+                  reportsCount += 1;
                   for (const response of responses) {
                     if (response.id === report.responseId) {
                       _.set(response.data, ['eResponse', 'eResponse.03', '_text'], incident.number);
@@ -176,6 +176,8 @@ router.post(
                   }
                 }
               }
+              payload.Incident = payload.Incident || [];
+              payload.Incident.push({ ...incident.toJSON(), reportsCount });
             } else {
               [obj, created] = await models[model].createOrUpdate(req.user, req.agency, record, {
                 transaction,
