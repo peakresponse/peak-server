@@ -34,6 +34,20 @@ describe('models', () => {
       ]);
     });
 
+    describe('sort', () => {
+      it('is set when number is set', () => {
+        const incident = models.Incident.build();
+        incident.number = '12345';
+        assert.deepStrictEqual(incident.sort, 12345);
+
+        incident.number = '12345-001';
+        assert.deepStrictEqual(incident.sort, 12345);
+
+        incident.number = 'abc12d345ad';
+        assert.deepStrictEqual(incident.sort, 12345);
+      });
+    });
+
     describe('paginate()', () => {
       it('filters records by dispatched agency', async () => {
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
