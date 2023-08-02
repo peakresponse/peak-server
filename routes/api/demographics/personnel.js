@@ -1,5 +1,7 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
+const _ = require('lodash');
+const { Op } = require('sequelize');
 
 const cache = require('../../../lib/cache');
 const models = require('../../../models');
@@ -8,6 +10,73 @@ const interceptors = require('../../interceptors');
 const base = require('./base');
 
 const router = express.Router();
+
+router.get(
+  '/',
+  interceptors.requireAgency(models.Employment.Roles.PERSONNEL),
+  helpers.async(async (req, res) => {
+    const page = req.query.page || 1;
+    const options = {
+      page,
+      where: { agencyId: req.agency.id },
+      order: [
+        ['last_name', 'ASC NULLS FIRST'],
+        ['first_name', 'ASC NULLS FIRST'],
+        ['middle_name', 'ASC NULLS FIRST'],
+        ['email', 'ASC'],
+      ],
+    };
+    if (req.query.search) {
+      const search = req.query.search.trim();
+      if (search !== '') {
+        options.where[Op.or] = {
+          firstName: { [Op.iLike]: `%${search}%` },
+          lastName: { [Op.iLike]: `%${search}%` },
+          middleName: { [Op.iLike]: `%${search}%` },
+          email: { [Op.iLike]: `%${search}%` },
+        };
+      }
+    }
+    const { docs, pages, total } = await models.Employment.paginate(options);
+    helpers.setPaginationHeaders(req, res, page, pages, total);
+    res.json(docs.map((d) => d.toJSON()));
+  })
+);
+
+router.post(
+  '/',
+  interceptors.requireAgency(models.Employment.Roles.PERSONNEL),
+  helpers.async(async (req, res) => {
+    const record = await models.Employment.create({
+      ..._.pick(req.body, ['firstName', 'lastName', 'email', 'data']),
+      createdByAgencyId: req.agency.id,
+      createdById: req.user.id,
+      updatedById: req.user.id,
+    });
+    res.status(HttpStatus.CREATED).json(record.toJSON());
+  })
+);
+
+router.get(
+  '/invite/:invitationCode',
+  helpers.async(async (req, res) => {
+    const { invitationCode } = req.params;
+    let record;
+    try {
+      record = await models.Employment.findOne({
+        where: { invitationCode },
+      });
+    } catch {
+      // no-op
+    }
+    if (record) {
+      const { email, invitationAt } = record;
+      res.json({ email, invitationAt });
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
 
 router.post(
   '/invite',
