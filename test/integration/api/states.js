@@ -55,6 +55,8 @@ describe('/api/states', () => {
         assert.deepStrictEqual(response.body, {
           initialized: true,
           dataSetVersions: [
+            '2023-06-02-370fa47febdf457374a7dd1907dfefacd539bda4',
+            '2023-05-27-ff13b8c96ce333b974669b3aacb6442faf9d9ef8',
             '2023-05-18-4ca62d3b2dc912a13e478a876bb60bd41ced0e2e',
             '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
             '2022-09-01-156cb80db204e903a77bcb2eaccf36c0eae9796d',
@@ -65,7 +67,13 @@ describe('/api/states', () => {
             '2019-04-26-b40131057feb8406ab0d1948eab992c1b42ccd36',
           ],
           demSchematronVersions: [],
-          emsSchematronVersions: [],
+          emsSchematronVersions: [
+            '2023-06-02-933643233e3928ff9abc6360a34ff4ee117f025b',
+            '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
+            '2019-03-05-33a41c3727ae4a37943f2524bc3243f78a8c523c',
+            '2017-10-04-2a6a2b7cfd26e0d380c62762348de2751896bade',
+            '2017-09-29-17bf40b4b0d29f86b72d4a716a8581d4d661c48e',
+          ],
         });
       });
     });
@@ -83,6 +91,8 @@ describe('/api/states', () => {
         assert.deepStrictEqual(response.body, {
           initialized: true,
           dataSetVersions: [
+            '2023-06-02-370fa47febdf457374a7dd1907dfefacd539bda4',
+            '2023-05-27-ff13b8c96ce333b974669b3aacb6442faf9d9ef8',
             '2023-05-18-4ca62d3b2dc912a13e478a876bb60bd41ced0e2e',
             '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
             '2022-09-01-156cb80db204e903a77bcb2eaccf36c0eae9796d',
@@ -93,7 +103,13 @@ describe('/api/states', () => {
             '2019-04-26-b40131057feb8406ab0d1948eab992c1b42ccd36',
           ],
           demSchematronVersions: [],
-          emsSchematronVersions: [],
+          emsSchematronVersions: [
+            '2023-06-02-933643233e3928ff9abc6360a34ff4ee117f025b',
+            '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
+            '2019-03-05-33a41c3727ae4a37943f2524bc3243f78a8c523c',
+            '2017-10-04-2a6a2b7cfd26e0d380c62762348de2751896bade',
+            '2017-09-29-17bf40b4b0d29f86b72d4a716a8581d4d661c48e',
+          ],
         });
       });
     });
