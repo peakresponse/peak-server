@@ -33,10 +33,21 @@ describe('models', () => {
       it('regenerates the DEMDataSet xml', async () => {
         const version = await models.Version.findByPk('682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
         await version.regenerate();
-        assert(
-          version.demDataSet.match(
-            `<DEMDataSet xmlns="http://www.nemsis.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.211008CP3/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd">
-	<DemographicReport timeStamp="[^"]+">
+        const m = version.demDataSet.match('timeStamp="([^"]+)"');
+        assert.deepStrictEqual(
+          version.demDataSet,
+          `<DEMDataSet xmlns="http://www.nemsis.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.211008CP3/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd">
+	<dCustomConfiguration>
+		<dCustomConfiguration.CustomGroup CustomElementID="dFacility.01">
+			<dCustomConfiguration.01 nemsisElement="dFacility.01">Type of Facility</dCustomConfiguration.01>
+			<dCustomConfiguration.02>The type of facility (healthcare or other) that the EMS agency transports patients to or from.</dCustomConfiguration.02>
+			<dCustomConfiguration.03>9902009</dCustomConfiguration.03>
+			<dCustomConfiguration.04>9923001</dCustomConfiguration.04>
+			<dCustomConfiguration.05>9903007</dCustomConfiguration.05>
+			<dCustomConfiguration.06 nemsisCode="1701009" customValueDescription="Alternate Care Site">1701037</dCustomConfiguration.06>
+		</dCustomConfiguration.CustomGroup>
+	</dCustomConfiguration>
+	<DemographicReport timeStamp="${m[1]}">
 		<dAgency>
 			<dAgency.01>S07-50120</dAgency.01>
 			<dAgency.02>S07-50120</dAgency.02>
@@ -175,7 +186,6 @@ describe('models', () => {
 		</dPersonnel>
 	</DemographicReport>
 </DEMDataSet>`
-          )
         );
       });
     });
