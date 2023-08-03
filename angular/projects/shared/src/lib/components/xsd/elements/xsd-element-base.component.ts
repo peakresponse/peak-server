@@ -191,11 +191,12 @@ export class XsdElementBaseComponent {
   get value(): string {
     const correlationId = this.correlationId;
     if (correlationId) {
-      const rg = this.data.eCustomResults?.['dCustomResults.ResultsGroup']?.find(
-        (rg: any) => rg['dCustomResults.02']?._text === this.name && rg['dCustomResults.03']?._text === correlationId
+      const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
+      const rg = this.data.CustomResults?.[`${dataSet}.ResultsGroup`]?.find(
+        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId
       );
       if (rg) {
-        return rg['dCustomResults.01']?._text;
+        return rg[`${dataSet}.01`]?._text;
       }
     }
     if (this.selectedValue) {
@@ -221,19 +222,18 @@ export class XsdElementBaseComponent {
   set value(value: string) {
     const correlationId = this.correlationId;
     if (correlationId) {
-      const index = this.record.data.eCustomResults?.['dCustomResults.ResultsGroup']?.findIndex(
-        (rg: any) => rg['dCustomResults.02']?._text === this.name && rg['dCustomResults.03']?._text === correlationId
+      const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
+      const index = this.record.data.CustomResults?.[`${dataSet}.ResultsGroup`]?.findIndex(
+        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId
       );
       if (index >= 0) {
-        this.record.data.eCustomResults['dCustomResults.ResultsGroup'].splice(index, 1);
-        if (this.record.data.eCustomResults['dCustomResults.ResultsGroup'].length === 0) {
-          delete this.record.data.eCustomResults;
+        this.record.data.CustomResults[`${dataSet}.ResultsGroup`].splice(index, 1);
+        if (this.record.data.CustomResults[`${dataSet}.ResultsGroup`].length === 0) {
+          delete this.record.data.CustomResults;
           this.correlationId = undefined;
         } else {
           if (
-            !this.record.data.eCustomResults?.['dCustomResults.ResultsGroup']?.find(
-              (rg: any) => rg['dCustomResults.03']?._text === correlationId
-            )
+            !this.record.data.CustomResults?.[`${dataSet}.ResultsGroup`]?.find((rg: any) => rg[`${dataSet}.03`]?._text === correlationId)
           ) {
             this.correlationId = undefined;
           }
@@ -291,12 +291,13 @@ export class XsdElementBaseComponent {
       correlationId = uuid();
       this.correlationId = correlationId;
     }
-    this.record.data.eCustomResults ||= {};
-    this.record.data.eCustomResults['dCustomResults.ResultsGroup'] ||= [];
-    this.record.data.eCustomResults['dCustomResults.ResultsGroup'].push({
-      'dCustomResults.01': { _text: customValue },
-      'dCustomResults.02': { _text: this.name },
-      'dCustomResults.03': { _text: correlationId },
+    const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
+    this.record.data.CustomResults ||= {};
+    this.record.data.CustomResults[`${dataSet}.ResultsGroup`] ||= [];
+    this.record.data.CustomResults[`${dataSet}.ResultsGroup`].push({
+      [`${dataSet}.01`]: { _text: customValue },
+      [`${dataSet}.02`]: { _text: this.name },
+      [`${dataSet}.03`]: { _text: correlationId },
     });
   }
 

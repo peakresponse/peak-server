@@ -100,6 +100,9 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       };
+      const dCustomResults = {
+        'dCustomResults.ResultsGroup': [],
+      };
       for (const modelName of ['Contact', 'Configuration', 'Location', 'Vehicle', 'Employment', 'Device', 'Facility']) {
         const queryOptions = {
           include: 'draft',
@@ -118,7 +121,17 @@ module.exports = (sequelize, DataTypes) => {
         records = records
           .map((r) => {
             if (r.draft) {
+              if (r.draft.data.CustomResults) {
+                dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
+                  r.draft.data.CustomResults['dCustomResults.ResultsGroup']
+                );
+              }
               return r.draft.archivedAt ? null : r.draft.getData(this);
+            }
+            if (r.data.CustomResults) {
+              dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
+                r.data.CustomResults['dCustomResults.ResultsGroup']
+              );
             }
             return r.getData(this);
           })
@@ -147,6 +160,9 @@ module.exports = (sequelize, DataTypes) => {
           }
           _.set(doc.DEMDataSet.DemographicReport, path, records);
         }
+      }
+      if (dCustomResults['dCustomResults.ResultsGroup'].length > 0) {
+        _.set(doc.DEMDataSet.DemographicReport, 'dCustomResults', dCustomResults);
       }
       const demDataSet = xmlFormatter(xmljs.js2xml(doc, { compact: true }), {
         collapseContent: true,

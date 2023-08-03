@@ -1,17 +1,17 @@
 import { find } from 'lodash';
 
 export class XsdSchema {
+  public readonly dataSet: string;
   private data: any;
   private commonTypes: any;
   private rootElementNameInternal?: string;
-  private customConfiguration?: any[];
   private customElements?: { [key: string]: any };
   private customElementsForGroup?: { [key: string]: any[] };
 
-  constructor(data: any, commonTypes: any, customConfiguration?: any[], rootElementName?: string) {
+  constructor(dataSet: string, data: any, commonTypes: any, customConfiguration?: any[], rootElementName?: string) {
+    this.dataSet = dataSet;
     this.data = data;
     this.commonTypes = commonTypes;
-    this.customConfiguration = customConfiguration;
     if (customConfiguration) {
       this.customElements = {};
       for (const element of customConfiguration) {
@@ -80,21 +80,5 @@ export class XsdSchema {
       return this.customElements?.[elementName];
     }
     return undefined;
-  }
-
-  customizeElement(element: any): any {
-    if (this.customConfiguration) {
-      const elementName = element?._attributes?.name;
-      const prefix = this.customConfiguration.find((cc) => cc['dCustomConfiguration.01']) ? 'dCustomConfiguration' : 'eCustomConfiguration';
-      const config = this.customConfiguration.find((cc) => cc[`${prefix}.01`]?._attributes?.nemsisElement === elementName);
-      if (config) {
-        if (config._attributes?.CustomElementID === elementName) {
-          // modify the existing element
-        } else {
-          // add to the element group
-        }
-      }
-    }
-    return element;
   }
 }

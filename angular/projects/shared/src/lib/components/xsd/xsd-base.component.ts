@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { find } from 'lodash';
-
 import { ApiService } from '../../services/api.service';
 import { AgencyService } from '../../services/agency.service';
 import { NavigationService } from '../../services/navigation.service';
@@ -17,6 +15,7 @@ import { XsdSchema } from './xsd-schema';
 })
 export class XsdBaseComponent implements OnInit {
   @Input() name?: string;
+  @Input() dataSet?: string;
   @Input() keyPath: string[] = [];
 
   @Input() nemsisVersion?: string;
@@ -51,13 +50,20 @@ export class XsdBaseComponent implements OnInit {
     this.isLoading = true;
     if (this.nemsisVersion && this.xsd) {
       this.schema.getXsd(false, this.nemsisVersion, this.xsd).subscribe((schema: any) => {
-        this.schemaData = new XsdSchema(schema, this.schema.getCommonTypes(false), this.customConfiguration, this.schemaRootElementName);
+        this.schemaData = new XsdSchema(
+          this.dataSet ?? '',
+          schema,
+          this.schema.getCommonTypes(false),
+          this.customConfiguration,
+          this.schemaRootElementName
+        );
         this.isLoading = !this.schemaData && !(!this.draftNemsisVersion || this.draftSchemaData) && !this.data;
       });
     }
     if (this.draftNemsisVersion && this.draftXsd) {
       this.schema.getXsd(true, this.draftNemsisVersion, this.draftXsd).subscribe((schema: any) => {
         this.draftSchemaData = new XsdSchema(
+          this.dataSet ?? '',
           schema,
           this.schema.getCommonTypes(true),
           this.draftCustomConfiguration,
