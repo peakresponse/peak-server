@@ -68,9 +68,9 @@ module.exports = (sequelize, DataTypes) => {
       records = records
         .map((r) => {
           if (r.draft) {
-            return r.draft.archivedAt ? null : r.draft.data;
+            return r.draft.archivedAt ? null : r.draft.getData(this);
           }
-          return r.data;
+          return r.getData(this);
         })
         .filter(Boolean);
       return this.update({ demCustomConfiguration: records }, { transaction });
@@ -84,7 +84,6 @@ module.exports = (sequelize, DataTypes) => {
         return sequelize.transaction((transaction) => this.regenerate({ ...options, transaction }));
       }
       const { transaction } = options;
-      const agency = await this.getAgency({ include: 'draft', transaction });
       const doc = {
         DEMDataSet: {
           _attributes: {
@@ -92,13 +91,19 @@ module.exports = (sequelize, DataTypes) => {
             'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
             'xsi:schemaLocation': `http://www.nemsis.org https://nemsis.org/media/nemsis_v3/${this.nemsisVersion}/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd`,
           },
-          DemographicReport: {
-            _attributes: {
-              timeStamp: DateTime.now().toISO(),
-            },
-            dAgency: (agency.draft ?? agency).getData(this),
-          },
         },
+      };
+      if (this.demCustomConfiguration?.length > 0) {
+        doc.DEMDataSet.dCustomConfiguration = {
+          'dCustomConfiguration.CustomGroup': this.demCustomConfiguration,
+        };
+      }
+      const agency = await this.getAgency({ include: 'draft', transaction });
+      doc.DEMDataSet.DemographicReport = {
+        _attributes: {
+          timeStamp: DateTime.now().toISO(),
+        },
+        dAgency: (agency.draft ?? agency).getData(this),
       };
       const dCustomResults = {
         'dCustomResults.ResultsGroup': [],
