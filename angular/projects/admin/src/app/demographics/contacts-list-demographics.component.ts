@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { AgencyService } from 'shared';
 import { SchemaListComponent } from '../schema/schema-list.component';
 
 @Component({
@@ -14,5 +15,5 @@ export class ContactsListDemographicsComponent {
     { name: 'First name', attr: ['dContact.03'], class: 'col-5' },
   ];
 
-  constructor(public route: ActivatedRoute) {}
+  constructor(public agency: AgencyService, public route: ActivatedRoute) {}
 }

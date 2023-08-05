@@ -1,7 +1,13 @@
-<admin-schema-record
+<shared-xsd-record
   name="Contact"
+  dataSet="DEM"
   [keyPath]="['demographics', 'contacts']"
-  schemaPath="/nemsis/xsd/dContact_v3.json"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dContact_v3.xsd"
+  [customConfiguration]="agency.version?.demCustomConfiguration"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dContact_v3.xsd"
+  [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
   [defaultValues]="defaultValues"
 >
-</admin-schema-record>
+</shared-xsd-record>
