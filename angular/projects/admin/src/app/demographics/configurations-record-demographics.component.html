@@ -1,7 +1,13 @@
-<admin-schema-record
+<shared-xsd-record
   name="Configuration"
+  dataSet="DEM"
   [keyPath]="['demographics', 'configurations']"
-  schemaPath="/nemsis/xsd/dConfiguration_v3.json"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dConfiguration_v3.xsd"
+  [customConfiguration]="agency.version?.demCustomConfiguration"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dConfiguration_v3.xsd"
+  [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
   [defaultValues]="defaultValues"
 >
-</admin-schema-record>
+</shared-xsd-record>
