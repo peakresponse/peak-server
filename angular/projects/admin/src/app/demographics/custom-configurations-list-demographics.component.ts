@@ -13,7 +13,7 @@ export class CustomConfigurationsListDemographicsComponent {
 
   sectionColumns = [{ name: 'Title', attr: ['dCustomConfiguration.01'], class: 'col-9' }];
 
-  constructor(private api: ApiService, private agency: AgencyService, public route: ActivatedRoute) {}
+  constructor(public agency: AgencyService, private api: ApiService, public route: ActivatedRoute) {}
 
   onImport() {
     this.api.demographics.customConfigurations.import().subscribe((response: HttpResponse<any>) => {

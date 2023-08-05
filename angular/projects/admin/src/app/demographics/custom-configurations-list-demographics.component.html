@@ -1,13 +1,17 @@
 <router-outlet></router-outlet>
-<admin-schema-list
+<shared-xsd-list
   #list
   name="Custom Configurations"
+  dataSet="DEM"
   [class.d-none]="route.firstChild"
   [keyPath]="['demographics', 'customConfigurations']"
-  schemaPath="/nemsis/xsd/dCustom_v3.json"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dCustom_v3.xsd"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dCustom_v3.xsd"
   [schemaColumns]="sectionColumns"
 >
   <ng-container class="admin-schema-list-header">
     <button (click)="onImport()" class="btn btn--sm btn--secondary ms-3">Import from State Data Set</button>
   </ng-container>
-</admin-schema-list>
+</shared-xsd-list>
