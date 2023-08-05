@@ -1,7 +1,13 @@
-<admin-schema-record
+<shared-xsd-record
   name="Device"
+  dataSet="DEM"
   [keyPath]="['demographics', 'devices']"
-  schemaPath="/nemsis/xsd/dDevice_v3.json"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dDevice_v3.xsd"
+  [customConfiguration]="agency.version?.demCustomConfiguration"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dDevice_v3.xsd"
+  [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
   [defaultValues]="defaultValues"
 >
-</admin-schema-record>
+</shared-xsd-record>
