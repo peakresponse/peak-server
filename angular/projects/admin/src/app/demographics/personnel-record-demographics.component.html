@@ -1,7 +1,13 @@
-<admin-schema-record
+<shared-xsd-record
   name="Personnel"
+  dataSet="DEM"
   [keyPath]="['demographics', 'personnel']"
-  schemaPath="/nemsis/xsd/dPersonnel_v3.json"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dPersonnel_v3.xsd"
+  [customConfiguration]="agency.version?.demCustomConfiguration"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dPersonnel_v3.xsd"
+  [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
   [defaultValues]="defaultValues"
 >
-</admin-schema-record>
+</shared-xsd-record>

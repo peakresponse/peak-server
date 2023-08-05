@@ -1,10 +1,14 @@
 <router-outlet></router-outlet>
-<admin-schema-list
+<shared-xsd-list
   #list
-  [class.d-none]="route.firstChild"
   name="Personnel"
+  dataSet="DEM"
+  [class.d-none]="route.firstChild"
   [keyPath]="['demographics', 'personnel']"
-  schemaPath="/nemsis/xsd/dPersonnelInvitation_v3.json"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dPersonnel_v3.xsd"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dPersonnel_v3.xsd"
   [schemaColumns]="sectionColumns"
   [addlColumns]="addlColumns"
 >
@@ -25,7 +29,7 @@
       </ng-container>
     </td>
   </ng-template>
-</admin-schema-list>
+</shared-xsd-list>
 <shared-modal
   #refuseConfirmation
   i18n-confirmLabel

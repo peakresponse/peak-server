@@ -18,7 +18,7 @@ router.get(
     const page = req.query.page || 1;
     const options = {
       page,
-      where: { agencyId: req.agency.id },
+      where: { createdByAgencyId: req.agency.id },
       order: [
         ['last_name', 'ASC NULLS FIRST'],
         ['first_name', 'ASC NULLS FIRST'],

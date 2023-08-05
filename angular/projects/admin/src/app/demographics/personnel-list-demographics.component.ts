@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { assign } from 'lodash';
 
-import { ApiService, ModalComponent, NotificationService } from 'shared';
+import { AgencyService, ApiService, ModalComponent, NotificationService } from 'shared';
 
 import { SchemaListComponent } from '../schema/schema-list.component';
 
@@ -34,7 +34,12 @@ export class PersonnelListDemographicsComponent {
     emails: '',
   };
 
-  constructor(private api: ApiService, private notification: NotificationService, public route: ActivatedRoute) {}
+  constructor(
+    public agency: AgencyService,
+    private api: ApiService,
+    private notification: NotificationService,
+    public route: ActivatedRoute
+  ) {}
 
   onApprove(event: Event, record: any) {
     event.stopPropagation();
