@@ -1,7 +1,13 @@
-<admin-schema-record
+<shared-xsd-record
   name="Location"
+  dataSet="DEM"
   [keyPath]="['demographics', 'locations']"
-  schemaPath="/nemsis/xsd/dLocation_v3.json"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dLocation_v3.xsd"
+  [customConfiguration]="agency.version?.demCustomConfiguration"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dLocation_v3.xsd"
+  [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
   [defaultValues]="defaultValues"
 >
-</admin-schema-record>
+</shared-xsd-record>

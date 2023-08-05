@@ -1,10 +1,14 @@
 <router-outlet></router-outlet>
-<admin-schema-list
+<shared-xsd-list
   #list
   name="Locations"
+  dataSet="DEM"
   [class.d-none]="route.firstChild"
   [keyPath]="['demographics', 'locations']"
-  schemaPath="/nemsis/xsd/dLocation_v3.json"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dLocation_v3.xsd"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dLocation_v3.xsd"
   [schemaColumns]="sectionColumns"
 >
-</admin-schema-list>
+</shared-xsd-list>
