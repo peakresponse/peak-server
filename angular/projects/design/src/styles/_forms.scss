@@ -15,17 +15,15 @@ form {
 }
 
 .select-wrapper {
-  position: relative;
+  display: flex;
   height: 2.75rem;
   flex: 1;
+  min-width: 0;
 }
 
 .select-wrapper__select {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  flex-grow: 1;
+  max-width: calc(100% - 2 * 0.875rem);
 }
 
 .form-field {
