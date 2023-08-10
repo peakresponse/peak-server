@@ -2,11 +2,24 @@ const assert = require('assert');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const nemsisStates = require('../../../lib/nemsis/states');
 
 describe('models', () => {
   describe('Agency', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'cities', 'states', 'counties', 'psaps', 'agencies', 'employments', 'scenes']);
+      await helpers.loadFixtures([
+        'users',
+        'cities',
+        'states',
+        'counties',
+        'psaps',
+        'nemsisStateDataSets',
+        'nemsisSchematrons',
+        'agencies',
+        'versions',
+        'employments',
+        'scenes',
+      ]);
     });
 
     describe("scope('canonical')", () => {
@@ -111,22 +124,22 @@ describe('models', () => {
           name: 'SchemaValidationError',
           errors: [
             {
-              path: `$['dAgency.AgencyServiceGroup']['dAgency.05']`,
+              path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.05']`,
               message: 'This field is required.',
               value: '',
             },
             {
-              path: `$['dAgency.AgencyServiceGroup']['dAgency.06']`,
+              path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.06']`,
               message: 'This field is required.',
               value: '',
             },
             {
-              path: `$['dAgency.AgencyServiceGroup']['dAgency.07']`,
+              path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.07']`,
               message: 'This field is required.',
               value: '',
             },
             {
-              path: `$['dAgency.AgencyServiceGroup']['dAgency.08']`,
+              path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.08']`,
               message: 'This field is required.',
               value: '',
             },
@@ -170,6 +183,49 @@ describe('models', () => {
       });
     });
 
+    describe('getDraftVersion()', () => {
+      it('returns null if no draft Version for an Agency', async () => {
+        const agency = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+        assert.deepStrictEqual(await agency.getDraftVersion(), null);
+      });
+
+      it('returns the draft Version for an Agency', async () => {
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const version = await agency.getDraftVersion();
+        assert.deepStrictEqual(version?.id, '682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
+      });
+
+      it('cannot have more than one draft Version for an Agency', async () => {
+        await assert.rejects(
+          models.Version.create({
+            agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+            isDraft: true,
+            nemsisVersion: '3.5.0.211008CP3',
+            stateDataSetId: '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae',
+            emsSchematronIds: ['dabc90e5-b8fa-4dac-bcfd-be659ba46b54'],
+            createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+            updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+          })
+        );
+      });
+    });
+
+    describe('getOrCreateDraftVersion()', () => {
+      it('returns the existing draft Version for an Agency', async () => {
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const version = await agency.getOrCreateDraftVersion(user);
+        assert.deepStrictEqual(version?.id, '682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
+      });
+
+      it('creates a new draft Version as needed', async () => {
+        const user = await models.User.findByPk('7f666fe4-dbdd-4c7f-ab44-d9157379a680');
+        const agency = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+        const version = await agency.getOrCreateDraftVersion(user);
+        assert.deepStrictEqual(version?.isDraft, true);
+      });
+    });
+
     describe('generateSubdomain()', () => {
       it('should generate a unique, unused subdomain from a short name (less than 4 words)', async () => {
         const agency = await models.Agency.findByPk('6b7ceef6-0be4-4791-848d-f115e8f15182');
@@ -187,46 +243,6 @@ describe('models', () => {
         const agency = await models.Agency.findByPk('2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d');
         const subdomain = await agency.generateSubdomain();
         assert.deepStrictEqual(subdomain, 'bmacc1');
-      });
-    });
-
-    describe('register()', () => {
-      it('creates a new demographic Agency record for a given Agency/User', async () => {
-        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
-        const canonicalAgency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
-        assert.deepStrictEqual(canonicalAgency.data, {
-          'sAgency.01': { _text: 'S66-50146' },
-          'sAgency.02': { _text: 'S66-50146' },
-          'sAgency.03': { _text: 'Bodega Bay Fire Protection District' },
-        });
-
-        await models.sequelize.transaction(async (transaction) => {
-          const agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
-          assert(agency);
-          assert.deepStrictEqual(agency.canonicalAgencyId, canonicalAgency.id);
-          assert.deepStrictEqual(agency.stateId, '06');
-          assert.deepStrictEqual(agency.stateUniqueId, 'S66-50146');
-          assert.deepStrictEqual(agency.number, 'S66-50146');
-          assert.deepStrictEqual(agency.subdomain, 'bbfpd');
-          assert.deepStrictEqual(agency.createdById, user.id);
-          assert.deepStrictEqual(agency.updatedById, user.id);
-          assert.deepStrictEqual(agency.createdById, user.id);
-          assert.deepStrictEqual(agency.updatedById, user.id);
-          assert.deepStrictEqual(agency.data, {
-            'dAgency.01': { _text: 'S66-50146' },
-            'dAgency.02': { _text: 'S66-50146' },
-            'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
-            'dAgency.04': { _text: '06' },
-          });
-
-          const employment = await models.Employment.findOne({
-            where: { agencyId: agency.id, userId: user.id },
-            transaction,
-          });
-          assert(employment);
-          assert(employment.isOwner);
-          assert(employment.isActive);
-        });
       });
     });
 
@@ -346,6 +362,95 @@ describe('models', () => {
           'dAgency.02': { _text: 'Test Number' },
           'dAgency.03': { _text: 'Test Name' },
           'dAgency.04': { _text: '06' },
+        });
+      });
+    });
+
+    context('with NEMSIS State repo', () => {
+      before(async () => {
+        const repo = nemsisStates.getNemsisStateRepo('06', '3.5.0');
+        await repo.pull();
+        await repo.install('2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632');
+      });
+
+      describe('register()', () => {
+        it('creates a new demographic Agency record for a given Agency/User', async () => {
+          const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+          const canonicalAgency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
+          assert.deepStrictEqual(canonicalAgency.data, {
+            'sAgency.01': { _text: 'S66-50146' },
+            'sAgency.02': { _text: 'S66-50146' },
+            'sAgency.03': { _text: 'Bodega Bay Fire Protection District' },
+          });
+
+          let agency;
+          await models.sequelize.transaction(async (transaction) => {
+            agency = await models.Agency.register(user, canonicalAgency, 'bbfpd', { transaction });
+          });
+          assert(agency);
+          assert.deepStrictEqual(agency.canonicalAgencyId, canonicalAgency.id);
+          assert.deepStrictEqual(agency.stateId, '06');
+          assert.deepStrictEqual(agency.stateUniqueId, 'S66-50146');
+          assert.deepStrictEqual(agency.number, 'S66-50146');
+          assert.deepStrictEqual(agency.subdomain, 'bbfpd');
+          assert.deepStrictEqual(agency.createdById, user.id);
+          assert.deepStrictEqual(agency.updatedById, user.id);
+          assert.deepStrictEqual(agency.createdById, user.id);
+          assert.deepStrictEqual(agency.updatedById, user.id);
+          assert.deepStrictEqual(agency.nemsisVersion, '3.5.0.211008CP3');
+          assert.deepStrictEqual(agency.stateDataSetId, '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae');
+          assert.deepStrictEqual(agency.data, {
+            'dAgency.01': { _text: 'S66-50146' },
+            'dAgency.02': { _text: 'S66-50146' },
+            'dAgency.03': { _text: 'Bodega Bay Fire Protection District' },
+            'dAgency.04': { _text: '06' },
+          });
+
+          const version = await agency.getVersion();
+          assert(version);
+          assert.deepStrictEqual(version.isDraft, false);
+          assert.deepStrictEqual(version.nemsisVersion, '3.5.0.211008CP3');
+          assert.deepStrictEqual(version.stateDataSetId, '45b8b4d4-0fad-438a-b1b8-fa1425c6a5ae');
+          assert.deepStrictEqual(version.emsSchematronIds, ['dabc90e5-b8fa-4dac-bcfd-be659ba46b54']);
+
+          const employment = await models.Employment.scope('finalOrNew').findOne({
+            where: { createdByAgencyId: agency.id, userId: user.id },
+          });
+          assert(employment);
+          assert(employment.isOwner);
+          assert(employment.isActive);
+        });
+      });
+
+      describe('.importConfiguration()', () => {
+        it('imports a Configuration from the NEMSIS State Data Set', async () => {
+          const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+          const user = await agency.getCreatedBy();
+          const configuration = await agency.importConfiguration(user);
+          assert.deepStrictEqual(configuration.isDraft, true);
+          assert.deepStrictEqual(configuration.isValid, false);
+          assert.deepStrictEqual(configuration.data?.['dConfiguration.ProcedureGroup']?.length, 12);
+          assert.deepStrictEqual(configuration.data?.['dConfiguration.MedicationGroup']?.length, 12);
+          assert.deepStrictEqual(configuration.data?.['dConfiguration.10']?.length, 112);
+          assert.deepStrictEqual(
+            configuration.validationErrors?.errors?.[0]?.path,
+            "$['dConfiguration.ConfigurationGroup']['dConfiguration.13']"
+          );
+          assert.deepStrictEqual(
+            configuration.validationErrors?.errors?.[1]?.path,
+            "$['dConfiguration.ConfigurationGroup']['dConfiguration.16']"
+          );
+        });
+      });
+
+      describe('.importDEMCustomConfigurations()', () => {
+        it('imports DEM Custom Configurations from the NEMSIS State Data Set', async () => {
+          const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+          const user = await agency.getCreatedBy();
+          const customConfigurations = await agency.importDEMCustomConfigurations(user);
+          assert.deepStrictEqual(customConfigurations.length, 2);
+          assert.deepStrictEqual(customConfigurations[0].customElementId, 'dAgency.11');
+          assert.deepStrictEqual(customConfigurations[1].customElementId, 'dAgency.13');
         });
       });
     });

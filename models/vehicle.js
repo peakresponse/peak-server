@@ -1,16 +1,28 @@
-const { Op } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Vehicle extends Base {
+    static get xsdPath() {
+      return 'dVehicle_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dVehicle';
+    }
+
+    static get groupTag() {
+      return 'dVehicle.VehicleGroup';
+    }
+
     static associate(models) {
       Vehicle.belongsTo(Vehicle, { as: 'draftParent' });
       Vehicle.hasOne(Vehicle, { as: 'draft', foreignKey: 'draftParentId' });
       Vehicle.belongsTo(models.User, { as: 'updatedBy' });
       Vehicle.belongsTo(models.User, { as: 'createdBy' });
       Vehicle.belongsTo(models.Agency, { as: 'createdByAgency' });
+      Vehicle.belongsTo(models.Version, { as: 'version' });
     }
   }
 
@@ -27,22 +39,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       callSign: {
         type: DataTypes.STRING,
-        field: 'call_sign',
       },
       type: {
         type: DataTypes.STRING,
       },
-      data: DataTypes.JSONB,
+      data: {
+        type: DataTypes.JSONB,
+      },
       isValid: {
         type: DataTypes.BOOLEAN,
-        field: 'is_valid',
       },
       validationErrors: {
         type: DataTypes.JSONB,
       },
       archivedAt: {
         type: DataTypes.DATE,
-        field: 'archived_at',
       },
     },
     {
@@ -53,23 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Vehicle.addScope('finalOrNew', {
-    where: {
-      [Op.or]: {
-        isDraft: false,
-        [Op.and]: {
-          isDraft: true,
-          draftParentId: null,
-        },
-      },
-    },
-  });
-
-  Vehicle.addScope('final', {
-    where: {
-      isDraft: false,
-    },
-  });
+  Vehicle.addDraftScopes();
 
   Vehicle.beforeValidate(async (record, options) => {
     record.syncNemsisId(options);
@@ -77,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('vin', ['dVehicle.02'], options);
     record.syncFieldAndNemsisValue('callSign', ['dVehicle.03'], options);
     record.syncFieldAndNemsisValue('type', ['dVehicle.04'], options);
-    await record.validateNemsisData('dVehicle_v3.xsd', 'dVehicle', 'dVehicle.VehicleGroup', options);
+    await record.xsdValidate(options);
   });
 
   sequelizePaginate.paginate(Vehicle);

@@ -91,7 +91,11 @@
           <shared-text-field id="medicationAllergies" label="Medication Allergies" [source]="report.history"></shared-text-field>
         </div>
         <div class="mb-3">
-          <shared-text-field id="environmentalFoodAllergies" label="Environmental/Food Allergies" [source]="report.history"></shared-text-field>
+          <shared-text-field
+            id="environmentalFoodAllergies"
+            label="Environmental/Food Allergies"
+            [source]="report.history"
+          ></shared-text-field>
         </div>
       </div>
     </div>
@@ -112,7 +116,7 @@
               <shared-text-field id="bpSystolic" label="BP Systolic" [source]="vital"></shared-text-field>
             </div>
             <div class="col-6">
-              <shared-text-field id="bpDiastolic" label="Diastolic" [source]="vital"></shared-text-field>  
+              <shared-text-field id="bpDiastolic" label="Diastolic" [source]="vital"></shared-text-field>
             </div>
           </div>
         </div>
@@ -182,8 +186,13 @@
         <h4>Recordings</h4>
       </div>
       <div *ngFor="let file of report.files; let i = index" class="col-6">
-        <shared-recording-field [title]="recordingTitle(i)" [fileUrl]="file.fileUrl" [timestamp]="file.createdAt" [duration]="file.metadata?.duration">
-          {{report.predictionsFor(file.canonicalId)?.text}}
+        <shared-recording-field
+          [title]="recordingTitle(i)"
+          [fileUrl]="file.fileUrl"
+          [timestamp]="file.createdAt"
+          [duration]="file.metadata?.duration"
+        >
+          {{ report.predictionsFor(file.canonicalId)?.text }}
         </shared-recording-field>
       </div>
     </div>

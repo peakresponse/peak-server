@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const sequelizePaginate = require('sequelize-paginate');
 
-const nemsis = require('../lib/nemsis');
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -216,12 +215,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Scene',
       tableName: 'scenes',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationErrors = await nemsis.validateSchema('eScene_v3.xsd', 'eScene', null, this.data);
-          this.isValid = this.validationErrors === null;
-        },
-      },
     }
   );
 
@@ -246,6 +239,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Scene.addScope('latest', {
     include: [{ model: Scene, as: 'versions', where: { id: null }, required: false }],
+  });
+
+  Scene.beforeSave(async (record, options) => {
+    await record.validateNemsisData('eScene_v3.xsd', 'eScene', null, options);
   });
 
   sequelizePaginate.paginate(Scene);

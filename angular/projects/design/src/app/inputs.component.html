@@ -4,17 +4,29 @@
   <form>
     <div class="mb-3">
       <shared-array-field id="array" label="Array Field" [source]="source" [target]="source">
-        <ng-template #item let-item="item">{{item}}</ng-template>
+        <ng-template #item let-item="item">{{ item }}</ng-template>
         <ng-template #form let-addItem="addItem">
-          <shared-search-field #arraySearch id="array-search" placeholder="Search" [searchHandler]="search" [isSelectOnly]="true" (valueChange)="$event && addItem($event); $event && arraySearch.onClear()"></shared-search-field>
+          <shared-search-field
+            #arraySearch
+            id="array-search"
+            placeholder="Search"
+            [searchHandler]="search"
+            [isSelectOnly]="true"
+            (valueChange)="$event && addItem($event); $event && arraySearch.onClear()"
+          ></shared-search-field>
         </ng-template>
       </shared-array-field>
     </div>
     <div class="mb-3">
       <shared-array-field id="empty-array" label="Empty Array Field" [source]="source" [target]="source">
-        <ng-template #item let-item="item">{{item}}</ng-template>
+        <ng-template #item let-item="item">{{ item }}</ng-template>
         <ng-template #form let-addItem="addItem">
-          <shared-select-field #arrayDropdown id="array-dropdown" (valueChange)="$event && addItem($event); $event && arrayDropdown.onClear()" [target]="{}">
+          <shared-select-field
+            #arrayDropdown
+            id="array-dropdown"
+            (valueChange)="$event && addItem($event); $event && arrayDropdown.onClear()"
+            [target]="{}"
+          >
             <option value="entry-1">Entry 1</option>
             <option value="entry-2">Entry 2</option>
             <option value="entry-3">Entry 3</option>
@@ -32,19 +44,45 @@
     <shared-text-field id="empty" label="Empty Field" placeholder="Sample Input" [source]="source" [target]="source"></shared-text-field>
   </div>
   <div class="mb-3">
-    <shared-text-field id="multiline" label="Multiline Field" placeholder="Sample Input" [rows]="4" [source]="source" [target]="source"></shared-text-field>
+    <shared-text-field
+      id="multiline"
+      label="Multiline Field"
+      placeholder="Sample Input"
+      [rows]="4"
+      [source]="source"
+      [target]="source"
+    ></shared-text-field>
   </div>
   <div class="mb-3">
-    <shared-text-field id="disabled" label="Disabled Field" [isDisabled]="true" placeholder="Sample Input" [source]="source"></shared-text-field>
+    <shared-text-field
+      id="disabled"
+      label="Disabled Field"
+      [isDisabled]="true"
+      placeholder="Sample Input"
+      [source]="source"
+    ></shared-text-field>
   </div>
   <div class="mb-3">
     <shared-text-field id="readonly" label="Readonly Field" placeholder="Sample Input" [source]="source"></shared-text-field>
   </div>
   <div class="mb-3">
-    <shared-text-field id="invalid" label="Invalid Field" [error]="error" placeholder="Sample Input" [source]="source" [target]="source"></shared-text-field>
+    <shared-text-field
+      id="invalid"
+      label="Invalid Field"
+      [error]="error"
+      placeholder="Sample Input"
+      [source]="source"
+      [target]="source"
+    ></shared-text-field>
   </div>
   <div class="mb-3">
-    <shared-text-field id="plaintext" label="Plaintext Field" placeholder="Sample Input" [isPlaintext]="true" [source]="source"></shared-text-field>
+    <shared-text-field
+      id="plaintext"
+      label="Plaintext Field"
+      placeholder="Sample Input"
+      [isPlaintext]="true"
+      [source]="source"
+    ></shared-text-field>
   </div>
 </section>
 <section>
@@ -52,7 +90,14 @@
   <div class="mb-3">
     <shared-checkbox id="checkbox" label="Checkbox" [inline]="true" [source]="source" [target]="source"></shared-checkbox>
     <shared-checkbox id="readonlyCheckbox" label="Readonly Checkbox" [inline]="true" [source]="source"></shared-checkbox>
-    <shared-checkbox id="disabledCheckbox" label="Disabled Checkbox" [inline]="true" [isDisabled]="true" [source]="source" [target]="source"></shared-checkbox>
+    <shared-checkbox
+      id="disabledCheckbox"
+      label="Disabled Checkbox"
+      [inline]="true"
+      [isDisabled]="true"
+      [source]="source"
+      [target]="source"
+    ></shared-checkbox>
   </div>
 </section>
 <section>
@@ -64,8 +109,14 @@
 <section>
   <h2>Recording Field</h2>
   <div class="mb-3">
-    <shared-recording-field title="Recording 1" [duration]="78" fileUrl="https://download.samplelib.com/mp3/sample-15s.mp3" timestamp="2022-04-06T23:38:04+0000">
-      Patient's name is Michael Fantacico age 45 respiratory rate 26 pulse 130 capillary refill to blood pressure 110/80 youngish man walking around with torn clothes in a small scrape on the knee seems slightly concussed but is able to communicate, priority delayed.
+    <shared-recording-field
+      title="Recording 1"
+      [duration]="78"
+      fileUrl="https://download.samplelib.com/mp3/sample-15s.mp3"
+      timestamp="2022-04-06T23:38:04+0000"
+    >
+      Patient's name is Michael Fantacico age 45 respiratory rate 26 pulse 130 capillary refill to blood pressure 110/80 youngish man
+      walking around with torn clothes in a small scrape on the knee seems slightly concussed but is able to communicate, priority delayed.
     </shared-recording-field>
   </div>
 </section>
@@ -102,6 +153,12 @@
 <section>
   <h2>Search</h2>
   <div class="mb-3">
-    <shared-search-field id="search" placeholder="Search" [searchHandler]="search" [source]="source" [target]="source"></shared-search-field>
+    <shared-search-field
+      id="search"
+      placeholder="Search"
+      [searchHandler]="search"
+      [source]="source"
+      [target]="source"
+    ></shared-search-field>
   </div>
 </section>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.nemsis.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../eProcedures_v3.xsd"/>
+  <xs:element name="eProcedures" type="eProcedures" id="eProceduresSection">
+    <xs:annotation>
+      <xs:documentation>Intervention Procedures Information</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>

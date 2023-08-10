@@ -1,31 +1,56 @@
 const sequelizePaginate = require('sequelize-paginate');
-const nemsis = require('../lib/nemsis');
+
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Device extends Base {
+    static get xsdPath() {
+      return 'dDevice_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dDevice';
+    }
+
+    static get groupTag() {
+      return 'dDevice.DeviceGroup';
+    }
+
     static associate(models) {
+      Device.belongsTo(Device, { as: 'draftParent' });
+      Device.hasOne(Device, { as: 'draft', foreignKey: 'draftParentId' });
       Device.belongsTo(models.User, { as: 'updatedBy' });
       Device.belongsTo(models.User, { as: 'createdBy' });
       Device.belongsTo(models.Agency, { as: 'createdByAgency' });
+      Device.belongsTo(models.Version, { as: 'version' });
     }
   }
 
   Device.init(
     {
+      isDraft: {
+        type: DataTypes.BOOLEAN,
+      },
       serialNumber: {
         type: DataTypes.STRING,
-        field: 'serial_number',
       },
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+      },
       primaryType: {
         type: DataTypes.STRING,
-        field: 'primary_type',
       },
-      data: DataTypes.JSONB,
+      data: {
+        type: DataTypes.JSONB,
+      },
       isValid: {
         type: DataTypes.BOOLEAN,
-        field: 'is_valid',
+      },
+      validationErrors: {
+        type: DataTypes.JSONB,
+      },
+      archivedAt: {
+        type: DataTypes.DATE,
       },
     },
     {
@@ -33,23 +58,17 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Device',
       tableName: 'devices',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationError = await nemsis.validateSchema('dDevice_v3.xsd', 'dDevice', 'dDevice.DeviceGroup', this.data);
-          this.isValid = this.validationError === null;
-          if (this.validationError) throw this.validationError;
-        },
-      },
     }
   );
 
-  Device.beforeSave(async (record) => {
-    if (!record.id) {
-      record.setDataValue('id', record.data?._attributes?.UUID);
-    }
-    record.setDataValue('serialNumber', record.data?.['dDevice.01']?._text);
-    record.setDataValue('name', record.data?.['dDevice.02']?._text);
-    record.setDataValue('primaryType', Base.firstValueOf(record.data?.['dDevice.03']));
+  Device.addDraftScopes();
+
+  Device.beforeSave(async (record, options) => {
+    record.syncNemsisId(options);
+    record.syncFieldAndNemsisValue('serialNumber', ['dDevice.01'], options);
+    record.syncFieldAndNemsisValue('name', ['dDevice.02'], options);
+    record.syncFieldAndNemsisValue('primaryType', ['dDevice.03'], options);
+    await record.xsdValidate(options);
   });
 
   sequelizePaginate.paginate(Device);

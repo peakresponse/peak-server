@@ -4,7 +4,7 @@ import { DirectUpload } from 'activestorage';
 import { ApiService } from '../services/api.service';
 import { UserService } from '../services/user.service';
 
-class Uploader {
+export class Uploader {
   file: File;
   progress = '0%';
   error: any = null;

@@ -22,7 +22,10 @@ describe('/webhooks/sffd', () => {
       'cities',
       'psaps',
       'dispatchers',
+      'nemsisStateDataSets',
+      'nemsisSchematrons',
       'agencies',
+      'versions',
       'employments',
     ]);
     testSession = session(app);

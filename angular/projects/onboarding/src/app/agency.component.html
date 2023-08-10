@@ -1,4 +1,10 @@
-<shared-wizard [isLoading]="isLoading" [isNextEnabled]="data.agency != null && data.agency != ''" (back)="onBack()" (cancel)="onCancel()" (next)="onNext()">
+<shared-wizard
+  [isLoading]="isLoading"
+  [isNextEnabled]="data.agency != null && data.agency != ''"
+  (back)="onBack()"
+  (cancel)="onCancel()"
+  (next)="onNext()"
+>
   <ng-container class="wizard__header">
     <h1 i18n>Which agency are you signing up?</h1>
   </ng-container>
@@ -6,8 +12,18 @@
     <div class="row">
       <div class="col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
         <div class="mb-3">
-          <ng-template #rt let-r="result" let-t="term">{{r.name}}</ng-template>
-          <shared-search-field #agencyEl [searchHandler]="searchHandler" [resultTemplate]="rt" [inputFormatter]="formatter" id="agency" label="Agency" placeholder="Search for Agency" [source]="data" [target]="data"></shared-search-field>
+          <ng-template #rt let-r="result" let-t="term">{{ r.name }}</ng-template>
+          <shared-search-field
+            #agencyEl
+            [searchHandler]="searchHandler"
+            [resultTemplate]="rt"
+            [inputFormatter]="formatter"
+            id="agency"
+            label="Agency"
+            placeholder="Search for Agency"
+            [source]="data"
+            [target]="data"
+          ></shared-search-field>
         </div>
       </div>
     </div>

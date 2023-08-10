@@ -4,7 +4,7 @@
     "ignoreSet": true,
     "data": {
       "id": "1a9b0a41-f194-419c-99f5-0ce5757a9026",
-      "agencyId": "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8",
+      "createdByAgencyId": "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8",
       "userId": "9eb5be23-c098-495c-a758-ce1def3ff541",
       "hiredOn": "2020-10-06",
       "startedOn": "2020-10-06",
@@ -37,7 +37,7 @@
     "ignoreSet": true,
     "data": {
       "id": "8abdb57e-cebf-455c-8148-2ef16d383d55",
-      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "hiredOn": "2020-04-06",
       "startedOn": "2020-04-06",
@@ -70,7 +70,7 @@
     "ignoreSet": true,
     "data": {
       "id": "7939c808-820e-42cc-8331-8e31ff951541",
-      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "8e6753e2-3063-48e1-af22-cea57bd06514",
       "hiredOn": "2020-04-06",
       "startedOn": "2020-04-06",
@@ -102,7 +102,7 @@
     "ignoreSet": true,
     "data": {
       "id": "5e5f2383-b25b-4cee-91a7-792ec9ca2848",
-      "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "createdByAgencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
       "userId": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
       "hiredOn": "2020-04-06",
       "startedOn": "2020-04-06",
@@ -135,7 +135,7 @@
     "ignoreSet": true,
     "data": {
       "id": "7cbb1b90-ca89-4892-9a57-0e3c3447aca1",
-      "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "createdByAgencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
       "userId": "6f4a1b45-b465-4ec9-8127-292d87d7952b",
       "hiredOn": "2020-04-06",
       "startedOn": "2020-04-06",
@@ -168,7 +168,7 @@
     "ignoreSet": true,
     "data": {
       "id": "0544b426-2969-4f98-a458-e090cd3487e2",
-      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "d12d1c45-baa7-4dfa-be2d-e08aed80d3a3",
       "isPending": true,
       "firstName": "Pending",
@@ -198,7 +198,7 @@
     "ignoreSet": true,
     "data": {
       "id": "ab7f0729-0506-4f80-931d-5456a29cacef",
-      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "b6bc38fd-1087-440b-b27b-3782f148bfe6",
       "roles": [],
       "firstName": "Refused",
@@ -229,7 +229,7 @@
     "ignoreSet": true,
     "data": {
       "id": "b0c2b79e-5905-417f-a790-ba77c1134d92",
-      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "99b0ce13-138a-40db-9f05-da6475b8b4eb",
       "endedOn": "2020-04-07",
       "roles": ["PERSONNEL"],
@@ -260,7 +260,7 @@
     "saveOptions": { "validate": false, "hooks": false },
     "data": {
       "id": "50c06caf-9706-4305-bc3a-5462a7d20b6f",
-      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "invitationCode": "eb9f6468-df4e-45d2-801f-c8e45d2fedea",
       "invitationAt": "2020-04-06T21:22:10.158Z",
       "firstName": "Invited",

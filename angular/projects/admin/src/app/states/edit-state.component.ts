@@ -1,67 +1,82 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
 
-import { FormComponent, ApiService, NavigationService } from 'shared';
+import { ApiService, NavigationService, SchemaService } from 'shared';
 
 @Component({
   templateUrl: './edit-state.component.html',
 })
 export class EditStateComponent {
   id: string = '';
-  status: string = '';
-  isConfiguring = false;
-  isError = false;
-  @ViewChild('form') form?: FormComponent;
+  state: any;
+  states?: any[];
 
-  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
+  agencyStats: any;
+  cityStats: any;
+  countyStats: any;
+  facilityStats: any;
+  facilityTypes: any;
+  psapStats: any;
+
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    public route: ActivatedRoute,
+    private schema: SchemaService
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.poll();
+    this.state = this.route.snapshot.data['state'];
+    this.refreshAgencyStats();
+    this.refreshCityStats();
+    this.refreshCountyStats();
+    this.refreshFacilityStats();
+    this.refreshPsapStats();
+    this.api.states.index().subscribe((response: HttpResponse<any>) => {
+      this.states = response.body;
+    });
+    this.schema.get('/nemsis/xsd/sFacility_v3.json').subscribe(() => {
+      this.facilityTypes = this.schema.getEnum('TypeOfFacility') ?? {};
+    });
+  }
+
+  stateById(id: string): any {
+    return this.states?.find((s) => s.id == id);
   }
 
   onDelete() {
     this.navigation.backTo(`/states`);
   }
 
-  onConfigure() {
-    this.isConfiguring = true;
-    this.isError = false;
-    this.api.states.configure(this.id).subscribe(() => {
-      this.poll();
+  refreshAgencyStats() {
+    this.api.states.getAgencies(this.id).subscribe((response: HttpResponse<any>) => (this.agencyStats = response.body));
+  }
+
+  refreshCityStats() {
+    this.api.states.getCities(this.id).subscribe((response: HttpResponse<any>) => {
+      this.cityStats = response.body;
+      this.cityStats.total = this.cityStats.reduce((sum: number, stat: any) => (sum += stat.count), 0);
     });
   }
 
-  poll() {
-    setTimeout(() => {
-      this.api.states
-        .get(this.id)
-        .pipe(
-          catchError((res) => {
-            this.status = res.headers.get('X-Status');
-            this.isConfiguring = false;
-            this.isError = true;
-            return EMPTY;
-          })
-        )
-        .subscribe((res) => {
-          this.status = res.headers.get('X-Status');
-          const statusCode = res.headers.get('X-Status-Code');
-          if (statusCode === '202') {
-            this.isConfiguring = true;
-            this.isError = false;
-            this.poll();
-          } else {
-            this.isConfiguring = false;
-            if (statusCode && statusCode !== '200') {
-              this.isError = true;
-            } else {
-              this.form?.refresh();
-            }
-          }
-        });
-    }, 1000);
+  refreshCountyStats() {
+    this.api.states.getCounties(this.id).subscribe((response: HttpResponse<any>) => (this.countyStats = response.body));
+  }
+
+  refreshFacilityStats() {
+    this.api.states.getFacilities(this.id).subscribe((response: HttpResponse<any>) => {
+      this.facilityStats = response.body;
+      this.facilityStats.total = this.facilityStats.reduce((sum: number, stat: any) => (sum += stat.count), 0);
+    });
+  }
+
+  refreshPsapStats() {
+    this.api.states.getPsaps(this.id).subscribe((response: HttpResponse<any>) => (this.psapStats = response.body));
+  }
+
+  onSignupsEnabledChange(value: boolean) {
+    this.api.states.update(this.id, { isConfigured: value }).subscribe();
   }
 }

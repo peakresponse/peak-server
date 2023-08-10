@@ -1,0 +1,14 @@
+<router-outlet></router-outlet>
+<shared-xsd-list
+  #list
+  name="Locations"
+  dataSet="DEM"
+  [class.d-none]="route.firstChild"
+  [keyPath]="['demographics', 'locations']"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dLocation_v3.xsd"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dLocation_v3.xsd"
+  [schemaColumns]="sectionColumns"
+>
+</shared-xsd-list>

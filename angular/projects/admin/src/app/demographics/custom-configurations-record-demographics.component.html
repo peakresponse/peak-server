@@ -1,0 +1,15 @@
+<shared-xsd-record
+  name="Custom Configuration"
+  dataSet="DEM"
+  [keyPath]="['demographics', 'customConfigurations']"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dCustom_v3.xsd"
+  schemaRootElementName="dCustomConfiguration"
+  [customConfiguration]="agency.version?.demCustomConfiguration"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dCustom_v3.xsd"
+  draftSchemaRootElementName="dCustomConfiguration"
+  [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
+  [defaultValues]="defaultValues"
+>
+</shared-xsd-record>

@@ -1,13 +1,26 @@
 <header class="command-header">
   <div class="command-header__container">
-    <div *ngIf="user" (mouseenter)="showDropdown = true" (mouseleave)="showDropdown = false" class="order-first d-flex align-items-center position-relative">
+    <div
+      *ngIf="user"
+      (mouseenter)="showDropdown = true"
+      (mouseleave)="showDropdown = false"
+      class="order-first d-flex align-items-center position-relative"
+    >
       <ul class="command-header__dropdown" [class.command-header__dropdown--active]="template && showDropdown">
         <ng-template [ngTemplateOutlet]="template"></ng-template>
       </ul>
       <shared-picture class="command-header__picture me-2" [pictureUrl]="user?.iconUrl"></shared-picture>
-      <h4 class="command-header__name"><span *ngIf="user.currentAssignment?.vehicleId">{{user.currentAssignment?.vehicle?.number}}: </span><span class="d-none d-lg-inline">{{user.position}} </span>{{user.firstName}} {{user.lastName}}</h4>
+      <h4 class="command-header__name">
+        <span *ngIf="user.currentAssignment?.vehicleId">{{ user.currentAssignment?.vehicle?.number }}: </span
+        ><span class="d-none d-lg-inline">{{ user.position }} </span>{{ user.firstName }} {{ user.lastName }}
+      </h4>
     </div>
-    <shared-search-field class="order-last" *ngIf="showSearch" placeholder="Search" (debouncedValueChange)="searchValueChange.emit($event)"></shared-search-field>
+    <shared-search-field
+      class="order-last"
+      *ngIf="showSearch"
+      placeholder="Search"
+      (debouncedValueChange)="searchValueChange.emit($event)"
+    ></shared-search-field>
     <ng-content></ng-content>
   </div>
 </header>

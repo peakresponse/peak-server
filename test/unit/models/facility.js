@@ -1,10 +1,8 @@
 const assert = require('assert');
 const nock = require('nock');
-const path = require('path');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
-const nemsis = require('../../../lib/nemsis');
 
 describe('models', () => {
   describe('Facility', () => {
@@ -75,42 +73,89 @@ describe('models', () => {
     });
 
     describe('save()', () => {
+      beforeEach(async () => {
+        await helpers.loadFixtures([
+          'cities',
+          'counties',
+          'states',
+          'users',
+          'psaps',
+          'nemsisStateDataSets',
+          'nemsisSchematrons',
+          'agencies',
+          'versions',
+        ]);
+      });
+
       it('should extract from NEMSIS data into fields', async () => {
-        await helpers.loadFixtures(['cities', 'counties', 'states', 'users']);
-        const dataSet = await nemsis.parseStateDataSet(
-          path.resolve(__dirname, '../../mocks/nemsis/washington/Resources/WA_StateDataSet.xml')
-        );
-        const { sFacilityGroup } = dataSet.json.StateDataSet.sFacility;
-        const sFacility = sFacilityGroup['sFacility.FacilityGroup'][0];
-        const facility = models.Facility.build();
-        facility.data = {
-          'sFacility.01': sFacilityGroup['sFacility.01'],
-          'sFacility.FacilityGroup': {
-            ...sFacility,
-            'sFacility.05': { _text: 'Test NPI' },
-            'sFacility.06': { _text: 'Test Unit' },
+        const facility = models.Facility.build({
+          data: {
+            'sFacility.01': { _text: '1701003' },
+            'sFacility.FacilityGroup': {
+              'sFacility.02': { _text: 'Rai Care Center Laguna Canyon - Irvine' },
+              'sFacility.03': { _text: '65037' },
+              'sFacility.04': { _text: 'Test Designation' },
+              'sFacility.05': { _text: 'Test NPI' },
+              'sFacility.06': { _text: 'Test Unit' },
+              'sFacility.07': { _text: '16255 Laguna Canyon Rd' },
+              'sFacility.08': { _text: '1660804' },
+              'sFacility.09': { _text: '06' },
+              'sFacility.10': { _text: '92618' },
+              'sFacility.11': { _text: '06059' },
+              'sFacility.12': { _text: 'US' },
+              'sFacility.13': { _text: '33.6639159,-117.7622126' },
+              'sFacility.15': { _text: '213-555-1234' },
+            },
           },
-        };
+        });
         await facility.save();
 
-        assert.deepStrictEqual(facility.type, '1701005');
-        assert.deepStrictEqual(facility.name, 'Astria Regional Medical Center');
-        assert.deepStrictEqual(facility.locationCode, 'HAC.FS.00000102');
-        assert.deepStrictEqual(facility.primaryDesignation, '9908007');
+        assert.deepStrictEqual(facility.type, '1701003');
+        assert.deepStrictEqual(facility.name, 'Rai Care Center Laguna Canyon - Irvine');
+        assert.deepStrictEqual(facility.locationCode, '65037');
+        assert.deepStrictEqual(facility.primaryDesignation, 'Test Designation');
         assert.deepStrictEqual(facility.primaryNationalProviderId, 'Test NPI');
         assert.deepStrictEqual(facility.unit, 'Test Unit');
-        assert.deepStrictEqual(facility.address, '110 S 9th Ave');
-        assert.deepStrictEqual(facility.cityId, '2412314');
-        assert.deepStrictEqual(facility.cityName, 'City of Yakima');
-        assert.deepStrictEqual(facility.stateId, '53');
-        assert.deepStrictEqual(facility.zip, '98902');
-        assert.deepStrictEqual(facility.countyId, '53077');
-        assert.deepStrictEqual(facility.countyName, 'Yakima County');
+        assert.deepStrictEqual(facility.address, '16255 Laguna Canyon Rd');
+        assert.deepStrictEqual(facility.cityId, '1660804');
+        assert.deepStrictEqual(facility.cityName, 'Irvine');
+        assert.deepStrictEqual(facility.stateId, '06');
+        assert.deepStrictEqual(facility.zip, '92618');
+        assert.deepStrictEqual(facility.countyId, '06059');
+        assert.deepStrictEqual(facility.countyName, 'Orange County');
         assert.deepStrictEqual(facility.country, 'US');
-        assert.deepStrictEqual(facility.geog?.coordinates, [-120.52111, 46.59662]);
-        assert.deepStrictEqual(facility.lat, '46.59662');
-        assert.deepStrictEqual(facility.lng, '-120.52111');
-        assert.deepStrictEqual(facility.primaryPhone, '509-575-5000');
+        assert.deepStrictEqual(facility.geog?.coordinates, [-117.7622126, 33.6639159]);
+        assert.deepStrictEqual(facility.lat, '33.6639159');
+        assert.deepStrictEqual(facility.lng, '-117.7622126');
+        assert.deepStrictEqual(facility.primaryPhone, '213-555-1234');
+      });
+
+      it('should validate NEMSIS data when an agency DEM record', async () => {
+        const facility = await models.Facility.create({
+          versionId: '645b0907-be8b-40c0-8976-a229f0a9ecd5',
+          data: {
+            'dFacility.01': { _text: '1701003' },
+            'dFacility.FacilityGroup': {
+              'dFacility.02': { _text: 'Rai Care Center Laguna Canyon - Irvine' },
+              'dFacility.03': { _text: '65037' },
+              'dFacility.04': { _text: '9908007' },
+              'dFacility.05': { _text: '0000000000' },
+              'dFacility.06': { _text: 'Test Unit' },
+              'dFacility.07': { _text: '16255 Laguna Canyon Rd' },
+              'dFacility.08': { _text: '1660804' },
+              'dFacility.09': { _text: '06' },
+              'dFacility.10': { _text: '92618' },
+              'dFacility.11': { _text: '06059' },
+              'dFacility.12': { _text: 'US' },
+              'dFacility.13': { _text: '33.663916,-117.762213' },
+              'dFacility.15': { _text: '213-555-1234' },
+            },
+          },
+          updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+          createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+          createdByAgencyId: '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8',
+        });
+        assert.deepStrictEqual(facility.isValid, true);
       });
     });
   });

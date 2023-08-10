@@ -11,7 +11,18 @@ describe('/api/agencies', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'users', 'employments']);
+    await helpers.loadFixtures([
+      'states',
+      'counties',
+      'cities',
+      'psaps',
+      'users',
+      'nemsisStateDataSets',
+      'nemsisSchematrons',
+      'agencies',
+      'versions',
+      'employments',
+    ]);
     testSession = session(app);
   });
 
@@ -211,8 +222,8 @@ describe('/api/agencies', () => {
         },
       });
 
-      const employment = await models.Employment.findOne({
-        where: { agencyId: agency.id, userId: user.id },
+      const employment = await models.Employment.scope('finalOrNew').findOne({
+        where: { createdByAgencyId: agency.id, userId: user.id },
       });
       assert(employment);
       assert(employment.isOwner);

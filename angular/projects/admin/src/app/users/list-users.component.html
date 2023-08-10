@@ -19,9 +19,9 @@
       <shared-list type="users" [search]="search">
         <ng-template let-record="record">
           <tr [routerLink]="['/users', record.id]">
-            <td>{{record.lastName}}</td>
-            <td>{{record.firstName}}</td>
-            <td>{{record.email}}</td>
+            <td>{{ record.lastName }}</td>
+            <td>{{ record.firstName }}</td>
+            <td>{{ record.email }}</td>
           </tr>
         </ng-template>
       </shared-list>

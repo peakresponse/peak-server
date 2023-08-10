@@ -9,6 +9,7 @@ export * from './lib/services/notification.service';
 export * from './lib/services/schema.service';
 export * from './lib/services/user.service';
 
+export * from './lib/components/dropzone.component';
 export * from './lib/components/error.component';
 export * from './lib/components/form.component';
 export * from './lib/components/list.component';
@@ -34,13 +35,17 @@ export * from './lib/components/fields/search-field.component';
 export * from './lib/components/fields/select-field.component';
 export * from './lib/components/fields/text-field.component';
 
-export * from './lib/components/fields/xsd/xsd-base.component';
-export * from './lib/components/fields/xsd/xsd-element-wrapper.component';
-export * from './lib/components/fields/xsd/xsd-element.component';
-export * from './lib/components/fields/xsd/xsd-form-group.component';
-export * from './lib/components/fields/xsd/xsd-input.component';
-export * from './lib/components/fields/xsd/xsd-select-state.component';
-export * from './lib/components/fields/xsd/xsd-select.component';
+export * from './lib/components/xsd/xsd-base.component';
+export * from './lib/components/xsd/xsd-list.component';
+export * from './lib/components/xsd/xsd-record.component';
+
+export * from './lib/components/xsd/elements/xsd-element-base.component';
+export * from './lib/components/xsd/elements/xsd-element-wrapper.component';
+export * from './lib/components/xsd/elements/xsd-element.component';
+export * from './lib/components/xsd/elements/xsd-form-group.component';
+export * from './lib/components/xsd/elements/xsd-input.component';
+export * from './lib/components/xsd/elements/xsd-select-state.component';
+export * from './lib/components/xsd/elements/xsd-select.component';
 
 export * from './lib/components/headers/command-footer.component';
 export * from './lib/components/headers/command-header.component';
@@ -54,5 +59,6 @@ export * from './lib/pipes/duration.pipe';
 export * from './lib/pipes/error.pipe';
 export * from './lib/pipes/get.pipe';
 export * from './lib/pipes/inflection.pipe';
+export * from './lib/pipes/version.pipe';
 
 export * from './lib/shared.module';

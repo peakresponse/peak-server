@@ -1,0 +1,33 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">NEMSIS</h1>
+  </div>
+  <form>
+    <h4>National Repository</h4>
+    <div class="row mb-5">
+      <div class="col-lg-4">
+        <shared-array-field id="versions" label="Versions" [source]="nemsis" [isFocusable]="false" [showClearButton]="false">
+          <ng-template #header>
+            <i *ngIf="!isRefreshing && !isInstalling" (click)="onRefreshVersions()" class="fas fa-sync clickable"></i>
+            <shared-loader *ngIf="isRefreshing"></shared-loader>
+          </ng-template>
+          <ng-template #item let-version="item">
+            <div class="d-flex justify-content-between">
+              {{ version }}
+              <span *ngIf="nemsis.versionsInstalled.includes(version)">
+                <i class="fas fa-check-circle text-success"></i>
+              </span>
+              <span *ngIf="!nemsis.versionsInstalled.includes(version) && !isInstalling && !isRefreshing">
+                <i (click)="onInstallVersion(version)" class="far fa-circle clickable"></i>
+              </span>
+              <span *ngIf="isInstalling === version">
+                <shared-loader></shared-loader>
+              </span>
+            </div>
+          </ng-template>
+        </shared-array-field>
+      </div>
+    </div>
+  </form>
+</div>

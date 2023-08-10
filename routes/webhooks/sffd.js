@@ -1,7 +1,7 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
 const { DateTime } = require('luxon');
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const models = require('../../models');
 const { dispatchIncidentUpdate } = require('../../wss');
@@ -91,8 +91,8 @@ router.post('/cad', async (req, res) => {
         });
         if (incident.isNewRecord) {
           const newScene = {
-            id: uuid.v4(),
-            canonicalId: uuid.v4(),
+            id: uuidv4(),
+            canonicalId: uuidv4(),
             address1: ADDRESS.trim(),
           };
           if (
@@ -134,8 +134,8 @@ router.post('/cad', async (req, res) => {
             req.user,
             null,
             {
-              id: uuid.v4(),
-              canonicalId: uuid.v4(),
+              id: uuidv4(),
+              canonicalId: uuidv4(),
               incidentId: incidents[INC_NO].id,
               vehicleId: vehicles[UNIT].id,
               dispatchedAt: dispatchedAt.toISO(),

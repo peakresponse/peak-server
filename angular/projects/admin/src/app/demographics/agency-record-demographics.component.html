@@ -1,5 +1,13 @@
-<admin-schema-record name="Agency"
-                     [keyPath]="['demographics', 'agency']"
-                     schemaPath="/nemsis/xsd/dAgency_v3.json"
-                     [defaultValues]="defaultValues">
-</admin-schema-record>
+<shared-xsd-record
+  name="Agency"
+  dataSet="DEM"
+  [keyPath]="['demographics', 'agency']"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dAgency_v3.xsd"
+  [customConfiguration]="agency.version?.demCustomConfiguration"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dAgency_v3.xsd"
+  [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
+  [defaultValues]="defaultValues"
+>
+</shared-xsd-record>

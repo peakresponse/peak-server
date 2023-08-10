@@ -55,6 +55,10 @@ export class BaseSchemaComponent implements OnInit {
     return complexType?.['xs:sequence']?.['xs:element'];
   }
 
+  get isGrouped(): boolean {
+    return this.rootChildElements?.length == 1;
+  }
+
   get groupElementName(): string {
     return this.rootChildElements?.[0]?._attributes?.name;
   }

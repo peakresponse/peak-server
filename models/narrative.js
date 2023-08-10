@@ -1,5 +1,4 @@
 const { Base } = require('./base');
-const nemsis = require('../lib/nemsis');
 
 module.exports = (sequelize, DataTypes) => {
   class Narrative extends Base {
@@ -49,13 +48,12 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Narrative',
       tableName: 'narratives',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationErrors = await nemsis.validateSchema('eNarrative_v3.xsd', 'eNarrative', null, this.data);
-          this.isValid = this.validationErrors === null;
-        },
-      },
     }
   );
+
+  Narrative.beforeSave(async (record, options) => {
+    await record.validateNemsisData('eNarrative_v3.xsd', 'eNarrative', null, options);
+  });
+
   return Narrative;
 };

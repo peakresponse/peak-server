@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # wait for postgres to accept connections...
+sleep 1
 while !</dev/tcp/db/5432; do
   sleep 1
 done

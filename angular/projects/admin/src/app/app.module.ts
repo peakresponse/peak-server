@@ -13,6 +13,7 @@ import { ClientsModule } from './clients/clients.module';
 import { DemographicsModule } from './demographics/demographics.module';
 import { FacilitiesModule } from './facilities/facilities.module';
 import { ListsModule } from './lists/lists.module';
+import { NemsisModule } from './nemsis/nemsis.module';
 import { PsapsModule } from './psaps/psaps.module';
 import { StatesModule } from './states/states.module';
 import { UsersModule } from './users/users.module';
@@ -29,6 +30,7 @@ import { UsersModule } from './users/users.module';
     DemographicsModule,
     FacilitiesModule,
     ListsModule,
+    NemsisModule,
     PsapsModule,
     StatesModule,
     UsersModule,

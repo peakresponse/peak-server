@@ -16,23 +16,25 @@ router.get(
     const page = req.query.page || 1;
     const options = {
       page,
+      where: {},
       order: [['name', 'ASC']],
     };
     if (req.query.search && req.query.search !== '') {
-      options.where = options.where || {};
       options.where.name = { [Op.iLike]: `%${req.query.search.trim()}%` };
     }
     if (req.query.type && req.query.type !== '') {
-      options.where = options.where || {};
       options.where.type = req.query.type.trim();
+    }
+    if (req.query.stateId && req.query.stateId !== '') {
+      options.where.stateId = req.query.stateId.trim();
     }
     let docs;
     let pages;
     let total;
     if (req.query.lat && req.query.lng) {
-      ({ docs, pages, total } = await models.Facility.findNear(req.query.lat, req.query.lng, options));
+      ({ docs, pages, total } = await models.Facility.scope('canonical').findNear(req.query.lat, req.query.lng, options));
     } else {
-      ({ docs, pages, total } = await models.Facility.paginate(options));
+      ({ docs, pages, total } = await models.Facility.scope('canonical').paginate(options));
     }
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((d) => d.toJSON()));

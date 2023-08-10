@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AgencyService, UserService } from 'shared';
 
+import { StateResolver } from './state.resolver';
 import { EditStateComponent } from './edit-state.component';
 import { ListStatesComponent } from './list-states.component';
+import { NemsisStateComponent } from './nemsis-state.component';
 
 const appRoutes: Routes = [
   {
@@ -18,6 +20,15 @@ const appRoutes: Routes = [
       {
         path: ':id',
         component: EditStateComponent,
+        resolve: {
+          state: StateResolver,
+        },
+        children: [
+          {
+            path: 'nemsis',
+            component: NemsisStateComponent,
+          },
+        ],
       },
     ],
   },

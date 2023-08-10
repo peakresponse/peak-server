@@ -34,6 +34,7 @@ td .form-check {
     padding-left: $grid-gutter-width / 2;
     padding-right: $grid-gutter-width / 2;
     border-bottom: 0.125rem solid $base-300;
+    vertical-align: middle;
 
     &:first-child {
       padding-left: $grid-gutter-width;

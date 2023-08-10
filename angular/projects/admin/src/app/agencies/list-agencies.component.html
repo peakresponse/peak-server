@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <span class="d-flex">
       <h1 class="h2">Agencies</h1>
-      <a routerLink="/agencies/new" class="btn btn--sm btn--secondary ms-3">New Agency</a>  
+      <a routerLink="/agencies/new" class="btn btn--sm btn--secondary ms-3">New Agency</a>
     </span>
     <shared-search-field placeholder="Search" (debouncedValueChange)="search = $event"></shared-search-field>
   </div>
@@ -24,10 +24,10 @@
             <td>
               <shared-checkbox [id]="record.id" name="claimedAgency" [source]="record"></shared-checkbox>
             </td>
-            <td>{{record.stateId}}</td>
-            <td>{{record.stateUniqueId}}</td>
-            <td>{{record.number}}</td>
-            <td>{{record.name}}</td>
+            <td>{{ record.stateId }}</td>
+            <td>{{ record.stateUniqueId }}</td>
+            <td>{{ record.number }}</td>
+            <td>{{ record.name }}</td>
           </tr>
         </ng-template>
       </shared-list>

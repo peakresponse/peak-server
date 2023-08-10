@@ -23,7 +23,19 @@ describe('/soap/nemsis', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'agencies', 'contacts', 'employments']);
+    await helpers.loadFixtures([
+      'users',
+      'states',
+      'counties',
+      'cities',
+      'psaps',
+      'nemsisStateDataSets',
+      'nemsisSchematrons',
+      'agencies',
+      'versions',
+      'contacts',
+      'employments',
+    ]);
     testSession = session(app);
 
     nock('http://peakresponse.localhost:3000')
@@ -69,7 +81,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns XSD validation errors for DEMDataSet', async () => {
-      const payload = readPayload('fail/2021-DEM-FailXsd_v350.xml');
+      const payload = readPayload('fail/2023-DEM-FailXsd_v350.xml');
       const response = await client.submitDemDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_XSD]);
@@ -80,13 +92,13 @@ describe('/soap/nemsis', () => {
           xmlError: [
             {
               desc:
-                "Element '{http://www.nemsis.org}dConfiguration.02': This element is not expected. Expected is ( {http://www.nemsis.org}dConfiguration.ProcedureGroup ).",
+                "Element '{http://www.nemsis.org}dPersonnel.24': [facet 'enumeration'] The value '9925015' is not an element of the set {'9925001', '9925002', '9925003', '9925005', '9925007', '9925023', '9925025', '9925027', '9925029', '9925031', '9925033', '9925035', '9925037', '9925039', '9925041', '9925043'}.",
               failedElementList: {
                 xmlElementInfo: [
                   {
-                    elementName: 'dConfiguration.02',
+                    elementName: 'dPersonnel.24',
                     elementLocation: {
-                      line: 175,
+                      line: 1063,
                     },
                   },
                 ],
@@ -98,7 +110,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns Schematron validation errors for DEMDataSet', async () => {
-      const payload = readPayload('fail/2021-DEM-FailSchematron_v350.xml');
+      const payload = readPayload('fail/2023-DEM-FailSchematron_v350.xml');
       const response = await client.submitDemDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR]);
@@ -110,7 +122,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns XSD validation errors for EMSDataSet', async () => {
-      const payload = readPayload('fail/2021-EMS-FailXsd_v350.xml');
+      const payload = readPayload('fail/2023-EMS-FailXsd_v350.xml');
       const response = await client.submitEmsDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_XSD]);
@@ -121,13 +133,13 @@ describe('/soap/nemsis', () => {
           xmlError: [
             {
               desc:
-                "Element '{http://www.nemsis.org}eCrew.02': [facet 'enumeration'] The value '9925017' is not an element of the set {'9925001', '9925002', '9925003', '9925005', '9925007', '9925023', '9925025', '9925027', '9925029', '9925031', '9925033', '9925035', '9925037', '9925039', '9925041', '9925043'}.",
+                "Element '{http://www.nemsis.org}eResponse.07': [facet 'enumeration'] The value '2207003' is not an element of the set {'2207011', '2207013', '2207015', '2207017', '2207019', '2207021', '2207023', '2207025', '2207027'}.",
               failedElementList: {
                 xmlElementInfo: [
                   {
-                    elementName: 'eCrew.02',
+                    elementName: 'eResponse.07',
                     elementLocation: {
-                      line: 95,
+                      line: 38,
                     },
                   },
                 ],
@@ -139,7 +151,7 @@ describe('/soap/nemsis', () => {
     });
 
     it('returns returns Schematron validation errors for EMSDataSet', async () => {
-      const payload = readPayload('fail/2021-EMS-FailSchematron_v350.xml');
+      const payload = readPayload('fail/2023-EMS-FailSchematron_v350.xml');
       const response = await client.submitEmsDataSet(payload, '3.5.0');
       assert.deepStrictEqual(response.requestType, 'SubmitData');
       assert.deepStrictEqual(response.requestHandle, server.statusMessages[NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR]);

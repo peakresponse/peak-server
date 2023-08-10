@@ -1,0 +1,17 @@
+<router-outlet></router-outlet>
+<shared-xsd-list
+  #list
+  name="Configurations"
+  dataSet="DEM"
+  [class.d-none]="route.firstChild"
+  [keyPath]="['demographics', 'configurations']"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dConfiguration_v3.xsd"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dConfiguration_v3.xsd"
+  [schemaColumns]="sectionColumns"
+>
+  <ng-container class="admin-schema-list-header">
+    <button (click)="onImport()" class="btn btn--sm btn--secondary ms-3">Import from State Data Set</button>
+  </ng-container>
+</shared-xsd-list>

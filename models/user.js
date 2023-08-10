@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const Sequelize = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const mailer = require('../emails/mailer');
 const { Base } = require('./base');
@@ -13,8 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Assignment, { as: 'assignments', foreignKey: 'userId' });
       User.hasOne(models.Assignment.scope('current'), { as: 'currentAssignment', foreignKey: 'userId' });
       User.hasMany(models.Dispatcher, { as: 'dispatchers', foreignKey: 'userId' });
-      User.hasMany(models.Employment, { as: 'employments', foreignKey: 'userId' });
-      User.belongsToMany(models.Agency, { as: 'agencies', through: models.Employment, otherKey: 'agencyId', foreignKey: 'userId' });
+      User.hasMany(models.Employment.scope('finalOrNew'), { as: 'employments', foreignKey: 'userId' });
+      User.belongsToMany(models.Agency, {
+        as: 'agencies',
+        through: models.Employment.scope('finalOrNew'),
+        otherKey: 'createdByAgencyId',
+        foreignKey: 'userId',
+      });
       User.hasMany(models.Patient, {
         as: 'createdPatients',
         foreignKey: 'createdById',
@@ -74,8 +79,8 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async isEmployedBy(agency, options) {
-      const employment = await sequelize.models.Employment.findOne({
-        where: { userId: this.id, agencyId: agency.id },
+      const employment = await sequelize.models.Employment.scope('finalOrNew').findOne({
+        where: { userId: this.id, createdByAgencyId: agency.id },
         transaction: options?.transaction,
       });
       return employment && employment.isActive ? employment : null;
@@ -84,8 +89,8 @@ module.exports = (sequelize, DataTypes) => {
     async sendPasswordResetEmail(agency, options) {
       if (agency) {
         /// check if there's a corresponding Employment record
-        const employment = await sequelize.models.Employment.findOne({
-          where: { userId: this.id, agencyId: agency.id },
+        const employment = await sequelize.models.Employment.scope('finalOrNew').findOne({
+          where: { userId: this.id, createdByAgencyId: agency.id },
           transaction: options?.transaction,
         });
         if (!employment) {
@@ -95,7 +100,7 @@ module.exports = (sequelize, DataTypes) => {
       const baseUrl = agency ? agency.baseUrl : process.env.BASE_URL;
       await this.update(
         {
-          passwordResetToken: uuid(),
+          passwordResetToken: uuidv4(),
           passwordResetTokenExpiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
         },
         options
@@ -112,8 +117,8 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async sendWelcomeEmail(agency, options) {
-      const employment = await sequelize.models.Employment.findOne({
-        where: { userId: this.id, agencyId: agency.id },
+      const employment = await sequelize.models.Employment.scope('finalOrNew').findOne({
+        where: { userId: this.id, createdByAgencyId: agency.id },
         transaction: options?.transaction,
       });
       if (employment.isPending) {

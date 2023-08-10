@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const HttpStatus = require('http-status-codes');
 const path = require('path');
 const session = require('supertest-session');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
@@ -13,8 +13,19 @@ describe('/api/assets', () => {
   let testSession;
 
   beforeEach(async () => {
-    file = `${uuid()}.png`;
-    await helpers.loadFixtures(['states', 'counties', 'cities', 'psaps', 'agencies', 'users', 'employments']);
+    file = `${uuidv4()}.png`;
+    await helpers.loadFixtures([
+      'states',
+      'counties',
+      'cities',
+      'psaps',
+      'users',
+      'nemsisStateDataSets',
+      'nemsisSchematrons',
+      'agencies',
+      'versions',
+      'employments',
+    ]);
     testSession = session(app);
     await testSession
       .post('/login')

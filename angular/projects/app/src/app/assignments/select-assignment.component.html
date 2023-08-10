@@ -1,6 +1,8 @@
-<shared-welcome-header [user]="user.attributes$|async"></shared-welcome-header>
+<shared-welcome-header [user]="user.attributes$ | async"></shared-welcome-header>
 <shared-command-footer>
-  <button type="button" [disabled]="isLoading || !canContinue" (click)="onContinue()" tabindex="0" class="btn btn--primary">Continue</button>
+  <button type="button" [disabled]="isLoading || !canContinue" (click)="onContinue()" tabindex="0" class="btn btn--primary">
+    Continue
+  </button>
   <button type="button" [disabled]="isLoading" (click)="onSkip()" tabindex="0" class="btn btn--secondary">Skip</button>
 </shared-command-footer>
 <div class="portrait-container">
@@ -9,14 +11,28 @@
     <shared-list class="row" type="demographics.vehicles">
       <ng-template let-record="record">
         <div class="col-3 mb-3">
-          <shared-checkbox [id]="record.id" name="vehicleId" [checkboxValue]="record.id" [label]="record.number" [source]="data" [target]="data" (valueChange)="onCheckboxValueChange($event)"></shared-checkbox>
+          <shared-checkbox
+            [id]="record.id"
+            name="vehicleId"
+            [checkboxValue]="record.id"
+            [label]="record.number"
+            [source]="data"
+            [target]="data"
+            (valueChange)="onCheckboxValueChange($event)"
+          ></shared-checkbox>
         </div>
       </ng-template>
     </shared-list>
     <div class="row">
       <div class="col-6 mb-3">
-        <shared-text-field id="number" (valueChange)="onInputValueChange($event)" label="Other:" [source]="data" [target]="data"></shared-text-field>
+        <shared-text-field
+          id="number"
+          (valueChange)="onInputValueChange($event)"
+          label="Other:"
+          [source]="data"
+          [target]="data"
+        ></shared-text-field>
       </div>
-    </div>  
+    </div>
   </fieldset>
 </div>

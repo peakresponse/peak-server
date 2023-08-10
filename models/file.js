@@ -1,7 +1,6 @@
 const _ = require('lodash');
 
 const { Base } = require('./base');
-const nemsis = require('../lib/nemsis');
 
 module.exports = (sequelize, DataTypes) => {
   class File extends Base {
@@ -83,20 +82,18 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'File',
       tableName: 'files',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationErrors = await nemsis.validateSchema('eOther_v3.xsd', 'eOther', 'eOther.FileGroup', this.data);
-          this.isValid = this.validationErrors === null;
-        },
-      },
     }
   );
 
-  File.afterSave(async (file, options) => {
-    if (!file.canonicalId) {
+  File.beforeSave(async (record, options) => {
+    await record.validateNemsisData('eOther_v3.xsd', 'eOther', 'eOther.FileGroup', options);
+  });
+
+  File.afterSave(async (record, options) => {
+    if (!record.canonicalId) {
       return;
     }
-    await file.handleAssetFile('file', options);
+    await record.handleAssetFile('file', options);
   });
 
   return File;

@@ -20,7 +20,8 @@ router.put(
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const { data } = req.body;
-    await req.agency.updateDraft({ data, updatedById: req.user.id });
+    const version = await req.agency.getOrCreateDraftVersion(req.user);
+    await req.agency.updateDraft({ versionId: version.id, data, updatedById: req.user.id });
     const draft = await req.agency.getDraft();
     res.status(HttpStatus.OK).json(await draft.toNemsisJSON());
   })

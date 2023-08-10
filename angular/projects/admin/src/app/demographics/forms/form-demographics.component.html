@@ -6,13 +6,16 @@
 </div>
 <div class="mb-3">
   <shared-array-field id="reasons" label="Reasons" [source]="record" [target]="record" [error]="error">
-    <ng-template #item let-item="item">
-      {{signatureReasons[item.code]}} ({{item.code}})
-    </ng-template>
+    <ng-template #item let-item="item"> {{ signatureReasons[item.code] }} ({{ item.code }}) </ng-template>
     <ng-template #form let-addItem="addItem">
-      <shared-select-field #reasonsSelect id="reasonsSelect" (valueChange)="$event && addItem({code: $event}); $event && reasonsSelect.onClear()" [target]="{reasonsSelect: null}">
+      <shared-select-field
+        #reasonsSelect
+        id="reasonsSelect"
+        (valueChange)="$event && addItem({ code: $event }); $event && reasonsSelect.onClear()"
+        [target]="{ reasonsSelect: null }"
+      >
         <option [value]="null">Add a Reason...</option>
-        <option *ngFor="let reason of signatureReasons | keyvalue" [value]="reason.key">{{reason.value}} ({{reason.key}})</option>
+        <option *ngFor="let reason of signatureReasons | keyvalue" [value]="reason.key">{{ reason.value }} ({{ reason.key }})</option>
       </shared-select-field>
     </ng-template>
   </shared-array-field>
@@ -22,31 +25,29 @@
     <ng-template #item let-item="item" let-removeItem="removeItem" let-updateItem="updateItem">
       <div class="array-field__subitem">
         <h5>Title</h5>
-        {{item.title}}
+        {{ item.title }}
       </div>
       <div *ngIf="item.body" class="array-field__subitem">
         <h5>Body</h5>
-        {{item.body}}
+        {{ item.body }}
       </div>
       <div *ngFor="let type of item.types; let first = first" class="array-field__subitem">
         <h5 *ngIf="first">Type(s)</h5>
-        {{signatureTypes[type]}} ({{type}})
+        {{ signatureTypes[type] }} ({{ type }})
       </div>
       <div class="array-field__subitem">
-        <admin-demographics-form-signature #editSignatureForm (onConfirm)="updateItem(item, $event)" [isEditing]="true"></admin-demographics-form-signature>
-        <button (click)="editSignatureForm.show(item)" type="button" class="btn btn--sm btn--secondary me-2">
-          Edit
-        </button>
-        <button (click)="removeItem(item)" type="button" class="btn btn--sm btn--secondary--danger">
-          Delete
-        </button>
+        <admin-demographics-form-signature
+          #editSignatureForm
+          (onConfirm)="updateItem(item, $event)"
+          [isEditing]="true"
+        ></admin-demographics-form-signature>
+        <button (click)="editSignatureForm.show(item)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
+        <button (click)="removeItem(item)" type="button" class="btn btn--sm btn--secondary--danger">Delete</button>
       </div>
     </ng-template>
     <ng-template #form let-addItem="addItem">
       <admin-demographics-form-signature #newSignatureForm (onConfirm)="addItem($event)"></admin-demographics-form-signature>
-      <button (click)="newSignatureForm.show()" type="button" class="btn btn--sm btn--primary">
-        New Signature
-      </button>
+      <button (click)="newSignatureForm.show()" type="button" class="btn btn--sm btn--primary">New Signature</button>
     </ng-template>
   </shared-array-field>
 </div>

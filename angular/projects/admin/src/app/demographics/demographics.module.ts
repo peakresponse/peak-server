@@ -8,19 +8,24 @@ import { SharedModule } from 'shared';
 import { SchemaModule } from '../schema/schema.module';
 
 import { FormsDemographicsModule } from './forms/forms-demographics.module';
+import { VersionsDemographicsModule } from './versions/versions-demographics.module';
+
 import { DemographicsRoutingModule } from './demographics-routing.module';
 
 import { AgencyRecordDemographicsComponent } from './agency-record-demographics.component';
-import { BaseDemographicsComponent } from './base-demographics.component';
-import { ConfigurationDemographicsComponent } from './configuration-demographics.component';
-import { ContactDemographicsComponent } from './contact-demographics.component';
-import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
-import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
+import { ConfigurationsListDemographicsComponent } from './configurations-list-demographics.component';
+import { ConfigurationsRecordDemographicsComponent } from './configurations-record-demographics.component';
+import { ContactsListDemographicsComponent } from './contacts-list-demographics.component';
+import { ContactsRecordDemographicsComponent } from './contacts-record-demographics.component';
+import { CustomConfigurationsListDemographicsComponent } from './custom-configurations-list-demographics.component';
+import { CustomConfigurationsRecordDemographicsComponent } from './custom-configurations-record-demographics.component';
 import { DashboardDemographicsComponent } from './dashboard-demographics.component';
-import { DeviceDemographicsComponent } from './device-demographics.component';
-import { FacilityDemographicsComponent } from './facility-demographics.component';
-import { ListDemographicsComponent } from './list-demographics.component';
-import { LocationDemographicsComponent } from './location-demographics.component';
+import { DevicesListDemographicsComponent } from './devices-list-demographics.component';
+import { DevicesRecordDemographicsComponent } from './devices-record-demographics.component';
+import { FacilitiesListDemographicsComponent } from './facilities-list-demographics.component';
+import { FacilitiesRecordDemographicsComponent } from './facilities-record-demographics.component';
+import { LocationsListDemographicsComponent } from './locations-list-demographics.component';
+import { LocationsRecordDemographicsComponent } from './locations-record-demographics.component';
 import { PersonnelBulkInviteDemographicsComponent } from './personnel-bulk-invite-demographics.component';
 import { PersonnelListDemographicsComponent } from './personnel-list-demographics.component';
 import { PersonnelRecordDemographicsComponent } from './personnel-record-demographics.component';
@@ -30,23 +35,35 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
 @NgModule({
   declarations: [
     AgencyRecordDemographicsComponent,
-    BaseDemographicsComponent,
-    ConfigurationDemographicsComponent,
-    ContactDemographicsComponent,
-    CustomConfigurationDemographicsComponent,
-    CustomResultsDemographicsComponent,
+    ConfigurationsListDemographicsComponent,
+    ConfigurationsRecordDemographicsComponent,
+    ContactsListDemographicsComponent,
+    ContactsRecordDemographicsComponent,
+    CustomConfigurationsListDemographicsComponent,
+    CustomConfigurationsRecordDemographicsComponent,
     DashboardDemographicsComponent,
-    DeviceDemographicsComponent,
-    FacilityDemographicsComponent,
-    ListDemographicsComponent,
-    LocationDemographicsComponent,
+    DevicesListDemographicsComponent,
+    DevicesRecordDemographicsComponent,
+    FacilitiesListDemographicsComponent,
+    FacilitiesRecordDemographicsComponent,
+    LocationsListDemographicsComponent,
+    LocationsRecordDemographicsComponent,
     PersonnelBulkInviteDemographicsComponent,
     PersonnelListDemographicsComponent,
     PersonnelRecordDemographicsComponent,
     VehiclesListDemographicsComponent,
     VehiclesRecordDemographicsComponent,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, SchemaModule, SharedModule, FormsDemographicsModule, DemographicsRoutingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgbModule,
+    SchemaModule,
+    SharedModule,
+    FormsDemographicsModule,
+    VersionsDemographicsModule,
+    DemographicsRoutingModule,
+  ],
   providers: [],
 })
 export class DemographicsModule {}

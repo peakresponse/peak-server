@@ -3,11 +3,13 @@ const AWS = require('aws-sdk');
 const fs = require('fs-extra');
 const inflection = require('inflection');
 const jsonpatch = require('fast-json-patch');
+const { mkdirp } = require('mkdirp');
 const path = require('path');
-const { Model } = require('sequelize');
-const uuid = require('uuid/v4');
+const { Model, Op } = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
 
 const nemsis = require('../lib/nemsis');
+const nemsisXsd = require('../lib/nemsis/xsd');
 
 const s3options = {};
 if (process.env.AWS_ACCESS_KEY_ID) {
@@ -23,8 +25,34 @@ const s3 = new AWS.S3(s3options);
 
 class Base extends Model {
   // MARK: - helpers for non-versioned (live/draft only) NEMSIS backed models
+  static addDraftScopes() {
+    this.addScope('draft', {
+      where: {
+        isDraft: true,
+      },
+    });
+
+    this.addScope('final', {
+      where: {
+        isDraft: false,
+      },
+    });
+
+    this.addScope('finalOrNew', {
+      where: {
+        [Op.or]: {
+          isDraft: false,
+          [Op.and]: {
+            isDraft: true,
+            draftParentId: null,
+          },
+        },
+      },
+    });
+  }
+
   async toNemsisJSON(options) {
-    const payload = _.pick(this, ['id', 'isDraft', 'data', 'isValid', 'validationErrors', 'createdAt', 'updatedAt']);
+    const payload = _.pick(this, ['id', 'isDraft', 'data', 'isValid', 'validationErrors', 'createdAt', 'updatedAt', 'archivedAt']);
     if (!this.isDraft) {
       const draft = this.draft || (await this.getDraft(options));
       if (draft) {
@@ -176,7 +204,7 @@ class Base extends Model {
           prev = current;
         }
       }
-      json.id = uuid();
+      json.id = uuidv4();
       json.parentId = canonical.currentId;
       json.secondParentId = record.id;
       json.canonicalId = canonical.id;
@@ -230,14 +258,50 @@ class Base extends Model {
     return null;
   }
 
+  getAssetFilePrefix(attribute) {
+    const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
+    const modelPrefix = inflection.transform(this.constructor.name, ['tableize', 'dasherize']);
+    const attrPrefix = inflection.transform(attribute, ['underscore', 'dasherize']);
+    return path.join(assetPrefix, modelPrefix, this.id, attrPrefix);
+  }
+
+  async downloadAssetFile(attribute, isNewInTransaction) {
+    const file = this.get(attribute);
+    const filePrefix = this.getAssetFilePrefix(attribute);
+    const tmpDir = path.resolve(__dirname, '../tmp/downloads');
+    const tmpFilePath = path.resolve(tmpDir, filePrefix, file);
+    await mkdirp(path.dirname(tmpFilePath));
+    if (process.env.AWS_S3_BUCKET) {
+      let Key;
+      if (isNewInTransaction) {
+        Key = path.join('uploads', file);
+      } else {
+        Key = path.join(filePrefix, file);
+      }
+      const data = await s3
+        .getObject({
+          Bucket: process.env.AWS_S3_BUCKET,
+          Key,
+        })
+        .promise();
+      await fs.promises.writeFile(tmpFilePath, data.Body);
+    } else {
+      let filePath;
+      if (isNewInTransaction) {
+        filePath = path.resolve(__dirname, '../tmp/uploads', file);
+      } else {
+        filePath = path.resolve(__dirname, '../public/assets', filePrefix, file);
+      }
+      await fs.promises.copyFile(filePath, tmpFilePath);
+    }
+    return tmpFilePath;
+  }
+
   async handleAssetFile(attribute, options) {
     if (!this.changed(attribute)) {
       return;
     }
-    const pathPrefix = `${inflection.transform(this.constructor.name, ['tableize', 'dasherize'])}/${
-      this.id
-    }/${inflection.transform(attribute, ['underscore', 'dasherize'])}`;
-    const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
+    const filePrefix = this.getAssetFilePrefix(attribute);
     const prevFile = this.previous(attribute);
     const newFile = this.get(attribute);
     const handle = async () => {
@@ -246,7 +310,7 @@ class Base extends Model {
           await s3
             .deleteObject({
               Bucket: process.env.AWS_S3_BUCKET,
-              Key: path.join(assetPrefix, pathPrefix, prevFile),
+              Key: path.join(filePrefix, prevFile),
             })
             .promise();
         }
@@ -256,7 +320,7 @@ class Base extends Model {
               ACL: 'private',
               Bucket: process.env.AWS_S3_BUCKET,
               CopySource: path.join(process.env.AWS_S3_BUCKET, 'uploads', newFile),
-              Key: path.join(assetPrefix, pathPrefix, newFile),
+              Key: path.join(filePrefix, newFile),
               ServerSideEncryption: 'AES256',
             })
             .promise();
@@ -269,13 +333,13 @@ class Base extends Model {
         }
       } else {
         if (prevFile) {
-          fs.removeSync(path.resolve(__dirname, '../public/assets', assetPrefix, pathPrefix, prevFile));
+          fs.removeSync(path.resolve(__dirname, '../public/assets', filePrefix, prevFile));
         }
         if (newFile) {
           const uploadPath = path.resolve(__dirname, '../tmp/uploads', newFile);
           if (fs.pathExistsSync(uploadPath)) {
             fs.ensureDirSync(path.resolve(__dirname, '../public/assets'));
-            fs.moveSync(uploadPath, path.resolve(__dirname, '../public/assets', assetPrefix, pathPrefix, newFile), {
+            fs.moveSync(uploadPath, path.resolve(__dirname, '../public/assets', filePrefix, newFile), {
               overwrite: true,
             });
           }
@@ -353,16 +417,16 @@ class Base extends Model {
     this.changed('data', true);
   }
 
-  syncNemsisId(options) {
+  syncNemsisId(options, keyPath = []) {
     if (!this.id) {
       if (!this.isDraft || !this.draftParentId) {
-        this.setDataValue('id', this.getNemsisAttributeValue([], 'UUID'));
+        this.setDataValue('id', this.getNemsisAttributeValue(keyPath, 'UUID'));
       }
       options.fields = options.fields || [];
       if (!this.id) {
-        this.id = uuid();
-        if (!this.getNemsisAttributeValue([], 'UUID') || (this.isDraft && !this.draftParentId)) {
-          this.setNemsisAttributeValue([], 'UUID', this.id);
+        this.id = uuidv4();
+        if (!this.getNemsisAttributeValue(keyPath, 'UUID') || (this.isDraft && !this.draftParentId)) {
+          this.setNemsisAttributeValue(keyPath, 'UUID', this.id);
           if (options.fields.indexOf('data') < 0) {
             options.fields.push('data');
           }
@@ -371,11 +435,29 @@ class Base extends Model {
       if (options.fields.indexOf('id') < 0) {
         options.fields.push('id');
       }
-    } else if (!this.getNemsisAttributeValue([], 'UUID')) {
-      this.setNemsisAttributeValue([], 'UUID', this.id);
+    } else if (!this.getNemsisAttributeValue(keyPath, 'UUID')) {
+      this.setNemsisAttributeValue(keyPath, 'UUID', this.id);
       options.fields = options.fields || [];
       if (options.fields.indexOf('data') < 0) {
         options.fields.push('data');
+      }
+    }
+  }
+
+  syncFieldAndNemsisAttributeValue(key, keyPath, attribute, options) {
+    if (this.changed(key)) {
+      this.setNemsisAttributeValue(keyPath, attribute, this.getDataValue(key));
+      options.fields = options.fields || [];
+      if (options.fields.indexOf('data') < 0) {
+        options.fields.push('data');
+      }
+    } else {
+      this.setDataValue(key, this.getNemsisAttributeValue(keyPath, attribute) ?? null);
+      if (this.changed(key)) {
+        options.fields = options.fields || [];
+        if (options.fields.indexOf(key) < 0) {
+          options.fields.push(key);
+        }
       }
     }
   }
@@ -393,6 +475,52 @@ class Base extends Model {
         options.fields = options.fields || [];
         if (options.fields.indexOf(key) < 0) {
           options.fields.push(key);
+        }
+      }
+    }
+  }
+
+  static get xsdPath() {
+    return null;
+  }
+
+  static get rootTag() {
+    return null;
+  }
+
+  static get groupTag() {
+    return null;
+  }
+
+  getData(version) {
+    const { xsdPath, rootTag, groupTag } = this.constructor;
+    const doc = nemsisXsd.generate(version.nemsisVersion, xsdPath, rootTag, groupTag, this.data);
+    // remove the xml namespace attributes
+    delete doc[rootTag]._attributes.xmlns;
+    delete doc[rootTag]._attributes['xmlns:xsi'];
+    // return the updated data
+    if (groupTag) {
+      return doc[rootTag][groupTag];
+    }
+    return doc[rootTag];
+  }
+
+  async xsdValidate(options) {
+    const { transaction } = options ?? {};
+    const { xsdPath, rootTag, groupTag } = this.constructor;
+    const version = this.version ?? (await this.getVersion({ transaction }));
+    if (version?.nemsisVersion) {
+      this.validationErrors = await nemsisXsd.validateElement(version.nemsisVersion, xsdPath, rootTag, groupTag, this.data);
+      this.isValid = this.validationErrors === null;
+      options.fields = options.fields || [];
+      if (this.changed('validationErrors')) {
+        if (options.fields.indexOf('validationErrors') < 0) {
+          options.fields.push('validationErrors');
+        }
+      }
+      if (this.changed('isValid')) {
+        if (options.fields.indexOf('isValid') < 0) {
+          options.fields.push('isValid');
         }
       }
     }

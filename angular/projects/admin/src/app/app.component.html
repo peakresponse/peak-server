@@ -1,40 +1,43 @@
 <nav class="sidebar">
   <ul *ngIf="currentAgency.id" class="sidebar__nav">
-    <h4 class="sidebar__heading">Agency Admin</h4>    
+    <h4 class="sidebar__heading">Agency Admin</h4>
     <li>
       <a routerLink="/demographics/dashboard" routerLinkActive="sidebar__item--active" class="sidebar__item">Dashboard</a>
     </li>
     <li>
       <a routerLink="/demographics/agency" routerLinkActive="sidebar__item--active" class="sidebar__item">Agency</a>
     </li>
-    <!-- <li>
+    <li>
+      <a routerLink="/demographics/configurations" routerLinkActive="sidebar__item--active" class="sidebar__item">Configurations</a>
+    </li>
+    <li>
       <a routerLink="/demographics/contacts" routerLinkActive="sidebar__item--active" class="sidebar__item">Contacts</a>
     </li>
     <li>
-      <a routerLink="/demographics/configuration" routerLinkActive="sidebar__item--active" class="sidebar__item">Configuration</a>
+      <a routerLink="/demographics/custom-configurations" routerLinkActive="sidebar__item--active" class="sidebar__item">Custom Configs</a>
     </li>
     <li>
       <a routerLink="/demographics/devices" routerLinkActive="sidebar__item--active" class="sidebar__item">Devices</a>
     </li>
     <li>
       <a routerLink="/demographics/facilities" routerLinkActive="sidebar__item--active" class="sidebar__item">Facilities</a>
-    </li> -->
+    </li>
     <li>
       <a routerLink="/demographics/forms" routerLinkActive="sidebar__item--active" class="sidebar__item">Forms</a>
     </li>
-    <!-- <li>
+    <li>
       <a routerLink="/demographics/locations" routerLinkActive="sidebar__item--active" class="sidebar__item">Locations</a>
     </li>
     <li>
       <a routerLink="/demographics/personnel" routerLinkActive="sidebar__item--active" class="sidebar__item">Personnel</a>
-    </li> -->
+    </li>
     <li>
       <a routerLink="/demographics/vehicles" routerLinkActive="sidebar__item--active" class="sidebar__item">Vehicles</a>
     </li>
-    <!--
     <li>
-      <a routerLink="/demographics/custom-configuration" routerLinkActive="sidebar__item--active" class="sidebar__item">Demographics</a>
+      <a routerLink="/demographics/versions" routerLinkActive="sidebar__item--active" class="sidebar__item">Versions</a>
     </li>
+    <!--
     <li>
       <a routerLink="/demographics/custom-results" routerLinkActive="sidebar__item--active" class="sidebar__item">Demographics</a>
     </li> -->
@@ -52,6 +55,9 @@
     </li>
     <li>
       <a routerLink="/lists" routerLinkActive="sidebar__item--active" class="sidebar__item">Lists</a>
+    </li>
+    <li>
+      <a routerLink="/nemsis" routerLinkActive="sidebar__item--active" class="sidebar__item">NEMSIS</a>
     </li>
     <li>
       <a routerLink="/psaps" routerLinkActive="sidebar__item--active" class="sidebar__item">PSAPs</a>
@@ -73,8 +79,13 @@
 <main>
   <router-outlet></router-outlet>
 </main>
-<div *ngIf="((notification.messages$|async)?.length ?? 0) > 0" class="notifications">  
-  <ngb-toast class="notifications__toast" *ngFor="let message of notification.messages$|async" [delay]="message.delay" (hidden)="notification.pop(message.id)">
-    {{message.text}}
+<div *ngIf="((notification.messages$|async)?.length ?? 0) > 0" class="notifications">
+  <ngb-toast
+    class="notifications__toast"
+    *ngFor="let message of notification.messages$ | async"
+    [delay]="message.delay"
+    (hidden)="notification.pop(message.id)"
+  >
+    {{ message.text }}
   </ngb-toast>
 </div>

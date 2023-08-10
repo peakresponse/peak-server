@@ -1,7 +1,6 @@
 const _ = require('lodash');
 
 const { Base } = require('./base');
-const nemsis = require('../lib/nemsis');
 
 module.exports = (sequelize, DataTypes) => {
   class Report extends Base {
@@ -264,10 +263,6 @@ module.exports = (sequelize, DataTypes) => {
             }
           }
         },
-        async schema() {
-          this.validationErrors = await nemsis.validateSchema('eRecord_v3.xsd', 'eRecord', null, this.data);
-          this.isValid = this.validationErrors === null;
-        },
       },
     }
   );
@@ -276,6 +271,10 @@ module.exports = (sequelize, DataTypes) => {
     where: {
       canonicalId: null,
     },
+  });
+
+  Report.beforeSave(async (record, options) => {
+    await record.validateNemsisData('eRecord_v3.xsd', 'eRecord', null, options);
   });
 
   Report.afterCreate(async (record, options) => {

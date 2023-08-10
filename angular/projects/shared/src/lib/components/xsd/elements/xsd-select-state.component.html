@@ -1,0 +1,19 @@
+<shared-xsd-element-wrapper
+  [xsd]="xsd"
+  [record]="record"
+  [element]="element"
+  [data]="data"
+  [index]="index"
+  [selectedValue]="selectedValue"
+  [displayOnly]="displayOnly"
+>
+  <ng-container *ngIf="isDisplayOnly">
+    <ng-container *ngIf="enumeratedValue as val; else noVal">{{ val }}</ng-container>
+    <ng-template #noVal>&nbsp;</ng-template>
+  </ng-container>
+  <div *ngIf="!isDisplayOnly" class="select-wrapper">
+    <select [id]="formName" [name]="formName" [(ngModel)]="value" class="select-wrapper__select" [class.is-invalid]="isInvalid">
+      <option *ngFor="let state of STATES" [value]="state.id">{{ state.name }}</option>
+    </select>
+  </div>
+</shared-xsd-element-wrapper>
