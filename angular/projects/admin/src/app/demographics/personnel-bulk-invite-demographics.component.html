@@ -1,14 +1,20 @@
-<shared-modal #modal
-  i18n-confirmLabel [confirmLabel]="status ? 'Send New Invitations' : 'Send Invitations'" i18n-dismissLabel dismissLabel="Close" 
-  (confirm)="onSendInvitations()" [disabled]="isLoading || isPolling">
+<shared-modal
+  #modal
+  i18n-confirmLabel
+  [confirmLabel]="status ? 'Send New Invitations' : 'Send Invitations'"
+  i18n-dismissLabel
+  dismissLabel="Close"
+  (confirm)="onSendInvitations()"
+  [disabled]="isLoading || isPolling"
+>
   <div class="modal-body">
     <shared-loader *ngIf="isLoading"></shared-loader>
     <ng-container *ngIf="!isLoading">
       <ng-container *ngIf="status">
-        <p>Invitations sent: {{status.sent}}</p>
+        <p>Invitations sent: {{ status.sent }}</p>
         <p *ngIf="status.failed.length">
           The following email addresses could not be sent,<br />please check if they have been already used:<br /><br />
-          <span *ngFor="let email of status.failed">{{email}}<br /></span>
+          <span *ngFor="let email of status.failed">{{ email }}<br /></span>
         </p>
       </ng-container>
       <ng-container *ngIf="!status">

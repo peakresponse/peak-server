@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.nemsis.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../eTimes_v3.xsd"/>
+  <xs:element name="eTimes" type="eTimes" id="eTimesSection">
+    <xs:annotation>
+      <xs:documentation>Call Event Times Information</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>

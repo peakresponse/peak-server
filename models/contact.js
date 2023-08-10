@@ -1,42 +1,65 @@
 const sequelizePaginate = require('sequelize-paginate');
+
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Contact extends Base {
+    static get xsdPath() {
+      return 'dContact_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dContact';
+    }
+
+    static get groupTag() {
+      return 'dContact.ContactInfoGroup';
+    }
+
     static associate(models) {
+      Contact.belongsTo(Contact, { as: 'draftParent' });
+      Contact.hasOne(Contact, { as: 'draft', foreignKey: 'draftParentId' });
       Contact.belongsTo(models.User, { as: 'updatedBy' });
       Contact.belongsTo(models.User, { as: 'createdBy' });
       Contact.belongsTo(models.Agency, { as: 'createdByAgency' });
+      Contact.belongsTo(models.Version, { as: 'version' });
     }
   }
 
   Contact.init(
     {
-      type: DataTypes.STRING,
+      isDraft: {
+        type: DataTypes.BOOLEAN,
+      },
+      type: {
+        type: DataTypes.STRING,
+      },
       lastName: {
         type: DataTypes.STRING,
-        field: 'last_name',
       },
       firstName: {
         type: DataTypes.STRING,
-        field: 'first_name',
       },
       middleName: {
         type: DataTypes.STRING,
-        field: 'middle_name',
       },
       primaryPhone: {
         type: DataTypes.STRING,
-        field: 'primary_phone',
       },
       primaryEmail: {
         type: DataTypes.STRING,
-        field: 'primary_email',
       },
-      data: DataTypes.JSONB,
+      data: {
+        type: DataTypes.JSONB,
+      },
       isValid: {
         type: DataTypes.BOOLEAN,
-        field: 'is_valid',
+      },
+      validationErrors: {
+        type: DataTypes.JSONB,
+      },
+      archivedAt: {
+        type: DataTypes.DATE,
       },
     },
     {
@@ -47,6 +70,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Contact.addDraftScopes();
+
   Contact.beforeValidate(async (record, options) => {
     record.syncNemsisId(options);
     record.syncFieldAndNemsisValue('type', ['dContact.01'], options);
@@ -55,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('middleName', ['dContact.04'], options);
     record.syncFieldAndNemsisValue('primaryPhone', ['dContact.10'], options);
     record.syncFieldAndNemsisValue('primaryEmail', ['dContact.11'], options);
-    await record.validateNemsisData('dContact_v3.xsd', 'dContact', 'dContact.ContactInfoGroup', options);
+    await record.xsdValidate(options);
   });
 
   sequelizePaginate.paginate(Contact);

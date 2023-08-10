@@ -13,7 +13,7 @@ router.get(
     const page = req.query.page || 1;
     const options = {
       where: {
-        agencyId: req.agency.id,
+        createdByAgencyId: req.agency.id,
       },
       include: [{ model: models.User, as: 'user' }],
       page,
@@ -27,7 +27,7 @@ router.get(
       options.where.isPending = !!parseInt(req.query.isPending, 10);
       options.where.refusedAt = null;
     }
-    const { docs, pages, total } = await models.Employment.paginate(options);
+    const { docs, pages, total } = await models.Employment.scope('finalOrNew').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(await Promise.all(docs.map((d) => d.toFullJSON())));
   })
@@ -38,7 +38,7 @@ router.post(
   interceptors.requireAgency(models.Employment.Roles.PERSONNEL),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
-      const employment = await models.Employment.findByPk(req.params.id, { transaction });
+      const employment = await models.Employment.scope('finalOrNew').findByPk(req.params.id, { transaction });
       await employment.approve(req.user, { transaction });
       res.json(employment.toJSON());
     });
@@ -50,7 +50,7 @@ router.post(
   interceptors.requireAgency(models.Employment.Roles.PERSONNEL),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
-      const employment = await models.Employment.findByPk(req.params.id, { transaction });
+      const employment = await models.Employment.scope('finalOrNew').findByPk(req.params.id, { transaction });
       await employment.refuse(req.user, { transaction });
       res.json(employment.toJSON());
     });

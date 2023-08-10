@@ -6,24 +6,30 @@ const models = require('../../../models');
 describe('models', () => {
   describe('Contact', () => {
     let user;
-    let dAgency;
+    let agency;
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'agencies']);
+      await helpers.loadFixtures([
+        'users',
+        'states',
+        'counties',
+        'cities',
+        'psaps',
+        'nemsisStateDataSets',
+        'nemsisSchematrons',
+        'agencies',
+        'versions',
+      ]);
       user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
-      const agency = await models.Agency.findByPk('5de082f2-3242-43be-bc2b-6e9396815b4f');
-      await models.sequelize.transaction(async (transaction) => {
-        dAgency = await models.Agency.register(user, agency, 'bbfpd', {
-          transaction,
-        });
-      });
+      agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
     });
 
     describe('.save()', () => {
       it('populates columns from the data', async () => {
         const contact = models.Contact.build();
-        contact.createdByAgencyId = dAgency.id;
+        contact.createdByAgencyId = agency.id;
         contact.createdById = user.id;
         contact.updatedById = user.id;
+        contact.versionId = agency.versionId;
         contact.data = {
           _attributes: {
             UUID: '5c0a380c-0f69-4533-bf6b-5238a2f02d10',
@@ -64,9 +70,10 @@ describe('models', () => {
 
       it('validates its data against NEMSIS xsd', async () => {
         const contact = models.Contact.build();
-        contact.createdByAgencyId = dAgency.id;
+        contact.createdByAgencyId = agency.id;
         contact.createdById = user.id;
         contact.updatedById = user.id;
+        contact.versionId = agency.versionId;
         contact.data = {
           _attributes: {
             UUID: '5c0a380c-0f69-4533-bf6b-5238a2f02d10',

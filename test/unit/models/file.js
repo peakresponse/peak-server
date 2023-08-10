@@ -1,8 +1,8 @@
 const assert = require('assert');
 const fs = require('fs-extra');
-const mkdirp = require('mkdirp');
+const { mkdirp } = require('mkdirp');
 const path = require('path');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
@@ -10,13 +10,25 @@ const models = require('../../../models');
 describe('models', () => {
   describe('File', () => {
     beforeEach(async () => {
-      await helpers.loadFixtures(['states', 'counties', 'cities', 'users', 'psaps', 'agencies', 'employments', 'files']);
+      await helpers.loadFixtures([
+        'states',
+        'counties',
+        'cities',
+        'users',
+        'psaps',
+        'nemsisStateDataSets',
+        'nemsisSchematrons',
+        'agencies',
+        'versions',
+        'employments',
+        'files',
+      ]);
     });
 
     describe('createOrUpdate()', () => {
       let file;
       beforeEach(() => {
-        file = `${uuid()}.png`;
+        file = `${uuidv4()}.png`;
         mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
         fs.copySync(path.resolve(__dirname, '../../fixtures/files/512x512.png'), path.resolve(__dirname, `../../../tmp/uploads/${file}`));
       });

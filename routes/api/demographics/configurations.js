@@ -4,67 +4,32 @@ const HttpStatus = require('http-status-codes');
 const models = require('../../../models');
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
+const base = require('./base');
 
 const router = express.Router();
 
-router.get(
-  '/',
-  interceptors.requireAgency(),
-  helpers.async(async (req, res) => {
-    const page = req.query.page || 1;
-    const { docs, pages, total } = await models.Configuration.paginate({
-      page,
-      where: { createdByAgencyId: req.agency.id },
-      order: [['state_name', 'ASC']],
-    });
-    helpers.setPaginationHeaders(req, res, page, pages, total);
-    res.json({
-      dConfiguration: {
-        'dConfiguration.ConfigurationGroup': docs.map((d) => d.data),
-      },
-    });
-  })
-);
-
 router.post(
-  '/',
-  interceptors.requireAgency(),
+  '/import',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
-    const record = await models.Configuration.create({
-      createdByAgencyId: req.agency.id,
-      data: req.body,
-      createdById: req.user.id,
-      updatedById: req.user.id,
+    let payload;
+    await models.sequelize.transaction(async (transaction) => {
+      const record = await req.agency.importConfiguration(req.user, { transaction });
+      payload = await record.toNemsisJSON({ transaction });
     });
-    if (record.isValid) {
-      res.status(HttpStatus.CREATED).json(record.data);
+    if (payload) {
+      res.json(payload);
     } else {
-      throw record.validationError;
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     }
   })
 );
 
-router.put(
-  '/:id',
-  interceptors.requireAgency(),
-  helpers.async(async (req, res) => {
-    let record = await models.Configuration.findOne({
-      where: {
-        id: req.params.id,
-        createdByAgencyId: req.agency.id,
-      },
-    });
-    if (record) {
-      record = await record.update({ data: req.body });
-      if (record.isValid) {
-        res.status(HttpStatus.NO_CONTENT).end();
-      } else {
-        throw record.validationError;
-      }
-    } else {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
-  })
-);
+base.addAllRoutes(router, models.Configuration, {
+  index: {
+    include: ['state'],
+    order: [['state', 'name', 'ASC']],
+  },
+});
 
 module.exports = router;

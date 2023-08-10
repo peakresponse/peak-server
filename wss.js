@@ -176,7 +176,7 @@ function configure(server, app) {
       }
       if (agency) {
         req.agency = await models.Agency.findOne({
-          where: { subdomain: agency },
+          where: { subdomain: agency, isDraft: false },
         });
       }
       if (!req.agency) {
@@ -195,8 +195,8 @@ function configure(server, app) {
       }
       /// ensure user is actively employed by agency (or is superuser admin)
       if (!req.user.isAdmin) {
-        const employment = await models.Employment.findOne({
-          where: { userId: req.user.id, agencyId: req.agency.id },
+        const employment = await models.Employment.scope('finalOrNew').findOne({
+          where: { userId: req.user.id, createdByAgencyId: req.agency.id },
         });
         if (!employment?.isActive) {
           socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');

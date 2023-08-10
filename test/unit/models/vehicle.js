@@ -9,7 +9,19 @@ describe('models', () => {
     let agency;
 
     beforeEach(async () => {
-      await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'agencies', 'employments', 'vehicles']);
+      await helpers.loadFixtures([
+        'users',
+        'states',
+        'counties',
+        'cities',
+        'psaps',
+        'nemsisStateDataSets',
+        'nemsisSchematrons',
+        'agencies',
+        'versions',
+        'employments',
+        'vehicles',
+      ]);
       user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
       agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
     });
@@ -25,6 +37,7 @@ describe('models', () => {
         record.createdByAgencyId = agency.id;
         record.createdById = user.id;
         record.updatedById = user.id;
+        record.versionId = agency.versionId;
         await record.save();
 
         await record.reload();
@@ -54,6 +67,7 @@ describe('models', () => {
         record.createdByAgencyId = agency.id;
         record.createdById = user.id;
         record.updatedById = user.id;
+        record.versionId = agency.versionId;
         record.data = {
           _attributes: {
             UUID: '5c0a380c-0f69-4533-bf6b-5238a2f02d10',

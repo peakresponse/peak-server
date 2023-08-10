@@ -16,14 +16,14 @@
       <shared-list type="states">
         <ng-template let-records="records" let-record="record">
           <tr class="state" [routerLink]="['/states', record.id]">
-            <td>{{record.id}}</td>
-            <td>{{record.name}}</td>
+            <td>{{ record.id }}</td>
+            <td>{{ record.name }}</td>
             <td class="state__configured">
               <shared-checkbox [id]="record.id" name="isConfigured" [source]="record"></shared-checkbox>
             </td>
             <td>
-              <ng-container *ngFor="let borderState of borderingStates(records, record); let first=first">
-                <span *ngIf="!first">,&nbsp;</span>{{borderState.name}}
+              <ng-container *ngFor="let borderState of borderingStates(records, record); let first = first">
+                <span *ngIf="!first">,&nbsp;</span>{{ borderState.name }}
               </ng-container>
             </td>
           </tr>

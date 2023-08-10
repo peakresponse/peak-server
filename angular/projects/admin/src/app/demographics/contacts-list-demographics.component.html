@@ -1,0 +1,14 @@
+<router-outlet></router-outlet>
+<shared-xsd-list
+  #list
+  name="Contacts"
+  dataSet="DEM"
+  [class.d-none]="route.firstChild"
+  [keyPath]="['demographics', 'contacts']"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dContact_v3.xsd"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dContact_v3.xsd"
+  [schemaColumns]="sectionColumns"
+>
+</shared-xsd-list>

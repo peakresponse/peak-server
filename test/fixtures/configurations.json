@@ -1,0 +1,170 @@
+[
+  {
+    "model": "Configuration",
+    "ignoreSet": true,
+    "data": {
+      "id": "d662a34d-b8e0-4b3a-95c6-2091735ffa43",
+      "data": {
+        "_attributes": {
+          "UUID": "d662a34d-b8e0-4b3a-95c6-2091735ffa43"
+        },
+        "dConfiguration.01": {
+          "_text": "06"
+        },
+        "dConfiguration.ProcedureGroup": {
+          "_attributes": {
+            "UUID": "bbfd13e3-a63f-4d55-b40e-35eb701ceb83"
+          },
+          "dConfiguration.06": {
+            "_text": "9917005"
+          },
+          "dConfiguration.07": [
+            {
+              "_text": "33747003"
+            },
+            {
+              "_text": "386493006"
+            },
+            {
+              "_text": "673005"
+            },
+            {
+              "_text": "56251003"
+            },
+            {
+              "_text": "398176008"
+            },
+            {
+              "_text": "225285007"
+            },
+            {
+              "_text": "241689008"
+            },
+            {
+              "_text": "81295004"
+            },
+            {
+              "_text": "226005007"
+            },
+            {
+              "_text": "86265008"
+            }
+          ]
+        },
+        "dConfiguration.MedicationGroup": {
+          "_attributes": {
+            "UUID": "6f7b2fef-8509-4cca-8ad0-860984d2ce5f"
+          },
+          "dConfiguration.08": {
+            "_text": "9917005"
+          },
+          "dConfiguration.09": [
+            {
+              "_attributes": {
+                "CodeType": "9924003"
+              },
+              "_text": "197587"
+            },
+            {
+              "_attributes": {
+                "CodeType": "9924005"
+              },
+              "_text": "180208003"
+            },
+            {
+              "_attributes": {
+                "CodeType": "9924005"
+              },
+              "_text": "116861002"
+            },
+            {
+              "_attributes": {
+                "CodeType": "9924005"
+              },
+              "_text": "116865006"
+            },
+            {
+              "_attributes": {
+                "CodeType": "9924005"
+              },
+              "_text": "33389009"
+            },
+            {
+              "_attributes": {
+                "CodeType": "9924005"
+              },
+              "_text": "116762002"
+            },
+            {
+              "_attributes": {
+                "CodeType": "9924005"
+              },
+              "_text": "116795008"
+            },
+            {
+              "_attributes": {
+                "CodeType": "9924005"
+              },
+              "_text": "71493000"
+            }
+          ]
+        },
+        "dConfiguration.10": [
+          {
+            "_text": "9914083"
+          },
+          {
+            "_text": "9914075"
+          },
+          {
+            "_text": "9914001"
+          },
+          {
+            "_text": "9914083"
+          },
+          {
+            "_text": "9914003"
+          },
+          {
+            "_text": "9914005"
+          },
+          {
+            "_text": "9914007"
+          },
+          {
+            "_text": "9914009"
+          },
+          {
+            "_text": "9914055"
+          },
+          {
+            "_text": "9914011"
+          }
+        ],
+        "dConfiguration.13": {
+          "_text": "1213003"
+        },
+        "dConfiguration.16": [
+          {
+            "_text": "43"
+          },
+          {
+            "_text": "50"
+          },
+          {
+            "_text": "55"
+          },
+          {
+            "_text": "88"
+          },
+          {
+            "_text": "92"
+          }
+        ]
+      },
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444"
+    }
+  }
+]

@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "lint:changed": "eslint $(git diff --name-only -- '*.js'; git ls-files -o --exclude-standard -- '*.js')",
     "pp": "prettier --write .",
-    "pp:changed": "prettier --write $(git diff --name-only -- '*.js' '*.ts' '*.css' '*.scss' '*.json'; git ls-files -o --exclude-standard -- '*.js' '*.ts' '*.css' '*.scss' '*.json')"
+    "pp:changed": "prettier --write $(git diff --name-only -- '*.js' '*.ts' '*.html' '*.css' '*.scss' '*.json'; git ls-files -o --exclude-standard -- '*.js' '*.ts' '*.html' '*.css' '*.scss' '*.json')"
   },
   "eslintConfig": {
     "parserOptions": {
@@ -129,12 +129,13 @@
     "lodash": "^4.17.21",
     "luxon": "^2.3.1",
     "mime-types": "^2.1.24",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^3.0.0",
     "mocha": "^9.2.2",
     "moment": "^2.24.0",
     "morgan": "~1.9.0",
     "mv": "^2.1.1",
     "node-cache": "^5.1.2",
+    "node-expat": "^2.4.0",
     "node-fetch": "^2.6.7",
     "node-stream-zip": "^1.9.1",
     "nodemon": "^2.0.15",
@@ -146,6 +147,7 @@
     "readline": "^1.3.0",
     "rollbar": "^2.21.1",
     "seedrandom": "^3.0.5",
+    "semver": "^7.3.8",
     "sequelize": "^6.7.0",
     "sequelize-cli": "^6.4.1",
     "sequelize-fixtures": "^1.2.0",
@@ -157,7 +159,7 @@
     "supertest-session": "^4.0.0",
     "tmp": "^0.1.0",
     "utf-8-validate": "^5.0.2",
-    "uuid": "^3.3.2",
+    "uuid": "^9.0.0",
     "validate-with-xmllint": "^1.2.0",
     "ws": "^7.5.0",
     "xlsx": "^0.18.4",
@@ -176,7 +178,6 @@
     "node-sass": "^4.14.1",
     "nodemailer-mock": "^1.5.1",
     "prettier": "^2.1.2",
-    "semver": "^7.3.8",
     "superwstest": "^2.0.2"
   }
 }

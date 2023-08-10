@@ -10,7 +10,7 @@ crontab /etc/cron.d/peak-crontab
  */
 
 const randomString = require('randomstring');
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const models = require('../models');
 const { dispatchIncidentUpdate } = require('../wss');
@@ -83,8 +83,8 @@ async function generateDemoData() {
       user,
       null,
       {
-        id: uuid.v4(),
-        canonicalId: uuid.v4(),
+        id: uuidv4(),
+        canonicalId: uuidv4(),
         address1: latestSFFD.scene.address1,
         cityId: latestSFFD.scene.cityId,
         countyId: latestSFFD.scene.countyId,
@@ -119,8 +119,8 @@ async function generateDemoData() {
         user,
         null,
         {
-          id: uuid.v4(),
-          canonicalId: uuid.v4(),
+          id: uuidv4(),
+          canonicalId: uuidv4(),
           incidentId: incident.id,
           vehicleId: vehicle.id,
           dispatchedAt: dispatch.dispatchedAt,

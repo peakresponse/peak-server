@@ -1,0 +1,14 @@
+<router-outlet></router-outlet>
+<shared-xsd-list
+  #list
+  name="Devices"
+  dataSet="DEM"
+  [class.d-none]="route.firstChild"
+  [keyPath]="['demographics', 'devices']"
+  [nemsisVersion]="agency.version?.nemsisVersion"
+  xsd="dDevice_v3.xsd"
+  [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
+  draftXsd="dDevice_v3.xsd"
+  [schemaColumns]="sectionColumns"
+>
+</shared-xsd-list>

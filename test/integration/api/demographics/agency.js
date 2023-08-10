@@ -10,7 +10,18 @@ describe('/api/demographics/agency', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['users', 'states', 'counties', 'cities', 'psaps', 'agencies', 'employments']);
+    await helpers.loadFixtures([
+      'users',
+      'states',
+      'counties',
+      'cities',
+      'psaps',
+      'nemsisStateDataSets',
+      'nemsisSchematrons',
+      'agencies',
+      'versions',
+      'employments',
+    ]);
     testSession = session(app);
     await testSession
       .post('/login')
@@ -31,6 +42,56 @@ describe('/api/demographics/agency', () => {
         'dAgency.02': { _text: 'S07-50120' },
         'dAgency.03': { _text: 'Bay Medic Ambulance - Contra Costa' },
         'dAgency.04': { _text: '06' },
+        'dAgency.AgencyServiceGroup': {
+          _attributes: {
+            UUID: 'da8710d1-e852-4713-9349-8673a5e3ea75',
+          },
+          'dAgency.05': {
+            _text: '06',
+          },
+          'dAgency.06': {
+            _text: '06013',
+          },
+          'dAgency.07': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'dAgency.08': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+        },
+        'dAgency.09': {
+          _text: '9920001',
+        },
+        'dAgency.11': {
+          _text: '9917005',
+        },
+        'dAgency.12': {
+          _text: '1016003',
+        },
+        'dAgency.13': {
+          _text: '9912007',
+        },
+        'dAgency.14': {
+          _text: '1018001',
+        },
+        'dAgency.25': {
+          _attributes: {
+            NV: '7701003',
+            'xsi:nil': 'true',
+          },
+        },
+        'dAgency.26': {
+          _attributes: {
+            NV: '7701003',
+            'xsi:nil': 'true',
+          },
+        },
       });
     });
   });
@@ -66,22 +127,22 @@ describe('/api/demographics/agency', () => {
 
       const errors = [
         {
-          path: `$['dAgency.AgencyServiceGroup']['dAgency.05']`,
+          path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.05']`,
           message: 'This field is required.',
           value: '',
         },
         {
-          path: `$['dAgency.AgencyServiceGroup']['dAgency.06']`,
+          path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.06']`,
           message: 'This field is required.',
           value: '',
         },
         {
-          path: `$['dAgency.AgencyServiceGroup']['dAgency.07']`,
+          path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.07']`,
           message: 'This field is required.',
           value: '',
         },
         {
-          path: `$['dAgency.AgencyServiceGroup']['dAgency.08']`,
+          path: `$['dAgency.AgencyServiceGroup'][0]['dAgency.08']`,
           message: 'This field is required.',
           value: '',
         },
@@ -138,6 +199,8 @@ describe('/api/demographics/agency', () => {
         updatedAt: response.body.updatedAt,
         createdAt: response.body.createdAt,
       });
+      assert(draft.versionId);
+      assert.notDeepStrictEqual(draft.versionId, agency.versionId);
     });
   });
 

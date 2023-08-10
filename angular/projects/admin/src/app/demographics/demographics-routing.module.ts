@@ -1,17 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AgencyService, SchemaService, UserService } from 'shared';
+import { AgencyService, UserService } from 'shared';
 
 import { AgencyRecordDemographicsComponent } from './agency-record-demographics.component';
-import { ConfigurationDemographicsComponent } from './configuration-demographics.component';
-import { ContactDemographicsComponent } from './contact-demographics.component';
-import { CustomConfigurationDemographicsComponent } from './custom-configuration-demographics.component';
-import { CustomResultsDemographicsComponent } from './custom-results-demographics.component';
+import { ConfigurationsListDemographicsComponent } from './configurations-list-demographics.component';
+import { ConfigurationsRecordDemographicsComponent } from './configurations-record-demographics.component';
+import { ContactsListDemographicsComponent } from './contacts-list-demographics.component';
+import { ContactsRecordDemographicsComponent } from './contacts-record-demographics.component';
+import { CustomConfigurationsListDemographicsComponent } from './custom-configurations-list-demographics.component';
+import { CustomConfigurationsRecordDemographicsComponent } from './custom-configurations-record-demographics.component';
 import { DashboardDemographicsComponent } from './dashboard-demographics.component';
-import { DeviceDemographicsComponent } from './device-demographics.component';
-import { FacilityDemographicsComponent } from './facility-demographics.component';
-import { LocationDemographicsComponent } from './location-demographics.component';
+import { DevicesListDemographicsComponent } from './devices-list-demographics.component';
+import { DevicesRecordDemographicsComponent } from './devices-record-demographics.component';
+import { FacilitiesListDemographicsComponent } from './facilities-list-demographics.component';
+import { FacilitiesRecordDemographicsComponent } from './facilities-record-demographics.component';
+import { LocationsListDemographicsComponent } from './locations-list-demographics.component';
+import { LocationsRecordDemographicsComponent } from './locations-record-demographics.component';
 import { PersonnelListDemographicsComponent } from './personnel-list-demographics.component';
 import { PersonnelRecordDemographicsComponent } from './personnel-record-demographics.component';
 import { VehiclesListDemographicsComponent } from './vehicles-list-demographics.component';
@@ -23,40 +28,75 @@ const appRoutes: Routes = [
     resolve: {
       agency: AgencyService,
       user: UserService,
-      schema: SchemaService,
     },
     children: [
+      {
+        path: 'dashboard',
+        component: DashboardDemographicsComponent,
+      },
       {
         path: 'agency',
         component: AgencyRecordDemographicsComponent,
       },
       {
-        path: 'configuration',
-        component: ConfigurationDemographicsComponent,
+        path: 'configurations',
+        component: ConfigurationsListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: ConfigurationsRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'contacts',
-        component: ContactDemographicsComponent,
+        component: ContactsListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: ContactsRecordDemographicsComponent,
+          },
+        ],
       },
       {
-        path: 'custom-configuration',
-        component: CustomConfigurationDemographicsComponent,
-      },
-      {
-        path: 'custom-results',
-        component: CustomResultsDemographicsComponent,
+        path: 'custom-configurations',
+        component: CustomConfigurationsListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: CustomConfigurationsRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'devices',
-        component: DeviceDemographicsComponent,
+        component: DevicesListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: DevicesRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'facilities',
-        component: FacilityDemographicsComponent,
+        component: FacilitiesListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: FacilitiesRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'locations',
-        component: LocationDemographicsComponent,
+        component: LocationsListDemographicsComponent,
+        children: [
+          {
+            path: ':id',
+            component: LocationsRecordDemographicsComponent,
+          },
+        ],
       },
       {
         path: 'personnel',
@@ -67,10 +107,6 @@ const appRoutes: Routes = [
             component: PersonnelRecordDemographicsComponent,
           },
         ],
-      },
-      {
-        path: 'dashboard',
-        component: DashboardDemographicsComponent,
       },
       {
         path: 'vehicles',

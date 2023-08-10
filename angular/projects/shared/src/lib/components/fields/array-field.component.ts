@@ -14,6 +14,7 @@ export class ArrayFieldComponent extends BaseFieldComponent {
   @Output() sorted = new EventEmitter<any>();
   @ContentChild('item') itemTemplate: TemplateRef<any> | null = null;
   @ContentChild('form') formTemplate: TemplateRef<any> | null = null;
+  @ContentChild('header') headerTemplate: TemplateRef<any> | null = null;
 
   onClick(event: MouseEvent) {
     const target = <HTMLElement>event.target;

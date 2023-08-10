@@ -14,11 +14,37 @@
     <ng-template let-record="record" let-error="error">
       <div *ngIf="states.length > 0" class="mb-3">
         <shared-select-field id="stateId" label="State" [source]="record" [target]="record" [error]="error">
-          <option *ngFor="let state of states" [value]="state.id">{{state.name}}</option>
+          <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
         </shared-select-field>
       </div>
       <div class="mb-3">
-        <shared-text-field id="stateUniqueId" label="State Unique Id" [source]="record" [target]="record" [error]="error"></shared-text-field>
+        <shared-text-field
+          id="nemsisVersion"
+          label="NEMSIS Version"
+          [source]="record"
+          [target]="record"
+          [error]="error"
+        ></shared-text-field>
+      </div>
+      <div class="mb-3">
+        <shared-object-field
+          id="stateDataSetId"
+          label="State Data Set"
+          [source]="record"
+          [target]="record"
+          [error]="error"
+          objectNameProperty="displayVersion"
+          objectApiPath="nemsisStateDataSets"
+        ></shared-object-field>
+      </div>
+      <div class="mb-3">
+        <shared-text-field
+          id="stateUniqueId"
+          label="State Unique Id"
+          [source]="record"
+          [target]="record"
+          [error]="error"
+        ></shared-text-field>
       </div>
       <div class="mb-3">
         <shared-text-field id="number" label="Number" [source]="record" [target]="record" [error]="error"></shared-text-field>
@@ -27,7 +53,14 @@
         <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
       <div *ngIf="record.isClaimed" class="mb-3">
-        <shared-object-field id="psapId" label="PSAP" [source]="record" [target]="record" [error]="error" [objectFetchHandler]="onFetchPsap" [searchHandler]="onSearchPsap"></shared-object-field>
+        <shared-object-field
+          id="psapId"
+          label="PSAP"
+          [source]="record"
+          [target]="record"
+          [error]="error"
+          objectApiPath="psaps"
+        ></shared-object-field>
       </div>
       <div *ngIf="record.isClaimed" class="mb-3">
         <shared-text-field id="subdomain" label="Subdomain" [source]="record" [target]="record" [error]="error"></shared-text-field>

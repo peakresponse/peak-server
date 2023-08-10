@@ -74,15 +74,22 @@ router.post(
   })
 );
 
-router.get('/me', (req, res) => {
-  if (!req.agency) {
-    res.status(HttpStatus.NOT_FOUND).end();
-  } else {
-    const data = req.agency.toJSON();
-    data.message = req.agency.getLocalizedInvitationMessage(res);
-    res.json(data);
-  }
-});
+router.get(
+  '/me',
+  helpers.async(async (req, res) => {
+    if (!req.agency) {
+      res.status(HttpStatus.NOT_FOUND).end();
+    } else {
+      const data = req.agency.toJSON();
+      data.message = req.agency.getLocalizedInvitationMessage(res);
+      const version = await req.agency.getVersion({ include: ['stateDataSet'] });
+      data.version = version?.toJSON();
+      const draftVersion = await req.agency.getDraftVersion();
+      data.draftVersion = draftVersion?.toJSON();
+      res.json(data);
+    }
+  })
+);
 
 router.get(
   '/validate',
@@ -100,7 +107,7 @@ router.get(
         /// check if it already exists
         agency = await models.Agency.findOne({
           attributes: ['id'],
-          where: { subdomain },
+          where: { subdomain, isDraft: false },
         });
         if (agency) {
           res.status(HttpStatus.CONFLICT).end();
@@ -119,7 +126,7 @@ router.get(
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const agency = await models.Agency.findByPk(req.params.id, {
-      include: [{ model: models.Agency, as: 'claimedAgency' }],
+      include: [{ model: models.Agency, as: 'claimedAgency', required: false }, 'stateDataSet'],
     });
     if (agency) {
       res.json(agency.toJSON());
@@ -137,7 +144,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       agency = await models.Agency.findByPk(req.params.id, { transaction });
       if (agency) {
-        const attributes = ['stateId', 'stateUniqueId', 'number', 'name'];
+        const attributes = ['nemsisVersion', 'stateDataSetId', 'stateId', 'stateUniqueId', 'number', 'name'];
         if (agency.isClaimed) {
           attributes.push('psapId', 'subdomain', 'routedUrl');
         }

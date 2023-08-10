@@ -56,7 +56,7 @@ async function loadAgency(req, res, next) {
   const subdomain = getAgencySubdomain(req);
   if (subdomain) {
     req.agency = await models.Agency.findOne({
-      where: { subdomain: { [Op.iLike]: subdomain } },
+      where: { subdomain: { [Op.iLike]: subdomain }, isDraft: false },
     });
     if (!req.agency) {
       if (req.accepts('html')) {
@@ -120,11 +120,11 @@ async function requireLogin(req, res, next, role) {
       const employment = await req.user.isEmployedBy(req.agency);
       isAllowed = employment !== null;
       /// check for role, if any
-      if (role) {
+      if (isAllowed && role) {
         if (Array.isArray(role)) {
-          isAllowed = employment.isOwner || role.filter((r) => employment.roles.include(r)).length > 0;
+          isAllowed = employment.isOwner || role.filter((r) => employment.roles.includes(r)).length > 0;
         } else {
-          isAllowed = employment.isOwner || employment.roles.include(role);
+          isAllowed = employment.isOwner || employment.roles.includes(role);
         }
       }
     }
@@ -141,7 +141,7 @@ async function requireLogin(req, res, next, role) {
 function requireAgency(role) {
   return (req, res, next) => {
     /// require that this request be on an agency subdomain...
-    if (!req.agency) {
+    if (!req.agency && !req.user?.isAdmin) {
       sendErrorForbidden(req, res);
     } else {
       /// ...by an active employed user

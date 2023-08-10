@@ -1,5 +1,5 @@
 <ng-template #content>
-  <div class="modal-header">                      
+  <div class="modal-header">
     <button type="button" class="btn btn--sm" aria-label="Close" (click)="onDismiss()">
       <i class="pr-icon pr-icon-24-exit"></i>
     </button>
@@ -10,11 +10,17 @@
     <div class="modal-footer">
       <ng-content select=".modal-footer"></ng-content>
       <div>
-        <button *ngIf="dismissLabel" ngbAutofocus type="button" class="btn btn--sm btn--secondary" (click)="onDismiss()">{{dismissLabel}}</button>
+        <button *ngIf="dismissLabel" ngbAutofocus type="button" class="btn btn--sm btn--secondary" (click)="onDismiss()">
+          {{ dismissLabel }}
+        </button>
       </div>
-      <div>
-        <button *ngIf="dangerLabel" ngbAutofocus type="button" class="btn btn--sm btn--danger" (click)="onDanger()">{{dangerLabel}}</button>
-        <button *ngIf="confirmLabel" ngbAutofocus type="button" class="btn btn--sm btn--primary" (click)="onConfirm()">{{confirmLabel}}</button>
+      <div *ngIf="dangerLabel || confirmLabel">
+        <button *ngIf="dangerLabel" ngbAutofocus type="button" class="btn btn--sm btn--danger" (click)="onDanger()">
+          {{ dangerLabel }}
+        </button>
+        <button *ngIf="confirmLabel" ngbAutofocus type="button" class="btn btn--sm btn--primary" (click)="onConfirm()">
+          {{ confirmLabel }}
+        </button>
       </div>
     </div>
   </fieldset>

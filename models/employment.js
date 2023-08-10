@@ -2,10 +2,9 @@ const _ = require('lodash');
 const moment = require('moment');
 const { Op, ValidationError, ValidationErrorItem } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const mailer = require('../emails/mailer');
-const nemsis = require('../lib/nemsis');
 
 const { Base } = require('./base');
 
@@ -24,9 +23,24 @@ module.exports = (sequelize, DataTypes) => {
       return Roles;
     }
 
+    static get xsdPath() {
+      return 'dPersonnel_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'dPersonnel';
+    }
+
+    static get groupTag() {
+      return 'dPersonnel.PersonnelGroup';
+    }
+
     static associate(models) {
       // associations can be defined here
-      Employment.belongsTo(models.Agency, { as: 'agency' });
+      Employment.belongsTo(models.Version, { as: 'version' });
+      Employment.belongsTo(Employment, { as: 'draftParent' });
+      Employment.hasOne(Employment, { as: 'draft', foreignKey: 'draftParentId' });
+      Employment.belongsTo(models.Agency, { as: 'createdByAgency' });
       Employment.belongsTo(models.User, { as: 'user' });
       Employment.belongsTo(models.User, { as: 'updatedBy' });
       Employment.belongsTo(models.User, { as: 'createdBy' });
@@ -63,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async sendInvitationEmail(options) {
-      const agency = await this.getAgency(options);
+      const agency = await this.getCreatedByAgency(options);
       const user = await this.getCreatedBy(options);
       await mailer.send({
         template: 'invitation',
@@ -96,6 +110,7 @@ module.exports = (sequelize, DataTypes) => {
       const attributes = { ...this.get() };
       const data = _.pick(attributes, [
         'id',
+        'isDraft',
         'userId',
         'firstName',
         'middleName',
@@ -114,9 +129,15 @@ module.exports = (sequelize, DataTypes) => {
         'status',
         'statusOn',
         'data',
+        'isValid',
+        'validationErrors',
         'createdAt',
         'updatedAt',
+        'archivedAt',
       ]);
+      if (this.draft) {
+        data.draft = this.draft.toJSON();
+      }
       if (this.user) {
         data.user = this.user.toJSON();
       }
@@ -126,6 +147,9 @@ module.exports = (sequelize, DataTypes) => {
 
   Employment.init(
     {
+      isDraft: {
+        type: DataTypes.BOOLEAN,
+      },
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -133,19 +157,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       lastName: {
         type: DataTypes.STRING,
-        field: 'last_name',
       },
       firstName: {
         type: DataTypes.STRING,
-        field: 'first_name',
       },
       middleName: {
         type: DataTypes.STRING,
-        field: 'middle_name',
       },
       email: {
         type: DataTypes.CITEXT,
-        field: 'email',
       },
       fullName: {
         type: DataTypes.VIRTUAL,
@@ -180,48 +200,38 @@ module.exports = (sequelize, DataTypes) => {
       },
       invitationCode: {
         type: DataTypes.UUID,
-        field: 'invitation_code',
       },
       invitationAt: {
         type: DataTypes.DATE,
-        field: 'invitation_at',
       },
       isPending: {
         type: DataTypes.BOOLEAN,
-        field: 'is_pending',
         allowNull: false,
         defaultValue: false,
       },
       approvedAt: {
         type: DataTypes.DATE,
-        field: 'approved_at',
       },
       refusedAt: {
         type: DataTypes.DATE,
-        field: 'refused_at',
       },
       status: {
         type: DataTypes.STRING,
       },
       statusOn: {
         type: DataTypes.DATEONLY,
-        field: 'status_on',
       },
       primaryJobRole: {
         type: DataTypes.STRING,
-        field: 'primary_job_role',
       },
       hiredOn: {
         type: DataTypes.DATEONLY,
-        field: 'hired_on',
       },
       startedOn: {
         type: DataTypes.DATEONLY,
-        field: 'started_on',
       },
       endedOn: {
         type: DataTypes.DATEONLY,
-        field: 'ended_on',
       },
       isActive: {
         type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['isPending', 'refusedAt', 'endedOn']),
@@ -231,13 +241,17 @@ module.exports = (sequelize, DataTypes) => {
       },
       isOwner: {
         type: DataTypes.BOOLEAN,
-        field: 'is_owner',
       },
       roles: DataTypes.ARRAY(DataTypes.ENUM('BILLING', 'CONFIGURATION', 'PERSONNEL', 'REPORTING')),
       data: DataTypes.JSONB,
       isValid: {
         type: DataTypes.BOOLEAN,
-        field: 'is_valid',
+      },
+      validationErrors: {
+        type: DataTypes.JSONB,
+      },
+      archivedAt: {
+        type: DataTypes.DATE,
       },
     },
     {
@@ -246,14 +260,9 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'employments',
       underscored: true,
       validate: {
-        async schema() {
+        async extra() {
           const errors = [];
           if (this.userId) {
-            this.validationError = await nemsis.validateSchema('dPersonnel_v3.xsd', 'dPersonnel', 'dPersonnel.PersonnelGroup', this.data);
-            this.isValid = this.validationError === null;
-            if (!this.isValid) {
-              throw this.validationError;
-            }
             // perform some extra validations since EVERYTHING is optional in NEMSIS
             // require at least first name, last name for existing users
             if (!this.lastName) {
@@ -294,6 +303,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Employment.addDraftScopes();
+
   Employment.addScope('active', {
     where: {
       endedOn: {
@@ -315,7 +326,7 @@ module.exports = (sequelize, DataTypes) => {
     };
   });
 
-  Employment.beforeValidate((record, options) => {
+  Employment.beforeValidate(async (record, options) => {
     record.syncNemsisId(options);
     record.syncFieldAndNemsisValue('lastName', ['dPersonnel.NameGroup', 'dPersonnel.01'], options);
     record.syncFieldAndNemsisValue('firstName', ['dPersonnel.NameGroup', 'dPersonnel.02'], options);
@@ -326,10 +337,11 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('hiredOn', ['dPersonnel.33'], options);
     record.syncFieldAndNemsisValue('primaryJobRole', ['dPersonnel.34'], options);
     if (!record.userId && !record.invitationCode) {
-      record.setDataValue('invitationCode', uuid.v4());
+      record.setDataValue('invitationCode', uuidv4());
       record.setDataValue('invitationAt', new Date());
     }
     record._validationTransaction = options.transaction;
+    await record.xsdValidate(options);
   });
 
   Employment.afterValidate((record) => {

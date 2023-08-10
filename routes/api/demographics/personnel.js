@@ -7,6 +7,7 @@ const cache = require('../../../lib/cache');
 const models = require('../../../models');
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
+const base = require('./base');
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get(
     const page = req.query.page || 1;
     const options = {
       page,
-      where: { agencyId: req.agency.id },
+      where: { createdByAgencyId: req.agency.id },
       order: [
         ['last_name', 'ASC NULLS FIRST'],
         ['first_name', 'ASC NULLS FIRST'],
@@ -48,7 +49,7 @@ router.post(
   helpers.async(async (req, res) => {
     const record = await models.Employment.create({
       ..._.pick(req.body, ['firstName', 'lastName', 'email', 'data']),
-      agencyId: req.agency.id,
+      createdByAgencyId: req.agency.id,
       createdById: req.user.id,
       updatedById: req.user.id,
     });
@@ -97,7 +98,7 @@ router.post(
           await models.Employment.create({
             fullName: row.fullName,
             email: row.email,
-            agencyId: req.agency.id,
+            createdByAgencyId: req.agency.id,
             createdById: req.user.id,
             updatedById: req.user.id,
           });
@@ -141,7 +142,7 @@ router.post(
       if (invitationCode) {
         /// look up the corresponding employment record, associate
         try {
-          employment = await models.Employment.findOne({
+          employment = await models.Employment.scope('finalOrNew').findOne({
             where: {
               invitationCode: req.body.invitationCode,
             },
@@ -154,7 +155,7 @@ router.post(
         }
       } else {
         /// look for an employment with a matching email
-        employment = await models.Employment.findOne({
+        employment = await models.Employment.scope('finalOrNew').findOne({
           where: {
             email: user.email,
           },
@@ -174,7 +175,7 @@ router.post(
         /// create a pending employment
         if (!employment) {
           employment = models.Employment.build();
-          employment.agencyId = req.agency.id;
+          employment.createdByAgencyId = req.agency.id;
           employment.createdById = user.id;
         }
         /// mark pending
@@ -191,60 +192,6 @@ router.post(
   })
 );
 
-router.get(
-  '/:id',
-  interceptors.requireAgency(),
-  helpers.async(async (req, res) => {
-    const record = await models.Employment.findOne({
-      where: {
-        id: req.params.id,
-        agencyId: req.agency.id,
-      },
-      include: ['user'],
-    });
-    if (record) {
-      res.json(record.toJSON());
-    } else {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
-  })
-);
-
-router.put(
-  '/:id',
-  interceptors.requireAgency(),
-  helpers.async(async (req, res) => {
-    let record;
-    await models.sequelize.transaction(async (transaction) => {
-      record = await models.Employment.findOne({
-        where: {
-          id: req.params.id,
-          agencyId: req.agency.id,
-        },
-        include: ['user'],
-        transaction,
-      });
-      if (record) {
-        record = await record.update(_.pick(req.body, ['data']), { transaction });
-        if (!record.isValid) {
-          throw record.validationError;
-        }
-        const { user } = record;
-        if (user) {
-          user.setFromEmployment(record);
-          user.set(_.pick(req.body.user, ['position']));
-          await user.save({ transaction });
-        }
-      }
-    });
-    if (record) {
-      res.json(record.toJSON());
-    } else {
-      res.status(HttpStatus.NOT_FOUND).end();
-    }
-  })
-);
-
 router.post(
   '/:id/resend-invitation',
   interceptors.requireAgency(),
@@ -254,7 +201,7 @@ router.post(
       record = await models.Employment.findOne({
         where: {
           id: req.params.id,
-          agencyId: req.agency.id,
+          createdByAgencyId: req.agency.id,
         },
         include: ['user'],
         transaction,
@@ -271,5 +218,19 @@ router.post(
     }
   })
 );
+
+base.addAllRoutes(router, models.Employment, {
+  index: {
+    order: [
+      ['last_name', 'ASC NULLS FIRST'],
+      ['first_name', 'ASC NULLS FIRST'],
+      ['middle_name', 'ASC NULLS FIRST'],
+      ['email', 'ASC'],
+    ],
+    serializer(docs) {
+      return docs.map((d) => d.toJSON());
+    },
+  },
+});
 
 module.exports = router;

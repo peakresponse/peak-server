@@ -1,4 +1,15 @@
-<shared-wizard [isNextVisible]="false" [isDoneVisible]="isDone" (done)="onDone()" [isSubmitVisible]="!isDone" [isSubmitEnabled]="isValid" (submit)="onSubmit()" [isBackVisible]="!isDone" (back)="onBack()" [isCancelVisible]="!isDone" (cancel)="onCancel()">
+<shared-wizard
+  [isNextVisible]="false"
+  [isDoneVisible]="isDone"
+  (done)="onDone()"
+  [isSubmitVisible]="!isDone"
+  [isSubmitEnabled]="isValid"
+  (submit)="onSubmit()"
+  [isBackVisible]="!isDone"
+  (back)="onBack()"
+  [isCancelVisible]="!isDone"
+  (cancel)="onCancel()"
+>
   <ng-container class="wizard__header">
     <ng-container *ngIf="!isDone">
       <h1 *ngIf="reason == 'state'" i18n>Sorry, we’re not yet available in your state.</h1>
@@ -19,8 +30,12 @@
     <ng-container *ngIf="!isDone">
       <div class="row narrow">
         <div class="col">
-          <p *ngIf="reason == 'state'" i18n>Please fill out your details to let us know you’re interested and to be notified as soon as sign-ups are available.</p>
-          <p *ngIf="reason == 'agency'" i18n>Please fill out your details to be notified as soon as we confirm and add your agency to the list.</p>
+          <p *ngIf="reason == 'state'" i18n>
+            Please fill out your details to let us know you’re interested and to be notified as soon as sign-ups are available.
+          </p>
+          <p *ngIf="reason == 'agency'" i18n>
+            Please fill out your details to be notified as soon as we confirm and add your agency to the list.
+          </p>
         </div>
       </div>
       <div class="row narrow">
@@ -38,7 +53,14 @@
       <div class="row narrow">
         <div class="col-md-6">
           <div class="mb-3">
-            <shared-text-field #firstEl id="firstName" label="First Name" placeholder="Jane" [source]="data" [target]="data"></shared-text-field>
+            <shared-text-field
+              #firstEl
+              id="firstName"
+              label="First Name"
+              placeholder="Jane"
+              [source]="data"
+              [target]="data"
+            ></shared-text-field>
           </div>
         </div>
         <div class="col-md-6">
@@ -49,7 +71,13 @@
       </div>
       <div class="row narrow">
         <div class="col">
-          <shared-text-field id="email" label="Email" placeholder="jane@firedepartment.gov" [source]="data" [target]="data"></shared-text-field>
+          <shared-text-field
+            id="email"
+            label="Email"
+            placeholder="jane@firedepartment.gov"
+            [source]="data"
+            [target]="data"
+          ></shared-text-field>
         </div>
       </div>
       <input type="submit" class="d-none" value="Next" />

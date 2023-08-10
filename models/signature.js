@@ -1,7 +1,6 @@
 const _ = require('lodash');
 
 const { Base } = require('./base');
-const nemsis = require('../lib/nemsis');
 
 module.exports = (sequelize, DataTypes) => {
   class Signature extends Base {
@@ -89,14 +88,12 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Signature',
       tableName: 'signatures',
       underscored: true,
-      validate: {
-        async schema() {
-          this.validationErrors = await nemsis.validateSchema('eOther_v3.xsd', 'eOther', 'eOther.SignatureGroup', this.data);
-          this.isValid = this.validationErrors === null;
-        },
-      },
     }
   );
+
+  Signature.beforeSave(async (record, options) => {
+    await record.validateNemsisData('eOther_v3.xsd', 'eOther', 'eOther.SignatureGroup', options);
+  });
 
   Signature.afterSave(async (signature, options) => {
     if (!signature.canonicalId) {

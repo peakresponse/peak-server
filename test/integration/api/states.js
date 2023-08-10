@@ -1,17 +1,20 @@
 /* eslint-disable func-names, no-await-in-loop */
 const assert = require('assert');
+const fs = require('fs');
 const HttpStatus = require('http-status-codes');
+const path = require('path');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
-const models = require('../../../models');
-const fccMocks = require('../../mocks/fcc');
-const geonamesMocks = require('../../mocks/geonames');
-const nemsisMocks = require('../../mocks/nemsis');
+const nemsisStates = require('../../../lib/nemsis/states');
 
 describe('/api/states', () => {
   let testSession;
+  let repoPath;
+  before(() => {
+    repoPath = path.resolve(__dirname, '../../../nemsis/repositories/delaware/3.5.0');
+  });
 
   beforeEach(async () => {
     await helpers.loadFixtures(['users', 'cities', 'counties', 'states']);
@@ -21,106 +24,94 @@ describe('/api/states', () => {
 
   describe('GET /', () => {
     it('should return a list of State records', async () => {
-      const response = await testSession.get('/api/states/').expect(200);
+      const response = await testSession.get('/api/states/').expect(HttpStatus.OK);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 8);
+      assert.deepStrictEqual(data.length, 17);
       assert.deepStrictEqual(data[0].name, 'Alabama');
     });
   });
 
-  describe('POST /:id/configure', () => {
-    it('should configure a Washington State record and associated Agency and Facility records', async function () {
-      if (!process.env.CI) {
-        this.skip();
-      }
-      fccMocks.mockPsapRegistryDownloads();
-      geonamesMocks.mockWashingtonDownloads();
-      nemsisMocks.mockReposRequest();
-      nemsisMocks.mockWashingtonFilesRequest();
-      nemsisMocks.mockWashingtonDownloads();
-
-      let response = await testSession.post('/api/states/53/configure').expect(HttpStatus.ACCEPTED);
-      /// start polling for completion
-      for (;;) {
-        response = await testSession.get(`/api/states/53`);
-        if (response.headers['x-status-code'] === '202') {
-          await helpers.sleep(1000);
-        } else {
-          assert.deepStrictEqual(response.status, HttpStatus.OK);
-          break;
-        }
-      }
-      const state = await models.State.findOne({ where: { id: '53' } });
-      assert(state);
-      assert.deepStrictEqual(state.name, 'Washington');
-      assert.deepStrictEqual(await state.countAgencies(), 495);
-      assert.deepStrictEqual(await models.Facility.count(), 159);
+  context('uninitialized', () => {
+    before(() => {
+      fs.rmSync(repoPath, { force: true, recursive: true });
     });
 
-    it('should configure a California State record and associated Agency and Facility records', async function () {
-      if (!process.env.CI) {
-        this.skip();
-      }
-      fccMocks.mockPsapRegistryDownloads();
-      geonamesMocks.mockCaliforniaDownloads();
-      nemsisMocks.mockReposRequest();
-      nemsisMocks.mockCaliforniaFilesRequest();
-      nemsisMocks.mockCaliforniaDownloads();
-
-      let response = await testSession.post('/api/states/06/configure').expect(HttpStatus.ACCEPTED);
-      /// start polling for completion
-      for (;;) {
-        response = await testSession.get(`/api/states/06`);
-        if (response.headers['x-status-code'] === '202') {
-          await helpers.sleep(1000);
-        } else {
-          assert(response.status, HttpStatus.OK);
-          break;
-        }
-      }
-      const state = await models.State.findOne({ where: { id: '06' } });
-      assert(state);
-      assert.deepStrictEqual(state.name, 'California');
-      assert.deepStrictEqual(await state.countAgencies(), 1450);
-      assert.deepStrictEqual(await models.Facility.count(), 119);
-      const facility = await models.Facility.findOne({
-        where: { stateId: '06', locationCode: '20046' },
-        rejectOnEmpty: true,
+    describe('GET /:id/repository', () => {
+      it('returns the initialization status of a state repository', async () => {
+        const response = await testSession.get('/api/states/10/repository').expect(HttpStatus.OK);
+        assert.deepStrictEqual(response.body, {
+          initialized: false,
+          dataSetVersions: [],
+          demSchematronVersions: [],
+          emsSchematronVersions: [],
+        });
       });
-      assert.deepStrictEqual(facility.name, 'Sutter Health CPMC');
-      assert.deepStrictEqual(facility.type, '1701005');
-      assert.deepStrictEqual(facility.address, '3698 Sacramento Street');
-      assert.deepStrictEqual(facility.cityId, '2411786');
-      assert.deepStrictEqual(facility.countyId, '06075');
-      assert.deepStrictEqual(facility.zip, '94118');
+    });
+
+    describe('PUT /:id/repository', () => {
+      it('pulls the specified state repository', async () => {
+        const response = await testSession.put('/api/states/10/repository').expect(HttpStatus.OK);
+        assert.deepStrictEqual(response.body, {
+          initialized: true,
+          dataSetVersions: [
+            '2023-06-02-370fa47febdf457374a7dd1907dfefacd539bda4',
+            '2023-05-27-ff13b8c96ce333b974669b3aacb6442faf9d9ef8',
+            '2023-05-18-4ca62d3b2dc912a13e478a876bb60bd41ced0e2e',
+            '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
+            '2022-09-01-156cb80db204e903a77bcb2eaccf36c0eae9796d',
+            '2019-11-26-b4feff0d87c761c9205cf0a194f4d410f0cbec34',
+            '2019-10-30-5658edf91fe2e90d272ce31859d4df2bf7cbd8e2',
+            '2019-10-08-e4feccf266de894e5bf45e99d7bf3e978e5bb386',
+            '2019-09-30-ffa327cf250d2065d0840724176bf7dcb77cfadc',
+            '2019-04-26-b40131057feb8406ab0d1948eab992c1b42ccd36',
+          ],
+          demSchematronVersions: [],
+          emsSchematronVersions: [
+            '2023-06-02-933643233e3928ff9abc6360a34ff4ee117f025b',
+            '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
+            '2019-03-05-33a41c3727ae4a37943f2524bc3243f78a8c523c',
+            '2017-10-04-2a6a2b7cfd26e0d380c62762348de2751896bade',
+            '2017-09-29-17bf40b4b0d29f86b72d4a716a8581d4d661c48e',
+          ],
+        });
+      });
     });
   });
 
-  describe('GET /:id', () => {
-    it('should return accepted for a record in processing', async () => {
-      await models.State.update(
-        {
-          dataSet: {
-            status: {
-              code: 202,
-              message: 'Processing',
-            },
-          },
-        },
-        { where: { id: '01' } }
-      );
-      await testSession.get(`/api/states/01`).expect(HttpStatus.OK).expect('X-Status', 'Processing').expect('X-Status-Code', '202');
+  context('initialized', () => {
+    before(async () => {
+      const repo = nemsisStates.getNemsisStateRepo('10', '3.5.0');
+      await repo.pull();
     });
 
-    it('should return ok for a record done processing', async () => {
-      await models.State.update(
-        {
-          dataSet: {},
-        },
-        { where: { id: '01' } }
-      );
-      await testSession.get(`/api/states/01`).expect(HttpStatus.OK);
+    describe('GET /:id/repository', () => {
+      it('returns the data set and schematron versions for a state repository', async () => {
+        const response = await testSession.get('/api/states/10/repository').expect(HttpStatus.OK);
+        assert.deepStrictEqual(response.body, {
+          initialized: true,
+          dataSetVersions: [
+            '2023-06-02-370fa47febdf457374a7dd1907dfefacd539bda4',
+            '2023-05-27-ff13b8c96ce333b974669b3aacb6442faf9d9ef8',
+            '2023-05-18-4ca62d3b2dc912a13e478a876bb60bd41ced0e2e',
+            '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
+            '2022-09-01-156cb80db204e903a77bcb2eaccf36c0eae9796d',
+            '2019-11-26-b4feff0d87c761c9205cf0a194f4d410f0cbec34',
+            '2019-10-30-5658edf91fe2e90d272ce31859d4df2bf7cbd8e2',
+            '2019-10-08-e4feccf266de894e5bf45e99d7bf3e978e5bb386',
+            '2019-09-30-ffa327cf250d2065d0840724176bf7dcb77cfadc',
+            '2019-04-26-b40131057feb8406ab0d1948eab992c1b42ccd36',
+          ],
+          demSchematronVersions: [],
+          emsSchematronVersions: [
+            '2023-06-02-933643233e3928ff9abc6360a34ff4ee117f025b',
+            '2023-03-02-b9155c6abb9902ffa9d9726f707b3f099d406039',
+            '2019-03-05-33a41c3727ae4a37943f2524bc3243f78a8c523c',
+            '2017-10-04-2a6a2b7cfd26e0d380c62762348de2751896bade',
+            '2017-09-29-17bf40b4b0d29f86b72d4a716a8581d4d661c48e',
+          ],
+        });
+      });
     });
   });
 });

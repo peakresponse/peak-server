@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -e
+
+# check if master NEMSIS public repository history has been set up
+if [ ! -d "nemsis/repositories/nemsis_public/master" ]; then
+  # clone without any tree or file data, without initial checkout
+  git clone --filter=blob:none --filter=tree:0 --no-checkout https://stash.utahdcc.org/stash/scm/nep/nemsis_public.git nemsis/repositories/nemsis_public/master
+fi
+# get latest commits in master
+cd nemsis/repositories/nemsis_public/master
+git pull --ff-only
+cd ../../../..
+
+# clone specific version if specified
+TAG=$1
+if [ -n "$TAG" ]; then
+  if [ ! -d "nemsis/repositories/nemsis_public/$TAG" ]; then
+    # clone without any tree or file data, without initial checkout
+    git clone --filter=blob:none --filter=tree:0 --no-checkout https://stash.utahdcc.org/stash/scm/nep/nemsis_public.git nemsis/repositories/nemsis_public/$TAG
+    cd nemsis/repositories/nemsis_public/$TAG
+    git sparse-checkout init --cone
+    git sparse-checkout set XSDs/NEMSIS_XSDs WSDL Schematron/rules Translation
+    git checkout $TAG
+    cd ../../../..
+  fi
+fi

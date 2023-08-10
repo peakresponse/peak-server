@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SortablejsModule } from 'ngx-sortablejs';
 
+import { DropzoneComponent } from './components/dropzone.component';
 import { ErrorComponent } from './components/error.component';
 import { FormComponent } from './components/form.component';
 import { ListComponent } from './components/list.component';
@@ -29,13 +32,17 @@ import { SearchFieldComponent } from './components/fields/search-field.component
 import { SelectFieldComponent } from './components/fields/select-field.component';
 import { TextFieldComponent } from './components/fields/text-field.component';
 
-import { XsdBaseComponent } from './components/fields/xsd/xsd-base.component';
-import { XsdElementWrapperComponent } from './components/fields/xsd/xsd-element-wrapper.component';
-import { XsdElementComponent } from './components/fields/xsd/xsd-element.component';
-import { XsdFormGroupComponent } from './components/fields/xsd/xsd-form-group.component';
-import { XsdInputComponent } from './components/fields/xsd/xsd-input.component';
-import { XsdSelectStateComponent } from './components/fields/xsd/xsd-select-state.component';
-import { XsdSelectComponent } from './components/fields/xsd/xsd-select.component';
+import { XsdBaseComponent } from './components/xsd/xsd-base.component';
+import { XsdListComponent } from './components/xsd/xsd-list.component';
+import { XsdRecordComponent } from './components/xsd/xsd-record.component';
+
+import { XsdElementBaseComponent } from './components/xsd/elements/xsd-element-base.component';
+import { XsdElementWrapperComponent } from './components/xsd/elements/xsd-element-wrapper.component';
+import { XsdElementComponent } from './components/xsd/elements/xsd-element.component';
+import { XsdFormGroupComponent } from './components/xsd/elements/xsd-form-group.component';
+import { XsdInputComponent } from './components/xsd/elements/xsd-input.component';
+import { XsdSelectStateComponent } from './components/xsd/elements/xsd-select-state.component';
+import { XsdSelectComponent } from './components/xsd/elements/xsd-select.component';
 
 import { CommandFooterComponent } from './components/headers/command-footer.component';
 import { CommandHeaderComponent } from './components/headers/command-header.component';
@@ -49,10 +56,12 @@ import { DurationPipe } from './pipes/duration.pipe';
 import { ErrorPipe } from './pipes/error.pipe';
 import { GetPipe } from './pipes/get.pipe';
 import { InflectionPipe } from './pipes/inflection.pipe';
+import { VersionPipe } from './pipes/version.pipe';
 
 @NgModule({
   declarations: [
     // components
+    DropzoneComponent,
     ErrorComponent,
     FormComponent,
     ListComponent,
@@ -77,18 +86,22 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
-    // components/fields/xsd
+    // components/headers
+    CommandFooterComponent,
+    CommandHeaderComponent,
+    WelcomeHeaderComponent,
+    // components/xsd
     XsdBaseComponent,
+    XsdListComponent,
+    XsdRecordComponent,
+    // components/xsd/elements
+    XsdElementBaseComponent,
     XsdElementWrapperComponent,
     XsdElementComponent,
     XsdFormGroupComponent,
     XsdInputComponent,
     XsdSelectStateComponent,
     XsdSelectComponent,
-    // components/headers
-    CommandFooterComponent,
-    CommandHeaderComponent,
-    WelcomeHeaderComponent,
     // directives
     AutoloadDirective,
     DebouncedDirective,
@@ -98,10 +111,12 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     ErrorPipe,
     GetPipe,
     InflectionPipe,
+    VersionPipe,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, SortablejsModule.forRoot({ animation: 150 })],
+  imports: [CommonModule, FormsModule, NgbModule, NgxDropzoneModule, RouterModule, SortablejsModule.forRoot({ animation: 150 })],
   exports: [
     // components
+    DropzoneComponent,
     ErrorComponent,
     FormComponent,
     ListComponent,
@@ -126,8 +141,12 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     SearchFieldComponent,
     SelectFieldComponent,
     TextFieldComponent,
-    // components/fields/xsd
+    // components/xsd
     XsdBaseComponent,
+    XsdListComponent,
+    XsdRecordComponent,
+    // components/xsd/elements
+    XsdElementBaseComponent,
     XsdElementWrapperComponent,
     XsdElementComponent,
     XsdFormGroupComponent,
@@ -147,6 +166,7 @@ import { InflectionPipe } from './pipes/inflection.pipe';
     ErrorPipe,
     GetPipe,
     InflectionPipe,
+    VersionPipe,
   ],
 })
 export class SharedModule {}

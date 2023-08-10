@@ -5,7 +5,7 @@
   <ng-template let-record="record" let-error="error">
     <div class="mb-3">
       <shared-select-field id="stateId" label="State" [source]="record" [target]="record" [error]="error">
-        <option *ngFor="let state of states" [value]="state.id">{{state.name}}</option>
+        <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
       </shared-select-field>
     </div>
     <div class="mb-3">

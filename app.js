@@ -43,7 +43,6 @@ app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'node_module
 app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 app.use('/libraries/smoothscroll', express.static(path.join(__dirname, 'node_modules/smoothscroll-polyfill/dist')));
-app.use('/nemsis', express.static(path.join(__dirname, 'nemsis')));
 
 // set up session handler with an app reference so can be used by websocket server
 app.sessionParser = cookieSession({

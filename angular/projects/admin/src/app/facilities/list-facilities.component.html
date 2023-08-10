@@ -19,11 +19,11 @@
       <shared-list type="facilities" [search]="search">
         <ng-template let-record="record">
           <tr [routerLink]="['/facilities', record.id]">
-            <td>{{record.name}}</td>
-            <td>{{record.address}}</td>
-            <td>{{record.cityName}}</td>
-            <td>{{record.stateName}}</td>
-            <td>{{record.locationCode}}</td>
+            <td>{{ record.name }}</td>
+            <td>{{ record.address }}</td>
+            <td>{{ record.cityName }}</td>
+            <td>{{ record.stateName }}</td>
+            <td>{{ record.locationCode }}</td>
           </tr>
         </ng-template>
       </shared-list>

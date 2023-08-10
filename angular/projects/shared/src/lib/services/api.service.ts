@@ -149,15 +149,24 @@ export class ApiService {
         return this.delete(`/api/demographics/agency`);
       },
     },
-    configuration: {
+    configurations: {
       index: (params?: HttpParams): Observable<any> => {
         return this.get(`/api/demographics/configurations`, params);
       },
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/configurations`, data);
       },
+      import: (): Observable<any> => {
+        return this.post(`/api/demographics/configurations/import`, null);
+      },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/configurations/${id}`, params);
+      },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/configurations/${id}`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/configurations/${id}`);
       },
     },
     contacts: {
@@ -167,13 +176,34 @@ export class ApiService {
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/contacts`, data);
       },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/contacts/${id}`, params);
+      },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/contacts/${id}`, data);
       },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/contacts/${id}`);
+      },
     },
-    customConfiguration: {
+    customConfigurations: {
       index: (params?: HttpParams): Observable<any> => {
-        return this.get(`/api/demographics/custom-configuration`, params);
+        return this.get(`/api/demographics/custom-configurations`, params);
+      },
+      create: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/custom-configurations`, data);
+      },
+      import: (): Observable<any> => {
+        return this.post(`/api/demographics/custom-configurations/import`, null);
+      },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/custom-configurations/${id}`, params);
+      },
+      update: (id: string, data: any): Observable<any> => {
+        return this.put(`/api/demographics/custom-configurations/${id}`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/custom-configurations/${id}`);
       },
     },
     customResults: {
@@ -188,19 +218,34 @@ export class ApiService {
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/devices`, data);
       },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/devices/${id}`, params);
+      },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/devices/${id}`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/devices/${id}`);
       },
     },
     facilities: {
       index: (params?: HttpParams): Observable<any> => {
         return this.get(`/api/demographics/facilities`, params);
       },
+      import: (data: any): Observable<any> => {
+        return this.post(`/api/demographics/facilities/import`, data);
+      },
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/facilities`, data);
       },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/facilities/${id}`, params);
+      },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/facilities/${id}`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/facilities/${id}`);
       },
     },
     forms: {
@@ -227,8 +272,14 @@ export class ApiService {
       create: (data: any): Observable<any> => {
         return this.post(`/api/demographics/locations`, data);
       },
+      get: (id: string, params?: HttpParams): Observable<any> => {
+        return this.get(`/api/demographics/locations/${id}`, params);
+      },
       update: (id: string, data: any): Observable<any> => {
         return this.put(`/api/demographics/locations/${id}`, data);
+      },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/locations/${id}`);
       },
     },
     personnel: {
@@ -351,6 +402,48 @@ export class ApiService {
     },
   };
 
+  nemsis = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/nemsis', params);
+    },
+    pull: (): Observable<any> => {
+      return this.post('/api/nemsis/refresh', null);
+    },
+    install: (version: string): Observable<any> => {
+      return this.post('/api/nemsis/install', { version });
+    },
+  };
+
+  nemsisSchematrons = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/nemsis/schematrons', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post('/api/nemsis/schematrons', data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/nemsis/schematrons/${id}`, params);
+    },
+  };
+
+  nemsisStateDataSets = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/nemsis/state-data-sets', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post('/api/nemsis/state-data-sets', data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/nemsis/state-data-sets/${id}`, params);
+    },
+    import: (id: string): Observable<any> => {
+      return this.post(`/api/nemsis/state-data-sets/${id}/import`, null);
+    },
+    cancelImport: (id: string): Observable<any> => {
+      return this.delete(`/api/nemsis/state-data-sets/${id}/import`);
+    },
+  };
+
   patients = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/patients', params);
@@ -429,9 +522,6 @@ export class ApiService {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/states', params);
     },
-    new: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/states/new', params);
-    },
     create: (data: any): Observable<any> => {
       return this.post(`/api/states`, data);
     },
@@ -440,6 +530,27 @@ export class ApiService {
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/states/${id}`, params);
+    },
+    getAgencies: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/states/${id}/agencies`, params);
+    },
+    getCities: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/states/${id}/cities`, params);
+    },
+    getCounties: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/states/${id}/counties`, params);
+    },
+    getFacilities: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/states/${id}/facilities`, params);
+    },
+    getPsaps: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/states/${id}/psaps`, params);
+    },
+    getRepository: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/states/${id}/repository`, params);
+    },
+    initRepository: (id: string, params?: HttpParams): Observable<any> => {
+      return this.put(`/api/states/${id}/repository`, params);
     },
     update: (id: string, data: any): Observable<any> => {
       return this.patch(`/api/states/${id}`, data);
@@ -469,6 +580,27 @@ export class ApiService {
       let params = new HttpParams();
       params = params.set('lat', lat).set('lng', lng);
       return this.get(`/api/utils/geocode`, params);
+    },
+  };
+
+  versions = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/versions', params);
+    },
+    create: (): Observable<any> => {
+      return this.post('/api/versions', null);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/versions/${id}`, params);
+    },
+    preview: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/versions/${id}/preview`, params, { responseType: 'text' });
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/versions/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/versions/${id}`);
     },
   };
 }

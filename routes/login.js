@@ -29,8 +29,8 @@ router.post('/', (req, res, next) => {
       if (req.agency) {
         /// check if user is actively employed in the agency, if not a site admin
         if (!user.isAdmin) {
-          const employment = await models.Employment.findOne({
-            where: { agencyId: req.agency.id, userId: user.id },
+          const employment = await models.Employment.scope('finalOrNew').findOne({
+            where: { createdByAgencyId: req.agency.id, userId: user.id },
           });
           if (!employment || !employment.isActive) throw HttpStatus.FORBIDDEN;
         }
@@ -38,9 +38,9 @@ router.post('/', (req, res, next) => {
       } else if (!user.isAdmin) {
         /// check if user is a site admin- if not, check for an active agency employment or psap dispatcher
         const employments = (
-          await models.Employment.findAll({
+          await models.Employment.scope('finalOrNew').findAll({
             where: { userId: user.id },
-            include: [{ model: models.Agency, as: 'agency' }],
+            include: ['createdByAgency'],
           })
         ).filter((e) => e.isActive);
         /// if none, block from login
@@ -52,7 +52,7 @@ router.post('/', (req, res, next) => {
           }
         }
         /// else, collect agencies
-        req.agencies = employments.map((e) => e.agency);
+        req.agencies = employments.map((e) => e.createdByAgency);
       }
       req.logIn(user, (logInErr) => {
         if (logInErr) {

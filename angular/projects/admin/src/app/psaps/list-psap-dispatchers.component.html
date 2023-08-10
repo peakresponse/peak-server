@@ -22,8 +22,8 @@
     <shared-list type="dispatchers" [params]="params" [basePath]="'/psaps/' + psapId + '/dispatchers'">
       <ng-template let-records="records" let-record="record">
         <tr class="state" [routerLink]="['/psaps', psapId, 'dispatchers', record.id]">
-          <td>{{record.user.firstName}} {{record.user.lastName}} &lt;{{record.user.email}}&gt;</td>
-          <td>{{record.callSign}}</td>
+          <td>{{ record.user.firstName }} {{ record.user.lastName }} &lt;{{ record.user.email }}&gt;</td>
+          <td>{{ record.callSign }}</td>
         </tr>
       </ng-template>
     </shared-list>
