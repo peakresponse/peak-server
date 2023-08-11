@@ -28,3 +28,6 @@
     <button (click)="remValue(selectedValue)" tabindex="-1" class="btn btn--remove" type="button">Remove</button>
   </div>
 </div>
+<div *ngIf="otherAttributes; let otherAttributes">
+  {{ otherAttributes | json }}
+</div>

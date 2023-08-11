@@ -447,4 +447,20 @@ export class XsdElementBaseComponent {
     }
     return null;
   }
+
+  get otherAttributes(): any[] | undefined {
+    const otherAttributes: any[] = [];
+    let attributes = this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute'];
+    if (attributes) {
+      if (!Array.isArray(attributes)) {
+        attributes = [attributes];
+      }
+      for (const attribute of attributes) {
+        if (attribute._attributes?.name !== 'NV' && attribute._attributes?.name !== 'CorrelationID') {
+          otherAttributes.push(attribute);
+        }
+      }
+    }
+    return otherAttributes.length ? otherAttributes : undefined;
+  }
 }
