@@ -463,4 +463,11 @@ export class XsdElementBaseComponent {
     }
     return otherAttributes.length ? otherAttributes : undefined;
   }
+
+  displayAttributeName(name: string | undefined): string | undefined {
+    if (name) {
+      return inflection.transform(name, ['underscore', 'humanize', 'titleize']);
+    }
+    return undefined;
+  }
 }

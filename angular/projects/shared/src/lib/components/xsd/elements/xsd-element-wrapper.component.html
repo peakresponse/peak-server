@@ -9,7 +9,20 @@
 </ng-container>
 <div *ngIf="!isDisplayOnly" class="input-group">
   <ng-container *ngIf="!isNil">
-    <ng-container *ngTemplateOutlet="content"></ng-container>
+    <div *ngIf="otherAttributes; let otherAttributes; else: noOtherAttributes" class="array-field array-field--noclear form-floating">
+      <div class="array-field__item">
+        <div class="array-field__subitem">
+          <ng-container *ngTemplateOutlet="content"></ng-container>
+        </div>
+        <div *ngFor="let otherAttribute of otherAttributes" class="array-field__subitem">
+          <h5>{{ displayAttributeName(otherAttribute._attributes?.name) }}</h5>
+          {{ otherAttribute | json }}
+        </div>
+      </div>
+    </div>
+    <ng-template #noOtherAttributes>
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </ng-template>
   </ng-container>
   <div *ngIf="isNil" class="select-wrapper">
     <select [(ngModel)]="NV" [id]="formName + '-NV'" [name]="formName + '-NV'" class="select-wrapper__select">
@@ -27,7 +40,4 @@
   <div *ngIf="index !== undefined && !(isRequired && index == 0)" class="input-group-append">
     <button (click)="remValue(selectedValue)" tabindex="-1" class="btn btn--remove" type="button">Remove</button>
   </div>
-</div>
-<div *ngIf="otherAttributes; let otherAttributes">
-  {{ otherAttributes | json }}
 </div>
