@@ -14,6 +14,7 @@ export class XsdElementBaseComponent {
   @Input() xsd?: XsdSchema;
   @Input() record: any;
   @Input() element: any;
+  @Input() attribute: any;
   @Input() data: any;
   @Input() error: any;
   @Input() index?: number;
@@ -29,10 +30,16 @@ export class XsdElementBaseComponent {
       return this._type;
     }
     this._type = null;
-    // check for a type attribute
-    let name = this.element?._attributes?.type;
-    if (!name) {
-      name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
+    let name;
+    // check if we're working on the element or attribute level
+    if (this.attribute) {
+      name = this.attribute._attributes?.type;
+    } else {
+      // check for a type attribute
+      name = this.element?._attributes?.type;
+      if (!name) {
+        name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
+      }
     }
     if (name) {
       this._type = this.xsd?.getType(name);
