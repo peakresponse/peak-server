@@ -189,13 +189,29 @@ export class XsdElementBaseComponent {
   }
 
   get formName(): string {
-    if (this.index) {
-      return `${this.name}[${this.index}]`;
+    let name = this.name;
+    if (this.attribute) {
+      name = `${name}__${this.attribute._attributes?.name}`;
     }
-    return this.name;
+    if (this.index) {
+      name = `${name}[${this.index}]`;
+    }
+    return name;
   }
 
   get value(): string {
+    // attribute value
+    if (this.attribute) {
+      if (this.selectedValue) {
+        return this.selectedValue._attributes?.[this.attribute._attributes?.name];
+      }
+      const value = this.data?.[this.name]?._attributes?.[this.attribute._attributes?.name];
+      // if (this.isRequired && value === undefined) {
+      //   this.value = value;
+      // }
+      return value;
+    }
+    // element value
     const correlationId = this.correlationId;
     if (correlationId) {
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
@@ -227,6 +243,19 @@ export class XsdElementBaseComponent {
   }
 
   set value(value: string) {
+    // attribute value
+    if (this.attribute) {
+      if (this.selectedValue) {
+        this.selectedValue._attributes ||= {};
+        this.selectedValue._attributes[this.attribute._attributes?.name] = value;
+      } else {
+        this.data[this.name] ||= {};
+        this.data[this.name]._attributes ||= {};
+        this.data[this.name]._attributes[this.attribute._attributes?.name] = value;
+      }
+      return;
+    }
+    // element value
     const correlationId = this.correlationId;
     if (correlationId) {
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
@@ -473,7 +502,7 @@ export class XsdElementBaseComponent {
 
   displayAttributeName(name: string | undefined): string | undefined {
     if (name) {
-      return inflection.transform(name, ['underscore', 'humanize', 'titleize']);
+      return inflection.transform(name.replace(/\d+/g, ` $& `), ['underscore', 'humanize', 'titleize']);
     }
     return undefined;
   }
