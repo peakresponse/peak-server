@@ -59,13 +59,19 @@ async function generateDemoData() {
   // get the latest incident from the demo agency
   const latestDemo = await models.Incident.findOne({
     where: { psapId: psap.id },
-    order: [['number', 'DESC']],
+    order: [
+      ['sort', 'DESC'],
+      ['number', 'DESC'],
+    ],
   });
   // get the latest incident from sffd
   const latestSFFD = await models.Incident.findOne({
     where: { psapId: '588' },
     include: ['scene', 'dispatches'],
-    order: [['number', 'DESC']],
+    order: [
+      ['sort', 'DESC'],
+      ['number', 'DESC'],
+    ],
   });
   if (!latestSFFD) {
     return;
