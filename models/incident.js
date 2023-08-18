@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       const limit = options?.paginate ?? 25;
       const offset = (parseInt(options?.page ?? 1, 10) - 1) * limit;
       let searchConditions = '';
-      let joins = '';
+      // let joins = '';
+      const joins = '';
       let search = '';
       if (options?.search) {
         search = `%${options.search}%`;
