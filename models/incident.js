@@ -28,14 +28,14 @@ module.exports = (sequelize, DataTypes) => {
       let search = '';
       if (options?.search) {
         search = `%${options.search}%`;
-        joins = `
-         INNER JOIN scenes ON incidents.scene_id=scenes.id
-        `;
+        // joins = `
+        //  INNER JOIN scenes ON incidents.scene_id=scenes.id
+        // `;
         searchConditions = `
-         AND (incidents.number ILIKE :search
-         OR scenes.address1 ILIKE :search
-         OR scenes.address2 ILIKE :search)
-        `;
+         AND (incidents.number ILIKE :search)`;
+        //  OR scenes.address1 ILIKE :search
+        //  OR scenes.address2 ILIKE :search)
+        // `;
       }
       let conditions;
       if (type === 'Agency') {
