@@ -360,6 +360,20 @@ export class XsdElementBaseComponent {
   }
 
   delValue() {
+    if (this.attribute) {
+      if (this.selectedValue) {
+        delete this.selectedValue._attributes[this.attribute._attributes?.name];
+        if (isEmpty(this.selectedValue._attributes)) {
+          delete this.selectedValue._attributes;
+        }
+      } else {
+        delete this.data[this.name]._attributes[this.attribute._attributes?.name];
+        if (isEmpty(this.data[this.name]._attributes)) {
+          delete this.data[this.name]._attributes;
+        }
+      }
+      return;
+    }
     if (this.selectedValue) {
       if (this.selectedValue._text !== undefined) {
         delete this.selectedValue._text;
