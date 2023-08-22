@@ -8,53 +8,65 @@
   </div>
 </ng-container>
 <ng-container *ngIf="!isDisplayOnly">
+  <ng-container *ngIf="attribute">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
   <ng-container *ngIf="!attribute">
-    <ng-template #inputGroup>
+    <ng-template #nillableContent>
+      <ng-container *ngIf="!isNil">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </ng-container>
+      <div *ngIf="isNil" class="select-wrapper">
+        <select [(ngModel)]="NV" [id]="formName + '-NV'" [name]="formName + '-NV'" class="select-wrapper__select">
+          <option *ngFor="let nv of nilValues" [value]="nv['xs:restriction']['xs:enumeration']._attributes.value">
+            {{ nv['xs:restriction']['xs:enumeration']['xs:annotation']['xs:documentation']._text }}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="isNillable" class="input-group-append">
+        <div class="form-check">
+          <input [(ngModel)]="isNil" [id]="formName + '-nil'" tabindex="-1" type="checkbox" class="form-check-input" />
+          <label [for]="formName + '-nil'" class="form-check-label">Nil?</label>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #noOtherAttributes>
       <div class="input-group align-items-center">
-        <ng-container *ngIf="!isNil">
-          <ng-container *ngTemplateOutlet="content"></ng-container>
-        </ng-container>
-        <div *ngIf="isNil" class="select-wrapper">
-          <select [(ngModel)]="NV" [id]="formName + '-NV'" [name]="formName + '-NV'" class="select-wrapper__select">
-            <option *ngFor="let nv of nilValues" [value]="nv['xs:restriction']['xs:enumeration']._attributes.value">
-              {{ nv['xs:restriction']['xs:enumeration']['xs:annotation']['xs:documentation']._text }}
-            </option>
-          </select>
-        </div>
-        <div *ngIf="isNillable" class="input-group-append">
-          <div class="form-check">
-            <input [(ngModel)]="isNil" [id]="formName + '-nil'" tabindex="-1" type="checkbox" class="form-check-input" />
-            <label [for]="formName + '-nil'" class="form-check-label">Nil?</label>
-          </div>
-        </div>
+        <ng-container *ngTemplateOutlet="nillableContent"></ng-container>
         <div *ngIf="index !== undefined && !(isRequired && index == 0)" class="input-group-append">
           <button (click)="remValue(selectedValue)" tabindex="-1" class="btn btn--remove" type="button">Remove</button>
         </div>
       </div>
     </ng-template>
-    <div *ngIf="otherAttributes; let otherAttributes; else: inputGroup" class="array-field array-field--noclear form-floating">
-      <div class="array-field__item">
-        <div class="array-field__subitem">
-          <ng-container *ngTemplateOutlet="inputGroup"></ng-container>
-        </div>
-        <div *ngFor="let otherAttribute of otherAttributes" class="array-field__subitem">
-          <h5>{{ displayAttributeName(otherAttribute._attributes?.name) }}</h5>
-          <shared-xsd-element
-            [xsd]="xsd"
-            [record]="record"
-            [basePath]="basePath"
-            [element]="element"
-            [attribute]="otherAttribute"
-            [data]="data"
-            [error]="error"
-            [index]="index"
-            [selectedValue]="selectedValue"
-          ></shared-xsd-element>
+    <div class="input-group align-items-center">
+      <div *ngIf="otherAttributes; let otherAttributes; else: noOtherAttributes" class="array-field array-field--noclear form-floating">
+        <div class="array-field__item">
+          <div class="array-field__subitem">
+            <div class="input-group align-items-center">
+              <ng-container *ngTemplateOutlet="nillableContent"></ng-container>
+            </div>
+          </div>
+          <ng-container *ngIf="!isNil">
+            <div *ngFor="let otherAttribute of otherAttributes" class="array-field__subitem">
+              <h5>{{ displayAttributeName(otherAttribute._attributes?.name) }}</h5>
+              <shared-xsd-element
+                [xsd]="xsd"
+                [record]="record"
+                [basePath]="basePath"
+                [element]="element"
+                [attribute]="otherAttribute"
+                [data]="data"
+                [error]="error"
+                [index]="index"
+                [selectedValue]="selectedValue"
+              ></shared-xsd-element>
+            </div>
+          </ng-container>
         </div>
       </div>
+      <div *ngIf="index !== undefined && !(isRequired && index == 0)" class="input-group-append">
+        <button (click)="remValue(selectedValue)" tabindex="-1" class="btn btn--remove" type="button">Remove</button>
+      </div>
     </div>
-  </ng-container>
-  <ng-container *ngIf="attribute">
-    <ng-container *ngTemplateOutlet="content"></ng-container>
   </ng-container>
 </ng-container>
