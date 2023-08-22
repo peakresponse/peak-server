@@ -34,6 +34,26 @@ export class XsdElementBaseComponent {
     // check if we're working on the element or attribute level
     if (this.attribute) {
       name = this.attribute._attributes?.type;
+      if (!name) {
+        // check for a simple type untion
+        let { memberTypes } = this.attribute['xs:simpleType']?.['xs:union']?._attributes ?? {};
+        if (memberTypes) {
+          memberTypes = memberTypes.split(' ').map((t: string) => this.xsd?.getType(t));
+          // combine into a single enumeration
+          this._type = memberTypes.reduce(
+            (accumulator: any, currentValue: any) => {
+              if (!accumulator._attributes) {
+                accumulator['xs:restriction']._attributes = currentValue['xs:restriction']?._attributes;
+              }
+              if (currentValue['xs:restriction']?.['xs:enumeration']) {
+                accumulator['xs:restriction']['xs:enumeration'].push(currentValue['xs:restriction']['xs:enumeration']);
+              }
+              return accumulator;
+            },
+            { 'xs:restriction': { 'xs:enumeration': [] } }
+          );
+        }
+      }
     } else {
       // check for a type attribute
       name = this.element?._attributes?.type;
@@ -45,29 +65,31 @@ export class XsdElementBaseComponent {
       this._type = this.xsd?.getType(name);
     }
     // customize type per custom configuration, if any
-    const config = this.xsd?.getCustomConfiguration(this.element);
-    if (config) {
-      // check for enumerated type values to add
-      if (this._type?.['xs:restriction']?.['xs:enumeration']) {
-        let values = config['eCustomConfiguration.06'] ?? config['dCustomConfiguration.06'];
-        if (values) {
-          if (!Array.isArray(values)) {
-            values = [values];
-          }
-          this._type = cloneDeep(this._type);
-          const enumeration = this._type?.['xs:restriction']?.['xs:enumeration'];
-          for (const value of values) {
-            enumeration.push({
-              _attributes: {
-                value: value._text,
-                nemsisCode: value._attributes?.nemsisCode,
-              },
-              'xs:annotation': {
-                'xs:documentation': {
-                  _text: value._attributes?.customValueDescription,
+    if (!this.attribute) {
+      const config = this.xsd?.getCustomConfiguration(this.element);
+      if (config) {
+        // check for enumerated type values to add
+        if (this._type?.['xs:restriction']?.['xs:enumeration']) {
+          let values = config['eCustomConfiguration.06'] ?? config['dCustomConfiguration.06'];
+          if (values) {
+            if (!Array.isArray(values)) {
+              values = [values];
+            }
+            this._type = cloneDeep(this._type);
+            const enumeration = this._type?.['xs:restriction']?.['xs:enumeration'];
+            for (const value of values) {
+              enumeration.push({
+                _attributes: {
+                  value: value._text,
+                  nemsisCode: value._attributes?.nemsisCode,
                 },
-              },
-            });
+                'xs:annotation': {
+                  'xs:documentation': {
+                    _text: value._attributes?.customValueDescription,
+                  },
+                },
+              });
+            }
           }
         }
       }
