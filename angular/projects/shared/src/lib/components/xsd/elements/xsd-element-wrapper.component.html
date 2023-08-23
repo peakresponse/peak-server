@@ -49,7 +49,7 @@
           <ng-container *ngIf="!isNil">
             <div *ngFor="let otherAttribute of otherAttributes" class="array-field__subitem">
               <h5>{{ displayAttributeName(otherAttribute._attributes?.name) }}</h5>
-              <shared-xsd-element
+              <shared-xsd-element-input
                 [xsd]="xsd"
                 [record]="record"
                 [basePath]="basePath"
@@ -59,7 +59,7 @@
                 [error]="error"
                 [index]="index"
                 [selectedValue]="selectedValue"
-              ></shared-xsd-element>
+              ></shared-xsd-element-input>
             </div>
           </ng-container>
         </div>

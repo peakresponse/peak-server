@@ -23,19 +23,19 @@
 <div class="mb-3">
   <shared-array-field id="signatures" label="Signatures" [source]="record" [target]="record" [error]="error" [showClearButton]="false">
     <ng-template #item let-item="item" let-removeItem="removeItem" let-updateItem="updateItem">
-      <div class="array-field__subitem">
+      <div class="form-field__subitem">
         <h5>Title</h5>
         {{ item.title }}
       </div>
-      <div *ngIf="item.body" class="array-field__subitem">
+      <div *ngIf="item.body" class="form-field__subitem">
         <h5>Body</h5>
         {{ item.body }}
       </div>
-      <div *ngFor="let type of item.types; let first = first" class="array-field__subitem">
+      <div *ngFor="let type of item.types; let first = first" class="form-field__subitem">
         <h5 *ngIf="first">Type(s)</h5>
         {{ signatureTypes[type] }} ({{ type }})
       </div>
-      <div class="array-field__subitem">
+      <div class="form-field__subitem">
         <admin-demographics-form-signature
           #editSignatureForm
           (onConfirm)="updateItem(item, $event)"

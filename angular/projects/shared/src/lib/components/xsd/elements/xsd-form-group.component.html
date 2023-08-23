@@ -63,7 +63,7 @@
       <h5 [class.text-danger]="isInvalid">
         {{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small>
       </h5>
-      <shared-xsd-element
+      <shared-xsd-element-input
         [xsd]="xsd"
         [record]="record"
         [basePath]="basePath"
@@ -71,7 +71,7 @@
         [data]="data"
         [displayOnly]="true"
         [error]="error"
-      ></shared-xsd-element>
+      ></shared-xsd-element-input>
       <div *ngIf="isInvalid" class="invalid-feedback">
         <span>{{ errorMessages.join(' ') }}</span>
       </div>
@@ -82,14 +82,14 @@
           >{{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small></span
         >
       </label>
-      <shared-xsd-element
+      <shared-xsd-element-input
         [xsd]="xsd"
         [record]="record"
         [basePath]="basePath"
         [element]="element"
         [data]="data"
         [error]="error"
-      ></shared-xsd-element>
+      ></shared-xsd-element-input>
       <span [class.feedback]="!isInvalid" [class.invalid-feedback]="isInvalid">
         {{ displayText }}
         <span *ngIf="isInvalid">{{ errorMessages.join(' ') }}</span>
@@ -102,7 +102,7 @@
         {{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small>
       </h5>
       <div *ngFor="let selectedValue of values; index as i">
-        <shared-xsd-element
+        <shared-xsd-element-input
           [xsd]="xsd"
           [record]="record"
           [basePath]="basePath"
@@ -112,7 +112,7 @@
           [index]="i"
           [selectedValue]="selectedValue"
           [displayOnly]="true"
-        ></shared-xsd-element>
+        ></shared-xsd-element-input>
       </div>
       <div *ngIf="isInvalid" class="invalid-feedback">
         <span>{{ errorMessages.join(' ') }}</span>
@@ -129,7 +129,7 @@
         class="array-field__item"
         [class.array-field__item--invalid]="isInvalidValue(i)"
       >
-        <shared-xsd-element
+        <shared-xsd-element-input
           [xsd]="xsd"
           [record]="record"
           [basePath]="basePath"
@@ -138,7 +138,7 @@
           [error]="error"
           [index]="i"
           [selectedValue]="selectedValue"
-        ></shared-xsd-element>
+        ></shared-xsd-element-input>
         <div [class.feedback]="!isInvalidValue(i)" [class.invalid-feedback]="isInvalidValue(i)">
           <span *ngIf="isInvalidValue(i)">{{ errorMessagesForValue(i).join(' ') }}</span>
         </div>

@@ -70,6 +70,7 @@ const states = [
 export class InputsComponent {
   source: any = {
     array: ['California', 'New York'],
+    'array-noclear': ['California', 'New York'],
     empty: '',
     multiline: 'This is a\nmultiline\ntext field.',
     disabled: 'Input',

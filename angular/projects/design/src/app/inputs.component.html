@@ -18,6 +18,27 @@
       </shared-array-field>
     </div>
     <div class="mb-3">
+      <shared-array-field
+        id="array-noclear"
+        label="Array Field (No Clear Buttons)"
+        [source]="source"
+        [target]="source"
+        [showClearButton]="false"
+      >
+        <ng-template #item let-item="item">{{ item }}</ng-template>
+        <ng-template #form let-addItem="addItem">
+          <shared-search-field
+            #arraySearch
+            id="array-search"
+            placeholder="Search"
+            [searchHandler]="search"
+            [isSelectOnly]="true"
+            (valueChange)="$event && addItem($event); $event && arraySearch.onClear()"
+          ></shared-search-field>
+        </ng-template>
+      </shared-array-field>
+    </div>
+    <div class="mb-3">
       <shared-array-field id="empty-array" label="Empty Array Field" [source]="source" [target]="source">
         <ng-template #item let-item="item">{{ item }}</ng-template>
         <ng-template #form let-addItem="addItem">
