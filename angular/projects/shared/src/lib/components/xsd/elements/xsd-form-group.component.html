@@ -1,61 +1,59 @@
-<div *ngIf="isGroup" class="array-field array-field--noclear mb-3">
-  <div class="form-field form-field--noclear">
-    <label [for]="formName">
-      <span
-        >{{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small></span
-      >
-    </label>
-    <span class="feedback">{{ groupText }}</span>
-    <div *ngFor="let selectedValue of values; index as i" class="array-field__item">
-      <div *ngFor="let nestedElement of groupElements" class="array-field__subitem">
+<div *ngIf="isGroup" class="form-field form-field--noclear mb-3">
+  <label [for]="formName">
+    <span
+      >{{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small></span
+    >
+  </label>
+  <span class="feedback">{{ groupText }}</span>
+  <div *ngFor="let selectedValue of values; index as i" class="form-field__item">
+    <div *ngFor="let nestedElement of groupElements" class="form-field__subitem">
+      <shared-xsd-form-group
+        [xsd]="xsd"
+        [record]="record"
+        [basePath]="path + '[' + i + ']'"
+        [element]="nestedElement"
+        [data]="selectedValue"
+        [displayOnly]="true"
+        [error]="error"
+      ></shared-xsd-form-group>
+    </div>
+    <div class="form-field__subitem">
+      <button (click)="showGroupModal(modal, selectedValue, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
+      <button *ngIf="i > 0 || !isRequired" (click)="remValue(selectedValue)" type="button" class="btn btn--sm btn--secondary--danger">
+        Delete
+      </button>
+    </div>
+  </div>
+  <div *ngIf="isMulti || values?.length === 0 || !values" class="form-field__item">
+    <button (click)="showGroupModal(modal)" class="btn btn--sm btn--primary" type="button">
+      New {{ displayName | inflection: 'singularize' }}
+    </button>
+  </div>
+  <shared-modal
+    #modal
+    i18n-confirmLabel
+    confirmLabel="Submit"
+    i18n-dismissLabel
+    dismissLabel="Cancel"
+    (confirm)="onGroupModalConfirm(modal)"
+  >
+    <h3 class="modal-title">
+      <span i18n *ngIf="isGroupModalEditing">Edit {{ displayName | inflection: 'singularize' }}</span>
+      <span i18n *ngIf="!isGroupModalEditing">New {{ displayName | inflection: 'singularize' }}</span>
+    </h3>
+    <div *ngIf="groupModalValue" class="modal-body text-start">
+      <div *ngFor="let nestedElement of groupElements">
         <shared-xsd-form-group
           [xsd]="xsd"
           [record]="record"
-          [basePath]="path + '[' + i + ']'"
+          [basePath]="groupModalPath"
           [element]="nestedElement"
-          [data]="selectedValue"
-          [displayOnly]="true"
+          [data]="groupModalValue"
           [error]="error"
         ></shared-xsd-form-group>
       </div>
-      <div class="array-field__subitem">
-        <button (click)="showGroupModal(modal, selectedValue, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
-        <button *ngIf="i > 0 || !isRequired" (click)="remValue(selectedValue)" type="button" class="btn btn--sm btn--secondary--danger">
-          Delete
-        </button>
-      </div>
     </div>
-    <div *ngIf="isMulti || values?.length === 0 || !values" class="array-field__item">
-      <button (click)="showGroupModal(modal)" class="btn btn--sm btn--primary" type="button">
-        New {{ displayName | inflection: 'singularize' }}
-      </button>
-    </div>
-    <shared-modal
-      #modal
-      i18n-confirmLabel
-      confirmLabel="Submit"
-      i18n-dismissLabel
-      dismissLabel="Cancel"
-      (confirm)="onGroupModalConfirm(modal)"
-    >
-      <h3 class="modal-title">
-        <span i18n *ngIf="isGroupModalEditing">Edit {{ displayName | inflection: 'singularize' }}</span>
-        <span i18n *ngIf="!isGroupModalEditing">New {{ displayName | inflection: 'singularize' }}</span>
-      </h3>
-      <div *ngIf="groupModalValue" class="modal-body text-start">
-        <div *ngFor="let nestedElement of groupElements">
-          <shared-xsd-form-group
-            [xsd]="xsd"
-            [record]="record"
-            [basePath]="groupModalPath"
-            [element]="nestedElement"
-            [data]="groupModalValue"
-            [error]="error"
-          ></shared-xsd-form-group>
-        </div>
-      </div>
-    </shared-modal>
-  </div>
+  </shared-modal>
 </div>
 <ng-container *ngIf="!isGroup">
   <ng-container *ngIf="!isMulti">
@@ -96,7 +94,7 @@
       </span>
     </div>
   </ng-container>
-  <div *ngIf="isMulti" class="array-field array-field--noclear">
+  <ng-container *ngIf="isMulti">
     <ng-container *ngIf="isDisplayOnly">
       <h5 [class.text-danger]="isInvalid">
         {{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small>
@@ -118,17 +116,13 @@
         <span>{{ errorMessages.join(' ') }}</span>
       </div>
     </ng-container>
-    <div *ngIf="!isDisplayOnly" class="form-field mb-3" [class.form-field--invalid]="isInvalid">
+    <div *ngIf="!isDisplayOnly" class="form-field form-field--noclear mb-3" [class.form-field--invalid]="isInvalid">
       <label [for]="formName">
         <span
           >{{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small></span
         >
       </label>
-      <div
-        *ngFor="let selectedValue of values; index as i"
-        class="array-field__item"
-        [class.array-field__item--invalid]="isInvalidValue(i)"
-      >
+      <div *ngFor="let selectedValue of values; index as i" class="form-field__item" [class.form-field__item--invalid]="isInvalidValue(i)">
         <shared-xsd-element-input
           [xsd]="xsd"
           [record]="record"
@@ -149,5 +143,5 @@
         <span *ngIf="isInvalid">{{ errorMessages.join(' ') }}</span>
       </span>
     </div>
-  </div>
+  </ng-container>
 </ng-container>

@@ -39,34 +39,36 @@
       </div>
     </ng-template>
     <div class="input-group align-items-center">
-      <div *ngIf="otherAttributes; let otherAttributes; else: noOtherAttributes" class="array-field array-field--noclear form-floating">
-        <div class="array-field__item">
-          <div class="array-field__subitem">
-            <div class="input-group align-items-center">
-              <ng-container *ngTemplateOutlet="nillableContent"></ng-container>
+      <ng-container *ngIf="otherAttributes; let otherAttributes; else: noOtherAttributes">
+        <div class="form-floating">
+          <div class="form-field__item">
+            <div class="form-field__subitem">
+              <div class="input-group align-items-center">
+                <ng-container *ngTemplateOutlet="nillableContent"></ng-container>
+              </div>
             </div>
+            <ng-container *ngIf="!isNil">
+              <div *ngFor="let otherAttribute of otherAttributes" class="form-field__subitem">
+                <h5>{{ displayAttributeName(otherAttribute._attributes?.name) }}</h5>
+                <shared-xsd-element-input
+                  [xsd]="xsd"
+                  [record]="record"
+                  [basePath]="basePath"
+                  [element]="element"
+                  [attribute]="otherAttribute"
+                  [data]="data"
+                  [error]="error"
+                  [index]="index"
+                  [selectedValue]="selectedValue"
+                ></shared-xsd-element-input>
+              </div>
+            </ng-container>
           </div>
-          <ng-container *ngIf="!isNil">
-            <div *ngFor="let otherAttribute of otherAttributes" class="array-field__subitem">
-              <h5>{{ displayAttributeName(otherAttribute._attributes?.name) }}</h5>
-              <shared-xsd-element-input
-                [xsd]="xsd"
-                [record]="record"
-                [basePath]="basePath"
-                [element]="element"
-                [attribute]="otherAttribute"
-                [data]="data"
-                [error]="error"
-                [index]="index"
-                [selectedValue]="selectedValue"
-              ></shared-xsd-element-input>
-            </div>
-          </ng-container>
         </div>
-      </div>
-      <div *ngIf="index !== undefined && !(isRequired && index == 0)" class="input-group-append">
-        <button (click)="remValue(selectedValue)" tabindex="-1" class="btn btn--remove" type="button">Remove</button>
-      </div>
+        <div *ngIf="index !== undefined && !(isRequired && index == 0)" class="input-group-append">
+          <button (click)="remValue(selectedValue)" tabindex="-1" class="btn btn--remove" type="button">Remove</button>
+        </div>
+      </ng-container>
     </div>
   </ng-container>
 </ng-container>
