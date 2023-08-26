@@ -332,6 +332,14 @@ select:disabled {
 
   .form-field__item {
     padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  input:not([type='checkbox']),
+  select,
+  textarea {
+    margin-left: 0;
   }
 }
 

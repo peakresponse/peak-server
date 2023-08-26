@@ -40,8 +40,9 @@ export * from './lib/components/xsd/xsd-list.component';
 export * from './lib/components/xsd/xsd-record.component';
 
 export * from './lib/components/xsd/elements/xsd-element-base.component';
-export * from './lib/components/xsd/elements/xsd-element-wrapper.component';
 export * from './lib/components/xsd/elements/xsd-element-input.component';
+export * from './lib/components/xsd/elements/xsd-element-multi.component';
+export * from './lib/components/xsd/elements/xsd-element-nillable.component';
 export * from './lib/components/xsd/elements/xsd-form-group.component';
 export * from './lib/components/xsd/elements/xsd-input.component';
 export * from './lib/components/xsd/elements/xsd-select-state.component';
