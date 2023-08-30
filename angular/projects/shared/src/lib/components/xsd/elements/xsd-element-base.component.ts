@@ -61,7 +61,15 @@ export class XsdElementBaseComponent {
         name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
       }
     }
-    if (name) {
+    if (name?.startsWith('xs:')) {
+      this._type = {
+        'xs:restriction': {
+          _attributes: {
+            base: name,
+          },
+        },
+      };
+    } else if (name) {
       this._type = this.xsd?.getType(name);
     }
     // customize type per custom configuration, if any

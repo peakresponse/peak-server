@@ -1,5 +1,6 @@
 <ng-container [ngSwitch]="componentType">
   <shared-xsd-input
+    class="d-flex"
     *ngSwitchCase="COMPONENT_TYPES.input"
     [xsd]="xsd"
     [record]="record"
