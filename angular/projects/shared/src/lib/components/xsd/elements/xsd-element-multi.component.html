@@ -37,7 +37,7 @@
     [displayOnly]="displayOnly"
   ></shared-xsd-element-nillable>
 </ng-container>
-<span *ngIf="!isDisplayOnly" [class.feedback]="!isInvalid" [class.invalid-feedback]="isInvalid">
+<div *ngIf="!isDisplayOnly" [class.feedback]="!isInvalid" [class.invalid-feedback]="isInvalid">
   {{ displayText }}
   <span *ngIf="isInvalid">{{ errorMessages.join(' ') }}</span>
-</span>
+</div>
