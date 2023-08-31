@@ -14,6 +14,7 @@ export class XsdElementBaseComponent {
   @Input() xsd?: XsdSchema;
   @Input() record: any;
   @Input() element: any;
+  @Input() attribute: any;
   @Input() data: any;
   @Input() error: any;
   @Input() index?: number;
@@ -29,38 +30,74 @@ export class XsdElementBaseComponent {
       return this._type;
     }
     this._type = null;
-    // check for a type attribute
-    let name = this.element?._attributes?.type;
-    if (!name) {
-      name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
+    let name;
+    // check if we're working on the element or attribute level
+    if (this.attribute) {
+      name = this.attribute._attributes?.type;
+      if (!name) {
+        // check for a simple type untion
+        let { memberTypes } = this.attribute['xs:simpleType']?.['xs:union']?._attributes ?? {};
+        if (memberTypes) {
+          memberTypes = memberTypes.split(' ').map((t: string) => this.xsd?.getType(t));
+          // combine into a single enumeration
+          this._type = memberTypes.reduce(
+            (accumulator: any, currentValue: any) => {
+              if (!accumulator._attributes) {
+                accumulator['xs:restriction']._attributes = currentValue['xs:restriction']?._attributes;
+              }
+              if (currentValue['xs:restriction']?.['xs:enumeration']) {
+                accumulator['xs:restriction']['xs:enumeration'].push(currentValue['xs:restriction']['xs:enumeration']);
+              }
+              return accumulator;
+            },
+            { 'xs:restriction': { 'xs:enumeration': [] } }
+          );
+        }
+      }
+    } else {
+      // check for a type attribute
+      name = this.element?._attributes?.type;
+      if (!name) {
+        name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
+      }
     }
-    if (name) {
+    if (name?.startsWith('xs:')) {
+      this._type = {
+        'xs:restriction': {
+          _attributes: {
+            base: name,
+          },
+        },
+      };
+    } else if (name) {
       this._type = this.xsd?.getType(name);
     }
     // customize type per custom configuration, if any
-    const config = this.xsd?.getCustomConfiguration(this.element);
-    if (config) {
-      // check for enumerated type values to add
-      if (this._type?.['xs:restriction']?.['xs:enumeration']) {
-        let values = config['eCustomConfiguration.06'] ?? config['dCustomConfiguration.06'];
-        if (values) {
-          if (!Array.isArray(values)) {
-            values = [values];
-          }
-          this._type = cloneDeep(this._type);
-          const enumeration = this._type?.['xs:restriction']?.['xs:enumeration'];
-          for (const value of values) {
-            enumeration.push({
-              _attributes: {
-                value: value._text,
-                nemsisCode: value._attributes?.nemsisCode,
-              },
-              'xs:annotation': {
-                'xs:documentation': {
-                  _text: value._attributes?.customValueDescription,
+    if (!this.attribute) {
+      const config = this.xsd?.getCustomConfiguration(this.element);
+      if (config) {
+        // check for enumerated type values to add
+        if (this._type?.['xs:restriction']?.['xs:enumeration']) {
+          let values = config['eCustomConfiguration.06'] ?? config['dCustomConfiguration.06'];
+          if (values) {
+            if (!Array.isArray(values)) {
+              values = [values];
+            }
+            this._type = cloneDeep(this._type);
+            const enumeration = this._type?.['xs:restriction']?.['xs:enumeration'];
+            for (const value of values) {
+              enumeration.push({
+                _attributes: {
+                  value: value._text,
+                  nemsisCode: value._attributes?.nemsisCode,
                 },
-              },
-            });
+                'xs:annotation': {
+                  'xs:documentation': {
+                    _text: value._attributes?.customValueDescription,
+                  },
+                },
+              });
+            }
           }
         }
       }
@@ -182,13 +219,29 @@ export class XsdElementBaseComponent {
   }
 
   get formName(): string {
-    if (this.index) {
-      return `${this.name}[${this.index}]`;
+    let name = this.name;
+    if (this.attribute) {
+      name = `${name}__${this.attribute._attributes?.name}`;
     }
-    return this.name;
+    if (this.index) {
+      name = `${name}[${this.index}]`;
+    }
+    return name;
   }
 
   get value(): string {
+    // attribute value
+    if (this.attribute) {
+      if (this.selectedValue) {
+        return this.selectedValue._attributes?.[this.attribute._attributes?.name];
+      }
+      const value = this.data?.[this.name]?._attributes?.[this.attribute._attributes?.name];
+      // if (this.isRequired && value === undefined) {
+      //   this.value = value;
+      // }
+      return value;
+    }
+    // element value
     const correlationId = this.correlationId;
     if (correlationId) {
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
@@ -220,6 +273,19 @@ export class XsdElementBaseComponent {
   }
 
   set value(value: string) {
+    // attribute value
+    if (this.attribute) {
+      if (this.selectedValue) {
+        this.selectedValue._attributes ||= {};
+        this.selectedValue._attributes[this.attribute._attributes?.name] = value;
+      } else {
+        this.data[this.name] ||= {};
+        this.data[this.name]._attributes ||= {};
+        this.data[this.name]._attributes[this.attribute._attributes?.name] = value;
+      }
+      return;
+    }
+    // element value
     const correlationId = this.correlationId;
     if (correlationId) {
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
@@ -302,6 +368,20 @@ export class XsdElementBaseComponent {
   }
 
   delValue() {
+    if (this.attribute) {
+      if (this.selectedValue) {
+        delete this.selectedValue._attributes[this.attribute._attributes?.name];
+        if (isEmpty(this.selectedValue._attributes)) {
+          delete this.selectedValue._attributes;
+        }
+      } else {
+        delete this.data[this.name]._attributes[this.attribute._attributes?.name];
+        if (isEmpty(this.data[this.name]._attributes)) {
+          delete this.data[this.name]._attributes;
+        }
+      }
+      return;
+    }
     if (this.selectedValue) {
       if (this.selectedValue._text !== undefined) {
         delete this.selectedValue._text;
@@ -446,5 +526,28 @@ export class XsdElementBaseComponent {
       }
     }
     return null;
+  }
+
+  get otherAttributes(): any[] | undefined {
+    const otherAttributes: any[] = [];
+    let attributes = this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute'];
+    if (attributes) {
+      if (!Array.isArray(attributes)) {
+        attributes = [attributes];
+      }
+      for (const attribute of attributes) {
+        if (attribute._attributes?.name !== 'NV' && attribute._attributes?.name !== 'CorrelationID') {
+          otherAttributes.push(attribute);
+        }
+      }
+    }
+    return otherAttributes.length ? otherAttributes : undefined;
+  }
+
+  displayAttributeName(name: string | undefined): string | undefined {
+    if (name) {
+      return inflection.transform(name.replace(/\d+/g, ` $& `), ['underscore', 'humanize', 'titleize']);
+    }
+    return undefined;
   }
 }

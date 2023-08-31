@@ -5,31 +5,29 @@
   <h4>Current</h4>
   <div class="row mb-4">
     <div class="col-lg-4">
-      <div class="array-field array-field--noclear mb-3">
-        <div class="form-field form-field--noclear form-field--nonempty">
-          <div class="array-field__item">
-            <h5>Version</h5>
-            {{ record?.version?.name | version }}
+      <div class="form-field form-field--noclear form-field--nonempty mb-3">
+        <div class="form-field__item">
+          <h5>Version</h5>
+          {{ record?.version?.name | version }}
+        </div>
+        <div class="form-field__item">
+          <h5>NEMSIS Version</h5>
+          {{ record?.version?.nemsisVersion }}
+        </div>
+        <div class="form-field__item">
+          <h5>State Data Set</h5>
+          {{ record?.version?.stateDataSet?.displayVersion }}
+        </div>
+        <div *ngIf="record?.demSchematronIds?.length" class="form-field__item">
+          <h5>DEM Schematrons</h5>
+          <div *ngFor="let schematronId of record.demSchematronIds">
+            {{ schematronById(schematronId)?.displayVersion }}
           </div>
-          <div class="array-field__item">
-            <h5>NEMSIS Version</h5>
-            {{ record?.version?.nemsisVersion }}
-          </div>
-          <div class="array-field__item">
-            <h5>State Data Set</h5>
-            {{ record?.version?.stateDataSet?.displayVersion }}
-          </div>
-          <div *ngIf="record?.demSchematronIds?.length" class="array-field__item">
-            <h5>DEM Schematrons</h5>
-            <div *ngFor="let schematronId of record.demSchematronIds">
-              {{ schematronById(schematronId)?.displayVersion }}
-            </div>
-          </div>
-          <div *ngIf="record?.emsSchematronIds?.length" class="array-field__item">
-            <h5>EMS Schematrons</h5>
-            <div *ngFor="let schematronId of record.emsSchematronIds">
-              {{ schematronById(schematronId)?.displayVersion }}
-            </div>
+        </div>
+        <div *ngIf="record?.emsSchematronIds?.length" class="form-field__item">
+          <h5>EMS Schematrons</h5>
+          <div *ngFor="let schematronId of record.emsSchematronIds">
+            {{ schematronById(schematronId)?.displayVersion }}
           </div>
         </div>
       </div>
@@ -48,31 +46,29 @@
     <h4>Draft</h4>
     <div class="row">
       <div class="col-lg-4">
-        <div class="array-field array-field--noclear mb-3">
-          <div class="form-field form-field--noclear form-field--nonempty">
-            <div class="array-field__item">
-              <h5>Version:</h5>
-              {{ record?.draftVersion?.name | version }}
+        <div class="form-field form-field--noclear form-field--nonempty mb-3">
+          <div class="form-field__item">
+            <h5>Version:</h5>
+            {{ record?.draftVersion?.name | version }}
+          </div>
+          <div class="form-field__item">
+            <h5>NEMSIS Version</h5>
+            {{ record?.draftVersion?.nemsisVersion }}
+          </div>
+          <div class="form-field__item">
+            <h5>State Data Set</h5>
+            {{ record?.draftVersion?.stateDataSet?.displayVersion }}
+          </div>
+          <div *ngIf="record?.draftVersion?.demSchematronIds?.length" class="form-field__item">
+            <h5>DEM Schematrons</h5>
+            <div *ngFor="let schematronId of record.draftVersion.demSchematronIds">
+              {{ schematronById(schematronId)?.displayVersion }}
             </div>
-            <div class="array-field__item">
-              <h5>NEMSIS Version</h5>
-              {{ record?.draftVersion?.nemsisVersion }}
-            </div>
-            <div class="array-field__item">
-              <h5>State Data Set</h5>
-              {{ record?.draftVersion?.stateDataSet?.displayVersion }}
-            </div>
-            <div *ngIf="record?.draftVersion?.demSchematronIds?.length" class="array-field__item">
-              <h5>DEM Schematrons</h5>
-              <div *ngFor="let schematronId of record.draftVersion.demSchematronIds">
-                {{ schematronById(schematronId)?.displayVersion }}
-              </div>
-            </div>
-            <div *ngIf="record?.draftVersion?.emsSchematronIds?.length" class="array-field__item">
-              <h5>EMS Schematrons</h5>
-              <div *ngFor="let schematronId of record.draftVersion.emsSchematronIds">
-                {{ schematronById(schematronId)?.displayVersion }}
-              </div>
+          </div>
+          <div *ngIf="record?.draftVersion?.emsSchematronIds?.length" class="form-field__item">
+            <h5>EMS Schematrons</h5>
+            <div *ngFor="let schematronId of record.draftVersion.emsSchematronIds">
+              {{ schematronById(schematronId)?.displayVersion }}
             </div>
           </div>
         </div>

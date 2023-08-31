@@ -1,28 +1,18 @@
-<shared-xsd-element-wrapper
-  [xsd]="xsd"
-  [record]="record"
-  [element]="element"
-  [data]="data"
-  [index]="index"
-  [selectedValue]="selectedValue"
-  [displayOnly]="displayOnly"
->
-  <ng-container *ngIf="isDisplayOnly">
-    <ng-container *ngIf="enumeratedValue as val; else noVal">{{ val }}</ng-container>
-    <ng-template #noVal>&nbsp;</ng-template>
-  </ng-container>
-  <div *ngIf="!isDisplayOnly" class="select-wrapper">
-    <select
-      [id]="formName"
-      [name]="formName"
-      [ngModel]="value"
-      (ngModelChange)="onChange($event)"
-      class="select-wrapper__select"
-      [class.is-invalid]="isInvalid"
-    >
-      <option *ngFor="let item of type['xs:restriction']['xs:enumeration']" [ngValue]="item._attributes.value">
-        {{ item['xs:annotation']['xs:documentation']._text }}
-      </option>
-    </select>
-  </div>
-</shared-xsd-element-wrapper>
+<ng-container *ngIf="isDisplayOnly">
+  <ng-container *ngIf="enumeratedValue as val; else noVal">{{ val }}</ng-container>
+  <ng-template #noVal>&nbsp;</ng-template>
+</ng-container>
+<div *ngIf="!isDisplayOnly" class="select-wrapper">
+  <select
+    [id]="formName"
+    [name]="formName"
+    [ngModel]="value"
+    (ngModelChange)="onChange($event)"
+    class="select-wrapper__select"
+    [class.is-invalid]="isInvalid"
+  >
+    <option *ngFor="let item of type['xs:restriction']['xs:enumeration']" [ngValue]="item._attributes.value">
+      {{ item['xs:annotation']['xs:documentation']._text }}
+    </option>
+  </select>
+</div>

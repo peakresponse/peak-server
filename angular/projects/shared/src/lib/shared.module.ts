@@ -37,8 +37,9 @@ import { XsdListComponent } from './components/xsd/xsd-list.component';
 import { XsdRecordComponent } from './components/xsd/xsd-record.component';
 
 import { XsdElementBaseComponent } from './components/xsd/elements/xsd-element-base.component';
-import { XsdElementWrapperComponent } from './components/xsd/elements/xsd-element-wrapper.component';
-import { XsdElementComponent } from './components/xsd/elements/xsd-element.component';
+import { XsdElementComponentInput } from './components/xsd/elements/xsd-element-input.component';
+import { XsdElementMultiComponent } from './components/xsd/elements/xsd-element-multi.component';
+import { XsdElementNillableComponent } from './components/xsd/elements/xsd-element-nillable.component';
 import { XsdFormGroupComponent } from './components/xsd/elements/xsd-form-group.component';
 import { XsdInputComponent } from './components/xsd/elements/xsd-input.component';
 import { XsdSelectStateComponent } from './components/xsd/elements/xsd-select-state.component';
@@ -96,8 +97,9 @@ import { VersionPipe } from './pipes/version.pipe';
     XsdRecordComponent,
     // components/xsd/elements
     XsdElementBaseComponent,
-    XsdElementWrapperComponent,
-    XsdElementComponent,
+    XsdElementComponentInput,
+    XsdElementMultiComponent,
+    XsdElementNillableComponent,
     XsdFormGroupComponent,
     XsdInputComponent,
     XsdSelectStateComponent,
@@ -147,8 +149,9 @@ import { VersionPipe } from './pipes/version.pipe';
     XsdRecordComponent,
     // components/xsd/elements
     XsdElementBaseComponent,
-    XsdElementWrapperComponent,
-    XsdElementComponent,
+    XsdElementComponentInput,
+    XsdElementMultiComponent,
+    XsdElementNillableComponent,
     XsdFormGroupComponent,
     XsdInputComponent,
     XsdSelectStateComponent,
