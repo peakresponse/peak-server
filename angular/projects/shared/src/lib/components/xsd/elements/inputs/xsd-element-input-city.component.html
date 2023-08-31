@@ -1,0 +1,15 @@
+<ng-container *ngIf="isDisplayOnly">
+  <ng-container *ngIf="value as val; else noVal">{{ val }}</ng-container>
+  <ng-template #noVal>&nbsp;</ng-template>
+</ng-container>
+<ng-container *ngIf="!isDisplayOnly">
+  <input
+    [id]="formName"
+    [name]="formName"
+    [(ngModel)]="value"
+    (input)="onInput($event)"
+    type="text"
+    class="form-control"
+    [class.is-invalid]="isInvalid"
+  />
+</ng-container>
