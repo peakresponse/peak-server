@@ -93,11 +93,14 @@ describe('models', () => {
         assert.deepStrictEqual(stateDataSet.status, { code: 202, message: 'Imported 4 Facilities' });
         const facility = await models.Facility.findOne({
           where: {
-            stateId: '05',
-            locationCode: '1417199225',
+            stateId: '48',
+            locationCode: '1295736734',
           },
         });
         assert(facility);
+        // make sure attributes on elements were imported
+        assert.deepStrictEqual(facility.data?.['sFacility.FacilityGroup']?.['sFacility.15']?.[0]?._attributes?.PhoneNumberType, '9913009');
+        assert.deepStrictEqual(facility.data?.['sFacility.FacilityGroup']?.['sFacility.15']?.[1]?._attributes?.PhoneNumberType, '9913009');
       });
     });
   });
