@@ -41,9 +41,9 @@ import { XsdElementComponentInput } from './components/xsd/elements/xsd-element-
 import { XsdElementMultiComponent } from './components/xsd/elements/xsd-element-multi.component';
 import { XsdElementNillableComponent } from './components/xsd/elements/xsd-element-nillable.component';
 import { XsdFormGroupComponent } from './components/xsd/elements/xsd-form-group.component';
-import { XsdInputComponent } from './components/xsd/elements/xsd-input.component';
-import { XsdSelectStateComponent } from './components/xsd/elements/xsd-select-state.component';
-import { XsdSelectComponent } from './components/xsd/elements/xsd-select.component';
+import { XsdInputComponent } from './components/xsd/elements/inputs/xsd-input.component';
+import { XsdSelectStateComponent } from './components/xsd/elements/inputs/xsd-select-state.component';
+import { XsdSelectComponent } from './components/xsd/elements/inputs/xsd-select.component';
 
 import { CommandFooterComponent } from './components/headers/command-footer.component';
 import { CommandHeaderComponent } from './components/headers/command-header.component';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { XsdElementBaseComponent } from './xsd-element-base.component';
+import { XsdElementBaseComponent } from '../xsd-element-base.component';
 
 @Component({
   selector: 'shared-xsd-select',
