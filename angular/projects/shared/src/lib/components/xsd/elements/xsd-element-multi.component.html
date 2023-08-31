@@ -1,0 +1,43 @@
+<h5 *ngIf="isDisplayOnly" [class.text-danger]="isInvalid">
+  {{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small>
+</h5>
+<ng-container *ngIf="isMulti">
+  <div
+    *ngFor="let selectedValue of values; index as i"
+    [class.form-field__item]="!isDisplayOnly"
+    [class.form-field__item--invalid]="isInvalidValue(i)"
+  >
+    <shared-xsd-element-nillable
+      [xsd]="xsd"
+      [record]="record"
+      [basePath]="basePath"
+      [element]="element"
+      [data]="data"
+      [error]="error"
+      [index]="i"
+      [selectedValue]="selectedValue"
+      [displayOnly]="displayOnly"
+    ></shared-xsd-element-nillable>
+    <div [class.feedback]="!isInvalidValue(i)" [class.invalid-feedback]="isInvalidValue(i)">
+      <span *ngIf="isInvalidValue(i)">{{ errorMessagesForValue(i).join(' ') }}</span>
+    </div>
+  </div>
+  <div *ngIf="!isDisplayOnly" class="form-field__content">
+    <button (click)="addValue({})" class="btn btn--sm btn--secondary" type="button">Add</button>
+  </div>
+</ng-container>
+<ng-container *ngIf="!isMulti">
+  <shared-xsd-element-nillable
+    [xsd]="xsd"
+    [record]="record"
+    [basePath]="basePath"
+    [element]="element"
+    [data]="data"
+    [error]="error"
+    [displayOnly]="displayOnly"
+  ></shared-xsd-element-nillable>
+</ng-container>
+<div *ngIf="!isDisplayOnly" [class.feedback]="!isInvalid" [class.invalid-feedback]="isInvalid">
+  {{ displayText }}
+  <span *ngIf="isInvalid">{{ errorMessages.join(' ') }}</span>
+</div>

@@ -52,8 +52,8 @@
       </div>
     </fieldset>
   </form>
-  <div *ngIf="record" class="col-md-6 mb-3">
-    {{ record.data | json }}
+  <div *ngIf="record" class="col-md-6 mb-3 position-relative">
+    <div class="position-fixed">{{ record.data | json }}</div>
   </div>
 </div>
 <div *ngIf="isLoading">

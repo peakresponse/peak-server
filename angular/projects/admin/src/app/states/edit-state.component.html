@@ -23,11 +23,9 @@
     <div class="row">
       <div class="col-lg-3">
         <div class="mb-3">
-          <div class="array-field array-field--noclear">
-            <div class="form-field form-field--noclear form-field--nonempty">
-              <label>Agencies</label>
-              <div class="array-field__item">Total: {{ agencyStats?.count }}</div>
-            </div>
+          <div class="form-field form-field--noclear form-field--nonempty">
+            <label>Agencies</label>
+            <div class="form-field__item">Total: {{ agencyStats?.count }}</div>
           </div>
         </div>
         <div class="mb-3" *ngIf="state?.borderStates?.length">
@@ -40,43 +38,35 @@
       </div>
       <div class="col-lg-3">
         <div class="mb-3">
-          <div class="array-field array-field--noclear">
-            <div class="form-field form-field--noclear form-field--nonempty">
-              <label>Cities</label>
-              <div *ngFor="let stat of cityStats" class="array-field__item">{{ stat.featureClass }}: {{ stat.count }}</div>
-              <div *ngIf="cityStats" class="array-field__item">Total: {{ cityStats.total }}</div>
-            </div>
+          <div class="form-field form-field--noclear form-field--nonempty">
+            <label>Cities</label>
+            <div *ngFor="let stat of cityStats" class="form-field__item">{{ stat.featureClass }}: {{ stat.count }}</div>
+            <div *ngIf="cityStats" class="form-field__item">Total: {{ cityStats.total }}</div>
           </div>
         </div>
         <div class="mb-3">
-          <div class="array-field array-field--noclear">
-            <div class="form-field form-field--noclear form-field--nonempty">
-              <label>Counties</label>
-              <div class="array-field__item">Total: {{ countyStats?.count }}</div>
-            </div>
+          <div class="form-field form-field--noclear form-field--nonempty">
+            <label>Counties</label>
+            <div class="form-field__item">Total: {{ countyStats?.count }}</div>
           </div>
         </div>
       </div>
       <div class="col-lg-3">
         <div class="mb-3">
-          <div class="array-field array-field--noclear">
-            <div class="form-field form-field--noclear form-field--nonempty">
-              <label>Facilities</label>
-              <div *ngFor="let stat of facilityStats" class="array-field__item">
-                <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{facilityTypes?.[stat.type]}}:</span> {{ stat.count }}
-              </div>
-              <div *ngIf="facilityStats" class="array-field__item">Total: {{ facilityStats.total }}</div>
+          <div class="form-field form-field--noclear form-field--nonempty">
+            <label>Facilities</label>
+            <div *ngFor="let stat of facilityStats" class="form-field__item">
+              <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{facilityTypes?.[stat.type]}}:</span> {{ stat.count }}
             </div>
+            <div *ngIf="facilityStats" class="form-field__item">Total: {{ facilityStats.total }}</div>
           </div>
         </div>
       </div>
       <div class="col-lg-3">
         <div class="mb-3">
-          <div class="array-field array-field--noclear">
-            <div class="form-field form-field--noclear form-field--nonempty">
-              <label>PSAPs</label>
-              <div class="array-field__item">Total: {{ psapStats?.count }}</div>
-            </div>
+          <div class="form-field form-field--noclear form-field--nonempty">
+            <label>PSAPs</label>
+            <div class="form-field__item">Total: {{ psapStats?.count }}</div>
           </div>
         </div>
       </div>
