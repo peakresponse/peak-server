@@ -1,4 +1,5 @@
 const express = require('express');
+const HttpStatus = require('http-status-codes');
 
 const models = require('../../models');
 const interceptors = require('../interceptors');
@@ -33,6 +34,19 @@ router.get(
     }
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
+  })
+);
+
+router.get(
+  '/:id',
+  interceptors.requireAgency(),
+  helpers.async(async (req, res) => {
+    const record = await models.City.findByPk(req.params.id);
+    if (record) {
+      res.json(record.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
   })
 );
 

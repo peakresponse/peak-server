@@ -116,6 +116,15 @@ export class ApiService {
     },
   };
 
+  cities = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/cities', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/cities/${id}`, params);
+    },
+  };
+
   clients = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/clients', params);

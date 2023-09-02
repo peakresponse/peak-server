@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
