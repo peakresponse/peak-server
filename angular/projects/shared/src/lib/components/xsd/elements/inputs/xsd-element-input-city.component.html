@@ -1,0 +1,19 @@
+<ng-container *ngIf="isDisplayOnly">
+  <ng-container *ngIf="value as val; else noVal">{{ inputFormatter(val) }}</ng-container>
+  <ng-template #noVal>&nbsp;</ng-template>
+</ng-container>
+<ng-container *ngIf="!isDisplayOnly">
+  <input
+    autocomplete="off"
+    [id]="formName"
+    [name]="formName"
+    [ngbTypeahead]="search"
+    [editable]="false"
+    [inputFormatter]="inputFormatter"
+    [resultFormatter]="resultFormatter"
+    [(ngModel)]="value"
+    type="text"
+    class="form-control"
+    [class.is-invalid]="isInvalid"
+  />
+</ng-container>

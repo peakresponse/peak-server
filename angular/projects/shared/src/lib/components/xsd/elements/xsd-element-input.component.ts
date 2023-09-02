@@ -8,6 +8,7 @@ import { XsdElementBaseComponent } from './xsd-element-base.component';
 })
 export class XsdElementComponentInput extends XsdElementBaseComponent {
   COMPONENT_TYPES = {
+    city: 'city',
     input: 'input',
     select: 'select',
     selectState: 'select-state',
@@ -18,6 +19,8 @@ export class XsdElementComponentInput extends XsdElementBaseComponent {
     switch (this.type?._attributes?.name) {
       case 'ANSIStateCode':
         return this.COMPONENT_TYPES.selectState;
+      case 'CityGnisCode':
+        return this.COMPONENT_TYPES.city;
     }
     switch (this.primitiveType) {
       case 'xs:string':
