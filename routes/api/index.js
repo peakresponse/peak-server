@@ -7,6 +7,7 @@ router.use('/assets', require('./assets'));
 router.use('/assignments', require('./assignments'));
 router.use('/cities', require('./cities'));
 router.use('/clients', require('./clients'));
+router.use('/counties', require('./counties'));
 router.use('/demographics', require('./demographics'));
 router.use('/dispatchers', require('./dispatchers'));
 router.use('/employments', require('./employments'));
