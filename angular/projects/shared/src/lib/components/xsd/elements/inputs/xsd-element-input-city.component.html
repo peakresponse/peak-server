@@ -4,10 +4,14 @@
 </ng-container>
 <ng-container *ngIf="!isDisplayOnly">
   <input
+    autocomplete="off"
     [id]="formName"
     [name]="formName"
+    [ngbTypeahead]="search"
+    [editable]="false"
+    [inputFormatter]="inputFormatter"
+    [resultFormatter]="resultFormatter"
     [(ngModel)]="value"
-    (input)="onInput($event)"
     type="text"
     class="form-control"
     [class.is-invalid]="isInvalid"

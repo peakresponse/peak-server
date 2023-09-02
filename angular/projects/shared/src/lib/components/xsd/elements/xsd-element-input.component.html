@@ -1,4 +1,19 @@
 <ng-container [ngSwitch]="componentType">
+  <shared-xsd-element-input-city
+    class="d-flex"
+    *ngSwitchCase="COMPONENT_TYPES.city"
+    [xsd]="xsd"
+    [record]="record"
+    [basePath]="basePath"
+    [element]="element"
+    [attribute]="attribute"
+    [data]="data"
+    [error]="error"
+    [index]="index"
+    [selectedValue]="selectedValue"
+    [displayOnly]="displayOnly"
+  >
+  </shared-xsd-element-input-city>
   <shared-xsd-input
     class="d-flex"
     *ngSwitchCase="COMPONENT_TYPES.input"
