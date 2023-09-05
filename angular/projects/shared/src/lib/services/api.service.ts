@@ -146,6 +146,15 @@ export class ApiService {
     },
   };
 
+  counties = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/counties', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/counties/${id}`, params);
+    },
+  };
+
   demographics = {
     agency: {
       index: (params?: HttpParams): Observable<any> => {

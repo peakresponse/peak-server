@@ -14,6 +14,21 @@
     [displayOnly]="displayOnly"
   >
   </shared-xsd-element-input-city>
+  <shared-xsd-element-input-county
+    class="d-flex"
+    *ngSwitchCase="COMPONENT_TYPES.county"
+    [xsd]="xsd"
+    [record]="record"
+    [basePath]="basePath"
+    [element]="element"
+    [attribute]="attribute"
+    [data]="data"
+    [error]="error"
+    [index]="index"
+    [selectedValue]="selectedValue"
+    [displayOnly]="displayOnly"
+  >
+  </shared-xsd-element-input-county>
   <shared-xsd-input
     class="d-flex"
     *ngSwitchCase="COMPONENT_TYPES.input"
