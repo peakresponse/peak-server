@@ -45,6 +45,7 @@ export * from './lib/components/xsd/elements/xsd-element-multi.component';
 export * from './lib/components/xsd/elements/xsd-element-nillable.component';
 export * from './lib/components/xsd/elements/xsd-form-group.component';
 export * from './lib/components/xsd/elements/inputs/xsd-element-input-city.component';
+export * from './lib/components/xsd/elements/inputs/xsd-element-input-county.component';
 export * from './lib/components/xsd/elements/inputs/xsd-input.component';
 export * from './lib/components/xsd/elements/inputs/xsd-select-state.component';
 export * from './lib/components/xsd/elements/inputs/xsd-select.component';

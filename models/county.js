@@ -1,4 +1,5 @@
 const { Model, Op } = require('sequelize');
+const sequelizePaginate = require('sequelize-paginate');
 const _ = require('lodash');
 
 const cache = {
@@ -62,18 +63,9 @@ module.exports = (sequelize, DataTypes) => {
 
   County.init(
     {
-      stateAbbr: {
-        type: DataTypes.STRING,
-        field: 'state_abbr',
-      },
-      stateCode: {
-        type: DataTypes.STRING,
-        field: 'state_code',
-      },
-      countyCode: {
-        type: DataTypes.STRING,
-        field: 'county_code',
-      },
+      stateAbbr: DataTypes.STRING,
+      stateCode: DataTypes.STRING,
+      countyCode: DataTypes.STRING,
       fullCode: {
         type: DataTypes.VIRTUAL(DataTypes.STRING, ['stateCode', 'countyCode']),
         get() {
@@ -81,10 +73,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       name: DataTypes.STRING,
-      classCode: {
-        type: DataTypes.STRING,
-        field: 'class_code',
-      },
+      classCode: DataTypes.STRING,
     },
     {
       sequelize,
@@ -93,6 +82,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+
+  sequelizePaginate.paginate(County);
 
   return County;
 };
