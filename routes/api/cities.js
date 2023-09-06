@@ -14,7 +14,7 @@ router.get(
     const { search, lat, lng, page = '1' } = req.query;
     const options = {
       where: {
-        featureClass: 'Civil',
+        featureClass: ['Civil', 'Populated Place', 'Military'],
       },
       order: [['featureName', 'ASC']],
       page,
