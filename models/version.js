@@ -184,7 +184,17 @@ module.exports = (sequelize, DataTypes) => {
       if (!validationErrors) {
         validationErrors = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet);
       }
-      // run the DEM Data Set through state Schematron validation
+      // run the DEM Data Set through state/additional Schematron validation
+      if (!validationErrors && this.demSchematronIds?.length) {
+        const schematrons = await sequelize.models.NemsisSchematron.findAll({ where: { id: this.demSchematronIds } });
+        for (const schematron of schematrons) {
+          // eslint-disable-next-line no-await-in-loop
+          validationErrors = await schematron.validate(this.demDataSet);
+          if (validationErrors) {
+            break;
+          }
+        }
+      }
       // run the DEM Data Set through any additonal configured Schematron validation
       return this.update({ isValid: !validationErrors, validationErrors });
     }

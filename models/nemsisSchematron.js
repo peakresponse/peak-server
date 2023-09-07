@@ -1,7 +1,11 @@
+const fs = require('fs/promises');
 const { DateTime } = require('luxon');
 const sequelizePaginate = require('sequelize-paginate');
+const shelljs = require('shelljs');
 
 const { Base } = require('./base');
+const { getNemsisStateRepo } = require('../lib/nemsis/states');
+const { validate } = require('../lib/nemsis/schematron');
 
 module.exports = (sequelize, DataTypes) => {
   class NemsisSchematron extends Base {
@@ -16,6 +20,28 @@ module.exports = (sequelize, DataTypes) => {
       NemsisSchematron.belongsTo(models.Agency, { as: 'createdByAgency' });
       NemsisSchematron.belongsTo(models.User, { as: 'createdBy' });
       NemsisSchematron.belongsTo(models.User, { as: 'updatedBy' });
+    }
+
+    async validate(xml) {
+      let schPath;
+      if (this.version) {
+        // get from state repository
+        const repo = getNemsisStateRepo(this.stateId, this.baseNemsisVersion);
+        schPath = repo.getDEMSchematronPath(this.version);
+      } else if (this.file) {
+        // download file attachment
+        schPath = await this.downloadAssetFile('file');
+      }
+      if (schPath) {
+        const xslPath = `${schPath}.xsl`;
+        try {
+          await fs.access(xslPath);
+        } catch {
+          shelljs.exec(`bin/sch-to-xsl ${schPath}`);
+        }
+        return validate(xml, xslPath);
+      }
+      return null;
     }
   }
 
