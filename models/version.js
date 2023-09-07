@@ -179,15 +179,14 @@ module.exports = (sequelize, DataTypes) => {
 
     async nemsisValidate() {
       // run the DEM Data Set through XSD validation
-      let error = await nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet);
-      if (error) {
-        return error;
-      }
+      let validationErrors = await nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet);
       // run the DEM Data Set through national Schematron validation
-      error = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet);
+      if (!validationErrors) {
+        validationErrors = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet);
+      }
       // run the DEM Data Set through state Schematron validation
       // run the DEM Data Set through any additonal configured Schematron validation
-      return error;
+      return this.update({ isValid: !validationErrors, validationErrors });
     }
   }
   Version.init(

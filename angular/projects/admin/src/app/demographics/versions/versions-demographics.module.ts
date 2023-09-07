@@ -10,9 +10,15 @@ import { VersionsDemographicsRoutingModule } from './versions-demographics-routi
 import { EditVersionDemographicsComponent } from './edit-version-demographics.component';
 import { ListVersionsDemographicsComponent } from './list-versions-demographics.component';
 import { PreviewVersionDemographicsComponent } from './preview-version-demographics.component';
+import { ValidateVersionDemographicsComponent } from './validate-version-demographics.component';
 
 @NgModule({
-  declarations: [EditVersionDemographicsComponent, ListVersionsDemographicsComponent, PreviewVersionDemographicsComponent],
+  declarations: [
+    EditVersionDemographicsComponent,
+    ListVersionsDemographicsComponent,
+    PreviewVersionDemographicsComponent,
+    ValidateVersionDemographicsComponent,
+  ],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, VersionsDemographicsRoutingModule],
   providers: [],
 })
