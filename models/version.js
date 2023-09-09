@@ -189,7 +189,7 @@ module.exports = (sequelize, DataTypes) => {
         const schematrons = await sequelize.models.NemsisSchematron.findAll({ where: { id: this.demSchematronIds } });
         for (const schematron of schematrons) {
           // eslint-disable-next-line no-await-in-loop
-          validationErrors = await schematron.validate(this.demDataSet);
+          validationErrors = await schematron.nemsisValidate(this.demDataSet);
           if (validationErrors) {
             break;
           }

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       NemsisSchematron.belongsTo(models.User, { as: 'updatedBy' });
     }
 
-    async validate(xml) {
+    async nemsisValidate(xml) {
       let schPath;
       if (this.version) {
         // get from state repository

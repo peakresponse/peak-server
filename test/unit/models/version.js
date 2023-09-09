@@ -2,9 +2,16 @@ const assert = require('assert');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const nemsisStates = require('../../../lib/nemsis/states');
 
 describe('models', () => {
   describe('Version', () => {
+    before(async () => {
+      const repo = nemsisStates.getNemsisStateRepo('06', '3.5.0');
+      await repo.pull();
+      await repo.install('2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4');
+    });
+
     beforeEach(async () => {
       await helpers.loadFixtures([
         'users',
@@ -194,8 +201,8 @@ describe('models', () => {
       it('validates the DEM Data Set against NEMSIS XSD and Schematron', async () => {
         const version = await models.Version.findByPk('682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
         await version.regenerate();
-        const result = await version.nemsisValidate();
-        assert.deepStrictEqual(result, null);
+        await version.nemsisValidate();
+        assert.deepStrictEqual(version.isValid, true);
       });
     });
   });
