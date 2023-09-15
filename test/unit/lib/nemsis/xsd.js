@@ -31,7 +31,7 @@ describe('lib', () => {
         it('returns an error object if the specified XML fails XSD validation against the specified NEMSIS version of the DEMDataSet.xsd', async () => {
           const xml = readXml('fail/2023-DEM-FailXsd_v350.xml');
           const result = await nemsisXsd.validateDemDataSet('3.5.0.211008CP3', xml);
-          assert.deepStrictEqual(result, {
+          assert.deepStrictEqual(result?.$json, {
             errors: [
               {
                 message: 'This is not a valid value.',

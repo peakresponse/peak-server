@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         } catch {
           shelljs.exec(`bin/sch-to-xsl ${schPath}`);
         }
-        return validate(xml, xslPath);
+        return validate(null, xml, xslPath);
       }
       return null;
     }

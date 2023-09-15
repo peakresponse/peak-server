@@ -510,7 +510,8 @@ class Base extends Model {
     const { xsdPath, rootTag, groupTag } = this.constructor;
     const version = this.version ?? (await this.getVersion({ transaction }));
     if (version?.nemsisVersion) {
-      this.validationErrors = await nemsisXsd.validateElement(version.nemsisVersion, xsdPath, rootTag, groupTag, this.data);
+      const xmlValidationErrorReport = await nemsisXsd.validateElement(version.nemsisVersion, xsdPath, rootTag, groupTag, this.data);
+      this.validationErrors = xmlValidationErrorReport?.$json ?? null;
       this.isValid = this.validationErrors === null;
       options.fields = options.fields || [];
       if (this.changed('validationErrors')) {

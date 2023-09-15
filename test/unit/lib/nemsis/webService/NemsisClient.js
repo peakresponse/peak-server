@@ -2,12 +2,12 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-require('../../../helpers');
+require('../../../../helpers');
 
-const { NemsisClient, NemsisServer } = require('../../../../lib/nemsis/webService');
+const { NemsisClient, NemsisServer } = require('../../../../../lib/nemsis/webService');
 
 function readPayload(payloadPath) {
-  let payload = fs.readFileSync(path.resolve(__dirname, '../../../fixtures/nemsis', payloadPath), 'utf8');
+  let payload = fs.readFileSync(path.resolve(__dirname, '../../../../fixtures/nemsis', payloadPath), 'utf8');
   // remove doctype declaraction
   payload = payload.replace(/<\?xml[^?]*\?>\s*/, '');
   return payload;
@@ -63,29 +63,6 @@ describe('lib', () => {
             const payload = readPayload('full/2023-EMS-1-Opioid-Release_v350.xml');
             const response = await client.submitEmsDataSet(payload, '3.5.0');
             assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.SUCCESS);
-          });
-        });
-      });
-
-      describe('NemsisServer', () => {
-        describe('.validateXMLWithSchematraon()', () => {
-          it('returns null for a valid doc', async () => {
-            const payload = readPayload('full/2023-DEM-1_v350.xml');
-            const schematronReport = await NemsisServer.validateXMLWithSchematron(
-              payload,
-              path.resolve(__dirname, '../../../../nemsis/schematron/DEMDataSet.sch.xsl')
-            );
-            assert.deepStrictEqual(schematronReport, null);
-          });
-
-          it('returns a schematronReport for a failed validation', async () => {
-            const payload = readPayload('fail/2023-DEM-FailSchematron_v350.xml');
-            const schematronReport = await NemsisServer.validateXMLWithSchematron(
-              payload,
-              path.resolve(__dirname, '../../../../nemsis/schematron/DEMDataSet.sch.xsl')
-            );
-            assert(schematronReport);
-            assert(schematronReport.completeSchematronReport);
           });
         });
       });

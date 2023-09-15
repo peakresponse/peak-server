@@ -32,7 +32,7 @@ describe('lib', () => {
           const xml = readXml('fail/2023-DEM-FailSchematron_v350.xml');
           const result = await nemsisSchematron.validateDemDataSet('3.5.0.211008CP3', xml);
           assert(result);
-          assert(result.completeSchematronReport);
+          assert(result.$xml);
         });
       });
     });
