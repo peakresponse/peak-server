@@ -195,8 +195,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
-      // run the DEM Data Set through any additonal configured Schematron validation
-      return this.update({ isValid: !validationErrors, validationErrors });
+      return this.update({ isValid: !validationErrors, validationErrors: validationErrors?.$json ?? null });
     }
   }
   Version.init(

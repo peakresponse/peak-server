@@ -5,7 +5,7 @@ const shelljs = require('shelljs');
 
 const { Base } = require('./base');
 const { getNemsisStateRepo } = require('../lib/nemsis/states');
-const { validate } = require('../lib/nemsis/schematron');
+const { validateDataSet } = require('../lib/nemsis/schematron');
 
 module.exports = (sequelize, DataTypes) => {
   class NemsisSchematron extends Base {
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         } catch {
           shelljs.exec(`bin/sch-to-xsl ${schPath}`);
         }
-        return validate(null, xml, xslPath);
+        return validateDataSet(xml, xslPath);
       }
       return null;
     }
