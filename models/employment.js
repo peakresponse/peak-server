@@ -297,7 +297,6 @@ module.exports = (sequelize, DataTypes) => {
             this.isValid = false;
             throw new ValidationError('Schema validation error', errors);
           }
-          this.isValid = true;
         },
       },
     }

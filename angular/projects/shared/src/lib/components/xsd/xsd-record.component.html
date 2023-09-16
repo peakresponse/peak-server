@@ -14,7 +14,7 @@
     <div *ngIf="isUnarchived" class="alert alert-success">Record restored!</div>
     <div *ngIf="isDraftDeleted" class="alert alert-success">Draft deleted!</div>
     <div *ngIf="isSavedErrorFree" class="alert alert-success">Draft saved!</div>
-    <div *ngIf="error && (isNewRecord || isEditingDraft)" class="alert alert-danger">
+    <div *ngIf="error" class="alert alert-danger">
       <shared-error [error]="error"></shared-error>
     </div>
     <ng-container *ngIf="isEditingDraft && record.archivedAt">

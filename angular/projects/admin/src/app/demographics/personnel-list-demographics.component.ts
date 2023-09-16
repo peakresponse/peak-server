@@ -4,15 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 
 import { assign } from 'lodash';
 
-import { AgencyService, ApiService, ModalComponent, NotificationService } from 'shared';
-
-import { SchemaListComponent } from '../schema/schema-list.component';
+import { AgencyService, ApiService, ModalComponent, NotificationService, XsdListComponent } from 'shared';
 
 @Component({
   templateUrl: './personnel-list-demographics.component.html',
 })
 export class PersonnelListDemographicsComponent {
-  @ViewChild('list') list?: SchemaListComponent;
+  @ViewChild('list') list?: XsdListComponent;
   @ViewChild('refuseConfirmation') refuseConfirmation?: ModalComponent;
 
   sectionColumns = [

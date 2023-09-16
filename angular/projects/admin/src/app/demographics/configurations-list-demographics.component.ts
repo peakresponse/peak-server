@@ -3,14 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { AgencyService, ApiService, NavigationService } from 'shared';
 
-import { SchemaListComponent } from '../schema/schema-list.component';
-
 @Component({
   templateUrl: './configurations-list-demographics.component.html',
 })
 export class ConfigurationsListDemographicsComponent {
-  @ViewChild('list') list?: SchemaListComponent;
-
   sectionColumns = [{ name: 'State ID', attr: ['dConfiguration.01'], class: 'col-3' }];
 
   constructor(public agency: AgencyService, private api: ApiService, private navigation: NavigationService, public route: ActivatedRoute) {}
