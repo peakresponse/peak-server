@@ -66,6 +66,12 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
           this.clone = cloneDeep(this.data);
           this.isLoading = !this.schemaData && !this.data;
           this.isEditingDraft = this.data.draft !== undefined;
+          if (!this.data.isValid) {
+            this.error = {
+              status: 422,
+              messages: this.data.validationErrors.errors,
+            };
+          }
         });
       }
     });
