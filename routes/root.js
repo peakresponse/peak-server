@@ -111,7 +111,7 @@ router.get('/', async (req, res, next) => {
     next();
   } else if (process.env.MARKETING_ENABLED === 'true') {
     let articles = cache.get('root-index-articles');
-    if (articles === undefined) {
+    if (articles === undefined || !articles.length) {
       articles = [];
       cache.set('root-index-articles', articles);
       try {
