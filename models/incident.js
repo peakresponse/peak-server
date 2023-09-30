@@ -20,6 +20,47 @@ module.exports = (sequelize, DataTypes) => {
       Incident.hasMany(models.Report.scope('canonical'), { as: 'reports', foreignKey: 'incidentId' });
     }
 
+    static async createPayload(incidents, options = {}) {
+      const { transaction } = options;
+      const payload = {
+        Dispatch: [],
+        Incident: [],
+        Scene: [],
+      };
+      const ids = {
+        City: new Set(),
+        State: new Set(),
+        Vehicle: new Set(),
+      };
+      for (const incident of incidents) {
+        payload.Incident.push(incident.toJSON());
+        let { scene, dispatches } = incident;
+        if (!scene) {
+          // eslint-disable-next-line no-await-in-loop
+          scene = await incident.getScene({ transaction });
+        }
+        if (scene) {
+          payload.Scene.push(scene.toJSON());
+          ids.City.add(scene.cityId);
+          ids.State.add(scene.stateId);
+        }
+        if (!dispatches) {
+          // eslint-disable-next-line no-await-in-loop
+          dispatches = await incident.getDispatches({ transaction });
+        }
+        dispatches.forEach((d) => {
+          payload.Dispatch.push(d.toJSON());
+          ids.Vehicle.add(d.vehicleId);
+        });
+      }
+      for (const model of ['City', 'State', 'Vehicle']) {
+        // eslint-disable-next-line no-await-in-loop
+        const records = await sequelize.models[model].findAll({ where: { id: [...ids[model]] }, transaction });
+        payload[model] = records.map((record) => record.toJSON());
+      }
+      return payload;
+    }
+
     static async paginate(type, obj, options) {
       const limit = options?.paginate ?? 25;
       const offset = (parseInt(options?.page ?? 1, 10) - 1) * limit;

@@ -184,7 +184,7 @@ module.exports = (sequelize, DataTypes) => {
       isActive: {
         type: new DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['closedAt']),
         get() {
-          return !this.closedAt;
+          return this.isMCI && !this.closedAt;
         },
       },
       data: DataTypes.JSONB,

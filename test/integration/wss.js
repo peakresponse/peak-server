@@ -149,16 +149,34 @@ describe('wss', () => {
           .ws(`/incidents?assignmentId=e5b169aa-e0a6-441b-92d4-95c729ff1988`)
           .set('Cookie', testSession.cookies.toValueString())
           .set('X-Agency-Subdomain', 'bmacc')
+          .expectJson((actual) => {
+            assert.deepStrictEqual(actual, {
+              Dispatch: [],
+              Incident: [],
+              Scene: [],
+              City: [],
+              State: [],
+              Vehicle: [],
+            });
+          })
           .exec(async () => {
             await wss.dispatchIncidentUpdate('6621202f-ca09-4ad9-be8f-b56346d1de65');
           })
           .expectJson((actual) => {
-            assert.deepStrictEqual(actual.City, JSON.parse(JSON.stringify(incident.scene.city.toJSON())));
-            assert.deepStrictEqual(actual.Dispatch, JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.toJSON()))));
-            assert.deepStrictEqual(actual.Incident, JSON.parse(JSON.stringify(incident.toJSON())));
-            assert.deepStrictEqual(actual.Scene, JSON.parse(JSON.stringify(incident.scene.toJSON())));
-            assert.deepStrictEqual(actual.State, JSON.parse(JSON.stringify(incident.scene.state.toJSON())));
-            assert.deepStrictEqual(actual.Vehicle, JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))));
+            assert.deepStrictEqual(actual.City, JSON.parse(JSON.stringify([incident.scene.city.toJSON()])));
+            assert.deepStrictEqual(
+              actual.Dispatch.sort((a, b) => a.id.localeCompare(b.id)),
+              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.toJSON()))).sort((a, b) => a.id.localeCompare(b.id))
+            );
+            assert.deepStrictEqual(actual.Incident, JSON.parse(JSON.stringify([incident.toJSON()])));
+            assert.deepStrictEqual(actual.Scene, JSON.parse(JSON.stringify([incident.scene.toJSON()])));
+            assert.deepStrictEqual(actual.State, JSON.parse(JSON.stringify([incident.scene.state.toJSON()])));
+            assert.deepStrictEqual(
+              actual.Vehicle.sort((a, b) => a.callSign.localeCompare(b.callSign)),
+              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))).sort((a, b) =>
+                a.callSign.localeCompare(b.callSign)
+              )
+            );
           })
           .close()
           .expectClosed();
@@ -179,16 +197,32 @@ describe('wss', () => {
           .ws(`/incidents?assignmentId=e5b169aa-e0a6-441b-92d4-95c729ff1988`)
           .set('Cookie', testSession.cookies.toValueString())
           .set('X-Agency-Subdomain', 'bmacc')
+          .expectJson((actual) => {
+            assert.deepStrictEqual(actual, {
+              Dispatch: [],
+              Incident: [],
+              Scene: [],
+              City: [],
+              State: [],
+              Vehicle: [],
+            });
+          })
           .exec(async () => {
             await wss.dispatchSceneUpdate(incident.scene.id);
           })
           .expectJson((actual) => {
-            assert.deepStrictEqual(actual.City, JSON.parse(JSON.stringify(incident.scene.city.toJSON())));
-            assert.deepStrictEqual(actual.Dispatch, JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.toJSON()))));
-            assert.deepStrictEqual(actual.Incident, JSON.parse(JSON.stringify(incident.toJSON())));
-            assert.deepStrictEqual(actual.Scene, JSON.parse(JSON.stringify(incident.scene.toJSON())));
-            assert.deepStrictEqual(actual.State, JSON.parse(JSON.stringify(incident.scene.state.toJSON())));
-            assert.deepStrictEqual(actual.Vehicle, JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))));
+            assert.deepStrictEqual(actual.City, JSON.parse(JSON.stringify([incident.scene.city.toJSON()])));
+            assert.deepStrictEqual(
+              actual.Dispatch.sort((a, b) => a.id.localeCompare(b.id)),
+              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.toJSON()))).sort((a, b) => a.id.localeCompare(b.id))
+            );
+            assert.deepStrictEqual(actual.Incident, JSON.parse(JSON.stringify([incident.toJSON()])));
+            assert.deepStrictEqual(actual.Scene, JSON.parse(JSON.stringify([incident.scene.toJSON()])));
+            assert.deepStrictEqual(actual.State, JSON.parse(JSON.stringify([incident.scene.state.toJSON()])));
+            assert.deepStrictEqual(
+              actual.Vehicle.sort((a, b) => a.id.localeCompare(b.id)),
+              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))).sort((a, b) => a.id.localeCompare(b.id))
+            );
           })
           .close()
           .expectClosed();

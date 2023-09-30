@@ -7,35 +7,54 @@ const incidentsServer = new WebSocket.Server({ noServer: true });
 incidentsServer.on('connection', async (ws, req) => {
   // eslint-disable-next-line no-param-reassign
   ws.info = { userId: req.user.id, agencyId: req.agency.id, assignmentId: req.assignment.id, vehicleId: req.assignment.vehicleId };
+  // query for any active MCIs- for now, incidents from the same agency, TODO query across all appropriate counties
+  const incidents = await models.Incident.findAll({
+    where: {
+      createdByAgencyId: req.agency.id,
+    },
+    include: [
+      {
+        model: models.Scene,
+        as: 'scene',
+        where: {
+          isMCI: true,
+          closedAt: null,
+        },
+      },
+      {
+        model: models.Dispatch,
+        as: 'dispatches',
+        required: false,
+      },
+    ],
+  });
+  const payload = await models.Incident.createPayload(incidents);
+  const data = JSON.stringify(payload);
+  ws.send(data);
 });
 
 async function dispatchIncidentUpdate(incidentId) {
   const incident = await models.Incident.findByPk(incidentId, {
     include: [
-      { model: models.Scene, as: 'scene', include: ['city', 'state'] },
+      { model: models.Scene, as: 'scene' },
       {
         model: models.Dispatch,
         as: 'dispatches',
-        include: 'vehicle',
+        required: false,
       },
     ],
   });
   if (!incident) {
     return;
   }
-  const json = {
-    City: incident.scene.city?.toJSON(),
-    Dispatch: incident.dispatches.map((d) => d.toJSON()),
-    Incident: incident.toJSON(),
-    Scene: incident.scene.toJSON(),
-    State: incident.scene.state?.toJSON(),
-    Vehicle: incident.dispatches.map((d) => d.vehicle.toJSON()),
-  };
-  const data = JSON.stringify(json);
+  const payload = await models.Incident.createPayload([incident]);
+  const data = JSON.stringify(payload);
   for (const ws of incidentsServer.clients) {
-    if (incident.dispatches.find((d) => d.vehicleId === ws.info.vehicleId)) {
+    if (incident.scene.isMCI && incident.createdByAgencyId === ws.info.agencyId) {
+      // send to all in agency if an MCI
       ws.send(data);
-    } else if (incident.dispatches.find((d) => d.vehicle.createdByAgencyId === ws.info.agencyId)) {
+    } else if (incident.dispatches.find((d) => d.vehicleId === ws.info.vehicleId)) {
+      // otherwise send to the dispatched vehicles
       ws.send(data);
     }
   }
