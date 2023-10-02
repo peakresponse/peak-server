@@ -13,5 +13,9 @@
 <div>
   <div *ngIf="validationErrors === undefined"><shared-loader></shared-loader></div>
   <div *ngIf="validationErrors === null">No validation errors!</div>
-  <pre *ngIf="validationErrors">{{ validationErrors | json }}</pre>
+  <div *ngIf="validationErrors">
+    <div *ngFor="let error of validationErrors.errors">
+      {{ error.value }}: {{ error.message }} <a [routerLink]="['/demographics', error.section, error.id]">Fix</a>
+    </div>
+  </div>
 </div>

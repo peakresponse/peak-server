@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       NemsisSchematron.belongsTo(models.User, { as: 'updatedBy' });
     }
 
-    async nemsisValidate(xml) {
+    async nemsisValidate(xml, doc) {
       let schPath;
       if (this.version) {
         // get from state repository
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         } catch {
           shelljs.exec(`bin/sch-to-xsl ${schPath}`);
         }
-        return validateDataSet(xml, xslPath);
+        return validateDataSet(xslPath, xml, doc);
       }
       return null;
     }
