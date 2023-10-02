@@ -35,7 +35,8 @@ describe('lib', () => {
             errors: [
               {
                 message: 'This is not a valid value.',
-                path: "$['DemographicReport']['dPersonnel']['dPersonnel.PersonnelGroup'][0]['dPersonnel.LicensureGroup']['dPersonnel.24']",
+                path:
+                  "$['DEMDataSet']['DemographicReport']['dPersonnel']['dPersonnel.PersonnelGroup'][0]['dPersonnel.LicensureGroup']['dPersonnel.24']",
                 value: '9925015',
               },
             ],
