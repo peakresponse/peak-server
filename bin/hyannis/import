@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+FILES_DIR=$SCRIPT_DIR/files
+# clear all files
+rm -f $FILES_DIR/*
+# perform mirror, track elapsed time
+START_TIME=$(date +%s)
+lftp -c "set ftp:ssl-auth TLS && \
+         set ssl:verify-certificate/$HYANNIS_SSL_FINGERPRINT no && \
+         open ftp://$HYANNIS_HOST:$HYANNIS_PORT && \
+         user $HYANNIS_USERNAME $HYANNIS_PASSWORD && \
+         mirror -r -N \"now - 12 hour\" /REDNMX $FILES_DIR"
+END_TIME=$(date +%s)
+echo "Elapsed Time: $(($END_TIME-$START_TIME)) seconds"

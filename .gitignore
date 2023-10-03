@@ -11,3 +11,4 @@ nemsis/xsd/*.json
 \~\$*.xlsx
 *.v350
 nginx/letsencrypt
+bin/hyannis/files
