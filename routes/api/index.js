@@ -11,6 +11,7 @@ router.use('/demographics', require('./demographics'));
 router.use('/dispatchers', require('./dispatchers'));
 router.use('/employments', require('./employments'));
 router.use('/facilities', require('./facilities'));
+router.use('/forms', require('./forms'));
 router.use('/incidents', require('./incidents'));
 router.use('/lists', require('./lists'));
 router.use('/psaps', require('./psaps'));
@@ -19,5 +20,6 @@ router.use('/scenes', require('./scenes'));
 router.use('/states', require('./states'));
 router.use('/users', require('./users'));
 router.use('/utils', require('./utils'));
+router.use('/vehicles', require('./vehicles'));
 
 module.exports = router;
