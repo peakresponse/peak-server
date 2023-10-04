@@ -1,3 +1,5 @@
+const inflection = require('inflection');
+const { JSONPath } = require('jsonpath-plus');
 const _ = require('lodash');
 const { DateTime } = require('luxon');
 const { Model } = require('sequelize');
@@ -178,16 +180,68 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async nemsisValidate() {
+      // get the js equivalent to the XML
+      const doc = xmljs.xml2js(this.demDataSet, { compact: true });
       // run the DEM Data Set through XSD validation
-      let error = await nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet);
-      if (error) {
-        return error;
-      }
+      let validationErrors = await nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet, doc);
       // run the DEM Data Set through national Schematron validation
-      error = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet);
-      // run the DEM Data Set through state Schematron validation
-      // run the DEM Data Set through any additonal configured Schematron validation
-      return error;
+      if (!validationErrors) {
+        validationErrors = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet, doc);
+      }
+      // run the DEM Data Set through state/additional Schematron validation
+      if (!validationErrors && this.demSchematronIds?.length) {
+        const schematrons = await sequelize.models.NemsisSchematron.findAll({ where: { id: this.demSchematronIds } });
+        for (const schematron of schematrons) {
+          // eslint-disable-next-line no-await-in-loop
+          validationErrors = await schematron.nemsisValidate(this.demDataSet, doc);
+          if (validationErrors) {
+            break;
+          }
+        }
+      }
+      if (validationErrors) {
+        // for each error, idenfity the model and id for the record it comes from
+        for (const error of validationErrors.$json.errors) {
+          const { path } = error;
+          const parts = [...path.matchAll(/\$|\['?([^'\]]+)'?\]/g)];
+          if (parts.length > 3) {
+            // infer the model from top level element
+            const section = parts[3][1].substring(1);
+            const model = section;
+            if (model === 'Personnel') {
+              error.section = 'personnel';
+              error.model = 'Employment';
+            } else {
+              error.section = inflection.pluralize(section.toLowerCase());
+              error.model = model;
+            }
+            if (model !== 'Agency') {
+              let subpath;
+              let nextIndex;
+              if (model === 'Facility' && parts.length > 6) {
+                subpath = `$${parts[1][0]}${parts[2][0]}${parts[3][0]}${parts[4][0]}${parts[5][0]}${parts[6][0]}`;
+                nextIndex = 7;
+              } else if (parts.length > 4) {
+                subpath = `$${parts[1][0]}${parts[2][0]}${parts[3][0]}${parts[4][0]}`;
+                nextIndex = 5;
+              }
+              if (subpath) {
+                let result = JSONPath({ wrap: false, path: subpath, json: doc });
+                if (!result?._attributes?.UUID && parts.length > nextIndex) {
+                  subpath = `${subpath}${parts[nextIndex][0]}`;
+                  result = JSONPath({ wrap: false, path: subpath, json: doc });
+                }
+                const {
+                  _attributes: { UUID: id },
+                } = result ?? {};
+                error.id = id;
+              }
+            }
+          }
+          // for schematron errors, set on the model object with appropriate path so it will be displayed on edit
+        }
+      }
+      return this.update({ isValid: !validationErrors, validationErrors: validationErrors?.$json ?? null });
     }
   }
   Version.init(

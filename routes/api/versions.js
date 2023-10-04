@@ -34,7 +34,7 @@ router.post(
 
 router.get(
   '/:id/preview',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const version = await models.Version.findByPk(req.params.id);
     if (version) {
@@ -44,6 +44,27 @@ router.get(
         }
         res.set('Content-Type', 'application/xml');
         res.send(version.demDataSet);
+      } else {
+        res.status(HttpStatus.FORBIDDEN).end();
+      }
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
+router.get(
+  '/:id/validate',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  helpers.async(async (req, res) => {
+    const version = await models.Version.findByPk(req.params.id);
+    if (version) {
+      if (version.agencyId === req.agency.id) {
+        if (version.isDraft) {
+          await version.regenerate();
+          await version.nemsisValidate();
+        }
+        res.json(version.validationErrors).end();
       } else {
         res.status(HttpStatus.FORBIDDEN).end();
       }

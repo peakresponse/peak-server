@@ -1,15 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
-import { AgencyService, ApiService } from 'shared';
-
-import { SchemaListComponent } from '../schema/schema-list.component';
+import { AgencyService, ApiService, XsdListComponent } from 'shared';
 
 @Component({
   templateUrl: './custom-configurations-list-demographics.component.html',
 })
 export class CustomConfigurationsListDemographicsComponent {
-  @ViewChild('list') list?: SchemaListComponent;
+  @ViewChild('list') list?: XsdListComponent;
 
   sectionColumns = [{ name: 'Title', attr: ['dCustomConfiguration.01'], class: 'col-9' }];
 

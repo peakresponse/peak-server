@@ -3,15 +3,13 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { AgencyService, ApiService } from 'shared';
-
-import { SchemaListComponent } from '../schema/schema-list.component';
+import { AgencyService, ApiService, XsdListComponent } from 'shared';
 
 @Component({
   templateUrl: './facilities-list-demographics.component.html',
 })
 export class FacilitiesListDemographicsComponent implements OnInit {
-  @ViewChild('list') list?: SchemaListComponent;
+  @ViewChild('list') list?: XsdListComponent;
 
   sectionColumns = [
     { name: 'Type', attr: ['dFacility.01'], class: 'col-5' },

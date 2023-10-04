@@ -5,8 +5,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from 'shared';
 
-import { SchemaModule } from '../schema/schema.module';
-
 import { FormsDemographicsModule } from './forms/forms-demographics.module';
 import { VersionsDemographicsModule } from './versions/versions-demographics.module';
 
@@ -58,7 +56,6 @@ import { VehiclesRecordDemographicsComponent } from './vehicles-record-demograph
     CommonModule,
     FormsModule,
     NgbModule,
-    SchemaModule,
     SharedModule,
     FormsDemographicsModule,
     VersionsDemographicsModule,
