@@ -7,7 +7,9 @@ const session = require('supertest-session');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
+const models = require('../../../models');
 const nemsisStates = require('../../../lib/nemsis/states');
+const fccMocks = require('../../mocks/fcc');
 
 describe('/api/states', () => {
   let testSession;
@@ -29,6 +31,14 @@ describe('/api/states', () => {
       assert(data.length);
       assert.deepStrictEqual(data.length, 17);
       assert.deepStrictEqual(data[0].name, 'Alabama');
+    });
+  });
+
+  describe('PUT /:id/psaps', () => {
+    it('should import PSAPs for the State', async () => {
+      await fccMocks.mockPsapRegistryDownloads();
+      await testSession.put('/api/states/06/psaps').expect(HttpStatus.OK);
+      assert.deepStrictEqual(await models.Psap.count(), 598);
     });
   });
 
