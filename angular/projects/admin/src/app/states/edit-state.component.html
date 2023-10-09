@@ -40,7 +40,9 @@
         <div class="mb-3">
           <div class="form-field form-field--noclear form-field--nonempty">
             <label>Cities</label>
-            <div *ngFor="let stat of cityStats" class="form-field__item">{{ stat.featureClass }}: {{ stat.count }}</div>
+            <div *ngFor="let stat of cityStats" class="form-field__item">
+              <span>{{ stat.featureClass }}:</span> {{ stat.count }}
+            </div>
             <div *ngIf="cityStats" class="form-field__item">Total: {{ cityStats.total }}</div>
           </div>
         </div>
@@ -65,7 +67,11 @@
       <div class="col-lg-3">
         <div class="mb-3">
           <div class="form-field form-field--noclear form-field--nonempty">
-            <label>PSAPs</label>
+            <label>
+              <span>PSAPs</span>
+              <shared-loader *ngIf="isImportingPsaps" class="me-3"></shared-loader>
+              <i *ngIf="!isImportingPsaps" (click)="onPsapsImport()" class="fas fa-file-import clickable me-3"></i>
+            </label>
             <div class="form-field__item">Total: {{ psapStats?.count }}</div>
           </div>
         </div>
