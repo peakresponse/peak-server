@@ -32,8 +32,8 @@ describe('/api/agencies', () => {
     });
 
     it('returns a paginated list of Agency records', async () => {
-      const response = await testSession.get('/api/agencies/').expect(HttpStatus.OK).expect('X-Total-Count', '12').expect('Link', '');
-      assert.deepStrictEqual(response.body.length, 12);
+      const response = await testSession.get('/api/agencies/').expect(HttpStatus.OK).expect('X-Total-Count', '13').expect('Link', '');
+      assert.deepStrictEqual(response.body.length, 13);
     });
 
     it('returns a paginated list of search filtered Agency records', async () => {
@@ -41,9 +41,9 @@ describe('/api/agencies', () => {
         .get('/api/agencies/')
         .query({ search: 'fire' })
         .expect(HttpStatus.OK)
-        .expect('X-Total-Count', '5')
+        .expect('X-Total-Count', '6')
         .expect('Link', '');
-      assert.deepStrictEqual(response.body.length, 5);
+      assert.deepStrictEqual(response.body.length, 6);
       assert.deepStrictEqual(response.body[0].name, 'Bodega Bay Fire Protection District');
       for (const facility of response.body) {
         assert(facility.name.match(/fire/i));

@@ -28,8 +28,8 @@ describe('/api/psaps', () => {
 
   describe('GET /', () => {
     it('returns a paginated list of records', async () => {
-      const response = await testSession.get('/api/psaps').expect(HttpStatus.OK).expect('X-Total-Count', '1');
-      assert.deepStrictEqual(response.body.length, 1);
+      const response = await testSession.get('/api/psaps').expect(HttpStatus.OK).expect('X-Total-Count', '2');
+      assert.deepStrictEqual(response.body.length, 2);
     });
   });
 

@@ -36,9 +36,10 @@ describe('/api/nemsis/state-data-sets', () => {
       const response = await testSession.get('/api/nemsis/state-data-sets').expect(HttpStatus.OK);
       const data = response.body;
       assert(data);
-      assert.deepStrictEqual(data.length, 2);
+      assert.deepStrictEqual(data.length, 3);
       assert.deepStrictEqual(data[0].stateId, '06');
-      assert.deepStrictEqual(data[1].stateId, '50');
+      assert.deepStrictEqual(data[1].stateId, '25');
+      assert.deepStrictEqual(data[2].stateId, '50');
     });
 
     it('returns configured NEMSIS state data sets for the given state', async () => {

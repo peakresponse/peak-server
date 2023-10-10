@@ -36,7 +36,7 @@ describe('/api/nemsis/schematrons', () => {
       const response = await testSession.get('/api/nemsis/schematrons').expect(HttpStatus.OK);
       const data = response.body;
       assert(data);
-      assert.deepStrictEqual(data.length, 1);
+      assert.deepStrictEqual(data.length, 2);
       assert.deepStrictEqual(data[0].stateId, '06');
     });
 
