@@ -11,5 +11,18 @@
       "createdAt": "2020-04-06T21:22:10.102Z",
       "updatedAt": "2020-04-06T21:22:10.102Z"
     }
+  },
+  {
+    "model": "Dispatcher",
+    "data": {
+      "id": "673858bc-b5ee-4e51-82bc-2ee41db61759",
+      "userId": "4d75cccd-fd9f-415e-ba7f-f339d053e1a6",
+      "psapId": "3151",
+      "callSign": "",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:10.102Z",
+      "updatedAt": "2020-04-06T21:22:10.102Z"
+    }
   }
 ]

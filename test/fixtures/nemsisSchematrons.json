@@ -11,5 +11,18 @@
       "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
     }
+  },
+  {
+    "model": "NemsisSchematron",
+    "ignoreSet": true,
+    "data": {
+      "id": "9d065054-b188-442d-b831-72870df1c9ba",
+      "stateId": "25",
+      "dataSet": "EMSDataSet",
+      "nemsisVersion": "3.5.0.211008CP3",
+      "version": "2023-09-22-787815b4abb88d120c1a190409fd6d07478cf399",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
   }
 ]
