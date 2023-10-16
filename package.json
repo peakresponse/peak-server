@@ -160,6 +160,7 @@
     "supertest": "^4.0.2",
     "supertest-session": "^4.0.0",
     "tmp": "^0.1.0",
+    "tmp-promise": "^3.0.3",
     "utf-8-validate": "^5.0.2",
     "uuid": "^9.0.0",
     "validate-with-xmllint": "^1.2.0",

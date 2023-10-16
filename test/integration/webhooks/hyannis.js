@@ -1,13 +1,10 @@
-// const assert = require('assert');
-// const fs = require('fs');
+const assert = require('assert');
 const HttpStatus = require('http-status-codes');
-// const moment = require('moment');
-// const path = require('path');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
-// const models = require('../../../models');
+const models = require('../../../models');
 
 describe('/webhooks/hyannis', () => {
   let testSession;
@@ -40,15 +37,37 @@ describe('/webhooks/hyannis', () => {
         .set('Authorization', `Bearer 60679b8a-6786-4637-a0cc-1984c1673c91`)
         .set('Accept', 'application/json')
         .send({
-          message: `Created: C:\\Users\\francisli\\Downloads\\filewatcher-windows-x64\\watch\\62589_AMB 2-8fb6025b-9c8d-4839-8686-db4686680276.xml
-Created: C:\\Users\\francisli\\Downloads\\filewatcher-windows-x64\\watch\\62589_AMB 2-793fbb39-a090-4918-b62a-80302a249a06.xml
-Created: C:\\Users\\francisli\\Downloads\\filewatcher-windows-x64\\watch\\62589_AMB 2-fc176bc8-a676-4ae6-aca0-1d48b59b15fd.xml
-Created: C:\\Users\\francisli\\Downloads\\filewatcher-windows-x64\\watch\\62589_AMB 2.xml
-Created: C:\\Users\\francisli\\Downloads\\filewatcher-windows-x64\\watch\\62589_AMB 2-00caf241-465d-4c31-b635-4aaea8a6907e.xml
-Created: C:\\Users\\francisli\\Downloads\\filewatcher-windows-x64\\watch\\62589_AMB 2-3ce78413-189c-484e-917f-0542374d83f7.xml
+          message: `Created: C:\\RedNMX\\ImageTrend\\CadFiles\\Archive\\62589_AMB 1.xml
+Created: C:\\RedNMX\\ImageTrend\\CadFiles\\Archive\\62589_AMB 2.xml
+Created: C:\\RedNMX\\ImageTrend\\CadFiles\\Archive\\62589_CAR 3.xml
 `,
         })
         .expect(HttpStatus.OK);
+      // check that Vehicle records are created for the Hyannis agency
+      assert.deepStrictEqual(await models.Vehicle.count(), 3);
+      assert(
+        await models.Vehicle.findOne({
+          where: {
+            createdByAgencyId: '761f3479-f2d5-44bf-a2da-32ac969ccd5e',
+            number: 'AMB 1',
+          },
+        })
+      );
+      // check that Incident and Scene records created for each unique Incident No
+      assert.deepStrictEqual(await models.Incident.count(), 1);
+      const incident = await models.Incident.findOne({
+        where: {
+          number: '2023006083',
+        },
+      });
+      assert(incident);
+      const scene = await incident.getScene();
+      assert(scene);
+      assert.deepStrictEqual(scene.address1, '1095 IYANNOUGH ROAD');
+      assert.deepStrictEqual(scene.cityId, '619333');
+      assert.deepStrictEqual(scene.countyId, '25001');
+      assert.deepStrictEqual(scene.stateId, '25');
+      assert.deepStrictEqual(scene.zip, '02601');
     });
   });
 });

@@ -35,7 +35,7 @@ describe('/api/cities', () => {
       const response = await testSession.get('/api/cities').set('Host', `bayshoreambulance.${process.env.BASE_HOST}`).expect(200);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 3);
+      assert.deepStrictEqual(data.length, 4);
       assert.deepStrictEqual(data[0].featureName, 'City of San Francisco');
     });
 
@@ -57,7 +57,7 @@ describe('/api/cities', () => {
         .expect(200);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 3);
+      assert.deepStrictEqual(data.length, 4);
       assert.deepStrictEqual(data[0].featureName, 'City of Yakima');
       assert.deepStrictEqual(data[1].featureName, 'City of San Francisco');
     });
