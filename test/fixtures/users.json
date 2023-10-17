@@ -131,5 +131,30 @@
       "isAdmin": false,
       "apiKey": "66ced5b6-6ed3-42e3-a11d-ea0d700dee9e"
     }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "ae6543bc-5ef1-4a61-9d26-ee27819cf306",
+      "firstName": "Hyannis",
+      "lastName": "User",
+      "position": "Integration",
+      "email": "hyannis+user@peakresponse.net",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "4d75cccd-fd9f-415e-ba7f-f339d053e1a6",
+      "firstName": "Hyannis",
+      "lastName": "Dispatcher",
+      "position": "Integration",
+      "email": "hyannis+dispatcher@peakresponse.net",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false,
+      "apiKey": "60679b8a-6786-4637-a0cc-1984c1673c91"
+    }
   }
 ]

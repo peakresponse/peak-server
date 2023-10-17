@@ -28,7 +28,7 @@ describe('models', () => {
     describe("scope('active')", () => {
       it('returns only active employments', async () => {
         const records = await models.Employment.scope('final', 'active').findAll();
-        assert.deepStrictEqual(records.length, 5);
+        assert.deepStrictEqual(records.length, 6);
       });
     });
 

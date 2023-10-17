@@ -19,6 +19,8 @@ export class EditStateComponent {
   facilityTypes: any;
   psapStats: any;
 
+  isImportingPsaps = false;
+
   constructor(
     private api: ApiService,
     private navigation: NavigationService,
@@ -69,6 +71,14 @@ export class EditStateComponent {
     this.api.states.getFacilities(this.id).subscribe((response: HttpResponse<any>) => {
       this.facilityStats = response.body;
       this.facilityStats.total = this.facilityStats.reduce((sum: number, stat: any) => (sum += stat.count), 0);
+    });
+  }
+
+  onPsapsImport() {
+    this.isImportingPsaps = true;
+    this.api.states.importPsaps(this.id).subscribe(() => {
+      this.refreshPsapStats();
+      this.isImportingPsaps = false;
     });
   }
 

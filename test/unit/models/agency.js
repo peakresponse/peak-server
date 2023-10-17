@@ -24,13 +24,13 @@ describe('models', () => {
 
     describe("scope('canonical')", () => {
       it('filters out non-canonical records', async () => {
-        assert.deepStrictEqual(await models.Agency.scope('canonical').count(), 12);
+        assert.deepStrictEqual(await models.Agency.scope('canonical').count(), 13);
       });
     });
 
     describe("scope('claimed')", () => {
       it('filters out non-claimed records', async () => {
-        assert.deepStrictEqual(await models.Agency.scope('claimed').count(), 3);
+        assert.deepStrictEqual(await models.Agency.scope('claimed').count(), 4);
       });
     });
 

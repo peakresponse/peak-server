@@ -40,5 +40,19 @@
       "createdAt": "2020-04-07T19:53:42.434Z",
       "updatedAt": "2020-04-07T19:53:42.434Z"
     }
+  },
+  {
+    "model": "County",
+    "data": {
+      "fullCode": "25001",
+      "id": "25001",
+      "stateAbbr": "MA",
+      "stateCode": "25",
+      "countyCode": "001",
+      "name": "Barnstable County",
+      "classCode": "H1",
+      "createdAt": "2020-04-07T19:53:42.434Z",
+      "updatedAt": "2020-04-07T19:53:42.434Z"
+    }
   }
 ]

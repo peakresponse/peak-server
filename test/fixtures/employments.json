@@ -3,6 +3,39 @@
     "model": "Employment",
     "ignoreSet": true,
     "data": {
+      "id": "c361866d-b681-475c-b9e7-1a7607bc4ccf",
+      "createdByAgencyId": "761f3479-f2d5-44bf-a2da-32ac969ccd5e",
+      "userId": "ae6543bc-5ef1-4a61-9d26-ee27819cf306",
+      "hiredOn": "2020-10-06",
+      "startedOn": "2020-10-06",
+      "endedOn": null,
+      "isOwner": false,
+      "roles": [],
+      "firstName": "Hyannis",
+      "lastName": "User",
+      "email": "hyannis.user@peakresponse.net",
+      "data": {
+        "_attributes": {
+          "UUID": "c361866d-b681-475c-b9e7-1a7607bc4ccf"
+        },
+        "dPersonnel.10": {
+          "_text": "hyannis.user@peakresponse.net"
+        },
+        "dPersonnel.NameGroup": {
+          "dPersonnel.01": { "_text": "User" },
+          "dPersonnel.02": { "_text": "Hyannis" }
+        }
+      },
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z",
+      "updatedById": "ae6543bc-5ef1-4a61-9d26-ee27819cf306",
+      "createdById": "ae6543bc-5ef1-4a61-9d26-ee27819cf306"
+    }
+  },
+  {
+    "model": "Employment",
+    "ignoreSet": true,
+    "data": {
       "id": "1a9b0a41-f194-419c-99f5-0ce5757a9026",
       "createdByAgencyId": "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8",
       "userId": "9eb5be23-c098-495c-a758-ce1def3ff541",

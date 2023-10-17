@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       const tmpDir = tmp.dirSync();
       try {
         const registryPath = path.resolve(tmpDir.name, 'registry.xlsx');
-        await download('https://www.fcc.gov/file/21421/download', registryPath);
+        await download('https://www.fcc.gov/sites/default/files/masterpsapregistryv2.272.xlsx', registryPath);
         await Psap.parsePsapsForState(stateId, registryPath);
       } finally {
         tmpDir.removeCallback();

@@ -13,5 +13,20 @@
       "countyId": "06075",
       "cityId": "2411786"
     }
+  },
+  {
+    "model": "Psap",
+    "data": {
+      "id": "3151",
+      "name": "Barnstable County Sheriffs Department",
+      "change": "M",
+      "comments": "PSAP Name, State, County or City text has been modified since the original posting of the FCC Registry.",
+      "modifiedOn": "2008-01-09",
+      "createdAt": "2021-07-27T18:11:51.085Z",
+      "updatedAt": "2021-07-27T18:18:50.333Z",
+      "stateId": "25",
+      "countyId": "25001",
+      "cityId": null
+    }
   }
 ]

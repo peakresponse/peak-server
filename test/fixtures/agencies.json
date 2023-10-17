@@ -424,5 +424,73 @@
         }
       }
     }
+  },
+  {
+    "model": "Agency",
+    "ignoreSet": true,
+    "data": {
+      "id": "47be0f5c-f384-4dd2-a96f-711462adca2b",
+      "isDraft": false,
+      "canonicalAgencyId": null,
+      "subdomain": null,
+      "stateUniqueId": "3110",
+      "number": "3110",
+      "name": "Hyannis Fire & Rescue Dept.",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdByAgencyId": null,
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "stateId": "25",
+      "nemsisVersion": "3.5.0.211008CP1",
+      "stateDataSetId": "0693b9cc-0268-4ab3-872b-caaed4a2fd95",
+      "data": {
+        "sAgency.01": {
+          "_text": "3110"
+        },
+        "sAgency.02": {
+          "_text": "3110"
+        },
+        "sAgency.03": {
+          "_text": "Hyannis Fire & Rescue Dept."
+        }
+      }
+    }
+  },
+  {
+    "model": "Agency",
+    "ignoreSet": true,
+    "data": {
+      "id": "761f3479-f2d5-44bf-a2da-32ac969ccd5e",
+      "isDraft": false,
+      "canonicalAgencyId": "47be0f5c-f384-4dd2-a96f-711462adca2b",
+      "subdomain": "hyannis",
+      "psapId": "3151",
+      "stateUniqueId": "3110",
+      "number": "3110",
+      "name": "Hyannis Fire & Rescue Dept.",
+      "createdById": "ae6543bc-5ef1-4a61-9d26-ee27819cf306",
+      "createdByAgencyId": "761f3479-f2d5-44bf-a2da-32ac969ccd5e",
+      "updatedById": "ae6543bc-5ef1-4a61-9d26-ee27819cf306",
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "stateId": "25",
+      "nemsisVersion": "3.5.0.211008CP1",
+      "stateDataSetId": "0693b9cc-0268-4ab3-872b-caaed4a2fd95",
+      "data": {
+        "dAgency.01": {
+          "_text": "3110"
+        },
+        "dAgency.02": {
+          "_text": "3110"
+        },
+        "dAgency.03": {
+          "_text": "Hyannis Fire & Rescue Dept."
+        },
+        "dAgency.04": {
+          "_text": "25"
+        }
+      }
+    }
   }
 ]

@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       const searchOrder = [
         [name, 'Civil'],
         [`City of ${name}`, 'Civil'],
+        [`Village of ${name}`, 'Civil'],
         [name, 'Populated Place'],
         [name, 'Military'],
         [name, 'Census'],

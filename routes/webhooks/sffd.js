@@ -37,6 +37,7 @@ router.post('/cad', async (req, res) => {
   await models.sequelize.transaction(async (transaction) => {
     const sffd = await models.Agency.scope('claimed').findOne({
       where: {
+        stateId: '06',
         stateUniqueId: 'S38-50827',
       },
       transaction,

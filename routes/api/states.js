@@ -115,6 +115,20 @@ router.get(
   })
 );
 
+router.put(
+  '/:id/psaps',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const state = await models.State.findByPk(req.params.id);
+    if (state) {
+      await models.Psap.importPsapsForState(state.id);
+      res.status(HttpStatus.OK).end();
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  })
+);
+
 router.get(
   '/:id/repository',
   interceptors.requireAdmin,

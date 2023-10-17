@@ -67,5 +67,28 @@
       "createdAt": "2020-04-07T19:59:21.446Z",
       "updatedAt": "2020-04-07T19:59:21.446Z"
     }
+  },
+  {
+    "model": "City",
+    "data": {
+      "id": "619333",
+      "featureName": "Hyannis",
+      "featureClass": "Populated Place",
+      "censusCode": "31820",
+      "censusClassCode": "U4",
+      "gsaCode": "0540",
+      "opmCode": "250540001",
+      "stateNumeric": "25",
+      "stateAlpha": "MA",
+      "countySequence": "1",
+      "countyNumeric": "001",
+      "countyName": "Barnstable",
+      "primaryLatitude": "41.6528887",
+      "primaryLongitude": "-70.2827989",
+      "dateCreated": "02/24/1974",
+      "dateEdited": "",
+      "createdAt": "2020-04-07T19:59:21.446Z",
+      "updatedAt": "2020-04-07T19:59:21.446Z"
+    }
   }
 ]
