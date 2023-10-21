@@ -50,8 +50,8 @@ async function dispatchIncidentUpdate(incidentId) {
   const payload = await models.Incident.createPayload([incident]);
   const data = JSON.stringify(payload);
   for (const ws of incidentsServer.clients) {
-    if (incident.scene.isMCI && incident.createdByAgencyId === ws.info.agencyId) {
-      // send to all in agency if an MCI
+    if (incident.scene.isMCI && incident.scene.updatedByAgencyId === ws.info.agencyId) {
+      // TODO: send to all agencies within jurisdiction if an MCI
       ws.send(data);
     } else if (incident.dispatches.find((d) => d.vehicleId === ws.info.vehicleId)) {
       // otherwise send to the dispatched vehicles
