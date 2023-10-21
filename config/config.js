@@ -6,7 +6,7 @@ if (!process.env.DATABASE_TEST_URL) {
 
 module.exports = {
   development: {
-    // logging: false,
+    logging: false,
     use_env_variable: 'DATABASE_URL',
   },
   test: {
