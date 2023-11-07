@@ -26,12 +26,17 @@ module.exports = (sequelize, DataTypes) => {
 
     static async createOrUpdate(user, agency, data, options) {
       const { transaction } = options ?? {};
+      // there is always only one active Responder record (departedAt IS NULL) per User and Scene
+      // so we fetch the active record by compound User/Scene instead of id to handle same
+      // account signed into multiple clients
       const [responder, created] = await Responder.findOrCreate({
         where: {
-          id: data.id,
+          sceneId: data.sceneId,
+          userId: data.userId,
+          departedAt: null,
         },
         defaults: {
-          ..._.pick(data, ['sceneId', 'userId', 'agencyId', 'vehicleId', 'arrivedAt', 'departedAt']),
+          ..._.pick(data, ['id', 'agencyId', 'vehicleId', 'arrivedAt', 'departedAt']),
           createdById: user.id,
           createdByAgencyId: agency.id,
           updatedById: user.id,
@@ -42,7 +47,17 @@ module.exports = (sequelize, DataTypes) => {
       if (created) {
         return [responder, created];
       }
-      await responder.update(_.pick(data, ['arrivedAt', 'departedAt']), { transaction });
+      // arrivedAt/departedAt values are immutable- once set, they cannot be changed
+      const attrs = [];
+      if (!responder.arrivedAt) {
+        attrs.push('arrivedAt');
+      }
+      if (!responder.departedAt) {
+        attrs.push('departedAt');
+      }
+      if (attrs.length > 0) {
+        await responder.update(_.pick(data, attrs), { transaction });
+      }
       return [responder, created];
     }
 
