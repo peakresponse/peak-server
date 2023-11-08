@@ -84,17 +84,18 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.currentUser = null;
-  res.locals.flash = {};
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  res.locals.title = 'Error!';
+  if (!res.headersSent) {
+    // set locals, only providing error in development
+    res.locals.currentUser = null;
+    res.locals.flash = {};
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.locals.title = 'Error!';
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+  }
   // allow error to pass to following Rollbar handler
   next(err, req, res);
 });
