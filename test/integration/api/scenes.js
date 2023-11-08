@@ -148,6 +148,50 @@ describe('/api/scenes', () => {
 
       const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
       assert.deepStrictEqual(scene.respondersCount, 3);
+
+      const responder = await models.Responder.findByPk('a80254a6-f373-40ac-bc07-17da6a61b2cb');
+      assert.deepStrictEqual(JSON.stringify(responder?.arrivedAt), '"2020-04-06T21:22:10.102Z"');
+
+      // this action should be idempotent- repeating it again should not cause an error or change its values
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'd1b79498-797e-450c-b9a0-b79a38719e3e',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            userId: '6f4a1b45-b465-4ec9-8127-292d87d7952b',
+            agencyId: '81b433cd-5f48-4458-87f3-0bf4e1591830',
+            arrivedAt: '2020-04-06T21:24:10.102Z',
+          },
+        })
+        .expect(HttpStatus.OK);
+
+      await responder.reload();
+      assert.deepStrictEqual(JSON.stringify(responder?.arrivedAt), '"2020-04-06T21:22:10.102Z"');
+    });
+
+    it('marks a Responder as having left a Scene', async () => {
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: '1550b568-9a2a-41b5-9c0f-8284f07d1aec',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            userId: '9c5f542e-f7b0-497d-91ed-1eeefd8ade7f',
+            agencyId: '81b433cd-5f48-4458-87f3-0bf4e1591830',
+            arrivedAt: '2020-04-06T21:32:10.102Z',
+            departedAt: '2020-04-06T22:32:10.102Z',
+          },
+        })
+        .expect(HttpStatus.OK);
+
+      const responder = await models.Responder.findByPk('1550b568-9a2a-41b5-9c0f-8284f07d1aec');
+      assert.deepStrictEqual(JSON.stringify(responder?.departedAt), '"2020-04-06T22:32:10.102Z"');
+
+      const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
+      assert.deepStrictEqual(scene.respondersCount, 1);
     });
   });
 });
