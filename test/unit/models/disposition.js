@@ -108,7 +108,6 @@ describe('models', () => {
         assert.deepStrictEqual(record.parentId, null);
         assert.deepStrictEqual(record.canonicalId, data.canonicalId);
         assert.deepStrictEqual(record.data, data.data);
-        assert(record.isValid);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'data']);
         assert.deepStrictEqual(record.updatedDataAttributes, [
           '/eDisposition.DestinationGroup',

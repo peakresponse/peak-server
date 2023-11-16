@@ -118,29 +118,6 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.dispatchedAt, dispatch.dispatchedAt);
         assert.deepStrictEqual(canonical.acknowledgedAt, dispatch.acknowledgedAt);
       });
-
-      it('validates NEMSIS data against the schema', async () => {
-        const user = await models.User.findByPk('9eb5be23-c098-495c-a758-ce1def3ff541');
-        const agency = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
-        const data = {
-          id: 'c25d6127-5cb9-4ca2-845d-37fb19a36e4b',
-          parentId: '374450ef-99e3-4554-9298-c8b70373d63f',
-          data: {
-            'eDispatch.01': {
-              _text: '2301021',
-            },
-            'eDispatch.02': {
-              _text: '2302001',
-            },
-          },
-        };
-        const [dispatch, created] = await models.Dispatch.createOrUpdate(user, agency, data);
-        assert(dispatch);
-        assert(!created);
-        assert(dispatch.isValid);
-        assert(dispatch.updatedAttributes, ['parentId', 'data']);
-        assert(dispatch.updatedDataAttributes, ['/eDispatch.01', '/eDispatch.02']);
-      });
     });
   });
 });

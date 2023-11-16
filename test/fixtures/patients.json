@@ -7,7 +7,6 @@
       "currentId": "cb94a8a4-bf8b-4316-8a3f-191aa2df4633",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "125615",
-      "version": 2,
       "lastName": "Jones",
       "firstName": "David",
       "age": 18,
@@ -43,7 +42,6 @@
       "currentId": "6ae0e0b0-db99-49c8-9174-d91234107157",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "362330",
-      "version": 1,
       "lastName": "Smith",
       "firstName": "Daniel",
       "age": 69,
@@ -79,7 +77,6 @@
       "currentId": "1b76259b-d08e-45d2-ba62-983880ef2e4e",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "769855",
-      "version": 2,
       "lastName": "Johnson",
       "firstName": "Mary",
       "age": 16,
@@ -115,7 +112,6 @@
       "currentId": "4227c672-2497-44fa-bde6-ca36a7282c13",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "398924",
-      "version": 1,
       "lastName": "Taylor",
       "firstName": "Mathew",
       "age": 45,
@@ -149,7 +145,6 @@
       "currentId": "01b08bf0-13ac-4c38-94cc-265518fb8604",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "809685",
-      "version": 2,
       "lastName": "Green",
       "firstName": "James",
       "age": 55,
@@ -185,7 +180,6 @@
       "currentId": "9d6295a1-b2cd-4e01-9425-11a4a01e947e",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "080709",
-      "version": 2,
       "lastName": "Thomas",
       "firstName": "Mary",
       "age": 23,
@@ -221,7 +215,6 @@
       "currentId": "54a52c0a-b2f0-49ef-bc8d-9150fb2da654",
       "sceneId": "25db9094-03a5-4267-8314-bead229eff9d",
       "pin": "593983",
-      "version": 2,
       "lastName": "Brown",
       "firstName": "Betty",
       "age": 71,
@@ -254,7 +247,6 @@
     "ignoreSet": true,
     "data": {
       "id": "6045b198-590e-483b-b493-40510b8d86ca",
-      "version": 1,
       "lastName": "Jones",
       "firstName": "David",
       "age": 18,
@@ -306,7 +298,6 @@
     "data": {
       "id": "cb94a8a4-bf8b-4316-8a3f-191aa2df4633",
       "parentId": "6045b198-590e-483b-b493-40510b8d86ca",
-      "version": 2,
       "lastName": "Jones",
       "firstName": "David",
       "age": 18,
@@ -341,7 +332,6 @@
     "ignoreSet": true,
     "data": {
       "id": "6ae0e0b0-db99-49c8-9174-d91234107157",
-      "version": 1,
       "lastName": "Smith",
       "firstName": "Daniel",
       "age": 69,
@@ -392,7 +382,6 @@
     "ignoreSet": true,
     "data": {
       "id": "4012c21f-cc05-4f18-89b6-8d32e261b077",
-      "version": 1,
       "lastName": "Johnson",
       "firstName": "Mary",
       "age": 16,
@@ -444,7 +433,6 @@
     "data": {
       "id": "1b76259b-d08e-45d2-ba62-983880ef2e4e",
       "parentId": "4012c21f-cc05-4f18-89b6-8d32e261b077",
-      "version": 2,
       "lastName": "Johnson",
       "firstName": "Mary",
       "age": 16,
@@ -480,7 +468,6 @@
     "ignoreSet": true,
     "data": {
       "id": "4227c672-2497-44fa-bde6-ca36a7282c13",
-      "version": 1,
       "lastName": "Taylor",
       "firstName": "Mathew",
       "age": 45,
@@ -514,7 +501,6 @@
     "ignoreSet": true,
     "data": {
       "id": "e8c8db8d-7fcc-4170-b5a8-a0b805a6ce82",
-      "version": 1,
       "lastName": "Green",
       "firstName": "James",
       "age": 55,
@@ -566,7 +552,6 @@
     "data": {
       "id": "01b08bf0-13ac-4c38-94cc-265518fb8604",
       "parentId": "e8c8db8d-7fcc-4170-b5a8-a0b805a6ce82",
-      "version": 2,
       "lastName": "Green",
       "firstName": "James",
       "age": 55,
@@ -602,7 +587,6 @@
     "ignoreSet": true,
     "data": {
       "id": "2ccf15a8-0be9-4b61-a2b1-10ae8f3359db",
-      "version": 1,
       "lastName": "Thomas",
       "firstName": "Mary",
       "age": 23,
@@ -654,7 +638,6 @@
     "data": {
       "id": "9d6295a1-b2cd-4e01-9425-11a4a01e947e",
       "parentId": "2ccf15a8-0be9-4b61-a2b1-10ae8f3359db",
-      "version": 2,
       "lastName": "Thomas",
       "firstName": "Mary",
       "age": 23,
@@ -690,7 +673,6 @@
     "ignoreSet": true,
     "data": {
       "id": "3c366588-a41e-47d1-a1fd-788ada643536",
-      "version": 1,
       "lastName": "Brown",
       "firstName": "Betty",
       "age": 71,
@@ -742,7 +724,6 @@
     "data": {
       "id": "54a52c0a-b2f0-49ef-bc8d-9150fb2da654",
       "parentId": "3c366588-a41e-47d1-a1fd-788ada643536",
-      "version": 2,
       "lastName": "Brown",
       "firstName": "Betty",
       "age": 71,

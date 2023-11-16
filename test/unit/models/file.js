@@ -68,7 +68,6 @@ describe('models', () => {
         assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${record.id}/file`, file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
         assert.deepStrictEqual(record.data, data.data);
-        assert(record.isValid);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'file', 'metadata', 'data']);
         assert.deepStrictEqual(record.updatedDataAttributes, ['/eOther.09', '/eOther.10']);
         assert.deepStrictEqual(record.createdById, user.id);

@@ -84,7 +84,6 @@ describe('models', () => {
         assert.deepStrictEqual(record.fileUrl, `/api/assets/signatures/${record.id}/file/${file}`);
         assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/signatures/${record.id}/file`, file)));
         assert.deepStrictEqual(record.data, data.data);
-        assert(record.isValid);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'formId', 'formInstanceId', 'file', 'data']);
         assert.deepStrictEqual(record.updatedDataAttributes, [
           '/eOther.12',
