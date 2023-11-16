@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Signature.belongsTo(models.Version, { as: 'version' });
       Signature.belongsTo(Signature, { as: 'canonical' });
       Signature.belongsTo(Signature, { as: 'current' });
       Signature.belongsTo(Signature, { as: 'parent' });

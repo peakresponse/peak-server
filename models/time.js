@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Time.belongsTo(models.Version, { as: 'version' });
       Time.belongsTo(Time, { as: 'canonical' });
       Time.belongsTo(Time, { as: 'current' });
       Time.belongsTo(Time, { as: 'parent' });

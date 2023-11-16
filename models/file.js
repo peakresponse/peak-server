@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      File.belongsTo(models.Version, { as: 'version' });
       File.belongsTo(File, { as: 'canonical' });
       File.belongsTo(File, { as: 'current' });
       File.belongsTo(File, { as: 'parent' });

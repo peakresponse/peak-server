@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Situation.belongsTo(models.Version, { as: 'version' });
       Situation.belongsTo(Situation, { as: 'canonical' });
       Situation.belongsTo(Situation, { as: 'current' });
       Situation.belongsTo(Situation, { as: 'parent' });

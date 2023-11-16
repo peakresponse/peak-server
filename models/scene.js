@@ -6,6 +6,7 @@ const { Base } = require('./base');
 module.exports = (sequelize, DataTypes) => {
   class Scene extends Base {
     static associate(models) {
+      Scene.belongsTo(models.Version, { as: 'version' });
       Scene.belongsTo(Scene, { as: 'canonical' });
       Scene.belongsTo(Scene, { as: 'current' });
       Scene.belongsTo(Scene, { as: 'parent' });
