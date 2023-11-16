@@ -51,9 +51,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Situation.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eSituation_v3.xsd', 'eSituation', null, options);
-  });
-
   return Situation;
 };

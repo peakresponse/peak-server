@@ -91,10 +91,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Signature.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eOther_v3.xsd', 'eOther', 'eOther.SignatureGroup', options);
-  });
-
   Signature.afterSave(async (signature, options) => {
     if (!signature.canonicalId) {
       return;

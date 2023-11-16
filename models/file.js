@@ -85,10 +85,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  File.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eOther_v3.xsd', 'eOther', 'eOther.FileGroup', options);
-  });
-
   File.afterSave(async (record, options) => {
     if (!record.canonicalId) {
       return;

@@ -51,9 +51,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Narrative.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eNarrative_v3.xsd', 'eNarrative', null, options);
-  });
-
   return Narrative;
 };

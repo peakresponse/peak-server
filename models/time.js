@@ -51,9 +51,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Time.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eTimes_v3.xsd', 'eTimes', null, options);
-  });
-
   return Time;
 };

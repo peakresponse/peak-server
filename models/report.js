@@ -274,10 +274,6 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Report.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eRecord_v3.xsd', 'eRecord', null, options);
-  });
-
   Report.afterCreate(async (record, options) => {
     if (record.isCanonical) {
       const incident = await record.getIncident(options);

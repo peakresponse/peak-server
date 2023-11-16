@@ -76,9 +76,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Procedure.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eProcedures_v3.xsd', 'eProcedures', 'eProcedures.ProcedureGroup', options);
-  });
-
   return Procedure;
 };

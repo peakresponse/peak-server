@@ -76,9 +76,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Medication.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eMedications_v3.xsd', 'eMedications', 'eMedications.MedicationGroup', options);
-  });
-
   return Medication;
 };

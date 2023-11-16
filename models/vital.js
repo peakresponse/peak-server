@@ -76,9 +76,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Vital.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eVitals_v3.xsd', 'eVitals', 'eVitals.VitalGroup', options);
-  });
-
   return Vital;
 };

@@ -79,9 +79,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Disposition.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eDisposition_v3.xsd', 'eDisposition', null, options);
-  });
-
   return Disposition;
 };

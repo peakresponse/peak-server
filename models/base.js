@@ -8,7 +8,6 @@ const path = require('path');
 const { Model, Op } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
-const nemsis = require('../lib/nemsis');
 const nemsisXsd = require('../lib/nemsis/xsd');
 
 const s3options = {};
@@ -523,22 +522,6 @@ class Base extends Model {
         if (options.fields.indexOf('isValid') < 0) {
           options.fields.push('isValid');
         }
-      }
-    }
-  }
-
-  async validateNemsisData(xsdPath, rootTag, groupTag, options) {
-    this.validationErrors = await nemsis.validateSchema(xsdPath, rootTag, groupTag, this.data);
-    this.isValid = this.validationErrors === null;
-    options.fields = options.fields || [];
-    if (this.changed('validationErrors')) {
-      if (options.fields.indexOf('validationErrors') < 0) {
-        options.fields.push('validationErrors');
-      }
-    }
-    if (this.changed('isValid')) {
-      if (options.fields.indexOf('isValid') < 0) {
-        options.fields.push('isValid');
       }
     }
   }

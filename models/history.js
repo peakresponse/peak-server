@@ -51,9 +51,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  History.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eHistory_v3.xsd', 'eHistory', null, options);
-  });
-
   return History;
 };

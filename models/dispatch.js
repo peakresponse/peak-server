@@ -98,9 +98,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Dispatch.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eDispatch_v3.xsd', 'eDispatch', null, options);
-  });
-
   return Dispatch;
 };

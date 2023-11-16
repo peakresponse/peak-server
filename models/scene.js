@@ -241,10 +241,6 @@ module.exports = (sequelize, DataTypes) => {
     include: [{ model: Scene, as: 'versions', where: { id: null }, required: false }],
   });
 
-  Scene.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eScene_v3.xsd', 'eScene', null, options);
-  });
-
   sequelizePaginate.paginate(Scene);
 
   return Scene;

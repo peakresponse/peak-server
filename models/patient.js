@@ -270,7 +270,6 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('age', ['ePatient.AgeGroup', 'ePatient.15'], options);
     record.syncFieldAndNemsisValue('ageUnits', ['ePatient.AgeGroup', 'ePatient.16'], options);
     record.syncFieldAndNemsisValue('dob', ['ePatient.17'], options);
-    await record.validateNemsisData('ePatient_v3.xsd', 'ePatient', null, options);
   });
 
   Patient.afterSave(async (patient, options) => {
