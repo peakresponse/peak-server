@@ -104,7 +104,6 @@ module.exports = (sequelize, DataTypes) => {
   Patient.init(
     {
       pin: DataTypes.STRING,
-      version: DataTypes.INTEGER,
       lastName: {
         type: DataTypes.STRING,
         field: 'last_name',
