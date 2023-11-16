@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      Patient.belongsTo(models.Version, { as: 'version' });
       Patient.belongsTo(Patient, { as: 'canonical' });
       Patient.belongsTo(Patient, { as: 'current' });
       Patient.belongsTo(Patient, { as: 'parent' });

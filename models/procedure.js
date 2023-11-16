@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Procedure.belongsTo(models.Version, { as: 'version' });
       Procedure.belongsTo(Procedure, { as: 'canonical' });
       Procedure.belongsTo(Procedure, { as: 'current' });
       Procedure.belongsTo(Procedure, { as: 'parent' });

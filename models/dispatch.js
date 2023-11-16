@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Dispatch.belongsTo(models.Version, { as: 'version' });
       Dispatch.belongsTo(Dispatch, { as: 'canonical' });
       Dispatch.belongsTo(Dispatch, { as: 'current' });
       Dispatch.belongsTo(Dispatch, { as: 'parent' });
