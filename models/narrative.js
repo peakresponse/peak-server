@@ -2,6 +2,14 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Narrative extends Base {
+    static get xsdPath() {
+      return 'eNarrative_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eNarrative';
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.

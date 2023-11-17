@@ -5,6 +5,14 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Scene extends Base {
+    static get xsdPath() {
+      return 'eScene_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eScene';
+    }
+
     static associate(models) {
       Scene.belongsTo(Scene, { as: 'canonical' });
       Scene.belongsTo(Scene, { as: 'current' });

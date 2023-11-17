@@ -4,6 +4,18 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Procedure extends Base {
+    static get xsdPath() {
+      return 'eProcedures_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eProcedures';
+    }
+
+    static get groupTag() {
+      return 'eProcedures.ProcedureGroup';
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.

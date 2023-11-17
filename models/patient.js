@@ -14,6 +14,14 @@ Object.freeze(PatientPriority);
 
 module.exports = (sequelize, DataTypes) => {
   class Patient extends Base {
+    static get xsdPath() {
+      return 'ePatient_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'ePatient';
+    }
+
     static get Priority() {
       return PatientPriority;
     }

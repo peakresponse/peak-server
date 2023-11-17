@@ -2,6 +2,8 @@ const _ = require('lodash');
 const xmlFormatter = require('xml-formatter');
 const xmljs = require('xml-js');
 
+const pkg = require('../package.json');
+
 // const nemsisXsd = require('../lib/nemsis/xsd');
 // const nemsisSchematron = require('../lib/nemsis/schematron');
 
@@ -190,10 +192,80 @@ module.exports = (sequelize, DataTypes) => {
               _attributes: {
                 UUID: this.canonicalId ?? this.id,
               },
+              eRecord: {
+                'eRecord.01': {
+                  _text: this.canonicalId ?? this.id,
+                },
+                'eRecord.SoftwareApplicationGroup': {
+                  'eRecord.02': {
+                    _text: 'Peak Response Inc.',
+                  },
+                  'eRecord.03': {
+                    _text: 'Peak Response',
+                  },
+                  'eRecord.04': {
+                    _text: pkg.version,
+                  },
+                },
+              },
             },
           },
         },
       };
+      const models = [
+        'Response',
+        'Dispatch',
+        'Time',
+        'Patient',
+        'Payment',
+        'Scene',
+        'Situation',
+        'Injury',
+        'Arrest',
+        'History',
+        'Narrative',
+        'Vital',
+        'Protocols',
+        'Medications',
+        'Procedures',
+        'Disposition',
+        'Outcome',
+        'File',
+        'Signature',
+      ];
+      for (const modelName of models) {
+        switch (modelName) {
+          case 'Injury':
+            break;
+          case 'Arrest':
+            break;
+          case 'Payment':
+            break;
+          case 'Protocol':
+            break;
+          case 'Outcome':
+            break;
+          default: {
+            // eslint-disable-next-line no-await-in-loop
+            const r = this[modelName.toLowerCase()] ?? (await this[`get${modelName}`]?.(options));
+            if (r) {
+              let element = {};
+              if (Array.isArray(r)) {
+                switch (modelName) {
+                  case 'File': // fallthrough
+                  case 'Signature':
+                    break;
+                  default:
+                    break;
+                }
+              } else {
+                element = r.getData(version);
+              }
+              doc.EMSDataSet.Header.PatientCareReport[`e${modelName}`] = element;
+            }
+          }
+        }
+      }
       const emsDataSet = xmlFormatter(xmljs.js2xml(doc, { compact: true }), {
         collapseContent: true,
         lineSeparator: '\n',
