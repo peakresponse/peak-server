@@ -1,3 +1,4 @@
+const inflection = require('inflection');
 const _ = require('lodash');
 const xmlFormatter = require('xml-formatter');
 const xmljs = require('xml-js');
@@ -224,7 +225,7 @@ module.exports = (sequelize, DataTypes) => {
         'Arrest',
         'History',
         'Narrative',
-        'Vital',
+        'Vitals',
         'Protocols',
         'Medications',
         'Procedures',
@@ -255,8 +256,9 @@ module.exports = (sequelize, DataTypes) => {
                   case 'File': // fallthrough
                   case 'Signature':
                     break;
-                  default:
-                    break;
+                  default: {
+                    element[sequelize.models[inflection.singularize(modelName)].groupTag] = r.map((record) => record.getData(version));
+                  }
                 }
               } else {
                 element = r.getData(version);

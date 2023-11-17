@@ -412,8 +412,69 @@ describe('models', () => {
 			<eNarrative>
 				<eNarrative.01>This is a test narrative</eNarrative.01>
 			</eNarrative>
-			<eMedications/>
-			<eProcedures/>
+			<eVitals>
+				<eVitals.VitalGroup>
+					<eVitals.01>2020-04-06T21:22:10-00:00</eVitals.01>
+					<eVitals.02>9923001</eVitals.02>
+					<eVitals.CardiacRhythmGroup>
+						<eVitals.03 NV="7701003" xsi:nil="true"/>
+						<eVitals.04 NV="7701003" xsi:nil="true"/>
+						<eVitals.05 NV="7701003" xsi:nil="true"/>
+					</eVitals.CardiacRhythmGroup>
+					<eVitals.BloodPressureGroup>
+						<eVitals.06 NV="7701003" xsi:nil="true"/>
+					</eVitals.BloodPressureGroup>
+					<eVitals.HeartRateGroup>
+						<eVitals.10 NV="7701003" xsi:nil="true"/>
+					</eVitals.HeartRateGroup>
+					<eVitals.12 NV="7701003" xsi:nil="true"/>
+					<eVitals.14 NV="7701003" xsi:nil="true"/>
+					<eVitals.16 NV="7701003" xsi:nil="true"/>
+					<eVitals.18 NV="7701003" xsi:nil="true"/>
+					<eVitals.GlasgowScoreGroup>
+						<eVitals.19 NV="7701003" xsi:nil="true"/>
+						<eVitals.20 NV="7701003" xsi:nil="true"/>
+						<eVitals.21 NV="7701003" xsi:nil="true"/>
+						<eVitals.22 NV="7701003" xsi:nil="true"/>
+					</eVitals.GlasgowScoreGroup>
+					<eVitals.26 NV="7701003" xsi:nil="true"/>
+					<eVitals.PainScaleGroup>
+						<eVitals.27 NV="7701003" xsi:nil="true"/>
+					</eVitals.PainScaleGroup>
+					<eVitals.StrokeScaleGroup>
+						<eVitals.29 NV="7701003" xsi:nil="true"/>
+						<eVitals.30 NV="7701003" xsi:nil="true"/>
+					</eVitals.StrokeScaleGroup>
+					<eVitals.31 NV="7701003" xsi:nil="true"/>
+				</eVitals.VitalGroup>
+			</eVitals>
+			<eMedications>
+				<eMedications.MedicationGroup>
+					<eMedications.01>2020-04-06T21:22:10-00:00</eMedications.01>
+					<eMedications.02 NV="7701003" xsi:nil="true"/>
+					<eMedications.03 NV="7701003" xsi:nil="true"/>
+					<eMedications.04 NV="7701003" xsi:nil="true"/>
+					<eMedications.DosageGroup>
+						<eMedications.05 NV="7701003" xsi:nil="true"/>
+						<eMedications.06 NV="7701003" xsi:nil="true"/>
+					</eMedications.DosageGroup>
+					<eMedications.07 NV="7701003" xsi:nil="true"/>
+					<eMedications.08 NV="7701003" xsi:nil="true"/>
+					<eMedications.10 NV="7701003" xsi:nil="true"/>
+				</eMedications.MedicationGroup>
+			</eMedications>
+			<eProcedures>
+				<eProcedures.ProcedureGroup>
+					<eProcedures.01>2020-04-06T21:22:10-00:00</eProcedures.01>
+					<eProcedures.02 NV="7701003" xsi:nil="true"/>
+					<eProcedures.03 NV="7701003" xsi:nil="true"/>
+					<eProcedures.05 NV="7701003" xsi:nil="true"/>
+					<eProcedures.06 NV="7701003" xsi:nil="true"/>
+					<eProcedures.07 NV="7701003" xsi:nil="true"/>
+					<eProcedures.08 NV="7701003" xsi:nil="true"/>
+					<eProcedures.10 NV="7701003" xsi:nil="true"/>
+				</eProcedures.ProcedureGroup>
+			</eProcedures>
 			<eDisposition>
 				<eDisposition.DestinationGroup>
 					<eDisposition.05>06</eDisposition.05>
