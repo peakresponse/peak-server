@@ -1,4 +1,9 @@
 const _ = require('lodash');
+const xmlFormatter = require('xml-formatter');
+const xmljs = require('xml-js');
+
+// const nemsisXsd = require('../lib/nemsis/xsd');
+// const nemsisSchematron = require('../lib/nemsis/schematron');
 
 const { Base } = require('./base');
 
@@ -152,10 +157,56 @@ module.exports = (sequelize, DataTypes) => {
       return payload;
     }
 
+    async regenerate(options) {
+      if (!options?.transaction) {
+        return sequelize.transaction((transaction) => this.regenerate({ ...options, transaction }));
+      }
+      const { transaction } = options;
+      const agency = this.createdByAgency ?? (await this.getCreatedByAgency(options));
+      const version = this.version ?? (await this.getVersion(options));
+      if (!agency || !version) {
+        return Promise.resolve();
+      }
+      const doc = {
+        EMSDataSet: {
+          _attributes: {
+            xmlns: 'http://www.nemsis.org',
+            'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+            'xsi:schemaLocation': `http://www.nemsis.org https://nemsis.org/media/nemsis_v3/${version.nemsisVersion}/XSDs/NEMSIS_XSDs/EMSDataSet_v3.xsd`,
+          },
+          Header: {
+            DemographicGroup: {
+              'dAgency.01': {
+                _text: agency.stateUniqueId,
+              },
+              'dAgency.02': {
+                _text: agency.number,
+              },
+              'dAgency.04': {
+                _text: agency.stateId,
+              },
+            },
+            PatientCareReport: {
+              _attributes: {
+                UUID: this.canonicalId ?? this.id,
+              },
+            },
+          },
+        },
+      };
+      const emsDataSet = xmlFormatter(xmljs.js2xml(doc, { compact: true }), {
+        collapseContent: true,
+        lineSeparator: '\n',
+        indentation: '\t',
+      });
+      return this.update({ emsDataSet }, { transaction });
+    }
+
     toJSON() {
       const attributes = { ...this.get() };
       return _.pick(attributes, [
         'id',
+        'versionId',
         'canonicalId',
         'currentId',
         'parentId',
@@ -196,59 +247,26 @@ module.exports = (sequelize, DataTypes) => {
           return this.disposition?.destinationFacilityId ? sequelize.models.Patient.Priority.TRANSPORTED : this.patient?.priority;
         },
       },
-      pin: {
-        type: DataTypes.STRING,
-      },
-      data: DataTypes.JSONB,
-      updatedAttributes: {
-        type: DataTypes.JSONB,
-        field: 'updated_attributes',
-      },
-      updatedDataAttributes: {
-        type: DataTypes.JSONB,
-        field: 'updated_data_attributes',
-      },
       isCanonical: {
         type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['canonicalId']),
         get() {
           return !this.canonicalId;
         },
       },
-      isValid: {
-        type: DataTypes.BOOLEAN,
-        field: 'is_valid',
-      },
-      validationErrors: {
-        type: DataTypes.JSONB,
-        field: 'validation_errors',
-      },
-      medicationIds: {
-        type: DataTypes.JSONB,
-        field: 'medication_ids',
-      },
-      procedureIds: {
-        type: DataTypes.JSONB,
-        field: 'procedure_ids',
-      },
-      vitalIds: {
-        type: DataTypes.JSONB,
-        field: 'vital_ids',
-      },
-      fileIds: {
-        type: DataTypes.JSONB,
-        field: 'file_ids',
-      },
-      signatureIds: {
-        type: DataTypes.JSONB,
-        field: 'signature_ids',
-      },
-      ringdownId: {
-        type: DataTypes.STRING,
-        field: 'ringdown_id',
-      },
-      predictions: {
-        type: DataTypes.JSONB,
-      },
+      pin: DataTypes.STRING,
+      data: DataTypes.JSONB,
+      updatedAttributes: DataTypes.JSONB,
+      updatedDataAttributes: DataTypes.JSONB,
+      isValid: DataTypes.BOOLEAN,
+      validationErrors: DataTypes.JSONB,
+      medicationIds: DataTypes.JSONB,
+      procedureIds: DataTypes.JSONB,
+      vitalIds: DataTypes.JSONB,
+      fileIds: DataTypes.JSONB,
+      signatureIds: DataTypes.JSONB,
+      ringdownId: DataTypes.STRING,
+      predictions: DataTypes.JSONB,
+      emsDataSet: DataTypes.TEXT,
     },
     {
       sequelize,

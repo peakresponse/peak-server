@@ -3,6 +3,7 @@
     "model": "Report",
     "data": {
       "id": "4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed",
+      "versionId": "682d5860-c11e-4a40-bfcc-b2dadec9e7d4",
       "canonicalId": null,
       "currentId": "9832d547-c14f-46ce-bb44-dae05d80d4ed",
       "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
@@ -52,6 +53,7 @@
     "model": "Report",
     "data": {
       "id": "9832d547-c14f-46ce-bb44-dae05d80d4ed",
+      "versionId": "682d5860-c11e-4a40-bfcc-b2dadec9e7d4",
       "canonicalId": "4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed",
       "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
       "sceneId": "a3486aa2-fc71-41c8-9db8-a28f30c48b2a",
@@ -118,6 +120,7 @@
     "model": "Report",
     "data": {
       "id": "9242e8de-9d22-457f-96c8-00a43dfc1f3a",
+      "versionId": "682d5860-c11e-4a40-bfcc-b2dadec9e7d4",
       "canonicalId": null,
       "currentId": "c19bb731-5e9e-4feb-9192-720782ecf9a8",
       "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
@@ -165,6 +168,7 @@
     "model": "Report",
     "data": {
       "id": "c19bb731-5e9e-4feb-9192-720782ecf9a8",
+      "versionId": "682d5860-c11e-4a40-bfcc-b2dadec9e7d4",
       "canonicalId": "9242e8de-9d22-457f-96c8-00a43dfc1f3a",
       "incidentId": "6621202f-ca09-4ad9-be8f-b56346d1de65",
       "sceneId": "a3486aa2-fc71-41c8-9db8-a28f30c48b2a",

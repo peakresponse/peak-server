@@ -327,5 +327,25 @@ describe('models', () => {
         });
       });
     });
+
+    describe('regenerate()', () => {
+      it('generates NEMSIS EMS DataSet XML', async () => {
+        const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+        await report.regenerate();
+        assert.deepStrictEqual(
+          report.emsDataSet,
+          `<EMSDataSet xmlns="http://www.nemsis.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.211008CP3/XSDs/NEMSIS_XSDs/EMSDataSet_v3.xsd">
+	<Header>
+		<DemographicGroup>
+			<dAgency.01>S07-50120</dAgency.01>
+			<dAgency.02>S07-50120</dAgency.02>
+			<dAgency.04>06</dAgency.04>
+		</DemographicGroup>
+		<PatientCareReport UUID="4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed"/>
+	</Header>
+</EMSDataSet>`
+        );
+      });
+    });
   });
 });
