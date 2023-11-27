@@ -234,17 +234,100 @@ module.exports = (sequelize, DataTypes) => {
         'File',
         'Signature',
       ];
+      const { PatientCareReport } = doc.EMSDataSet.Header;
       for (const modelName of models) {
         switch (modelName) {
           case 'Injury':
+            PatientCareReport.eInjury = {};
+            ['eInjury.01', 'eInjury.03', 'eInjury.04'].forEach(
+              (e) =>
+                (PatientCareReport.eInjury[e] = {
+                  _attributes: {
+                    NV: '7701003',
+                    'xsi:nil': 'true',
+                  },
+                })
+            );
             break;
           case 'Arrest':
+            PatientCareReport.eArrest = {};
+            [
+              'eArrest.01',
+              'eArrest.02',
+              'eArrest.03',
+              'eArrest.04',
+              'eArrest.07',
+              'eArrest.09',
+              'eArrest.11',
+              'eArrest.12',
+              'eArrest.14',
+              'eArrest.16',
+              'eArrest.17',
+              'eArrest.18',
+              'eArrest.20',
+              'eArrest.21',
+              'eArrest.22',
+            ].forEach(
+              (e) =>
+                (PatientCareReport.eArrest[e] = {
+                  _attributes: {
+                    NV: '7701003',
+                    'xsi:nil': 'true',
+                  },
+                })
+            );
             break;
           case 'Payment':
+            PatientCareReport.ePayment = {};
+            ['ePayment.01', 'ePayment.50'].forEach(
+              (e) =>
+                (PatientCareReport.ePayment[e] = {
+                  _attributes: {
+                    NV: '7701003',
+                    'xsi:nil': 'true',
+                  },
+                })
+            );
             break;
           case 'Protocol':
+            PatientCareReport.eProtocols = {
+              'eProtocols.ProtocolGroup': {
+                'eProtocols.01': {
+                  _attributes: {
+                    NV: '7701003',
+                    'xsi:nil': 'true',
+                  },
+                },
+              },
+            };
             break;
           case 'Outcome':
+            PatientCareReport.eOutcome = {};
+            [
+              '["eOutcome.01"]',
+              '["eOutcome.02"]',
+              '["eOutcome.EmergencyDepartmentProceduresGroup"]["eOutcome.09"]',
+              '["eOutcome.EmergencyDepartmentProceduresGroup"]["eOutcome.19"]',
+              '["eOutcome.10"]',
+              '["eOutcome.11"]',
+              '["eOutcome.HospitalProceduresGroup"]["eOutcome.12"]',
+              '["eOutcome.HospitalProceduresGroup"]["eOutcome.20"]',
+              '["eOutcome.13"]',
+              '["eOutcome.16"]',
+              '["eOutcome.18"]',
+            ].forEach((e) =>
+              _.set(
+                PatientCareReport.eOutcome,
+                e,
+                {
+                  _attributes: {
+                    NV: '7701003',
+                    'xsi:nil': 'true',
+                  },
+                },
+                Object
+              )
+            );
             break;
           default: {
             // eslint-disable-next-line no-await-in-loop
@@ -263,7 +346,7 @@ module.exports = (sequelize, DataTypes) => {
               } else {
                 element = r.getData(version);
               }
-              doc.EMSDataSet.Header.PatientCareReport[`e${modelName}`] = element;
+              PatientCareReport[`e${modelName}`] = element;
             }
           }
         }

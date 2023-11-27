@@ -391,6 +391,10 @@ describe('models', () => {
 					<ePatient.15>18</ePatient.15>
 				</ePatient.AgeGroup>
 			</ePatient>
+			<ePayment>
+				<ePayment.01 NV="7701003" xsi:nil="true"/>
+				<ePayment.50 NV="7701003" xsi:nil="true"/>
+			</ePayment>
 			<eScene/>
 			<eSituation>
 				<eSituation.01 NV="7701003" xsi:nil="true"/>
@@ -405,6 +409,28 @@ describe('models', () => {
 				<eSituation.18 NV="7701003" xsi:nil="true"/>
 				<eSituation.20 NV="7701003" xsi:nil="true"/>
 			</eSituation>
+			<eInjury>
+				<eInjury.01 NV="7701003" xsi:nil="true"/>
+				<eInjury.03 NV="7701003" xsi:nil="true"/>
+				<eInjury.04 NV="7701003" xsi:nil="true"/>
+			</eInjury>
+			<eArrest>
+				<eArrest.01 NV="7701003" xsi:nil="true"/>
+				<eArrest.02 NV="7701003" xsi:nil="true"/>
+				<eArrest.03 NV="7701003" xsi:nil="true"/>
+				<eArrest.04 NV="7701003" xsi:nil="true"/>
+				<eArrest.07 NV="7701003" xsi:nil="true"/>
+				<eArrest.09 NV="7701003" xsi:nil="true"/>
+				<eArrest.11 NV="7701003" xsi:nil="true"/>
+				<eArrest.12 NV="7701003" xsi:nil="true"/>
+				<eArrest.14 NV="7701003" xsi:nil="true"/>
+				<eArrest.16 NV="7701003" xsi:nil="true"/>
+				<eArrest.17 NV="7701003" xsi:nil="true"/>
+				<eArrest.18 NV="7701003" xsi:nil="true"/>
+				<eArrest.20 NV="7701003" xsi:nil="true"/>
+				<eArrest.21 NV="7701003" xsi:nil="true"/>
+				<eArrest.22 NV="7701003" xsi:nil="true"/>
+			</eArrest>
 			<eHistory>
 				<eHistory.01>3101009</eHistory.01>
 				<eHistory.17 PN="8801015" xsi:nil="true"/>
@@ -501,6 +527,23 @@ describe('models', () => {
 				</eDisposition.HospitalTeamActivationGroup>
 				<eDisposition.32>4232001</eDisposition.32>
 			</eDisposition>
+			<eOutcome>
+				<eOutcome.01 NV="7701003" xsi:nil="true"/>
+				<eOutcome.02 NV="7701003" xsi:nil="true"/>
+				<eOutcome.EmergencyDepartmentProceduresGroup>
+					<eOutcome.09 NV="7701003" xsi:nil="true"/>
+					<eOutcome.19 NV="7701003" xsi:nil="true"/>
+				</eOutcome.EmergencyDepartmentProceduresGroup>
+				<eOutcome.10 NV="7701003" xsi:nil="true"/>
+				<eOutcome.11 NV="7701003" xsi:nil="true"/>
+				<eOutcome.HospitalProceduresGroup>
+					<eOutcome.12 NV="7701003" xsi:nil="true"/>
+					<eOutcome.20 NV="7701003" xsi:nil="true"/>
+				</eOutcome.HospitalProceduresGroup>
+				<eOutcome.13 NV="7701003" xsi:nil="true"/>
+				<eOutcome.16 NV="7701003" xsi:nil="true"/>
+				<eOutcome.18 NV="7701003" xsi:nil="true"/>
+			</eOutcome>
 		</PatientCareReport>
 	</Header>
 </EMSDataSet>`
