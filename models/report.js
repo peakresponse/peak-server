@@ -5,8 +5,8 @@ const xmljs = require('xml-js');
 
 const pkg = require('../package.json');
 
-// const nemsisXsd = require('../lib/nemsis/xsd');
-// const nemsisSchematron = require('../lib/nemsis/schematron');
+const nemsisXsd = require('../lib/nemsis/xsd');
+const nemsisSchematron = require('../lib/nemsis/schematron');
 
 const { Base } = require('./base');
 
@@ -160,6 +160,41 @@ module.exports = (sequelize, DataTypes) => {
       return payload;
     }
 
+    async nemsisValidate(options) {
+      if (!options?.transaction) {
+        return sequelize.transaction((transaction) => this.nemsisValidate({ ...options, transaction }));
+      }
+      const { transaction } = options;
+      const version = this.version ?? (await this.getVersion({ transaction }));
+      if (!version) {
+        return Promise.resolve();
+      }
+      // get the js equivalent to the XML
+      const doc = xmljs.xml2js(this.emsDataSet, { compact: true });
+      // run the EMS Data Set through XSD validation
+      let validationErrors = await nemsisXsd.validateEmsDataSet(version.nemsisVersion, this.emsDataSet, doc);
+      // run the EMS Data Set through national Schematron validation
+      if (!validationErrors) {
+        validationErrors = await nemsisSchematron.validateEmsDataSet(version.nemsisVersion, this.emsDataSet, doc);
+      }
+      // run the EMS Data Set through state/additional Schematron validation
+      if (!validationErrors && version.emsSchematronIds?.length) {
+        const schematrons = await sequelize.models.NemsisSchematron.findAll({ where: { id: version.emsSchematronIds } });
+        for (const schematron of schematrons) {
+          // eslint-disable-next-line no-await-in-loop
+          validationErrors = await schematron.nemsisValidate(this.emsDataSet, doc);
+          if (validationErrors) {
+            break;
+          }
+        }
+      }
+      if (validationErrors) {
+        // for each error, idenfity the model and id for the record it comes from
+        // for schematron errors, set on the model object with appropriate path so it will be displayed on edit
+      }
+      return this.update({ isValid: !validationErrors, validationErrors: validationErrors?.$json ?? null }, { transaction });
+    }
+
     async regenerate(options) {
       if (!options?.transaction) {
         return sequelize.transaction((transaction) => this.regenerate({ ...options, transaction }));
@@ -237,6 +272,19 @@ module.exports = (sequelize, DataTypes) => {
       const { PatientCareReport } = doc.EMSDataSet.Header;
       for (const modelName of models) {
         switch (modelName) {
+          case 'Dispatch':
+            PatientCareReport.eDispatch = {
+              'eDispatch.01': {
+                _text: '2301051',
+              },
+              'eDispatch.02': {
+                _attributes: {
+                  NV: '7701003',
+                  'xsi:nil': 'true',
+                },
+              },
+            };
+            break;
           case 'Injury':
             PatientCareReport.eInjury = {};
             ['eInjury.01', 'eInjury.03', 'eInjury.04'].forEach(
@@ -289,7 +337,7 @@ module.exports = (sequelize, DataTypes) => {
                 })
             );
             break;
-          case 'Protocol':
+          case 'Protocols':
             PatientCareReport.eProtocols = {
               'eProtocols.ProtocolGroup': {
                 'eProtocols.01': {
@@ -346,7 +394,11 @@ module.exports = (sequelize, DataTypes) => {
               } else {
                 element = r.getData(version);
               }
-              PatientCareReport[`e${modelName}`] = element;
+              let section = `e${modelName}`;
+              if (modelName === 'Time') {
+                section = 'eTimes';
+              }
+              PatientCareReport[section] = element;
             }
           }
         }

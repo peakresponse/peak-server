@@ -329,6 +329,16 @@ describe('models', () => {
       });
     });
 
+    describe('nemsisValidate()', () => {
+      it('validates the NEMSIS EMS DataSet XML', async () => {
+        const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+        await report.regenerate();
+        await report.nemsisValidate();
+        console.log(report.isValid, report.validationErrors);
+        assert.deepStrictEqual(report.isValid, true);
+      });
+    });
+
     describe('regenerate()', () => {
       it('generates NEMSIS EMS DataSet XML', async () => {
         const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
@@ -371,7 +381,11 @@ describe('models', () => {
 				<eResponse.23>2223001</eResponse.23>
 				<eResponse.24>2224019</eResponse.24>
 			</eResponse>
-			<eTime>
+			<eDispatch>
+				<eDispatch.01>2301051</eDispatch.01>
+				<eDispatch.02 NV="7701003" xsi:nil="true"/>
+			</eDispatch>
+			<eTimes>
 				<eTimes.01>2020-04-06T21:22:10-00:00</eTimes.01>
 				<eTimes.03>2020-04-06T21:22:10-00:00</eTimes.03>
 				<eTimes.05 NV="7701003" xsi:nil="true"/>
@@ -381,7 +395,7 @@ describe('models', () => {
 				<eTimes.11 NV="7701003" xsi:nil="true"/>
 				<eTimes.12 NV="7701003" xsi:nil="true"/>
 				<eTimes.13>2020-04-06T21:22:10-00:00</eTimes.13>
-			</eTime>
+			</eTimes>
 			<ePatient>
 				<ePatient.PatientNameGroup>
 					<ePatient.02>Jones</ePatient.02>
@@ -474,6 +488,11 @@ describe('models', () => {
 					<eVitals.31 NV="7701003" xsi:nil="true"/>
 				</eVitals.VitalGroup>
 			</eVitals>
+			<eProtocols>
+				<eProtocols.ProtocolGroup>
+					<eProtocols.01 NV="7701003" xsi:nil="true"/>
+				</eProtocols.ProtocolGroup>
+			</eProtocols>
 			<eMedications>
 				<eMedications.MedicationGroup>
 					<eMedications.01>2020-04-06T21:22:10-00:00</eMedications.01>
