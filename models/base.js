@@ -394,12 +394,16 @@ class Base extends Model {
     this.changed('data', true);
   }
 
-  setNemsisValue(keyPath, newValue) {
+  setNemsisValue(keyPath, newValue, required = false) {
     this.data = this.data || {};
     if (newValue) {
       _.set(this.data, keyPath, { _text: newValue });
     } else {
-      _.unset(this.data, keyPath);
+      if (required) {
+        _.set(this.data, keyPath, { _attributes: { 'xsi:nil': 'true', NV: '7701003' } });
+      } else {
+        _.unset(this.data, keyPath);
+      }
     }
     this.changed('data', true);
   }
@@ -461,19 +465,35 @@ class Base extends Model {
     }
   }
 
-  syncFieldAndNemsisValue(key, keyPath, options) {
+  syncFieldAndNemsisValue(key, keyPath, options, required = false) {
     if (this.changed(key)) {
-      this.setNemsisValue(keyPath, this.getDataValue(key));
+      this.setNemsisValue(keyPath, this.getDataValue(key), required);
       options.fields = options.fields || [];
       if (options.fields.indexOf('data') < 0) {
         options.fields.push('data');
       }
     } else {
-      this.setDataValue(key, this.getFirstNemsisValue(keyPath) ?? null);
+      const value = this.getFirstNemsisValue(keyPath) ?? null;
+      this.setDataValue(key, value);
       if (this.changed(key)) {
         options.fields = options.fields || [];
         if (options.fields.indexOf(key) < 0) {
           options.fields.push(key);
+        }
+      }
+      if (!value && required) {
+        if (!_.get(this.data, keyPath)) {
+          _.set(this.data, keyPath, {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          });
+          this.changed('data', true);
+          options.fields = options.fields || [];
+          if (options.fields.indexOf('data') < 0) {
+            options.fields.push('data');
+          }
         }
       }
     }

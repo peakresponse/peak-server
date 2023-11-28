@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const seedrandom = require('seedrandom');
 
 const { Base } = require('./base');
@@ -274,10 +275,26 @@ module.exports = (sequelize, DataTypes) => {
   Patient.beforeValidate(async (record, options) => {
     record.syncFieldAndNemsisValue('lastName', ['ePatient.PatientNameGroup', 'ePatient.02'], options);
     record.syncFieldAndNemsisValue('firstName', ['ePatient.PatientNameGroup', 'ePatient.03'], options);
-    record.syncFieldAndNemsisValue('gender', ['ePatient.13'], options);
-    record.syncFieldAndNemsisValue('age', ['ePatient.AgeGroup', 'ePatient.15'], options);
-    record.syncFieldAndNemsisValue('ageUnits', ['ePatient.AgeGroup', 'ePatient.16'], options);
+    record.syncFieldAndNemsisValue('gender', ['ePatient.13'], options, true);
+    record.syncFieldAndNemsisValue('age', ['ePatient.AgeGroup', 'ePatient.15'], options, true);
+    record.syncFieldAndNemsisValue('ageUnits', ['ePatient.AgeGroup', 'ePatient.16'], options, true);
     record.syncFieldAndNemsisValue('dob', ['ePatient.17'], options);
+    // placeholders for required ePatient fields
+    [['ePatient.07'], ['ePatient.08'], ['ePatient.09'], ['ePatient.14']].forEach((e) => {
+      if (!_.get(record.data, [e])) {
+        _.set(record.data, [e], {
+          _attributes: {
+            NV: '7701003',
+            'xsi:nil': 'true',
+          },
+        });
+        record.changed('data', true);
+        options.fields = options.fields || [];
+        if (options.fields.indexOf('data') < 0) {
+          options.fields.push('data');
+        }
+      }
+    });
   });
 
   Patient.afterSave(async (patient, options) => {

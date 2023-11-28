@@ -401,8 +401,14 @@ describe('models', () => {
 					<ePatient.02>Jones</ePatient.02>
 					<ePatient.03>David</ePatient.03>
 				</ePatient.PatientNameGroup>
+				<ePatient.07 NV="7701003" xsi:nil="true"/>
+				<ePatient.08 NV="7701003" xsi:nil="true"/>
+				<ePatient.09 NV="7701003" xsi:nil="true"/>
+				<ePatient.13 NV="7701003" xsi:nil="true"/>
+				<ePatient.14 NV="7701003" xsi:nil="true"/>
 				<ePatient.AgeGroup>
 					<ePatient.15>18</ePatient.15>
+					<ePatient.16 NV="7701003" xsi:nil="true"/>
 				</ePatient.AgeGroup>
 			</ePatient>
 			<ePayment>

@@ -34,6 +34,78 @@ describe('models', () => {
       agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
     });
 
+    describe('.data', () => {
+      it('is synchronized with attributes on validation', async () => {
+        const patient = await models.Patient.findByPk('47449282-c48a-4ca1-a719-5117b790fc70');
+        assert.deepStrictEqual(patient.data, {
+          'ePatient.07': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.08': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.09': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.13': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.14': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.AgeGroup': {
+            'ePatient.15': {
+              _text: 18,
+            },
+            'ePatient.16': {
+              _attributes: {
+                'xsi:nil': 'true',
+                NV: '7701003',
+              },
+            },
+          },
+          'ePatient.PatientNameGroup': {
+            'ePatient.02': {
+              _text: 'Jones',
+            },
+            'ePatient.03': {
+              _text: 'David',
+            },
+          },
+        });
+
+        patient.gender = '9906001';
+        await patient.validate();
+        assert.deepStrictEqual(patient.data['ePatient.13'], {
+          _text: '9906001',
+        });
+
+        patient.gender = null;
+        await patient.validate();
+        assert.deepStrictEqual(patient.data['ePatient.13'], {
+          _attributes: {
+            'xsi:nil': 'true',
+            NV: '7701003',
+          },
+        });
+      });
+    });
+
     describe('createOrUpdate()', () => {
       let portraitFile;
       beforeEach(() => {
@@ -82,6 +154,50 @@ describe('models', () => {
           'portraitFile',
         ]);
         assert.deepStrictEqual(patient.data, {
+          'ePatient.07': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.08': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.09': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.13': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.14': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.AgeGroup': {
+            'ePatient.15': {
+              _attributes: {
+                NV: '7701003',
+                'xsi:nil': 'true',
+              },
+            },
+            'ePatient.16': {
+              _attributes: {
+                NV: '7701003',
+                'xsi:nil': 'true',
+              },
+            },
+          },
           'ePatient.PatientNameGroup': {
             'ePatient.02': { _text: 'Doe' },
             'ePatient.03': { _text: 'John' },
