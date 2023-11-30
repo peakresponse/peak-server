@@ -398,12 +398,10 @@ class Base extends Model {
     this.data = this.data || {};
     if (newValue) {
       _.set(this.data, keyPath, { _text: newValue });
+    } else if (required) {
+      _.set(this.data, keyPath, { _attributes: { 'xsi:nil': 'true', NV: '7701003' } });
     } else {
-      if (required) {
-        _.set(this.data, keyPath, { _attributes: { 'xsi:nil': 'true', NV: '7701003' } });
-      } else {
-        _.unset(this.data, keyPath);
-      }
+      _.unset(this.data, keyPath);
     }
     this.changed('data', true);
   }
