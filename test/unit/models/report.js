@@ -334,7 +334,6 @@ describe('models', () => {
         const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
         await report.regenerate();
         await report.nemsisValidate();
-        console.log(report.isValid, report.validationErrors);
         assert.deepStrictEqual(report.isValid, true);
       });
     });
@@ -415,7 +414,17 @@ describe('models', () => {
 				<ePayment.01 NV="7701003" xsi:nil="true"/>
 				<ePayment.50 NV="7701003" xsi:nil="true"/>
 			</ePayment>
-			<eScene/>
+			<eScene>
+				<eScene.01 NV="7701003" xsi:nil="true"/>
+				<eScene.06 NV="7701003" xsi:nil="true"/>
+				<eScene.07 NV="7701003" xsi:nil="true"/>
+				<eScene.08 NV="7701003" xsi:nil="true"/>
+				<eScene.09 NV="7701003" xsi:nil="true"/>
+				<eScene.17>2411786</eScene.17>
+				<eScene.18>06</eScene.18>
+				<eScene.19 NV="7701003" xsi:nil="true"/>
+				<eScene.21 NV="7701003" xsi:nil="true"/>
+			</eScene>
 			<eSituation>
 				<eSituation.01 NV="7701003" xsi:nil="true"/>
 				<eSituation.02 NV="7701003" xsi:nil="true"/>

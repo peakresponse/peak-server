@@ -226,6 +226,32 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Scene.beforeValidate(async (record, options) => {
+    // TODO: handle MCI records
+    record.syncFieldAndNemsisValue('address1', ['eScene.15'], options);
+    record.syncFieldAndNemsisValue('address2', ['eScene.16'], options);
+    record.syncFieldAndNemsisValue('cityId', ['eScene.17'], options);
+    record.syncFieldAndNemsisValue('stateId', ['eScene.18'], options, true);
+    record.syncFieldAndNemsisValue('zip', ['eScene.19'], options, true);
+    record.syncFieldAndNemsisValue('countyId', ['eScene.21'], options, true);
+    // placeholders for required eScene fields
+    [['eScene.01'], ['eScene.06'], ['eScene.07'], ['eScene.08'], ['eScene.09']].forEach((e) => {
+      if (!_.get(record.data, [e])) {
+        _.set(record.data, [e], {
+          _attributes: {
+            NV: '7701003',
+            'xsi:nil': 'true',
+          },
+        });
+        record.changed('data', true);
+        options.fields = options.fields || [];
+        if (options.fields.indexOf('data') < 0) {
+          options.fields.push('data');
+        }
+      }
+    });
+  });
+
   Scene.addScope('agency', (agencyId) => {
     return {
       where: { createdByAgencyId: agencyId },

@@ -188,11 +188,15 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
+      let isValid = true;
       if (validationErrors) {
         // for each error, idenfity the model and id for the record it comes from
         // for schematron errors, set on the model object with appropriate path so it will be displayed on edit
+        for (const error of validationErrors.$json.errors) {
+          isValid = isValid && error.level === 'warning';
+        }
       }
-      return this.update({ isValid: !validationErrors, validationErrors: validationErrors?.$json ?? null }, { transaction });
+      return this.update({ isValid, validationErrors: validationErrors?.$json ?? null }, { transaction });
     }
 
     async regenerate(options) {
@@ -287,15 +291,14 @@ module.exports = (sequelize, DataTypes) => {
             break;
           case 'Injury':
             PatientCareReport.eInjury = {};
-            ['eInjury.01', 'eInjury.03', 'eInjury.04'].forEach(
-              (e) =>
-                (PatientCareReport.eInjury[e] = {
-                  _attributes: {
-                    NV: '7701003',
-                    'xsi:nil': 'true',
-                  },
-                })
-            );
+            ['eInjury.01', 'eInjury.03', 'eInjury.04'].forEach((e) => {
+              PatientCareReport.eInjury[e] = {
+                _attributes: {
+                  NV: '7701003',
+                  'xsi:nil': 'true',
+                },
+              };
+            });
             break;
           case 'Arrest':
             PatientCareReport.eArrest = {};
@@ -315,27 +318,25 @@ module.exports = (sequelize, DataTypes) => {
               'eArrest.20',
               'eArrest.21',
               'eArrest.22',
-            ].forEach(
-              (e) =>
-                (PatientCareReport.eArrest[e] = {
-                  _attributes: {
-                    NV: '7701003',
-                    'xsi:nil': 'true',
-                  },
-                })
-            );
+            ].forEach((e) => {
+              PatientCareReport.eArrest[e] = {
+                _attributes: {
+                  NV: '7701003',
+                  'xsi:nil': 'true',
+                },
+              };
+            });
             break;
           case 'Payment':
             PatientCareReport.ePayment = {};
-            ['ePayment.01', 'ePayment.50'].forEach(
-              (e) =>
-                (PatientCareReport.ePayment[e] = {
-                  _attributes: {
-                    NV: '7701003',
-                    'xsi:nil': 'true',
-                  },
-                })
-            );
+            ['ePayment.01', 'ePayment.50'].forEach((e) => {
+              PatientCareReport.ePayment[e] = {
+                _attributes: {
+                  NV: '7701003',
+                  'xsi:nil': 'true',
+                },
+              };
+            });
             break;
           case 'Protocols':
             PatientCareReport.eProtocols = {
