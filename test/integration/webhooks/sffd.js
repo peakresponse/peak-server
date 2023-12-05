@@ -45,40 +45,43 @@ describe('/webhooks/sffd', () => {
         .send(data)
         .expect(HttpStatus.OK);
       // check that Vehicle records created for the SFFD agency
-      assert.deepStrictEqual(await models.Vehicle.count(), 26);
+      assert.deepStrictEqual(await models.Vehicle.count(), 29);
       assert(
         await models.Vehicle.findOne({
           where: {
             createdByAgencyId: '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8',
-            number: '74',
+            number: 'M547',
           },
         })
       );
       // check that Incident and Scene records created for each unique Incident No
-      assert.deepStrictEqual(await models.Incident.count(), 92);
+      assert.deepStrictEqual(await models.Incident.count(), 49);
       const incident = await models.Incident.findOne({
         where: {
-          number: '21049765',
+          number: '23163981',
         },
       });
       assert(incident);
       const scene = await incident.getScene();
       assert(scene);
-      assert.deepStrictEqual(scene.address1, 'HOWARD ST/LANGTON ST');
+      assert.deepStrictEqual(scene.address1, '887 POTRERO AV #2ND FL');
       assert.deepStrictEqual(scene.cityId, '2411786');
       assert.deepStrictEqual(scene.countyId, '06075');
       assert.deepStrictEqual(scene.stateId, '06');
 
       // check that Dispatch records created for each unit dispatched to Incident
-      assert.deepStrictEqual(await models.Dispatch.scope('canonical').count(), 77);
+      assert.deepStrictEqual(await models.Dispatch.scope('canonical').count(), 37);
       const dispatches = await incident.getDispatches({ include: [{ model: models.Vehicle, as: 'vehicle' }] });
-      assert.deepStrictEqual(dispatches.length, 2);
-      const vehicle1 = dispatches.find((dispatch) => dispatch.vehicle.number === '59');
+      assert.deepStrictEqual(dispatches.length, 3);
+      const vehicle1 = dispatches.find((dispatch) => dispatch.vehicle.number === 'M595');
       assert(vehicle1);
-      assert.deepStrictEqual(moment(vehicle1.dispatchedAt).toISOString(), '2021-04-26T13:09:30.000Z');
-      const vehicle2 = dispatches.find((dispatch) => dispatch.vehicle.number === '62');
+      assert.deepStrictEqual(moment(vehicle1.dispatchedAt).toISOString(), '2023-12-05T22:42:08.000Z');
+      const vehicle2 = dispatches.find((dispatch) => dispatch.vehicle.number === 'M554');
       assert(vehicle2);
-      assert.deepStrictEqual(moment(vehicle2.dispatchedAt).toISOString(), '2021-04-26T13:06:18.000Z');
+      assert.deepStrictEqual(moment(vehicle2.dispatchedAt).toISOString(), '2023-12-05T22:43:13.000Z');
+      const vehicle3 = dispatches.find((dispatch) => dispatch.vehicle.number === 'M573');
+      assert(vehicle3);
+      assert.deepStrictEqual(moment(vehicle3.dispatchedAt).toISOString(), '2023-12-05T22:45:54.000Z');
     });
   });
 });
