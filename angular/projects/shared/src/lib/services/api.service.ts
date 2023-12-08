@@ -604,6 +604,12 @@ export class ApiService {
     },
   };
 
+  vehicles = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get(`/api/vehicles`, params);
+    },
+  };
+
   versions = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/versions', params);
