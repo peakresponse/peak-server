@@ -54,6 +54,8 @@ export class ReportComponent implements OnDestroy {
     this.navigation.backTo(`/incidents/${this.incidentId}/reports`);
   }
 
+  onExport() {}
+
   recordingTitle(i: number): string {
     return `Recording ${i + 1}`;
   }
