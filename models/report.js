@@ -205,7 +205,7 @@ module.exports = (sequelize, DataTypes) => {
       }
       const { transaction } = options;
       const agency = this.createdByAgency ?? (await this.getCreatedByAgency(options));
-      const version = this.version ?? (await this.getVersion(options));
+      const version = this.version ?? (await this.getVersion(options)) ?? agency?.version ?? (await agency?.getVersion(options));
       if (!agency || !version) {
         return Promise.resolve();
       }
