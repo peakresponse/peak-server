@@ -213,4 +213,21 @@ router.get(
   })
 );
 
+router.get(
+  '/:id/preview',
+  interceptors.requireAgency(),
+  helpers.async(async (req, res) => {
+    await models.sequelize.transaction(async (transaction) => {
+      const report = await models.Report.findByPk(req.params.id, { transaction });
+      if (report) {
+        await report.regenerate({ transaction });
+        res.set('Content-Type', 'application/xml');
+        res.send(report.emsDataSet);
+      } else {
+        res.status(HttpStatus.NOT_FOUND).end();
+      }
+    });
+  })
+);
+
 module.exports = router;
