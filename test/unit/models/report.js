@@ -1,4 +1,6 @@
 const assert = require('assert');
+const fs = require('fs-extra');
+const path = require('path');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
@@ -341,7 +343,13 @@ describe('models', () => {
     describe('regenerate()', () => {
       it('generates NEMSIS EMS DataSet XML', async () => {
         const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+        // attach a fixture to the File referenced by this report
+        const tmpFile = helpers.uploadFile('testing123.mp4');
+        const file = await models.File.findByPk('8e693fb6-7f2a-4cc8-9d5f-d8eb5915bb60');
+        await file.update({ file: tmpFile });
+        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${file.id}/file`, tmpFile)));
         await report.regenerate();
+        await helpers.cleanUploadedAssets();
         assert.deepStrictEqual(
           report.emsDataSet,
           `<EMSDataSet xmlns="http://www.nemsis.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.211008CP3/XSDs/NEMSIS_XSDs/EMSDataSet_v3.xsd">
