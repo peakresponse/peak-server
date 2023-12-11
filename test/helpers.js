@@ -11,24 +11,39 @@ process.env.BASE_URL = 'http://peakresponse.localhost:3000';
 process.env.EXPRESS_SUBDOMAIN_OFFSET = '2';
 
 const fixtures = require('sequelize-fixtures');
+const fs = require('fs-extra');
+const { mkdirp } = require('mkdirp');
 const nock = require('nock');
 const nodemailerMock = require('nodemailer-mock');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const models = require('../models');
 
-const loadFixtures = (files) => {
+function loadFixtures(files) {
   const filePaths = files.map((f) => path.resolve(__dirname, `fixtures/${f}.json`));
   return models.sequelize.transaction((transaction) => {
     return fixtures.loadFiles(filePaths, models, { transaction });
   });
-};
+}
 
-const recordNetworkRequests = () => {
+function recordNetworkRequests() {
   nock.recorder.rec();
-};
+}
 
-const resetDatabase = async () => {
+function uploadFile(file) {
+  const tmpFile = `${uuidv4()}.${path.extname(file)}`;
+  mkdirp.sync(path.resolve(__dirname, '../tmp/uploads'));
+  fs.copySync(path.resolve(__dirname, `fixtures/files/${file}`), path.resolve(__dirname, `../tmp/uploads/${tmpFile}`));
+  return tmpFile;
+}
+
+function cleanUploadedAssets() {
+  fs.removeSync(path.resolve(__dirname, `../tmp/uploads`));
+  fs.removeSync(path.resolve(__dirname, `../public/assets/${process.env.ASSET_PATH_PREFIX}`));
+}
+
+async function resetDatabase() {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
     DELETE FROM list_items;
@@ -85,11 +100,11 @@ const resetDatabase = async () => {
     DELETE FROM counties;
     DELETE FROM cities;
   `);
-};
+}
 
-const sleep = (ms) => {
+function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-};
+}
 
 beforeEach(async () => {
   await resetDatabase();
@@ -103,8 +118,10 @@ after(async () => {
 });
 
 module.exports = {
+  cleanUploadedAssets,
   loadFixtures,
   recordNetworkRequests,
   resetDatabase,
   sleep,
+  uploadFile,
 };

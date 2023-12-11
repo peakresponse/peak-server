@@ -1,8 +1,6 @@
 const assert = require('assert');
 const fs = require('fs-extra');
-const { mkdirp } = require('mkdirp');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
@@ -28,14 +26,11 @@ describe('models', () => {
     describe('createOrUpdate()', () => {
       let file;
       beforeEach(() => {
-        file = `${uuidv4()}.png`;
-        mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
-        fs.copySync(path.resolve(__dirname, '../../fixtures/files/512x512.png'), path.resolve(__dirname, `../../../tmp/uploads/${file}`));
+        file = helpers.uploadFile('512x512.png');
       });
 
       afterEach(() => {
-        fs.removeSync(path.resolve(__dirname, `../../../tmp/uploads/${file}`));
-        fs.removeSync(path.resolve(__dirname, `../../../public/assets/test`));
+        helpers.cleanUploadedAssets();
       });
 
       it('creates a new canonical and corresponding history record', async () => {

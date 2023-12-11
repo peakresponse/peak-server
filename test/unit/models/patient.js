@@ -1,6 +1,5 @@
 const assert = require('assert');
 const fs = require('fs-extra');
-const { mkdirp } = require('mkdirp');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
@@ -109,17 +108,11 @@ describe('models', () => {
     describe('createOrUpdate()', () => {
       let portraitFile;
       beforeEach(() => {
-        portraitFile = `${uuidv4()}.png`;
-        mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
-        fs.copySync(
-          path.resolve(__dirname, '../../fixtures/files/512x512.png'),
-          path.resolve(__dirname, `../../../tmp/uploads/${portraitFile}`)
-        );
+        portraitFile = helpers.uploadFile('512x512.png');
       });
 
       afterEach(() => {
-        fs.removeSync(path.resolve(__dirname, `../../../tmp/uploads/${portraitFile}`));
-        fs.removeSync(path.resolve(__dirname, `../../../public/assets/test`));
+        helpers.cleanUploadedAssets();
       });
 
       it('creates a new Patient record', async () => {
