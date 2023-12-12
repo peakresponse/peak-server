@@ -53,12 +53,10 @@ describe('/api/assets', () => {
       const data = response.body;
       assert.deepStrictEqual(data.signed_id, file);
       assert.deepStrictEqual(data.content_type, 'image/png');
-      assert(data.direct_upload.url.startsWith(`http://localhost:9000/app/uploads/${file}`));
+      assert(data.direct_upload.url.startsWith(`${process.env.AWS_S3_SIGNER_ENDPOINT}/app/uploads/${file}`));
       assert(data.direct_upload.url.endsWith, 'x-id=PutObject');
       assert.deepStrictEqual(data.direct_upload.headers, {
         'Content-Type': 'image/png',
-        'x-amz-acl': 'private',
-        'x-amz-server-side-encryption': 'AES256',
       });
     });
   });
@@ -79,7 +77,7 @@ describe('/api/assets', () => {
     it('returns a redirect URL (non-AWS)', async () => {
       const response = await testSession.get(`/api/assets/${file}`).set('Host', `bmacc.${process.env.BASE_HOST}`);
       assert.deepStrictEqual(response.status, HttpStatus.MOVED_TEMPORARILY);
-      assert(response.headers.location.startsWith, `http://localhost:9000/app/test/${file}`);
+      assert(response.headers.location.startsWith, `${process.env.AWS_S3_SIGNER_ENDPOINT}/app/test/${file}`);
       assert(response.headers.location.endsWith, 'x-id=GetObject');
     });
   });

@@ -3,7 +3,7 @@
   "version": "2.0.0-alpha.33",
   "private": true,
   "scripts": {
-    "start": "nodemon -V --ignore ./angular --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
+    "start": "nodemon -V --ignore ./angular --ignore ./data --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
     "test": "mocha --unhandled-rejections=strict --recursive test/unit test/integration",
     "ci": "prettier --check . && npm run lint && npm run test",
     "lint": "eslint .",
