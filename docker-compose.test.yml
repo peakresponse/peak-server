@@ -15,7 +15,7 @@ services:
     depends_on:
       - minio
     command: >
-      /bin/sh -c "
+      -c "
       mc alias set myminio http://minio:9000 minioadmin minioadmin
       mc mb --ignore-existing myminio/app
       exit 0;
