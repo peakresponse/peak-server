@@ -20,6 +20,7 @@ services:
       mc mb --ignore-existing myminio/app
       exit 0;
       "
+    entrypoint: /bin/sh
   server:
     build: .
     image: peakresponse/peak-server
