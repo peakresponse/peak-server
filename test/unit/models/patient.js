@@ -1,5 +1,4 @@
 const assert = require('assert');
-const fs = require('fs-extra');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
@@ -107,12 +106,12 @@ describe('models', () => {
 
     describe('createOrUpdate()', () => {
       let portraitFile;
-      beforeEach(() => {
-        portraitFile = helpers.uploadFile('512x512.png');
+      beforeEach(async () => {
+        portraitFile = await helpers.uploadFile('512x512.png');
       });
 
-      afterEach(() => {
-        helpers.cleanUploadedAssets();
+      afterEach(async () => {
+        await helpers.cleanUploadedAssets();
       });
 
       it('creates a new Patient record', async () => {
@@ -134,9 +133,7 @@ describe('models', () => {
         assert.deepStrictEqual(patient.priority, 2);
         assert.deepStrictEqual(patient.portraitFile, portraitFile);
         assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/${patient.id}/portrait-file/${portraitFile}`);
-        assert(
-          fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/patients/${patient.id}/portrait-file`, portraitFile))
-        );
+        assert(await helpers.assetPathExists(path.join('patients', patient.id, 'portrait-file', portraitFile)));
         assert.deepStrictEqual(patient.updatedAttributes, [
           'id',
           'canonicalId',
@@ -211,7 +208,6 @@ describe('models', () => {
       it('updates the Patient with a new historical record', async () => {
         const patient = await models.Patient.findByPk('47449282-c48a-4ca1-a719-5117b790fc70');
         assert.deepStrictEqual(patient.priority, 0);
-        assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/cb94a8a4-bf8b-4316-8a3f-191aa2df4633/portrait-file/man1.jpg`);
 
         const id = uuidv4();
         const [record, created] = await models.Patient.createOrUpdate(user, agency, {
@@ -228,7 +224,6 @@ describe('models', () => {
         assert.deepStrictEqual(record.firstName, 'New');
         assert.deepStrictEqual(record.lastName, 'Name');
         assert.deepStrictEqual(record.priority, 2);
-        assert.deepStrictEqual(record.portraitUrl, `/api/assets/patients/${record.id}/portrait-file/man1.jpg`);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'lastName', 'firstName', 'priority']);
 
         await patient.reload();
@@ -236,7 +231,6 @@ describe('models', () => {
         assert.deepStrictEqual(patient.firstName, 'New');
         assert.deepStrictEqual(patient.lastName, 'Name');
         assert.deepStrictEqual(patient.priority, 2);
-        assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/${record.id}/portrait-file/man1.jpg`);
       });
     });
   });

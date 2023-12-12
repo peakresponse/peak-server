@@ -1,5 +1,4 @@
 const assert = require('assert');
-const fs = require('fs-extra');
 const _ = require('lodash');
 const path = require('path');
 
@@ -26,12 +25,12 @@ describe('models', () => {
 
     describe('createOrUpdate()', () => {
       let file;
-      beforeEach(() => {
-        file = helpers.uploadFile('512x512.png');
+      beforeEach(async () => {
+        file = await helpers.uploadFile('512x512.png');
       });
 
-      afterEach(() => {
-        helpers.cleanUploadedAssets();
+      afterEach(async () => {
+        await helpers.cleanUploadedAssets();
       });
 
       it('creates a new canonical and corresponding history record', async () => {
@@ -61,7 +60,7 @@ describe('models', () => {
         assert.deepStrictEqual(record.canonicalId, data.canonicalId);
         assert.deepStrictEqual(record.file, file);
         assert.deepStrictEqual(record.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${record.id}/file`, file)));
+        assert(await helpers.assetPathExists(path.join('files', record.id, 'file', file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
         assert.deepStrictEqual(record.data, data.data);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'file', 'metadata', 'data']);
@@ -117,7 +116,7 @@ describe('models', () => {
         assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
         assert.deepStrictEqual(record.file, file);
         assert.deepStrictEqual(record.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${record.id}/file`, file)));
+        assert(await helpers.assetPathExists(path.join('files', record.id, 'file', file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
         assert.deepStrictEqual(record.data['eOther.09']._text, '4509015');
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'file', 'metadata', 'data']);

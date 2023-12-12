@@ -1,5 +1,4 @@
 const assert = require('assert');
-const fs = require('fs-extra');
 const path = require('path');
 
 const helpers = require('../../helpers');
@@ -26,12 +25,12 @@ describe('models', () => {
 
     describe('createOrUpdate()', () => {
       let file;
-      beforeEach(() => {
-        file = helpers.uploadFile('512x512.png');
+      beforeEach(async () => {
+        file = await helpers.uploadFile('512x512.png');
       });
 
-      afterEach(() => {
-        helpers.cleanUploadedAssets();
+      afterEach(async () => {
+        await helpers.cleanUploadedAssets();
       });
 
       it('creates a new canonical and corresponding history record', async () => {
@@ -77,7 +76,7 @@ describe('models', () => {
         assert.deepStrictEqual(record.formInstanceId, data.formInstanceId);
         assert.deepStrictEqual(record.file, file);
         assert.deepStrictEqual(record.fileUrl, `/api/assets/signatures/${record.id}/file/${file}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/signatures/${record.id}/file`, file)));
+        assert(await helpers.assetPathExists(path.join('signatures', record.id, 'file', file)));
         assert.deepStrictEqual(record.data, data.data);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'formId', 'formInstanceId', 'file', 'data']);
         assert.deepStrictEqual(record.updatedDataAttributes, [
@@ -150,7 +149,7 @@ describe('models', () => {
         assert.deepStrictEqual(record.formInstanceId, parent.formInstanceId);
         assert.deepStrictEqual(record.file, file);
         assert.deepStrictEqual(record.fileUrl, `/api/assets/signatures/${record.id}/file/${file}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/signatures/${record.id}/file`, file)));
+        assert(await helpers.assetPathExists(path.join('signatures', record.id, 'file', file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
         assert.deepStrictEqual(record.data['eOther.15']._text, '4515031');
         assert.deepStrictEqual(record.data['eOther.16']._text, file);

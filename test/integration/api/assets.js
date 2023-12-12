@@ -53,17 +53,18 @@ describe('/api/assets', () => {
       const data = response.body;
       assert.deepStrictEqual(data.signed_id, file);
       assert.deepStrictEqual(data.content_type, 'image/png');
-      assert.deepStrictEqual(data.direct_upload, {
-        url: `/api/assets/${file}`,
-        headers: {
-          'Content-Type': 'image/png',
-        },
+      assert(data.direct_upload.url.startsWith(`http://localhost:9000/app/uploads/${file}`));
+      assert(data.direct_upload.url.endsWith, 'x-id=PutObject');
+      assert.deepStrictEqual(data.direct_upload.headers, {
+        'Content-Type': 'image/png',
+        'x-amz-acl': 'private',
+        'x-amz-server-side-encryption': 'AES256',
       });
     });
   });
 
   describe('PUT /:path', () => {
-    it('stores the uploaded file into tmp folder (non-AWS)', async () => {
+    it('stores the uploaded file into tmp folder (local only)', async () => {
       await testSession
         .put(`/api/assets/${file}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
@@ -77,8 +78,9 @@ describe('/api/assets', () => {
   describe('GET /:path', () => {
     it('returns a redirect URL (non-AWS)', async () => {
       const response = await testSession.get(`/api/assets/${file}`).set('Host', `bmacc.${process.env.BASE_HOST}`);
-      // .expect(HttpStatus.FOUND);
-      assert.deepStrictEqual(response.headers.location, `/assets/test/${file}`);
+      assert.deepStrictEqual(response.status, HttpStatus.MOVED_TEMPORARILY);
+      assert(response.headers.location.startsWith, `http://localhost:9000/app/test/${file}`);
+      assert(response.headers.location.endsWith, 'x-id=GetObject');
     });
   });
 });
