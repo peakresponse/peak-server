@@ -17,7 +17,7 @@ services:
     command: >
       -c "
       mc alias set myminio http://minio:9000 minioadmin minioadmin
-      mc mb --ignore-existing myminio/app
+      mc mb myminio/app
       exit 0;
       "
     entrypoint: /bin/sh
