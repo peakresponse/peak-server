@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const AWS = require('aws-sdk');
 const fs = require('fs-extra');
 const inflection = require('inflection');
 const jsonpatch = require('fast-json-patch');
@@ -8,19 +7,8 @@ const path = require('path');
 const { Model, Op } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
+const s3 = require('../lib/aws/s3');
 const nemsisXsd = require('../lib/nemsis/xsd');
-
-const s3options = {};
-if (process.env.AWS_ACCESS_KEY_ID) {
-  s3options.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-}
-if (process.env.AWS_SECRET_ACCESS_KEY) {
-  s3options.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-}
-if (process.env.AWS_S3_BUCKET_REGION) {
-  s3options.region = process.env.AWS_S3_BUCKET_REGION;
-}
-const s3 = new AWS.S3(s3options);
 
 class Base extends Model {
   // MARK: - helpers for non-versioned (live/draft only) NEMSIS backed models
@@ -277,12 +265,9 @@ class Base extends Model {
       } else {
         Key = path.join(filePrefix, file);
       }
-      const data = await s3
-        .getObject({
-          Bucket: process.env.AWS_S3_BUCKET,
-          Key,
-        })
-        .promise();
+      const data = await s3.getObject({
+        Key,
+      });
       await fs.promises.writeFile(tmpFilePath, data.Body);
     } else {
       let filePath;
@@ -306,29 +291,18 @@ class Base extends Model {
     const handle = async () => {
       if (process.env.AWS_S3_BUCKET) {
         if (prevFile) {
-          await s3
-            .deleteObject({
-              Bucket: process.env.AWS_S3_BUCKET,
-              Key: path.join(filePrefix, prevFile),
-            })
-            .promise();
+          await s3.deleteObject({
+            Key: path.join(filePrefix, prevFile),
+          });
         }
         if (newFile) {
-          await s3
-            .copyObject({
-              ACL: 'private',
-              Bucket: process.env.AWS_S3_BUCKET,
-              CopySource: path.join(process.env.AWS_S3_BUCKET, 'uploads', newFile),
-              Key: path.join(filePrefix, newFile),
-              ServerSideEncryption: 'AES256',
-            })
-            .promise();
-          await s3
-            .deleteObject({
-              Bucket: process.env.AWS_S3_BUCKET,
-              Key: path.join('uploads', newFile),
-            })
-            .promise();
+          await s3.copyObject({
+            CopySource: path.join(process.env.AWS_S3_BUCKET, 'uploads', newFile),
+            Key: path.join(filePrefix, newFile),
+          });
+          await s3.deleteObject({
+            Key: path.join('uploads', newFile),
+          });
         }
       } else {
         if (prevFile) {
