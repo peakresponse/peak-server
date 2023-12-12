@@ -32,7 +32,7 @@ function recordNetworkRequests() {
 }
 
 function uploadFile(file) {
-  const tmpFile = `${uuidv4()}.${path.extname(file)}`;
+  const tmpFile = `${uuidv4()}${path.extname(file)}`;
   mkdirp.sync(path.resolve(__dirname, '../tmp/uploads'));
   fs.copySync(path.resolve(__dirname, `fixtures/files/${file}`), path.resolve(__dirname, `../tmp/uploads/${tmpFile}`));
   return tmpFile;

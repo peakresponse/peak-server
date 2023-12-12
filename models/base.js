@@ -516,10 +516,11 @@ class Base extends Model {
     delete doc[rootTag]._attributes.xmlns;
     delete doc[rootTag]._attributes['xmlns:xsi'];
     // return the updated data
-    if (groupTag) {
-      return doc[rootTag][groupTag];
+    let data = groupTag ? doc[rootTag][groupTag] : doc[rootTag];
+    if (Array.isArray(data)) {
+      [data] = data;
     }
-    return doc[rootTag];
+    return data;
   }
 
   async xsdValidate(options) {

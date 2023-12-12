@@ -1,5 +1,6 @@
 const assert = require('assert');
 const fs = require('fs-extra');
+const _ = require('lodash');
 const path = require('path');
 
 const helpers = require('../../helpers');
@@ -52,7 +53,7 @@ describe('models', () => {
             },
           },
         };
-        const [record, created] = await models.File.createOrUpdate(user, agency, data);
+        const [record, created] = await models.File.createOrUpdate(user, agency, _.cloneDeep(data));
         assert(record);
         assert(created);
         assert.deepStrictEqual(record.id, data.id);
@@ -62,9 +63,10 @@ describe('models', () => {
         assert.deepStrictEqual(record.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
         assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${record.id}/file`, file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
+        data.data['eOther.22'] = { _text: file };
         assert.deepStrictEqual(record.data, data.data);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'file', 'metadata', 'data']);
-        assert.deepStrictEqual(record.updatedDataAttributes, ['/eOther.09', '/eOther.10']);
+        assert.deepStrictEqual(record.updatedDataAttributes, ['/eOther.09', '/eOther.10', '/eOther.22']);
         assert.deepStrictEqual(record.createdById, user.id);
         assert.deepStrictEqual(record.updatedById, user.id);
         assert.deepStrictEqual(record.createdByAgencyId, agency.id);

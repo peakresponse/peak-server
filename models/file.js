@@ -4,6 +4,18 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class File extends Base {
+    static get xsdPath() {
+      return 'eOther_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eOther';
+    }
+
+    static get groupTag() {
+      return 'eOther.FileGroup';
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -84,6 +96,10 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+
+  File.beforeValidate(async (record, options) => {
+    record.syncFieldAndNemsisValue('file', ['eOther.22'], options);
+  });
 
   File.afterSave(async (record, options) => {
     if (!record.canonicalId) {

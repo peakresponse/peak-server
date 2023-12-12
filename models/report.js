@@ -270,8 +270,8 @@ module.exports = (sequelize, DataTypes) => {
         'Procedures',
         'Disposition',
         'Outcome',
-        'File',
-        'Signature',
+        'Files',
+        'Signatures',
       ];
       const { PatientCareReport } = doc.EMSDataSet.Header;
       for (const modelName of models) {
@@ -381,25 +381,15 @@ module.exports = (sequelize, DataTypes) => {
           default: {
             // eslint-disable-next-line no-await-in-loop
             const r = this[modelName.toLowerCase()] ?? (await this[`get${modelName}`]?.(options));
+            const modelClass = sequelize.models[inflection.singularize(modelName)];
             if (r) {
               let element = {};
               if (Array.isArray(r)) {
-                switch (modelName) {
-                  case 'File': // fallthrough
-                  case 'Signature':
-                    break;
-                  default: {
-                    element[sequelize.models[inflection.singularize(modelName)].groupTag] = r.map((record) => record.getData(version));
-                  }
-                }
+                element[modelClass.groupTag] = r.map((record) => record.getData(version));
               } else {
                 element = r.getData(version);
               }
-              let section = `e${modelName}`;
-              if (modelName === 'Time') {
-                section = 'eTimes';
-              }
-              PatientCareReport[section] = element;
+              PatientCareReport[modelClass.rootTag] = _.merge(PatientCareReport[modelClass.rootTag] ?? {}, element);
             }
           }
         }
