@@ -1,4 +1,3 @@
-const AWS = require('aws-sdk');
 const express = require('express');
 const fs = require('fs');
 const HttpStatus = require('http-status-codes');
@@ -9,20 +8,9 @@ const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
+const s3 = require('../../lib/aws/s3');
 
 const router = express.Router();
-
-const s3options = {};
-if (process.env.AWS_ACCESS_KEY_ID) {
-  s3options.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-}
-if (process.env.AWS_SECRET_ACCESS_KEY) {
-  s3options.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-}
-if (process.env.AWS_S3_BUCKET_REGION) {
-  s3options.region = process.env.AWS_S3_BUCKET_REGION;
-}
-const s3 = new AWS.S3(s3options);
 
 router.post(
   '/',
@@ -39,12 +27,9 @@ router.post(
     }
     if (process.env.AWS_S3_BUCKET) {
       /// store in S3, in tmp uploads dir
-      const url = await s3.getSignedUrlPromise('putObject', {
-        ACL: 'private',
-        Bucket: process.env.AWS_S3_BUCKET,
+      const url = await s3.getSignedUploadUrl({
         ContentType: response.content_type,
         Key: `uploads/${response.signed_id}`,
-        ServerSideEncryption: 'AES256',
       });
       response.direct_upload = {
         url,
@@ -89,9 +74,7 @@ router.get(
     const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
     const keyPath = path.join(assetPrefix, req.params.path);
     if (process.env.AWS_S3_BUCKET) {
-      const url = await s3.getSignedUrlPromise('getObject', {
-        Bucket: process.env.AWS_S3_BUCKET,
-        Expires: 60,
+      const url = await s3.getSignedDownloadUrl({
         Key: keyPath,
       });
       res.redirect(url);
