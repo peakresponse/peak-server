@@ -385,9 +385,11 @@ module.exports = (sequelize, DataTypes) => {
             if (r) {
               let element = {};
               if (Array.isArray(r)) {
-                element[modelClass.groupTag] = r.map((record) => record.getData(version));
+                // eslint-disable-next-line no-await-in-loop
+                element[modelClass.groupTag] = await Promise.all(r.map((record) => record.getData(version)));
               } else {
-                element = r.getData(version);
+                // eslint-disable-next-line no-await-in-loop
+                element = await r.getData(version);
               }
               PatientCareReport[modelClass.rootTag] = _.merge(PatientCareReport[modelClass.rootTag] ?? {}, element);
             }

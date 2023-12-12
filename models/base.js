@@ -509,7 +509,7 @@ class Base extends Model {
     return null;
   }
 
-  getData(version) {
+  async getData(version) {
     const { xsdPath, rootTag, groupTag } = this.constructor;
     const doc = nemsisXsd.generate(version.nemsisVersion, xsdPath, rootTag, groupTag, this.data);
     // remove the xml namespace attributes

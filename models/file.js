@@ -36,6 +36,14 @@ module.exports = (sequelize, DataTypes) => {
       return Base.createOrUpdate(File, user, agency, data, [], ['file', 'metadata', 'data'], options);
     }
 
+    async getData(version) {
+      const data = await super.getData(version);
+      if (this.file) {
+        data['eOther.22'] = this.file;
+      }
+      return data;
+    }
+
     toJSON() {
       const attributes = { ...this.get() };
       return _.pick(attributes, [
@@ -96,10 +104,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
-
-  File.beforeValidate(async (record, options) => {
-    record.syncFieldAndNemsisValue('file', ['eOther.22'], options);
-  });
 
   File.afterSave(async (record, options) => {
     if (!record.canonicalId) {
