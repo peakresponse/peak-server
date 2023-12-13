@@ -586,9 +586,10 @@ describe('models', () => {
 				<eOutcome.18 NV="7701003" xsi:nil="true"/>
 			</eOutcome>
 			<eOther>
-				<eOther.FileGroup>
+				<eOther.FileGroup CorrelationId="8e693fb6-7f2a-4cc8-9d5f-d8eb5915bb60">
 					<eOther.09>4509001</eOther.09>
 					<eOther.10>mp4</eOther.10>
+					<eOther.11></eOther.11>
 					<eOther.22>${tmpFile}</eOther.22>
 				</eOther.FileGroup>
 				<eOther.SignatureGroup>

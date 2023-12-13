@@ -39,8 +39,10 @@ module.exports = (sequelize, DataTypes) => {
     async getData(version) {
       const data = await super.getData(version);
       if (this.file) {
-        data['eOther.22'] = this.file;
+        data['eOther.11'] = { _text: '' };
+        data['eOther.22'] = { _text: this.file };
       }
+      data._attributes = { CorrelationId: this.id };
       return data;
     }
 
