@@ -916,6 +916,17 @@ describe('/api/reports', () => {
 				<eOutcome.16 NV="7701003" xsi:nil="true"/>
 				<eOutcome.18 NV="7701003" xsi:nil="true"/>
 			</eOutcome>
+			<eOther>
+				<eOther.FileGroup>
+					<eOther.09>4509001</eOther.09>
+					<eOther.10>mp4</eOther.10>
+				</eOther.FileGroup>
+				<eOther.SignatureGroup>
+					<eOther.12>4512015</eOther.12>
+					<eOther.13>4513009</eOther.13>
+					<eOther.15>4515019</eOther.15>
+				</eOther.SignatureGroup>
+			</eOther>
 		</PatientCareReport>
 	</Header>
 </EMSDataSet>`

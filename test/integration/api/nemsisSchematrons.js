@@ -1,10 +1,7 @@
 const assert = require('assert');
-const fs = require('fs-extra');
 const HttpStatus = require('http-status-codes');
-const { mkdirp } = require('mkdirp');
 const path = require('path');
 const session = require('supertest-session');
-const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../../helpers');
 
@@ -73,18 +70,12 @@ describe('/api/nemsis/schematrons', () => {
     context('external file', () => {
       let file;
 
-      beforeEach(() => {
-        file = `${uuidv4()}.xml`;
-        mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
-        fs.copySync(
-          path.resolve(__dirname, '../../fixtures/nemsis/schematron/DEMDataSet.sch'),
-          path.resolve(__dirname, `../../../tmp/uploads/${file}`)
-        );
+      beforeEach(async () => {
+        file = await helpers.uploadFile('DEMDataSet.sch');
       });
 
-      afterEach(() => {
-        fs.removeSync(path.resolve(__dirname, `../../../tmp/uploads/${file}`));
-        fs.removeSync(path.resolve(__dirname, `../../../public/assets/test`));
+      afterEach(async () => {
+        await helpers.cleanUploadedAssets();
       });
 
       it('creates a new Nemsis State Data Set record from an external file', async () => {
@@ -106,7 +97,7 @@ describe('/api/nemsis/schematrons', () => {
         assert.deepStrictEqual(record.fileVersion, 'compliance_pre_2023');
         assert.deepStrictEqual(record.createdById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
         assert.deepStrictEqual(record.updatedById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
-        assert(fs.existsSync(path.resolve(__dirname, `../../../public/assets/test/nemsis-schematrons/${record.id}/file/${file}`)));
+        assert(await helpers.assetPathExists(path.join('nemsis-schematrons', record.id, 'file', file)));
       });
 
       it('returns unprocessable entity for an external file not matching the specified data set type', async () => {
