@@ -163,6 +163,10 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async nemsisValidate(options) {
+      if (this.isCanonical) {
+        const current = await this.getCurrent(options);
+        return current.nemsisValidate(options);
+      }
       if (!options?.transaction) {
         return sequelize.transaction((transaction) => this.nemsisValidate({ ...options, transaction }));
       }

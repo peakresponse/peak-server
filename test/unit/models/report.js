@@ -336,7 +336,9 @@ describe('models', () => {
         const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
         await report.regenerate();
         await report.nemsisValidate();
-        assert.deepStrictEqual(report.isValid, true);
+        // canonical record runs the regeneration and validation on the current instance
+        const current = await report.getCurrent();
+        assert.deepStrictEqual(current.isValid, true);
       });
     });
 
