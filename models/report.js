@@ -1,5 +1,7 @@
 const inflection = require('inflection');
 const _ = require('lodash');
+const fs = require('fs/promises');
+const tmp = require('tmp-promise');
 const xmlFormatter = require('xml-formatter');
 const xmljs = require('xml-js');
 
@@ -200,6 +202,10 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async regenerate(options) {
+      if (this.isCanonical) {
+        const current = await this.getCurrent(options);
+        return current.regenerate(options);
+      }
       if (!options?.transaction) {
         return sequelize.transaction((transaction) => this.regenerate({ ...options, transaction }));
       }
@@ -381,6 +387,9 @@ module.exports = (sequelize, DataTypes) => {
           default: {
             // eslint-disable-next-line no-await-in-loop
             const r = this[modelName.toLowerCase()] ?? (await this[`get${modelName}`]?.(options));
+            if (!this[modelName.toLowerCase()]) {
+              this[modelName.toLowerCase()] = r;
+            }
             const modelClass = sequelize.models[inflection.singularize(modelName)];
             if (r) {
               let element = {};
@@ -396,12 +405,25 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
+      // generate XML, with file placeholders
       const emsDataSet = xmlFormatter(xmljs.js2xml(doc, { compact: true }), {
         collapseContent: true,
         lineSeparator: '\n',
         indentation: '\t',
       });
-      return this.update({ emsDataSet }, { transaction });
+      // write to a tmp file
+      const tmpFile = await tmp.file({ postfix: 'ems-data-set.xml' });
+      await fs.writeFile(tmpFile.path, emsDataSet);
+      // insert base64 encoded files
+      for (const modelName of ['Files']) {
+        const records = this[modelName.toLowerCase()]; // note that these _will_ already be fetched above
+        // eslint-disable-next-line no-await-in-loop
+        await Promise.all(records.map((record) => record.insertFileInto(tmpFile.path)));
+      }
+      // upload as file attachment
+      const emsDataSetFile = await Base.uploadAssetFile(tmpFile.path);
+      await tmpFile.cleanup();
+      return this.update({ emsDataSet, emsDataSetFile }, { transaction });
     }
 
     toJSON() {
@@ -469,6 +491,13 @@ module.exports = (sequelize, DataTypes) => {
       ringdownId: DataTypes.STRING,
       predictions: DataTypes.JSONB,
       emsDataSet: DataTypes.TEXT,
+      emsDataSetFile: DataTypes.STRING,
+      emsDataSetFileUrl: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return this.assetUrl('emsDataSetFile');
+        },
+      },
     },
     {
       sequelize,
@@ -499,6 +528,13 @@ module.exports = (sequelize, DataTypes) => {
       const incident = await record.getIncident(options);
       await incident?.updateReportsCount(options);
     }
+  });
+
+  Report.afterSave(async (record, options) => {
+    if (record.isCanonical) {
+      return;
+    }
+    await record.handleAssetFile('emsDataSetFile', options);
   });
 
   return Report;

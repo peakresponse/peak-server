@@ -11,7 +11,7 @@
 				<eRecord.SoftwareApplicationGroup>
 					<eRecord.02>Peak Response Inc.</eRecord.02>
 					<eRecord.03>Peak Response</eRecord.03>
-					<eRecord.04>2.0.0</eRecord.04>
+					<eRecord.04></eRecord.04>
 				</eRecord.SoftwareApplicationGroup>
 			</eRecord>
 			<eResponse>
@@ -267,7 +267,7 @@ EGN1NlCnxLn6owYLff+nBbjoL0wBAvsyDKLZ+W4WQA2CacOODmYjnaTORx+GdgwYik/dhXB7QOe9
 2OwB4ufRbhZgqDPQzTx7N1PNnmapD04P6JyaC00BerfF5hggpic7WwA9BojTxfsTcZE801nqQzEG
 iOiOudAUIP2QvjqzgNjVRYNORM0CYp2MExHFBzoNfShmARGNzIVuAbLb5Jm06wCxqwW4hP6i7V/Q
 svdt/4CWBQdt/wIAAHbGvzvk58jgk4JfAAAAAElFTkSuQmCC</eOther.11>
-					<eOther.22>filename</eOther.22>
+					<eOther.22></eOther.22>
 				</eOther.FileGroup>
 				<eOther.SignatureGroup>
 					<eOther.12>4512015</eOther.12>

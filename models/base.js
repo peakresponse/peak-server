@@ -236,7 +236,7 @@ class Base extends Model {
 
   assetUrl(attribute) {
     const pathPrefix = `${inflection.transform(this.constructor.name, ['tableize', 'dasherize'])}/${
-      this?.currentId ?? this.id
+      this.currentId ?? this.id
     }/${inflection.transform(attribute, ['underscore', 'dasherize'])}`;
     const file = this.get(attribute);
     if (file) {
@@ -279,6 +279,16 @@ class Base extends Model {
       await fs.promises.copyFile(filePath, tmpFilePath);
     }
     return tmpFilePath;
+  }
+
+  static async uploadAssetFile(filePath) {
+    const destFileName = `${uuidv4()}${path.extname(filePath)}`;
+    if (process.env.AWS_S3_BUCKET) {
+      await s3.putObject({ Key: path.join('uploads', destFileName), filePath });
+    } else {
+      await fs.promises.copyFile(filePath, path.resolve(__dirname, '../tmp/uploads', destFileName));
+    }
+    return destFileName;
   }
 
   async handleAssetFile(attribute, options) {

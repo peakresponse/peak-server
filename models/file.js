@@ -1,6 +1,9 @@
+const fs = require('fs/promises');
 const _ = require('lodash');
+const tmp = require('tmp-promise');
 
 const { Base } = require('./base');
+const utils = require('../lib/utils');
 
 module.exports = (sequelize, DataTypes) => {
   class File extends Base {
@@ -39,11 +42,29 @@ module.exports = (sequelize, DataTypes) => {
     async getData(version) {
       const data = await super.getData(version);
       if (this.file) {
-        data['eOther.11'] = { _text: '' };
+        data['eOther.11'] = { _text: this.id.replace(/-/g, '') };
         data['eOther.22'] = { _text: this.file };
       }
-      data._attributes = { CorrelationId: this.id };
       return data;
+    }
+
+    async insertFileInto(xmlFilePath) {
+      if (!this.file) {
+        return;
+      }
+      let filePath;
+      let tmpFile;
+      try {
+        filePath = await this.downloadAssetFile('file');
+        tmpFile = await tmp.file();
+        await utils.base64Encode(filePath, tmpFile.path);
+        await utils.insertFileIntoFile(tmpFile.path, xmlFilePath, `(<eOther\\.11>)(${this.id.replace(/-/g, '')})(<\\/eOther\\.11>)`);
+      } finally {
+        if (filePath) {
+          await fs.unlink(filePath);
+        }
+        await tmpFile?.cleanup();
+      }
     }
 
     toJSON() {
