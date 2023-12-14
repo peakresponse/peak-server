@@ -11,8 +11,8 @@
       </ul>
       <shared-picture class="command-header__picture me-2" [pictureUrl]="user?.iconUrl"></shared-picture>
       <h4 class="command-header__name">
-        <span *ngIf="user.currentAssignment?.vehicleId">{{ user.currentAssignment?.vehicle?.number }}: </span
-        ><span class="d-none d-lg-inline">{{ user.position }} </span>{{ user.firstName }} {{ user.lastName }}
+        <span *ngIf="vehicle">{{ vehicle.number }}: </span><span class="d-none d-lg-inline">{{ user.position }} </span>{{ user.firstName }}
+        {{ user.lastName }}
       </h4>
     </div>
     <shared-search-field

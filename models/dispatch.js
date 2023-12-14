@@ -4,6 +4,14 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Dispatch extends Base {
+    static get xsdPath() {
+      return 'eDispatch_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eDispatch';
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -96,10 +104,6 @@ module.exports = (sequelize, DataTypes) => {
     where: {
       canonicalId: null,
     },
-  });
-
-  Dispatch.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eDispatch_v3.xsd', 'eDispatch', null, options);
   });
 
   return Dispatch;

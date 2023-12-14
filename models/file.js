@@ -1,9 +1,24 @@
+const fs = require('fs/promises');
 const _ = require('lodash');
+const tmp = require('tmp-promise');
 
 const { Base } = require('./base');
+const utils = require('../lib/utils');
 
 module.exports = (sequelize, DataTypes) => {
   class File extends Base {
+    static get xsdPath() {
+      return 'eOther_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eOther';
+    }
+
+    static get groupTag() {
+      return 'eOther.FileGroup';
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -22,6 +37,34 @@ module.exports = (sequelize, DataTypes) => {
 
     static createOrUpdate(user, agency, data, options) {
       return Base.createOrUpdate(File, user, agency, data, [], ['file', 'metadata', 'data'], options);
+    }
+
+    async getData(version) {
+      const data = await super.getData(version);
+      if (this.file) {
+        data['eOther.11'] = { _text: this.id.replace(/-/g, '') };
+        data['eOther.22'] = { _text: this.file };
+      }
+      return data;
+    }
+
+    async insertFileInto(xmlFilePath) {
+      if (!this.file) {
+        return;
+      }
+      let filePath;
+      let tmpFile;
+      try {
+        filePath = await this.downloadAssetFile('file');
+        tmpFile = await tmp.file();
+        await utils.base64Encode(filePath, tmpFile.path);
+        await utils.insertFileIntoFile(tmpFile.path, xmlFilePath, `(<eOther\\.11>)(${this.id.replace(/-/g, '')})(<\\/eOther\\.11>)`);
+      } finally {
+        if (filePath) {
+          await fs.unlink(filePath);
+        }
+        await tmpFile?.cleanup();
+      }
     }
 
     toJSON() {
@@ -84,10 +127,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
-
-  File.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eOther_v3.xsd', 'eOther', 'eOther.FileGroup', options);
-  });
 
   File.afterSave(async (record, options) => {
     if (!record.canonicalId) {

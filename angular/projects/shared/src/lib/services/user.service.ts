@@ -15,6 +15,18 @@ export class UserService implements Resolve<any> {
     return this.userSubject;
   }
 
+  private assignment: any = null;
+  private assignmentSubject = new ReplaySubject<any>(1);
+  get assignment$(): Observable<any> {
+    return this.assignmentSubject;
+  }
+
+  private vehicle: any = null;
+  private vehicleSubject = new ReplaySubject<any>(1);
+  get vehicle$(): Observable<any> {
+    return this.vehicleSubject;
+  }
+
   private agency: any = null;
   private agencySubject = new ReplaySubject<any>(1);
   get agency$(): Observable<any> {
@@ -42,7 +54,7 @@ export class UserService implements Resolve<any> {
   }
 
   get currentAssignment(): any {
-    return this.user?.currentAssignment;
+    return this.assignment;
   }
 
   hasRole(role: string) {
@@ -76,9 +88,14 @@ export class UserService implements Resolve<any> {
       )
       .subscribe((response) => {
         this.user = response.body.User;
+        this.assignment = response.body.Assignment;
+        this.vehicle = response.body.Vehicle;
         this.agency = response.body.Agency;
         this.employment = response.body.Employment;
+
         this.userSubject.next(this.user);
+        this.assignmentSubject.next(this.assignment);
+        this.vehicleSubject.next(this.vehicle);
         this.agencySubject.next(this.agency);
         this.employmentSubject.next(this.employmentSubject);
       });
@@ -95,6 +112,8 @@ export class UserService implements Resolve<any> {
       }),
       mergeMap((response) => {
         this.user = response.body.User;
+        this.assignment = response.body.Assignment;
+        this.vehicle = response.body.Vehicle;
         this.agency = response.body.Agency;
         this.employment = response.body.Employment;
         return of(this.user);

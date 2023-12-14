@@ -1,14 +1,15 @@
 const assert = require('assert');
-const fs = require('fs-extra');
-const { mkdirp } = require('mkdirp');
+const fs = require('fs/promises');
+const _ = require('lodash');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+const tmp = require('tmp-promise');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
 
 describe('models', () => {
   describe('File', () => {
+    let file;
     beforeEach(async () => {
       await helpers.loadFixtures([
         'states',
@@ -23,21 +24,14 @@ describe('models', () => {
         'employments',
         'files',
       ]);
+      file = await helpers.uploadFile('512x512.png');
+    });
+
+    afterEach(async () => {
+      await helpers.cleanUploadedAssets();
     });
 
     describe('createOrUpdate()', () => {
-      let file;
-      beforeEach(() => {
-        file = `${uuidv4()}.png`;
-        mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
-        fs.copySync(path.resolve(__dirname, '../../fixtures/files/512x512.png'), path.resolve(__dirname, `../../../tmp/uploads/${file}`));
-      });
-
-      afterEach(() => {
-        fs.removeSync(path.resolve(__dirname, `../../../tmp/uploads/${file}`));
-        fs.removeSync(path.resolve(__dirname, `../../../public/assets/test`));
-      });
-
       it('creates a new canonical and corresponding history record', async () => {
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
@@ -57,7 +51,7 @@ describe('models', () => {
             },
           },
         };
-        const [record, created] = await models.File.createOrUpdate(user, agency, data);
+        const [record, created] = await models.File.createOrUpdate(user, agency, _.cloneDeep(data));
         assert(record);
         assert(created);
         assert.deepStrictEqual(record.id, data.id);
@@ -65,10 +59,9 @@ describe('models', () => {
         assert.deepStrictEqual(record.canonicalId, data.canonicalId);
         assert.deepStrictEqual(record.file, file);
         assert.deepStrictEqual(record.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${record.id}/file`, file)));
+        assert(await helpers.assetPathExists(path.join('files', record.id, 'file', file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
         assert.deepStrictEqual(record.data, data.data);
-        assert(record.isValid);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'file', 'metadata', 'data']);
         assert.deepStrictEqual(record.updatedDataAttributes, ['/eOther.09', '/eOther.10']);
         assert.deepStrictEqual(record.createdById, user.id);
@@ -122,7 +115,7 @@ describe('models', () => {
         assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
         assert.deepStrictEqual(record.file, file);
         assert.deepStrictEqual(record.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
-        assert(fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/files/${record.id}/file`, file)));
+        assert(await helpers.assetPathExists(path.join('files', record.id, 'file', file)));
         assert.deepStrictEqual(record.metadata, data.metadata);
         assert.deepStrictEqual(record.data['eOther.09']._text, '4509015');
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'file', 'metadata', 'data']);
@@ -139,6 +132,47 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.fileUrl, `/api/assets/files/${record.id}/file/${file}`);
         assert.deepStrictEqual(canonical.metadata, data.metadata);
         assert.deepStrictEqual(canonical.data, record.data);
+      });
+    });
+
+    describe('.getData()', () => {
+      it('returns the data with the file attachment info placeholders', async () => {
+        const version = await models.Version.findByPk('c680282e-8756-4b02-82f3-2437c22ecade');
+        const record = await models.File.findByPk('8e693fb6-7f2a-4cc8-9d5f-d8eb5915bb60');
+        await record.update({ file });
+        assert(await helpers.assetPathExists(path.join('files', record.id, 'file', file)));
+        const data = await record.getData(version);
+        assert.deepStrictEqual(data, {
+          'eOther.09': {
+            _text: '4509001',
+          },
+          'eOther.10': {
+            _text: 'mp4',
+          },
+          'eOther.11': {
+            _text: '8e693fb67f2a4cc89d5fd8eb5915bb60',
+          },
+          'eOther.22': {
+            _text: file,
+          },
+        });
+      });
+    });
+
+    describe('.insertFileInto()', () => {
+      it('inserts base64 encoded data into the specified XML file', async () => {
+        const record = await models.File.findByPk('8e693fb6-7f2a-4cc8-9d5f-d8eb5915bb60');
+        await record.update({ file });
+        const tmpFile = await tmp.file();
+        try {
+          await fs.copyFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.before.xml'), tmpFile.path);
+          await record.insertFileInto(tmpFile.path);
+          const test = await fs.readFile(tmpFile.path);
+          const compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.after.xml'));
+          assert(test.equals(compare));
+        } finally {
+          await tmpFile.cleanup();
+        }
       });
     });
   });

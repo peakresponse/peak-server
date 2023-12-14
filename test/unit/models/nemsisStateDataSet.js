@@ -1,8 +1,4 @@
 const assert = require('assert');
-const fs = require('fs-extra');
-const { mkdirp } = require('mkdirp');
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
 
 const helpers = require('../../helpers');
 
@@ -50,12 +46,7 @@ describe('models', () => {
 
       beforeEach(async () => {
         await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'nemsisStateDataSets', 'nemsisSchematrons']);
-        file = `${uuidv4()}.xml`;
-        mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
-        fs.copySync(
-          path.resolve(__dirname, '../../fixtures/nemsis/full/2023-STATE-1_v350.xml'),
-          path.resolve(__dirname, `../../../tmp/uploads/${file}`)
-        );
+        file = await helpers.uploadFile('2023-STATE-1_v350.xml');
         stateDataSet = await models.NemsisStateDataSet.create({
           stateId: '05',
           nemsisVersion: '3.5.0.211008CP3',
@@ -66,9 +57,8 @@ describe('models', () => {
         });
       });
 
-      afterEach(() => {
-        fs.removeSync(path.resolve(__dirname, `../../../tmp/uploads/${file}`));
-        fs.removeSync(path.resolve(__dirname, `../../../public/assets/test`));
+      afterEach(async () => {
+        await helpers.cleanUploadedAssets();
       });
 
       it('imports Agency records from the specified external State Data Set', async () => {

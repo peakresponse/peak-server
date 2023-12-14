@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const AWS = require('aws-sdk');
 const fs = require('fs-extra');
 const inflection = require('inflection');
 const jsonpatch = require('fast-json-patch');
@@ -8,20 +7,8 @@ const path = require('path');
 const { Model, Op } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
-const nemsis = require('../lib/nemsis');
+const s3 = require('../lib/aws/s3');
 const nemsisXsd = require('../lib/nemsis/xsd');
-
-const s3options = {};
-if (process.env.AWS_ACCESS_KEY_ID) {
-  s3options.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-}
-if (process.env.AWS_SECRET_ACCESS_KEY) {
-  s3options.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-}
-if (process.env.AWS_S3_BUCKET_REGION) {
-  s3options.region = process.env.AWS_S3_BUCKET_REGION;
-}
-const s3 = new AWS.S3(s3options);
 
 class Base extends Model {
   // MARK: - helpers for non-versioned (live/draft only) NEMSIS backed models
@@ -249,7 +236,7 @@ class Base extends Model {
 
   assetUrl(attribute) {
     const pathPrefix = `${inflection.transform(this.constructor.name, ['tableize', 'dasherize'])}/${
-      this?.currentId ?? this.id
+      this.currentId ?? this.id
     }/${inflection.transform(attribute, ['underscore', 'dasherize'])}`;
     const file = this.get(attribute);
     if (file) {
@@ -278,12 +265,9 @@ class Base extends Model {
       } else {
         Key = path.join(filePrefix, file);
       }
-      const data = await s3
-        .getObject({
-          Bucket: process.env.AWS_S3_BUCKET,
-          Key,
-        })
-        .promise();
+      const data = await s3.getObject({
+        Key,
+      });
       await fs.promises.writeFile(tmpFilePath, data.Body);
     } else {
       let filePath;
@@ -297,6 +281,16 @@ class Base extends Model {
     return tmpFilePath;
   }
 
+  static async uploadAssetFile(filePath) {
+    const destFileName = `${uuidv4()}${path.extname(filePath)}`;
+    if (process.env.AWS_S3_BUCKET) {
+      await s3.putObject({ Key: path.join('uploads', destFileName), filePath });
+    } else {
+      await fs.promises.copyFile(filePath, path.resolve(__dirname, '../tmp/uploads', destFileName));
+    }
+    return destFileName;
+  }
+
   async handleAssetFile(attribute, options) {
     if (!this.changed(attribute)) {
       return;
@@ -307,29 +301,18 @@ class Base extends Model {
     const handle = async () => {
       if (process.env.AWS_S3_BUCKET) {
         if (prevFile) {
-          await s3
-            .deleteObject({
-              Bucket: process.env.AWS_S3_BUCKET,
-              Key: path.join(filePrefix, prevFile),
-            })
-            .promise();
+          await s3.deleteObject({
+            Key: path.join(filePrefix, prevFile),
+          });
         }
         if (newFile) {
-          await s3
-            .copyObject({
-              ACL: 'private',
-              Bucket: process.env.AWS_S3_BUCKET,
-              CopySource: path.join(process.env.AWS_S3_BUCKET, 'uploads', newFile),
-              Key: path.join(filePrefix, newFile),
-              ServerSideEncryption: 'AES256',
-            })
-            .promise();
-          await s3
-            .deleteObject({
-              Bucket: process.env.AWS_S3_BUCKET,
-              Key: path.join('uploads', newFile),
-            })
-            .promise();
+          await s3.copyObject({
+            CopySource: path.join(process.env.AWS_S3_BUCKET, 'uploads', newFile),
+            Key: path.join(filePrefix, newFile),
+          });
+          await s3.deleteObject({
+            Key: path.join('uploads', newFile),
+          });
         }
       } else {
         if (prevFile) {
@@ -395,10 +378,12 @@ class Base extends Model {
     this.changed('data', true);
   }
 
-  setNemsisValue(keyPath, newValue) {
+  setNemsisValue(keyPath, newValue, required = false) {
     this.data = this.data || {};
     if (newValue) {
       _.set(this.data, keyPath, { _text: newValue });
+    } else if (required) {
+      _.set(this.data, keyPath, { _attributes: { 'xsi:nil': 'true', NV: '7701003' } });
     } else {
       _.unset(this.data, keyPath);
     }
@@ -462,19 +447,35 @@ class Base extends Model {
     }
   }
 
-  syncFieldAndNemsisValue(key, keyPath, options) {
+  syncFieldAndNemsisValue(key, keyPath, options, required = false) {
     if (this.changed(key)) {
-      this.setNemsisValue(keyPath, this.getDataValue(key));
+      this.setNemsisValue(keyPath, this.getDataValue(key), required);
       options.fields = options.fields || [];
       if (options.fields.indexOf('data') < 0) {
         options.fields.push('data');
       }
     } else {
-      this.setDataValue(key, this.getFirstNemsisValue(keyPath) ?? null);
+      const value = this.getFirstNemsisValue(keyPath) ?? null;
+      this.setDataValue(key, value);
       if (this.changed(key)) {
         options.fields = options.fields || [];
         if (options.fields.indexOf(key) < 0) {
           options.fields.push(key);
+        }
+      }
+      if (!value && required) {
+        if (!_.get(this.data, keyPath)) {
+          _.set(this.data, keyPath, {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          });
+          this.changed('data', true);
+          options.fields = options.fields || [];
+          if (options.fields.indexOf('data') < 0) {
+            options.fields.push('data');
+          }
         }
       }
     }
@@ -492,17 +493,18 @@ class Base extends Model {
     return null;
   }
 
-  getData(version) {
+  async getData(version) {
     const { xsdPath, rootTag, groupTag } = this.constructor;
     const doc = nemsisXsd.generate(version.nemsisVersion, xsdPath, rootTag, groupTag, this.data);
     // remove the xml namespace attributes
     delete doc[rootTag]._attributes.xmlns;
     delete doc[rootTag]._attributes['xmlns:xsi'];
     // return the updated data
-    if (groupTag) {
-      return doc[rootTag][groupTag];
+    let data = groupTag ? doc[rootTag][groupTag] : doc[rootTag];
+    if (Array.isArray(data)) {
+      [data] = data;
     }
-    return doc[rootTag];
+    return data;
   }
 
   async xsdValidate(options) {
@@ -523,22 +525,6 @@ class Base extends Model {
         if (options.fields.indexOf('isValid') < 0) {
           options.fields.push('isValid');
         }
-      }
-    }
-  }
-
-  async validateNemsisData(xsdPath, rootTag, groupTag, options) {
-    this.validationErrors = await nemsis.validateSchema(xsdPath, rootTag, groupTag, this.data);
-    this.isValid = this.validationErrors === null;
-    options.fields = options.fields || [];
-    if (this.changed('validationErrors')) {
-      if (options.fields.indexOf('validationErrors') < 0) {
-        options.fields.push('validationErrors');
-      }
-    }
-    if (this.changed('isValid')) {
-      if (options.fields.indexOf('isValid') < 0) {
-        options.fields.push('isValid');
       }
     }
   }

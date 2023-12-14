@@ -4,6 +4,18 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Medication extends Base {
+    static get xsdPath() {
+      return 'eMedications_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eMedications';
+    }
+
+    static get groupTag() {
+      return 'eMedications.MedicationGroup';
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -75,10 +87,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
-
-  Medication.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eMedications_v3.xsd', 'eMedications', 'eMedications.MedicationGroup', options);
-  });
 
   return Medication;
 };

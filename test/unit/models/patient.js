@@ -1,6 +1,4 @@
 const assert = require('assert');
-const fs = require('fs-extra');
-const { mkdirp } = require('mkdirp');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
@@ -34,20 +32,86 @@ describe('models', () => {
       agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
     });
 
+    describe('.data', () => {
+      it('is synchronized with attributes on validation', async () => {
+        const patient = await models.Patient.findByPk('47449282-c48a-4ca1-a719-5117b790fc70');
+        assert.deepStrictEqual(patient.data, {
+          'ePatient.07': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.08': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.09': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.13': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.14': {
+            _attributes: {
+              'xsi:nil': 'true',
+              NV: '7701003',
+            },
+          },
+          'ePatient.AgeGroup': {
+            'ePatient.15': {
+              _text: 18,
+            },
+            'ePatient.16': {
+              _attributes: {
+                'xsi:nil': 'true',
+                NV: '7701003',
+              },
+            },
+          },
+          'ePatient.PatientNameGroup': {
+            'ePatient.02': {
+              _text: 'Jones',
+            },
+            'ePatient.03': {
+              _text: 'David',
+            },
+          },
+        });
+
+        patient.gender = '9906001';
+        await patient.validate();
+        assert.deepStrictEqual(patient.data['ePatient.13'], {
+          _text: '9906001',
+        });
+
+        patient.gender = null;
+        await patient.validate();
+        assert.deepStrictEqual(patient.data['ePatient.13'], {
+          _attributes: {
+            'xsi:nil': 'true',
+            NV: '7701003',
+          },
+        });
+      });
+    });
+
     describe('createOrUpdate()', () => {
       let portraitFile;
-      beforeEach(() => {
-        portraitFile = `${uuidv4()}.png`;
-        mkdirp.sync(path.resolve(__dirname, '../../../tmp/uploads'));
-        fs.copySync(
-          path.resolve(__dirname, '../../fixtures/files/512x512.png'),
-          path.resolve(__dirname, `../../../tmp/uploads/${portraitFile}`)
-        );
+      beforeEach(async () => {
+        portraitFile = await helpers.uploadFile('512x512.png');
       });
 
-      afterEach(() => {
-        fs.removeSync(path.resolve(__dirname, `../../../tmp/uploads/${portraitFile}`));
-        fs.removeSync(path.resolve(__dirname, `../../../public/assets/test`));
+      afterEach(async () => {
+        await helpers.cleanUploadedAssets();
       });
 
       it('creates a new Patient record', async () => {
@@ -69,9 +133,7 @@ describe('models', () => {
         assert.deepStrictEqual(patient.priority, 2);
         assert.deepStrictEqual(patient.portraitFile, portraitFile);
         assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/${patient.id}/portrait-file/${portraitFile}`);
-        assert(
-          fs.pathExistsSync(path.resolve(__dirname, `../../../public/assets/test/patients/${patient.id}/portrait-file`, portraitFile))
-        );
+        assert(await helpers.assetPathExists(path.join('patients', patient.id, 'portrait-file', portraitFile)));
         assert.deepStrictEqual(patient.updatedAttributes, [
           'id',
           'canonicalId',
@@ -82,6 +144,50 @@ describe('models', () => {
           'portraitFile',
         ]);
         assert.deepStrictEqual(patient.data, {
+          'ePatient.07': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.08': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.09': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.13': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.14': {
+            _attributes: {
+              NV: '7701003',
+              'xsi:nil': 'true',
+            },
+          },
+          'ePatient.AgeGroup': {
+            'ePatient.15': {
+              _attributes: {
+                NV: '7701003',
+                'xsi:nil': 'true',
+              },
+            },
+            'ePatient.16': {
+              _attributes: {
+                NV: '7701003',
+                'xsi:nil': 'true',
+              },
+            },
+          },
           'ePatient.PatientNameGroup': {
             'ePatient.02': { _text: 'Doe' },
             'ePatient.03': { _text: 'John' },
@@ -102,7 +208,6 @@ describe('models', () => {
       it('updates the Patient with a new historical record', async () => {
         const patient = await models.Patient.findByPk('47449282-c48a-4ca1-a719-5117b790fc70');
         assert.deepStrictEqual(patient.priority, 0);
-        assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/cb94a8a4-bf8b-4316-8a3f-191aa2df4633/portrait-file/man1.jpg`);
 
         const id = uuidv4();
         const [record, created] = await models.Patient.createOrUpdate(user, agency, {
@@ -119,7 +224,6 @@ describe('models', () => {
         assert.deepStrictEqual(record.firstName, 'New');
         assert.deepStrictEqual(record.lastName, 'Name');
         assert.deepStrictEqual(record.priority, 2);
-        assert.deepStrictEqual(record.portraitUrl, `/api/assets/patients/${record.id}/portrait-file/man1.jpg`);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'lastName', 'firstName', 'priority']);
 
         await patient.reload();
@@ -127,7 +231,6 @@ describe('models', () => {
         assert.deepStrictEqual(patient.firstName, 'New');
         assert.deepStrictEqual(patient.lastName, 'Name');
         assert.deepStrictEqual(patient.priority, 2);
-        assert.deepStrictEqual(patient.portraitUrl, `/api/assets/patients/${record.id}/portrait-file/man1.jpg`);
       });
     });
   });

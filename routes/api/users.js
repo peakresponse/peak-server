@@ -3,7 +3,7 @@ const HttpStatus = require('http-status-codes');
 const { Op } = require('sequelize');
 const _ = require('lodash');
 
-const aws = require('../../lib/aws');
+const sts = require('../../lib/aws/sts');
 const models = require('../../models');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -57,7 +57,7 @@ router.get(
       // add additional privilege info
       data.User.isAdmin = req.user.isAdmin;
       // temporary AWS credentials for use with Transcribe service
-      data.User.awsCredentials = await aws.getTemporaryCredentialsForMobileApp();
+      data.User.awsCredentials = await sts.getTemporaryCredentialsForMobileApp();
       // add any active scenes the user may be a part of
       const scenes = await req.user.getActiveScenes({ include: ['city', 'incident', 'state'] });
       data.Scene = scenes.map((s) => s.toJSON());
@@ -114,7 +114,7 @@ router.get(
           })
         )?.toJSON() ?? null;
       // temporary AWS credentials for use with Transcribe service
-      data.user.awsCredentials = await aws.getTemporaryCredentialsForMobileApp();
+      data.user.awsCredentials = await sts.getTemporaryCredentialsForMobileApp();
       // add Agency/Employment info, if any
       if (req.agency) {
         data.agency = req.agency.toJSON();

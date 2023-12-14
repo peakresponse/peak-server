@@ -1,0 +1,280 @@
+<EMSDataSet xmlns="http://www.nemsis.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.211008CP3/XSDs/NEMSIS_XSDs/EMSDataSet_v3.xsd">
+	<Header>
+		<DemographicGroup>
+			<dAgency.01>S07-50120</dAgency.01>
+			<dAgency.02>S07-50120</dAgency.02>
+			<dAgency.04>06</dAgency.04>
+		</DemographicGroup>
+		<PatientCareReport UUID="4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed">
+			<eRecord>
+				<eRecord.01>4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed</eRecord.01>
+				<eRecord.SoftwareApplicationGroup>
+					<eRecord.02>Peak Response Inc.</eRecord.02>
+					<eRecord.03>Peak Response</eRecord.03>
+					<eRecord.04></eRecord.04>
+				</eRecord.SoftwareApplicationGroup>
+			</eRecord>
+			<eResponse>
+				<eResponse.AgencyGroup>
+					<eResponse.01>S07-50120</eResponse.01>
+				</eResponse.AgencyGroup>
+				<eResponse.03>12345</eResponse.03>
+				<eResponse.04 NV="7701003" xsi:nil="true"/>
+				<eResponse.ServiceGroup>
+					<eResponse.05>2205001</eResponse.05>
+				</eResponse.ServiceGroup>
+				<eResponse.07>2207015</eResponse.07>
+				<eResponse.08>2208013</eResponse.08>
+				<eResponse.09>2209011</eResponse.09>
+				<eResponse.10>2210017</eResponse.10>
+				<eResponse.11>2211011</eResponse.11>
+				<eResponse.12>2212015</eResponse.12>
+				<eResponse.13>50</eResponse.13>
+				<eResponse.14>50</eResponse.14>
+				<eResponse.23>2223001</eResponse.23>
+				<eResponse.24>2224019</eResponse.24>
+			</eResponse>
+			<eDispatch>
+				<eDispatch.01>2301051</eDispatch.01>
+				<eDispatch.02 NV="7701003" xsi:nil="true"/>
+			</eDispatch>
+			<eTimes>
+				<eTimes.01>2020-04-06T21:22:10-00:00</eTimes.01>
+				<eTimes.03>2020-04-06T21:22:10-00:00</eTimes.03>
+				<eTimes.05 NV="7701003" xsi:nil="true"/>
+				<eTimes.06 NV="7701003" xsi:nil="true"/>
+				<eTimes.07 NV="7701003" xsi:nil="true"/>
+				<eTimes.09 NV="7701003" xsi:nil="true"/>
+				<eTimes.11 NV="7701003" xsi:nil="true"/>
+				<eTimes.12 NV="7701003" xsi:nil="true"/>
+				<eTimes.13>2020-04-06T21:22:10-00:00</eTimes.13>
+			</eTimes>
+			<ePatient>
+				<ePatient.PatientNameGroup>
+					<ePatient.02>Jones</ePatient.02>
+					<ePatient.03>David</ePatient.03>
+				</ePatient.PatientNameGroup>
+				<ePatient.07 NV="7701003" xsi:nil="true"/>
+				<ePatient.08 NV="7701003" xsi:nil="true"/>
+				<ePatient.09 NV="7701003" xsi:nil="true"/>
+				<ePatient.13 NV="7701003" xsi:nil="true"/>
+				<ePatient.14 NV="7701003" xsi:nil="true"/>
+				<ePatient.AgeGroup>
+					<ePatient.15>18</ePatient.15>
+					<ePatient.16 NV="7701003" xsi:nil="true"/>
+				</ePatient.AgeGroup>
+			</ePatient>
+			<ePayment>
+				<ePayment.01 NV="7701003" xsi:nil="true"/>
+				<ePayment.50 NV="7701003" xsi:nil="true"/>
+			</ePayment>
+			<eScene>
+				<eScene.01 NV="7701003" xsi:nil="true"/>
+				<eScene.06 NV="7701003" xsi:nil="true"/>
+				<eScene.07 NV="7701003" xsi:nil="true"/>
+				<eScene.08 NV="7701003" xsi:nil="true"/>
+				<eScene.09 NV="7701003" xsi:nil="true"/>
+				<eScene.17>2411786</eScene.17>
+				<eScene.18>06</eScene.18>
+				<eScene.19 NV="7701003" xsi:nil="true"/>
+				<eScene.21 NV="7701003" xsi:nil="true"/>
+			</eScene>
+			<eSituation>
+				<eSituation.01 NV="7701003" xsi:nil="true"/>
+				<eSituation.02 NV="7701003" xsi:nil="true"/>
+				<eSituation.07 NV="7701003" xsi:nil="true"/>
+				<eSituation.08 NV="7701003" xsi:nil="true"/>
+				<eSituation.09 NV="7701003" xsi:nil="true"/>
+				<eSituation.10 NV="7701003" xsi:nil="true"/>
+				<eSituation.11 NV="7701003" xsi:nil="true"/>
+				<eSituation.12 NV="7701003" xsi:nil="true"/>
+				<eSituation.13 NV="7701003" xsi:nil="true"/>
+				<eSituation.18 NV="7701003" xsi:nil="true"/>
+				<eSituation.20 NV="7701003" xsi:nil="true"/>
+			</eSituation>
+			<eInjury>
+				<eInjury.01 NV="7701003" xsi:nil="true"/>
+				<eInjury.03 NV="7701003" xsi:nil="true"/>
+				<eInjury.04 NV="7701003" xsi:nil="true"/>
+			</eInjury>
+			<eArrest>
+				<eArrest.01 NV="7701003" xsi:nil="true"/>
+				<eArrest.02 NV="7701003" xsi:nil="true"/>
+				<eArrest.03 NV="7701003" xsi:nil="true"/>
+				<eArrest.04 NV="7701003" xsi:nil="true"/>
+				<eArrest.07 NV="7701003" xsi:nil="true"/>
+				<eArrest.09 NV="7701003" xsi:nil="true"/>
+				<eArrest.11 NV="7701003" xsi:nil="true"/>
+				<eArrest.12 NV="7701003" xsi:nil="true"/>
+				<eArrest.14 NV="7701003" xsi:nil="true"/>
+				<eArrest.16 NV="7701003" xsi:nil="true"/>
+				<eArrest.17 NV="7701003" xsi:nil="true"/>
+				<eArrest.18 NV="7701003" xsi:nil="true"/>
+				<eArrest.20 NV="7701003" xsi:nil="true"/>
+				<eArrest.21 NV="7701003" xsi:nil="true"/>
+				<eArrest.22 NV="7701003" xsi:nil="true"/>
+			</eArrest>
+			<eHistory>
+				<eHistory.01>3101009</eHistory.01>
+				<eHistory.17 PN="8801015" xsi:nil="true"/>
+			</eHistory>
+			<eNarrative>
+				<eNarrative.01>This is a test narrative</eNarrative.01>
+			</eNarrative>
+			<eVitals>
+				<eVitals.VitalGroup>
+					<eVitals.01>2020-04-06T21:22:10-00:00</eVitals.01>
+					<eVitals.02>9923001</eVitals.02>
+					<eVitals.CardiacRhythmGroup>
+						<eVitals.03 NV="7701003" xsi:nil="true"/>
+						<eVitals.04 NV="7701003" xsi:nil="true"/>
+						<eVitals.05 NV="7701003" xsi:nil="true"/>
+					</eVitals.CardiacRhythmGroup>
+					<eVitals.BloodPressureGroup>
+						<eVitals.06 NV="7701003" xsi:nil="true"/>
+					</eVitals.BloodPressureGroup>
+					<eVitals.HeartRateGroup>
+						<eVitals.10 NV="7701003" xsi:nil="true"/>
+					</eVitals.HeartRateGroup>
+					<eVitals.12 NV="7701003" xsi:nil="true"/>
+					<eVitals.14 NV="7701003" xsi:nil="true"/>
+					<eVitals.16 NV="7701003" xsi:nil="true"/>
+					<eVitals.18 NV="7701003" xsi:nil="true"/>
+					<eVitals.GlasgowScoreGroup>
+						<eVitals.19 NV="7701003" xsi:nil="true"/>
+						<eVitals.20 NV="7701003" xsi:nil="true"/>
+						<eVitals.21 NV="7701003" xsi:nil="true"/>
+						<eVitals.22 NV="7701003" xsi:nil="true"/>
+					</eVitals.GlasgowScoreGroup>
+					<eVitals.26 NV="7701003" xsi:nil="true"/>
+					<eVitals.PainScaleGroup>
+						<eVitals.27 NV="7701003" xsi:nil="true"/>
+					</eVitals.PainScaleGroup>
+					<eVitals.StrokeScaleGroup>
+						<eVitals.29 NV="7701003" xsi:nil="true"/>
+						<eVitals.30 NV="7701003" xsi:nil="true"/>
+					</eVitals.StrokeScaleGroup>
+					<eVitals.31 NV="7701003" xsi:nil="true"/>
+				</eVitals.VitalGroup>
+			</eVitals>
+			<eProtocols>
+				<eProtocols.ProtocolGroup>
+					<eProtocols.01 NV="7701003" xsi:nil="true"/>
+				</eProtocols.ProtocolGroup>
+			</eProtocols>
+			<eMedications>
+				<eMedications.MedicationGroup>
+					<eMedications.01>2020-04-06T21:22:10-00:00</eMedications.01>
+					<eMedications.02 NV="7701003" xsi:nil="true"/>
+					<eMedications.03 NV="7701003" xsi:nil="true"/>
+					<eMedications.04 NV="7701003" xsi:nil="true"/>
+					<eMedications.DosageGroup>
+						<eMedications.05 NV="7701003" xsi:nil="true"/>
+						<eMedications.06 NV="7701003" xsi:nil="true"/>
+					</eMedications.DosageGroup>
+					<eMedications.07 NV="7701003" xsi:nil="true"/>
+					<eMedications.08 NV="7701003" xsi:nil="true"/>
+					<eMedications.10 NV="7701003" xsi:nil="true"/>
+				</eMedications.MedicationGroup>
+			</eMedications>
+			<eProcedures>
+				<eProcedures.ProcedureGroup>
+					<eProcedures.01>2020-04-06T21:22:10-00:00</eProcedures.01>
+					<eProcedures.02 NV="7701003" xsi:nil="true"/>
+					<eProcedures.03 NV="7701003" xsi:nil="true"/>
+					<eProcedures.05 NV="7701003" xsi:nil="true"/>
+					<eProcedures.06 NV="7701003" xsi:nil="true"/>
+					<eProcedures.07 NV="7701003" xsi:nil="true"/>
+					<eProcedures.08 NV="7701003" xsi:nil="true"/>
+					<eProcedures.10 NV="7701003" xsi:nil="true"/>
+				</eProcedures.ProcedureGroup>
+			</eProcedures>
+			<eDisposition>
+				<eDisposition.DestinationGroup>
+					<eDisposition.05>06</eDisposition.05>
+					<eDisposition.06>06075</eDisposition.06>
+					<eDisposition.07>94103</eDisposition.07>
+				</eDisposition.DestinationGroup>
+				<eDisposition.IncidentDispositionGroup>
+					<eDisposition.27>4227001</eDisposition.27>
+					<eDisposition.28>4228001</eDisposition.28>
+					<eDisposition.29>4229003</eDisposition.29>
+					<eDisposition.30>4230005</eDisposition.30>
+				</eDisposition.IncidentDispositionGroup>
+				<eDisposition.16>4216005</eDisposition.16>
+				<eDisposition.17>4217003</eDisposition.17>
+				<eDisposition.18>4218015</eDisposition.18>
+				<eDisposition.19>4219005</eDisposition.19>
+				<eDisposition.20>4220001</eDisposition.20>
+				<eDisposition.21>4221003</eDisposition.21>
+				<eDisposition.22 NV="7701001" xsi:nil="true"/>
+				<eDisposition.23>9908007</eDisposition.23>
+				<eDisposition.HospitalTeamActivationGroup>
+					<eDisposition.24 NV="7701003" xsi:nil="true"/>
+					<eDisposition.25 NV="7701003" xsi:nil="true"/>
+				</eDisposition.HospitalTeamActivationGroup>
+				<eDisposition.32>4232001</eDisposition.32>
+			</eDisposition>
+			<eOutcome>
+				<eOutcome.01 NV="7701003" xsi:nil="true"/>
+				<eOutcome.02 NV="7701003" xsi:nil="true"/>
+				<eOutcome.EmergencyDepartmentProceduresGroup>
+					<eOutcome.09 NV="7701003" xsi:nil="true"/>
+					<eOutcome.19 NV="7701003" xsi:nil="true"/>
+				</eOutcome.EmergencyDepartmentProceduresGroup>
+				<eOutcome.10 NV="7701003" xsi:nil="true"/>
+				<eOutcome.11 NV="7701003" xsi:nil="true"/>
+				<eOutcome.HospitalProceduresGroup>
+					<eOutcome.12 NV="7701003" xsi:nil="true"/>
+					<eOutcome.20 NV="7701003" xsi:nil="true"/>
+				</eOutcome.HospitalProceduresGroup>
+				<eOutcome.13 NV="7701003" xsi:nil="true"/>
+				<eOutcome.16 NV="7701003" xsi:nil="true"/>
+				<eOutcome.18 NV="7701003" xsi:nil="true"/>
+			</eOutcome>
+			<eOther>
+				<eOther.FileGroup>
+					<eOther.09>4509001</eOther.09>
+					<eOther.10>mp4</eOther.10>
+					<eOther.11>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</eOther.11>
+					<eOther.22></eOther.22>
+				</eOther.FileGroup>
+				<eOther.SignatureGroup>
+					<eOther.12>4512015</eOther.12>
+					<eOther.13>4513009</eOther.13>
+					<eOther.15>4515019</eOther.15>
+				</eOther.SignatureGroup>
+			</eOther>
+		</PatientCareReport>
+	</Header>
+</EMSDataSet>

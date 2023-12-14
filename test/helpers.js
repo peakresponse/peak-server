@@ -2,8 +2,6 @@
 
 /// MUST BE FIRST! set the NODE_ENV to test to disable logging, switch to test db
 process.env.NODE_ENV = 'test';
-/// handle files as local, in a test subdir
-process.env.AWS_S3_BUCKET = '';
 process.env.ASSET_PATH_PREFIX = 'test';
 /// override any custom base host/url
 process.env.BASE_HOST = 'peakresponse.localhost';
@@ -11,24 +9,55 @@ process.env.BASE_URL = 'http://peakresponse.localhost:3000';
 process.env.EXPRESS_SUBDOMAIN_OFFSET = '2';
 
 const fixtures = require('sequelize-fixtures');
+const fs = require('fs-extra');
+const { mkdirp } = require('mkdirp');
 const nock = require('nock');
 const nodemailerMock = require('nodemailer-mock');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const models = require('../models');
+const s3 = require('../lib/aws/s3');
 
-const loadFixtures = (files) => {
+function loadFixtures(files) {
   const filePaths = files.map((f) => path.resolve(__dirname, `fixtures/${f}.json`));
   return models.sequelize.transaction((transaction) => {
     return fixtures.loadFiles(filePaths, models, { transaction });
   });
-};
+}
 
-const recordNetworkRequests = () => {
+function recordNetworkRequests() {
   nock.recorder.rec();
-};
+}
 
-const resetDatabase = async () => {
+async function uploadFile(file) {
+  const tmpFile = `${uuidv4()}${path.extname(file)}`;
+  if (process.env.AWS_S3_BUCKET) {
+    await s3.putObject({ Key: path.join('uploads', tmpFile), filePath: path.resolve(__dirname, `fixtures/files/${file}`) });
+  } else {
+    mkdirp.sync(path.resolve(__dirname, '../tmp/uploads'));
+    fs.copySync(path.resolve(__dirname, `fixtures/files/${file}`), path.resolve(__dirname, `../tmp/uploads/${tmpFile}`));
+  }
+  return tmpFile;
+}
+
+function assetPathExists(assetPath) {
+  if (process.env.AWS_S3_BUCKET) {
+    return s3.objectExists({ Key: path.join(process.env.ASSET_PATH_PREFIX, assetPath) });
+  }
+  return fs.pathExistsSync(path.resolve(__dirname, '../public/assets', process.env.ASSET_PATH_PREFIX, assetPath));
+}
+
+async function cleanUploadedAssets() {
+  if (process.env.AWS_S3_BUCKET) {
+    await s3.deleteObjects({ Prefix: process.env.ASSET_PATH_PREFIX });
+  } else {
+    fs.removeSync(path.resolve(__dirname, `../tmp/uploads`));
+    fs.removeSync(path.resolve(__dirname, `../public/assets/${process.env.ASSET_PATH_PREFIX}`));
+  }
+}
+
+async function resetDatabase() {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
     DELETE FROM list_items;
@@ -85,11 +114,11 @@ const resetDatabase = async () => {
     DELETE FROM counties;
     DELETE FROM cities;
   `);
-};
+}
 
-const sleep = (ms) => {
+function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-};
+}
 
 beforeEach(async () => {
   await resetDatabase();
@@ -103,8 +132,11 @@ after(async () => {
 });
 
 module.exports = {
+  assetPathExists,
+  cleanUploadedAssets,
   loadFixtures,
   recordNetworkRequests,
   resetDatabase,
   sleep,
+  uploadFile,
 };

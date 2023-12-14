@@ -3,7 +3,7 @@
   "version": "2.0.0-alpha.33",
   "private": true,
   "scripts": {
-    "start": "nodemon -V --ignore ./angular --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
+    "start": "nodemon -V --ignore ./angular --ignore ./data --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
     "test": "mocha --unhandled-rejections=strict --recursive test/unit test/integration",
     "ci": "prettier --check . && npm run lint && npm run test",
     "lint": "eslint .",
@@ -96,6 +96,9 @@
     "singleQuote": true
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.470.0",
+    "@aws-sdk/cloudfront-signer": "^3.468.0",
+    "@aws-sdk/s3-request-presigner": "^3.470.0",
     "@fortawesome/fontawesome-free": "^5.8.2",
     "@googlemaps/google-maps-services-js": "^3.3.26",
     "@node-oauth/oauth2-server": "^4.3.0",

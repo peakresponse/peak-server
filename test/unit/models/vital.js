@@ -164,7 +164,6 @@ describe('models', () => {
         assert.deepStrictEqual(record.parentId, null);
         assert.deepStrictEqual(record.canonicalId, data.canonicalId);
         assert.deepStrictEqual(record.data, data.data);
-        assert(record.isValid);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'data']);
         assert.deepStrictEqual(record.updatedDataAttributes, [
           '/eVitals.01',
@@ -229,7 +228,6 @@ describe('models', () => {
         assert.deepStrictEqual(record.createdByAgencyId, parent.createdByAgencyId);
         assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
         assert.deepStrictEqual(record.data['eVitals.26']._text, '3326001');
-        assert(record.isValid);
         assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'data']);
         assert.deepStrictEqual(record.updatedDataAttributes, ['/eVitals.26']);
 

@@ -1,5 +1,6 @@
 <shared-command-header>
   <a class="command-header__plain" (click)="onDone()">Done</a>
+  <a class="command-header__plain" [download]="reportId + '.xml'" [href]="'/api/reports/' + reportId + '/preview'">Export</a>
 </shared-command-header>
 <main>
   <form *ngIf="report" class="report">

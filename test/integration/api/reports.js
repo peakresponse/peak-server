@@ -671,5 +671,17 @@ describe('/api/reports', () => {
         );
       });
     });
+
+    describe('GET /:id/preview', () => {
+      it('returns the NEMSIS XML EMSDataSet export of the Report', async () => {
+        const response = await testSession
+          .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed/preview`)
+          .set('Host', `bmacc.${process.env.BASE_HOST}`);
+        assert.deepStrictEqual(response.statusCode, HttpStatus.MOVED_TEMPORARILY);
+        const record = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+        const current = await record.getCurrent();
+        assert.deepStrictEqual(response.headers.location, `/api/assets/reports/${current.id}/ems-data-set-file/${current.emsDataSetFile}`);
+      });
+    });
   });
 });

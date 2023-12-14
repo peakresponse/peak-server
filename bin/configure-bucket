@@ -2,7 +2,6 @@
 
 /* eslint-disable no-console */
 
-const AWS = require('aws-sdk');
 require('dotenv').config();
 
 if (process.argv.length < 4) {
@@ -12,17 +11,7 @@ if (process.argv.length < 4) {
 
 const [, , scheme, ...domains] = process.argv;
 
-const s3options = {};
-if (process.env.AWS_ACCESS_KEY_ID) {
-  s3options.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-}
-if (process.env.AWS_SECRET_ACCESS_KEY) {
-  s3options.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-}
-if (process.env.AWS_S3_BUCKET_REGION) {
-  s3options.region = process.env.AWS_S3_BUCKET_REGION;
-}
-const s3 = new AWS.S3(s3options);
+const s3 = require('../lib/aws/s3');
 
 async function configure() {
   const origins = [];
@@ -30,39 +19,33 @@ async function configure() {
     origins.push(`${scheme}://${domain}`);
     origins.push(`${scheme}://*.${domain}`);
   }
-  await s3
-    .putBucketCors({
-      Bucket: process.env.AWS_S3_BUCKET,
-      CORSConfiguration: {
-        CORSRules: [
-          {
-            AllowedMethods: ['PUT', 'GET'],
-            AllowedOrigins: origins,
-            AllowedHeaders: ['*'],
+  await s3.putBucketCors({
+    CORSConfiguration: {
+      CORSRules: [
+        {
+          AllowedMethods: ['PUT', 'GET'],
+          AllowedOrigins: origins,
+          AllowedHeaders: ['*'],
+        },
+      ],
+    },
+  });
+  await s3.putBucketLifecycleConfiguration({
+    LifecycleConfiguration: {
+      Rules: [
+        {
+          Expiration: {
+            Days: 1,
           },
-        ],
-      },
-    })
-    .promise();
-  await s3
-    .putBucketLifecycleConfiguration({
-      Bucket: process.env.AWS_S3_BUCKET,
-      LifecycleConfiguration: {
-        Rules: [
-          {
-            Expiration: {
-              Days: 1,
-            },
-            Filter: {
-              Prefix: 'uploads/',
-            },
-            ID: 'DeleteOrphanedUploads',
-            Status: 'Enabled',
+          Filter: {
+            Prefix: 'uploads/',
           },
-        ],
-      },
-    })
-    .promise();
+          ID: 'DeleteOrphanedUploads',
+          Status: 'Enabled',
+        },
+      ],
+    },
+  });
 }
 
 configure().then(() => {

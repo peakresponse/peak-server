@@ -1,7 +1,10 @@
 const assert = require('assert');
+const fs = require('fs/promises');
+const path = require('path');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const pkg = require('../../../package.json');
 
 describe('models', () => {
   describe('Report', () => {
@@ -131,7 +134,6 @@ describe('models', () => {
         assert.deepStrictEqual(record.parentId, null);
         assert.deepStrictEqual(record.canonicalId, data.canonicalId);
         assert.deepStrictEqual(record.data, data.data);
-        assert(record.isValid);
         assert.deepStrictEqual(record.updatedAttributes, [
           'id',
           'canonicalId',
@@ -326,6 +328,51 @@ describe('models', () => {
           Time: [report.time.toJSON()],
           Vital: report.vitals.map((m) => m.toJSON()),
         });
+      });
+    });
+
+    describe('nemsisValidate()', () => {
+      it('validates the NEMSIS EMS DataSet XML', async () => {
+        const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+        await report.regenerate();
+        await report.nemsisValidate();
+        // canonical record runs the regeneration and validation on the current instance
+        const current = await report.getCurrent();
+        assert.deepStrictEqual(current.isValid, true);
+      });
+    });
+
+    describe('regenerate()', () => {
+      it('generates NEMSIS EMS DataSet XML', async () => {
+        const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+        // attach a fixture to the File referenced by this report
+        const tmpFile = await helpers.uploadFile('512x512.png');
+        const file = await models.File.findByPk('8e693fb6-7f2a-4cc8-9d5f-d8eb5915bb60');
+        await file.update({ file: tmpFile });
+        assert(await helpers.assetPathExists(path.join('files', file.id, 'file', tmpFile)));
+        // regenerate the report ems data set xml
+        await report.regenerate();
+        // since this is the canonical record, it will regenerate the "current" version
+        const current = await report.getCurrent();
+        // assert that the emsDataSet field exists, without inserted files for efficiency in handling/validation
+        let compare;
+        compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.before.xml'));
+        compare = compare.toString();
+        compare = compare.replace('<eRecord.04></eRecord.04>', `<eRecord.04>${pkg.version}</eRecord.04>`);
+        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${tmpFile}</eOther.22>`);
+        assert.deepStrictEqual(current.emsDataSet, compare);
+        // assert that the full xml attachment exists with inserted file
+        assert(current.emsDataSetFile);
+        assert(await helpers.assetPathExists(path.join('reports', current.id, 'ems-data-set-file', current.emsDataSetFile)));
+        const downloadedFilePath = await current.downloadAssetFile('emsDataSetFile');
+        const test = await fs.readFile(downloadedFilePath);
+        compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.after.xml'));
+        compare = compare.toString();
+        compare = compare.replace('<eRecord.04></eRecord.04>', `<eRecord.04>${pkg.version}</eRecord.04>`);
+        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${tmpFile}</eOther.22>`);
+        assert.deepStrictEqual(test.toString(), compare);
+        await helpers.cleanUploadedAssets();
+        await fs.unlink(downloadedFilePath);
       });
     });
   });

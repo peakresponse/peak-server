@@ -11,9 +11,9 @@ export class UserGuard implements CanActivate, CanActivateChild {
   constructor(private router: Router, private user: UserService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    return this.user.attributes$.pipe(
-      switchMap((user: any) => {
-        if (!user.currentAssignment) {
+    return this.user.assignment$.pipe(
+      switchMap((assignment: any) => {
+        if (!assignment) {
           return of(this.router.parseUrl('/assignments'));
         }
         // if (user.activeScenes?.length > 0) {

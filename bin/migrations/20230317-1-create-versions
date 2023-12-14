@@ -66,29 +66,33 @@ async function createVersions() {
         let emsSchematronIds;
         if (agency.stateId === '06') {
           if (!caDataSet) {
-            caDataSet = await models.NemsisStateDataSet.create(
-              {
+            caDataSet = await models.NemsisStateDataSet.findOrCreate({
+              where: {
                 stateId: '06',
-                nemsisVersion: '3.5.0.211008CP3',
                 version: '2023-02-15-c07d8f9168fa7ef218657360f7efe6f464bc9632',
+              },
+              defaults: {
+                nemsisVersion: '3.5.0.211008CP3',
                 createdById: agency.createdById,
                 updatedById: agency.updatedById,
               },
-              { transaction }
-            );
+              transaction,
+            });
           }
           if (!caSchematron) {
-            caSchematron = await models.NemsisSchematron.create(
-              {
+            caSchematron = await models.NemsisSchematron.findOrCreate({
+              where: {
                 stateId: '06',
+                version: '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4',
+              },
+              defaults: {
                 dataSet: 'EMSDataSet',
                 nemsisVersion: '3.5.0.211008CP3',
-                version: '2023-02-17-5d0e21eff095d115b7e58e3fc7c39a040a2a00b4',
                 createdById: agency.createdById,
                 updatedById: agency.updatedById,
               },
-              { transaction }
-            );
+              transaction,
+            });
           }
           emsSchematronIds = [caSchematron.id];
           await agency.update(
@@ -100,29 +104,33 @@ async function createVersions() {
           );
         } else if (agency.stateId === '53') {
           if (!waDataSet) {
-            waDataSet = await models.NemsisStateDataSet.create(
-              {
+            waDataSet = await models.NemsisStateDataSet.findOrCreate({
+              where: {
                 stateId: '53',
-                nemsisVersion: '3.5.0.191130CP1',
                 version: '2022-11-14-a3125654bf5bfd4feee0363731000ff1a430aef8',
+              },
+              defaults: {
+                nemsisVersion: '3.5.0.191130CP1',
                 createdById: agency.createdById,
                 updatedById: agency.updatedById,
               },
-              { transaction }
-            );
+              transaction,
+            });
           }
           if (!waSchematron) {
-            waSchematron = await models.NemsisSchematron.create(
-              {
+            waSchematron = await models.NemsisSchematron.findOrCreate({
+              where: {
                 stateId: '53',
+                version: '2023-01-25-42a113f2aee3d9072816f32e22ae6f35b250514e',
+              },
+              defaults: {
                 dataSet: 'EMSDataSet',
                 nemsisVersion: '3.5.0.191130CP1',
-                version: '2023-01-25-42a113f2aee3d9072816f32e22ae6f35b250514e',
                 createdById: agency.createdById,
                 updatedById: agency.updatedById,
               },
-              { transaction }
-            );
+              transaction,
+            });
           }
           emsSchematronIds = [waSchematron.id];
           await agency.update(
@@ -132,6 +140,8 @@ async function createVersions() {
             },
             { transaction }
           );
+        } else {
+          continue;
         }
         const version = await models.Version.create(
           {

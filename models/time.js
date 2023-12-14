@@ -2,6 +2,14 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Time extends Base {
+    static get xsdPath() {
+      return 'eTimes_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eTimes';
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -50,10 +58,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
-
-  Time.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eTimes_v3.xsd', 'eTimes', null, options);
-  });
 
   return Time;
 };

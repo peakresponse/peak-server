@@ -4,6 +4,7 @@
   max-width: 750px;
   margin: 0 auto;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .reports__report {
@@ -33,6 +34,7 @@
       }
     }
     hr {
+      border: 0;
       height: 0;
       margin: 0;
       padding: 0;

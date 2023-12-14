@@ -4,6 +4,18 @@ const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
   class Signature extends Base {
+    static get xsdPath() {
+      return 'eOther_v3.xsd';
+    }
+
+    static get rootTag() {
+      return 'eOther';
+    }
+
+    static get groupTag() {
+      return 'eOther.SignatureGroup';
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -90,10 +102,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
-
-  Signature.beforeSave(async (record, options) => {
-    await record.validateNemsisData('eOther_v3.xsd', 'eOther', 'eOther.SignatureGroup', options);
-  });
 
   Signature.afterSave(async (signature, options) => {
     if (!signature.canonicalId) {

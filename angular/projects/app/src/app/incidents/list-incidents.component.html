@@ -2,6 +2,7 @@
 <shared-command-header
   [class.d-none]="route.firstChild"
   [user]="user.attributes$ | async"
+  [vehicle]="user.vehicle$ | async"
   [showSearch]="true"
   (searchValueChange)="search = $event"
 >
@@ -14,7 +15,7 @@
     </li>
   </ng-template>
   <ul class="nav">
-    <li *ngIf="user.currentAssignment?.vehicleId" class="nav__item">
+    <li *ngIf="user.assignment$ | async" class="nav__item">
       <a class="nav__link" [class.nav__link--active]="filter == 'mine'" routerLink="/incidents" fragment="mine">My Dispatches</a>
     </li>
     <li class="nav__item">

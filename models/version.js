@@ -67,14 +67,16 @@ module.exports = (sequelize, DataTypes) => {
         order: [['customElementId', 'ASC']],
         transaction,
       });
-      records = records
-        .map((r) => {
-          if (r.draft) {
-            return r.draft.archivedAt ? null : r.draft.getData(this);
-          }
-          return r.getData(this);
-        })
-        .filter(Boolean);
+      records = await Promise.all(
+        records
+          .map((r) => {
+            if (r.draft) {
+              return r.draft.archivedAt ? null : r.draft.getData(this);
+            }
+            return r.getData(this);
+          })
+          .filter(Boolean)
+      );
       return this.update({ demCustomConfiguration: records }, { transaction });
     }
 
@@ -105,7 +107,7 @@ module.exports = (sequelize, DataTypes) => {
         _attributes: {
           timeStamp: DateTime.now().toISO(),
         },
-        dAgency: (agency.draft ?? agency).getData(this),
+        dAgency: await (agency.draft ?? agency).getData(this),
       };
       const dCustomResults = {
         'dCustomResults.ResultsGroup': [],
@@ -125,24 +127,27 @@ module.exports = (sequelize, DataTypes) => {
         }
         // eslint-disable-next-line no-await-in-loop
         let records = await sequelize.models[modelName].scope('finalOrNew').findAll(queryOptions);
-        records = records
-          .map((r) => {
-            if (r.draft) {
-              if (r.draft.data.CustomResults) {
+        // eslint-disable-next-line no-await-in-loop
+        records = await Promise.all(
+          records
+            .map((r) => {
+              if (r.draft) {
+                if (r.draft.data.CustomResults) {
+                  dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
+                    r.draft.data.CustomResults['dCustomResults.ResultsGroup']
+                  );
+                }
+                return r.draft.archivedAt ? null : r.draft.getData(this);
+              }
+              if (r.data.CustomResults) {
                 dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
-                  r.draft.data.CustomResults['dCustomResults.ResultsGroup']
+                  r.data.CustomResults['dCustomResults.ResultsGroup']
                 );
               }
-              return r.draft.archivedAt ? null : r.draft.getData(this);
-            }
-            if (r.data.CustomResults) {
-              dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
-                r.data.CustomResults['dCustomResults.ResultsGroup']
-              );
-            }
-            return r.getData(this);
-          })
-          .filter(Boolean);
+              return r.getData(this);
+            })
+            .filter(Boolean)
+        );
         if (modelName === 'Facility') {
           const newRecords = [];
           let prevRecord;
