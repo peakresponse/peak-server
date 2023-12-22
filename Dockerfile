@@ -1,5 +1,5 @@
 # Start with the latest Node.js LTS release
-FROM node:14.19.1-bullseye
+FROM node:14.21.3-bullseye
 
 # Support for multi-architecture builds
 ARG TARGETARCH
