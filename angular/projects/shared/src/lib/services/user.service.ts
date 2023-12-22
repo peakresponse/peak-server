@@ -8,7 +8,7 @@ import { ApiService } from './api.service';
 import { remove } from 'lodash';
 
 @Injectable()
-export class UserService  {
+export class UserService {
   private user: any = null;
   private userSubject = new ReplaySubject<any>(1);
   get attributes$(): Observable<any> {

@@ -8,7 +8,7 @@ import { catchError, mergeMap } from 'rxjs/operators';
 import { ApiService } from 'shared';
 
 @Injectable()
-export class StateResolver  {
+export class StateResolver {
   private state: any = null;
 
   constructor(private api: ApiService) {}

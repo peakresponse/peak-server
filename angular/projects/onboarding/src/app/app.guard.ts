@@ -12,7 +12,7 @@ import { AppService } from './app.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AppGuard  {
+export class AppGuard {
   constructor(private api: ApiService, private app: AppService, private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {

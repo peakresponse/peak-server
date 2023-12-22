@@ -8,7 +8,7 @@ import { catchError, mergeMap } from 'rxjs/operators';
 import { ApiService } from './api.service';
 
 @Injectable()
-export class AgencyService  {
+export class AgencyService {
   private agency: any = null;
 
   constructor(private api: ApiService) {}
