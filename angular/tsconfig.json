@@ -15,11 +15,18 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
-      "shared": ["dist/shared/shared", "dist/shared"]
+      "shared": [
+        "dist/shared/shared",
+        "dist/shared"
+      ]
     },
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
-    "lib": ["es2018", "dom"]
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
