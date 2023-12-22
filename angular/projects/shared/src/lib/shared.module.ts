@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { SortablejsModule } from 'ngx-sortablejs';
+import { SortablejsModule } from '@talentia/ngx-sortablejs';
 
 import { DropzoneComponent } from './components/dropzone.component';
 import { ErrorComponent } from './components/error.component';

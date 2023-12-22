@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 import { Observable, of, EMPTY, ReplaySubject } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { ApiService } from './api.service';
 import { remove } from 'lodash';
 
 @Injectable()
-export class UserService implements Resolve<any> {
+export class UserService  {
   private user: any = null;
   private userSubject = new ReplaySubject<any>(1);
   get attributes$(): Observable<any> {
