@@ -9,9 +9,10 @@ const router = express.Router();
 
 /* GET the login form */
 router.get('/', (req, res) => {
-  req.logout();
-  res.render('login/new', {
-    redirectURI: req.query.redirectURI,
+  req.logout(() => {
+    res.render('login/new', {
+      redirectURI: req.query.redirectURI,
+    });
   });
 });
 

@@ -44,9 +44,10 @@ router.get('/terms', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('info', 'You have been logged out.');
-  res.redirect('/');
+  req.logout(() => {
+    req.flash('info', 'You have been logged out.');
+    res.redirect('/');
+  });
 });
 
 if (process.env.MARKETING_ENABLED === 'true') {
