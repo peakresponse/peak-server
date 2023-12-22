@@ -2,3 +2,5 @@ webpack-stats.json
 dist
 /nemsis
 /nginx/letsencrypt
+/angular/.angular
+/angular/projects/design/src/icons.font.js.css
