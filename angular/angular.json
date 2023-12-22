@@ -514,5 +514,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
