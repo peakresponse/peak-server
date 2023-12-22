@@ -39,7 +39,7 @@ app.set('trust proxy', 1);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/angular', express.static(path.join(__dirname, 'angular/dist')));
-app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+app.use('/libraries/bootstrap', express.static(path.join(__dirname, 'angular/node_modules/bootstrap/dist')));
 app.use('/libraries/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 app.use('/libraries/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 app.use('/libraries/smoothscroll', express.static(path.join(__dirname, 'node_modules/smoothscroll-polyfill/dist')));
