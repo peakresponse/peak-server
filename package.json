@@ -160,20 +160,20 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "eslint": "^7.9.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-mocha": "^8.0.0",
-    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-mocha": "^10.2.0",
+    "eslint-plugin-prettier": "^5.1.1",
     "foreman": "^3.0.1",
     "mocha": "^10.2.0",
-    "nock": "^12.0.3",
-    "nodemailer-mock": "^1.5.1",
+    "nock": "^13.4.0",
+    "nodemailer-mock": "^2.0.3",
     "nodemon": "^3.0.2",
-    "prettier": "^2.1.2",
+    "prettier": "^3.1.1",
     "supertest": "^6.3.3",
     "supertest-session": "^5.0.1",
-    "superwstest": "^2.0.2"
+    "superwstest": "^2.0.3"
   }
 }
