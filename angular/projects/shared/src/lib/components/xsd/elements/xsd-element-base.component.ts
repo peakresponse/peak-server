@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import * as inflection from 'inflection';
-import { cloneDeep, filter, find, isEmpty } from 'lodash';
+import { cloneDeep, filter, find, isEmpty } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
 import { ApiService } from '../../../services/api.service';

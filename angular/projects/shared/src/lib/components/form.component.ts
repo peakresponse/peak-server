@@ -1,7 +1,7 @@
 import { Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

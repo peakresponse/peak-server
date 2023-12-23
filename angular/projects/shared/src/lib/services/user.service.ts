@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-
+import { remove } from 'lodash-es';
 import { Observable, of, EMPTY, ReplaySubject } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 import { ApiService } from './api.service';
-import { remove } from 'lodash';
 
 @Injectable()
 export class UserService {

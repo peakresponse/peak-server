@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/htt
 import { Component, ContentChild, Input, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
 
-import { assign, clone, get, remove } from 'lodash';
+import { assign, clone, get, remove } from 'lodash-es';
 import { EMPTY, Subscription } from 'rxjs';
 import { catchError, filter } from 'rxjs/operators';
 

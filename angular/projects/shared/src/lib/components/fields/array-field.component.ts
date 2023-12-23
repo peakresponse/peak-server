@@ -1,6 +1,6 @@
 import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
-import { assign } from 'lodash';
+import { assign } from 'lodash-es';
 
 import { BaseFieldComponent } from './base-field.component';
 

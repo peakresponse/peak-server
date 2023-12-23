@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { assign } from 'lodash';
+import { assign } from 'lodash-es';
 
 import { AgencyService, ApiService, ModalComponent, NotificationService, XsdListComponent } from 'shared';
 

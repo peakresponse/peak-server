@@ -2,7 +2,7 @@ import { Component, ContentChild, ElementRef, Input, SimpleChanges, TemplateRef,
 import { HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 
-import { assign, clone, get, remove } from 'lodash';
+import { assign, clone, get, remove } from 'lodash-es';
 import { Subscription, EMPTY } from 'rxjs';
 import { catchError, filter } from 'rxjs/operators';
 

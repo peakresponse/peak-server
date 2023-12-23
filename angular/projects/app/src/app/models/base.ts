@@ -1,5 +1,5 @@
 import { capitalize, singularize } from 'inflection';
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 
 export class NemsisValue {
   private data: any;

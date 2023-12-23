@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, ContentChild, Input, OnDestroy, TemplateRef } from '@angular/core';
 import { EMPTY, Subscription } from 'rxjs';
 
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, get } from 'lodash-es';
 
 import { XsdBaseComponent } from './xsd-base.component';
 import { catchError } from 'rxjs/operators';
