@@ -101,7 +101,7 @@
     "@aws-sdk/s3-request-presigner": "^3.478.0",
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@googlemaps/google-maps-services-js": "^3.3.42",
-    "@node-oauth/oauth2-server": "^4.3.0",
+    "@node-oauth/oauth2-server": "^5.1.0",
     "ajv": "^6.12.6",
     "ajv-cli": "^3.1.0",
     "aws-sdk": "^2.1524.0",
