@@ -5,7 +5,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.font\.js\.css/,
+        test: /\.font\.js/,
         use: [
           MiniCssExtractPlugin.loader,
           {
