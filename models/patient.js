@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const seedrandom = require('seedrandom');
 
 const { Base } = require('./base');
 
@@ -42,15 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       Patient.belongsTo(models.Facility, { as: 'transportFacility' });
 
       Patient.hasMany(Patient, { as: 'versions', foreignKey: 'canonicalId' });
-    }
-
-    static generatePIN(seed) {
-      const rng = seedrandom(seed);
-      let pin = '';
-      for (let i = 0; i < 6; i += 1) {
-        pin += Math.floor(rng() * 10);
-      }
-      return pin;
     }
 
     static async createOrUpdate(user, agency, data, options) {
