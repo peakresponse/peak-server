@@ -1,7 +1,7 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.transaction((transaction) => {
-      return queryInterface
+  up: (queryInterface, Sequelize) =>
+    queryInterface.sequelize.transaction((transaction) =>
+      queryInterface
         .createTable(
           'observations',
           {
@@ -124,16 +124,13 @@ module.exports = {
           },
           { transaction },
         )
-        .then(() => {
-          return queryInterface.addIndex('observations', {
+        .then(() =>
+          queryInterface.addIndex('observations', {
             fields: ['patient_id', 'version'],
             unique: true,
             transaction,
-          });
-        });
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('observations');
-  },
+          }),
+        ),
+    ),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('observations'),
 };

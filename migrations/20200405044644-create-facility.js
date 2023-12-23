@@ -1,7 +1,7 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.transaction((transaction) => {
-      return queryInterface
+  up: (queryInterface, Sequelize) =>
+    queryInterface.sequelize.transaction((transaction) =>
+      queryInterface
         .createTable(
           'facilities',
           {
@@ -70,22 +70,19 @@ module.exports = {
           },
           { transaction },
         )
-        .then(() => {
-          return queryInterface.addIndex('facilities', {
+        .then(() =>
+          queryInterface.addIndex('facilities', {
             fields: ['state_code', 'code'],
             unique: true,
             transaction,
-          });
-        })
-        .then(() => {
-          return queryInterface.addIndex('facilities', {
+          }),
+        )
+        .then(() =>
+          queryInterface.addIndex('facilities', {
             fields: ['agency_id'],
             transaction,
-          });
-        });
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('facilities');
-  },
+          }),
+        ),
+    ),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('facilities'),
 };

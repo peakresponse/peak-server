@@ -21,9 +21,7 @@ const s3 = require('../lib/aws/s3');
 
 function loadFixtures(files) {
   const filePaths = files.map((f) => path.resolve(__dirname, `fixtures/${f}.json`));
-  return models.sequelize.transaction((transaction) => {
-    return fixtures.loadFiles(filePaths, models, { transaction });
-  });
+  return models.sequelize.transaction((transaction) => fixtures.loadFiles(filePaths, models, { transaction }));
 }
 
 function recordNetworkRequests() {
@@ -117,7 +115,9 @@ async function resetDatabase() {
 }
 
 function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 }
 
 beforeEach(async () => {

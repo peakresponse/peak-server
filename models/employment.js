@@ -317,13 +317,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Employment.addScope('role', (role) => {
-    return {
-      where: {
-        [Op.or]: [{ isOwner: true }, { roles: { [Op.contains]: [role] } }],
-      },
-    };
-  });
+  Employment.addScope('role', (role) => ({
+    where: {
+      [Op.or]: [{ isOwner: true }, { roles: { [Op.contains]: [role] } }],
+    },
+  }));
 
   Employment.beforeValidate(async (record, options) => {
     record.syncNemsisId(options);

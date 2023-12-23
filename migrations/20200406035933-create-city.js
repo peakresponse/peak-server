@@ -1,7 +1,7 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.transaction((transaction) => {
-      return queryInterface
+  up: (queryInterface, Sequelize) =>
+    queryInterface.sequelize.transaction((transaction) =>
+      queryInterface
         .createTable(
           'cities',
           {
@@ -71,16 +71,13 @@ module.exports = {
           },
           { transaction },
         )
-        .then(() => {
-          return queryInterface.addIndex('cities', {
+        .then(() =>
+          queryInterface.addIndex('cities', {
             fields: ['feature_id'],
             unique: true,
             transaction,
-          });
-        });
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('cities');
-  },
+          }),
+        ),
+    ),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('cities'),
 };

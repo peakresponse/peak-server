@@ -1,7 +1,7 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.transaction((transaction) => {
-      return queryInterface
+  up: (queryInterface, Sequelize) =>
+    queryInterface.sequelize.transaction((transaction) =>
+      queryInterface
         .createTable(
           'destinations',
           {
@@ -49,17 +49,14 @@ module.exports = {
           },
           { transaction },
         )
-        .then(() => {
-          return queryInterface.addIndex('destinations', {
+        .then(() =>
+          queryInterface.addIndex('destinations', {
             fields: [Sequelize.fn('lower', Sequelize.col('name'))],
             unique: true,
             name: 'destinations_name_idx',
             transaction,
-          });
-        });
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('destinations');
-  },
+          }),
+        ),
+    ),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('destinations'),
 };

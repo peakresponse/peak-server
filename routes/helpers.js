@@ -74,13 +74,11 @@ function register(req, res, next) {
 
   res.locals.inflection = inflection;
 
-  const hasError = (name) => {
-    return _.find(res.locals.errors, (e) => e.path === name) !== undefined;
-  };
+  const hasError = (name) => _.find(res.locals.errors, (e) => e.path === name) !== undefined;
   res.locals.hasError = hasError;
 
-  const errorMessages = (name) => {
-    return _.uniq(
+  const errorMessages = (name) =>
+    _.uniq(
       _.compact(
         _.map(
           _.filter(res.locals.errors, (e) => e.path === name),
@@ -88,7 +86,6 @@ function register(req, res, next) {
         ),
       ),
     );
-  };
   res.locals.errorMessages = errorMessages;
 
   res.locals.renderErrorMessages = (name, classes) => {

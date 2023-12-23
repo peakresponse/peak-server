@@ -193,7 +193,5 @@ module.exports = {
       });
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('scene_observations');
-  },
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('scene_observations'),
 };

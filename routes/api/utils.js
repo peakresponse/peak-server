@@ -20,7 +20,8 @@ router.get(
     if (data.status === 'OK') {
       const { results } = data;
       data = {};
-      for (const result of results) {
+      if (results.length) {
+        const result = results[0];
         result.address_components.reverse();
         /* eslint-disable no-await-in-loop */
         for (const addressComponent of result.address_components) {
@@ -45,7 +46,6 @@ router.get(
           }
         }
         /* eslint-enable no-await-in-loop */
-        break;
       }
       res.json(data);
     } else {

@@ -1,6 +1,6 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize
+  up: (queryInterface, Sequelize) =>
+    queryInterface.sequelize
       .query('CREATE EXTENSION IF NOT EXISTS "pgcrypto";')
       .then(() =>
         queryInterface.createTable('users', {
@@ -49,9 +49,6 @@ module.exports = {
           unique: true,
           name: 'users_email_idx',
         }),
-      );
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
-  },
+      ),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('users'),
 };
