@@ -1,7 +1,6 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
 const moment = require('moment');
 const { URLSearchParams } = require('url');

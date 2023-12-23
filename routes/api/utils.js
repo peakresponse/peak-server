@@ -1,5 +1,4 @@
 const express = require('express');
-const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
 
 const models = require('../../models');

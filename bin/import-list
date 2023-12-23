@@ -15,7 +15,6 @@
  */
 
 /* eslint-disable no-console, no-await-in-loop */
-const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
