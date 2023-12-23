@@ -1,15 +1,22 @@
-const nock = require('nock');
+const fs = require('fs');
 const path = require('path');
-
-// Uncomment line below to record external HTTP calls
-// nock.recorder.rec();
+const { MockAgent, setGlobalDispatcher } = require('undici');
 
 function mockDownloads(filePaths) {
+  const agent = new MockAgent();
+  agent.disableNetConnect();
+
+  const client = agent.get('https://geonames.usgs.gov');
   for (const filePath of filePaths) {
-    nock('https://geonames.usgs.gov', { encodedQueryParams: true })
-      .get(`/docs/federalcodes/${filePath}`)
-      .replyWithFile(200, path.resolve(__dirname, 'geonames', filePath));
+    client
+      .intercept({
+        path: `/docs/federalcodes/${filePath}`,
+        method: 'GET',
+      })
+      .reply(200, fs.readFileSync(path.resolve(__dirname, 'geonames', filePath)));
   }
+
+  setGlobalDispatcher(agent);
 }
 
 function mockWashingtonDownloads() {

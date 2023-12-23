@@ -3,7 +3,7 @@ const sequelizePaginate = require('sequelize-paginate');
 const LineReader = require('line-by-line');
 const _ = require('lodash');
 const path = require('path');
-const tmp = require('tmp');
+const tmp = require('tmp-promise');
 
 const { download, unzip } = require('../lib/utils');
 
@@ -84,15 +84,15 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async importCitiesForState(stateId) {
-      const tmpDir = tmp.dirSync();
+      const tmpDir = await tmp.dir({ unsafeCleanup: true });
       try {
         const stateAbbr = sequelize.models.State.getAbbrForCode(stateId);
-        const cityPath = path.resolve(tmpDir.name, `${stateAbbr}.zip`);
+        const cityPath = path.resolve(tmpDir.path, `${stateAbbr}.zip`);
         await download(`https://geonames.usgs.gov/docs/federalcodes/${stateAbbr}_FedCodes.zip`, cityPath);
         const unzippedPath = await unzip(cityPath, tmpDir);
         await City.parseCities(unzippedPath);
       } finally {
-        tmpDir.removeCallback();
+        await tmpDir.cleanup();
       }
     }
 
