@@ -44,11 +44,11 @@ router.get(
     payload.Incident = docs.map((i) => i.toJSON());
     payload.Scene = _.uniqBy(
       docs.map((i) => i.scene.toJSON()),
-      (s) => s.id
+      (s) => s.id,
     );
     payload.State = _.uniqBy(docs.map((i) => i.scene.state).filter(Boolean), (s) => s.id).map((s) => s.toJSON());
     res.json(payload);
-  })
+  }),
 );
 
 router.get(
@@ -82,7 +82,7 @@ router.get(
       payload.State = incident.scene.state.toJSON();
     });
     res.json(payload);
-  })
+  }),
 );
 
 module.exports = router;

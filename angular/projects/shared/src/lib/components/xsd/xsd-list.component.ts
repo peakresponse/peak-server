@@ -78,7 +78,7 @@ export class XsdListComponent extends XsdBaseComponent implements OnDestroy {
             this.data = records;
           }
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         let found = false;

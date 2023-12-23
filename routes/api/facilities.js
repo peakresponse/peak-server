@@ -38,7 +38,7 @@ router.get(
     }
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((d) => d.toJSON()));
-  })
+  }),
 );
 
 router.post(
@@ -59,7 +59,7 @@ router.post(
       results = results.concat(facilities.map((f) => f.toJSON()));
     }
     res.json(results);
-  })
+  }),
 );
 
 router.get(
@@ -72,7 +72,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.post(
@@ -87,7 +87,7 @@ router.post(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

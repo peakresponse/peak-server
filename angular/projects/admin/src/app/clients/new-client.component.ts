@@ -10,7 +10,11 @@ export class NewClientComponent {
   @ViewChild('showSecret') showSecret?: ModalComponent;
   client: any;
 
-  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {}
 
   onCreate(client: any) {
     this.client = client;

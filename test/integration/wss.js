@@ -108,9 +108,9 @@ describe('wss', () => {
                   responders
                     .map((r) => r.vehicle)
                     .filter((v) => v)
-                    .map((v) => v.toJSON())
-                )
-              )
+                    .map((v) => v.toJSON()),
+                ),
+              ),
             );
             assert.deepStrictEqual(actual.City, JSON.parse(JSON.stringify(scene.city.toJSON())));
             assert.deepStrictEqual(actual.Incident, JSON.parse(JSON.stringify(scene.incident.toJSON())));
@@ -169,7 +169,7 @@ describe('wss', () => {
             assert.deepStrictEqual(actual.City, JSON.parse(JSON.stringify([incident.scene.city.toJSON()])));
             assert.deepStrictEqual(
               actual.Dispatch.sort((a, b) => a.id.localeCompare(b.id)),
-              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.toJSON()))).sort((a, b) => a.id.localeCompare(b.id))
+              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.toJSON()))).sort((a, b) => a.id.localeCompare(b.id)),
             );
             assert.deepStrictEqual(actual.Incident, JSON.parse(JSON.stringify([incident.toJSON()])));
             assert.deepStrictEqual(actual.Scene, JSON.parse(JSON.stringify([incident.scene.toJSON()])));
@@ -177,8 +177,8 @@ describe('wss', () => {
             assert.deepStrictEqual(
               actual.Vehicle.sort((a, b) => a.callSign.localeCompare(b.callSign)),
               JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))).sort((a, b) =>
-                a.callSign.localeCompare(b.callSign)
-              )
+                a.callSign.localeCompare(b.callSign),
+              ),
             );
           })
           .close()
@@ -217,14 +217,14 @@ describe('wss', () => {
             assert.deepStrictEqual(actual.City, JSON.parse(JSON.stringify([incident.scene.city.toJSON()])));
             assert.deepStrictEqual(
               actual.Dispatch.sort((a, b) => a.id.localeCompare(b.id)),
-              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.toJSON()))).sort((a, b) => a.id.localeCompare(b.id))
+              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.toJSON()))).sort((a, b) => a.id.localeCompare(b.id)),
             );
             assert.deepStrictEqual(actual.Incident, JSON.parse(JSON.stringify([incident.toJSON()])));
             assert.deepStrictEqual(actual.Scene, JSON.parse(JSON.stringify([incident.scene.toJSON()])));
             assert.deepStrictEqual(actual.State, JSON.parse(JSON.stringify([incident.scene.state.toJSON()])));
             assert.deepStrictEqual(
               actual.Vehicle.sort((a, b) => a.id.localeCompare(b.id)),
-              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))).sort((a, b) => a.id.localeCompare(b.id))
+              JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))).sort((a, b) => a.id.localeCompare(b.id)),
             );
           })
           .close()

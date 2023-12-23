@@ -100,7 +100,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Signature',
       tableName: 'signatures',
       underscored: true,
-    }
+    },
   );
 
   Signature.afterSave(async (signature, options) => {

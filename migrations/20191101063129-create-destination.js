@@ -47,7 +47,7 @@ module.exports = {
               },
             },
           },
-          { transaction }
+          { transaction },
         )
         .then(() => {
           return queryInterface.addIndex('destinations', {

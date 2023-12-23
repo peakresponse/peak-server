@@ -102,7 +102,7 @@ if (process.env.MARKETING_ENABLED === 'true') {
         },
       });
       res.status(HttpStatus.NO_CONTENT).end();
-    })
+    }),
   );
 }
 

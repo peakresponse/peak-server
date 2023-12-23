@@ -85,7 +85,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Procedure',
       tableName: 'procedures',
       underscored: true,
-    }
+    },
   );
 
   return Procedure;

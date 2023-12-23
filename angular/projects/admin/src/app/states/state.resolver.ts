@@ -30,7 +30,7 @@ export class StateResolver {
       mergeMap((response: HttpResponse<any>) => {
         this.state = response.body;
         return of(this.state);
-      })
+      }),
     );
   }
 }

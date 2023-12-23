@@ -21,7 +21,7 @@ router.get(
       ],
     });
     res.json(records.map((r) => r.toJSON()));
-  })
+  }),
 );
 
 module.exports = router;

@@ -17,7 +17,10 @@ export class LoginComponent {
   error: any = null;
   isLoading = false;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private route: ActivatedRoute,
+  ) {}
 
   get isValid(): boolean {
     return this.data.email && this.data.password ? true : false;
@@ -44,7 +47,7 @@ export class LoginComponent {
             ],
           };
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: any) => {
         const redirectURI = this.route.snapshot.queryParamMap.get('redirectURI') || '/';

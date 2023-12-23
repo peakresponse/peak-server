@@ -110,7 +110,7 @@ module.exports = (sequelize, DataTypes) => {
           model: Incident,
           mapToModel: true,
           transaction: options?.transaction,
-        }
+        },
       );
       const [{ count }] = await sequelize.query(
         `SELECT COUNT(DISTINCT(incidents.id)) FROM incidents ${joins}
@@ -124,7 +124,7 @@ module.exports = (sequelize, DataTypes) => {
           },
           type: sequelize.QueryTypes.SELECT,
           transaction: options?.transaction,
-        }
+        },
       );
       const total = parseInt(count, 10);
       const pages = Math.round(total / limit) + 1;
@@ -228,7 +228,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Incident',
       tableName: 'incidents',
       underscored: true,
-    }
+    },
   );
 
   Incident.addScope('agency', (agencyId) => ({

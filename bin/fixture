@@ -11,14 +11,14 @@ config[process.env.NODE_ENV || 'development'].logging = false;
 const models = require('../models');
 const Op = models.Sequelize.Op;
 
-let [,,model,where] = process.argv;
+let [, , model, where] = process.argv;
 where = eval(`(${where})`);
 
 async function fixture(model, where) {
   const fixtures = [];
-  for (let obj of await models[model].findAll({where})) {
+  for (let obj of await models[model].findAll({ where })) {
     process.stdout.write('.');
-    fixtures.push({model, data: obj.toJSON()});
+    fixtures.push({ model, data: obj.toJSON() });
   }
   console.log('\n');
   fs.writeFileSync(path.resolve(__dirname, '../test/fixtures', `${model.toLowerCase()}.json`), JSON.stringify(fixtures));

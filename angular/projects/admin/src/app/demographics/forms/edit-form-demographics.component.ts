@@ -12,7 +12,11 @@ export class EditFormDemographicsComponent {
   id: string = '';
   @ViewChild('form') form?: FormComponent;
 
-  constructor(private navigation: NavigationService, private notification: NotificationService, private route: ActivatedRoute) {}
+  constructor(
+    private navigation: NavigationService,
+    private notification: NotificationService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

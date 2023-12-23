@@ -134,7 +134,7 @@ module.exports = (sequelize, DataTypes) => {
           createdById: user.id,
           updatedById: user.id,
         },
-        { transaction }
+        { transaction },
       );
       await version.regenerate({ transaction });
       await agency.update({ versionId: version.id }, { transaction });
@@ -188,7 +188,7 @@ module.exports = (sequelize, DataTypes) => {
             createdById: user.id,
             updatedById: user.id,
           },
-          { transaction: options?.transaction }
+          { transaction: options?.transaction },
         );
       }
       return version;
@@ -244,7 +244,7 @@ module.exports = (sequelize, DataTypes) => {
               createdById: user.id,
               updatedById: user.id,
             },
-            { transaction }
+            { transaction },
           );
         }
       });
@@ -286,7 +286,7 @@ module.exports = (sequelize, DataTypes) => {
               createdById: user.id,
               updatedById: user.id,
             },
-            { transaction }
+            { transaction },
           );
         }
         records.push(record);
@@ -424,7 +424,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Agency',
       tableName: 'agencies',
       underscored: true,
-    }
+    },
   );
 
   Agency.addScope('canonical', {

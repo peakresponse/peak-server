@@ -122,7 +122,7 @@ module.exports = {
       },
     });
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX dispatches_incident_id_vehicle_id ON dispatches (incident_id, vehicle_id) WHERE canonical_id IS NULL'
+      'CREATE UNIQUE INDEX dispatches_incident_id_vehicle_id ON dispatches (incident_id, vehicle_id) WHERE canonical_id IS NULL',
     );
   },
   down: async (queryInterface, Sequelize) => {

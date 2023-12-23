@@ -29,7 +29,7 @@ export class AgencyService {
       mergeMap((response: HttpResponse<any>) => {
         this.agency = response.body;
         return of(this.agency);
-      })
+      }),
     );
   }
 

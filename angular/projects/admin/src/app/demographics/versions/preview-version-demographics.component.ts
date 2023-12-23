@@ -10,7 +10,10 @@ export class PreviewVersionDemographicsComponent implements OnInit {
   id: string = '';
   xml?: string;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

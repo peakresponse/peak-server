@@ -36,7 +36,7 @@ export class PersonnelListDemographicsComponent {
     public agency: AgencyService,
     private api: ApiService,
     private notification: NotificationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
   ) {}
 
   onApprove(event: Event, record: any) {

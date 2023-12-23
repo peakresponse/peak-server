@@ -43,7 +43,7 @@ export class XsdBaseComponent implements OnInit {
     protected navigation: NavigationService,
     protected notification: NotificationService,
     protected schema: SchemaService,
-    protected user: UserService
+    protected user: UserService,
   ) {}
 
   ngOnInit() {
@@ -55,7 +55,7 @@ export class XsdBaseComponent implements OnInit {
           schema,
           this.schema.getCommonTypes(false),
           this.customConfiguration,
-          this.schemaRootElementName
+          this.schemaRootElementName,
         );
         this.isLoading = !this.schemaData && !(!this.draftNemsisVersion || this.draftSchemaData) && !this.data;
       });
@@ -67,7 +67,7 @@ export class XsdBaseComponent implements OnInit {
           schema,
           this.schema.getCommonTypes(true),
           this.draftCustomConfiguration,
-          this.draftSchemaRootElementName
+          this.draftSchemaRootElementName,
         );
         this.isLoading = !this.schemaData && !(!this.draftNemsisVersion || this.draftSchemaData) && !this.data;
       });

@@ -185,7 +185,7 @@ describe('/api/agencies', () => {
       assert.deepStrictEqual(response.body.subdomain, 'baymedicalameda');
       assert.deepStrictEqual(
         response.body.message,
-        'Please join the Bay Medic Ambulance - Alameda Peak Response account. We’ll be using this new software to help organize and document MCIs.'
+        'Please join the Bay Medic Ambulance - Alameda Peak Response account. We’ll be using this new software to help organize and document MCIs.',
       );
 
       const user = await models.User.findOne({

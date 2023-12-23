@@ -3,7 +3,7 @@
 'use strict';
 
 if (process.argv.length != 6) {
-  console.log("Usage: bin/create-admin First Last email@address.com password");
+  console.log('Usage: bin/create-admin First Last email@address.com password');
   return;
 }
 
@@ -15,8 +15,8 @@ models.User.create({
   email: process.argv[4],
   password: process.argv[5],
   position: 'Superuser',
-  isAdmin: true
-}).then(user => {
+  isAdmin: true,
+}).then((user) => {
   console.log('Admin user created!');
   models.sequelize.close();
 });

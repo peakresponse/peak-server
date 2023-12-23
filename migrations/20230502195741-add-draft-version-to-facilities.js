@@ -41,16 +41,16 @@ module.exports = {
       type: Sequelize.DATE,
     });
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX facilities_canonical_compound_uk ON facilities (type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NULL AND is_draft=FALSE'
+      'CREATE UNIQUE INDEX facilities_canonical_compound_uk ON facilities (type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NULL AND is_draft=FALSE',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX facilities_canonical_primary_national_provider_id_uk ON facilities (primary_national_provider_id, state_id) WHERE canonical_facility_id IS NULL AND is_draft=FALSE'
+      'CREATE UNIQUE INDEX facilities_canonical_primary_national_provider_id_uk ON facilities (primary_national_provider_id, state_id) WHERE canonical_facility_id IS NULL AND is_draft=FALSE',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX facilities_compound_uk ON facilities (created_by_agency_id, type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NOT NULL AND is_draft=FALSE'
+      'CREATE UNIQUE INDEX facilities_compound_uk ON facilities (created_by_agency_id, type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NOT NULL AND is_draft=FALSE',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX facilities_primary_national_provider_id_uk ON facilities (created_by_agency_id, primary_national_provider_id) WHERE canonical_facility_id IS NOT NULL AND is_draft=FALSE'
+      'CREATE UNIQUE INDEX facilities_primary_national_provider_id_uk ON facilities (created_by_agency_id, primary_national_provider_id) WHERE canonical_facility_id IS NOT NULL AND is_draft=FALSE',
     );
   },
 
@@ -66,16 +66,16 @@ module.exports = {
     await queryInterface.removeColumn('facilities', 'draft_parent_id');
     await queryInterface.removeColumn('facilities', 'is_draft');
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX facilities_canonical_compound_uk ON facilities (type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NULL'
+      'CREATE UNIQUE INDEX facilities_canonical_compound_uk ON facilities (type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NULL',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX facilities_canonical_primary_national_provider_id_uk ON facilities (primary_national_provider_id, state_id) WHERE canonical_facility_id IS NULL'
+      'CREATE UNIQUE INDEX facilities_canonical_primary_national_provider_id_uk ON facilities (primary_national_provider_id, state_id) WHERE canonical_facility_id IS NULL',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX facilities_compound_uk ON facilities (created_by_agency_id, type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NOT NULL'
+      'CREATE UNIQUE INDEX facilities_compound_uk ON facilities (created_by_agency_id, type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NOT NULL',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX facilities_primary_national_provider_id_uk ON facilities (created_by_agency_id, primary_national_provider_id) WHERE canonical_facility_id IS NOT NULL'
+      'CREATE UNIQUE INDEX facilities_primary_national_provider_id_uk ON facilities (created_by_agency_id, primary_national_provider_id) WHERE canonical_facility_id IS NOT NULL',
     );
     await queryInterface.removeColumn('facilities', 'version_id');
   },

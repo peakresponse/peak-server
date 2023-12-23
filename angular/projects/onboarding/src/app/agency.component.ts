@@ -20,7 +20,12 @@ export class AgencyComponent {
   };
   isLoading = false;
 
-  constructor(private app: AppService, private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private app: AppService,
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.stateId = this.route.snapshot.queryParamMap.get('stateId') ?? '';
@@ -35,7 +40,7 @@ export class AgencyComponent {
   searchHandler = (term: string) =>
     this.api.agencies.index(new HttpParams().set('search', term).set('stateId', this.stateId)).pipe(
       catchError(() => of([])),
-      map((res) => res.body)
+      map((res) => res.body),
     );
 
   onBack() {
@@ -60,7 +65,7 @@ export class AgencyComponent {
                 agencyId: this.data.agency.id,
               });
               return EMPTY;
-            })
+            }),
           )
           .subscribe((res) => {
             this.isLoading = false;

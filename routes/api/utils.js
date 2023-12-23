@@ -14,7 +14,7 @@ router.get(
   helpers.async(async (req, res) => {
     let data = await (
       await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${req.query.lat},${req.query.lng}&key=${process.env.GOOGLE_MAPS_SERVER_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${req.query.lat},${req.query.lng}&key=${process.env.GOOGLE_MAPS_SERVER_API_KEY}`,
       )
     ).json();
     if (data.status === 'OK') {
@@ -51,7 +51,7 @@ router.get(
     } else {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

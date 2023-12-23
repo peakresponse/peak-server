@@ -40,7 +40,7 @@ module.exports = {
               type: Sequelize.DATE,
             },
           },
-          { transaction }
+          { transaction },
         )
         .then(() => {
           return queryInterface.addIndex('counties', {

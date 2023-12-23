@@ -19,7 +19,7 @@ function findByNameAndClass(cities, name, featureClass) {
       c.featureClass === featureClass &&
       name.localeCompare(c.featureName, undefined, {
         sensitivity: 'accent',
-      }) === 0
+      }) === 0,
   );
 }
 
@@ -236,7 +236,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'City',
       tableName: 'cities',
       underscored: true,
-    }
+    },
   );
 
   City.beforeSave((record) => {

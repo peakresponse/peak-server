@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Location',
       tableName: 'locations',
       underscored: true,
-    }
+    },
   );
 
   Location.addDraftScopes();

@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
           'ringdownId',
           'predictions',
         ],
-        options
+        options,
       );
     }
 
@@ -384,8 +384,8 @@ module.exports = (sequelize, DataTypes) => {
                     'xsi:nil': 'true',
                   },
                 },
-                Object
-              )
+                Object,
+              ),
             );
             break;
           default: {
@@ -518,7 +518,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         },
       },
-    }
+    },
   );
 
   Report.addScope('canonical', {

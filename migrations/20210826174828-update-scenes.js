@@ -19,7 +19,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -33,7 +33,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -47,7 +47,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -55,7 +55,7 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -63,7 +63,7 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -71,7 +71,7 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -81,7 +81,7 @@ module.exports = {
           type: Sequelize.BOOLEAN,
           defaultValue: false,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -89,12 +89,12 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(`UPDATE scene_observations SET id=gen_random_uuid() WHERE id=scene_id`, { transaction });
       await queryInterface.sequelize.query(
         `INSERT INTO scenes(id, canonical_id, name, "desc", urgency, note, approx_patients_count, is_active, is_mci, lat, lng, geog, address1, address2, city_id, county_id, state_id, zip, created_by_id, updated_by_id, created_by_agency_id, updated_by_agency_id, created_at, updated_at, closed_at, incident_commander_id, incident_commander_agency_id, approx_priority_patients_counts) SELECT id, scene_id AS canonical_id, name, "desc", urgency, note, COALESCE(approx_patients_count, 0), COALESCE(is_active, TRUE), COALESCE(is_mci, TRUE), lat, lng, geog, address1, address2, city_id, county_id, state_id, zip, created_by_id, updated_by_id, created_by_agency_id, updated_by_agency_id, created_at, updated_at, closed_at, incident_commander_id, incident_commander_agency_id, COALESCE(approx_priority_patients_counts, '[]') FROM scene_observations`,
-        { transaction }
+        { transaction },
       );
     });
   },

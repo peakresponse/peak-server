@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Client',
       tableName: 'clients',
       underscored: true,
-    }
+    },
   );
   sequelizePaginate.paginate(Client);
   return Client;

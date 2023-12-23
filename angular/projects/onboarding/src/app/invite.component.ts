@@ -26,7 +26,12 @@ export class InviteComponent {
   isLoading = false;
   error: any = null;
 
-  constructor(private app: AppService, private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
+  constructor(
+    private app: AppService,
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private navigation: NavigationService,
+  ) {
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId') ?? undefined;
     if (!this.app.agency) {
       this.isLoading = true;
@@ -76,7 +81,7 @@ export class InviteComponent {
             this.isLoading = false;
             this.error = res.error;
             return EMPTY;
-          })
+          }),
         )
         .subscribe((res) => {
           this.isLoading = false;

@@ -43,7 +43,7 @@ const mockReposRequest = () => {
         'fBP7x8Kpojexu7XlyWVxigiLgpun5cBS_XffLAFnXSwZzETNpjeNrw==',
         'Vary',
         'Origin',
-      ]
+      ],
     );
 };
 
@@ -79,7 +79,7 @@ const mockAlabamaFilesRequest = () => {
         'Mon, 06 Apr 2020 18:12:59 GMT',
         'Connection',
         'close',
-      ]
+      ],
     );
 };
 
@@ -124,7 +124,7 @@ const mockCaliforniaFilesRequest = () => {
         'Mon, 06 Apr 2020 17:36:34 GMT',
         'Connection',
         'close',
-      ]
+      ],
     );
 };
 
@@ -175,7 +175,7 @@ const mockWashingtonFilesRequest = () => {
         'qTr9GR8R2x9BAe6AJdNJ2GXvXed0cuoKOqGxGB1jr1b9_mUcjOOz4A==',
         'Vary',
         'Origin',
-      ]
+      ],
     );
 };
 

@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Device',
       tableName: 'devices',
       underscored: true,
-    }
+    },
   );
 
   Device.addDraftScopes();

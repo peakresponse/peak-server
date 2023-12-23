@@ -15,7 +15,11 @@ export class EditAgencyComponent {
   canonicalAgencyId: string = '';
   claimedAgencyId: string = '';
 
-  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.api.states.index().subscribe((res: any) => (this.states = res.body));

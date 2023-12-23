@@ -30,10 +30,10 @@ module.exports = {
     });
     await queryInterface.sequelize.query('CREATE UNIQUE INDEX agencies_subdomain ON agencies (subdomain) WHERE is_draft=FALSE');
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX agencies_created_by_agency_id_state_unique_id_number_state_id_u ON agencies (created_by_agency_id, state_unique_id, number, state_id) WHERE is_draft=FALSE'
+      'CREATE UNIQUE INDEX agencies_created_by_agency_id_state_unique_id_number_state_id_u ON agencies (created_by_agency_id, state_unique_id, number, state_id) WHERE is_draft=FALSE',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX agencies_subdomain_state_unique_id_number_state_id ON agencies (state_unique_id, number, state_id) WHERE subdomain IS NOT NULL AND is_draft=FALSE'
+      'CREATE UNIQUE INDEX agencies_subdomain_state_unique_id_number_state_id ON agencies (state_unique_id, number, state_id) WHERE subdomain IS NOT NULL AND is_draft=FALSE',
     );
   },
 
@@ -77,7 +77,7 @@ module.exports = {
       fields: ['created_by_agency_id', 'state_unique_id', 'number', 'state_id'],
     });
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX agencies_subdomain_state_unique_id_number_state_id ON agencies (state_unique_id, number, state_id) WHERE subdomain IS NOT NULL'
+      'CREATE UNIQUE INDEX agencies_subdomain_state_unique_id_number_state_id ON agencies (state_unique_id, number, state_id) WHERE subdomain IS NOT NULL',
     );
   },
 };

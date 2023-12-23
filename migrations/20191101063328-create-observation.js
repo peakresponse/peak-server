@@ -122,7 +122,7 @@ module.exports = {
               allowNull: false,
             },
           },
-          { transaction }
+          { transaction },
         )
         .then(() => {
           return queryInterface.addIndex('observations', {

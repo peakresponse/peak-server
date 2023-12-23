@@ -37,7 +37,7 @@ export class ListComponent {
     protected api: ApiService,
     protected currentUser: UserService,
     protected navigation: NavigationService,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
@@ -107,7 +107,7 @@ export class ListComponent {
             this.records = records;
           }
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         let found = false;

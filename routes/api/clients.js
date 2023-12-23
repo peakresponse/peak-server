@@ -31,7 +31,7 @@ router.get(
     const { docs, pages, total } = await models.Client.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
-  })
+  }),
 );
 
 router.post(
@@ -46,7 +46,7 @@ router.post(
     const data = client.toJSON();
     data.clientSecret = clientSecret;
     res.status(HttpStatus.CREATED).json(data);
-  })
+  }),
 );
 
 router.get(
@@ -59,7 +59,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.delete(
@@ -78,7 +78,7 @@ router.delete(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.patch(
@@ -102,7 +102,7 @@ router.patch(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.patch(
@@ -123,7 +123,7 @@ router.patch(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

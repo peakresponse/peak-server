@@ -7,5 +7,9 @@ import { AgencyService, NotificationService, UserService } from 'shared';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  constructor(public currentAgency: AgencyService, public currentUser: UserService, public notification: NotificationService) {}
+  constructor(
+    public currentAgency: AgencyService,
+    public currentUser: UserService,
+    public notification: NotificationService,
+  ) {}
 }

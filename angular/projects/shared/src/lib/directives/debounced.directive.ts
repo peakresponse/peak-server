@@ -12,7 +12,10 @@ export class DebouncedDirective implements OnInit, OnDestroy {
 
   valueSubscription?: Subscription;
 
-  constructor(private element: ElementRef, private ngModel: NgModel) {}
+  constructor(
+    private element: ElementRef,
+    private ngModel: NgModel,
+  ) {}
 
   ngOnInit() {
     this.valueSubscription = this.ngModel.valueChanges

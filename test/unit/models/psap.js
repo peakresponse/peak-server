@@ -21,7 +21,7 @@ describe('models', () => {
         assert.deepStrictEqual(psap.change, 'M');
         assert.deepStrictEqual(
           psap.comments,
-          'PSAP Name, State, County or City text has been modified since the original posting of the FCC Registry.'
+          'PSAP Name, State, County or City text has been modified since the original posting of the FCC Registry.',
         );
         assert.deepStrictEqual(psap.modifiedOn, '2012-10-03');
       });

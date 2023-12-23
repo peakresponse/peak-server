@@ -8,7 +8,10 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AppGuard {
-  constructor(private router: Router, private user: UserService) {}
+  constructor(
+    private router: Router,
+    private user: UserService,
+  ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return this.user.attributes$.pipe(
@@ -18,7 +21,7 @@ export class AppGuard {
         } else {
           return of(this.router.parseUrl('/demographics/dashboard'));
         }
-      })
+      }),
     );
   }
 }

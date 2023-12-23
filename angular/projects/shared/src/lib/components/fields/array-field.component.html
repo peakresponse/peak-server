@@ -18,7 +18,7 @@
     <div *ngFor="let item of value; let i = index" [attr.data-index]="i" class="form-field__item" (click)="onClick($event)">
       <ng-template
         [ngTemplateOutlet]="itemTemplate"
-        [ngTemplateOutletContext]="{item, removeItem: onRemoveItem, updateItem: onUpdateItem}"
+        [ngTemplateOutletContext]="{ item, removeItem: onRemoveItem, updateItem: onUpdateItem }"
       ></ng-template>
     </div>
   </ng-container>

@@ -37,7 +37,7 @@ router.get(
     const { docs, pages, total } = await models.Psap.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
-  })
+  }),
 );
 
 router.get(
@@ -50,7 +50,7 @@ router.get(
     } else {
       res.send(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

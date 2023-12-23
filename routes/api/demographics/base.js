@@ -26,7 +26,7 @@ function addIndex(router, model, options) {
         payload = await Promise.all(docs.map((d) => d.toNemsisJSON()));
       }
       res.json(payload);
-    })
+    }),
   );
 }
 
@@ -48,14 +48,14 @@ function addCreate(router, model, options) {
             createdById: req.user.id,
             updatedById: req.user.id,
           },
-          { transaction }
+          { transaction },
         );
         if (afterCreate) {
           await Promise.resolve(afterCreate(version, record, { transaction }));
         }
       });
       res.status(HttpStatus.CREATED).json(await record?.toNemsisJSON());
-    })
+    }),
   );
 }
 
@@ -75,7 +75,7 @@ function addGet(router, model) {
       } else {
         res.status(HttpStatus.NOT_FOUND).end();
       }
-    })
+    }),
   );
 }
 
@@ -108,7 +108,7 @@ function addUpdate(router, model, options) {
       } else {
         res.status(HttpStatus.NOT_FOUND).end();
       }
-    })
+    }),
   );
 }
 
@@ -138,7 +138,7 @@ function addDelete(router, model, options) {
         }
       });
       res.status(HttpStatus.NO_CONTENT).end();
-    })
+    }),
   );
 }
 

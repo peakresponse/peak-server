@@ -12,7 +12,7 @@ router.get(
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     res.json(await req.agency.toNemsisJSON());
-  })
+  }),
 );
 
 router.put(
@@ -24,7 +24,7 @@ router.put(
     await req.agency.updateDraft({ versionId: version.id, data, updatedById: req.user.id });
     const draft = await req.agency.getDraft();
     res.status(HttpStatus.OK).json(await draft.toNemsisJSON());
-  })
+  }),
 );
 
 router.delete(
@@ -38,7 +38,7 @@ router.delete(
       }
     });
     res.status(HttpStatus.NO_CONTENT).end();
-  })
+  }),
 );
 
 module.exports = router;

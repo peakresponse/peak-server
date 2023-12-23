@@ -13,7 +13,12 @@ export class DoneComponent {
   agencyId?: string;
   subdomain?: string;
 
-  constructor(private app: AppService, private api: ApiService, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  constructor(
+    private app: AppService,
+    private api: ApiService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+  ) {
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId') ?? undefined;
     if (!this.app.agency) {
       this.api.agencies.check(this.agencyId ?? '').subscribe((res) => (this.subdomain = res.body.subdomain));

@@ -24,7 +24,7 @@ export class SearchFieldComponent extends BaseFieldComponent {
       switchMap((text) => {
         this.debouncedValueChange.emit(text);
         return this.searchHandler(text);
-      })
+      }),
     );
 
   constructor() {

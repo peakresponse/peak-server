@@ -23,7 +23,7 @@ router.get(
       await fs.writeFile(xsdJSONPath, JSON.stringify(json), 'utf8');
       res.json(json);
     }
-  })
+  }),
 );
 
 router.get(
@@ -34,7 +34,7 @@ router.get(
     const json = xmljs.xml2js(xml, { compact: true });
     await fs.writeFile(path.resolve(__dirname, path.join('../nemsis', req.path)), JSON.stringify(json), 'utf8');
     res.json(json);
-  })
+  }),
 );
 
 module.exports = router;

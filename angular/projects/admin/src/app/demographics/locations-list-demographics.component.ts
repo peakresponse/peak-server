@@ -12,5 +12,8 @@ export class LocationsListDemographicsComponent {
     { name: 'Number', attr: ['dLocation.03'], class: 'col-3' },
   ];
 
-  constructor(public agency: AgencyService, public route: ActivatedRoute) {}
+  constructor(
+    public agency: AgencyService,
+    public route: ActivatedRoute,
+  ) {}
 }

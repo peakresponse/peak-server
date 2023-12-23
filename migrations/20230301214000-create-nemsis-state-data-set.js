@@ -76,7 +76,7 @@ module.exports = {
     });
     // create a partial unique index that enforces unique version when set
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX nemsis_state_data_sets_version_uk ON nemsis_state_data_sets (state_id, version) WHERE version IS NOT NULL'
+      'CREATE UNIQUE INDEX nemsis_state_data_sets_version_uk ON nemsis_state_data_sets (state_id, version) WHERE version IS NOT NULL',
     );
   },
 

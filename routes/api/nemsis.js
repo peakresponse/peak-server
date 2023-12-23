@@ -18,7 +18,7 @@ router.get(
     payload.versions = nemsisPublic.versions;
     payload.versionsInstalled = nemsisPublic.versionsInstalled;
     res.json(payload);
-  })
+  }),
 );
 
 router.post(
@@ -30,7 +30,7 @@ router.post(
     payload.versions = nemsisPublic.versions;
     payload.versionsInstalled = nemsisPublic.versionsInstalled;
     res.json(payload);
-  })
+  }),
 );
 
 router.post(
@@ -43,7 +43,7 @@ router.post(
     payload.versions = nemsisPublic.versions;
     payload.versionsInstalled = nemsisPublic.versionsInstalled;
     res.json(payload);
-  })
+  }),
 );
 
 module.exports = router;

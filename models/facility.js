@@ -123,7 +123,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Facility',
       tableName: 'facilities',
       underscored: true,
-    }
+    },
   );
 
   Facility.addDraftScopes();
@@ -149,14 +149,14 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('address', [`${type}.FacilityGroup`, `${type}.07`], options);
     record.setDataValue(
       'cityName',
-      await sequelize.models.City.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]), options)
+      await sequelize.models.City.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]), options),
     );
     if (record.cityName) {
       record.setDataValue('cityId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]));
     }
     record.setDataValue(
       'stateName',
-      await sequelize.models.State.getNameForCode(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]), options)
+      await sequelize.models.State.getNameForCode(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]), options),
     );
     if (record.stateName) {
       record.setDataValue('stateId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]));
@@ -164,7 +164,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('zip', [`${type}.FacilityGroup`, `${type}.10`], options);
     record.setDataValue(
       'countyName',
-      await sequelize.models.County.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]), options)
+      await sequelize.models.County.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]), options),
     );
     if (record.countyName) {
       record.setDataValue('countyId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]));

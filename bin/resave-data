@@ -33,7 +33,7 @@ async function resaveData() {
             where: { id: record.id },
             silent: true,
             transaction,
-          }
+          },
         );
       }
     });

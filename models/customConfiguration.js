@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'CustomConfiguration',
       tableName: 'custom_configurations',
       underscored: true,
-    }
+    },
   );
 
   CustomConfiguration.addDraftScopes();

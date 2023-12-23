@@ -69,7 +69,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scene_pins',
@@ -78,11 +78,11 @@ module.exports = {
           type: Sequelize.ENUM('MGS', 'OTHER', 'STAGING', 'TRANSPORT', 'TRIAGE', 'TREATMENT'),
           allowNull: false,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         `CREATE UNIQUE INDEX scene_pins_scene_id_type_uk ON scene_pins (scene_id, type) WHERE type <> 'OTHER' AND deleted_at IS NULL`,
-        { transaction }
+        { transaction },
       );
       await queryInterface.addConstraint('scene_pins', {
         type: 'FOREIGN KEY',

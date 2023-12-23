@@ -85,7 +85,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { schema: 'demographics', transaction }
+        { schema: 'demographics', transaction },
       );
       await queryInterface.sequelize.query('CREATE INDEX "demographics.facilities_geog_idx" ON demographics.facilities USING gist(geog)', {
         transaction,

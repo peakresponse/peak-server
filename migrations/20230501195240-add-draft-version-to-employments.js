@@ -18,13 +18,13 @@ module.exports = {
     await queryInterface.sequelize.query('ALTER TABLE "employments" DROP CONSTRAINT "demographics.employments_agency_id_email_uk"');
     await queryInterface.sequelize.query('ALTER TABLE "employments" DROP CONSTRAINT "demographics.employments_invitation_code_uk"');
     await queryInterface.sequelize.query(
-      'ALTER TABLE "employments" RENAME CONSTRAINT "demographics.employments_created_by_id_users_fk" TO "employments_created_by_id_users_fk"'
+      'ALTER TABLE "employments" RENAME CONSTRAINT "demographics.employments_created_by_id_users_fk" TO "employments_created_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "employments" RENAME CONSTRAINT "demographics.employments_updated_by_id_users_fk" TO "employments_updated_by_id_users_fk"'
+      'ALTER TABLE "employments" RENAME CONSTRAINT "demographics.employments_updated_by_id_users_fk" TO "employments_updated_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "employments" RENAME CONSTRAINT "demographics.employments_user_id_users_fk" TO "employments_user_id_users_fk"'
+      'ALTER TABLE "employments" RENAME CONSTRAINT "demographics.employments_user_id_users_fk" TO "employments_user_id_users_fk"',
     );
     await queryInterface.addColumn('employments', 'is_draft', {
       type: Sequelize.BOOLEAN,
@@ -48,10 +48,10 @@ module.exports = {
       type: Sequelize.DATE,
     });
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX employments_agency_id_email_uk ON employments (agency_id, email) WHERE is_draft=FALSE'
+      'CREATE UNIQUE INDEX employments_agency_id_email_uk ON employments (agency_id, email) WHERE is_draft=FALSE',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX employments_invitation_code_uk ON employments (invitation_code) WHERE is_draft=FALSE'
+      'CREATE UNIQUE INDEX employments_invitation_code_uk ON employments (invitation_code) WHERE is_draft=FALSE',
     );
     await queryInterface.renameColumn('employments', 'agency_id', 'created_by_agency_id');
   },
@@ -77,19 +77,19 @@ module.exports = {
       type: 'UNIQUE',
     });
     await queryInterface.sequelize.query(
-      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_agency_id_email_uk" TO "demographics.employments_agency_id_email_uk"'
+      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_agency_id_email_uk" TO "demographics.employments_agency_id_email_uk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_invitation_code_uk" TO "demographics.employments_invitation_code_uk"'
+      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_invitation_code_uk" TO "demographics.employments_invitation_code_uk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_user_id_users_fk" TO "demographics.employments_user_id_users_fk"'
+      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_user_id_users_fk" TO "demographics.employments_user_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_updated_by_id_users_fk" TO "demographics.employments_updated_by_id_users_fk"'
+      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_updated_by_id_users_fk" TO "demographics.employments_updated_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_created_by_id_users_fk" TO "demographics.employments_created_by_id_users_fk"'
+      'ALTER TABLE "employments" RENAME CONSTRAINT "employments_created_by_id_users_fk" TO "demographics.employments_created_by_id_users_fk"',
     );
     await queryInterface.removeColumn('employments', 'version_id');
   },

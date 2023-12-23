@@ -19,7 +19,10 @@ export class ListIncidentsComponent {
   params: HttpParams = new HttpParams();
   fragmentSubscription?: Subscription;
 
-  constructor(public route: ActivatedRoute, public user: UserService) {
+  constructor(
+    public route: ActivatedRoute,
+    public user: UserService,
+  ) {
     const fragment = this.route.snapshot.fragment || 'mine';
     this.onFragmentChanged(fragment);
     this.fragmentSubscription = this.route.fragment.subscribe((newFragment: string | null) => this.onFragmentChanged(newFragment));

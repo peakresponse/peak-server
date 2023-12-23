@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'ListSection',
       tableName: 'list_sections',
       underscored: true,
-    }
+    },
   );
   return ListSection;
 };

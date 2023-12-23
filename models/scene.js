@@ -81,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
           'approxPriorityPatientsCounts',
           'data',
         ],
-        options
+        options,
       );
     }
 
@@ -223,7 +223,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Scene',
       tableName: 'scenes',
       underscored: true,
-    }
+    },
   );
 
   Scene.beforeValidate(async (record, options) => {

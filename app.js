@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'test') {
 app.use(
   fileUpload({
     useTempFiles: !process.env.AWS_S3_BUCKET,
-  })
+  }),
 );
 app.use(bodyParser.raw({ type: ['text/xml', 'image/*', 'video/*', 'audio/*'], limit: '10mb' }));
 app.use(express.json({ limit: '1mb' }));

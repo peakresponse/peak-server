@@ -63,7 +63,7 @@ class Base extends Model {
         {
           isDraft: true,
           draftParentId: this.id,
-        }
+        },
       );
       delete mergedValues.id;
       delete mergedValues.draft;
@@ -76,7 +76,7 @@ class Base extends Model {
   static async createOrUpdate(model, user, agency, data, createAttrs, updateAttrs, options) {
     if (!options?.transaction) {
       return model.sequelize.transaction((transaction) =>
-        Base.createOrUpdate(model, user, agency, data, createAttrs, updateAttrs, { ...options, transaction })
+        Base.createOrUpdate(model, user, agency, data, createAttrs, updateAttrs, { ...options, transaction }),
       );
     }
     // find or create the new historical record
@@ -209,7 +209,7 @@ class Base extends Model {
             attr = attr.substring(0, index);
           }
           return attr;
-        })
+        }),
       );
       await record.save({ silent: true, transaction: options.transaction });
       filteredData = json;

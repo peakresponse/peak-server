@@ -75,8 +75,8 @@ passport.use(
       } catch (err) {
         return done(null, false, err);
       }
-    }
-  )
+    },
+  ),
 );
 
 passport.serializeUser((user, done) => {

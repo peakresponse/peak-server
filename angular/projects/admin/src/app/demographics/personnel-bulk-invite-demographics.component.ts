@@ -20,7 +20,10 @@ export class PersonnelBulkInviteDemographicsComponent {
   isLoading = false;
   isPolling = false;
 
-  constructor(private api: ApiService, private notification: NotificationService) {}
+  constructor(
+    private api: ApiService,
+    private notification: NotificationService,
+  ) {}
 
   show() {
     this.isLoading = true;
@@ -30,7 +33,7 @@ export class PersonnelBulkInviteDemographicsComponent {
         catchError((response: HttpErrorResponse) => {
           this.isLoading = false;
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.isLoading = false;

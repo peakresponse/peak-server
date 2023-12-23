@@ -23,7 +23,7 @@ export class XsdElementInputCityComponent extends XsdElementBaseComponent {
             this.cache[id] = {};
             this.value = id;
             return EMPTY;
-          })
+          }),
         )
         .subscribe((response: HttpResponse<any>) => {
           this.cache[id] = response.body;
@@ -45,9 +45,9 @@ export class XsdElementInputCityComponent extends XsdElementBaseComponent {
               this.cache[city.id] = city;
               return city.id;
             });
-          })
+          }),
         );
-      })
+      }),
     );
 
   inputFormatter = (id: string): string => {

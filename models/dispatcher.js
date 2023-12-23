@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Dispatcher',
       tableName: 'dispatchers',
       underscored: true,
-    }
+    },
   );
   sequelizePaginate.paginate(Dispatcher);
   return Dispatcher;

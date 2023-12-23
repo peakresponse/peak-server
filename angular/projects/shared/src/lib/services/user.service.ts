@@ -83,7 +83,7 @@ export class UserService {
         catchError((error) => {
           console.log(error);
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response) => {
         this.user = response.body.User;
@@ -116,7 +116,7 @@ export class UserService {
         this.agency = response.body.Agency;
         this.employment = response.body.Employment;
         return of(this.user);
-      })
+      }),
     );
   }
 }

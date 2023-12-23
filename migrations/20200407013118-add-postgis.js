@@ -17,7 +17,7 @@ module.exports = {
       await queryInterface.sequelize.query('CREATE INDEX facilities_geog_idx ON facilities USING gist(geog)', { transaction });
       await queryInterface.sequelize.query(
         'UPDATE facilities SET geog=ST_MakePoint(CAST(lng AS FLOAT), CAST(lat AS FLOAT)) WHERE lat IS NOT NULL AND lng IS NOT NULL',
-        { transaction }
+        { transaction },
       );
     });
   },

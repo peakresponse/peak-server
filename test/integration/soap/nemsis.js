@@ -91,8 +91,7 @@ describe('/soap/nemsis', () => {
           totalErrorCount: 1,
           xmlError: [
             {
-              desc:
-                "Element '{http://www.nemsis.org}dPersonnel.24': [facet 'enumeration'] The value '9925015' is not an element of the set {'9925001', '9925002', '9925003', '9925005', '9925007', '9925023', '9925025', '9925027', '9925029', '9925031', '9925033', '9925035', '9925037', '9925039', '9925041', '9925043'}.",
+              desc: "Element '{http://www.nemsis.org}dPersonnel.24': [facet 'enumeration'] The value '9925015' is not an element of the set {'9925001', '9925002', '9925003', '9925005', '9925007', '9925023', '9925025', '9925027', '9925029', '9925031', '9925033', '9925035', '9925037', '9925039', '9925041', '9925043'}.",
               failedElementList: {
                 xmlElementInfo: [
                   {
@@ -132,8 +131,7 @@ describe('/soap/nemsis', () => {
           totalErrorCount: 1,
           xmlError: [
             {
-              desc:
-                "Element '{http://www.nemsis.org}eResponse.07': [facet 'enumeration'] The value '2207003' is not an element of the set {'2207011', '2207013', '2207015', '2207017', '2207019', '2207021', '2207023', '2207025', '2207027'}.",
+              desc: "Element '{http://www.nemsis.org}eResponse.07': [facet 'enumeration'] The value '2207003' is not an element of the set {'2207011', '2207013', '2207015', '2207017', '2207019', '2207021', '2207023', '2207025', '2207027'}.",
               failedElementList: {
                 xmlElementInfo: [
                   {

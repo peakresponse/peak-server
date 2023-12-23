@@ -21,7 +21,7 @@ module.exports = {
         {
           type: 'GEOMETRY USING CAST("geog" AS GEOMETRY)',
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.changeColumn(
         'scene_observations',
@@ -29,7 +29,7 @@ module.exports = {
         {
           type: 'GEOMETRY USING CAST("geog" AS GEOMETRY)',
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.changeColumn(
         'locations',
@@ -37,7 +37,7 @@ module.exports = {
         {
           type: 'GEOMETRY USING CAST("geog" AS GEOMETRY)',
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.removeColumn('patients', 'geog', { transaction });
       await queryInterface.removeColumn('patient_observations', 'geog', {

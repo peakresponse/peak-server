@@ -41,7 +41,7 @@ module.exports = {
         'agencies',
         'is_valid',
         { type: Sequelize.BOOLEAN, defaultValue: false, allowNull: false },
-        { transaction }
+        { transaction },
       );
 
       await queryInterface.addColumn('agencies', 'subdomain', Sequelize.CITEXT, { transaction });
@@ -63,7 +63,7 @@ module.exports = {
       /// ensure there is a compound unique id for a canonical agency record
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX agencies_canonical_state_unique_id_number_state_id ON agencies (state_unique_id, number, state_id) WHERE canonical_agency_id IS NULL',
-        { transaction }
+        { transaction },
       );
       /// ensure subdomains are unique
       await queryInterface.addConstraint('agencies', {
@@ -74,7 +74,7 @@ module.exports = {
       /// ensure only one subdomain per unique agency
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX agencies_subdomain_state_unique_id_number_state_id ON agencies (state_unique_id, number, state_id) WHERE subdomain IS NOT NULL',
-        { transaction }
+        { transaction },
       );
       /// ensure subdomains only set on agency owned records
       await queryInterface.addConstraint('agencies', {
@@ -121,7 +121,7 @@ module.exports = {
         INSERT INTO agencies (id, canonical_agency_id, subdomain, state_unique_id, number, name, state_id, data, is_valid, created_by_id, created_by_agency_id, created_at, updated_by_id, updated_at)
         (SELECT id, agency_id, subdomain, state_unique_id, number, name, state_id, data, is_valid, created_by_id, id, created_at, updated_by_id, updated_at FROM demographics.agencies);
       `,
-        { transaction }
+        { transaction },
       );
 
       /// re-map foreign key references
@@ -131,7 +131,7 @@ module.exports = {
           `ALTER TABLE ${tableName} ADD CONSTRAINT ${tableName
             .split('.')
             .pop()}_${column}_agencies_fk FOREIGN KEY (${column}) REFERENCES agencies(id)`,
-          { transaction }
+          { transaction },
         );
       }
     });
@@ -143,11 +143,11 @@ module.exports = {
       for (const [tableName, constraintId, column] of CONSTRAINTS) {
         await queryInterface.sequelize.query(
           `ALTER TABLE ${tableName} DROP CONSTRAINT ${tableName.split('.').pop()}_${column}_agencies_fk`,
-          { transaction }
+          { transaction },
         );
         await queryInterface.sequelize.query(
           `ALTER TABLE ${tableName} ADD CONSTRAINT "${constraintId}" FOREIGN KEY (${column}) REFERENCES demographics.agencies(id)`,
-          { transaction }
+          { transaction },
         );
       }
       await queryInterface.sequelize.query('DELETE FROM agencies WHERE created_by_agency_id IS NOT NULL', { transaction });

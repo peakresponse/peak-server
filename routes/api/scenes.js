@@ -25,7 +25,7 @@ router.get(
     const { docs, pages, total } = await models.Scene.scope({ method: ['agency', req.agency.id] }, 'canonical', 'closed').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((d) => d.toJSON()));
-  })
+  }),
 );
 
 router.post(
@@ -60,12 +60,12 @@ router.post(
       }
       await models.Scene.update(
         { respondersCount: await models.Responder.scope('onscene').count({ where: { sceneId: scene.canonicalId }, transaction }) },
-        { where: { id: scene.canonicalId }, transaction }
+        { where: { id: scene.canonicalId }, transaction },
       );
     });
     res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(scene.toJSON());
     await dispatchSceneUpdate(scene.canonicalId);
-  })
+  }),
 );
 
 module.exports = router;

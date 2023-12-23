@@ -99,7 +99,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query('CREATE INDEX scene_observations_geog_idx ON scene_observations USING gist(geog)', {
         transaction,

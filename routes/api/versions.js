@@ -20,7 +20,7 @@ router.get(
       order: [['createdAt', 'DESC']],
     });
     res.json(versions.map((v) => v.toJSON()));
-  })
+  }),
 );
 
 router.post(
@@ -29,7 +29,7 @@ router.post(
   helpers.async(async (req, res) => {
     const version = await req.agency.getOrCreateDraftVersion(req.user);
     res.json(version.toJSON());
-  })
+  }),
 );
 
 router.get(
@@ -50,7 +50,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.get(
@@ -71,7 +71,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.get(
@@ -88,7 +88,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.patch(
@@ -109,7 +109,7 @@ router.patch(
     } else {
       res.status(HttpStatus.NOT_FOUND);
     }
-  })
+  }),
 );
 
 router.delete(
@@ -130,7 +130,7 @@ router.delete(
     } else {
       res.status(HttpStatus.NOT_FOUND);
     }
-  })
+  }),
 );
 
 module.exports = router;

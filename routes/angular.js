@@ -84,7 +84,7 @@ router.get(
       environment: {},
       layout: 'angular/layout',
     });
-  }
+  },
 );
 
 router.get('/auth(/*)?', (req, res) => {

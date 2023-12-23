@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
             }
             return r.getData(this);
           })
-          .filter(Boolean)
+          .filter(Boolean),
       );
       return this.update({ demCustomConfiguration: records }, { transaction });
     }
@@ -134,19 +134,19 @@ module.exports = (sequelize, DataTypes) => {
               if (r.draft) {
                 if (r.draft.data.CustomResults) {
                   dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
-                    r.draft.data.CustomResults['dCustomResults.ResultsGroup']
+                    r.draft.data.CustomResults['dCustomResults.ResultsGroup'],
                   );
                 }
                 return r.draft.archivedAt ? null : r.draft.getData(this);
               }
               if (r.data.CustomResults) {
                 dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
-                  r.data.CustomResults['dCustomResults.ResultsGroup']
+                  r.data.CustomResults['dCustomResults.ResultsGroup'],
                 );
               }
               return r.getData(this);
             })
-            .filter(Boolean)
+            .filter(Boolean),
         );
         if (modelName === 'Facility') {
           const newRecords = [];
@@ -297,7 +297,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Version',
       tableName: 'versions',
       underscored: true,
-    }
+    },
   );
   return Version;
 };

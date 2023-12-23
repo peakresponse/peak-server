@@ -41,14 +41,14 @@ module.exports = {
             allowNull: false,
             type: Sequelize.DATE,
           },
-        })
+        }),
       )
       .then(() =>
         queryInterface.addIndex('users', {
           fields: [Sequelize.fn('lower', Sequelize.col('email'))],
           unique: true,
           name: 'users_email_idx',
-        })
+        }),
       );
   },
   down: (queryInterface, Sequelize) => {

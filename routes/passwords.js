@@ -32,7 +32,7 @@ router.post(
         res.status(HttpStatus.NOT_FOUND).render('passwords/forgot');
       }
     }
-  })
+  }),
 );
 
 /* GET the reset password form */
@@ -52,7 +52,7 @@ router.get(
         isInvalid: true,
       });
     }
-  })
+  }),
 );
 
 /* POST the new password */
@@ -102,7 +102,7 @@ router.post(
         });
       }
     }
-  })
+  }),
 );
 
 module.exports = router;

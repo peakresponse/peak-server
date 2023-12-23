@@ -19,7 +19,7 @@
       <tr *ngFor="let record of data" [routerLink]="record.id" [class.text-decoration-line-through]="record.draft?.archivedAt">
         <td><i *ngIf="record.isDraft || record.draft" class="fas fa-exclamation-triangle"></i></td>
         <td *ngFor="let column of schemaColumns">
-          {{((record.draft?.data ?? record.data)|get:column.attr)?._text}}
+          {{ (record.draft?.data ?? record.data | get: column.attr)?._text }}
         </td>
         <ng-template
           [ngTemplateOutlet]="template"

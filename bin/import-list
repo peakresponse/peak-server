@@ -25,7 +25,7 @@ const { Op } = models.Sequelize;
 
 if (process.argv.length < 5) {
   console.log(
-    'Usage: bin/import-list superuser@email.com filename.xlsx field[,field,field] ICD10CM|SNOMED|RXNORM|MIX [3=no sections,4=sections (default)]'
+    'Usage: bin/import-list superuser@email.com filename.xlsx field[,field,field] ICD10CM|SNOMED|RXNORM|MIX [3=no sections,4=sections (default)]',
   );
   process.exit(1);
 }

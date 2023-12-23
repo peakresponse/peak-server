@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
             approvedAt: new Date(),
             approvedById: user.id,
           },
-          options
+          options,
         );
       }
     }
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
               refusedAt: new Date(),
               refusedById: user.id,
             },
-            options
+            options,
           );
         }
       }
@@ -299,7 +299,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         },
       },
-    }
+    },
   );
 
   Employment.addDraftScopes();

@@ -36,7 +36,12 @@ export class AccountComponent {
   isLoading = false;
   error: any = null;
 
-  constructor(private app: AppService, private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
+  constructor(
+    private app: AppService,
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private navigation: NavigationService,
+  ) {
     this.exists = this.route.snapshot.data.exists;
     this.stateId = this.route.snapshot.queryParamMap.get('stateId') ?? '';
     this.data.agencyId = this.route.snapshot.queryParamMap.get('agencyId') ?? '';
@@ -116,7 +121,7 @@ export class AccountComponent {
               this.isLoading = false;
               this.error = res.error;
               return EMPTY;
-            })
+            }),
           )
           .subscribe((res) => {
             this.isLoading = false;
@@ -132,7 +137,7 @@ export class AccountComponent {
               this.error = res.error;
               console.log(res.error);
               return EMPTY;
-            })
+            }),
           )
           .subscribe((res) => {
             this.isLoading = false;

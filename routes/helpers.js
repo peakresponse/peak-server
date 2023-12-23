@@ -84,9 +84,9 @@ function register(req, res, next) {
       _.compact(
         _.map(
           _.filter(res.locals.errors, (e) => e.path === name),
-          (e) => e.message
-        )
-      )
+          (e) => e.message,
+        ),
+      ),
     );
   };
   res.locals.errorMessages = errorMessages;

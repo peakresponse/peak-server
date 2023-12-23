@@ -9,7 +9,10 @@ import { NavigationService } from 'shared';
 export class NewUserComponent {
   id: string | null = null;
 
-  constructor(private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {}
 
   onCreate(user: any) {
     this.navigation.replaceWith(`/users/${user.id}`);

@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
               deletedByAgencyId: agency.id,
               deletedAt: new Date(),
             },
-            { transaction }
+            { transaction },
           );
         }
         pin = await ScenePin.create(
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
             createdByAgencyId: agency.id,
             updatedByAgencyId: agency.id,
           }),
-          { transaction }
+          { transaction },
         );
       });
       return pin;
@@ -110,7 +110,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'ScenePin',
       tableName: 'scene_pins',
       underscored: true,
-    }
+    },
   );
 
   ScenePin.beforeValidate((record) => {

@@ -46,7 +46,7 @@ router.post(
       };
     }
     res.json(response);
-  })
+  }),
 );
 
 router.put(
@@ -62,7 +62,7 @@ router.put(
     } catch (err) {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     }
-  })
+  }),
 );
 
 router.get(
@@ -79,7 +79,7 @@ router.get(
     } else {
       res.redirect(path.join('/assets', keyPath));
     }
-  })
+  }),
 );
 
 module.exports = router;

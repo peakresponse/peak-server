@@ -100,7 +100,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
           this.error = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.isLoading = false;
@@ -150,7 +150,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
           this.error = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
-        })
+        }),
       )
       .subscribe(() => {
         this.isLoading = false;
@@ -175,7 +175,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
           this.error = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.isLoading = false;

@@ -31,7 +31,10 @@ export class NemsisStateComponent implements OnInit {
     return this.schematronsInstalled.filter((st) => st.dataSet === 'EMSDataSet' && st.version === null);
   }
 
-  constructor(private api: ApiService, public route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    public route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.parent?.params['id'] ?? '';

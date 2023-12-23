@@ -30,7 +30,7 @@ router.get(
     const { docs, pages, total } = await models.Employment.scope('finalOrNew').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(await Promise.all(docs.map((d) => d.toFullJSON())));
-  })
+  }),
 );
 
 router.post(
@@ -42,7 +42,7 @@ router.post(
       await employment.approve(req.user, { transaction });
       res.json(employment.toJSON());
     });
-  })
+  }),
 );
 
 router.post(
@@ -54,7 +54,7 @@ router.post(
       await employment.refuse(req.user, { transaction });
       res.json(employment.toJSON());
     });
-  })
+  }),
 );
 
 module.exports = router;

@@ -58,7 +58,7 @@
           <div class="form-field form-field--noclear form-field--nonempty">
             <label>Facilities</label>
             <div *ngFor="let stat of facilityStats" class="form-field__item">
-              <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{facilityTypes?.[stat.type]}}:</span> {{ stat.count }}
+              <span *ngIf="!stat.type">(no type):</span><span *ngIf="stat.type">{{ facilityTypes?.[stat.type] }}:</span> {{ stat.count }}
             </div>
             <div *ngIf="facilityStats" class="form-field__item">Total: {{ facilityStats.total }}</div>
           </div>

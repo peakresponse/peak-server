@@ -19,7 +19,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -33,7 +33,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -47,7 +47,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -55,7 +55,7 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -63,7 +63,7 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -71,7 +71,7 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -81,7 +81,7 @@ module.exports = {
           type: Sequelize.BOOLEAN,
           defaultValue: false,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -89,7 +89,7 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query('ALTER TABLE patients ALTER COLUMN pin DROP NOT NULL', { transaction });
       await queryInterface.sequelize.query('ALTER TABLE patients ALTER COLUMN priority DROP NOT NULL', { transaction });
@@ -97,7 +97,7 @@ module.exports = {
       await queryInterface.removeConstraint('patients', 'patients_scene_id_pin_uk', { transaction });
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX patients_scene_id_pin_uk ON patients (scene_id, pin) WHERE canonical_id IS NULL',
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patient_observations',
@@ -105,15 +105,15 @@ module.exports = {
         {
           type: Sequelize.CITEXT,
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         'UPDATE patient_observations SET pin=patients.pin FROM patients WHERE patients.id=patient_observations.patient_id',
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         'INSERT INTO patients(id, canonical_id, pin, version, last_name, first_name, age, dob, respiratory_rate, pulse, capillary_refill, text, priority, location, lat, lng, created_at, created_by_id, updated_at, updated_by_id, updated_attributes, transport_agency_id, transport_facility_id, scene_id, parent_id, created_by_agency_id, updated_by_agency_id, portrait_file, photo_file, audio_file, geog, gender, age_units, bp_systolic, bp_diastolic, gcs_total, complaint, predictions, is_transported, is_transported_left_independently, triage_mental_status, triage_perfusion) SELECT id, patient_id AS canonical_id, pin, version, last_name, first_name, age, dob, respiratory_rate, pulse, capillary_refill, text, priority, location, lat, lng, created_at, created_by_id, updated_at, updated_by_id, updated_attributes, transport_agency_id, transport_facility_id, scene_id, parent_patient_observation_id AS parent_id, created_by_agency_id, updated_by_agency_id, portrait_file, photo_file, audio_file, geog, gender, age_units, bp_systolic, bp_diastolic, gcs_total, complaint, predictions, is_transported, is_transported_left_independently, triage_mental_status, triage_perfusion FROM patient_observations',
-        { transaction }
+        { transaction },
       );
     });
   },

@@ -86,7 +86,7 @@ module.exports = (sequelize, DataTypes) => {
           'transportFacilityId',
           'data',
         ],
-        options
+        options,
       );
       return [record, created];
     }
@@ -259,7 +259,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         },
       },
-    }
+    },
   );
 
   Patient.beforeValidate(async (record, options) => {

@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Narrative',
       tableName: 'narratives',
       underscored: true,
-    }
+    },
   );
 
   return Narrative;

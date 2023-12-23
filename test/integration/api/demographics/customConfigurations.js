@@ -116,7 +116,7 @@ describe('/api/demographics/custom-configurations', () => {
       assert.deepStrictEqual(draftVersion.demCustomConfiguration?.length, 1);
       assert.deepStrictEqual(
         draftVersion.demCustomConfiguration[0]?.['dCustomConfiguration.02']?._text,
-        'Updating this element text for the update'
+        'Updating this element text for the update',
       );
     });
   });

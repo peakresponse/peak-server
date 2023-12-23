@@ -11,12 +11,16 @@ import { ApiService, NavigationService } from 'shared';
   templateUrl: './new-psap-dispatcher.component.html',
 })
 export class NewPsapDispatcherComponent {
-  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {}
 
   searchHandler = (query: string) =>
     this.api.users.index(new HttpParams().set('search', query)).pipe(
       catchError(() => of([])),
-      map((res: any) => res.body)
+      map((res: any) => res.body),
     );
 
   formatter = (result: any) => `${result.firstName} ${result.lastName} <${result.email}>`;

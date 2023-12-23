@@ -34,7 +34,10 @@ export class FormComponent implements OnChanges {
   updated = false;
   error = false;
 
-  constructor(protected api: ApiService, protected currentUser: UserService) {}
+  constructor(
+    protected api: ApiService,
+    protected currentUser: UserService,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['id']) {
@@ -51,7 +54,7 @@ export class FormComponent implements OnChanges {
           this.error = response.error;
           this.loading = false;
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.loading = false;
@@ -79,7 +82,7 @@ export class FormComponent implements OnChanges {
             this.error = response.error;
             this.loading = false;
             return EMPTY;
-          })
+          }),
         )
         .subscribe((response: HttpResponse<any>) => {
           this.loading = false;
@@ -95,7 +98,7 @@ export class FormComponent implements OnChanges {
             this.error = response.error;
             this.loading = false;
             return EMPTY;
-          })
+          }),
         )
         .subscribe((response: HttpResponse<any>) => {
           this.loading = false;
@@ -120,7 +123,7 @@ export class FormComponent implements OnChanges {
           this.error = response.error;
           this.loading = false;
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.loading = false;

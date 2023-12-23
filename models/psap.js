@@ -86,7 +86,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Psap',
       tableName: 'psaps',
       underscored: true,
-    }
+    },
   );
 
   sequelizePaginate.paginate(Psap);

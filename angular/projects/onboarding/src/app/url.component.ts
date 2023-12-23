@@ -23,7 +23,11 @@ export class UrlComponent {
   };
   errorStatus?: number;
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private navigation: NavigationService) {
+  constructor(
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private navigation: NavigationService,
+  ) {
     this.baseHost = (window as any).env.BASE_HOST;
     this.stateId = this.route.snapshot.queryParamMap.get('stateId') ?? undefined;
     this.agencyId = this.route.snapshot.queryParamMap.get('agencyId') ?? undefined;
@@ -41,7 +45,7 @@ export class UrlComponent {
             /// TODO: show error
           }
           return EMPTY;
-        })
+        }),
       )
       .subscribe((res) => {
         this.isLoading = false;
@@ -63,7 +67,7 @@ export class UrlComponent {
             this.errorStatus = res.status;
           }
           return EMPTY;
-        })
+        }),
       )
       .subscribe(() => {
         if (this.data.subdomain == value) {

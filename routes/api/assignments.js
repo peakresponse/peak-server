@@ -49,7 +49,7 @@ router.post(
         res.status(HttpStatus.CREATED).json(assignment.toJSON());
       }
     });
-  })
+  }),
 );
 
 module.exports = router;
