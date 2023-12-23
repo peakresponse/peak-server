@@ -6,8 +6,7 @@
   [class.form-field--invalid]="isInvalid"
   [class.form-field--nonempty]="isNonEmpty"
   [class.form-field--unconfirmed]="isUnconfirmed"
-  (click)="onClick($event)"
->
+  (click)="onClick($event)">
   <label [for]="derivedId">{{ label }}</label>
   <input *ngIf="upload" type="text" readonly [value]="upload.name" />
   <input *ngIf="!upload && value" type="text" readonly [value]="value" />
@@ -16,5 +15,10 @@
 <div class="invalid-feedback" *ngIf="errorMessage as msg">{{ msg }}</div>
 <ng-template
   [ngTemplateOutlet]="template"
-  [ngTemplateOutletContext]="{ isEditing: isEditing, isFocusable: isFocusable, isFocused: isFocused, source: source, target: target }"
-></ng-template>
+  [ngTemplateOutletContext]="{
+    isEditing: isEditing,
+    isFocusable: isFocusable,
+    isFocused: isFocused,
+    source: source,
+    target: target
+  }"></ng-template>

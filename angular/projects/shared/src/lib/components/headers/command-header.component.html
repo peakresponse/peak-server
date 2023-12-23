@@ -4,8 +4,7 @@
       *ngIf="user"
       (mouseenter)="showDropdown = true"
       (mouseleave)="showDropdown = false"
-      class="order-first d-flex align-items-center position-relative"
-    >
+      class="order-first d-flex align-items-center position-relative">
       <ul class="command-header__dropdown" [class.command-header__dropdown--active]="template && showDropdown">
         <ng-template [ngTemplateOutlet]="template"></ng-template>
       </ul>
@@ -19,8 +18,7 @@
       class="order-last"
       *ngIf="showSearch"
       placeholder="Search"
-      (debouncedValueChange)="searchValueChange.emit($event)"
-    ></shared-search-field>
+      (debouncedValueChange)="searchValueChange.emit($event)"></shared-search-field>
     <ng-content></ng-content>
   </div>
 </header>

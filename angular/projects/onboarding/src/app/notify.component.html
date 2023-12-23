@@ -8,8 +8,7 @@
   [isBackVisible]="!isDone"
   (back)="onBack()"
   [isCancelVisible]="!isDone"
-  (cancel)="onCancel()"
->
+  (cancel)="onCancel()">
   <ng-container class="wizard__header">
     <ng-container *ngIf="!isDone">
       <h1 *ngIf="reason == 'state'" i18n>Sorry, we’re not yet available in your state.</h1>
@@ -59,8 +58,7 @@
               label="First Name"
               placeholder="Jane"
               [source]="data"
-              [target]="data"
-            ></shared-text-field>
+              [target]="data"></shared-text-field>
           </div>
         </div>
         <div class="col-md-6">
@@ -76,8 +74,7 @@
             label="Email"
             placeholder="jane@firedepartment.gov"
             [source]="data"
-            [target]="data"
-          ></shared-text-field>
+            [target]="data"></shared-text-field>
         </div>
       </div>
       <input type="submit" class="d-none" value="Next" />

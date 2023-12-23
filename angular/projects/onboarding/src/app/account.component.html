@@ -8,8 +8,7 @@
   (next)="onNext()"
   [isNextVisible]="!isDone"
   [isDoneVisible]="isDone"
-  (done)="onCancel()"
->
+  (done)="onCancel()">
   <ng-container class="wizard__header">
     <h1 *ngIf="!isDone && !exists" i18n>Tell us a little about yourself.</h1>
     <h1 *ngIf="!isDone && exists && !isFirstStep" i18n>Looks like {{ agency?.name }} already has an account.</h1>
@@ -49,8 +48,7 @@
               label="First Name"
               [source]="data"
               [target]="data"
-              [error]="error"
-            ></shared-text-field>
+              [error]="error"></shared-text-field>
           </div>
         </div>
         <div class="col-md-6">
@@ -81,8 +79,7 @@
               [hasError]="!isPasswordSecure || !isPasswordConfirmed"
               [source]="data"
               [target]="data"
-              [error]="error"
-            >
+              [error]="error">
               <ng-template>
                 <div *ngIf="!isPasswordConfirmed" class="invalid-feedback">Passwords do not match</div>
               </ng-template>
@@ -96,8 +93,7 @@
               [hasError]="!isPasswordConfirmed"
               [source]="data"
               [target]="data"
-              [error]="error"
-            >
+              [error]="error">
               <ng-template>
                 <div *ngIf="!isPasswordConfirmed" class="invalid-feedback">Passwords do not match</div>
               </ng-template>

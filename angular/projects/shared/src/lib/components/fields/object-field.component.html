@@ -6,8 +6,7 @@
   [source]="search.object"
   [target]="target ? search.object : null"
   [isFocusable]="false"
-  (valueChange)="onClear()"
-></shared-text-field>
+  (valueChange)="onClear()"></shared-text-field>
 <ng-template #rt let-r="result" let-t="term">{{ inputFormatter(r) }}</ng-template>
 <shared-search-field
   *ngIf="!search.object"
@@ -20,5 +19,4 @@
   [resultTemplate]="rt"
   [isSelectOnly]="true"
   [inputFormatter]="inputFormatter"
-  (valueChange)="onSelect($event)"
-></shared-search-field>
+  (valueChange)="onSelect($event)"></shared-search-field>

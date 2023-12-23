@@ -15,8 +15,7 @@
       [hideButtons]="!isDraft"
       (load)="onLoad($event)"
       (update)="onUpdate()"
-      (delete)="onDelete()"
-    >
+      (delete)="onDelete()">
       <ng-template let-record="record" let-error="error">
         <div class="mb-3 d-flex align-items-center">
           <shared-text-field id="name" class="flex-grow-1 me-3" label="Name" [source]="record" [error]="error"></shared-text-field>
@@ -28,8 +27,7 @@
             label="NEMSIS Version"
             [source]="record"
             [target]="isDraft ? record : null"
-            [error]="error"
-          ></shared-text-field>
+            [error]="error"></shared-text-field>
         </div>
         <div class="mb-3">
           <shared-object-field
@@ -39,8 +37,7 @@
             [target]="isDraft ? record : null"
             [error]="error"
             objectNameProperty="displayVersion"
-            objectApiPath="nemsisStateDataSets"
-          ></shared-object-field>
+            objectApiPath="nemsisStateDataSets"></shared-object-field>
         </div>
         <div class="mb-3">
           <shared-array-field
@@ -48,8 +45,7 @@
             label="DEM Schematrons"
             [source]="record"
             [target]="isDraft ? record : null"
-            [error]="error"
-          >
+            [error]="error">
             <ng-template #item let-schematronId="item">
               {{ schematronById(schematronId)?.displayVersion }}
             </ng-template>
@@ -58,8 +54,7 @@
                 #demSchematrons
                 id="demSchematrons"
                 (valueChange)="$event && addItem($event); $event && demSchematrons.onClear()"
-                [target]="{ demSchematrons: null }"
-              >
+                [target]="{ demSchematrons: null }">
                 <option [value]="null">Add a DEM Schematron...</option>
                 <option *ngFor="let schematron of demSchematronsInstalled" [value]="schematron.id">{{ schematron.displayVersion }}</option>
               </shared-select-field>
@@ -72,8 +67,7 @@
             label="EMS Schematrons"
             [source]="record"
             [target]="isDraft ? record : null"
-            [error]="error"
-          >
+            [error]="error">
             <ng-template #item let-schematronId="item">
               {{ schematronById(schematronId)?.displayVersion }}
             </ng-template>
@@ -82,8 +76,7 @@
                 #emsSchematrons
                 id="emsSchematrons"
                 (valueChange)="$event && addItem($event); $event && emsSchematrons.onClear()"
-                [target]="{ emsSchematrons: null }"
-              >
+                [target]="{ emsSchematrons: null }">
                 <option [value]="null">Add an EMS Schematron...</option>
                 <option *ngFor="let schematron of emsSchematronsInstalled" [value]="schematron.id">{{ schematron.displayVersion }}</option>
               </shared-select-field>

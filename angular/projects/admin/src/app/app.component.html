@@ -84,8 +84,7 @@
     class="notifications__toast"
     *ngFor="let message of notification.messages$ | async"
     [delay]="message.delay"
-    (hidden)="notification.pop(message.id)"
-  >
+    (hidden)="notification.pop(message.id)">
     {{ message.text }}
   </ngb-toast>
 </div>

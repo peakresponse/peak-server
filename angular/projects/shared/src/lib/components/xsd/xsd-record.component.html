@@ -32,8 +32,7 @@
           [element]="element"
           [data]="record.data"
           [error]="error"
-          [basePath]="recordSchema?.basePath"
-        ></shared-xsd-form-group>
+          [basePath]="recordSchema?.basePath"></shared-xsd-form-group>
       </ng-container>
       <ng-template *ngIf="template" [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ recordSchema, record, error }"></ng-template>
       <div class="d-flex justify-content-between mb-3">
@@ -45,8 +44,7 @@
           *ngIf="!(isNewRecord || isEditingDraft || record.isDraft) && !record.draft"
           (click)="onArchive()"
           type="button"
-          class="btn btn--danger"
-        >
+          class="btn btn--danger">
           Archive
         </button>
       </div>

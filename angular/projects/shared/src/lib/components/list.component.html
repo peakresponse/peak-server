@@ -2,6 +2,5 @@
 <ng-template
   *ngFor="let record of records; trackBy: trackById"
   [ngTemplateOutlet]="template"
-  [ngTemplateOutletContext]="{ records: records, record: record }"
-></ng-template>
+  [ngTemplateOutletContext]="{ records: records, record: record }"></ng-template>
 <span #paginationLoader="sharedAutoload" *ngIf="paginationLink" [shared-autoload]="paginationLink" (onLoadMore)="onLoadMore($event)"></span>

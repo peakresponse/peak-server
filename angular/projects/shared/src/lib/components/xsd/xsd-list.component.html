@@ -23,8 +23,7 @@
         </td>
         <ng-template
           [ngTemplateOutlet]="template"
-          [ngTemplateOutletContext]="{ records: data, id: record.id, record: record }"
-        ></ng-template>
+          [ngTemplateOutletContext]="{ records: data, id: record.id, record: record }"></ng-template>
       </tr>
       <tr *ngIf="(data?.length ?? 0) === 0">
         <td [attr.colspan]="1 + schemaColumns.length + addlColumns.length">No records yet.</td>
@@ -37,8 +36,7 @@
             #paginationLoader="sharedAutoload"
             *ngIf="paginationLink"
             [shared-autoload]="paginationLink"
-            (onLoadMore)="onLoadMore($event)"
-          ></span>
+            (onLoadMore)="onLoadMore($event)"></span>
         </td>
       </tr>
     </tfoot>

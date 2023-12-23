@@ -23,8 +23,7 @@
           label="NEMSIS Version"
           [source]="record"
           [target]="record"
-          [error]="error"
-        ></shared-text-field>
+          [error]="error"></shared-text-field>
       </div>
       <div class="mb-3">
         <shared-object-field
@@ -34,8 +33,7 @@
           [target]="record"
           [error]="error"
           objectNameProperty="displayVersion"
-          objectApiPath="nemsisStateDataSets"
-        ></shared-object-field>
+          objectApiPath="nemsisStateDataSets"></shared-object-field>
       </div>
       <div class="mb-3">
         <shared-text-field
@@ -43,8 +41,7 @@
           label="State Unique Id"
           [source]="record"
           [target]="record"
-          [error]="error"
-        ></shared-text-field>
+          [error]="error"></shared-text-field>
       </div>
       <div class="mb-3">
         <shared-text-field id="number" label="Number" [source]="record" [target]="record" [error]="error"></shared-text-field>
@@ -59,8 +56,7 @@
           [source]="record"
           [target]="record"
           [error]="error"
-          objectApiPath="psaps"
-        ></shared-object-field>
+          objectApiPath="psaps"></shared-object-field>
       </div>
       <div *ngIf="record.isClaimed" class="mb-3">
         <shared-text-field id="subdomain" label="Subdomain" [source]="record" [target]="record" [error]="error"></shared-text-field>

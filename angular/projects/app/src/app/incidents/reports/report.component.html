@@ -95,8 +95,7 @@
           <shared-text-field
             id="environmentalFoodAllergies"
             label="Environmental/Food Allergies"
-            [source]="report.history"
-          ></shared-text-field>
+            [source]="report.history"></shared-text-field>
         </div>
       </div>
     </div>
@@ -191,8 +190,7 @@
           [title]="recordingTitle(i)"
           [fileUrl]="file.fileUrl"
           [timestamp]="file.createdAt"
-          [duration]="file.metadata?.duration"
-        >
+          [duration]="file.metadata?.duration">
           {{ report.predictionsFor(file.canonicalId)?.text }}
         </shared-recording-field>
       </div>
