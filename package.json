@@ -91,7 +91,7 @@
     "timeout": 120000
   },
   "prettier": {
-    "jsxBracketSameLine": true,
+    "bracketSameLine": true,
     "printWidth": 140,
     "singleQuote": true
   },
