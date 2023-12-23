@@ -4,5 +4,10 @@ module.exports = {
   output: {
     publicPath: '/angular/auth/',
   },
-  plugins: [new BundleTracker({ filename: './projects/auth/webpack-stats.json' })],
+  plugins: [
+    new BundleTracker({
+      path: __dirname,
+      filename: 'webpack-stats.json',
+    }),
+  ],
 };

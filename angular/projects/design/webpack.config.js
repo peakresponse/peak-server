@@ -22,5 +22,11 @@ module.exports = {
   output: {
     publicPath: '/angular/design/',
   },
-  plugins: [new MiniCssExtractPlugin(), new BundleTracker({ filename: './projects/design/webpack-stats.json' })],
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new BundleTracker({
+      path: __dirname,
+      filename: 'webpack-stats.json',
+    }),
+  ],
 };
