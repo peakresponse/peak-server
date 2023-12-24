@@ -130,7 +130,6 @@
     "luxon": "^3.4.4",
     "mime-types": "^2.1.35",
     "mkdirp": "^3.0.1",
-    "moment": "^2.29.4",
     "morgan": "~1.10.0",
     "node-cache": "^5.1.2",
     "node-expat": "astro/node-expat#2bdaae78c00419e9f119a81b2dd524aa31d70f9d",
@@ -175,6 +174,7 @@
     "supertest": "^6.3.3",
     "supertest-session": "^5.0.1",
     "superwstest": "^2.0.3",
+    "timekeeper": "^2.3.1",
     "undici": "^6.2.1"
   }
 }

@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const HttpStatus = require('http-status-codes');
-const moment = require('moment');
+const { DateTime } = require('luxon');
 const { URLSearchParams } = require('url');
 const xmljs = require('xml-js');
 
@@ -110,7 +110,7 @@ router.get('/', async (req, res, next) => {
   if (req.subdomains.length > 0) {
     next();
   } else if (process.env.MARKETING_ENABLED === 'true') {
-    let articles = cache.get('root-index-articles');
+    let articles = []; // cache.get('root-index-articles');
     if (articles === undefined || !articles.length) {
       articles = [];
       cache.set('root-index-articles', articles);
@@ -125,7 +125,7 @@ router.get('/', async (req, res, next) => {
         for (const item of json.rss.channel.item) {
           const article = {
             title: item.title._cdata,
-            pubDate: moment(item.pubDate._text).format('MMMM D, YYYY'),
+            pubDate: DateTime.fromRFC2822(item.pubDate._text).toLocaleString({ month: 'long', day: 'numeric' }),
             link: item.link._text,
             content: item['content:encoded']._cdata,
           };
