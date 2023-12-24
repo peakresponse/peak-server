@@ -97,12 +97,12 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.478.0",
+    "@aws-sdk/client-sts": "^3.478.0",
     "@aws-sdk/cloudfront-signer": "^3.468.0",
     "@aws-sdk/s3-request-presigner": "^3.478.0",
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@googlemaps/google-maps-services-js": "^3.3.42",
     "@node-oauth/oauth2-server": "^5.1.0",
-    "aws-sdk": "^2.1524.0",
     "basic-ftp": "^5.0.4",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
