@@ -1,5 +1,7 @@
 const assert = require('assert');
+const { DateTime } = require('luxon');
 const nodemailerMock = require('nodemailer-mock');
+const timekeeper = require('timekeeper');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
@@ -41,6 +43,20 @@ describe('models', () => {
       it('returns only active employments that satisfy the given role (owner satisfies all implicitly)', async () => {
         const records = await models.Employment.scope('final', { method: ['role', models.Employment.Roles.PERSONNEL] }, 'active').findAll();
         assert.deepStrictEqual(records.length, 3);
+      });
+    });
+
+    describe('.isActive', () => {
+      it('returns false if current datetime is past end date', async () => {
+        const record = await models.Employment.findByPk('b0c2b79e-5905-417f-a790-ba77c1134d92');
+        assert.deepStrictEqual(record.isActive, false);
+      });
+
+      it('returns true if current datetime is NOT past end date', async () => {
+        timekeeper.freeze(DateTime.fromISO('2020-04-06').toJSDate());
+        const record = await models.Employment.findByPk('b0c2b79e-5905-417f-a790-ba77c1134d92');
+        assert.deepStrictEqual(record.isActive, true);
+        timekeeper.reset();
       });
     });
 

@@ -1,5 +1,5 @@
 const { Model } = require('sequelize');
-const moment = require('moment');
+const { DateTime } = require('luxon');
 const path = require('path');
 const sequelizePaginate = require('sequelize-paginate');
 const tmp = require('tmp-promise');
@@ -63,7 +63,9 @@ module.exports = (sequelize, DataTypes) => {
           psap.cityId = await sequelize.models.City.getCode(city?.trim(), stateId);
           psap.change = change?.trim();
           psap.comments = comments?.trim();
-          psap.modifiedOn = moment(modified, 'M/D/YYYY').toISOString();
+          if (modified) {
+            psap.modifiedOn = DateTime.fromFormat(modified, 'M/d/yy').toISODate();
+          }
           // eslint-disable-next-line no-await-in-loop
           await psap.save();
         }

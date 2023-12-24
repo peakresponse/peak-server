@@ -1,5 +1,5 @@
 const assert = require('assert');
-const moment = require('moment');
+const { DateTime } = require('luxon');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
@@ -29,7 +29,7 @@ describe('models', () => {
     describe('createOrUpdate()', () => {
       it('creates a new canonical and corresponding history Dispatch record', async () => {
         const user = await models.User.findByPk('4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c');
-        const now = moment().toISOString();
+        const now = DateTime.now().toISO();
         const data = {
           id: 'ce9151bf-090c-45c6-80ff-a0c17ba26065',
           canonicalId: '399c6daf-66db-4845-8fbf-2930477b7e61',
@@ -49,7 +49,7 @@ describe('models', () => {
         assert.deepStrictEqual(dispatch.updatedById, user.id);
         assert.deepStrictEqual(dispatch.createdByAgencyId, null);
         assert.deepStrictEqual(dispatch.updatedByAgencyId, null);
-        assert.deepStrictEqual(moment(dispatch.dispatchedAt).toISOString(), data.dispatchedAt);
+        assert.deepStrictEqual(DateTime.fromJSDate(dispatch.dispatchedAt).toISO(), data.dispatchedAt);
 
         const canonical = await models.Dispatch.findByPk('399c6daf-66db-4845-8fbf-2930477b7e61');
         assert(canonical);
@@ -62,7 +62,7 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.updatedById, user.id);
         assert.deepStrictEqual(canonical.createdByAgencyId, null);
         assert.deepStrictEqual(canonical.updatedByAgencyId, null);
-        assert.deepStrictEqual(moment(canonical.dispatchedAt).toISOString(), data.dispatchedAt);
+        assert.deepStrictEqual(DateTime.fromJSDate(canonical.dispatchedAt).toISO(), data.dispatchedAt);
 
         // records should be immutable and idempodent, sending data with same id returns existing record
         [dispatch, created] = await models.Dispatch.createOrUpdate(user, null, { ...data, dispatchedAt: null });
@@ -77,13 +77,13 @@ describe('models', () => {
         assert.deepStrictEqual(dispatch.updatedById, user.id);
         assert.deepStrictEqual(dispatch.createdByAgencyId, null);
         assert.deepStrictEqual(dispatch.updatedByAgencyId, null);
-        assert.deepStrictEqual(moment(dispatch.dispatchedAt).toISOString(), data.dispatchedAt);
+        assert.deepStrictEqual(DateTime.fromJSDate(dispatch.dispatchedAt).toISO(), data.dispatchedAt);
       });
 
       it('updates an existing canonical record and creates a corresponding history Dispatch record', async () => {
         const user = await models.User.findByPk('9eb5be23-c098-495c-a758-ce1def3ff541');
         const agency = await models.Agency.findByPk('6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
-        const now = moment().toISOString();
+        const now = DateTime.now().toISO();
         const data = {
           id: 'c25d6127-5cb9-4ca2-845d-37fb19a36e4b',
           parentId: '374450ef-99e3-4554-9298-c8b70373d63f',
@@ -103,7 +103,7 @@ describe('models', () => {
         assert.deepStrictEqual(dispatch.createdByAgencyId, parent.createdByAgencyId);
         assert.deepStrictEqual(dispatch.updatedByAgencyId, agency.id);
         assert.deepStrictEqual(dispatch.dispatchedAt, parent.dispatchedAt);
-        assert.deepStrictEqual(moment(dispatch.acknowledgedAt).toISOString(), data.acknowledgedAt);
+        assert.deepStrictEqual(DateTime.fromJSDate(dispatch.acknowledgedAt).toISO(), data.acknowledgedAt);
         assert.deepStrictEqual(dispatch.updatedAttributes, ['id', 'parentId', 'acknowledgedAt']);
 
         const canonical = await dispatch.getCanonical();

@@ -1,7 +1,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const HttpStatus = require('http-status-codes');
-const moment = require('moment');
+const { DateTime } = require('luxon');
 const path = require('path');
 const session = require('supertest-session');
 
@@ -75,13 +75,13 @@ describe('/webhooks/sffd', () => {
       assert.deepStrictEqual(dispatches.length, 3);
       const vehicle1 = dispatches.find((dispatch) => dispatch.vehicle.number === 'M595');
       assert(vehicle1);
-      assert.deepStrictEqual(moment(vehicle1.dispatchedAt).toISOString(), '2023-12-05T22:42:08.000Z');
+      assert.deepStrictEqual(DateTime.fromJSDate(vehicle1.dispatchedAt).toISO(), '2023-12-05T22:42:08.000+00:00');
       const vehicle2 = dispatches.find((dispatch) => dispatch.vehicle.number === 'M554');
       assert(vehicle2);
-      assert.deepStrictEqual(moment(vehicle2.dispatchedAt).toISOString(), '2023-12-05T22:43:13.000Z');
+      assert.deepStrictEqual(DateTime.fromJSDate(vehicle2.dispatchedAt).toISO(), '2023-12-05T22:43:13.000+00:00');
       const vehicle3 = dispatches.find((dispatch) => dispatch.vehicle.number === 'M573');
       assert(vehicle3);
-      assert.deepStrictEqual(moment(vehicle3.dispatchedAt).toISOString(), '2023-12-05T22:45:54.000Z');
+      assert.deepStrictEqual(DateTime.fromJSDate(vehicle3.dispatchedAt).toISO(), '2023-12-05T22:45:54.000+00:00');
     });
   });
 });

@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const moment = require('moment');
+const { DateTime } = require('luxon');
 const { Op, ValidationError, ValidationErrorItem } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 const { v4: uuidv4 } = require('uuid');
@@ -236,7 +236,7 @@ module.exports = (sequelize, DataTypes) => {
       isActive: {
         type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['isPending', 'refusedAt', 'endedOn']),
         get() {
-          return !this.isPending && !this.refusedAt && (this.endedOn == null || moment(this.endedOn).isAfter(moment()));
+          return !this.isPending && !this.refusedAt && (this.endedOn == null || DateTime.fromISO(this.endedOn) > DateTime.now());
         },
       },
       isOwner: {
