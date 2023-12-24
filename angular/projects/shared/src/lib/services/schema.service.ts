@@ -47,7 +47,7 @@ export class SchemaService {
             this.commonTypes = commonTypes;
           }
           return of(commonTypes);
-        })
+        }),
       );
     }
     observable = observable.pipe(
@@ -89,9 +89,9 @@ export class SchemaService {
               }
             }
             return of(schema);
-          })
+          }),
         );
-      })
+      }),
     );
     return observable;
   }
@@ -137,7 +137,7 @@ export class SchemaService {
             this.commonTypes[simpleType._attributes.name] = simpleType;
           }
           return of(this.commonTypes);
-        })
+        }),
       );
     }
     return observable.pipe(
@@ -167,9 +167,9 @@ export class SchemaService {
               }
             }
             return of(schema);
-          })
+          }),
         );
-      })
+      }),
     );
   }
 }

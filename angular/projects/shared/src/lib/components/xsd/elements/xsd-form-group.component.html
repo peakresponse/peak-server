@@ -15,8 +15,7 @@
           [element]="nestedElement"
           [data]="selectedValue"
           [displayOnly]="true"
-          [error]="error"
-        ></shared-xsd-element-multi>
+          [error]="error"></shared-xsd-element-multi>
       </div>
       <div class="form-field__subitem">
         <button (click)="showGroupModal(modal, selectedValue, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
@@ -36,8 +35,7 @@
       confirmLabel="Submit"
       i18n-dismissLabel
       dismissLabel="Cancel"
-      (confirm)="onGroupModalConfirm(modal)"
-    >
+      (confirm)="onGroupModalConfirm(modal)">
       <h3 class="modal-title">
         <span i18n *ngIf="isGroupModalEditing">Edit {{ displayName | inflection: 'singularize' }}</span>
         <span i18n *ngIf="!isGroupModalEditing">New {{ displayName | inflection: 'singularize' }}</span>
@@ -50,8 +48,7 @@
             [basePath]="groupModalPath"
             [element]="nestedElement"
             [data]="groupModalValue"
-            [error]="error"
-          ></shared-xsd-form-group>
+            [error]="error"></shared-xsd-form-group>
         </div>
       </div>
     </shared-modal>

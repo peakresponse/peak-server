@@ -33,7 +33,7 @@ router.get(
     const { docs, pages, total } = await models.Form.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((doc) => doc.toJSON()));
-  })
+  }),
 );
 
 router.post(
@@ -42,7 +42,7 @@ router.post(
   helpers.async(async (req, res) => {
     const [record, created] = await models.Form.createOrUpdate(req.user, req.agency, req.body);
     res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(record.toJSON());
-  })
+  }),
 );
 
 router.get(
@@ -60,7 +60,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.delete(
@@ -86,7 +86,7 @@ router.delete(
             parentId: record.currentId,
             archivedAt: new Date(),
           },
-          { transaction }
+          { transaction },
         );
       }
     });
@@ -95,7 +95,7 @@ router.delete(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

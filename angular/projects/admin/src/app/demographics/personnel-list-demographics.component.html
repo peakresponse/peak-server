@@ -10,8 +10,7 @@
   [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
   draftXsd="dPersonnel_v3.xsd"
   [schemaColumns]="sectionColumns"
-  [addlColumns]="addlColumns"
->
+  [addlColumns]="addlColumns">
   <ng-container class="admin-schema-list-header">
     <button (click)="bulkInvite.show()" class="btn btn--sm btn--secondary ms-3">Bulk Invite</button>
   </ng-container>
@@ -36,8 +35,7 @@
   confirmLabel="Refuse"
   i18n-dismissLabel
   dismissLabel="Cancel"
-  (confirm)="onConfirmRefuse(refuseConfirmation.data)"
->
+  (confirm)="onConfirmRefuse(refuseConfirmation.data)">
   <div class="modal-body">
     <p i18n>
       Are you sure you wish to refuse the pending user request from

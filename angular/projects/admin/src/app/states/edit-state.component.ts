@@ -25,7 +25,7 @@ export class EditStateComponent {
     private api: ApiService,
     private navigation: NavigationService,
     public route: ActivatedRoute,
-    private schema: SchemaService
+    private schema: SchemaService,
   ) {}
 
   ngOnInit() {

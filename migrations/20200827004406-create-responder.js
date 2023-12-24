@@ -50,7 +50,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addConstraint('responders', {
         type: 'FOREIGN KEY',

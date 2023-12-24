@@ -95,7 +95,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'NemsisSchematron',
       tableName: 'nemsis_schematrons',
       underscored: true,
-    }
+    },
   );
 
   NemsisSchematron.afterSave(async (record, options) => {

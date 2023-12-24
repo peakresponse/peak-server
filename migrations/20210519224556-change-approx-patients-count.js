@@ -31,7 +31,7 @@ module.exports = {
           allowNull: false,
           defaultValue: [0, 0, 0, 0, 0, 0],
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scene_observations',
@@ -39,7 +39,7 @@ module.exports = {
         {
           type: Sequelize.JSONB,
         },
-        { transaction }
+        { transaction },
       );
     });
   },

@@ -33,7 +33,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'observations',
@@ -45,7 +45,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -57,7 +57,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'patients',
@@ -69,7 +69,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
     });
   },

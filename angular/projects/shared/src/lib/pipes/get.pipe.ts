@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 
 /**
  * Returns the value (or first value of an array) for the given attribute path.

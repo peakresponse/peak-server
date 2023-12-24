@@ -84,19 +84,20 @@ router.get(
       environment: {},
       layout: 'angular/layout',
     });
-  }
+  },
 );
 
 router.get('/auth(/*)?', (req, res) => {
-  req.logout();
-  res.locals.designWebpackStats = getDesignWebpackStats();
-  res.locals.webpackStats = getAuthWebpackStats();
-  res.render('angular/index', {
-    title: 'auth.title',
-    baseHref: '/auth',
-    elementRoot: 'auth-root',
-    environment: {},
-    layout: 'angular/layout',
+  req.logout(() => {
+    res.locals.designWebpackStats = getDesignWebpackStats();
+    res.locals.webpackStats = getAuthWebpackStats();
+    res.render('angular/index', {
+      title: 'auth.title',
+      baseHref: '/auth',
+      elementRoot: 'auth-root',
+      environment: {},
+      layout: 'angular/layout',
+    });
   });
 });
 

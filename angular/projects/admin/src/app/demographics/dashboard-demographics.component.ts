@@ -19,7 +19,7 @@ export class DashboardDemographicsComponent implements OnInit {
     private agency: AgencyService,
     private api: ApiService,
     private navigation: NavigationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {

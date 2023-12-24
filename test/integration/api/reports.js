@@ -666,8 +666,8 @@ describe('/api/reports', () => {
               State: [report.scene.state.toJSON()],
               Time: [report.time.toJSON()],
               Vital: report.vitals.map((m) => m.toJSON()),
-            })
-          )
+            }),
+          ),
         );
       });
     });

@@ -34,7 +34,7 @@ export class ForgotComponent {
           this.isLoading = false;
           this.error = response.error;
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.success = response.body;

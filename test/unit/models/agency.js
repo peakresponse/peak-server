@@ -205,7 +205,7 @@ describe('models', () => {
             emsSchematronIds: ['dabc90e5-b8fa-4dac-bcfd-be659ba46b54'],
             createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
             updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
-          })
+          }),
         );
       });
     });
@@ -434,11 +434,11 @@ describe('models', () => {
           assert.deepStrictEqual(configuration.data?.['dConfiguration.10']?.length, 112);
           assert.deepStrictEqual(
             configuration.validationErrors?.errors?.[0]?.path,
-            "$['dConfiguration.ConfigurationGroup']['dConfiguration.13']"
+            "$['dConfiguration.ConfigurationGroup']['dConfiguration.13']",
           );
           assert.deepStrictEqual(
             configuration.validationErrors?.errors?.[1]?.path,
-            "$['dConfiguration.ConfigurationGroup']['dConfiguration.16']"
+            "$['dConfiguration.ConfigurationGroup']['dConfiguration.16']",
           );
         });
       });

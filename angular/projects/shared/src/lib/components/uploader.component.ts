@@ -50,7 +50,10 @@ export class UploaderComponent {
   @ViewChild('fileInput') fileInput?: ElementRef;
   uploaders: any[] = [];
 
-  constructor(protected api: ApiService, protected currentUser: UserService) {}
+  constructor(
+    protected api: ApiService,
+    protected currentUser: UserService,
+  ) {}
 
   onChange(event: any) {
     for (let file of event.target.files) {

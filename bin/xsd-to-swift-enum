@@ -27,7 +27,7 @@ ${values
     (val) =>
       `    case ${inflection.camelize(val['xs:annotation']['xs:documentation']._text.replace(/[^A-Za-z0-9]/g, ''), true)} = "${
         val._attributes.value
-      }"`
+      }"`,
   )
   .join('\n')}
 

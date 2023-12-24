@@ -17,7 +17,11 @@ export class ListReportsComponent implements OnDestroy {
   incidentId?: string | null;
   reports?: any[];
 
-  constructor(private api: ApiService, private navigation: NavigationService, public route: ActivatedRoute) {
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    public route: ActivatedRoute,
+  ) {
     this.subscription = this.route.paramMap.subscribe((paramMap) => {
       this.incidentId = paramMap.get('incidentId');
       if (this.incidentId) {

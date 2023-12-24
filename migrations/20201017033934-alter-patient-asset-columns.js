@@ -11,7 +11,7 @@ module.exports = {
         photo_file=SUBSTRING(photo_url FROM 37),
         audio_file=SUBSTRING(audio_url FROM 37)
       `,
-        { transaction }
+        { transaction },
       );
       await queryInterface.removeColumn('patients', 'portrait_url', { transaction });
       await queryInterface.removeColumn('patients', 'photo_url', { transaction });
@@ -31,7 +31,7 @@ module.exports = {
         photo_url=CASE WHEN photo_file IS NOT NULL THEN CONCAT('/uploads/patient-observations/photo/', photo_file) ELSE NULL END,
         audio_url=CASE WHEN audio_file IS NOT NULL THEN CONCAT('/uploads/patient-observations/audio/', audio_file) ELSE NULL END
       `,
-        { transaction }
+        { transaction },
       );
       await queryInterface.removeColumn('patients', 'portrait_file', { transaction });
       await queryInterface.removeColumn('patients', 'photo_file', { transaction });

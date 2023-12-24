@@ -25,7 +25,11 @@ export class NewFormDemographicsComponent implements OnInit {
   isNewSignatureOpen = false;
   newSignature: any = {};
 
-  constructor(private navigation: NavigationService, private notification: NotificationService, private schema: SchemaService) {}
+  constructor(
+    private navigation: NavigationService,
+    private notification: NotificationService,
+    private schema: SchemaService,
+  ) {}
 
   ngOnInit(): void {
     this.schema.get('/nemsis/xsd/eOther_v3.json').subscribe(() => {

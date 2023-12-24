@@ -10,7 +10,7 @@ module.exports = {
       await queryInterface.sequelize.query('ALTER TABLE responders ALTER COLUMN arrived_at SET NOT NULL', { transaction });
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX responders_scene_id_user_id ON responders (scene_id, user_id) WHERE departed_at IS NULL',
-        { transaction }
+        { transaction },
       );
     });
   },

@@ -2,7 +2,7 @@ const { Model } = require('sequelize');
 const moment = require('moment');
 const path = require('path');
 const sequelizePaginate = require('sequelize-paginate');
-const tmp = require('tmp');
+const tmp = require('tmp-promise');
 
 const { download, parseSpreadsheet } = require('../lib/utils');
 
@@ -28,13 +28,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async importPsapsForState(stateId) {
-      const tmpDir = tmp.dirSync();
+      const tmpDir = await tmp.dir({ unsafeCleanup: true });
       try {
-        const registryPath = path.resolve(tmpDir.name, 'registry.xlsx');
+        const registryPath = path.resolve(tmpDir.path, 'registry.xlsx');
         await download('https://www.fcc.gov/sites/default/files/masterpsapregistryv2.272.xlsx', registryPath);
         await Psap.parsePsapsForState(stateId, registryPath);
       } finally {
-        tmpDir.removeCallback();
+        await tmpDir.cleanup();
       }
     }
 
@@ -86,7 +86,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Psap',
       tableName: 'psaps',
       underscored: true,
-    }
+    },
   );
 
   sequelizePaginate.paginate(Psap);

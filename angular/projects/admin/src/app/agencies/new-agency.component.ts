@@ -9,7 +9,11 @@ import { ApiService, NavigationService } from 'shared';
 export class NewAgencyComponent {
   states: any = [];
 
-  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.api.states.index().subscribe((res: any) => (this.states = res.body));

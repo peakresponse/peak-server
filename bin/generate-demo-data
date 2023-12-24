@@ -90,7 +90,7 @@ async function generateDemoData() {
         countyId: latestSFFD.scene.countyId,
         stateId: latestSFFD.scene.stateId,
       },
-      { transaction }
+      { transaction },
     );
     const incident = await models.Incident.create(
       {
@@ -100,7 +100,7 @@ async function generateDemoData() {
         createdById: user.id,
         updatedById: user.id,
       },
-      { transaction }
+      { transaction },
     );
     incidentId = incident.id;
     for (const dispatch of latestSFFD.dispatches) {
@@ -125,7 +125,7 @@ async function generateDemoData() {
           vehicleId: vehicle.id,
           dispatchedAt: dispatch.dispatchedAt,
         },
-        { transaction }
+        { transaction },
       );
     }
   });

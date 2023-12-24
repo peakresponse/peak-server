@@ -81,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
           'approxPriorityPatientsCounts',
           'data',
         ],
-        options
+        options,
       );
     }
 
@@ -223,7 +223,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Scene',
       tableName: 'scenes',
       underscored: true,
-    }
+    },
   );
 
   Scene.beforeValidate(async (record, options) => {
@@ -252,12 +252,10 @@ module.exports = (sequelize, DataTypes) => {
     });
   });
 
-  Scene.addScope('agency', (agencyId) => {
-    return {
-      where: { createdByAgencyId: agencyId },
-      /// TODO add OR clause for MCIs in county and surrounding counties
-    };
-  });
+  Scene.addScope('agency', (agencyId) => ({
+    where: { createdByAgencyId: agencyId },
+    /// TODO add OR clause for MCIs in county and surrounding counties
+  }));
 
   Scene.addScope('active', {
     where: { isMCI: true, closedAt: null },

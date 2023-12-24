@@ -103,7 +103,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Responder',
       tableName: 'responders',
       underscored: true,
-    }
+    },
   );
 
   Responder.addScope('onscene', {

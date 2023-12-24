@@ -58,34 +58,34 @@ describe('models', () => {
               _.find(error.errors, {
                 path: 'firstName',
                 message: 'First name cannot be blank',
-              })
+              }),
             );
             assert(
               _.find(error.errors, {
                 path: 'lastName',
                 message: 'Last name cannot be blank',
-              })
+              }),
             );
             assert(
               _.find(error.errors, {
                 path: 'email',
                 message: 'Email cannot be blank',
-              })
+              }),
             );
             assert(
               _.find(error.errors, {
                 path: 'position',
                 message: 'Position cannot be blank',
-              })
+              }),
             );
             assert(
               _.find(error.errors, {
                 path: 'password',
                 message: 'Password not secure enough',
-              })
+              }),
             );
             return true;
-          }
+          },
         );
       });
 
@@ -105,10 +105,10 @@ describe('models', () => {
               _.find(error.errors, {
                 path: 'password',
                 message: 'Password not secure enough',
-              })
+              }),
             );
             return true;
-          }
+          },
         );
         await assert.rejects(
           models.User.register({
@@ -125,10 +125,10 @@ describe('models', () => {
               _.find(error.errors, {
                 path: 'password',
                 message: 'Password not secure enough',
-              })
+              }),
             );
             return true;
-          }
+          },
         );
       });
 
@@ -146,7 +146,7 @@ describe('models', () => {
             assert.deepStrictEqual(error.errors.length, 1);
             assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
-          }
+          },
         );
         await assert.rejects(
           models.User.register({
@@ -161,7 +161,7 @@ describe('models', () => {
             assert.deepStrictEqual(error.errors.length, 1);
             assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
-          }
+          },
         );
         await assert.rejects(
           models.User.register({
@@ -176,7 +176,7 @@ describe('models', () => {
             assert.deepStrictEqual(error.errors.length, 1);
             assert(_.find(error.errors, { path: 'email', message: 'Invalid Email' }));
             return true;
-          }
+          },
         );
       });
 
@@ -204,10 +204,10 @@ describe('models', () => {
               _.find(error.errors, {
                 path: 'email',
                 message: 'Email already registered',
-              })
+              }),
             );
             return true;
-          }
+          },
         );
       });
     });

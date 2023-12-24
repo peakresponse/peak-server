@@ -22,7 +22,7 @@ describe('/api/facilities', () => {
         .expect('X-Total-Count', '127')
         .expect(
           'Link',
-          `<${process.env.BASE_URL}/api/facilities/?page=2>; rel="next",<${process.env.BASE_URL}/api/facilities/?page=6>; rel="last"`
+          `<${process.env.BASE_URL}/api/facilities/?page=2>; rel="next",<${process.env.BASE_URL}/api/facilities/?page=6>; rel="last"`,
         );
       assert.deepStrictEqual(response.body.length, 25);
     });
@@ -44,7 +44,7 @@ describe('/api/facilities', () => {
         .expect('X-Total-Count', '127')
         .expect(
           'Link',
-          `<${process.env.BASE_URL}/api/facilities/?lat=37.7866029&lng=-122.4560444&page=2>; rel="next",<${process.env.BASE_URL}/api/facilities/?lat=37.7866029&lng=-122.4560444&page=6>; rel="last"`
+          `<${process.env.BASE_URL}/api/facilities/?lat=37.7866029&lng=-122.4560444&page=2>; rel="next",<${process.env.BASE_URL}/api/facilities/?lat=37.7866029&lng=-122.4560444&page=6>; rel="last"`,
         );
       assert.deepStrictEqual(response.body.length, 25);
       assert.deepStrictEqual(response.body[0].name, 'CPMC - 3801 Sacramento Street');

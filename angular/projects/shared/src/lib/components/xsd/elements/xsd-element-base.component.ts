@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import * as inflection from 'inflection';
-import { cloneDeep, filter, find, isEmpty } from 'lodash';
+import { cloneDeep, filter, find, isEmpty } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
 import { ApiService } from '../../../services/api.service';
@@ -50,7 +50,7 @@ export class XsdElementBaseComponent {
               }
               return accumulator;
             },
-            { 'xs:restriction': { 'xs:enumeration': [] } }
+            { 'xs:restriction': { 'xs:enumeration': [] } },
           );
         }
       }
@@ -246,7 +246,7 @@ export class XsdElementBaseComponent {
     if (correlationId) {
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
       const rg = this.data.CustomResults?.[`${dataSet}.ResultsGroup`]?.find(
-        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId
+        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId,
       );
       if (rg) {
         return rg[`${dataSet}.01`]?._text;
@@ -290,7 +290,7 @@ export class XsdElementBaseComponent {
     if (correlationId) {
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
       const index = this.record.data.CustomResults?.[`${dataSet}.ResultsGroup`]?.findIndex(
-        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId
+        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId,
       );
       if (index >= 0) {
         this.record.data.CustomResults[`${dataSet}.ResultsGroup`].splice(index, 1);

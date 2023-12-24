@@ -7,10 +7,10 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     await queryInterface.sequelize.query(
-      'ALTER TABLE "vehicles" RENAME CONSTRAINT "demographics.vehicles_created_by_id_users_fk" TO "vehicles_created_by_id_users_fk"'
+      'ALTER TABLE "vehicles" RENAME CONSTRAINT "demographics.vehicles_created_by_id_users_fk" TO "vehicles_created_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "vehicles" RENAME CONSTRAINT "demographics.vehicles_updated_by_id_users_fk" TO "vehicles_updated_by_id_users_fk"'
+      'ALTER TABLE "vehicles" RENAME CONSTRAINT "demographics.vehicles_updated_by_id_users_fk" TO "vehicles_updated_by_id_users_fk"',
     );
     await queryInterface.sequelize.query('ALTER TABLE "vehicles" DROP CONSTRAINT "demographics.vehicles_agency_id_vin_uk"');
     await queryInterface.sequelize.query('ALTER TABLE "vehicles" DROP CONSTRAINT "demographics.vehicles_agency_id_number_uk"');
@@ -36,10 +36,10 @@ module.exports = {
       type: Sequelize.DATE,
     });
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX vehicles_agency_id_vin_uk ON vehicles (created_by_agency_id, vin) WHERE is_draft=FALSE'
+      'CREATE UNIQUE INDEX vehicles_agency_id_vin_uk ON vehicles (created_by_agency_id, vin) WHERE is_draft=FALSE',
     );
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX vehicles_agency_id_number_uk ON vehicles (created_by_agency_id, number) WHERE is_draft=FALSE'
+      'CREATE UNIQUE INDEX vehicles_agency_id_number_uk ON vehicles (created_by_agency_id, number) WHERE is_draft=FALSE',
     );
   },
 
@@ -63,16 +63,16 @@ module.exports = {
       fields: ['created_by_agency_id', 'vin'],
     });
     await queryInterface.sequelize.query(
-      'ALTER TABLE "vehicles" RENAME CONSTRAINT "vehicles_created_by_agency_id_vin_uk" TO "demographics.vehicles_agency_id_vin_uk"'
+      'ALTER TABLE "vehicles" RENAME CONSTRAINT "vehicles_created_by_agency_id_vin_uk" TO "demographics.vehicles_agency_id_vin_uk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "vehicles" RENAME CONSTRAINT "vehicles_created_by_agency_id_number_uk" TO "demographics.vehicles_agency_id_number_uk"'
+      'ALTER TABLE "vehicles" RENAME CONSTRAINT "vehicles_created_by_agency_id_number_uk" TO "demographics.vehicles_agency_id_number_uk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "vehicles" RENAME CONSTRAINT "vehicles_updated_by_id_users_fk" TO "demographics.vehicles_updated_by_id_users_fk"'
+      'ALTER TABLE "vehicles" RENAME CONSTRAINT "vehicles_updated_by_id_users_fk" TO "demographics.vehicles_updated_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "vehicles" RENAME CONSTRAINT "vehicles_created_by_id_users_fk" TO "demographics.vehicles_created_by_id_users_fk"'
+      'ALTER TABLE "vehicles" RENAME CONSTRAINT "vehicles_created_by_id_users_fk" TO "demographics.vehicles_created_by_id_users_fk"',
     );
   },
 };

@@ -3,8 +3,7 @@
   [isNextEnabled]="data.agency != null && data.agency != ''"
   (back)="onBack()"
   (cancel)="onCancel()"
-  (next)="onNext()"
->
+  (next)="onNext()">
   <ng-container class="wizard__header">
     <h1 i18n>Which agency are you signing up?</h1>
   </ng-container>
@@ -22,8 +21,7 @@
             label="Agency"
             placeholder="Search for Agency"
             [source]="data"
-            [target]="data"
-          ></shared-search-field>
+            [target]="data"></shared-search-field>
         </div>
       </div>
     </div>

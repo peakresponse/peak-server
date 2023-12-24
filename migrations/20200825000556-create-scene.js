@@ -87,7 +87,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query('CREATE INDEX scenes_geog_idx ON scenes USING gist(geog)', { transaction });
       await queryInterface.addConstraint('scenes', {
@@ -161,7 +161,5 @@ module.exports = {
       });
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('scenes');
-  },
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('scenes'),
 };

@@ -17,10 +17,10 @@ module.exports = {
     });
     await queryInterface.sequelize.query('ALTER INDEX "demographics.locations_geog_idx" RENAME TO "locations_geog_idx"');
     await queryInterface.sequelize.query(
-      'ALTER TABLE "locations" RENAME CONSTRAINT "demographics.locations_created_by_id_users_fk" TO "locations_created_by_id_users_fk"'
+      'ALTER TABLE "locations" RENAME CONSTRAINT "demographics.locations_created_by_id_users_fk" TO "locations_created_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "locations" RENAME CONSTRAINT "demographics.locations_updated_by_id_users_fk" TO "locations_updated_by_id_users_fk"'
+      'ALTER TABLE "locations" RENAME CONSTRAINT "demographics.locations_updated_by_id_users_fk" TO "locations_updated_by_id_users_fk"',
     );
     await queryInterface.addColumn('locations', 'is_draft', {
       type: Sequelize.BOOLEAN,
@@ -57,10 +57,10 @@ module.exports = {
     await queryInterface.removeColumn('locations', 'draft_parent_id');
     await queryInterface.removeColumn('locations', 'is_draft');
     await queryInterface.sequelize.query(
-      'ALTER TABLE "locations" RENAME CONSTRAINT "locations_updated_by_id_users_fk" TO "demographics.locations_updated_by_id_users_fk"'
+      'ALTER TABLE "locations" RENAME CONSTRAINT "locations_updated_by_id_users_fk" TO "demographics.locations_updated_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "locations" RENAME CONSTRAINT "locations_created_by_id_users_fk" TO "demographics.locations_created_by_id_users_fk"'
+      'ALTER TABLE "locations" RENAME CONSTRAINT "locations_created_by_id_users_fk" TO "demographics.locations_created_by_id_users_fk"',
     );
     await queryInterface.sequelize.query('ALTER INDEX "locations_geog_idx" RENAME TO "demographics.locations_geog_idx"');
     await queryInterface.removeColumn('locations', 'version_id');

@@ -5,8 +5,7 @@
   i18n-dismissLabel
   dismissLabel="Close"
   (confirm)="onSendInvitations()"
-  [disabled]="isLoading || isPolling"
->
+  [disabled]="isLoading || isPolling">
   <div class="modal-body">
     <shared-loader *ngIf="isLoading"></shared-loader>
     <ng-container *ngIf="!isLoading">

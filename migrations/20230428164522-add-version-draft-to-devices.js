@@ -16,10 +16,10 @@ module.exports = {
       },
     });
     await queryInterface.sequelize.query(
-      'ALTER TABLE "devices" RENAME CONSTRAINT "demographics.devices_created_by_id_users_fk" TO "devices_created_by_id_users_fk"'
+      'ALTER TABLE "devices" RENAME CONSTRAINT "demographics.devices_created_by_id_users_fk" TO "devices_created_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "devices" RENAME CONSTRAINT "demographics.devices_updated_by_id_users_fk" TO "devices_updated_by_id_users_fk"'
+      'ALTER TABLE "devices" RENAME CONSTRAINT "demographics.devices_updated_by_id_users_fk" TO "devices_updated_by_id_users_fk"',
     );
     await queryInterface.sequelize.query('ALTER TABLE "devices" DROP CONSTRAINT "demographics.devices_agency_id_serial_number_uk"');
     await queryInterface.addColumn('devices', 'is_draft', {
@@ -44,7 +44,7 @@ module.exports = {
       type: Sequelize.DATE,
     });
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX devices_agency_id_serial_number_uk ON devices (created_by_agency_id, serial_number) WHERE is_draft=FALSE'
+      'CREATE UNIQUE INDEX devices_agency_id_serial_number_uk ON devices (created_by_agency_id, serial_number) WHERE is_draft=FALSE',
     );
   },
 
@@ -64,13 +64,13 @@ module.exports = {
       type: 'UNIQUE',
     });
     await queryInterface.sequelize.query(
-      'ALTER TABLE "devices" RENAME CONSTRAINT "devices_created_by_agency_id_serial_number_uk" TO "demographics.devices_agency_id_serial_number_uk"'
+      'ALTER TABLE "devices" RENAME CONSTRAINT "devices_created_by_agency_id_serial_number_uk" TO "demographics.devices_agency_id_serial_number_uk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "devices" RENAME CONSTRAINT "devices_updated_by_id_users_fk" TO "demographics.devices_updated_by_id_users_fk"'
+      'ALTER TABLE "devices" RENAME CONSTRAINT "devices_updated_by_id_users_fk" TO "demographics.devices_updated_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "devices" RENAME CONSTRAINT "devices_created_by_id_users_fk" TO "demographics.devices_created_by_id_users_fk"'
+      'ALTER TABLE "devices" RENAME CONSTRAINT "devices_created_by_id_users_fk" TO "demographics.devices_created_by_id_users_fk"',
     );
     await queryInterface.removeColumn('devices', 'version_id');
   },

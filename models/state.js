@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
           exclude: ['dataSet', 'dataSetXml', 'schematronXml'],
         },
       },
-    }
+    },
   );
 
   return State;

@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { assign } from 'lodash';
+import { assign } from 'lodash-es';
 
 import { AgencyService, ApiService, ModalComponent, NotificationService, XsdListComponent } from 'shared';
 
@@ -36,7 +36,7 @@ export class PersonnelListDemographicsComponent {
     public agency: AgencyService,
     private api: ApiService,
     private notification: NotificationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
   ) {}
 
   onApprove(event: Event, record: any) {

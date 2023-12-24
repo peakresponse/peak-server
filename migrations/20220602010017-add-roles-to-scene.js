@@ -20,7 +20,7 @@ module.exports = {
             deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -35,7 +35,7 @@ module.exports = {
             deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -50,7 +50,7 @@ module.exports = {
             deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -65,7 +65,7 @@ module.exports = {
             deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -80,7 +80,7 @@ module.exports = {
             deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
           },
         },
-        { transaction }
+        { transaction },
       );
     });
   },

@@ -13,8 +13,7 @@
     [maxLength]="maxLength"
     [type]="inputType"
     class="form-control"
-    [class.is-invalid]="isInvalid"
-  />
+    [class.is-invalid]="isInvalid" />
   <input
     *ngIf="pattern && !(minLength && maxLength)"
     [id]="formName"
@@ -24,8 +23,7 @@
     [pattern]="pattern"
     [type]="inputType"
     class="form-control"
-    [class.is-invalid]="isInvalid"
-  />
+    [class.is-invalid]="isInvalid" />
   <input
     *ngIf="pattern && minLength && maxLength"
     [id]="formName"
@@ -37,8 +35,7 @@
     [maxLength]="maxLength"
     [type]="inputType"
     class="form-control"
-    [class.is-invalid]="isInvalid"
-  />
+    [class.is-invalid]="isInvalid" />
   <input
     *ngIf="min && max"
     [id]="formName"
@@ -49,8 +46,7 @@
     [max]="max"
     [type]="inputType"
     class="form-control"
-    [class.is-invalid]="isInvalid"
-  />
+    [class.is-invalid]="isInvalid" />
   <input
     *ngIf="fractionDigits && totalDigits"
     [id]="formName"
@@ -61,8 +57,7 @@
     [max]="'9'.repeat(totalDigits - fractionDigits) + '.' + '9'.repeat(fractionDigits)"
     [type]="inputType"
     class="form-control"
-    [class.is-invalid]="isInvalid"
-  />
+    [class.is-invalid]="isInvalid" />
   <input
     *ngIf="!pattern && !(minLength && maxLength) && !(min && max) && !(fractionDigits && totalDigits)"
     [id]="formName"
@@ -71,6 +66,5 @@
     (input)="onInput($event)"
     [type]="inputType"
     class="form-control"
-    [class.is-invalid]="isInvalid"
-  />
+    [class.is-invalid]="isInvalid" />
 </ng-container>

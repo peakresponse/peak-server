@@ -28,7 +28,7 @@ async function createVersions() {
                 },
               },
             },
-            { transaction }
+            { transaction },
           );
         }
         if (agency.data?._attributes?.UUID) {
@@ -100,7 +100,7 @@ async function createVersions() {
               nemsisVersion: agency.nemsisVersion ?? '3.5.0.211008CP3',
               stateDataSetId: agency.stateDataSetId ?? caDataSet.id,
             },
-            { transaction }
+            { transaction },
           );
         } else if (agency.stateId === '53') {
           if (!waDataSet) {
@@ -138,7 +138,7 @@ async function createVersions() {
               nemsisVersion: agency.nemsisVersion ?? '3.5.0.191130CP1',
               stateDataSetId: agency.stateDataSetId ?? waDataSet.id,
             },
-            { transaction }
+            { transaction },
           );
         } else {
           continue;
@@ -153,7 +153,7 @@ async function createVersions() {
             createdById: agency.createdById,
             updatedById: agency.createdById,
           },
-          { transaction }
+          { transaction },
         );
         await version.regenerate({ transaction });
         await agency.update({ versionId: version.id }, { transaction });

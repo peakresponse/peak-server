@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree, CanActivateChild, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { UserService } from 'shared';
 import { switchMap } from 'rxjs/operators';
@@ -7,8 +7,11 @@ import { switchMap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
-export class UserGuard implements CanActivate, CanActivateChild {
-  constructor(private router: Router, private user: UserService) {}
+export class UserGuard {
+  constructor(
+    private router: Router,
+    private user: UserService,
+  ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return this.user.assignment$.pipe(
@@ -26,7 +29,7 @@ export class UserGuard implements CanActivate, CanActivateChild {
         //   return of(this.router.parseUrl(`/scenes/${sceneId}`));
         // }
         return of(true);
-      })
+      }),
     );
   }
 

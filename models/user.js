@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     static async register(values, options) {
       /// sanitize values
       const sanitizedValues = _.mapValues(_.pick(values, ['firstName', 'lastName', 'email', 'position', 'password']), (v) =>
-        v ? v.trim() : ''
+        v ? v.trim() : '',
       );
       const user = User.build(sanitizedValues);
       const errors = [];
@@ -103,7 +103,7 @@ module.exports = (sequelize, DataTypes) => {
           passwordResetToken: uuidv4(),
           passwordResetTokenExpiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
         },
-        options
+        options,
       );
       await mailer.send({
         template: 'password-reset',
@@ -148,7 +148,7 @@ module.exports = (sequelize, DataTypes) => {
                 agencyName: agency.name,
                 url: `${agency.baseUrl}/users`,
               },
-            })
+            }),
           );
         }
         await Promise.all(promises);
@@ -313,7 +313,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'User',
       tableName: 'users',
       underscored: true,
-    }
+    },
   );
 
   // eslint-disable-next-line consistent-return

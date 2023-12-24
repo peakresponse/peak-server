@@ -26,7 +26,12 @@ export class NotifyComponent {
   };
   errors: any = null;
 
-  constructor(private app: AppService, private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {
+  constructor(
+    private app: AppService,
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {
     this.reason = this.route.snapshot.queryParamMap.get('reason');
     this.agency = this.route.snapshot.queryParamMap.get('agency');
     this.state = this.route.snapshot.queryParamMap.get('state');
@@ -69,7 +74,7 @@ export class NotifyComponent {
           catchError((res) => {
             this.isLoading = false;
             return EMPTY;
-          })
+          }),
         )
         .subscribe((res) => {
           this.isLoading = false;

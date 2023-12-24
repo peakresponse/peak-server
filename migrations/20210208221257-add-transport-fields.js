@@ -21,11 +21,11 @@ module.exports = {
       defaultValue: false,
     });
     await queryInterface.sequelize.query(
-      `UPDATE patients SET is_transported_left_independently=TRUE WHERE priority=5 AND transport_agency_id IS NULL AND transport_facility_id IS NULL`
+      `UPDATE patients SET is_transported_left_independently=TRUE WHERE priority=5 AND transport_agency_id IS NULL AND transport_facility_id IS NULL`,
     );
     await queryInterface.sequelize.query(`UPDATE patients SET is_transported=TRUE WHERE priority=5`);
     await queryInterface.sequelize.query(
-      `UPDATE patient_observations SET is_transported_left_independently=TRUE WHERE priority=5 AND transport_agency_id IS NULL AND transport_facility_id IS NULL`
+      `UPDATE patient_observations SET is_transported_left_independently=TRUE WHERE priority=5 AND transport_agency_id IS NULL AND transport_facility_id IS NULL`,
     );
     await queryInterface.sequelize.query(`UPDATE patient_observations SET is_transported=TRUE WHERE priority=5`);
     await queryInterface.sequelize.query(`

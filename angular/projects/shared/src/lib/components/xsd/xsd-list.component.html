@@ -19,12 +19,11 @@
       <tr *ngFor="let record of data" [routerLink]="record.id" [class.text-decoration-line-through]="record.draft?.archivedAt">
         <td><i *ngIf="record.isDraft || record.draft" class="fas fa-exclamation-triangle"></i></td>
         <td *ngFor="let column of schemaColumns">
-          {{((record.draft?.data ?? record.data)|get:column.attr)?._text}}
+          {{ (record.draft?.data ?? record.data | get: column.attr)?._text }}
         </td>
         <ng-template
           [ngTemplateOutlet]="template"
-          [ngTemplateOutletContext]="{ records: data, id: record.id, record: record }"
-        ></ng-template>
+          [ngTemplateOutletContext]="{ records: data, id: record.id, record: record }"></ng-template>
       </tr>
       <tr *ngIf="(data?.length ?? 0) === 0">
         <td [attr.colspan]="1 + schemaColumns.length + addlColumns.length">No records yet.</td>
@@ -37,8 +36,7 @@
             #paginationLoader="sharedAutoload"
             *ngIf="paginationLink"
             [shared-autoload]="paginationLink"
-            (onLoadMore)="onLoadMore($event)"
-          ></span>
+            (onLoadMore)="onLoadMore($event)"></span>
         </td>
       </tr>
     </tfoot>

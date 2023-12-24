@@ -51,7 +51,7 @@ Created: C:\\RedNMX\\ImageTrend\\CadFiles\\Archive\\62589_CAR 3.xml
             createdByAgencyId: '761f3479-f2d5-44bf-a2da-32ac969ccd5e',
             number: 'AMB 1',
           },
-        })
+        }),
       );
       // check that Incident and Scene records created for each unique Incident No
       assert.deepStrictEqual(await models.Incident.count(), 1);

@@ -27,7 +27,7 @@ export class EditVersionDemographicsComponent {
     private api: ApiService,
     private navigation: NavigationService,
     private notification: NotificationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {

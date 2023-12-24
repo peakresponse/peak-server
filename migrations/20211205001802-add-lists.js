@@ -59,7 +59,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addConstraint('lists', {
         type: 'UNIQUE',
@@ -122,7 +122,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addConstraint('list_sections', {
         type: 'UNIQUE',
@@ -200,7 +200,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addConstraint('list_items', {
         type: 'UNIQUE',

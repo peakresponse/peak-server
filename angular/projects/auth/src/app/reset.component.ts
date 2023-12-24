@@ -18,7 +18,10 @@ export class ResetComponent {
   error: any = null;
   isLoading = false;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private route: ActivatedRoute,
+  ) {}
 
   get isValid(): boolean {
     return this.data.password ? true : false;
@@ -36,7 +39,7 @@ export class ResetComponent {
           this.isLoading = false;
           this.error = response.error;
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.success = response.body;

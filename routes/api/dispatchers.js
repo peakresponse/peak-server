@@ -39,7 +39,7 @@ router.get(
     const { docs, pages, total } = await models.Dispatcher.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
-  })
+  }),
 );
 
 router.post(
@@ -51,7 +51,7 @@ router.post(
     data.updatedById = req.user.id;
     const dispatcher = await models.Dispatcher.create(data);
     res.status(HttpStatus.CREATED).json(dispatcher.toJSON());
-  })
+  }),
 );
 
 router.get(
@@ -66,7 +66,7 @@ router.get(
     } else {
       res.send(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.patch(
@@ -82,7 +82,7 @@ router.patch(
     } else {
       res.send(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

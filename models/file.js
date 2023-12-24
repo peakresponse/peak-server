@@ -125,7 +125,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'File',
       tableName: 'files',
       underscored: true,
-    }
+    },
   );
 
   File.afterSave(async (record, options) => {

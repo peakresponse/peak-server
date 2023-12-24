@@ -18,8 +18,7 @@
             #signatureTypesSelect
             id="signatureTypesSelect"
             (valueChange)="$event && addItem($event); $event && signatureTypesSelect.onClear()"
-            [target]="{ signatureTypesSelect: null }"
-          >
+            [target]="{ signatureTypesSelect: null }">
             <option [value]="null">Add a Signature Type...</option>
             <option *ngFor="let type of signatureTypes | keyvalue" [value]="type.key">{{ type.value }} ({{ type.key }})</option>
           </shared-select-field>

@@ -1,7 +1,6 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
 const moment = require('moment');
 const { URLSearchParams } = require('url');
@@ -44,9 +43,10 @@ router.get('/terms', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('info', 'You have been logged out.');
-  res.redirect('/');
+  req.logout(() => {
+    req.flash('info', 'You have been logged out.');
+    res.redirect('/');
+  });
 });
 
 if (process.env.MARKETING_ENABLED === 'true') {
@@ -102,7 +102,7 @@ if (process.env.MARKETING_ENABLED === 'true') {
         },
       });
       res.status(HttpStatus.NO_CONTENT).end();
-    })
+    }),
   );
 }
 

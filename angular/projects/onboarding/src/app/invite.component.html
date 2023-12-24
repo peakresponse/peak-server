@@ -7,8 +7,7 @@
   [isSubmitEnabled]="isValid"
   (submit)="onNext()"
   [isSkipVisible]="true"
-  (skip)="onSkip()"
->
+  (skip)="onSkip()">
   <ng-container class="wizard__header">
     <h1 i18n>Send invitations to your team to create their own accounts:</h1>
   </ng-container>
@@ -28,8 +27,7 @@
             [rows]="4"
             [source]="data"
             [target]="data"
-            [error]="error"
-          ></shared-text-field>
+            [error]="error"></shared-text-field>
         </div>
         <div class="mb-3 d-md-none text-right">
           <a (click)="onSkip()" class="skip">Skip this step...</a>

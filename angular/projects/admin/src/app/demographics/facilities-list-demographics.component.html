@@ -9,8 +9,7 @@
   xsd="dFacility_v3.xsd"
   [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
   draftXsd="dFacility_v3.xsd"
-  [schemaColumns]="sectionColumns"
->
+  [schemaColumns]="sectionColumns">
   <ng-container class="admin-schema-list-header">
     <button (click)="importModal.show(null, { size: 'lg' })" class="btn btn--sm btn--secondary ms-3">Import from State Data Set</button>
   </ng-container>
@@ -25,14 +24,12 @@
         [target]="importSearchParams"
         class="flex-grow-1 me-3"
         placeholder="Search"
-        (debouncedValueChange)="onImportSearch($event)"
-      ></shared-search-field>
+        (debouncedValueChange)="onImportSearch($event)"></shared-search-field>
       <shared-select-field
         id="stateId"
         [source]="importSearchParams"
         [target]="importSearchParams"
-        (valueChange)="onImportSearch(importSearchParams.search)"
-      >
+        (valueChange)="onImportSearch(importSearchParams.search)">
         <option *ngFor="let state of states" [selected]="state.id === importSearchParams?.stateId" [value]="state.id">
           {{ state.name }}
         </option>
@@ -44,8 +41,7 @@
       <div
         *ngFor="let record of importSearchResults; let last = last"
         class="d-flex justify-content-between align-items-center text-start py-3 border-2 border-top"
-        [class.border-bottom]="last"
-      >
+        [class.border-bottom]="last">
         {{ record.name }}
         <button *ngIf="isImported.includes(record.id)" disabled class="btn btn--sm btn--tertiary">Done!</button>
         <shared-loader *ngIf="isImporting === record.id" class="mx-3 my-1"></shared-loader>
@@ -53,8 +49,7 @@
           *ngIf="isImporting !== record.id && !isImported.includes(record.id)"
           [disabled]="isImporting"
           (click)="onImport(record)"
-          class="btn btn--sm btn--primary"
-        >
+          class="btn btn--sm btn--primary">
           Import
         </button>
       </div>

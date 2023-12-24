@@ -1,5 +1,5 @@
 import { capitalize, singularize } from 'inflection';
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 
 export class NemsisValue {
   private data: any;
@@ -100,7 +100,7 @@ export class Base {
       const element = get(this.data.data, keyPath);
       if (element) {
         this.cache[keyPathJoined] = new NemsisValueList(
-          Array.isArray(element) ? element.map((e) => new NemsisValue(e)) : [new NemsisValue(element)]
+          Array.isArray(element) ? element.map((e) => new NemsisValue(e)) : [new NemsisValue(element)],
         );
       } else {
         this.cache[keyPathJoined] = new NemsisValueList([]);

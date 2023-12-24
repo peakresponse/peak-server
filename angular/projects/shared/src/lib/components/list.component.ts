@@ -2,7 +2,7 @@ import { Component, ContentChild, ElementRef, Input, SimpleChanges, TemplateRef,
 import { HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 
-import { assign, clone, get, remove } from 'lodash';
+import { assign, clone, get, remove } from 'lodash-es';
 import { Subscription, EMPTY } from 'rxjs';
 import { catchError, filter } from 'rxjs/operators';
 
@@ -37,7 +37,7 @@ export class ListComponent {
     protected api: ApiService,
     protected currentUser: UserService,
     protected navigation: NavigationService,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
@@ -107,7 +107,7 @@ export class ListComponent {
             this.records = records;
           }
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         let found = false;

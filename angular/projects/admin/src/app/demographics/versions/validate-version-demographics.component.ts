@@ -10,7 +10,10 @@ export class ValidateVersionDemographicsComponent implements OnInit {
   id: string = '';
   validationErrors: any;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

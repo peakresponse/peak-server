@@ -17,9 +17,7 @@ if (config.use_env_variable) {
 
 function importModelsFromDir(dirname) {
   fs.readdirSync(dirname)
-    .filter((file) => {
-      return file.indexOf('.') !== 0 && file !== basename && file !== 'base.js' && file.slice(-3) === '.js';
-    })
+    .filter((file) => file.indexOf('.') !== 0 && file !== basename && file !== 'base.js' && file.slice(-3) === '.js')
     .forEach((file) => {
       const model = require(path.join(dirname, file))(sequelize, Sequelize.DataTypes);
       db[model.name] = model;
@@ -30,9 +28,7 @@ function importModelsFromDir(dirname) {
 importModelsFromDir(__dirname);
 /// import models from any immediate subdirs
 fs.readdirSync(__dirname)
-  .filter((dir) => {
-    return dir.indexOf('.') !== 0 && dir.slice(-3) !== '.js' && dir.slice(-4) !== '.txt';
-  })
+  .filter((dir) => dir.indexOf('.') !== 0 && dir.slice(-3) !== '.js' && dir.slice(-4) !== '.txt')
   .forEach((dir) => {
     importModelsFromDir(path.join(__dirname, dir));
   });

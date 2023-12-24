@@ -11,7 +11,7 @@ module.exports = {
         {
           allowNull: false,
           transaction,
-        }
+        },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -23,7 +23,7 @@ module.exports = {
         {
           allowNull: false,
           transaction,
-        }
+        },
       );
       await queryInterface.addColumn(
         'scenes',
@@ -35,7 +35,7 @@ module.exports = {
         {
           allowNull: false,
           transaction,
-        }
+        },
       );
     });
   },

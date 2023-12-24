@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'ListItem',
       tableName: 'list_items',
       underscored: true,
-    }
+    },
   );
   sequelizePaginate.paginate(ListItem);
   return ListItem;

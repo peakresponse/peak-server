@@ -75,7 +75,7 @@ module.exports = {
     });
     // create a partial unique index that enforces unique version when set
     await queryInterface.sequelize.query(
-      'CREATE UNIQUE INDEX nemsis_schematrons_state_id_version_uk ON nemsis_schematrons (state_id, version) WHERE state_id IS NOT NULL AND version IS NOT NULL'
+      'CREATE UNIQUE INDEX nemsis_schematrons_state_id_version_uk ON nemsis_schematrons (state_id, version) WHERE state_id IS NOT NULL AND version IS NOT NULL',
     );
   },
   async down(queryInterface, Sequelize) {

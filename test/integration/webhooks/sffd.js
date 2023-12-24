@@ -52,7 +52,7 @@ describe('/webhooks/sffd', () => {
             createdByAgencyId: '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8',
             number: 'M547',
           },
-        })
+        }),
       );
       // check that Incident and Scene records created for each unique Incident No
       assert.deepStrictEqual(await models.Incident.count(), 49);

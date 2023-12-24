@@ -79,13 +79,12 @@
 <main>
   <router-outlet></router-outlet>
 </main>
-<div *ngIf="((notification.messages$|async)?.length ?? 0) > 0" class="notifications">
+<div *ngIf="((notification.messages$ | async)?.length ?? 0) > 0" class="notifications">
   <ngb-toast
     class="notifications__toast"
     *ngFor="let message of notification.messages$ | async"
     [delay]="message.delay"
-    (hidden)="notification.pop(message.id)"
-  >
+    (hidden)="notification.pop(message.id)">
     {{ message.text }}
   </ngb-toast>
 </div>

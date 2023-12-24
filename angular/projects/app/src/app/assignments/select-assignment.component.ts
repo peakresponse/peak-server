@@ -11,7 +11,11 @@ export class SelectAssignmentComponent {
   };
   isLoading: boolean = false;
 
-  constructor(private api: ApiService, public user: UserService, private navigation: NavigationService) {}
+  constructor(
+    private api: ApiService,
+    public user: UserService,
+    private navigation: NavigationService,
+  ) {}
 
   onCheckboxValueChange(value: any) {
     if (value) {

@@ -3,7 +3,7 @@ const sequelizePaginate = require('sequelize-paginate');
 const LineReader = require('line-by-line');
 const _ = require('lodash');
 const path = require('path');
-const tmp = require('tmp');
+const tmp = require('tmp-promise');
 
 const { download, unzip } = require('../lib/utils');
 
@@ -19,7 +19,7 @@ function findByNameAndClass(cities, name, featureClass) {
       c.featureClass === featureClass &&
       name.localeCompare(c.featureName, undefined, {
         sensitivity: 'accent',
-      }) === 0
+      }) === 0,
   );
 }
 
@@ -84,15 +84,15 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async importCitiesForState(stateId) {
-      const tmpDir = tmp.dirSync();
+      const tmpDir = await tmp.dir({ unsafeCleanup: true });
       try {
         const stateAbbr = sequelize.models.State.getAbbrForCode(stateId);
-        const cityPath = path.resolve(tmpDir.name, `${stateAbbr}.zip`);
+        const cityPath = path.resolve(tmpDir.path, `${stateAbbr}.zip`);
         await download(`https://geonames.usgs.gov/docs/federalcodes/${stateAbbr}_FedCodes.zip`, cityPath);
         const unzippedPath = await unzip(cityPath, tmpDir);
         await City.parseCities(unzippedPath);
       } finally {
-        tmpDir.removeCallback();
+        await tmpDir.cleanup();
       }
     }
 
@@ -236,7 +236,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'City',
       tableName: 'cities',
       underscored: true,
-    }
+    },
   );
 
   City.beforeSave((record) => {

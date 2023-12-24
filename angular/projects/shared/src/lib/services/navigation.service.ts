@@ -10,7 +10,12 @@ export class NavigationService {
   private currentUrl: string = '';
   private previousUrl: string = '';
 
-  constructor(private location: Location, private router: Router, private route: ActivatedRoute, private title: Title) {
+  constructor(
+    private location: Location,
+    private router: Router,
+    private route: ActivatedRoute,
+    private title: Title,
+  ) {
     //// keep track of the current and previous url
     router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: any) => {
       this.previousUrl = this.currentUrl;
@@ -27,7 +32,7 @@ export class NavigationService {
           return route;
         }),
         filter((route) => route.outlet === 'primary'),
-        mergeMap((route) => route.data)
+        mergeMap((route) => route.data),
       )
       .subscribe((data) => {
         if (data['title']) {

@@ -34,7 +34,7 @@ router.get(
     });
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((d) => d.toJSON()));
-  })
+  }),
 );
 
 router.post(
@@ -43,7 +43,7 @@ router.post(
   helpers.async(async (req, res) => {
     const user = await models.User.register(req.body);
     res.status(HttpStatus.CREATED).json(user.toJSON());
-  })
+  }),
 );
 
 router.get(
@@ -126,7 +126,7 @@ router.get(
       }
       res.json(data);
     }
-  })
+  }),
 );
 
 router.get(
@@ -143,7 +143,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.patch(
@@ -163,7 +163,7 @@ router.patch(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { assign, cloneDeep } from 'lodash';
+import { assign, cloneDeep } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
 import { XsdElementBaseComponent } from './xsd-element-base.component';

@@ -29,7 +29,11 @@ export class FacilitiesListDemographicsComponent implements OnInit {
   isImporting?: string;
   isImported: string[] = [];
 
-  constructor(public agency: AgencyService, private api: ApiService, public route: ActivatedRoute) {}
+  constructor(
+    public agency: AgencyService,
+    private api: ApiService,
+    public route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.route?.parent?.data.subscribe((data: any) => {

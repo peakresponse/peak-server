@@ -1,7 +1,7 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.transaction((transaction) => {
-      return queryInterface
+  up: (queryInterface, Sequelize) =>
+    queryInterface.sequelize.transaction((transaction) =>
+      queryInterface
         .createTable(
           'counties',
           {
@@ -40,18 +40,15 @@ module.exports = {
               type: Sequelize.DATE,
             },
           },
-          { transaction }
+          { transaction },
         )
-        .then(() => {
-          return queryInterface.addIndex('counties', {
+        .then(() =>
+          queryInterface.addIndex('counties', {
             fields: ['state_code', 'county_code'],
             unique: true,
             transaction,
-          });
-        });
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('counties');
-  },
+          }),
+        ),
+    ),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('counties'),
 };

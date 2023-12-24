@@ -14,8 +14,7 @@
             label="State"
             [source]="data"
             [target]="data"
-            [options]="states"
-          >
+            [options]="states">
             <option [ngValue]="null">Please choose your state</option>
             <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
           </shared-select-field>

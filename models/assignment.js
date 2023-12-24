@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
           createdById: user.id,
           updatedById: user.id,
         },
-        { transaction: options?.transaction }
+        { transaction: options?.transaction },
       );
       newAssignment.setDataValue('vehicle', vehicle);
       return newAssignment;
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Assignment',
       tableName: 'assignments',
       underscored: true,
-    }
+    },
   );
   Assignment.addScope('current', {
     where: {

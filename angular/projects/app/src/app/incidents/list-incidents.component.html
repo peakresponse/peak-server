@@ -4,8 +4,7 @@
   [user]="user.attributes$ | async"
   [vehicle]="user.vehicle$ | async"
   [showSearch]="true"
-  (searchValueChange)="search = $event"
->
+  (searchValueChange)="search = $event">
   <ng-template>
     <li class="command-header__dropdown-item">
       <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>

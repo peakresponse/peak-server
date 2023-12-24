@@ -19,8 +19,7 @@
                 [source]="data"
                 [target]="data"
                 [shared-debounced]
-                (debouncedValueChange)="validate($event)"
-              >
+                (debouncedValueChange)="validate($event)">
                 <ng-template>
                   <div *ngIf="isLoading" class="valid-feedback"><shared-loader></shared-loader> Please wait, checking availability...</div>
                   <div *ngIf="!isLoading && isValid" class="valid-feedback">This URL is available!</div>

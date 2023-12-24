@@ -27,7 +27,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.post(
@@ -65,7 +65,7 @@ router.post(
       return;
     }
     res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
-  })
+  }),
 );
 
 router.get(
@@ -78,7 +78,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.post(
@@ -141,7 +141,7 @@ router.post(
       }
     });
     res.status(status).json(user.toJSON());
-  })
+  }),
 );
 
 router.post(
@@ -168,7 +168,7 @@ router.post(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 base.addAllRoutes(router, models.Employment, {

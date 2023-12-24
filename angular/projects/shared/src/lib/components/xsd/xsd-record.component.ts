@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, ContentChild, Input, OnDestroy, TemplateRef } from '@angular/core';
 import { EMPTY, Subscription } from 'rxjs';
 
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, get } from 'lodash-es';
 
 import { XsdBaseComponent } from './xsd-base.component';
 import { catchError } from 'rxjs/operators';
@@ -100,7 +100,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
           this.error = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.isLoading = false;
@@ -150,7 +150,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
           this.error = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
-        })
+        }),
       )
       .subscribe(() => {
         this.isLoading = false;
@@ -175,7 +175,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
           this.error = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response: HttpResponse<any>) => {
         this.isLoading = false;

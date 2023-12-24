@@ -5,61 +5,61 @@ module.exports = {
         { schema: 'demographics', tableName: 'employments' },
         'status',
         { type: Sequelize.STRING },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'status_at',
         { type: Sequelize.DATE },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'primary_job_role',
         { type: Sequelize.STRING },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'data',
         { type: Sequelize.JSONB },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'first_name',
         { type: Sequelize.STRING },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'last_name',
         { type: Sequelize.STRING },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'middle_name',
         { type: Sequelize.STRING },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'email',
         { type: Sequelize.STRING },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'invitation_code',
         { type: Sequelize.UUID },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addColumn(
         { schema: 'demographics', tableName: 'employments' },
         'invitation_at',
         { type: Sequelize.DATE },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(`ALTER TABLE demographics.employments ALTER COLUMN hired_at DROP NOT NULL`, { transaction });
       await queryInterface.sequelize.query(`ALTER TABLE demographics.employments ALTER COLUMN started_at DROP NOT NULL`, { transaction });

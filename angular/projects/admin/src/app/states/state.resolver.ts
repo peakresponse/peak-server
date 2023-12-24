@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
@@ -8,7 +8,7 @@ import { catchError, mergeMap } from 'rxjs/operators';
 import { ApiService } from 'shared';
 
 @Injectable()
-export class StateResolver implements Resolve<any> {
+export class StateResolver {
   private state: any = null;
 
   constructor(private api: ApiService) {}
@@ -30,7 +30,7 @@ export class StateResolver implements Resolve<any> {
       mergeMap((response: HttpResponse<any>) => {
         this.state = response.body;
         return of(this.state);
-      })
+      }),
     );
   }
 }

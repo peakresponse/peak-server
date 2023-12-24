@@ -17,7 +17,7 @@ router.get(
       },
     });
     res.json(lists.map((l) => l.toJSON()));
-  })
+  }),
 );
 
 router.get(
@@ -39,7 +39,7 @@ router.get(
     });
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
-  })
+  }),
 );
 
 router.get(
@@ -69,7 +69,7 @@ router.get(
       items: items.map((i) => i.toJSON()),
     };
     res.json(data);
-  })
+  }),
 );
 
 module.exports = router;

@@ -1,13 +1,20 @@
-const nock = require('nock');
+const fs = require('fs');
 const path = require('path');
-
-// Uncomment line below to record external HTTP calls
-// nock.recorder.rec();
+const { MockAgent, setGlobalDispatcher } = require('undici');
 
 function mockPsapRegistryDownloads() {
-  nock('https://www.fcc.gov:443', { encodedQueryParams: true })
-    .get('/sites/default/files/masterpsapregistryv2.272.xlsx')
-    .replyWithFile(200, path.resolve(__dirname, 'fcc', 'masterpsapregistryv2.272.xlsx'));
+  const agent = new MockAgent();
+  agent.disableNetConnect();
+
+  const client = agent.get('https://www.fcc.gov');
+  client
+    .intercept({
+      path: '/sites/default/files/masterpsapregistryv2.272.xlsx',
+      method: 'GET',
+    })
+    .reply(200, fs.readFileSync(path.resolve(__dirname, 'fcc', 'masterpsapregistryv2.272.xlsx')));
+
+  setGlobalDispatcher(agent);
 }
 
 module.exports = {

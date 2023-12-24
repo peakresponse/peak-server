@@ -24,7 +24,7 @@ router.post(
     } else {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     }
-  })
+  }),
 );
 
 base.addAllRoutes(router, models.CustomConfiguration, {

@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'County',
       tableName: 'counties',
       underscored: true,
-    }
+    },
   );
 
   sequelizePaginate.paginate(County);

@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         data,
         ['incidentId', 'vehicleId'],
         ['data', 'dispatchedAt', 'acknowledgedAt'],
-        options
+        options,
       );
     }
 
@@ -97,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Dispatch',
       tableName: 'dispatches',
       underscored: true,
-    }
+    },
   );
 
   Dispatch.addScope('canonical', {

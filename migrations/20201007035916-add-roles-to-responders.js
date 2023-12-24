@@ -5,11 +5,11 @@ module.exports = {
         'responders',
         'role',
         { type: Sequelize.ENUM('STAGING', 'TRANSPORT', 'TRIAGE', 'TREATMENT') },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX responders_scene_id_role_uk ON responders (scene_id, role) WHERE departed_at IS NULL',
-        { transaction }
+        { transaction },
       );
     });
   },

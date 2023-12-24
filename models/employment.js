@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
             approvedAt: new Date(),
             approvedById: user.id,
           },
-          options
+          options,
         );
       }
     }
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
               refusedAt: new Date(),
               refusedById: user.id,
             },
-            options
+            options,
           );
         }
       }
@@ -299,7 +299,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         },
       },
-    }
+    },
   );
 
   Employment.addDraftScopes();
@@ -317,13 +317,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Employment.addScope('role', (role) => {
-    return {
-      where: {
-        [Op.or]: [{ isOwner: true }, { roles: { [Op.contains]: [role] } }],
-      },
-    };
-  });
+  Employment.addScope('role', (role) => ({
+    where: {
+      [Op.or]: [{ isOwner: true }, { roles: { [Op.contains]: [role] } }],
+    },
+  }));
 
   Employment.beforeValidate(async (record, options) => {
     record.syncNemsisId(options);

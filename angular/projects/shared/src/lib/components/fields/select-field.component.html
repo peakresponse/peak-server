@@ -5,8 +5,7 @@
   [class.form-field--focused]="isFocused"
   [class.form-field--invalid]="isInvalid"
   [class.form-field--nonempty]="isNonEmpty"
-  [class.form-field--unconfirmed]="isUnconfirmed"
->
+  [class.form-field--unconfirmed]="isUnconfirmed">
   <label [for]="derivedId">{{ label }}</label>
   <select
     #inputEl
@@ -16,8 +15,7 @@
     [tabindex]="isFocusable && isEditing ? 0 : -1"
     (focus)="onFocus($event)"
     (blur)="onBlur($event)"
-    [(ngModel)]="optionValue"
-  >
+    [(ngModel)]="optionValue">
     <ng-content></ng-content
     >>
   </select>

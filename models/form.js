@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Form',
       tableName: 'forms',
       underscored: true,
-    }
+    },
   );
 
   Form.addScope('canonical', {

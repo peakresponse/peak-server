@@ -59,7 +59,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { schema: 'demographics', transaction }
+        { schema: 'demographics', transaction },
       );
       await queryInterface.addConstraint('demographics.agencies', {
         type: 'FOREIGN KEY',
@@ -115,7 +115,7 @@ module.exports = {
         (SELECT state_agency_id, subdomain, state_unique_id, number, name, state_id, data, agencies.created_by_id, agencies.updated_by_id, agencies.created_at, agencies.updated_at
         FROM demographics JOIN agencies ON demographics.agency_id=agencies.id)
       `,
-        { transaction }
+        { transaction },
       );
 
       /// move/adapt the employments table to refer to this new agency table
@@ -136,15 +136,15 @@ module.exports = {
       });
       await queryInterface.sequelize.query(
         `ALTER TABLE demographics.employments RENAME CONSTRAINT employments_created_by_id_fkey TO "demographics.employments_created_by_id_users_fk"`,
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         `ALTER TABLE demographics.employments RENAME CONSTRAINT employments_updated_by_id_fkey TO "demographics.employments_updated_by_id_users_fk"`,
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         `ALTER TABLE demographics.employments RENAME CONSTRAINT employments_user_id_fkey TO "demographics.employments_user_id_users_fk"`,
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         `
@@ -156,7 +156,7 @@ module.exports = {
          JOIN public.agencies ON demographics.agency_id=public.agencies.id
          JOIN demographics.agencies ON public.agencies.state_agency_id=demographics.agencies.agency_id)
       `,
-        { transaction }
+        { transaction },
       );
       await queryInterface.removeColumn({ schema: 'demographics', tableName: 'employments' }, 'demographic_id', { transaction });
       await queryInterface.sequelize.query(`ALTER TABLE demographics.employments ALTER COLUMN agency_id SET NOT NULL`, { transaction });

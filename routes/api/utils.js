@@ -1,5 +1,4 @@
 const express = require('express');
-const fetch = require('node-fetch');
 const HttpStatus = require('http-status-codes');
 
 const models = require('../../models');
@@ -15,13 +14,14 @@ router.get(
   helpers.async(async (req, res) => {
     let data = await (
       await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${req.query.lat},${req.query.lng}&key=${process.env.GOOGLE_MAPS_SERVER_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${req.query.lat},${req.query.lng}&key=${process.env.GOOGLE_MAPS_SERVER_API_KEY}`,
       )
     ).json();
     if (data.status === 'OK') {
       const { results } = data;
       data = {};
-      for (const result of results) {
+      if (results.length) {
+        const result = results[0];
         result.address_components.reverse();
         /* eslint-disable no-await-in-loop */
         for (const addressComponent of result.address_components) {
@@ -46,13 +46,12 @@ router.get(
           }
         }
         /* eslint-enable no-await-in-loop */
-        break;
       }
       res.json(data);
     } else {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

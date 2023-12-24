@@ -12,8 +12,7 @@
         #reasonsSelect
         id="reasonsSelect"
         (valueChange)="$event && addItem({ code: $event }); $event && reasonsSelect.onClear()"
-        [target]="{ reasonsSelect: null }"
-      >
+        [target]="{ reasonsSelect: null }">
         <option [value]="null">Add a Reason...</option>
         <option *ngFor="let reason of signatureReasons | keyvalue" [value]="reason.key">{{ reason.value }} ({{ reason.key }})</option>
       </shared-select-field>
@@ -39,8 +38,7 @@
         <admin-demographics-form-signature
           #editSignatureForm
           (onConfirm)="updateItem(item, $event)"
-          [isEditing]="true"
-        ></admin-demographics-form-signature>
+          [isEditing]="true"></admin-demographics-form-signature>
         <button (click)="editSignatureForm.show(item)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
         <button (click)="removeItem(item)" type="button" class="btn btn--sm btn--secondary--danger">Delete</button>
       </div>

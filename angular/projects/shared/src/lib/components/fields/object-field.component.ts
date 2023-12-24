@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 
 import { BaseFieldComponent } from './base-field.component';
 import { ApiService } from '../../services/api.service';

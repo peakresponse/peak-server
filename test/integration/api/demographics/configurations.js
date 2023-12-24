@@ -51,11 +51,11 @@ describe('/api/demographics/configurations', () => {
       assert.deepStrictEqual(configuration.data?.['dConfiguration.10']?.length, 112);
       assert.deepStrictEqual(
         configuration.validationErrors?.errors?.[0]?.path,
-        "$['dConfiguration.ConfigurationGroup']['dConfiguration.13']"
+        "$['dConfiguration.ConfigurationGroup']['dConfiguration.13']",
       );
       assert.deepStrictEqual(
         configuration.validationErrors?.errors?.[1]?.path,
-        "$['dConfiguration.ConfigurationGroup']['dConfiguration.16']"
+        "$['dConfiguration.ConfigurationGroup']['dConfiguration.16']",
       );
     });
   });

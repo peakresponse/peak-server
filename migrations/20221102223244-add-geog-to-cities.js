@@ -13,7 +13,7 @@ module.exports = {
       await queryInterface.sequelize.query('CREATE INDEX cities_geog_idx ON facilities USING gist(geog)', { transaction });
       await queryInterface.sequelize.query(
         'UPDATE cities SET geog=ST_MakePoint(CAST(primary_longitude AS FLOAT), CAST(primary_latitude AS FLOAT)) WHERE primary_latitude IS NOT NULL AND primary_longitude IS NOT NULL',
-        { transaction }
+        { transaction },
       );
     });
   },

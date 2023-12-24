@@ -9,7 +9,11 @@ import { ApiService, NavigationService } from 'shared';
 export class EditClientComponent {
   id: string = '';
 
-  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

@@ -4,5 +4,10 @@ module.exports = {
   output: {
     publicPath: '/angular/admin/',
   },
-  plugins: [new BundleTracker({ filename: './projects/admin/webpack-stats.json' })],
+  plugins: [
+    new BundleTracker({
+      path: __dirname,
+      filename: 'webpack-stats.json',
+    }),
+  ],
 };

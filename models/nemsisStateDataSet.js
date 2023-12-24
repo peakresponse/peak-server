@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
             message,
           },
         },
-        { transaction: options?.transaction }
+        { transaction: options?.transaction },
       );
     }
 
@@ -245,7 +245,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'NemsisStateDataSet',
       tableName: 'nemsis_state_data_sets',
       underscored: true,
-    }
+    },
   );
 
   NemsisStateDataSet.afterSave(async (record, options) => {

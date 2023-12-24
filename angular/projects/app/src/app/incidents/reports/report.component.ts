@@ -23,7 +23,11 @@ export class ReportComponent implements OnDestroy {
   reportId?: string | null;
   report: any;
 
-  constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {
+  constructor(
+    private api: ApiService,
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {
     this.subscription = this.route.paramMap.subscribe((paramMap) => {
       this.reportId = paramMap.get('reportId');
       if (this.reportId) {
@@ -42,7 +46,7 @@ export class ReportComponent implements OnDestroy {
     this.subscription.add(
       this.route.parent?.paramMap.subscribe((paramMap) => {
         this.incidentId = paramMap.get('incidentId');
-      })
+      }),
     );
   }
 

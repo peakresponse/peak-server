@@ -10,7 +10,10 @@ import { NavigationService } from 'shared';
 export class EditUserComponent {
   id: string = '';
 
-  constructor(private navigation: NavigationService, private route: ActivatedRoute) {}
+  constructor(
+    private navigation: NavigationService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

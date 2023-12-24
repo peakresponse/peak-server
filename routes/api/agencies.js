@@ -44,7 +44,7 @@ router.get(
     const { docs, pages, total } = await models.Agency.scope('canonical').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => (req.user?.isAdmin ? r.toJSON() : r.toPublicJSON())));
-  })
+  }),
 );
 
 router.post(
@@ -71,7 +71,7 @@ router.post(
       createdById: req.user.id,
     });
     res.status(HttpStatus.CREATED).json(agency.toJSON());
-  })
+  }),
 );
 
 router.get(
@@ -88,7 +88,7 @@ router.get(
       data.draftVersion = draftVersion?.toJSON();
       res.json(data);
     }
-  })
+  }),
 );
 
 router.get(
@@ -118,7 +118,7 @@ router.get(
       }
     }
     res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
-  })
+  }),
 );
 
 router.get(
@@ -133,7 +133,7 @@ router.get(
     } else {
       res.send(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.patch(
@@ -156,7 +156,7 @@ router.patch(
     } else {
       res.send(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 router.get(
@@ -184,7 +184,7 @@ router.get(
         res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
       }
     }
-  })
+  }),
 );
 
 router.post(
@@ -218,7 +218,7 @@ router.post(
         });
       });
     });
-  })
+  }),
 );
 
 module.exports = router;

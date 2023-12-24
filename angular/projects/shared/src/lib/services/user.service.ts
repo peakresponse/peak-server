@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { remove } from 'lodash-es';
 import { Observable, of, EMPTY, ReplaySubject } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 import { ApiService } from './api.service';
-import { remove } from 'lodash';
 
 @Injectable()
-export class UserService implements Resolve<any> {
+export class UserService {
   private user: any = null;
   private userSubject = new ReplaySubject<any>(1);
   get attributes$(): Observable<any> {
@@ -84,7 +83,7 @@ export class UserService implements Resolve<any> {
         catchError((error) => {
           console.log(error);
           return EMPTY;
-        })
+        }),
       )
       .subscribe((response) => {
         this.user = response.body.User;
@@ -117,7 +116,7 @@ export class UserService implements Resolve<any> {
         this.agency = response.body.Agency;
         this.employment = response.body.Employment;
         return of(this.user);
-      })
+      }),
     );
   }
 }

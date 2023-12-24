@@ -17,7 +17,7 @@ router.get(
     };
     const records = await models.Form.findAll(options);
     res.json(records.map((r) => r.toJSON()));
-  })
+  }),
 );
 
 module.exports = router;

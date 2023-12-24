@@ -5,7 +5,7 @@ module.exports = {
         'facilities',
         'is_valid',
         { type: Sequelize.BOOLEAN, defaultValue: false, allowNull: false },
-        { transaction }
+        { transaction },
       );
 
       await queryInterface.addColumn('facilities', 'canonical_facility_id', Sequelize.UUID, { transaction });
@@ -98,20 +98,20 @@ module.exports = {
       /// include the created by agency column in the compound unique ids
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX facilities_primary_national_provider_id_uk ON facilities (created_by_agency_id, primary_national_provider_id) WHERE created_by_agency_id IS NOT NULL',
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX facilities_compound_uk ON facilities (created_by_agency_id, type, location_code, address, city_id, state_id) WHERE created_by_agency_id IS NOT NULL',
-        { transaction }
+        { transaction },
       );
       /// ensure there are compound unique ids for the canonical facility records on state
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX facilities_canonical_primary_national_provider_id_uk ON facilities (primary_national_provider_id, state_id) WHERE canonical_facility_id IS NULL',
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         'CREATE UNIQUE INDEX facilities_canonical_compound_uk ON facilities (type, location_code, address, city_id, state_id) WHERE canonical_facility_id IS NULL',
-        { transaction }
+        { transaction },
       );
       /// ensure facilities are either canonical or owned
       await queryInterface.addConstraint('facilities', {
@@ -137,7 +137,7 @@ module.exports = {
         INSERT INTO facilities (id, created_by_agency_id, canonical_facility_id, type, name, location_code, primary_designation, primary_national_provider_id, address, city_id, city_name, state_id, state_name, zip, county_id, county_name, country, geog, primary_phone, data, created_by_id, updated_by_id, created_at, updated_at, is_valid)
         (SELECT id, agency_id, facility_id, type, name, location_code, primary_designation, primary_national_provider_id, address, city_id, city_name, state_id, state_name, zip, county_id, county_name, country, geog, primary_phone, data, created_by_id, updated_by_id, created_at, updated_at, is_valid FROM demographics.facilities);
       `,
-        { transaction }
+        { transaction },
       );
     });
   },

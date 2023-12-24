@@ -198,7 +198,7 @@ router.post('/cad', async (req, res) => {
                   vehicleId: vehicles[data.unitNo].id,
                   dispatchedAt: data.dispatchedAt,
                 },
-                { transaction }
+                { transaction },
               );
             }
           }

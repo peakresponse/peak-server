@@ -43,7 +43,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { schema: 'demographics', transaction }
+        { schema: 'demographics', transaction },
       );
       await queryInterface.addConstraint('demographics.devices', {
         type: 'UNIQUE',

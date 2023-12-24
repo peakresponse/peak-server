@@ -67,7 +67,7 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.addConstraint('demographics', {
         type: 'UNIQUE',
@@ -155,11 +155,11 @@ module.exports = {
             type: Sequelize.DATE,
           },
         },
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         `CREATE TYPE enum_employments__roles AS ENUM ('BILLING', 'CONFIGURATION', 'PERSONNEL', 'REPORTING')`,
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(`ALTER TABLE employments ADD COLUMN roles enum_employments__roles[] NOT NULL DEFAULT '{}'`, {
         transaction,
@@ -200,7 +200,7 @@ module.exports = {
       await queryInterface.addColumn('agencies', 'updated_by_id', Sequelize.UUID, { transaction });
       await queryInterface.sequelize.query(
         `UPDATE agencies SET created_by_id=users.id, updated_by_id=users.id FROM users WHERE users.is_admin=TRUE`,
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(`ALTER TABLE agencies ALTER COLUMN created_by_id SET NOT NULL`, { transaction });
       await queryInterface.sequelize.query(`ALTER TABLE agencies ALTER COLUMN updated_by_id SET NOT NULL`, { transaction });
@@ -226,7 +226,7 @@ module.exports = {
         'states',
         'is_configured',
         { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false },
-        { transaction }
+        { transaction },
       );
       /// initialize existing state data
       await queryInterface.sequelize.query(`UPDATE states SET is_configured=TRUE WHERE data_set IS NOT NULL`, { transaction });
@@ -263,7 +263,7 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
       /// agency-overrides reference the source state record
       await queryInterface.addColumn(
@@ -278,17 +278,17 @@ module.exports = {
             key: 'id',
           },
         },
-        { transaction }
+        { transaction },
       );
 
       /// finally, create agency compound unique constraint as defined by NEMSIS
       await queryInterface.sequelize.query(
         `ALTER TABLE agencies ADD CONSTRAINT agencies_state_uk EXCLUDE (state_unique_id WITH =, number WITH =, state_id WITH =) WHERE (demographic_id IS NULL) DEFERRABLE INITIALLY DEFERRED`,
-        { transaction }
+        { transaction },
       );
       await queryInterface.sequelize.query(
         `ALTER TABLE agencies ADD CONSTRAINT agencies_demographic_uk EXCLUDE (demographic_id WITH =, state_unique_id WITH =, number WITH =, state_id WITH =) WHERE (demographic_id IS NOT NULL)`,
-        { transaction }
+        { transaction },
       );
     });
   },

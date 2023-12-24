@@ -192,7 +192,7 @@ describe('models', () => {
 			</dPersonnel.PersonnelGroup>
 		</dPersonnel>
 	</DemographicReport>
-</DEMDataSet>`
+</DEMDataSet>`,
         );
       });
     });

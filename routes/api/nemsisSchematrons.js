@@ -31,7 +31,7 @@ router.get(
     const { docs, pages, total } = await models.NemsisSchematron.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));
-  })
+  }),
 );
 
 router.post(
@@ -68,7 +68,7 @@ router.post(
               createdByAgencyId: req.agency?.id,
               updatedById: req.user.id,
             },
-            { transaction }
+            { transaction },
           );
           tmpPath = await record.downloadAssetFile('file', true);
           const schematronParser = new NemsisSchematronParser(tmpPath);
@@ -97,7 +97,7 @@ router.post(
     } else {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
     }
-  })
+  }),
 );
 
 router.get(
@@ -110,7 +110,7 @@ router.get(
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }
-  })
+  }),
 );
 
 module.exports = router;

@@ -11,7 +11,10 @@ export class ListNemsisComponent implements OnInit {
   isRefreshing = false;
   isInstalling?: string;
 
-  constructor(private api: ApiService, public route: ActivatedRoute) {}
+  constructor(
+    private api: ApiService,
+    public route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.isRefreshing = true;

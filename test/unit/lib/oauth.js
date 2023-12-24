@@ -49,7 +49,7 @@ describe('lib', () => {
               redirectUri: 'http://localhost:3000/callback',
             },
             client,
-            user
+            user,
           );
           assert(code);
 
@@ -69,7 +69,7 @@ describe('lib', () => {
               redirectUri: 'http://localhost:3000/callback',
             },
             client,
-            user
+            user,
           );
           assert(code);
 
@@ -94,7 +94,7 @@ describe('lib', () => {
               redirectUri: 'http://localhost:3000/callback',
             },
             client,
-            user
+            user,
           );
           assert(code);
           assert(cache.get(`oauth_prc_abcd1234`));
@@ -115,7 +115,7 @@ describe('lib', () => {
               accessTokenExpiresAt: now,
             },
             client,
-            user
+            user,
           );
           assert(token?.id);
           assert.deepStrictEqual(token.accessToken, 'abcd1234');

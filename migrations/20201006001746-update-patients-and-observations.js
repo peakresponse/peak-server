@@ -31,18 +31,16 @@ module.exports = {
           }
         }
       }
-      const [
-        results,
-      ] = await queryInterface.sequelize.query(
+      const [results] = await queryInterface.sequelize.query(
         `SELECT id, updated_attributes FROM patient_observations WHERE updated_attributes ? 'bloodPressure'`,
-        { transaction }
+        { transaction },
       );
       for (const result of results) {
         const index = result.updated_attributes.indexOf('bloodPressure');
         result.updated_attributes.splice(index, 1, 'bpSystolic', 'bpDiastolic');
         await queryInterface.sequelize.query(
           `UPDATE patient_observations SET updated_attributes='${JSON.stringify(result.updated_attributes)}' WHERE id='${result.id}'`,
-          { transaction }
+          { transaction },
         );
       }
     });

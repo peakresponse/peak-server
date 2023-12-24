@@ -23,7 +23,7 @@ export class XsdElementInputCountyComponent extends XsdElementBaseComponent {
             this.cache[id] = {};
             this.value = id;
             return EMPTY;
-          })
+          }),
         )
         .subscribe((response: HttpResponse<any>) => {
           this.cache[id] = response.body;
@@ -45,9 +45,9 @@ export class XsdElementInputCountyComponent extends XsdElementBaseComponent {
               this.cache[county.id] = county;
               return county.id;
             });
-          })
+          }),
         );
-      })
+      }),
     );
 
   inputFormatter = (id: string): string => {

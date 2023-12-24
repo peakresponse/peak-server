@@ -8,8 +8,7 @@
   [draftNemsisVersion]="agency.draftVersion?.nemsisVersion"
   draftXsd="dFacility_v3.xsd"
   [draftCustomConfiguration]="agency.draftVersion?.demCustomConfiguration"
-  [defaultValues]="defaultValues"
->
+  [defaultValues]="defaultValues">
   <ng-template let-recordSchema="recordSchema" let-record="record" let-error="error">
     <ng-container *ngFor="let element of recordSchema?.childElements">
       <shared-xsd-form-group
@@ -18,8 +17,7 @@
         [record]="record"
         [element]="element"
         [data]="record.data"
-        [error]="error"
-      ></shared-xsd-form-group>
+        [error]="error"></shared-xsd-form-group>
       <ng-container *ngIf="isGroup(element)">
         <shared-xsd-form-group
           *ngFor="let nestedElement of groupElements(element)"
@@ -27,8 +25,7 @@
           [record]="record"
           [element]="nestedElement"
           [data]="nestedData(record.data)"
-          [error]="error"
-        ></shared-xsd-form-group>
+          [error]="error"></shared-xsd-form-group>
       </ng-container>
     </ng-container>
   </ng-template>

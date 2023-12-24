@@ -16,10 +16,10 @@ module.exports = {
       },
     });
     await queryInterface.sequelize.query(
-      'ALTER TABLE "contacts" RENAME CONSTRAINT "demographics.contacts_created_by_id_users_fk" TO "contacts_created_by_id_users_fk"'
+      'ALTER TABLE "contacts" RENAME CONSTRAINT "demographics.contacts_created_by_id_users_fk" TO "contacts_created_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "contacts" RENAME CONSTRAINT "demographics.contacts_updated_by_id_users_fk" TO "contacts_updated_by_id_users_fk"'
+      'ALTER TABLE "contacts" RENAME CONSTRAINT "demographics.contacts_updated_by_id_users_fk" TO "contacts_updated_by_id_users_fk"',
     );
     await queryInterface.addColumn('contacts', 'is_draft', {
       type: Sequelize.BOOLEAN,
@@ -56,10 +56,10 @@ module.exports = {
     await queryInterface.removeColumn('contacts', 'draft_parent_id');
     await queryInterface.removeColumn('contacts', 'is_draft');
     await queryInterface.sequelize.query(
-      'ALTER TABLE "contacts" RENAME CONSTRAINT "contacts_updated_by_id_users_fk" TO "demographics.contacts_updated_by_id_users_fk"'
+      'ALTER TABLE "contacts" RENAME CONSTRAINT "contacts_updated_by_id_users_fk" TO "demographics.contacts_updated_by_id_users_fk"',
     );
     await queryInterface.sequelize.query(
-      'ALTER TABLE "contacts" RENAME CONSTRAINT "contacts_created_by_id_users_fk" TO "demographics.contacts_created_by_id_users_fk"'
+      'ALTER TABLE "contacts" RENAME CONSTRAINT "contacts_created_by_id_users_fk" TO "demographics.contacts_created_by_id_users_fk"',
     );
     await queryInterface.removeColumn('contacts', 'version_id');
   },

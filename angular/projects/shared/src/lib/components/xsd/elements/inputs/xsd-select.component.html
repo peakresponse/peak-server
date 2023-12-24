@@ -9,8 +9,7 @@
     [ngModel]="value"
     (ngModelChange)="onChange($event)"
     class="select-wrapper__select"
-    [class.is-invalid]="isInvalid"
-  >
+    [class.is-invalid]="isInvalid">
     <option *ngFor="let item of type['xs:restriction']['xs:enumeration']" [ngValue]="item._attributes.value">
       {{ item['xs:annotation']['xs:documentation']._text }}
     </option>

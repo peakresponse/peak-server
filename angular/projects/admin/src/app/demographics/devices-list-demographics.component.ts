@@ -13,5 +13,8 @@ export class DevicesListDemographicsComponent {
     { name: 'Type', attr: ['dDevice.03'], class: 'col-5' },
   ];
 
-  constructor(public agency: AgencyService, public route: ActivatedRoute) {}
+  constructor(
+    public agency: AgencyService,
+    public route: ActivatedRoute,
+  ) {}
 }

@@ -30,7 +30,7 @@ router.get(
       const payload = await models.Report.createPayload(reports, { transaction });
       res.json(payload);
     });
-  })
+  }),
 );
 
 /* eslint-disable no-await-in-loop */
@@ -194,7 +194,7 @@ router.post(
     });
     await Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id)));
     await Promise.all(reportIds.map((id) => dispatchReportUpdate(id)));
-  })
+  }),
 );
 /* eslint-enable no-await-in-loop */
 
@@ -210,7 +210,7 @@ router.get(
       const payload = await models.Report.createPayload([report], { transaction });
       res.json(payload);
     });
-  })
+  }),
 );
 
 router.get(
@@ -229,7 +229,7 @@ router.get(
         res.status(HttpStatus.NOT_FOUND).end();
       }
     });
-  })
+  }),
 );
 
 module.exports = router;

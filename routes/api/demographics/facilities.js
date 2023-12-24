@@ -26,7 +26,7 @@ router.post(
       updatedById: req.user.id,
     });
     res.status(HttpStatus.CREATED).json(await record.toNemsisJSON());
-  })
+  }),
 );
 
 base.addAllRoutes(router, models.Facility, {

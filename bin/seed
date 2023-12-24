@@ -4,7 +4,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const tmp = require('tmp');
+const tmp = require('tmp-promise');
 
 const { download } = require('../lib/utils');
 
@@ -53,7 +53,7 @@ async function parseCounties(filePath) {
 }
 
 async function seed() {
-  const tmpDir = tmp.dirSync();
+  const tmpDir = await tmp.dir({ unsafeCleanup: true });
   try {
     /// parse and insert all the states
     const statePath = path.resolve(__dirname, '../lib/states.txt');
@@ -62,7 +62,7 @@ async function seed() {
     console.log('\n');
 
     /// download and seed county data
-    const countyPath = path.resolve(tmpDir.name, 'county.txt');
+    const countyPath = path.resolve(tmpDir.path, 'county.txt');
     console.log('Downloading county data...');
     await download('https://www2.census.gov/geo/docs/reference/codes/files/national_county.txt', countyPath);
     console.log('Parsing and saving county data...');
@@ -72,7 +72,7 @@ async function seed() {
     console.log('Done!');
   } finally {
     models.sequelize.close();
-    tmpDir.removeCallback();
+    await tmpDir.cleanup();
   }
 }
 
