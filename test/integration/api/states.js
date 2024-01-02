@@ -65,6 +65,7 @@ describe('/api/states', () => {
         assert.deepStrictEqual(response.body, {
           initialized: true,
           dataSetVersions: [
+            '2023-12-30-325c3fd54eaa6672cd0530e4319981c9a35a090c',
             '2023-12-02-248d4a29699bd4aac893f40883d28e98a434569e',
             '2023-06-02-370fa47febdf457374a7dd1907dfefacd539bda4',
             '2023-05-27-ff13b8c96ce333b974669b3aacb6442faf9d9ef8',
@@ -102,6 +103,7 @@ describe('/api/states', () => {
         assert.deepStrictEqual(response.body, {
           initialized: true,
           dataSetVersions: [
+            '2023-12-30-325c3fd54eaa6672cd0530e4319981c9a35a090c',
             '2023-12-02-248d4a29699bd4aac893f40883d28e98a434569e',
             '2023-06-02-370fa47febdf457374a7dd1907dfefacd539bda4',
             '2023-05-27-ff13b8c96ce333b974669b3aacb6442faf9d9ef8',
