@@ -1,4 +1,5 @@
 const crypto = require('node:crypto');
+const _ = require('lodash');
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -8,6 +9,26 @@ module.exports = (sequelize, DataTypes) => {
       Export.belongsTo(models.State, { as: 'state' });
       Export.belongsTo(models.User, { as: 'createdBy' });
       Export.belongsTo(models.User, { as: 'updatedBy' });
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'name',
+        'type',
+        'authUrl',
+        'apiUrl',
+        'username',
+        'organization',
+        'isVisible',
+        'isApprovalReqd',
+        'isOverridable',
+        'createdById',
+        'updatedById',
+        'createdAt',
+        'updatedAt',
+      ]);
     }
   }
 

@@ -101,6 +101,7 @@ async function resetDatabase() {
     DELETE FROM vehicles;
     UPDATE agencies SET version_id=NULL;
     DELETE FROM versions;
+    DELETE FROM exports;
     DELETE FROM agencies;
     DELETE FROM nemsis_state_data_sets;
     DELETE FROM nemsis_schematrons;
