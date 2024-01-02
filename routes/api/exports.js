@@ -13,12 +13,17 @@ router.get(
   '/',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
-    const records = await models.Export.findAll({
+    const options = {
       where: {
         isVisible: true,
       },
       order: [['name', 'ASC']],
-    });
+    };
+    const { showAll } = req.query ?? {};
+    if (req.user.isAdmin && showAll === 'true') {
+      delete options.where.isVisible;
+    }
+    const records = await models.Export.findAll(options);
     res.json(records.map((r) => r.toJSON()));
   }),
 );

@@ -36,6 +36,13 @@ describe('/api/exports', () => {
       assert.deepStrictEqual(data.length, 1);
       assert.deepStrictEqual(data[0].name, 'Export Fixture 2 (visible)');
     });
+
+    it('returns all Exports', async () => {
+      const response = await testSession.get('/api/exports?showAll=true').expect(HttpStatus.OK);
+      const data = response.body;
+      assert(data);
+      assert.deepStrictEqual(data.length, 3);
+    });
   });
 
   describe('POST /', () => {

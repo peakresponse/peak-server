@@ -55,14 +55,17 @@ module.exports = {
       is_visible: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       is_approval_reqd: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       is_overridable: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       created_by_id: {
         allowNull: false,

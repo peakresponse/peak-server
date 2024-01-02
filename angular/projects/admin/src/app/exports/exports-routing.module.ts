@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgencyService, UserService } from 'shared';
 
 import { ListExportsComponent } from './list-exports.component';
+import { NewExportComponent } from './new-export.component';
+import { EditExportComponent } from './edit-export.component';
 
 const appRoutes: Routes = [
   {
@@ -13,7 +15,16 @@ const appRoutes: Routes = [
       agency: AgencyService,
       user: UserService,
     },
-    children: [],
+    children: [
+      {
+        path: 'new',
+        component: NewExportComponent,
+      },
+      {
+        path: ':id',
+        component: EditExportComponent,
+      },
+    ],
   },
 ];
 

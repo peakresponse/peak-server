@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">New Export</h1>
+</div>
+<shared-form class="d-block col-xl-6" (create)="onCreate($event)" type="exports">
+  <ng-template let-record="record" let-error="error">
+    <div class="mb-3">
+      <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-select-field id="type" label="Type" [source]="record" [target]="record" [error]="error">
+        <option value="NEMSIS">NEMSIS SOAP</option>
+        <option value="ESO">ESO Partner</option>
+      </shared-select-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="authUrl" label="Auth URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="apiUrl" label="API URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="username" label="Username" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field
+        id="password"
+        type="password"
+        label="Password"
+        [source]="record"
+        [target]="record"
+        [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-text-field id="organization" label="Organization" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-checkbox id="isVisible" label="Is Visible?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+    </div>
+    <div class="mb-3">
+      <shared-checkbox
+        id="isApprovalReqd"
+        label="Is Approval Required?"
+        [source]="record"
+        [target]="record"
+        [error]="error"></shared-checkbox>
+    </div>
+    <div class="mb-3">
+      <shared-checkbox id="isOverridable" label="Is Overridable?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+    </div>
+  </ng-template>
+</shared-form>

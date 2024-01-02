@@ -7,9 +7,11 @@ import { SharedModule } from 'shared';
 
 import { ExportsRoutingModule } from './exports-routing.module';
 import { ListExportsComponent } from './list-exports.component';
+import { NewExportComponent } from './new-export.component';
+import { EditExportComponent } from './edit-export.component';
 
 @NgModule({
-  declarations: [ListExportsComponent],
+  declarations: [ListExportsComponent, NewExportComponent, EditExportComponent],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, ExportsRoutingModule],
   providers: [],
 })
