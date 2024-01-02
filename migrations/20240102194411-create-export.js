@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      password: {
+      encrypted_password: {
         allowNull: false,
         type: Sequelize.TEXT,
       },
