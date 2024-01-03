@@ -1,55 +1,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('exports', {
+    await queryInterface.createTable('export_triggers', {
       id: {
         allowNull: false,
         defaultValue: Sequelize.literal('gen_random_uuid()'),
         primaryKey: true,
         type: Sequelize.UUID,
       },
-      name: {
+      export_id: {
         allowNull: false,
-        type: Sequelize.CITEXT,
-      },
-      description: {
-        type: Sequelize.TEXT,
-      },
-      logo: {
-        type: Sequelize.TEXT,
-      },
-      type: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
-      auth_url: {
-        type: Sequelize.TEXT,
-      },
-      api_url: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
-      username: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
-      encrypted_password: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
-      organization: {
-        type: Sequelize.TEXT,
-      },
-      state_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
         references: {
           model: {
-            tableName: 'states',
+            tableName: 'exports',
           },
           key: 'id',
         },
       },
       agency_id: {
+        allowNull: false,
         type: Sequelize.UUID,
         references: {
           model: {
@@ -58,20 +28,43 @@ module.exports = {
           key: 'id',
         },
       },
-      is_visible: {
+      type: {
         allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        type: Sequelize.TEXT,
       },
-      is_approval_reqd: {
+      debounce_time: {
         allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
-      is_overridable: {
+      is_enabled: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
+      },
+      approved_by_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'users',
+          },
+          key: 'id',
+        },
+      },
+      approved_at: {
+        type: Sequelize.DATE,
+      },
+      username: {
+        type: Sequelize.TEXT,
+      },
+      encrypted_password: {
+        type: Sequelize.TEXT,
+      },
+      organization: {
+        type: Sequelize.TEXT,
+      },
+      credentials: {
+        type: Sequelize.JSONB,
       },
       created_by_id: {
         allowNull: false,
@@ -102,8 +95,10 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addIndex('export_triggers', ['export_id', 'agency_id'], { unique: true });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('exports');
+    await queryInterface.dropTable('export_triggers');
   },
 };

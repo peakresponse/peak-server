@@ -1,30 +1,31 @@
 const _ = require('lodash');
-const { Base } = require('./base');
+const { Model } = require('sequelize');
 
 const crypto = require('../lib/crypto');
 
 module.exports = (sequelize, DataTypes) => {
-  class Export extends Base {
+  class ExportTrigger extends Model {
     static associate(models) {
-      Export.belongsTo(models.Agency, { as: 'agency' });
-      Export.belongsTo(models.State, { as: 'state' });
-      Export.belongsTo(models.User, { as: 'createdBy' });
-      Export.belongsTo(models.User, { as: 'updatedBy' });
+      ExportTrigger.belongsTo(models.Export, { as: 'export' });
+      ExportTrigger.belongsTo(models.Agency, { as: 'agency' });
+      ExportTrigger.belongsTo(models.User, { as: 'createdBy' });
+      ExportTrigger.belongsTo(models.User, { as: 'updatedBy' });
     }
 
     toJSON() {
       const attributes = { ...this.get() };
       return _.pick(attributes, [
         'id',
-        'name',
+        'exportId',
+        'agencyId',
         'type',
-        'authUrl',
-        'apiUrl',
+        'debounceTime',
+        'isEnabled',
+        'approvedById',
+        'approvedAt',
         'username',
         'organization',
-        'isVisible',
-        'isApprovalReqd',
-        'isOverridable',
+        'credentials',
         'createdById',
         'updatedById',
         'createdAt',
@@ -33,20 +34,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  Export.init(
+  ExportTrigger.init(
     {
-      name: DataTypes.TEXT,
-      description: DataTypes.TEXT,
-      logo: DataTypes.TEXT,
-      logoUrl: {
-        type: DataTypes.VIRTUAL,
-        get() {
-          return this.assetUrl('logo');
-        },
-      },
       type: DataTypes.TEXT,
-      authUrl: DataTypes.TEXT,
-      apiUrl: DataTypes.TEXT,
+      debounceTime: DataTypes.INTEGER,
+      isEnabled: DataTypes.BOOLEAN,
+      approvedAt: DataTypes.DATE,
       username: DataTypes.TEXT,
       password: {
         type: DataTypes.VIRTUAL,
@@ -63,17 +56,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       encryptedPassword: DataTypes.TEXT,
       organization: DataTypes.TEXT,
-      isVisible: DataTypes.BOOLEAN,
-      isApprovalReqd: DataTypes.BOOLEAN,
-      isOverridable: DataTypes.BOOLEAN,
+      credentials: DataTypes.JSONB,
     },
     {
       sequelize,
-      modelName: 'Export',
-      tableName: 'exports',
+      modelName: 'ExportTrigger',
+      tableName: 'export_triggers',
       underscored: true,
     },
   );
 
-  return Export;
+  return ExportTrigger;
 };
