@@ -1,0 +1,44 @@
+[
+  {
+    "model": "ExportTrigger",
+    "data": {
+      "exportId": "1cea9191-f9c1-413c-9fb8-37de06d372cb",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "type": "SAVE",
+      "debounceTime": 0,
+      "isEnabled": true,
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "ExportTrigger",
+    "data": {
+      "exportId": "d897bfb5-c286-400e-9fa8-582cfef7791c",
+      "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "type": "SAVE",
+      "debounceTime": 0,
+      "isEnabled": true,
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "ExportTrigger",
+    "data": {
+      "exportId": "1cea9191-f9c1-413c-9fb8-37de06d372cb",
+      "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
+      "type": "SAVE",
+      "debounceTime": 0,
+      "isEnabled": true,
+      "createdById": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
+      "updatedById": "9c5f542e-f7b0-497d-91ed-1eeefd8ade7f",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  }
+]
