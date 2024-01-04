@@ -73,6 +73,32 @@ router.post(
   }),
 );
 
+router.patch(
+  '/:id/approve',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    let record;
+    await models.sequelize.transaction(async (transaction) => {
+      record = await models.ExportTrigger.findByPk(req.params.id, {
+        transaction,
+      });
+      if (record && !record.approvedAt) {
+        record.approvedAt = new Date();
+        record.approvedById = req.user.id;
+        record.updatedById = req.user.id;
+        await record.save({
+          transaction,
+        });
+      }
+    });
+    if (record) {
+      res.json(record.toJSON());
+    } else {
+      res.status(HttpStatus.NOT_FOUND).end();
+    }
+  }),
+);
+
 router.get(
   '/:id',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),

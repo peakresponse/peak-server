@@ -91,6 +91,19 @@ describe('/api/exports/triggers', () => {
       });
     });
 
+    describe('PATCH /:id/approve', () => {
+      it('marks the specified ExportTrigger as approved', async () => {
+        const response = await testSession
+          .patch('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234/approve')
+          .expect(HttpStatus.OK);
+        assert(response.body.approvedAt);
+        assert.deepStrictEqual(response.body.approvedById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
+        const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
+        assert(record.approvedAt);
+        assert.deepStrictEqual(record.approvedById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
+      });
+    });
+
     describe('PATCH /:id', () => {
       it('updates the specified ExportTrigger', async () => {
         const response = await testSession
