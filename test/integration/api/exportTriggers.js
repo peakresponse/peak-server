@@ -121,6 +121,14 @@ describe('/api/exports/triggers', () => {
         assert.deepStrictEqual(record.isEnabled, false);
       });
     });
+
+    describe('DELETE /:id', () => {
+      it('deletes the specified ExportTrigger', async () => {
+        await testSession.delete('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234').expect(HttpStatus.OK);
+        const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
+        assert.deepStrictEqual(record, null);
+      });
+    });
   });
 
   context('as a user', () => {
@@ -214,6 +222,17 @@ describe('/api/exports/triggers', () => {
         const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
         assert.deepStrictEqual(record.debounceTime, 10);
         assert.deepStrictEqual(record.isEnabled, false);
+      });
+    });
+
+    describe('DELETE /:id', () => {
+      it('deletes the specified ExportTrigger', async () => {
+        await testSession
+          .delete('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234')
+          .set('Host', `bmacc.${process.env.BASE_HOST}`)
+          .expect(HttpStatus.OK);
+        const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
+        assert.deepStrictEqual(record, null);
       });
     });
   });
