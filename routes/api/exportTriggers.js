@@ -40,20 +40,17 @@ router.post(
   '/',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
-    const record = models.Export.build(
-      _.pick(req.body, [
-        'name',
-        'type',
-        'authUrl',
-        'apiUrl',
-        'username',
-        'password',
-        'organization',
-        'isVisible',
-        'isApprovalReqd',
-        'isOverridable',
-      ]),
+    const record = models.ExportTrigger.build(
+      _.pick(req.body, ['exportId', 'type', 'debounceTime', 'isEnabled', 'username', 'password', 'organization']),
     );
+    if (req.user.isAdmin && req.body.agencyId) {
+      record.agencyId = req.body.agencyId;
+    } else if (req.agency) {
+      record.agencyId = req.agency.id;
+    } else {
+      res.status(HttpStatus.BAD_REQUEST).end();
+      return;
+    }
     record.createdById = req.user.id;
     record.updatedById = req.user.id;
     await record.save();
