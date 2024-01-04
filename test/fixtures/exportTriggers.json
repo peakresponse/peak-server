@@ -2,6 +2,7 @@
   {
     "model": "ExportTrigger",
     "data": {
+      "id": "3843042f-a086-4c3f-8a2c-ed663e0fb234",
       "exportId": "1cea9191-f9c1-413c-9fb8-37de06d372cb",
       "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "type": "SAVE",
@@ -16,6 +17,7 @@
   {
     "model": "ExportTrigger",
     "data": {
+      "id": "ed8b1c03-a635-4239-aee7-9e6010445b47",
       "exportId": "d897bfb5-c286-400e-9fa8-582cfef7791c",
       "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "type": "SAVE",
@@ -30,6 +32,7 @@
   {
     "model": "ExportTrigger",
     "data": {
+      "id": "0d1e341b-6caf-412b-b085-56849b3264cd",
       "exportId": "1cea9191-f9c1-413c-9fb8-37de06d372cb",
       "agencyId": "81b433cd-5f48-4458-87f3-0bf4e1591830",
       "type": "SAVE",

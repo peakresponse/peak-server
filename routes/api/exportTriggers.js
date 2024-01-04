@@ -40,9 +40,24 @@ router.post(
   '/',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
-    const record = models.ExportTrigger.build(
-      _.pick(req.body, ['exportId', 'type', 'debounceTime', 'isEnabled', 'username', 'password', 'organization']),
-    );
+    const { exportId } = req.body ?? {};
+    if (!exportId) {
+      res.status(HttpStatus.BAD_REQUEST).end();
+      return;
+    }
+    const exp = await models.Export.findByPk(exportId);
+    if (!exp) {
+      res.status(HttpStatus.BAD_REQUEST).end();
+      return;
+    }
+    const record = models.ExportTrigger.build(_.pick(req.body, ['exportId', 'type', 'debounceTime', 'isEnabled']));
+    if (exp.isOverridable) {
+      record.set(_.pick(req.body, ['username', 'password', 'organization']));
+    }
+    if (!exp.isApprovalReqd) {
+      record.approvedAt = new Date();
+      record.approvedById = req.user.id;
+    }
     if (req.user.isAdmin && req.body.agencyId) {
       record.agencyId = req.body.agencyId;
     } else if (req.agency) {
@@ -62,7 +77,7 @@ router.get(
   '/:id',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
-    const record = await models.Export.findByPk(req.params.id);
+    const record = await models.ExportTrigger.findByPk(req.params.id);
     if (record) {
       if (req.user.isAdmin || record.agencyId === req.agency.id) {
         res.json(record.toJSON());
@@ -82,24 +97,17 @@ router.patch(
     let record;
     let isAllowed;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Export.findByPk(req.params.id, { transaction });
+      record = await models.ExportTrigger.findByPk(req.params.id, {
+        include: ['export'],
+        transaction,
+      });
       if (record) {
         isAllowed = req.user.isAdmin || record.agencyId === req.agency.id;
         if (isAllowed) {
-          record.set(
-            _.pick(req.body, [
-              'name',
-              'type',
-              'authUrl',
-              'apiUrl',
-              'username',
-              'password',
-              'organization',
-              'isVisible',
-              'isApprovalReqd',
-              'isOverridable',
-            ]),
-          );
+          record.set(_.pick(req.body, ['type', 'debounceTime', 'isEnabled']));
+          if (record.export.isOverridable) {
+            record.set(_.pick(req.body, ['username', 'password', 'organization']));
+          }
           record.updatedBy = req.user;
           await record.save({
             transaction,
@@ -109,7 +117,9 @@ router.patch(
     });
     if (record) {
       if (isAllowed) {
-        res.json(record.toJSON());
+        const data = record.toJSON();
+        delete data.export;
+        res.json(data);
       } else {
         res.status(HttpStatus.FORBIDDEN).end();
       }
@@ -126,7 +136,7 @@ router.delete(
     let record;
     let isAllowed;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Export.findByPk(req.params.id, { transaction });
+      record = await models.ExportTrigger.findByPk(req.params.id, { transaction });
       if (record) {
         isAllowed = req.user.isAdmin || record.agencyId === req.agency.id;
         if (isAllowed) {

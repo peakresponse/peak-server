@@ -68,6 +68,59 @@ describe('/api/exports/triggers', () => {
         assert.deepStrictEqual(record.isEnabled, false);
       });
     });
+
+    describe('GET /:id', () => {
+      it('returns the specified ExportTrigger', async () => {
+        const response = await testSession.get('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234').expect(HttpStatus.OK);
+        assert.deepStrictEqual(response.body, {
+          id: '3843042f-a086-4c3f-8a2c-ed663e0fb234',
+          exportId: '1cea9191-f9c1-413c-9fb8-37de06d372cb',
+          agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+          type: 'SAVE',
+          debounceTime: 0,
+          isEnabled: true,
+          approvedById: null,
+          approvedAt: null,
+          username: null,
+          organization: null,
+          createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          createdAt: '2020-10-06T01:44:44.012Z',
+          updatedAt: response.body.updatedAt,
+        });
+      });
+    });
+
+    describe('PATCH /:id', () => {
+      it('updates the specified ExportTrigger', async () => {
+        const response = await testSession
+          .patch('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234')
+          .send({
+            debounceTime: 10,
+            isEnabled: false,
+          })
+          .expect(HttpStatus.OK);
+        assert.deepStrictEqual(response.body, {
+          id: '3843042f-a086-4c3f-8a2c-ed663e0fb234',
+          exportId: '1cea9191-f9c1-413c-9fb8-37de06d372cb',
+          agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+          type: 'SAVE',
+          debounceTime: 10,
+          isEnabled: false,
+          approvedById: null,
+          approvedAt: null,
+          username: null,
+          organization: null,
+          createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          createdAt: '2020-10-06T01:44:44.012Z',
+          updatedAt: response.body.updatedAt,
+        });
+        const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
+        assert.deepStrictEqual(record.debounceTime, 10);
+        assert.deepStrictEqual(record.isEnabled, false);
+      });
+    });
   });
 
   context('as a user', () => {
@@ -102,6 +155,63 @@ describe('/api/exports/triggers', () => {
         assert.deepStrictEqual(record.exportId, 'c41296ca-143d-4774-9bc1-58538984562f');
         assert.deepStrictEqual(record.agencyId, '9eeb6591-12f8-4036-8af8-6b235153d444');
         assert.deepStrictEqual(record.type, 'SAVE');
+        assert.deepStrictEqual(record.debounceTime, 10);
+        assert.deepStrictEqual(record.isEnabled, false);
+      });
+    });
+
+    describe('GET /:id', () => {
+      it('returns the specified ExportTrigger', async () => {
+        const response = await testSession
+          .get('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234')
+          .set('Host', `bmacc.${process.env.BASE_HOST}`)
+          .expect(HttpStatus.OK);
+        assert.deepStrictEqual(response.body, {
+          id: '3843042f-a086-4c3f-8a2c-ed663e0fb234',
+          exportId: '1cea9191-f9c1-413c-9fb8-37de06d372cb',
+          agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+          type: 'SAVE',
+          debounceTime: 0,
+          isEnabled: true,
+          approvedById: null,
+          approvedAt: null,
+          username: null,
+          organization: null,
+          createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          createdAt: '2020-10-06T01:44:44.012Z',
+          updatedAt: response.body.updatedAt,
+        });
+      });
+    });
+
+    describe('PATCH /:id', () => {
+      it('updates the specified ExportTrigger', async () => {
+        const response = await testSession
+          .patch('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234')
+          .set('Host', `bmacc.${process.env.BASE_HOST}`)
+          .send({
+            debounceTime: 10,
+            isEnabled: false,
+          })
+          .expect(HttpStatus.OK);
+        assert.deepStrictEqual(response.body, {
+          id: '3843042f-a086-4c3f-8a2c-ed663e0fb234',
+          exportId: '1cea9191-f9c1-413c-9fb8-37de06d372cb',
+          agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+          type: 'SAVE',
+          debounceTime: 10,
+          isEnabled: false,
+          approvedById: null,
+          approvedAt: null,
+          username: null,
+          organization: null,
+          createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          createdAt: '2020-10-06T01:44:44.012Z',
+          updatedAt: response.body.updatedAt,
+        });
+        const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
         assert.deepStrictEqual(record.debounceTime, 10);
         assert.deepStrictEqual(record.isEnabled, false);
       });

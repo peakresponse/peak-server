@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       ExportTrigger.belongsTo(models.Export, { as: 'export' });
       ExportTrigger.belongsTo(models.Agency, { as: 'agency' });
+      ExportTrigger.belongsTo(models.User, { as: 'approvedBy' });
       ExportTrigger.belongsTo(models.User, { as: 'createdBy' });
       ExportTrigger.belongsTo(models.User, { as: 'updatedBy' });
     }
@@ -25,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         'approvedAt',
         'username',
         'organization',
-        'credentials',
         'createdById',
         'updatedById',
         'createdAt',
