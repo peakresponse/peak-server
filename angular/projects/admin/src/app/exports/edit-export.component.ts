@@ -8,6 +8,7 @@ import { NavigationService } from 'shared';
 })
 export class EditExportComponent {
   id: string = '';
+  isEditing = false;
 
   constructor(
     private navigation: NavigationService,

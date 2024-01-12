@@ -1,7 +1,7 @@
 import { Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
-import { get } from 'lodash-es';
+import { cloneDeep, get } from 'lodash-es';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -19,17 +19,21 @@ export class FormComponent implements OnChanges {
   @Input() record: any = {};
   @Input() transformRecord: (record: any) => any = (record) => record;
   @Input() hideButtons = false;
+  @Input() showCancel = false;
   @Input() createLabel: string = 'Create';
+  @Input() cancelLabel: string = 'Cancel';
   @Input() updateLabel: string = 'Update';
   @Input() deleteLabel: string = 'Delete';
   @Input() disabled = false;
   @Output() load = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<any>();
   @Output() create = new EventEmitter<any>();
   @Output() update = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @ContentChild(TemplateRef) template: TemplateRef<any> | null = null;
   @ViewChild('deleteConfirmation') deleteModal?: ModalComponent;
 
+  originalRecord: any = {};
   loading = false;
   updated = false;
   error = false;
@@ -59,6 +63,7 @@ export class FormComponent implements OnChanges {
       .subscribe((response: HttpResponse<any>) => {
         this.loading = false;
         this.record = response.body;
+        this.originalRecord = cloneDeep(this.record);
         this.load.emit(this.record);
       });
   }
@@ -68,6 +73,11 @@ export class FormComponent implements OnChanges {
       return get(this.api, this.type).update !== undefined;
     }
     return get(this.api, this.type).create !== undefined;
+  }
+
+  onCancel() {
+    this.record = cloneDeep(this.originalRecord);
+    this.cancel.emit();
   }
 
   onSubmit() {
@@ -88,6 +98,7 @@ export class FormComponent implements OnChanges {
           this.loading = false;
           this.updated = true;
           this.record = response.body;
+          this.originalRecord = cloneDeep(this.record);
           this.update.emit(response.body);
         });
     } else {

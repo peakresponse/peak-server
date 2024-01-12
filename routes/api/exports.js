@@ -35,6 +35,8 @@ router.post(
     const record = models.Export.build(
       _.pick(req.body, [
         'name',
+        'description',
+        'logo',
         'type',
         'authUrl',
         'apiUrl',
@@ -84,6 +86,8 @@ router.patch(
           record.set(
             _.pick(req.body, [
               'name',
+              'description',
+              'logo',
               'type',
               'authUrl',
               'apiUrl',

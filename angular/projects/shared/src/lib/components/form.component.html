@@ -7,6 +7,7 @@
           <span *ngIf="!record.id">{{ createLabel }}</span>
           <span *ngIf="record.id">{{ updateLabel }}</span>
         </button>
+        <button (click)="onCancel()" *ngIf="showCancel" type="button" class="btn btn--secondary ms-3">{{ cancelLabel }}</button>
         <shared-error *ngIf="error" [error]="error" class="ms-3"></shared-error>
         <span *ngIf="updated" class="ms-3 valid-feedback"> This record has been updated! </span>
       </span>

@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       return _.pick(attributes, [
         'id',
         'name',
+        'description',
+        'logo',
+        'logoUrl',
         'type',
         'authUrl',
         'apiUrl',
