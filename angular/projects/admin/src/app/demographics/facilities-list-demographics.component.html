@@ -30,7 +30,7 @@
         [source]="importSearchParams"
         [target]="importSearchParams"
         (valueChange)="onImportSearch(importSearchParams.search)">
-        <option *ngFor="let state of states" [selected]="state.id === importSearchParams?.stateId" [value]="state.id">
+        <option *ngFor="let state of states" [selected]="state.id === importSearchParams.stateId" [value]="state.id">
           {{ state.name }}
         </option>
       </shared-select-field>
