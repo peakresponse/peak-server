@@ -1,45 +1,65 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-  <h1 class="h2">Edit Export</h1>
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Edit Export</h1>
+  </div>
+  <shared-form
+    *ngIf="id"
+    type="exports"
+    [id]="id"
+    [hideButtons]="!isEditing"
+    [showCancel]="true"
+    (cancel)="isEditing = false"
+    (update)="isEditing = false"
+    (delete)="onDelete()"
+    class="d-block col-xl-6">
+    <ng-template let-record="record" let-error="error">
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>Name</label>
+          <h3>{{ record.name }}</h3>
+        </div>
+        <div *ngIf="record.authUrl" class="mb-3">
+          <label>Auth URL</label>
+          <h3>{{ record.authUrl }}</h3>
+        </div>
+        <div *ngIf="record.apiUrl" class="mb-3">
+          <label>API URL</label>
+          <h3>{{ record.apiUrl }}</h3>
+        </div>
+        <div *ngIf="record.username" class="mb-3">
+          <label>Username</label>
+          <h3>{{ record.username }}</h3>
+        </div>
+        <div *ngIf="record.organization" class="mb-3">
+          <label>Organization</label>
+          <h3>{{ record.organization }}</h3>
+        </div>
+        <div class="mb-3">
+          <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr class="list">
+                <th class="col-4">Id</th>
+                <th>Agency <a [routerLink]="['/exports', record.id, 'triggers', 'new']" class="btn btn--sm btn--primary ms-3">Add</a></th>
+              </tr>
+            </thead>
+            <shared-list type="exportTriggers" [params]="params">
+              <ng-template let-records="records" let-r="record">
+                <tr [routerLink]="['/exports', record.id, 'triggers', r.id]">
+                  <td>{{ r.id }}</td>
+                  <td>{{ r.name }}</td>
+                </tr>
+              </ng-template>
+            </shared-list>
+          </table>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEditing">
+        <admin-exports-form [record]="record" [error]="error"></admin-exports-form>
+      </ng-container>
+    </ng-template>
+  </shared-form>
 </div>
-<shared-form
-  *ngIf="id"
-  type="exports"
-  [id]="id"
-  [hideButtons]="!isEditing"
-  [showCancel]="true"
-  (cancel)="isEditing = false"
-  (update)="isEditing = false"
-  (delete)="onDelete()"
-  class="d-block col-xl-6">
-  <ng-template let-record="record" let-error="error">
-    <ng-container *ngIf="!isEditing">
-      <div class="mb-3">
-        <label>Name</label>
-        <h3>{{ record.name }}</h3>
-      </div>
-      <div *ngIf="record.authUrl" class="mb-3">
-        <label>Auth URL</label>
-        <h3>{{ record.authUrl }}</h3>
-      </div>
-      <div *ngIf="record.apiUrl" class="mb-3">
-        <label>API URL</label>
-        <h3>{{ record.apiUrl }}</h3>
-      </div>
-      <div *ngIf="record.username" class="mb-3">
-        <label>Username</label>
-        <h3>{{ record.username }}</h3>
-      </div>
-      <div *ngIf="record.organization" class="mb-3">
-        <label>Organization</label>
-        <h3>{{ record.organization }}</h3>
-      </div>
-      <div class="mb-3">
-        <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
-      </div>
-      <hr />
-    </ng-container>
-    <ng-container *ngIf="isEditing">
-      <admin-exports-form [record]="record" [error]="error"></admin-exports-form>
-    </ng-container>
-  </ng-template>
-</shared-form>

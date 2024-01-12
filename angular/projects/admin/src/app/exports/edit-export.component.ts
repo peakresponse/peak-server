@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,13 +11,16 @@ export class EditExportComponent {
   id: string = '';
   isEditing = false;
 
+  params?: HttpParams;
+
   constructor(
     private navigation: NavigationService,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
+    this.params = new HttpParams({ fromObject: { exportId: this.id } });
   }
 
   onDelete() {
