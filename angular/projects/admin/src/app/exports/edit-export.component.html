@@ -35,6 +35,10 @@
           <label>Organization</label>
           <h3>{{ record.organization }}</h3>
         </div>
+        <div *ngIf="record.isOverridable" class="mb-3">
+          <label>Is Overridable?</label>
+          <h3>Yes</h3>
+        </div>
         <div class="mb-3">
           <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
         </div>
@@ -42,15 +46,13 @@
           <table class="table">
             <thead>
               <tr class="list">
-                <th class="col-4">Id</th>
                 <th>Agency <a [routerLink]="['/exports', record.id, 'triggers', 'new']" class="btn btn--sm btn--primary ms-3">Add</a></th>
               </tr>
             </thead>
             <shared-list type="exportTriggers" [params]="params">
               <ng-template let-records="records" let-r="record">
                 <tr [routerLink]="['/exports', record.id, 'triggers', r.id]">
-                  <td>{{ r.id }}</td>
-                  <td>{{ r.name }}</td>
+                  <td>{{ r.agency?.name }} ({{ r.agency?.stateUniqueId }})</td>
                 </tr>
               </ng-template>
             </shared-list>

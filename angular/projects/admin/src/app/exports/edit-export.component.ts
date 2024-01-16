@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { NavigationService } from 'shared';
@@ -7,7 +7,7 @@ import { NavigationService } from 'shared';
 @Component({
   templateUrl: './edit-export.component.html',
 })
-export class EditExportComponent {
+export class EditExportComponent implements OnInit {
   id: string = '';
   isEditing = false;
 
