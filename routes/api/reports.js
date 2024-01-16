@@ -192,8 +192,17 @@ router.post(
       }
       res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(payload);
     });
-    await Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id)));
-    await Promise.all(reportIds.map((id) => dispatchReportUpdate(id)));
+    await Promise.all([
+      Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id))),
+      Promise.all(reportIds.map((id) => dispatchReportUpdate(id))),
+    ]);
+    const exportTriggers = await req.agency.getExportTriggers({
+      where: {
+        type: 'SAVE',
+        isEnabled: true,
+      },
+    });
+    await Promise.all(reportIds.map((id) => Promise.all(exportTriggers.map((et) => et.execute(id)))));
   }),
 );
 /* eslint-enable no-await-in-loop */

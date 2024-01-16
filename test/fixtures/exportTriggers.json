@@ -22,7 +22,7 @@
       "agencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "type": "SAVE",
       "debounceTime": 0,
-      "isEnabled": true,
+      "isEnabled": false,
       "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "createdAt": "2020-10-06T01:44:44.012Z",

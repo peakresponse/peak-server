@@ -43,6 +43,8 @@ describe('/api/reports', () => {
       'forms',
       'signatures',
       'reports',
+      'exports',
+      'exportTriggers',
     ]);
     testSession = session(app);
   });
