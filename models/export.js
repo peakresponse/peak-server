@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         'logoUrl',
         'type',
         'authUrl',
+        'wsdlUrl',
         'apiUrl',
         'username',
         'organization',
@@ -49,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: DataTypes.TEXT,
       authUrl: DataTypes.TEXT,
+      wsdlUrl: DataTypes.TEXT,
       apiUrl: DataTypes.TEXT,
       username: DataTypes.TEXT,
       password: {

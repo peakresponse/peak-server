@@ -197,12 +197,13 @@ router.post(
       Promise.all(reportIds.map((id) => dispatchReportUpdate(id))),
     ]);
     const exportTriggers = await req.agency.getExportTriggers({
+      include: ['export'],
       where: {
         type: 'SAVE',
         isEnabled: true,
       },
     });
-    await Promise.all(reportIds.map((id) => Promise.all(exportTriggers.map((et) => et.execute(id)))));
+    await Promise.all(reportIds.map((id) => Promise.all(exportTriggers.map((et) => et.dispatch(id)))));
   }),
 );
 /* eslint-enable no-await-in-loop */

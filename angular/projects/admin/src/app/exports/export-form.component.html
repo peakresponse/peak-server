@@ -10,6 +10,9 @@
 <div class="mb-3">
   <shared-text-field id="authUrl" label="Auth URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
 </div>
+<div *ngIf="record.type === 'NEMSIS'" class="mb-3">
+  <shared-text-field id="wsdlUrl" label="WSDL URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
 <div class="mb-3">
   <shared-text-field id="apiUrl" label="API URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
 </div>

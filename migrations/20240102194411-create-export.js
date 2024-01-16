@@ -25,6 +25,9 @@ module.exports = {
       auth_url: {
         type: Sequelize.TEXT,
       },
+      wsdl_url: {
+        type: Sequelize.TEXT,
+      },
       api_url: {
         allowNull: false,
         type: Sequelize.TEXT,

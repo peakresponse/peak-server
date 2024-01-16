@@ -1,3 +1,4 @@
+const inflection = require('inflection');
 const _ = require('lodash');
 const { Model } = require('sequelize');
 
@@ -11,6 +12,12 @@ module.exports = (sequelize, DataTypes) => {
       ExportTrigger.belongsTo(models.User, { as: 'approvedBy' });
       ExportTrigger.belongsTo(models.User, { as: 'createdBy' });
       ExportTrigger.belongsTo(models.User, { as: 'updatedBy' });
+    }
+
+    dispatch(reportId) {
+      // eslint-disable-next-line import/no-dynamic-require, global-require
+      const handler = require(`../lib/exports/${inflection.camelize(this.export.type.toLowerCase(), true)}`);
+      handler.execute(this.id, reportId);
     }
 
     toJSON() {

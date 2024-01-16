@@ -23,6 +23,10 @@
           <label>Auth URL</label>
           <h3>{{ record.authUrl }}</h3>
         </div>
+        <div *ngIf="record.wsdlUrl" class="mb-3">
+          <label>WSDL URL</label>
+          <h3>{{ record.wsdlUrl }}</h3>
+        </div>
         <div *ngIf="record.apiUrl" class="mb-3">
           <label>API URL</label>
           <h3>{{ record.apiUrl }}</h3>

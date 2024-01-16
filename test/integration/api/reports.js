@@ -6,6 +6,8 @@ const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
 
+const { mockValidatorEMSRequest } = require('../../mocks/nemsis');
+
 describe('/api/reports', () => {
   let testSession;
 
@@ -46,6 +48,7 @@ describe('/api/reports', () => {
       'exports',
       'exportTriggers',
     ]);
+    mockValidatorEMSRequest();
     testSession = session(app);
   });
 
@@ -582,6 +585,9 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.OK);
+
+        // give time for async triggers
+        await helpers.sleep(1000);
 
         const report = await models.Report.findByPk('da67b07b-144b-42c3-85f4-b3ce1bc8d235');
         assert(report);
