@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     dispatch(reportId) {
       // eslint-disable-next-line import/no-dynamic-require, global-require
       const handler = require(`../lib/exports/${inflection.camelize(this.export.type.toLowerCase(), true)}`);
-      handler.execute(this.id, reportId);
+      handler.execute(this.exportId, this.id, reportId);
     }
 
     toJSON() {

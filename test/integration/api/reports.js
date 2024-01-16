@@ -586,8 +586,30 @@ describe('/api/reports', () => {
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.OK);
 
-        // give time for async triggers
+        // give time export trigger to fire
         await helpers.sleep(1000);
+        const exportLog = await models.ExportLog.findOne({
+          where: {
+            reportId: 'da67b07b-144b-42c3-85f4-b3ce1bc8d235',
+          },
+        });
+        assert(exportLog);
+        assert.deepStrictEqual(exportLog.params, {
+          export: {
+            type: 'NEMSIS',
+            wsdlUrl: 'https://validator.nemsis.org/nemsisWs.wsdl',
+            apiUrl: 'https://validator.nemsis.org/',
+            username: 'tester1',
+            organization: null,
+          },
+          exportTrigger: {
+            type: 'SAVE',
+            debounceTime: 0,
+            username: null,
+            organization: null,
+          },
+        });
+        assert.deepStrictEqual(exportLog.result?.statusCode, '-12');
 
         const report = await models.Report.findByPk('da67b07b-144b-42c3-85f4-b3ce1bc8d235');
         assert(report);

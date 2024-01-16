@@ -59,6 +59,9 @@ async function cleanUploadedAssets() {
 async function resetDatabase() {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
+    DELETE FROM export_logs;
+    DELETE FROM export_triggers;
+    DELETE FROM exports;
     DELETE FROM list_items;
     DELETE FROM list_sections;
     DELETE FROM lists;
@@ -101,8 +104,6 @@ async function resetDatabase() {
     DELETE FROM vehicles;
     UPDATE agencies SET version_id=NULL;
     DELETE FROM versions;
-    DELETE FROM export_triggers;
-    DELETE FROM exports;
     DELETE FROM agencies;
     DELETE FROM nemsis_state_data_sets;
     DELETE FROM nemsis_schematrons;
