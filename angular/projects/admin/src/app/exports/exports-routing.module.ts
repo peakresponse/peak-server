@@ -5,8 +5,9 @@ import { AgencyService, UserService } from 'shared';
 
 import { ListExportsComponent } from './list-exports.component';
 import { NewExportComponent } from './new-export.component';
-import { NewExportTriggerComponent } from './new-export-trigger.component';
 import { EditExportComponent } from './edit-export.component';
+import { NewExportTriggerComponent } from './new-export-trigger.component';
+import { EditExportTriggerComponent } from './edit-export-trigger.component';
 
 const appRoutes: Routes = [
   {
@@ -28,6 +29,10 @@ const appRoutes: Routes = [
           {
             path: 'triggers/new',
             component: NewExportTriggerComponent,
+          },
+          {
+            path: 'triggers/:id',
+            component: EditExportTriggerComponent,
           },
         ],
       },

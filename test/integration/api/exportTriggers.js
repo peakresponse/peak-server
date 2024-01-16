@@ -87,6 +87,8 @@ describe('/api/exports/triggers', () => {
           updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
           createdAt: '2020-10-06T01:44:44.012Z',
           updatedAt: response.body.updatedAt,
+          export: response.body.export,
+          agency: response.body.agency,
         });
       });
     });
@@ -128,6 +130,8 @@ describe('/api/exports/triggers', () => {
           updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
           createdAt: '2020-10-06T01:44:44.012Z',
           updatedAt: response.body.updatedAt,
+          export: response.body.export,
+          agency: response.body.agency,
         });
         const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
         assert.deepStrictEqual(record.debounceTime, 10);
@@ -202,6 +206,8 @@ describe('/api/exports/triggers', () => {
           updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
           createdAt: '2020-10-06T01:44:44.012Z',
           updatedAt: response.body.updatedAt,
+          export: response.body.export,
+          agency: response.body.agency,
         });
       });
     });
@@ -231,6 +237,8 @@ describe('/api/exports/triggers', () => {
           updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
           createdAt: '2020-10-06T01:44:44.012Z',
           updatedAt: response.body.updatedAt,
+          export: response.body.export,
+          agency: response.body.agency,
         });
         const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
         assert.deepStrictEqual(record.debounceTime, 10);

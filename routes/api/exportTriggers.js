@@ -103,7 +103,9 @@ router.get(
   '/:id',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
-    const record = await models.ExportTrigger.findByPk(req.params.id);
+    const record = await models.ExportTrigger.findByPk(req.params.id, {
+      include: ['agency', 'export'],
+    });
     if (record) {
       if (req.user.isAdmin || record.agencyId === req.agency.id) {
         res.json(record.toJSON());
@@ -124,7 +126,7 @@ router.patch(
     let isAllowed;
     await models.sequelize.transaction(async (transaction) => {
       record = await models.ExportTrigger.findByPk(req.params.id, {
-        include: ['export'],
+        include: ['agency', 'export'],
         transaction,
       });
       if (record) {
@@ -144,7 +146,6 @@ router.patch(
     if (record) {
       if (isAllowed) {
         const data = record.toJSON();
-        delete data.export;
         res.json(data);
       } else {
         res.status(HttpStatus.FORBIDDEN).end();
