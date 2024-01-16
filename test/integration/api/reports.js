@@ -220,6 +220,9 @@ describe('/api/reports', () => {
           .send(data)
           .expect(HttpStatus.CREATED);
 
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
         report = await models.Report.findByPk('e092a222-3ba6-4b45-bef1-b29b01542f48');
         assert(report);
         assert.deepStrictEqual(report.data, data.Report.data);
@@ -315,6 +318,9 @@ describe('/api/reports', () => {
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
 
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
         const report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
         assert(report);
         assert.deepStrictEqual(report.data, data.Report.data);
@@ -368,6 +374,8 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
 
         const report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
         assert(report);
@@ -439,6 +447,8 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
 
         const report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
         assert(report);
@@ -585,8 +595,7 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.OK);
-
-        // give time export trigger to fire
+        // give time for export trigger to fire
         await helpers.sleep(1000);
         const exportLog = await models.ExportLog.findOne({
           where: {
