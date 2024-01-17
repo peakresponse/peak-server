@@ -11,6 +11,7 @@ router.use('/counties', require('./counties'));
 router.use('/demographics', require('./demographics'));
 router.use('/dispatchers', require('./dispatchers'));
 router.use('/employments', require('./employments'));
+router.use('/exports/logs', require('./exportLogs'));
 router.use('/exports/triggers', require('./exportTriggers'));
 router.use('/exports', require('./exports'));
 router.use('/facilities', require('./facilities'));

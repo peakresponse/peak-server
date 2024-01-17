@@ -538,6 +538,8 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
 
         const report = await models.Report.findByPk('2f1b5eb1-4689-41ef-8d88-aeda834a99ac');
         assert(report);
