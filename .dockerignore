@@ -1,8 +1,12 @@
 /.circleci
 /.env
 /.git
+/angular/.angular
+/angular/dist
+/angular/node_modules
 /nemsis/repositories
 /node_modules
 /public/assets
 /target
+/tmp
 /*.dump
