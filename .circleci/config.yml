@@ -11,7 +11,6 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-          version: 20.10.2
       - run: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
       - run: docker-compose -f docker-compose.test.yml build server
       - run: docker-compose -f docker-compose.test.yml run server bash -l -c "bin/pg_wait && npx sequelize db:create --env=test && npx sequelize db:migrate --env=test && npm run ci"
