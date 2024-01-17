@@ -1,0 +1,59 @@
+[
+  {
+    "model": "Export",
+    "data": {
+      "id": "1cea9191-f9c1-413c-9fb8-37de06d372cb",
+      "name": "Export Fixture 1 (not visible)",
+      "type": "NEMSIS",
+      "wsdlUrl": "https://validator.nemsis.org/nemsisWs.wsdl",
+      "apiUrl": "https://validator.nemsis.org/",
+      "username": "tester1",
+      "encryptedPassword": "m1iR8Nr7zX7txNnn1168rw==:sMXfaBIHKA/tTOzVXfokCQ==",
+      "isVisible": false,
+      "isApprovalReqd": true,
+      "isOverridable": false,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "Export",
+    "data": {
+      "id": "c41296ca-143d-4774-9bc1-58538984562f",
+      "name": "Export Fixture 2 (visible)",
+      "type": "NEMSIS",
+      "wsdlUrl": "https://validator.nemsis.org/nemsisWs.wsdl",
+      "apiUrl": "https://validator.nemsis.org/",
+      "username": "tester2",
+      "encryptedPassword": "m1iR8Nr7zX7txNnn1168rw==:sMXfaBIHKA/tTOzVXfokCQ==",
+      "isVisible": true,
+      "isApprovalReqd": true,
+      "isOverridable": false,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "Export",
+    "data": {
+      "id": "d897bfb5-c286-400e-9fa8-582cfef7791c",
+      "name": "Export Fixture 3 (not visible)",
+      "type": "NEMSIS",
+      "wsdlUrl": "https://validator.nemsis.org/nemsisWs.wsdl",
+      "apiUrl": "https://validator.nemsis.org/",
+      "username": "tester3",
+      "encryptedPassword": "m1iR8Nr7zX7txNnn1168rw==:sMXfaBIHKA/tTOzVXfokCQ==",
+      "isVisible": false,
+      "isApprovalReqd": true,
+      "isOverridable": false,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  }
+]

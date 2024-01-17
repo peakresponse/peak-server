@@ -11,6 +11,7 @@ import { AgencyService, NavigationService, NotificationService, SchemaService, U
 import { AgenciesModule } from './agencies/agencies.module';
 import { ClientsModule } from './clients/clients.module';
 import { DemographicsModule } from './demographics/demographics.module';
+import { ExportsModule } from './exports/exports.module';
 import { FacilitiesModule } from './facilities/facilities.module';
 import { ListsModule } from './lists/lists.module';
 import { NemsisModule } from './nemsis/nemsis.module';
@@ -28,6 +29,7 @@ import { UsersModule } from './users/users.module';
     AgenciesModule,
     ClientsModule,
     DemographicsModule,
+    ExportsModule,
     FacilitiesModule,
     ListsModule,
     NemsisModule,

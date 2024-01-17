@@ -76,7 +76,7 @@
       "startedOn": "2020-04-06",
       "endedOn": null,
       "isOwner": true,
-      "roles": [],
+      "roles": ["CONFIGURATION"],
       "firstName": "Regular",
       "lastName": "User",
       "email": "regular@peakresponse.net",

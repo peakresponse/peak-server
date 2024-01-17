@@ -7,6 +7,7 @@ process.env.ASSET_PATH_PREFIX = 'test';
 process.env.BASE_HOST = 'peakresponse.localhost';
 process.env.BASE_URL = 'http://peakresponse.localhost:3000';
 process.env.EXPRESS_SUBDOMAIN_OFFSET = '2';
+process.env.MODEL_EXPORT_AES_KEY = 'atFRHRK2gSapTqgJZxpl4ffqsOaUXUpoLbVw3D9Z6kc=';
 
 const fixtures = require('sequelize-fixtures');
 const fs = require('fs-extra');
@@ -58,6 +59,9 @@ async function cleanUploadedAssets() {
 async function resetDatabase() {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
+    DELETE FROM export_logs;
+    DELETE FROM export_triggers;
+    DELETE FROM exports;
     DELETE FROM list_items;
     DELETE FROM list_sections;
     DELETE FROM lists;

@@ -58,7 +58,7 @@ describe('/api/users', () => {
       assert.deepStrictEqual(data.agency.subdomain, 'bmacc');
       assert(data.employment);
       assert(data.employment.isOwner);
-      assert.deepStrictEqual(data.employment.roles, []);
+      assert.deepStrictEqual(data.employment.roles, ['CONFIGURATION']);
     });
 
     it('returns the user record of the logged in user (API level 2+)', async () => {
@@ -85,7 +85,7 @@ describe('/api/users', () => {
       assert.deepStrictEqual(data.Agency[0].subdomain, 'bmacc');
       assert(data.Employment);
       assert(data.Employment.isOwner);
-      assert.deepStrictEqual(data.Employment.roles, []);
+      assert.deepStrictEqual(data.Employment.roles, ['CONFIGURATION']);
     });
   });
 });

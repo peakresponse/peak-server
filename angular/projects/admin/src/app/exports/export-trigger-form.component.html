@@ -1,0 +1,34 @@
+<div *ngIf="!record.id" class="mb-3">
+  <ng-template #rt let-r="result" let-t="term">{{ r.name }} ({{ r.stateUniqueId }})</ng-template>
+  <shared-search-field
+    id="agency"
+    label="Agency"
+    placeholder="Start typing a name..."
+    [searchHandler]="searchHandler"
+    [inputFormatter]="formatter"
+    [resultTemplate]="rt"
+    [source]="record"
+    [target]="record"
+    [error]="error"></shared-search-field>
+</div>
+<div class="mb-3">
+  <shared-select-field id="type" label="Type" [source]="record" [target]="record" [error]="error">
+    <option value="SAVE">On Save</option>
+  </shared-select-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="debounceTime" label="Debounce Time" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-checkbox id="isEnabled" label="Is Enabled?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+</div>
+<h4>Credentials</h4>
+<div class="mb-3">
+  <shared-text-field id="username" label="Username" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="password" type="password" label="Password" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="organization" label="Organization" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>

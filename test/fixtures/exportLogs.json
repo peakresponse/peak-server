@@ -1,0 +1,44 @@
+[
+  {
+    "model": "ExportLog",
+    "data": {
+      "id": "ad0d9791-a03a-43ed-9dbc-3bf6a228daa4",
+      "exportId": "1cea9191-f9c1-413c-9fb8-37de06d372cb",
+      "exportTriggerId": "3843042f-a086-4c3f-8a2c-ed663e0fb234",
+      "reportId": "9832d547-c14f-46ce-bb44-dae05d80d4ed",
+      "params": {},
+      "result": {},
+      "isError": false,
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "ExportLog",
+    "data": {
+      "id": "c4806bc4-396c-4b68-8b29-a5c7b029d8f9",
+      "exportId": "d897bfb5-c286-400e-9fa8-582cfef7791c",
+      "exportTriggerId": "ed8b1c03-a635-4239-aee7-9e6010445b47",
+      "reportId": "9832d547-c14f-46ce-bb44-dae05d80d4ed",
+      "params": {},
+      "result": {},
+      "isError": false,
+      "createdAt": "2020-10-06T01:45:44.012Z",
+      "updatedAt": "2020-10-06T01:45:44.012Z"
+    }
+  },
+  {
+    "model": "ExportLog",
+    "data": {
+      "id": "71ffbaca-52eb-486d-9652-1dfb69fd8c1e",
+      "exportId": "1cea9191-f9c1-413c-9fb8-37de06d372cb",
+      "exportTriggerId": "0d1e341b-6caf-412b-b085-56849b3264cd",
+      "reportId": "c19bb731-5e9e-4feb-9192-720782ecf9a8",
+      "params": {},
+      "result": {},
+      "isError": false,
+      "createdAt": "2020-10-06T01:46:44.012Z",
+      "updatedAt": "2020-10-06T01:46:44.012Z"
+    }
+  }
+]

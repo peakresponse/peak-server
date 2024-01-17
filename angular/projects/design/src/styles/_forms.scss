@@ -12,6 +12,11 @@ form {
     border-top: 2px solid $base-300;
     opacity: 1;
   }
+
+  label:not(.form-check-label) {
+    @include h4-semibold;
+    color: $base-500;
+  }
 }
 
 .select-wrapper {

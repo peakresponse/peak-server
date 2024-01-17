@@ -40,6 +40,7 @@ router.post(
   helpers.async(async (req, res) => {
     const incidentIds = [];
     const reportIds = [];
+    const canonicalReportIds = [];
     await models.sequelize.transaction(async (transaction) => {
       // TODO: check if logged-in user is authorized to create/update
       const payload = {};
@@ -184,7 +185,8 @@ router.post(
               });
               if (model === 'Report') {
                 incidentIds.push(obj.incidentId);
-                reportIds.push(obj.canonicalId);
+                reportIds.push(obj.id);
+                canonicalReportIds.push(obj.canonicalId);
               }
             }
           }
@@ -192,8 +194,18 @@ router.post(
       }
       res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(payload);
     });
-    await Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id)));
-    await Promise.all(reportIds.map((id) => dispatchReportUpdate(id)));
+    await Promise.all([
+      Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id))),
+      Promise.all(canonicalReportIds.map((id) => dispatchReportUpdate(id))),
+    ]);
+    const exportTriggers = await req.agency.getExportTriggers({
+      include: ['export'],
+      where: {
+        type: 'SAVE',
+        isEnabled: true,
+      },
+    });
+    await Promise.all(reportIds.map((id) => Promise.all(exportTriggers.map((et) => et.dispatch(id)))));
   }),
 );
 /* eslint-enable no-await-in-loop */
@@ -218,11 +230,17 @@ router.get(
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
-      let report = await models.Report.findByPk(req.params.id, { transaction });
+      let report = await models.Report.findByPk(req.params.id, {
+        attributes: { include: ['emsDataSetFile', 'emsDataSetFileUrl'] },
+        transaction,
+      });
       if (report) {
         await report.regenerate({ transaction });
         if (report.isCanonical) {
-          report = await report.getCurrent({ transaction });
+          report = await models.Report.findByPk(report.currentId, {
+            attributes: { include: ['emsDataSetFile', 'emsDataSetFileUrl'] },
+            transaction,
+          });
         }
         res.redirect(report.emsDataSetFileUrl);
       } else {

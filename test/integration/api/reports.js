@@ -6,6 +6,8 @@ const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
 
+const { mockValidatorEMSRequest } = require('../../mocks/nemsis');
+
 describe('/api/reports', () => {
   let testSession;
 
@@ -43,7 +45,10 @@ describe('/api/reports', () => {
       'forms',
       'signatures',
       'reports',
+      'exports',
+      'exportTriggers',
     ]);
+    mockValidatorEMSRequest();
     testSession = session(app);
   });
 
@@ -215,6 +220,9 @@ describe('/api/reports', () => {
           .send(data)
           .expect(HttpStatus.CREATED);
 
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
         report = await models.Report.findByPk('e092a222-3ba6-4b45-bef1-b29b01542f48');
         assert(report);
         assert.deepStrictEqual(report.data, data.Report.data);
@@ -310,6 +318,9 @@ describe('/api/reports', () => {
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
 
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
         const report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
         assert(report);
         assert.deepStrictEqual(report.data, data.Report.data);
@@ -363,6 +374,8 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
 
         const report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
         assert(report);
@@ -434,6 +447,8 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
 
         const report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
         assert(report);
@@ -523,6 +538,8 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
 
         const report = await models.Report.findByPk('2f1b5eb1-4689-41ef-8d88-aeda834a99ac');
         assert(report);
@@ -580,6 +597,31 @@ describe('/api/reports', () => {
           },
         };
         await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.OK);
+        // give time for export trigger to fire
+        await helpers.sleep(1000);
+        const exportLog = await models.ExportLog.findOne({
+          where: {
+            reportId: 'da67b07b-144b-42c3-85f4-b3ce1bc8d235',
+          },
+        });
+        assert(exportLog);
+        assert.deepStrictEqual(exportLog.isError, false);
+        assert.deepStrictEqual(exportLog.params, {
+          export: {
+            type: 'NEMSIS',
+            wsdlUrl: 'https://validator.nemsis.org/nemsisWs.wsdl',
+            apiUrl: 'https://validator.nemsis.org/',
+            username: 'tester1',
+            organization: null,
+          },
+          exportTrigger: {
+            type: 'SAVE',
+            debounceTime: 0,
+            username: null,
+            organization: null,
+          },
+        });
+        assert.deepStrictEqual(exportLog.result?.statusCode, '-12');
 
         const report = await models.Report.findByPk('da67b07b-144b-42c3-85f4-b3ce1bc8d235');
         assert(report);
@@ -679,7 +721,7 @@ describe('/api/reports', () => {
           .set('Host', `bmacc.${process.env.BASE_HOST}`);
         assert.deepStrictEqual(response.statusCode, HttpStatus.MOVED_TEMPORARILY);
         const record = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
-        const current = await record.getCurrent();
+        const current = await record.getCurrent({ attributes: { include: ['emsDataSetFile'] } });
         assert.deepStrictEqual(response.headers.location, `/api/assets/reports/${current.id}/ems-data-set-file/${current.emsDataSetFile}`);
       });
     });

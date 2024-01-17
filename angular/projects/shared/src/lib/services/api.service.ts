@@ -383,6 +383,51 @@ export class ApiService {
     },
   };
 
+  exports = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/exports', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/exports`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/exports/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/exports/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/exports/${id}`);
+    },
+  };
+
+  exportLogs = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/exports/logs', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/exports/logs/${id}`, params);
+    },
+  };
+
+  exportTriggers = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/exports/triggers', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/exports/triggers`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/exports/triggers/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/exports/triggers/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/exports/triggers/${id}`);
+    },
+  };
+
   facilities = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/facilities', params);

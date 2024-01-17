@@ -1,0 +1,75 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Edit Export Trigger</h1>
+  </div>
+  <shared-form
+    *ngIf="id"
+    type="exportTriggers"
+    [id]="id"
+    [hideButtons]="!isEditing"
+    [showCancel]="true"
+    (cancel)="isEditing = false"
+    (update)="isEditing = false"
+    (delete)="onDelete()"
+    class="d-block col-xl-6">
+    <ng-template let-record="record" let-error="error">
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>Export</label>
+          <h3>{{ record.export?.name }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Agency</label>
+          <h3>{{ record.agency?.name }} ({{ record.agency?.stateUniqueId }})</h3>
+        </div>
+        <div class="mb-3">
+          <label>Type</label>
+          <h3 *ngIf="record.type == 'SAVE'">On Save</h3>
+        </div>
+        <div *ngIf="record.username" class="mb-3">
+          <label>Username</label>
+          <h3>{{ record.username }}</h3>
+        </div>
+        <div *ngIf="record.organization" class="mb-3">
+          <label>Organization</label>
+          <h3>{{ record.organization }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Is Enabled?</label>
+          <h3 *ngIf="record.isEnabled">Yes</h3>
+          <h3 *ngIf="!record.isEnabled">No</h3>
+        </div>
+        <div class="mb-3">
+          <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr class="list">
+                <th></th>
+                <th>Timestamp</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <shared-list type="exportLogs" [params]="params">
+              <ng-template let-records="records" let-r="record">
+                <tr [routerLink]="['/exports', exportId, 'triggers', id, 'logs', r.id]">
+                  <td>
+                    <span *ngIf="!r.isError"><i class="fas fa-check-circle"></i></span>
+                    <span *ngIf="r.isError"><i class="fas fa-xmark-circle"></i></span>
+                  </td>
+                  <td>{{ r.createdAt | date: 'medium' }}</td>
+                  <td>{{ r.result?.message }}</td>
+                </tr>
+              </ng-template>
+            </shared-list>
+          </table>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEditing">
+        <admin-exports-trigger-form [record]="record" [error]="error"></admin-exports-trigger-form>
+      </ng-container>
+    </ng-template>
+  </shared-form>
+</div>

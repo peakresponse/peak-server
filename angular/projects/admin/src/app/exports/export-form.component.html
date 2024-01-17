@@ -1,0 +1,36 @@
+<div class="mb-3">
+  <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-select-field id="type" label="Type" [source]="record" [target]="record" [error]="error">
+    <option value="NEMSIS">NEMSIS SOAP</option>
+    <option value="ESO">ESO Partner</option>
+  </shared-select-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="authUrl" label="Auth URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div *ngIf="record.type === 'NEMSIS'" class="mb-3">
+  <shared-text-field id="wsdlUrl" label="WSDL URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="apiUrl" label="API URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="username" label="Username" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="password" type="password" label="Password" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="organization" label="Organization" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-checkbox id="isVisible" label="Is Visible?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+</div>
+<div class="mb-3">
+  <shared-checkbox id="isApprovalReqd" label="Is Approval Required?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+</div>
+<div class="mb-3">
+  <shared-checkbox id="isOverridable" label="Is Overridable?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+</div>

@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       Agency.belongsTo(models.Psap, { as: 'psap' });
       Agency.belongsTo(models.Version, { as: 'version' });
       Agency.hasMany(models.Version, { as: 'versions', foreignKey: 'agencyId' });
+      Agency.hasMany(models.ExportTrigger, { as: 'exportTriggers', foreignKey: 'agencyId' });
       Agency.hasMany(models.Agency, {
         as: 'customizedAgencies',
         foreignKey: 'createdByAgencyId',
