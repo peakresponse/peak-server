@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
     toJSON() {
       const attributes = { ...this.get() };
       const data = _.pick(attributes, ['id', 'exportId', 'exportTriggerId', 'reportId', 'params', 'result', 'createdAt', 'updatedAt']);
+      if (this.export) {
+        data.export = this.export.toJSON();
+      }
+      if (this.exportTrigger) {
+        data.exportTrigger = this.exportTrigger.toJSON();
+      }
       return data;
     }
   }
@@ -20,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       params: DataTypes.JSONB,
       result: DataTypes.JSONB,
+      isError: DataTypes.BOOLEAN,
     },
     {
       sequelize,

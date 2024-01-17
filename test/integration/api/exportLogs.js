@@ -77,6 +77,8 @@ describe('/api/exports/logs', () => {
           result: {},
           createdAt: '2020-10-06T01:45:44.012Z',
           updatedAt: response.body.updatedAt,
+          export: response.body.export,
+          exportTrigger: response.body.exportTrigger,
         });
       });
     });
@@ -109,6 +111,8 @@ describe('/api/exports/logs', () => {
           result: {},
           createdAt: '2020-10-06T01:45:44.012Z',
           updatedAt: response.body.updatedAt,
+          export: response.body.export,
+          exportTrigger: response.body.exportTrigger,
         });
       });
 

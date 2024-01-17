@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">Export Log</h1>
+</div>
+<shared-form *ngIf="id" type="exportLogs" [id]="id" [hideButtons]="true" class="d-block col-xl-6">
+  <ng-template let-record="record" let-error="error">
+    <div class="mb-3">
+      <label>Export</label>
+      <h3>{{ record.export?.name }}</h3>
+    </div>
+    <div class="mb-3">
+      <label>Params</label>
+      <h3>{{ record.params | json }}</h3>
+    </div>
+    <div class="mb-3">
+      <label>Is Error?</label>
+      <h3 *ngIf="record.isError">Yes</h3>
+      <h3 *ngIf="!record.isError">No</h3>
+    </div>
+    <div class="mb-3">
+      <label>Message</label>
+      <h3>{{ record.result?.message }}</h3>
+    </div>
+    <div class="mb-3">
+      <label>Result</label>
+      <h3>{{ record.result | json }}</h3>
+    </div>
+  </ng-template>
+</shared-form>

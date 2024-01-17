@@ -401,6 +401,15 @@ export class ApiService {
     },
   };
 
+  exportLogs = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/exports/logs', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/exports/logs/${id}`, params);
+    },
+  };
+
   exportTriggers = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/exports/triggers', params);

@@ -13,6 +13,7 @@ import { EditExportComponent } from './edit-export.component';
 import { ExportTriggerFormComponent } from './export-trigger-form.component';
 import { NewExportTriggerComponent } from './new-export-trigger.component';
 import { EditExportTriggerComponent } from './edit-export-trigger.component';
+import { ExportLogComponent } from './export-log.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { EditExportTriggerComponent } from './edit-export-trigger.component';
     ExportTriggerFormComponent,
     NewExportTriggerComponent,
     EditExportTriggerComponent,
+    ExportLogComponent,
   ],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, ExportsRoutingModule],
   providers: [],

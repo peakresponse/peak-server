@@ -47,9 +47,23 @@
           <table class="table">
             <thead>
               <tr class="list">
-                <th>Log date</th>
+                <th></th>
+                <th>Timestamp</th>
+                <th>Result</th>
               </tr>
             </thead>
+            <shared-list type="exportLogs" [params]="params">
+              <ng-template let-records="records" let-r="record">
+                <tr [routerLink]="['/exports', exportId, 'triggers', id, 'logs', r.id]">
+                  <td>
+                    <span *ngIf="!r.isError"><i class="fas fa-check-circle"></i></span>
+                    <span *ngIf="r.isError"><i class="fas fa-xmark-circle"></i></span>
+                  </td>
+                  <td>{{ r.createdAt | date: 'medium' }}</td>
+                  <td>{{ r.result?.message }}</td>
+                </tr>
+              </ng-template>
+            </shared-list>
           </table>
         </div>
       </ng-container>

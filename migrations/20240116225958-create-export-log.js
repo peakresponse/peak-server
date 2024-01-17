@@ -43,6 +43,10 @@ module.exports = {
       result: {
         type: Sequelize.JSONB,
       },
+      is_error: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

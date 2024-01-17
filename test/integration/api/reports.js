@@ -605,6 +605,7 @@ describe('/api/reports', () => {
           },
         });
         assert(exportLog);
+        assert.deepStrictEqual(exportLog.isError, false);
         assert.deepStrictEqual(exportLog.params, {
           export: {
             type: 'NEMSIS',

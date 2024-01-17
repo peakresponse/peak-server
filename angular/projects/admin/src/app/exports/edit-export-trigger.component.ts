@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,6 +11,7 @@ export class EditExportTriggerComponent implements OnInit {
   id: string = '';
   exportId: string = '';
   isEditing = false;
+  params?: HttpParams;
 
   constructor(
     private navigation: NavigationService,
@@ -19,6 +21,7 @@ export class EditExportTriggerComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.exportId = this.route.snapshot.parent?.params['id'];
+    this.params = new HttpParams({ fromObject: { exportId: this.exportId, exportTriggerId: this.id } });
   }
 
   onDelete() {

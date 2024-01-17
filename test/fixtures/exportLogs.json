@@ -8,6 +8,7 @@
       "reportId": "9832d547-c14f-46ce-bb44-dae05d80d4ed",
       "params": {},
       "result": {},
+      "isError": false,
       "createdAt": "2020-10-06T01:44:44.012Z",
       "updatedAt": "2020-10-06T01:44:44.012Z"
     }
@@ -21,6 +22,7 @@
       "reportId": "9832d547-c14f-46ce-bb44-dae05d80d4ed",
       "params": {},
       "result": {},
+      "isError": false,
       "createdAt": "2020-10-06T01:45:44.012Z",
       "updatedAt": "2020-10-06T01:45:44.012Z"
     }
@@ -34,6 +36,7 @@
       "reportId": "c19bb731-5e9e-4feb-9192-720782ecf9a8",
       "params": {},
       "result": {},
+      "isError": false,
       "createdAt": "2020-10-06T01:46:44.012Z",
       "updatedAt": "2020-10-06T01:46:44.012Z"
     }

@@ -8,6 +8,7 @@ import { NewExportComponent } from './new-export.component';
 import { EditExportComponent } from './edit-export.component';
 import { NewExportTriggerComponent } from './new-export-trigger.component';
 import { EditExportTriggerComponent } from './edit-export-trigger.component';
+import { ExportLogComponent } from './export-log.component';
 
 const appRoutes: Routes = [
   {
@@ -33,6 +34,12 @@ const appRoutes: Routes = [
           {
             path: 'triggers/:id',
             component: EditExportTriggerComponent,
+            children: [
+              {
+                path: 'logs/:id',
+                component: ExportLogComponent,
+              },
+            ],
           },
         ],
       },
