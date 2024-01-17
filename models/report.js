@@ -164,7 +164,7 @@ module.exports = (sequelize, DataTypes) => {
 
     async nemsisValidate(options) {
       if (this.isCanonical) {
-        const current = await this.getCurrent(options);
+        const current = await Report.unscoped().findByPk(this.currentId, options);
         return current.nemsisValidate(options);
       }
       if (!options?.transaction) {
@@ -516,6 +516,11 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error();
             }
           }
+        },
+      },
+      defaultScope: {
+        attributes: {
+          exclude: ['emsDataSet', 'emsDataSetFile', 'emsDataSetFileUrl'],
         },
       },
     },

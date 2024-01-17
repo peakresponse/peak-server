@@ -353,7 +353,7 @@ describe('models', () => {
         // regenerate the report ems data set xml
         await report.regenerate();
         // since this is the canonical record, it will regenerate the "current" version
-        const current = await report.getCurrent();
+        const current = await models.Report.unscoped().findByPk(report.currentId);
         // assert that the emsDataSet field exists, without inserted files for efficiency in handling/validation
         let compare;
         compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.before.xml'));

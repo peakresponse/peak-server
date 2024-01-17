@@ -720,7 +720,7 @@ describe('/api/reports', () => {
           .set('Host', `bmacc.${process.env.BASE_HOST}`);
         assert.deepStrictEqual(response.statusCode, HttpStatus.MOVED_TEMPORARILY);
         const record = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
-        const current = await record.getCurrent();
+        const current = await record.getCurrent({ attributes: { include: ['emsDataSetFile'] } });
         assert.deepStrictEqual(response.headers.location, `/api/assets/reports/${current.id}/ems-data-set-file/${current.emsDataSetFile}`);
       });
     });

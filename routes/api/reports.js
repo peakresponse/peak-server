@@ -230,11 +230,17 @@ router.get(
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
-      let report = await models.Report.findByPk(req.params.id, { transaction });
+      let report = await models.Report.findByPk(req.params.id, {
+        attributes: { include: ['emsDataSetFile', 'emsDataSetFileUrl'] },
+        transaction,
+      });
       if (report) {
         await report.regenerate({ transaction });
         if (report.isCanonical) {
-          report = await report.getCurrent({ transaction });
+          report = await models.Report.findByPk(report.currentId, {
+            attributes: { include: ['emsDataSetFile', 'emsDataSetFileUrl'] },
+            transaction,
+          });
         }
         res.redirect(report.emsDataSetFileUrl);
       } else {
