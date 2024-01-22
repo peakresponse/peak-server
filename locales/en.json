@@ -17,6 +17,9 @@
   "design": {
     "title": "Design"
   },
+  "guides": {
+    "title": "Guides"
+  },
   "login": {
     "new": {
       "title": "Log In",

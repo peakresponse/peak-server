@@ -12,6 +12,7 @@ let adminWebpackStats;
 let authWebpackStats;
 let onboardingWebpackStats;
 let appWebpackStats;
+let guidesWebpackStats;
 
 function getDesignWebpackStats() {
   if (!designWebpackStats || process.env.NODE_ENV !== 'production') {
@@ -46,6 +47,13 @@ function getAppWebpackStats() {
     appWebpackStats = JSON.parse(fs.readFileSync(path.join(__dirname, '../angular/projects/app/webpack-stats.json')));
   }
   return appWebpackStats;
+}
+
+function getGuidesWebpackStats() {
+  if (!guidesWebpackStats || process.env.NODE_ENV !== 'production') {
+    guidesWebpackStats = JSON.parse(fs.readFileSync(path.join(__dirname, '../angular/projects/guides/webpack-stats.json')));
+  }
+  return guidesWebpackStats;
 }
 
 if (process.env.NODE_ENV !== 'production') {
@@ -112,6 +120,18 @@ router.get('/sign-up(/*)?', (req, res) => {
       BASE_HOST: process.env.BASE_HOST,
       MARKETING_ENABLED: process.env.MARKETING_ENABLED,
     },
+    layout: 'angular/layout',
+  });
+});
+
+router.get('/guides(/*)?', (req, res) => {
+  res.locals.designWebpackStats = getDesignWebpackStats();
+  res.locals.webpackStats = getGuidesWebpackStats();
+  res.render('angular/index', {
+    title: 'guides.title',
+    baseHref: '/guides',
+    elementRoot: 'guides-root',
+    environment: {},
     layout: 'angular/layout',
   });
 });
