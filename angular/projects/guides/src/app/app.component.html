@@ -1,14 +1,8 @@
 <nav class="sidebar">
   <ul class="sidebar__nav">
     <h4 class="sidebar__heading">User Guides</h4>
-    <li>
-      <a routerLink="/getting-started" routerLinkActive="sidebar__item--active" class="sidebar__item">Getting Started</a>
-    </li>
-    <li>
-      <a routerLink="/daily" routerLinkActive="sidebar__item--active" class="sidebar__item">Run Reporting</a>
-    </li>
-    <li>
-      <a routerLink="/mci" routerLinkActive="sidebar__item--active" class="sidebar__item">MCIs</a>
+    <li *ngFor="let record of guides">
+      <a [routerLink]="record.slug" routerLinkActive="sidebar__item--active" class="sidebar__item">{{ record.navName ?? record.name }}</a>
     </li>
   </ul>
 </nav>

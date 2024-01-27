@@ -440,6 +440,24 @@ export class ApiService {
     },
   };
 
+  guides = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/guides', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/guides`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/guides/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/guides/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/guides/${id}`);
+    },
+  };
+
   home = {
     contact: (data: any): Observable<any> => {
       return this.post('/contact-us', data);

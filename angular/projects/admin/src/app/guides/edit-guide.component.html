@@ -1,0 +1,63 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Edit Guide</h1>
+  </div>
+  <shared-form
+    *ngIf="id"
+    type="guides"
+    [id]="id"
+    [hideButtons]="!isEditing"
+    [showCancel]="true"
+    (cancel)="isEditing = false"
+    (update)="isEditing = false"
+    (delete)="onDelete()"
+    class="d-block col-xl-6">
+    <ng-template let-record="record" let-error="error">
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>Name</label>
+          <h3>{{ record.name }}</h3>
+        </div>
+        <div *ngIf="record.navName" class="mb-3">
+          <label>Nav Name</label>
+          <h3>{{ record.authUrl }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>URL Slug</label>
+          <h3>{{ record.slug }}</h3>
+        </div>
+        <div *ngIf="record.body" class="mb-3">
+          <label>Body</label>
+          <h3>{{ record.body }}</h3>
+        </div>
+        <div *ngIf="record.position" class="mb-3">
+          <label>Position</label>
+          <h3>{{ record.position }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Is Visible?</label>
+          <h3>
+            <span *ngIf="record.isVisible">Yes</span>
+            <span *ngIf="!record.isVisible">No</span>
+          </h3>
+        </div>
+        <div class="mb-3">
+          <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr class="list">
+                <th>Sections <a [routerLink]="['/exports', record.id, 'triggers', 'new']" class="btn btn--sm btn--primary ms-3">Add</a></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEditing">
+        <admin-guides-form [record]="record" [error]="error"></admin-guides-form>
+      </ng-container>
+    </ng-template>
+  </shared-form>
+</div>
