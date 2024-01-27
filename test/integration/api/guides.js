@@ -11,7 +11,7 @@ describe('/api/guides', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['states', 'counties', 'cities', 'users', 'guides']);
+    await helpers.loadFixtures(['states', 'counties', 'cities', 'users', 'guides', 'guideSections']);
     testSession = session(app);
   });
 
@@ -48,6 +48,11 @@ describe('/api/guides', () => {
         const data = response.body;
         assert(data);
         assert.deepStrictEqual(data.name, 'Getting Started');
+        assert.deepStrictEqual(data.sections.length, 4);
+        assert.deepStrictEqual(data.sections[0].name, 'Signing In');
+        assert.deepStrictEqual(data.sections[1].name, 'Selecting your Unit/Vehicle');
+        assert.deepStrictEqual(data.sections[2].name, 'Changing your Unit/Vehicle');
+        assert.deepStrictEqual(data.sections[3].name, 'Logging Out');
       });
 
       it('returns forbidden for an invisible Guide', async () => {

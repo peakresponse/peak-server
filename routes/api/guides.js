@@ -51,6 +51,10 @@ router.get(
           required: false,
         },
       },
+      order: [
+        [{ model: models.GuideSection, as: 'sections' }, 'position', 'ASC'],
+        [{ model: models.GuideSection, as: 'sections' }, { model: models.GuideItem, as: 'items' }, 'position', 'ASC'],
+      ],
     };
     const { id } = req.params;
     let record;

@@ -5,5 +5,8 @@
         <h1 class="h2">{{ record.name }}</h1>
       </span>
     </div>
+    <ng-container *ngFor="let section of record.sections">
+      <h3>{{ section.name }}</h3>
+    </ng-container>
   </ng-template>
 </shared-form>
