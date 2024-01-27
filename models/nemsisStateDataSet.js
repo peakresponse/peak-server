@@ -1,5 +1,5 @@
 const { DateTime } = require('luxon');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { Op } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 
@@ -71,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
 
     async startImportDataSet(user, stateDataSet) {
       await this.update({ isCancelled: false });
-      await this.setStatus(HttpStatus.ACCEPTED, 'Importing Agencies...');
+      await this.setStatus(StatusCodes.ACCEPTED, 'Importing Agencies...');
       // perform the following in the background
       this.importAgencies(user.id, stateDataSet)
         .then(() => this.reload())
@@ -84,19 +84,19 @@ module.exports = (sequelize, DataTypes) => {
         .then(() => this.reload())
         .then(() => {
           if (this.isCancelled) {
-            return this.setStatus(HttpStatus.OK, 'Import cancelled');
+            return this.setStatus(StatusCodes.OK, 'Import cancelled');
           }
-          return this.setStatus(HttpStatus.OK, 'Import completed');
+          return this.setStatus(StatusCodes.OK, 'Import completed');
         });
     }
 
     cancelImportDataSet(options) {
       let status;
-      if (this.isCancelled || this.status?.code === HttpStatus.OK) {
+      if (this.isCancelled || this.status?.code === StatusCodes.OK) {
         status = null;
       } else {
         status = {
-          code: HttpStatus.OK,
+          code: StatusCodes.OK,
           message: 'Import cancelled',
         };
       }
@@ -116,7 +116,7 @@ module.exports = (sequelize, DataTypes) => {
             return;
           }
           count += 1;
-          await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count}/${total} Agencies...`, { transaction });
+          await this.setStatus(StatusCodes.ACCEPTED, `Importing ${count}/${total} Agencies...`, { transaction });
           const [record] = await sequelize.models.Agency.scope('canonical').findOrBuild({
             where: {
               stateUniqueId: agency['sAgency.01']._text,
@@ -135,7 +135,7 @@ module.exports = (sequelize, DataTypes) => {
         });
         return this.isCancelled;
       });
-      await this.setStatus(HttpStatus.ACCEPTED, `Imported ${count} Agencies`);
+      await this.setStatus(StatusCodes.ACCEPTED, `Imported ${count} Agencies`);
     }
 
     async importFacilities(userId) {
@@ -151,7 +151,7 @@ module.exports = (sequelize, DataTypes) => {
             return;
           }
           count += 1;
-          await this.setStatus(HttpStatus.ACCEPTED, `Importing ${count}/${total} Facilities...`, { transaction });
+          await this.setStatus(StatusCodes.ACCEPTED, `Importing ${count}/${total} Facilities...`, { transaction });
           let record;
           if (facility['sFacility.03']?._text) {
             [record] = await sequelize.models.Facility.findOrBuild({
@@ -191,7 +191,7 @@ module.exports = (sequelize, DataTypes) => {
         });
         return this.isCancelled;
       });
-      await this.setStatus(HttpStatus.ACCEPTED, `Imported ${count} Facilities`);
+      await this.setStatus(StatusCodes.ACCEPTED, `Imported ${count} Facilities`);
     }
   }
 

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../../helpers');
@@ -35,7 +35,7 @@ describe('/api/demographics/agency', () => {
       const response = await testSession
         .get('/api/demographics/agency')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.id, '9eeb6591-12f8-4036-8af8-6b235153d444');
       assert.deepStrictEqual(response.body.data, {
         'dAgency.01': { _text: 'S07-50120' },
@@ -123,7 +123,7 @@ describe('/api/demographics/agency', () => {
             'dAgency.26': {},
           },
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       const errors = [
         {
@@ -217,12 +217,12 @@ describe('/api/demographics/agency', () => {
             'dAgency.04': { _text: '06' },
           },
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
       const draft = await agency.getDraft();
       assert(draft);
 
-      await testSession.delete(`/api/demographics/agency`).set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.NO_CONTENT);
+      await testSession.delete(`/api/demographics/agency`).set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.NO_CONTENT);
       await agency.reload();
       assert.deepStrictEqual(await agency.getDraft(), null);
     });

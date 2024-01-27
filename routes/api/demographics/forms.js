@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { v4: uuidv4 } = require('uuid');
 
 const models = require('../../../models');
@@ -41,7 +41,7 @@ router.post(
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
     const [record, created] = await models.Form.createOrUpdate(req.user, req.agency, req.body);
-    res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(record.toJSON());
+    res.status(created ? StatusCodes.CREATED : StatusCodes.OK).json(record.toJSON());
   }),
 );
 
@@ -58,7 +58,7 @@ router.get(
     if (record) {
       res.json(record.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -91,9 +91,9 @@ router.delete(
       }
     });
     if (record) {
-      res.status(HttpStatus.OK).end();
+      res.status(StatusCodes.OK).end();
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

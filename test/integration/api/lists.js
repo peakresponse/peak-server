@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -29,12 +29,12 @@ describe('/api/lists', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('GET /all', () => {
     it('returns all the lists for the user agency', async () => {
-      const response = await testSession.get('/api/lists/all').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      const response = await testSession.get('/api/lists/all').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.lists.length, 2);

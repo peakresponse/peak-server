@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -27,7 +27,7 @@ describe('/api/counties', () => {
       .post('/login')
       .set('Host', `bayshoreambulance.${process.env.BASE_HOST}`)
       .send({ email: 'bayshore@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {

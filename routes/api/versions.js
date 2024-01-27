@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
 
 const models = require('../../models');
@@ -45,10 +45,10 @@ router.get(
         res.set('Content-Type', 'application/xml');
         res.send(version.demDataSet);
       } else {
-        res.status(HttpStatus.FORBIDDEN).end();
+        res.status(StatusCodes.FORBIDDEN).end();
       }
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -66,10 +66,10 @@ router.get(
         }
         res.json(version.validationErrors).end();
       } else {
-        res.status(HttpStatus.FORBIDDEN).end();
+        res.status(StatusCodes.FORBIDDEN).end();
       }
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -83,10 +83,10 @@ router.get(
       if (version.agencyId === req.agency.id) {
         res.json(version.toJSON());
       } else {
-        res.status(HttpStatus.FORBIDDEN).end();
+        res.status(StatusCodes.FORBIDDEN).end();
       }
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -107,7 +107,7 @@ router.patch(
     if (version) {
       res.json(version.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND);
+      res.status(StatusCodes.NOT_FOUND);
     }
   }),
 );
@@ -124,11 +124,11 @@ router.delete(
       }
     });
     if (version?.isDraft) {
-      res.status(HttpStatus.OK).end();
+      res.status(StatusCodes.OK).end();
     } else if (version) {
-      res.status(HttpStatus.NOT_ALLOWED).end();
+      res.status(StatusCodes.NOT_ALLOWED).end();
     } else {
-      res.status(HttpStatus.NOT_FOUND);
+      res.status(StatusCodes.NOT_FOUND);
     }
   }),
 );

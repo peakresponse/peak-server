@@ -1,4 +1,4 @@
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../../models');
 const helpers = require('../../helpers');
@@ -54,7 +54,7 @@ function addCreate(router, model, options) {
           await Promise.resolve(afterCreate(version, record, { transaction }));
         }
       });
-      res.status(HttpStatus.CREATED).json(await record?.toNemsisJSON());
+      res.status(StatusCodes.CREATED).json(await record?.toNemsisJSON());
     }),
   );
 }
@@ -71,9 +71,9 @@ function addGet(router, model) {
         },
       });
       if (record) {
-        res.status(HttpStatus.OK).json(await record.toNemsisJSON());
+        res.status(StatusCodes.OK).json(await record.toNemsisJSON());
       } else {
-        res.status(HttpStatus.NOT_FOUND).end();
+        res.status(StatusCodes.NOT_FOUND).end();
       }
     }),
   );
@@ -104,9 +104,9 @@ function addUpdate(router, model, options) {
         }
       });
       if (record) {
-        res.status(HttpStatus.OK).json(await record.toNemsisJSON());
+        res.status(StatusCodes.OK).json(await record.toNemsisJSON());
       } else {
-        res.status(HttpStatus.NOT_FOUND).end();
+        res.status(StatusCodes.NOT_FOUND).end();
       }
     }),
   );
@@ -137,7 +137,7 @@ function addDelete(router, model, options) {
           }
         }
       });
-      res.status(HttpStatus.NO_CONTENT).end();
+      res.status(StatusCodes.NO_CONTENT).end();
     }),
   );
 }

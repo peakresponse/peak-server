@@ -1,6 +1,6 @@
 const assert = require('assert');
 const fs = require('fs');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { DateTime } = require('luxon');
 const path = require('path');
 const session = require('supertest-session');
@@ -43,7 +43,7 @@ describe('/webhooks/sffd', () => {
         .set('Authorization', `Bearer w125HmUqL32RXoeEBZu87kpQeogxLh9qqz4VDFSQ`)
         .set('Accept', 'application/json')
         .send(data)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       // check that Vehicle records created for the SFFD agency
       assert.deepStrictEqual(await models.Vehicle.count(), 29);
       assert(

@@ -1,6 +1,6 @@
 const assert = require('assert');
 const fs = require('fs');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const nock = require('nock');
 const path = require('path');
 const session = require('supertest-session');
@@ -41,14 +41,14 @@ describe('/soap/nemsis', () => {
     nock('http://peakresponse.localhost:3000')
       .get('/soap/nemsis?wsdl')
       .reply(async (uri, requestBody, cb) => {
-        const response = await testSession.get('/soap/nemsis?wsdl').expect(HttpStatus.OK);
+        const response = await testSession.get('/soap/nemsis?wsdl').expect(StatusCodes.OK);
         cb(null, [response.statusCode, response.text]);
       });
 
     nock('http://peakresponse.localhost:3000')
       .post('/soap/nemsis')
       .reply(async (uri, requestBody, cb) => {
-        const response = await testSession.post('/soap/nemsis').type('text/xml').send(requestBody).expect(HttpStatus.OK);
+        const response = await testSession.post('/soap/nemsis').type('text/xml').send(requestBody).expect(StatusCodes.OK);
         cb(null, [response.statusCode, response.text]);
       });
   });

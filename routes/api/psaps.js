@@ -1,6 +1,6 @@
 const express = require('express');
 
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const models = require('../../models');
 
 const { Op } = models.Sequelize;
@@ -48,7 +48,7 @@ router.get(
     if (psap) {
       res.json(psap.toJSON());
     } else {
-      res.send(HttpStatus.NOT_FOUND).end();
+      res.send(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

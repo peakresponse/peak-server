@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -23,19 +23,19 @@ describe('/api/psaps', () => {
       'employments',
     ]);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns a paginated list of records', async () => {
-      const response = await testSession.get('/api/psaps').expect(HttpStatus.OK).expect('X-Total-Count', '2');
+      const response = await testSession.get('/api/psaps').expect(StatusCodes.OK).expect('X-Total-Count', '2');
       assert.deepStrictEqual(response.body.length, 2);
     });
   });
 
   describe('GET /:id', () => {
     it('returns a record by id', async () => {
-      const response = await testSession.get('/api/psaps/588').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/psaps/588').expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.name, 'San Francisco Department Of Emergency Management (san Francisco)');
     });
   });

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const nodemailerMock = require('nodemailer-mock');
 const session = require('supertest-session');
 
@@ -40,7 +40,7 @@ describe('/passwords', () => {
         .post('/passwords/forgot')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       /// user should now have a reset token and expiration
       await user.reload();
       assert(user.passwordResetToken);
@@ -61,7 +61,7 @@ describe('/passwords', () => {
         .post('/passwords/forgot')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ email: 'notfound@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.NOT_FOUND);
+        .expect(StatusCodes.NOT_FOUND);
       assert(response.text.includes('Email not found'));
     });
   });
@@ -80,7 +80,7 @@ describe('/passwords', () => {
         .post(`/passwords/reset/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'Abcd1234!' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       /// user should now have a reset token and expiration cleared
       await user.reload();
       assert(user.passwordResetToken == null);
@@ -94,7 +94,7 @@ describe('/passwords', () => {
         .post(`/passwords/reset/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
-        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
+        .expect(StatusCodes.UNPROCESSABLE_ENTITY);
       assert(response.text.includes('Password not secure'));
     });
 
@@ -103,14 +103,14 @@ describe('/passwords', () => {
         .post(`/passwords/reset/00000000-0000-0000-0000-000000000000`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
-        .expect(HttpStatus.NOT_FOUND);
+        .expect(StatusCodes.NOT_FOUND);
       assert(response.text.includes('The password reset link you used is invalid.'));
 
       response = await testSession
         .post(`/passwords/reset/asdfasdfasdf`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'weak' })
-        .expect(HttpStatus.NOT_FOUND);
+        .expect(StatusCodes.NOT_FOUND);
       assert(response.text.includes('The password reset link you used is invalid.'));
     });
 
@@ -122,7 +122,7 @@ describe('/passwords', () => {
         .post(`/passwords/reset/${user.passwordResetToken}`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ password: 'Strong1!' })
-        .expect(HttpStatus.GONE);
+        .expect(StatusCodes.GONE);
     });
   });
 });

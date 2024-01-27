@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -36,7 +36,7 @@ describe('/api/users', () => {
         .get('/api/users/me')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .set('Accept', 'application/json')
-        .expect(HttpStatus.UNAUTHORIZED);
+        .expect(StatusCodes.UNAUTHORIZED);
     });
 
     it('returns the user record of the logged in user (API level 1)', async () => {
@@ -44,9 +44,9 @@ describe('/api/users', () => {
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
-      const response = await testSession.get('/api/users/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      const response = await testSession.get('/api/users/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
       const data = response.body;
       assert(data.user);
       assert.deepStrictEqual(data.user.email, 'regular@peakresponse.net');
@@ -66,13 +66,13 @@ describe('/api/users', () => {
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       const response = await testSession
         .get('/api/users/me')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .set('X-Api-Level', '2')
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const data = response.body;
       assert(data.User);
       assert.deepStrictEqual(data.User.email, 'regular@peakresponse.net');

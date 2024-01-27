@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const path = require('path');
 const session = require('supertest-session');
 
@@ -25,12 +25,12 @@ describe('/api/nemsis/state-data-sets', () => {
       'employments',
     ]);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns all configured NEMSIS state data sets', async () => {
-      const response = await testSession.get('/api/nemsis/state-data-sets').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/nemsis/state-data-sets').expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.length, 3);
@@ -40,7 +40,7 @@ describe('/api/nemsis/state-data-sets', () => {
     });
 
     it('returns configured NEMSIS state data sets for the given state', async () => {
-      const response = await testSession.get('/api/nemsis/state-data-sets?stateId=50').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/nemsis/state-data-sets?stateId=50').expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.length, 1);
@@ -53,7 +53,7 @@ describe('/api/nemsis/state-data-sets', () => {
       const response = await testSession
         .post('/api/nemsis/state-data-sets')
         .send({ stateId: '50', version: '2023-02-21-001db2f318b31b46da54fb8891e195df6bb8947c' })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert(response.body.id);
       const record = await models.NemsisStateDataSet.findByPk(response.body.id);
       assert.deepStrictEqual(record.stateId, '50');
@@ -82,7 +82,7 @@ describe('/api/nemsis/state-data-sets', () => {
             file,
             fileName: '2023-STATE-1_v350.xml',
           })
-          .expect(HttpStatus.CREATED);
+          .expect(StatusCodes.CREATED);
         assert(response.body.id);
         const record = await models.NemsisStateDataSet.findByPk(response.body.id);
         assert.deepStrictEqual(record.stateId, '05');
@@ -102,7 +102,7 @@ describe('/api/nemsis/state-data-sets', () => {
             file,
             fileName: '2023-STATE-1_v350.xml',
           })
-          .expect(HttpStatus.UNPROCESSABLE_ENTITY);
+          .expect(StatusCodes.UNPROCESSABLE_ENTITY);
       });
     });
   });
@@ -111,17 +111,17 @@ describe('/api/nemsis/state-data-sets', () => {
     it('starts importing from the specified NEMSIS State Data Set', async () => {
       let response = await testSession
         .post('/api/nemsis/state-data-sets/1301f4e2-87b9-486a-b3d0-61a46d703b44/import')
-        .expect(HttpStatus.OK);
-      assert.deepStrictEqual(response.body.status?.code, HttpStatus.ACCEPTED);
+        .expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body.status?.code, StatusCodes.ACCEPTED);
       // start polling for completion
       for (;;) {
         // eslint-disable-next-line no-await-in-loop
         response = await testSession.get(`/api/nemsis/state-data-sets/1301f4e2-87b9-486a-b3d0-61a46d703b44`);
-        if (response.body.status?.code === HttpStatus.ACCEPTED) {
+        if (response.body.status?.code === StatusCodes.ACCEPTED) {
           // eslint-disable-next-line no-await-in-loop
           await helpers.sleep(250);
         } else {
-          assert.deepStrictEqual(response.status, HttpStatus.OK);
+          assert.deepStrictEqual(response.status, StatusCodes.OK);
           break;
         }
       }

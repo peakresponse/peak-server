@@ -1,6 +1,6 @@
 const assert = require('assert');
 const fs = require('fs');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const path = require('path');
 const session = require('supertest-session');
 
@@ -34,12 +34,12 @@ describe('/api/nemsis', () => {
       'employments',
     ]);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns all NEMSIS national public versions and versions installed', async () => {
-      const response = await testSession.get('/api/nemsis').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/nemsis').expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.versions.length, 5);
@@ -50,7 +50,7 @@ describe('/api/nemsis', () => {
 
   describe('POST /install', () => {
     it('installs the specified version of the NEMSIS public repo', async () => {
-      const response = await testSession.post('/api/nemsis/install').send({ version: '3.5.0.211008CP3' }).expect(HttpStatus.OK);
+      const response = await testSession.post('/api/nemsis/install').send({ version: '3.5.0.211008CP3' }).expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.versions.length, 5);

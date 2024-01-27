@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { DateTime } = require('luxon');
 const { URLSearchParams } = require('url');
 const xmljs = require('xml-js');
@@ -63,7 +63,7 @@ if (process.env.MARKETING_ENABLED === 'true') {
         blacklist.includes(req.body.lastName?.trim() ?? '') ||
         blacklist.includes(req.body.email?.trim() ?? '')
       ) {
-        res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+        res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
         return;
       }
       // validate reCAPTCHA response if not coming from sign-up flow
@@ -81,7 +81,7 @@ if (process.env.MARKETING_ENABLED === 'true') {
         });
         response = await response.json();
         if (!response.success) {
-          res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+          res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
           return;
         }
       }
@@ -101,7 +101,7 @@ if (process.env.MARKETING_ENABLED === 'true') {
           headers: JSON.stringify(req.headers),
         },
       });
-      res.status(HttpStatus.NO_CONTENT).end();
+      res.status(StatusCodes.NO_CONTENT).end();
     }),
   );
 }

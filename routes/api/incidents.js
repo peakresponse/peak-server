@@ -1,7 +1,7 @@
 const express = require('express');
 const _ = require('lodash');
 
-// const HttpStatus = require('http-status-codes');
+// const { StatusCodes } = require('http-status-codes');
 const models = require('../../models');
 
 const helpers = require('../helpers');

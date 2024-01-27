@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
 
 const models = require('../../models');
@@ -70,7 +70,7 @@ router.post(
       updatedById: req.user.id,
       createdById: req.user.id,
     });
-    res.status(HttpStatus.CREATED).json(agency.toJSON());
+    res.status(StatusCodes.CREATED).json(agency.toJSON());
   }),
 );
 
@@ -78,7 +78,7 @@ router.get(
   '/me',
   helpers.async(async (req, res) => {
     if (!req.agency) {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     } else {
       const data = req.agency.toJSON();
       data.message = req.agency.getLocalizedInvitationMessage(res);
@@ -110,14 +110,14 @@ router.get(
           where: { subdomain, isDraft: false },
         });
         if (agency) {
-          res.status(HttpStatus.CONFLICT).end();
+          res.status(StatusCodes.CONFLICT).end();
         }
-        res.status(HttpStatus.NO_CONTENT).end();
+        res.status(StatusCodes.NO_CONTENT).end();
       } catch (err) {
         /// fallthrough
       }
     }
-    res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
   }),
 );
 
@@ -131,7 +131,7 @@ router.get(
     if (agency) {
       res.json(agency.toJSON());
     } else {
-      res.send(HttpStatus.NOT_FOUND).end();
+      res.send(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -154,7 +154,7 @@ router.patch(
     if (agency) {
       res.json(agency.toJSON());
     } else {
-      res.send(HttpStatus.NOT_FOUND).end();
+      res.send(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -179,9 +179,9 @@ router.get(
       const agency = await models.Agency.findByPk(req.params.id);
       if (agency) {
         const subdomain = await agency.generateSubdomain();
-        res.status(HttpStatus.NOT_FOUND).json({ subdomain });
+        res.status(StatusCodes.NOT_FOUND).json({ subdomain });
       } else {
-        res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+        res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
       }
     }
   }),
@@ -193,7 +193,7 @@ router.post(
     /// get the source State Agency record (i.e. imported from NEMSIS repo)
     const canonicalAgency = await models.Agency.findByPk(req.params.id);
     if (!canonicalAgency) {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
       return;
     }
     /// perform creation in transaction
@@ -210,7 +210,7 @@ router.post(
           throw err;
         }
         /// return id, name, subdomain, and default invite message
-        res.status(HttpStatus.CREATED).json({
+        res.status(StatusCodes.CREATED).json({
           id: agency.id,
           name: agency.name,
           subdomain: agency.subdomain,

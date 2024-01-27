@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../../helpers');
@@ -36,7 +36,7 @@ describe('/api/demographics/vehicles', () => {
       const response = await testSession
         .get('/api/demographics/vehicles')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const vehicles = response.body;
       assert.deepStrictEqual(vehicles.length, 4);
       assert.deepStrictEqual(vehicles[0].data['dVehicle.01']._text, '43');
@@ -61,7 +61,7 @@ describe('/api/demographics/vehicles', () => {
           },
         })
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
 
       function assertVehicle(vehicle) {
         assert(vehicle.id);
@@ -87,7 +87,7 @@ describe('/api/demographics/vehicles', () => {
       const response = await testSession
         .get(`/api/demographics/vehicles/91986460-5a12-426d-9855-93227b47ead5`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.data, {
         _attributes: {
           UUID: '91986460-5a12-426d-9855-93227b47ead5',
@@ -148,7 +148,7 @@ describe('/api/demographics/vehicles', () => {
         .put(`/api/demographics/vehicles/4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7`)
         .send({ data })
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.data, data);
 
       const vehicle = await models.Vehicle.findByPk('4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7');
@@ -164,7 +164,7 @@ describe('/api/demographics/vehicles', () => {
       await testSession
         .delete(`/api/demographics/vehicles/91986460-5a12-426d-9855-93227b47ead5`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.NO_CONTENT);
+        .expect(StatusCodes.NO_CONTENT);
       const record = await models.Vehicle.findByPk('91986460-5a12-426d-9855-93227b47ead5');
       const draft = await record.getDraft();
       assert.deepStrictEqual(draft, null);
@@ -174,7 +174,7 @@ describe('/api/demographics/vehicles', () => {
       await testSession
         .delete(`/api/demographics/vehicles/3465c833-2919-4565-8bde-a3ce70eaae8f`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.NO_CONTENT);
+        .expect(StatusCodes.NO_CONTENT);
       const record = await models.Vehicle.findByPk('91986460-5a12-426d-9855-93227b47ead5');
       const draft = await record.getDraft();
       assert.deepStrictEqual(draft, null);

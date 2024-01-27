@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 require('../helpers');
@@ -19,11 +19,11 @@ describe('/nemsis', () => {
 
       let response;
       // first call will convert to json on the fly
-      response = await testSession.get('/nemsis/public/3.5.0.211008CP3/dAgency_v3.xsd').expect(HttpStatus.OK);
+      response = await testSession.get('/nemsis/public/3.5.0.211008CP3/dAgency_v3.xsd').expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body?.['xs:schema']?._attributes?.targetNamespace, 'http://www.nemsis.org');
 
       // test again, to make sure that serving exiting file works
-      response = await testSession.get('/nemsis/public/3.5.0.211008CP3/dAgency_v3.xsd').expect(HttpStatus.OK);
+      response = await testSession.get('/nemsis/public/3.5.0.211008CP3/dAgency_v3.xsd').expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body?.['xs:schema']?._attributes?.targetNamespace, 'http://www.nemsis.org');
     });
   });

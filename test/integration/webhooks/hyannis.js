@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -42,7 +42,7 @@ Created: C:\\RedNMX\\ImageTrend\\CadFiles\\Archive\\62589_AMB 2.xml
 Created: C:\\RedNMX\\ImageTrend\\CadFiles\\Archive\\62589_CAR 3.xml
 `,
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       // check that Vehicle records are created for the Hyannis agency
       assert.deepStrictEqual(await models.Vehicle.count(), 3);
       assert(

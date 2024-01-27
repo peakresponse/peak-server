@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../../helpers');
@@ -28,7 +28,7 @@ describe('/api/demographics/custom-configurations', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('POST /', () => {
@@ -52,7 +52,7 @@ describe('/api/demographics/custom-configurations', () => {
             },
           },
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
 
       assert.deepStrictEqual(response.body?.data?._attributes?.CustomElementID, 'dFacility.01');
 
@@ -71,7 +71,7 @@ describe('/api/demographics/custom-configurations', () => {
       const response = await testSession
         .post('/api/demographics/custom-configurations/import')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       assert.deepStrictEqual(response.body?.length, 2);
       assert.deepStrictEqual(response.body[0].data?._attributes?.CustomElementID, 'dAgency.11');
@@ -107,7 +107,7 @@ describe('/api/demographics/custom-configurations', () => {
             },
           },
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       assert.deepStrictEqual(response.body?.data?.['dCustomConfiguration.02']?._text, 'Updating this element text for the update');
 
@@ -127,7 +127,7 @@ describe('/api/demographics/custom-configurations', () => {
       await testSession
         .delete('/api/demographics/custom-configurations/a8d82dff-941b-41b4-859e-1b12fb617221')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.NO_CONTENT);
+        .expect(StatusCodes.NO_CONTENT);
 
       const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
       const draftVersion = await agency.getDraftVersion();

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const models = require('../../models');
 
 const helpers = require('../helpers');
@@ -41,12 +41,12 @@ router.post(
       }
       const assignment = await models.Assignment.assign(req.user, req.agency, user, vehicle, { transaction });
       if (req.apiLevel >= 3) {
-        res.status(HttpStatus.CREATED).json({
+        res.status(StatusCodes.CREATED).json({
           Assignment: assignment.toJSON(),
           Vehicle: vehicle?.toJSON(),
         });
       } else {
-        res.status(HttpStatus.CREATED).json(assignment.toJSON());
+        res.status(StatusCodes.CREATED).json(assignment.toJSON());
       }
     });
   }),

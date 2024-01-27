@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
 
 const helpers = require('../helpers');
@@ -20,7 +20,7 @@ router.get(
     };
     const { incidentId } = req.query;
     if (!incidentId) {
-      res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
       return;
     }
     options.where.incidentId = incidentId;
@@ -192,7 +192,7 @@ router.post(
           }
         }
       }
-      res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(payload);
+      res.status(created ? StatusCodes.CREATED : StatusCodes.OK).json(payload);
     });
     await Promise.all([
       Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id))),
@@ -244,7 +244,7 @@ router.get(
         }
         res.redirect(report.emsDataSetFileUrl);
       } else {
-        res.status(HttpStatus.NOT_FOUND).end();
+        res.status(StatusCodes.NOT_FOUND).end();
       }
     });
   }),

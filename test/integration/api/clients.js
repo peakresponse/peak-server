@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -12,12 +12,12 @@ describe('/api/clients', () => {
   beforeEach(async () => {
     await helpers.loadFixtures(['users', 'clients']);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns a paginated list of Clients', async () => {
-      const response = await testSession.get('/api/clients').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/clients').expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.length, 2);
     });
   });
@@ -31,7 +31,7 @@ describe('/api/clients', () => {
           name: 'Test Client',
           redirectUri: 'http://localhost:3000/callback',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
 
       assert(response.body.id);
       const client = await models.Client.findByPk(response.body.id);
@@ -46,7 +46,7 @@ describe('/api/clients', () => {
       const response = await testSession
         .get('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0')
         .set('Accept', 'application/json')
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const data = response.body;
       delete data.updatedAt;
       assert.deepStrictEqual(data, {
@@ -64,7 +64,10 @@ describe('/api/clients', () => {
 
   describe('DELETE /:id', () => {
     it('deletes an existing Client', async () => {
-      await testSession.delete('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0').set('Accept', 'application/json').expect(HttpStatus.OK);
+      await testSession
+        .delete('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0')
+        .set('Accept', 'application/json')
+        .expect(StatusCodes.OK);
       const client = await models.Client.findByPk('9db6b601-13fc-4755-906a-c532ce319be0');
       assert.deepStrictEqual(client, null);
     });
@@ -79,7 +82,7 @@ describe('/api/clients', () => {
           name: 'Renamed Client',
           redirectUri: 'http://localhost:3000/renamedcallback',
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const client = await models.Client.findByPk(response.body.id);
       assert.deepStrictEqual(client.name, 'Renamed Client');
       assert.deepStrictEqual(client.redirectUri, 'http://localhost:3000/renamedcallback');
@@ -94,7 +97,7 @@ describe('/api/clients', () => {
       const response = await testSession
         .patch('/api/clients/9db6b601-13fc-4755-906a-c532ce319be0/regenerate')
         .set('Accept', 'application/json')
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       await client.reload();
       assert.notDeepStrictEqual(client.clientId, oldClientId);

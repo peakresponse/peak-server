@@ -1,6 +1,6 @@
 const assert = require('assert');
 const fs = require('fs-extra');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const path = require('path');
 const session = require('supertest-session');
 const { v4: uuidv4 } = require('uuid');
@@ -31,7 +31,7 @@ describe('/api/assets', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   afterEach(() => {
@@ -49,7 +49,7 @@ describe('/api/assets', () => {
             content_type: 'image/png',
           },
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const data = response.body;
       assert.deepStrictEqual(data.signed_id, file);
       assert.deepStrictEqual(data.content_type, 'image/png');
@@ -68,7 +68,7 @@ describe('/api/assets', () => {
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .set('Content-Type', 'image/png')
         .send(fs.readFileSync(path.resolve(__dirname, '../../fixtures/files/512x512.png')))
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert(fs.pathExistsSync(path.resolve(__dirname, `../../../tmp/uploads`, file)));
     });
   });
@@ -76,7 +76,7 @@ describe('/api/assets', () => {
   describe('GET /:path', () => {
     it('returns a redirect URL (non-AWS)', async () => {
       const response = await testSession.get(`/api/assets/${file}`).set('Host', `bmacc.${process.env.BASE_HOST}`);
-      assert.deepStrictEqual(response.status, HttpStatus.MOVED_TEMPORARILY);
+      assert.deepStrictEqual(response.status, StatusCodes.MOVED_TEMPORARILY);
       assert(response.headers.location.startsWith, `${process.env.AWS_S3_SIGNER_ENDPOINT}/app/test/${file}`);
       assert(response.headers.location.endsWith, 'x-id=GetObject');
     });

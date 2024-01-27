@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const models = require('../models');
 
@@ -26,14 +26,14 @@ router.post('/', (req, res, next) => {
     }
     try {
       /// check if successfully logged in
-      if (!user) throw HttpStatus.UNAUTHORIZED;
+      if (!user) throw StatusCodes.UNAUTHORIZED;
       if (req.agency) {
         /// check if user is actively employed in the agency, if not a site admin
         if (!user.isAdmin) {
           const employment = await models.Employment.scope('finalOrNew').findOne({
             where: { createdByAgencyId: req.agency.id, userId: user.id },
           });
-          if (!employment || !employment.isActive) throw HttpStatus.FORBIDDEN;
+          if (!employment || !employment.isActive) throw StatusCodes.FORBIDDEN;
         }
         req.agencies = [req.agency];
       } else if (!user.isAdmin) {
@@ -49,7 +49,7 @@ router.post('/', (req, res, next) => {
           /// check if a dispatcher
           const dispatchers = await user.getDispatchers();
           if (dispatchers.length === 0) {
-            throw HttpStatus.FORBIDDEN;
+            throw StatusCodes.FORBIDDEN;
           }
         }
         /// else, collect agencies
@@ -65,7 +65,7 @@ router.post('/', (req, res, next) => {
           const data = {
             agencies: (req.agencies || []).map((a) => a.toJSON()),
           };
-          res.status(HttpStatus.OK).json(data);
+          res.status(StatusCodes.OK).json(data);
           return;
         }
         /// handle web login response
@@ -90,13 +90,13 @@ router.post('/', (req, res, next) => {
       }
       /// handle web login response
       switch (status) {
-        case HttpStatus.UNAUTHORIZED:
+        case StatusCodes.UNAUTHORIZED:
           res.locals.errors = [
             { path: 'email', message: null },
             { path: 'password', message: res.__('login.new.invalid') },
           ];
           break;
-        case HttpStatus.FORBIDDEN:
+        case StatusCodes.FORBIDDEN:
           res.locals.errors = [{ path: 'email', message: res.__('login.new.forbidden') }];
           break;
         default:

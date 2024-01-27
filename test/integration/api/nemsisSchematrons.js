@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const path = require('path');
 const session = require('supertest-session');
 
@@ -25,12 +25,12 @@ describe('/api/nemsis/schematrons', () => {
       'employments',
     ]);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns all configured NEMSIS schematrons', async () => {
-      const response = await testSession.get('/api/nemsis/schematrons').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/nemsis/schematrons').expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.length, 2);
@@ -38,13 +38,13 @@ describe('/api/nemsis/schematrons', () => {
     });
 
     it('returns configured NEMSIS schematrons for the given state', async () => {
-      let response = await testSession.get('/api/nemsis/schematrons?stateId=06').expect(HttpStatus.OK);
+      let response = await testSession.get('/api/nemsis/schematrons?stateId=06').expect(StatusCodes.OK);
       let data = response.body;
       assert(data);
       assert.deepStrictEqual(data.length, 1);
       assert.deepStrictEqual(data[0].stateId, '06');
 
-      response = await testSession.get('/api/nemsis/schematrons?stateId=50').expect(HttpStatus.OK);
+      response = await testSession.get('/api/nemsis/schematrons?stateId=50').expect(StatusCodes.OK);
       data = response.body;
       assert(data);
       assert.deepStrictEqual(data.length, 0);
@@ -56,7 +56,7 @@ describe('/api/nemsis/schematrons', () => {
       const response = await testSession
         .post('/api/nemsis/schematrons')
         .send({ stateId: '50', dataSet: 'EMSDataSet', version: '2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576' })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert(response.body.id);
       const record = await models.NemsisSchematron.findByPk(response.body.id);
       assert.deepStrictEqual(record.stateId, '50');
@@ -87,7 +87,7 @@ describe('/api/nemsis/schematrons', () => {
             file,
             fileName: 'DEMDataSet.sch',
           })
-          .expect(HttpStatus.CREATED);
+          .expect(StatusCodes.CREATED);
         assert(response.body.id);
         const record = await models.NemsisSchematron.findByPk(response.body.id);
         assert.deepStrictEqual(record.stateId, '05');
@@ -109,7 +109,7 @@ describe('/api/nemsis/schematrons', () => {
             file,
             fileName: 'DEMDataSet.sch',
           })
-          .expect(HttpStatus.UNPROCESSABLE_ENTITY);
+          .expect(StatusCodes.UNPROCESSABLE_ENTITY);
       });
     });
   });

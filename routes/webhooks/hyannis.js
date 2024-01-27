@@ -1,7 +1,7 @@
 const ftp = require('basic-ftp');
 const express = require('express');
 const fs = require('fs/promises');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { DateTime } = require('luxon');
 const path = require('path');
 const tmp = require('tmp-promise');
@@ -55,12 +55,12 @@ router.post('/cad', async (req, res) => {
   // check for watcher notification message
   const { message } = req.body ?? {};
   if (!message) {
-    res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
     return;
   }
   // check for authenticated user
   if (!req.user) {
-    res.status(HttpStatus.UNAUTHORIZED).end();
+    res.status(StatusCodes.UNAUTHORIZED).end();
     return;
   }
   // find corresponding dispatcher record for the user
@@ -72,7 +72,7 @@ router.post('/cad', async (req, res) => {
     },
   });
   if (!dispatcher) {
-    res.status(HttpStatus.FORBIDDEN).end();
+    res.status(StatusCodes.FORBIDDEN).end();
     return;
   }
   // server is IP restricted, simulate in CI
@@ -205,10 +205,10 @@ router.post('/cad', async (req, res) => {
         }
       }
     });
-    res.status(HttpStatus.OK).end();
+    res.status(StatusCodes.OK).end();
     await Promise.all(newIncidentIds.map((id) => dispatchIncidentUpdate(id)));
   } catch (err) {
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   } finally {
     // close ftps connection
     client.close();

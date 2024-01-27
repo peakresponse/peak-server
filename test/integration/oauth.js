@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../helpers');
@@ -29,7 +29,7 @@ describe('/oauth', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('POST /authorize', () => {
@@ -73,7 +73,7 @@ describe('/oauth', () => {
           code,
           redirect_uri: 'http://localhost:3000/callback',
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert(response.body.access_token);
       assert(response.body.token_type);
       assert(response.body.expires_in);

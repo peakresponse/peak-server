@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../models');
 const interceptors = require('../interceptors');
@@ -45,7 +45,7 @@ router.get(
     if (record) {
       res.json(record.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

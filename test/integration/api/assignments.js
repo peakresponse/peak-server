@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -30,7 +30,7 @@ describe('/api/assignments', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'personnel.admin@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('POST /', () => {
@@ -41,7 +41,7 @@ describe('/api/assignments', () => {
         .send({
           vehicleId: '91986460-5a12-426d-9855-93227b47ead5',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert.deepStrictEqual(response.body.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
       assert.deepStrictEqual(response.body.vehicleId, '91986460-5a12-426d-9855-93227b47ead5');
     });
@@ -53,7 +53,7 @@ describe('/api/assignments', () => {
         .send({
           number: '23',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert.deepStrictEqual(response.body.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
       assert(response.body.vehicleId);
       const vehicle = await models.Vehicle.findByPk(response.body.vehicleId, { rejectOnEmpty: true });
@@ -66,7 +66,7 @@ describe('/api/assignments', () => {
         .post('/api/assignments')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({})
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert.deepStrictEqual(response.body.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
       assert.deepStrictEqual(response.body.vehicleId, null);
     });
@@ -79,7 +79,7 @@ describe('/api/assignments', () => {
           userId: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
           vehicleId: '4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert.deepStrictEqual(response.body.id, 'e5b169aa-e0a6-441b-92d4-95c729ff1988');
     });
 
@@ -96,7 +96,7 @@ describe('/api/assignments', () => {
           userId: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
           vehicleId: '91986460-5a12-426d-9855-93227b47ead5',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
 
       priorAssignment = await models.Assignment.findByPk(priorAssignment.id);
       assert(priorAssignment.endedAt !== null);

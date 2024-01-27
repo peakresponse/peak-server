@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -52,12 +52,12 @@ describe('/api/exports/logs', () => {
 
   context('as an admin', () => {
     beforeEach(async () => {
-      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
     });
 
     describe('GET /', () => {
       it('returns all ExportLogs', async () => {
-        const response = await testSession.get('/api/exports/logs').expect(HttpStatus.OK);
+        const response = await testSession.get('/api/exports/logs').expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body?.length, 3);
         assert.deepStrictEqual(response.body[0].id, '71ffbaca-52eb-486d-9652-1dfb69fd8c1e');
         assert.deepStrictEqual(response.body[1].id, 'c4806bc4-396c-4b68-8b29-a5c7b029d8f9');
@@ -67,7 +67,7 @@ describe('/api/exports/logs', () => {
 
     describe('GET /:id', () => {
       it('returns the specified ExportLog', async () => {
-        const response = await testSession.get('/api/exports/logs/c4806bc4-396c-4b68-8b29-a5c7b029d8f9').expect(HttpStatus.OK);
+        const response = await testSession.get('/api/exports/logs/c4806bc4-396c-4b68-8b29-a5c7b029d8f9').expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           id: 'c4806bc4-396c-4b68-8b29-a5c7b029d8f9',
           exportId: 'd897bfb5-c286-400e-9fa8-582cfef7791c',
@@ -86,12 +86,12 @@ describe('/api/exports/logs', () => {
 
   context('as a user', () => {
     beforeEach(async () => {
-      await testSession.post('/login').send({ email: 'regular@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      await testSession.post('/login').send({ email: 'regular@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
     });
 
     describe('GET /', () => {
       it('returns all configured ExportTriggers for their Agency', async () => {
-        const response = await testSession.get('/api/exports/logs').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+        const response = await testSession.get('/api/exports/logs').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body?.length, 2);
       });
     });
@@ -101,7 +101,7 @@ describe('/api/exports/logs', () => {
         const response = await testSession
           .get('/api/exports/logs/c4806bc4-396c-4b68-8b29-a5c7b029d8f9')
           .set('Host', `bmacc.${process.env.BASE_HOST}`)
-          .expect(HttpStatus.OK);
+          .expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           id: 'c4806bc4-396c-4b68-8b29-a5c7b029d8f9',
           exportId: 'd897bfb5-c286-400e-9fa8-582cfef7791c',
@@ -120,7 +120,7 @@ describe('/api/exports/logs', () => {
         await testSession
           .get('/api/exports/logs/71ffbaca-52eb-486d-9652-1dfb69fd8c1e')
           .set('Host', `bmacc.${process.env.BASE_HOST}`)
-          .expect(HttpStatus.FORBIDDEN);
+          .expect(StatusCodes.FORBIDDEN);
       });
     });
   });

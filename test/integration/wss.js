@@ -1,6 +1,6 @@
 const assert = require('assert');
 const http = require('http');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const request = require('superwstest');
 const session = require('supertest-session');
 
@@ -65,7 +65,7 @@ describe('wss', () => {
         .post('/login')
         .set('Host', process.env.BASE_HOST)
         .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
     });
 
     describe('/scene', () => {

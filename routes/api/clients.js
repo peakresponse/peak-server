@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
 const { Op } = require('sequelize');
 
@@ -45,7 +45,7 @@ router.post(
     await client.save();
     const data = client.toJSON();
     data.clientSecret = clientSecret;
-    res.status(HttpStatus.CREATED).json(data);
+    res.status(StatusCodes.CREATED).json(data);
   }),
 );
 
@@ -57,7 +57,7 @@ router.get(
     if (client) {
       res.json(client.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -74,9 +74,9 @@ router.delete(
       }
     });
     if (client) {
-      res.status(HttpStatus.OK).end();
+      res.status(StatusCodes.OK).end();
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -100,7 +100,7 @@ router.patch(
       data.clientSecret = clientSecret;
       res.json(data);
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -121,7 +121,7 @@ router.patch(
     if (client) {
       res.json(client.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

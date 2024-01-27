@@ -1,4 +1,4 @@
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const inflection = require('inflection');
 const _ = require('lodash');
 
@@ -7,8 +7,8 @@ function async(handler) {
     Promise.resolve(handler(req, res, next)).catch((err) => {
       // console.error(err);
       if (err.name === 'SchemaValidationError' || err.name === 'SequelizeValidationError') {
-        res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
-          status: HttpStatus.UNPROCESSABLE_ENTITY,
+        res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+          status: StatusCodes.UNPROCESSABLE_ENTITY,
           messages: err.errors.map((e) => _.pick(e, ['path', 'message', 'value'])),
         });
       } else {
@@ -68,7 +68,7 @@ function register(req, res, next) {
     req.apiLevel = 1;
   }
   if (req.apiLevel < minApiLevel) {
-    res.status(HttpStatus.BAD_REQUEST).end();
+    res.status(StatusCodes.BAD_REQUEST).end();
     return;
   }
 
