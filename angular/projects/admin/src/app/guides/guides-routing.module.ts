@@ -6,6 +6,8 @@ import { AgencyService, UserService } from 'shared';
 import { ListGuidesComponent } from './list-guides.component';
 import { NewGuideComponent } from './new-guide.component';
 import { EditGuideComponent } from './edit-guide.component';
+import { NewGuideSectionComponent } from './new-guide-section.component';
+import { EditGuideSectionComponent } from './edit-guide-section.component';
 
 const appRoutes: Routes = [
   {
@@ -23,7 +25,16 @@ const appRoutes: Routes = [
       {
         path: ':id',
         component: EditGuideComponent,
-        children: [],
+        children: [
+          {
+            path: 'sections/new',
+            component: NewGuideSectionComponent,
+          },
+          {
+            path: 'sections/:id',
+            component: EditGuideSectionComponent,
+          },
+        ],
       },
     ],
   },

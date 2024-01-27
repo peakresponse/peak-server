@@ -1,0 +1,62 @@
+[
+  {
+    "model": "GuideSection",
+    "data": {
+      "id": "a0f93c54-0886-4a6f-8339-3b3a72859bc8",
+      "guideId": "739bf09f-5670-45c9-9149-9d15710f03e7",
+      "name": "Signing In",
+      "body": null,
+      "position": 1,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "GuideSection",
+    "data": {
+      "id": "294f2e6f-26cc-4826-87e7-a1931b9160b2",
+      "guideId": "739bf09f-5670-45c9-9149-9d15710f03e7",
+      "name": "Selecting your Unit/Vehicle",
+      "body": null,
+      "position": 2,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "GuideSection",
+    "data": {
+      "id": "82202d74-21b4-4afb-99ee-1d8a0d81f668",
+      "guideId": "739bf09f-5670-45c9-9149-9d15710f03e7",
+      "name": "Changing your Unit/Vehicle",
+      "body": null,
+      "position": 3,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "GuideSection",
+    "data": {
+      "id": "9f2ab3f6-9c99-4d7c-8b5d-62022c7afb5d",
+      "guideId": "739bf09f-5670-45c9-9149-9d15710f03e7",
+      "name": "Logging Out",
+      "body": null,
+      "position": 4,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  }
+]

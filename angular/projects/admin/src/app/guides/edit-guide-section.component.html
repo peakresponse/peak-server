@@ -1,0 +1,45 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Edit Guide Section</h1>
+  </div>
+  <shared-form
+    *ngIf="id"
+    type="guideSections"
+    [id]="id"
+    [hideButtons]="!isEditing"
+    [showCancel]="true"
+    (cancel)="isEditing = false"
+    (update)="isEditing = false"
+    (delete)="onDelete()"
+    class="d-block col-xl-6">
+    <ng-template let-record="record" let-error="error">
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>Name</label>
+          <h3>{{ record.name }}</h3>
+        </div>
+        <div *ngIf="record.body" class="mb-3">
+          <label>Body</label>
+          <h3>{{ record.body }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Position</label>
+          <h3>{{ record.position }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Is Visible?</label>
+          <h3 *ngIf="record.isVisible">Yes</h3>
+          <h3 *ngIf="!record.isVisible">No</h3>
+        </div>
+        <div class="mb-3">
+          <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+        </div>
+        <div class="table-responsive"></div>
+      </ng-container>
+      <ng-container *ngIf="isEditing">
+        <admin-guides-section-form [record]="record" [error]="error"></admin-guides-section-form>
+      </ng-container>
+    </ng-template>
+  </shared-form>
+</div>

@@ -50,12 +50,12 @@ export class ListComponent {
       .subscribe((event) => {
         if ((event as NavigationEnd).url.endsWith(this.basePath)) {
           let prevUrl = this.navigation.getPreviousUrl();
-          let match = prevUrl.match(`${this.basePath.replace('/', '/')}\/([^\/]+)`);
+          let match = prevUrl.match(`${this.basePath}(.+)`);
           if (match) {
-            let id = match[1];
-            if (id == 'new' || id == 'publish') {
+            let id = match[1].substring(match[1].lastIndexOf('/') + 1);
+            if (id === 'new' || id === 'publish') {
               this.refresh();
-            } else if (id.match(/\d+/)) {
+            } else {
               this.refreshRecord(id);
             }
           }

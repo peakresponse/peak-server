@@ -5,12 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from 'shared';
 
 @Component({
-  templateUrl: './edit-guide.component.html',
+  templateUrl: './edit-guide-section.component.html',
 })
-export class EditGuideComponent implements OnInit {
+export class EditGuideSectionComponent implements OnInit {
   id: string = '';
+  guideId: string = '';
   isEditing = false;
-
   params?: HttpParams;
 
   constructor(
@@ -20,10 +20,11 @@ export class EditGuideComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.params = new HttpParams({ fromObject: { guideId: this.id } });
+    this.guideId = this.route.snapshot.parent?.params['id'];
+    this.params = new HttpParams({ fromObject: { sectionId: this.id } });
   }
 
   onDelete() {
-    this.navigation.backTo(`/guides`);
+    this.navigation.backTo(`/guides/${this.guideId}`);
   }
 }

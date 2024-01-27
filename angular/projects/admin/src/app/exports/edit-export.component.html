@@ -53,7 +53,7 @@
                 <th>Agency <a [routerLink]="['/exports', record.id, 'triggers', 'new']" class="btn btn--sm btn--primary ms-3">Add</a></th>
               </tr>
             </thead>
-            <shared-list type="exportTriggers" [params]="params">
+            <shared-list type="exportTriggers" [params]="params" [basePath]="'/exports/' + record.id">
               <ng-template let-records="records" let-r="record">
                 <tr [routerLink]="['/exports', record.id, 'triggers', r.id]">
                   <td>{{ r.agency?.name }} ({{ r.agency?.stateUniqueId }})</td>
