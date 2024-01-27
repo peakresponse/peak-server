@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       GuideSection.belongsTo(models.User, { as: 'createdBy' });
       GuideSection.belongsTo(models.User, { as: 'updatedBy' });
       GuideSection.belongsTo(models.Guide, { as: 'guide' });
-      GuideSection.hasMany(models.GuideItem, { as: 'items' });
+      GuideSection.hasMany(models.GuideItem, { as: 'items', foreignKey: 'section_id' });
     }
   }
   GuideSection.init(

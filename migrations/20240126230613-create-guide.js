@@ -128,12 +128,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID,
       },
-      guide_section_id: {
+      section_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: {
           model: {
-            tableName: 'guides',
+            tableName: 'guide_sections',
           },
           key: 'id',
         },

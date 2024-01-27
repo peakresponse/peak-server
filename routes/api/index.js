@@ -16,6 +16,7 @@ router.use('/exports/triggers', require('./exportTriggers'));
 router.use('/exports', require('./exports'));
 router.use('/facilities', require('./facilities'));
 router.use('/forms', require('./forms'));
+router.use('/guides/items', require('./guideItems'));
 router.use('/guides/sections', require('./guideSections'));
 router.use('/guides', require('./guides'));
 router.use('/incidents', require('./incidents'));

@@ -1,11 +1,11 @@
-const { Model } = require('sequelize');
+const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
-  class GuideItem extends Model {
+  class GuideItem extends Base {
     static associate(models) {
       GuideItem.belongsTo(models.User, { as: 'createdBy' });
       GuideItem.belongsTo(models.User, { as: 'updatedBy' });
-      GuideItem.belongsTo(models.GuideSection, { as: 'section', foreignKey: 'guide_section_id' });
+      GuideItem.belongsTo(models.GuideSection, { as: 'section' });
     }
   }
 

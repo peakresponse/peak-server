@@ -145,7 +145,7 @@ describe('/api/guides', () => {
     describe('DELETE /:id', () => {
       it('deletes an existing Guide record', async () => {
         await testSession.delete('/api/guides/14b0bd28-8d22-49bc-bd38-f630e432cea1').expect(StatusCodes.OK);
-        const record = await models.Export.findByPk('14b0bd28-8d22-49bc-bd38-f630e432cea1');
+        const record = await models.Guide.findByPk('14b0bd28-8d22-49bc-bd38-f630e432cea1');
         assert.deepStrictEqual(record, null);
       });
     });
