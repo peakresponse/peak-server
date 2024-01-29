@@ -458,6 +458,24 @@ export class ApiService {
     },
   };
 
+  guideItems = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/guides/items', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/guides/items`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/guides/items/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/guides/items/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/guides/items/${id}`);
+    },
+  };
+
   guideSections = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/guides/sections', params);

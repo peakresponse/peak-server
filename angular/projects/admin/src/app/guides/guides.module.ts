@@ -13,6 +13,9 @@ import { EditGuideComponent } from './edit-guide.component';
 import { GuideSectionFormComponent } from './guide-section-form.component';
 import { NewGuideSectionComponent } from './new-guide-section.component';
 import { EditGuideSectionComponent } from './edit-guide-section.component';
+import { GuideItemFormComponent } from './guide-item-form.component';
+import { NewGuideItemComponent } from './new-guide-item.component';
+import { EditGuideItemComponent } from './edit-guide-item.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { EditGuideSectionComponent } from './edit-guide-section.component';
     GuideSectionFormComponent,
     NewGuideSectionComponent,
     EditGuideSectionComponent,
+    GuideItemFormComponent,
+    NewGuideItemComponent,
+    EditGuideItemComponent,
   ],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, GuidesRoutingModule],
   providers: [],

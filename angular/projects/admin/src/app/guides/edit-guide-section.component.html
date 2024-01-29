@@ -35,7 +35,36 @@
         <div class="mb-3">
           <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
         </div>
-        <div class="table-responsive"></div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr class="list">
+                <th>
+                  Body
+                  <a [routerLink]="['/guides', guideId, 'sections', record.id, 'items', 'new']" class="btn btn--sm btn--primary ms-3"
+                    >Add</a
+                  >
+                </th>
+                <th>Position</th>
+                <th>Is Visible?</th>
+              </tr>
+            </thead>
+            <shared-list type="guideItems" [params]="params" [basePath]="'/guides/' + guideId + '/sections/' + record.id">
+              <ng-template let-records="records" let-r="record">
+                <tr [routerLink]="['/guides', guideId, 'sections', record.id, 'items', r.id]">
+                  <td>
+                    <div class="guide-item__body">{{ r.body }}</div>
+                  </td>
+                  <td>{{ r.position }}</td>
+                  <td>
+                    <span *ngIf="r.isVisible">Yes</span>
+                    <span *ngIf="!r.isVisible">No</span>
+                  </td>
+                </tr>
+              </ng-template>
+            </shared-list>
+          </table>
+        </div>
       </ng-container>
       <ng-container *ngIf="isEditing">
         <admin-guides-section-form [record]="record" [error]="error"></admin-guides-section-form>

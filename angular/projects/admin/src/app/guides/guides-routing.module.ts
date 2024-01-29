@@ -8,6 +8,8 @@ import { NewGuideComponent } from './new-guide.component';
 import { EditGuideComponent } from './edit-guide.component';
 import { NewGuideSectionComponent } from './new-guide-section.component';
 import { EditGuideSectionComponent } from './edit-guide-section.component';
+import { NewGuideItemComponent } from './new-guide-item.component';
+import { EditGuideItemComponent } from './edit-guide-item.component';
 
 const appRoutes: Routes = [
   {
@@ -33,6 +35,16 @@ const appRoutes: Routes = [
           {
             path: 'sections/:id',
             component: EditGuideSectionComponent,
+            children: [
+              {
+                path: 'items/new',
+                component: NewGuideItemComponent,
+              },
+              {
+                path: 'items/:id',
+                component: EditGuideItemComponent,
+              },
+            ],
           },
         ],
       },

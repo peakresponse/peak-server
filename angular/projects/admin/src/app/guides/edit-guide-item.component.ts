@@ -5,14 +5,13 @@ import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from 'shared';
 
 @Component({
-  templateUrl: './edit-guide-section.component.html',
-  styleUrls: ['./edit-guide-section.component.scss'],
+  templateUrl: './edit-guide-item.component.html',
 })
-export class EditGuideSectionComponent implements OnInit {
+export class EditGuideItemComponent implements OnInit {
   id: string = '';
+  sectionId: string = '';
   guideId: string = '';
   isEditing = false;
-  params?: HttpParams;
 
   constructor(
     private navigation: NavigationService,
@@ -21,11 +20,11 @@ export class EditGuideSectionComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.guideId = this.route.snapshot.parent?.params['id'];
-    this.params = new HttpParams({ fromObject: { sectionId: this.id } });
+    this.sectionId = this.route.snapshot.parent?.params['id'];
+    this.guideId = this.route.snapshot.parent?.parent?.params['id'];
   }
 
   onDelete() {
-    this.navigation.backTo(`/guides/${this.guideId}`);
+    this.navigation.backTo(`/guides/${this.guideId}/sections/${this.sectionId}`);
   }
 }
