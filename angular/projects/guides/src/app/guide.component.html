@@ -7,12 +7,12 @@
     </div>
     <ng-container *ngFor="let section of record.sections">
       <h3 class="mb-3">{{ section.name }}</h3>
-      <div class="d-flex mb-5">
-        <div class="guide-item" *ngFor="let item of section.items; index as i">
+      <div class="d-flex flex-wrap">
+        <div class="guide-item me-5 mb-5" *ngFor="let item of section.items; index as i">
           <div class="guide-item__img shadow mb-3">
             <img class="img-fluid" [src]="item.fileUrl" />
           </div>
-          <div class="guide-item__body p-3" [innerHTML]="i + 1 + '. ' + item.body"></div>
+          <div class="guide-item__body p-3" [innerHTML]="'<h3>' + (i + 1) + '.</h3> ' + item.body"></div>
         </div>
       </div>
     </ng-container>
