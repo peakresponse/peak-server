@@ -1,0 +1,16 @@
+<div class="mb-3">
+  <shared-file-field id="file" label="File" [source]="record" [target]="record" [error]="error"></shared-file-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="body" label="Body" [rows]="3" [source]="record" [target]="record" [error]="error"></shared-text-field>
+  <div class="p-3">
+    <b>Preview:</b>
+    <p [innerHTML]="record.body"></p>
+  </div>
+</div>
+<div class="mb-3">
+  <shared-text-field id="position" label="Position" type="number" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-checkbox id="isVisible" label="Is Visible?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+</div>

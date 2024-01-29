@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { Op } = require('sequelize');
 const _ = require('lodash');
 
@@ -42,7 +42,7 @@ router.post(
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const user = await models.User.register(req.body);
-    res.status(HttpStatus.CREATED).json(user.toJSON());
+    res.status(StatusCodes.CREATED).json(user.toJSON());
   }),
 );
 
@@ -141,7 +141,7 @@ router.get(
       data.apiKey = user.apiKey;
       res.json(data);
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -161,7 +161,7 @@ router.patch(
     if (user) {
       res.json(user.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

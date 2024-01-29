@@ -59,6 +59,9 @@ async function cleanUploadedAssets() {
 async function resetDatabase() {
   /// clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
+    DELETE FROM guide_items;
+    DELETE FROM guide_sections;
+    DELETE FROM guides;
     DELETE FROM export_logs;
     DELETE FROM export_triggers;
     DELETE FROM exports;

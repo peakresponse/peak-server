@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../models');
 
@@ -49,7 +49,7 @@ router.get(
       }
       res.json(data);
     } else {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
     }
   }),
 );

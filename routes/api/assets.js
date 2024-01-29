@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require('fs');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const mime = require('mime-types');
 const { mkdirp } = require('mkdirp');
 const path = require('path');
@@ -58,9 +58,9 @@ router.put(
     try {
       await mkdirp(path.dirname(tmpFile));
       await fs.promises.writeFile(tmpFile, req.body);
-      res.status(HttpStatus.OK).end();
+      res.status(StatusCodes.OK).end();
     } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
     }
   }),
 );

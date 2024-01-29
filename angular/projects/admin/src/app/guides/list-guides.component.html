@@ -1,0 +1,34 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <span class="d-flex">
+      <h1 class="h2">Guides</h1>
+      <a routerLink="/guides/new" class="btn btn--sm btn--secondary ms-3">New Guide</a>
+    </span>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr class="list">
+          <th>Name</th>
+          <th>Slug</th>
+          <th>Position</th>
+          <th>Is Visible?</th>
+        </tr>
+      </thead>
+      <shared-list type="guides" [params]="params">
+        <ng-template let-records="records" let-record="record">
+          <tr [routerLink]="['/guides', record.id]">
+            <td>{{ record.name }}</td>
+            <td>{{ record.slug }}</td>
+            <td>{{ record.position }}</td>
+            <td>
+              <span *ngIf="record.isVisible">Yes</span>
+              <span *ngIf="!record.isVisible">No</span>
+            </td>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+</div>

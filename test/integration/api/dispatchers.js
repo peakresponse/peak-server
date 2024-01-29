@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -24,12 +24,12 @@ describe('/api/psaps', () => {
       'employments',
     ]);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns a paginated list of records', async () => {
-      const response = await testSession.get('/api/dispatchers?psapId=588').expect(HttpStatus.OK).expect('X-Total-Count', '1');
+      const response = await testSession.get('/api/dispatchers?psapId=588').expect(StatusCodes.OK).expect('X-Total-Count', '1');
       assert.deepStrictEqual(response.body.length, 1);
     });
   });
@@ -43,7 +43,7 @@ describe('/api/psaps', () => {
           userId: '9eb5be23-c098-495c-a758-ce1def3ff541',
           callSign: 'TEST',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
 
       const record = await models.Dispatcher.findByPk(response.body.id);
       assert(record);
@@ -55,7 +55,7 @@ describe('/api/psaps', () => {
 
   describe('GET /:id', () => {
     it('returns a record by id', async () => {
-      const response = await testSession.get('/api/dispatchers/1f8a2ee2-8b6a-43b6-8764-a6013643a24b').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/dispatchers/1f8a2ee2-8b6a-43b6-8764-a6013643a24b').expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.callSign, 'DT01');
     });
   });
@@ -67,7 +67,7 @@ describe('/api/psaps', () => {
         .send({
           callSign: 'TESTING',
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const record = await models.Dispatcher.findByPk('1f8a2ee2-8b6a-43b6-8764-a6013643a24b');
       assert.deepStrictEqual(record.callSign, 'TESTING');
     });

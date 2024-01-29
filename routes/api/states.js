@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
 
 const models = require('../../models');
@@ -32,7 +32,7 @@ router.get(
         }),
       });
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -52,7 +52,7 @@ router.get(
       results.sort((a, b) => (a.type ?? '').localeCompare(b.type ?? ''));
       res.json(results);
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -72,7 +72,7 @@ router.get(
       results.sort((a, b) => (a.featureClass ?? '').localeCompare(b.featureClass ?? ''));
       res.json(results);
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -91,7 +91,7 @@ router.get(
         }),
       });
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -110,7 +110,7 @@ router.get(
         }),
       });
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -122,9 +122,9 @@ router.put(
     const state = await models.State.findByPk(req.params.id);
     if (state) {
       await models.Psap.importPsapsForState(state.id);
-      res.status(HttpStatus.OK).end();
+      res.status(StatusCodes.OK).end();
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -137,7 +137,7 @@ router.get(
     if (repo) {
       res.json(repo.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -151,7 +151,7 @@ router.put(
       await repo.pull();
       res.json(repo.toJSON()).end();
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -171,7 +171,7 @@ router.patch(
     if (state) {
       res.json(state.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -191,7 +191,7 @@ router.get(
       }
       res.json(state.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

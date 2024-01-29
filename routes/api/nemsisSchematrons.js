@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require('fs');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -82,7 +82,7 @@ router.post(
         });
       } catch (err) {
         if (err.message === 'dataSet') {
-          res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+          res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
           return;
         }
         record = null;
@@ -93,9 +93,9 @@ router.post(
       }
     }
     if (record) {
-      res.status(HttpStatus.CREATED).json(record.toJSON());
+      res.status(StatusCodes.CREATED).json(record.toJSON());
     } else {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
     }
   }),
 );
@@ -108,7 +108,7 @@ router.get(
     if (schematron) {
       res.json(schematron.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

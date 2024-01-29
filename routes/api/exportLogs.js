@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../models');
 
@@ -29,7 +29,7 @@ router.get(
       if (req.agency) {
         options.include[1] = { model: models.ExportTrigger, as: 'exportTrigger', where: { agencyId: req.agency.id } };
       } else {
-        res.status(HttpStatus.BAD_REQUEST).end();
+        res.status(StatusCodes.BAD_REQUEST).end();
         return;
       }
     }
@@ -50,10 +50,10 @@ router.get(
       if (req.user.isAdmin || record.exportTrigger.agencyId === req.agency.id) {
         res.json(record.toJSON());
       } else {
-        res.status(HttpStatus.FORBIDDEN).end();
+        res.status(StatusCodes.FORBIDDEN).end();
       }
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

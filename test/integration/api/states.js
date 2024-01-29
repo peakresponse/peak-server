@@ -1,7 +1,7 @@
 /* eslint-disable func-names, no-await-in-loop */
 const assert = require('assert');
 const fs = require('fs');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const path = require('path');
 const session = require('supertest-session');
 
@@ -26,7 +26,7 @@ describe('/api/states', () => {
 
   describe('GET /', () => {
     it('should return a list of State records', async () => {
-      const response = await testSession.get('/api/states/').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/states/').expect(StatusCodes.OK);
       const data = response.body;
       assert(data.length);
       assert.deepStrictEqual(data.length, 17);
@@ -37,7 +37,7 @@ describe('/api/states', () => {
   describe('PUT /:id/psaps', () => {
     it('should import PSAPs for the State', async () => {
       await fccMocks.mockPsapRegistryDownloads();
-      await testSession.put('/api/states/06/psaps').expect(HttpStatus.OK);
+      await testSession.put('/api/states/06/psaps').expect(StatusCodes.OK);
       assert.deepStrictEqual(await models.Psap.count(), 598);
     });
   });
@@ -49,7 +49,7 @@ describe('/api/states', () => {
 
     describe('GET /:id/repository', () => {
       it('returns the initialization status of a state repository', async () => {
-        const response = await testSession.get('/api/states/10/repository').expect(HttpStatus.OK);
+        const response = await testSession.get('/api/states/10/repository').expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           initialized: false,
           dataSetVersions: [],
@@ -61,7 +61,7 @@ describe('/api/states', () => {
 
     describe('PUT /:id/repository', () => {
       it('pulls the specified state repository', async () => {
-        const response = await testSession.put('/api/states/10/repository').expect(HttpStatus.OK);
+        const response = await testSession.put('/api/states/10/repository').expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           initialized: true,
           dataSetVersions: [
@@ -99,7 +99,7 @@ describe('/api/states', () => {
 
     describe('GET /:id/repository', () => {
       it('returns the data set and schematron versions for a state repository', async () => {
-        const response = await testSession.get('/api/states/10/repository').expect(HttpStatus.OK);
+        const response = await testSession.get('/api/states/10/repository').expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           initialized: true,
           dataSetVersions: [

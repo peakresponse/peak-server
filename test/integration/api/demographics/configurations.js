@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../../helpers');
@@ -28,7 +28,7 @@ describe('/api/demographics/configurations', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('POST /import', () => {
@@ -39,7 +39,7 @@ describe('/api/demographics/configurations', () => {
       const response = await testSession
         .post('/api/demographics/configurations/import')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       assert(response.body?.id);
       const configuration = await models.Configuration.findByPk(response.body.id);

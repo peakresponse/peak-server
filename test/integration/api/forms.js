@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -32,7 +32,7 @@ describe('/api/forms', () => {
 
   describe('GET /', () => {
     it('returns a list of Forms for the current agency', async () => {
-      const response = await testSession.get('/api/forms').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      const response = await testSession.get('/api/forms').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
       const records = response.body;
       assert.deepStrictEqual(records.length, 2);
       assert.deepStrictEqual(records[0].title, 'Patient / Patient Representative');

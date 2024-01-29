@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -63,7 +63,7 @@ router.post(
         { where: { id: scene.canonicalId }, transaction },
       );
     });
-    res.status(created ? HttpStatus.CREATED : HttpStatus.OK).json(scene.toJSON());
+    res.status(created ? StatusCodes.CREATED : StatusCodes.OK).json(scene.toJSON());
     await dispatchSceneUpdate(scene.canonicalId);
   }),
 );

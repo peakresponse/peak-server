@@ -1,0 +1,46 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Edit Guide Item</h1>
+  </div>
+  <shared-form
+    *ngIf="id"
+    type="guideItems"
+    [id]="id"
+    [hideButtons]="!isEditing"
+    [showCancel]="true"
+    (cancel)="isEditing = false"
+    (update)="isEditing = false"
+    (delete)="onDelete()"
+    class="d-block col-xl-6">
+    <ng-template let-record="record" let-error="error">
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>File</label>
+          <div class="w-25 mt-2">
+            <img class="img-fluid" [src]="record.fileUrl" />
+          </div>
+        </div>
+        <div *ngIf="record.body" class="mb-3">
+          <label>Body</label>
+          <p [innerHTML]="record.body"></p>
+        </div>
+        <div class="mb-3">
+          <label>Position</label>
+          <h3>{{ record.position }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Is Visible?</label>
+          <h3 *ngIf="record.isVisible">Yes</h3>
+          <h3 *ngIf="!record.isVisible">No</h3>
+        </div>
+        <div class="mb-3">
+          <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEditing">
+        <admin-guides-item-form [record]="record" [error]="error"></admin-guides-item-form>
+      </ng-container>
+    </ng-template>
+  </shared-form>
+</div>

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const nodemailerMock = require('nodemailer-mock');
 const session = require('supertest-session');
 
@@ -29,7 +29,7 @@ describe('/api/demographics/personnel', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('POST /', () => {
@@ -38,7 +38,7 @@ describe('/api/demographics/personnel', () => {
         .post('/api/demographics/personnel')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ data: {} })
-        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
+        .expect(StatusCodes.UNPROCESSABLE_ENTITY);
     });
 
     it('creates a new Employment from data and sends an invite', async () => {
@@ -60,7 +60,7 @@ describe('/api/demographics/personnel', () => {
             },
           },
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       const employment = await models.Employment.scope('finalOrNew').findOne({ where: { email: 'first.last@test.com' } });
       assert(employment);
       assert.deepStrictEqual(employment.firstName, 'First');
@@ -114,7 +114,7 @@ describe('/api/demographics/personnel', () => {
           },
           position: 'Position',
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const employment = await models.Employment.scope('finalOrNew').findByPk('7939c808-820e-42cc-8331-8e31ff951541');
       const draft = await employment.getDraft();
       assert.deepStrictEqual(draft.lastName, 'Last');
@@ -154,7 +154,7 @@ describe('/api/demographics/personnel', () => {
       await testSession
         .post('/api/demographics/personnel/50c06caf-9706-4305-bc3a-5462a7d20b6f/resend-invitation')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.NO_CONTENT);
+        .expect(StatusCodes.NO_CONTENT);
       const emails = nodemailerMock.mock.getSentMail();
       assert.deepStrictEqual(emails.length, 1);
       assert.deepStrictEqual(emails[0].to, 'Invited Member <invited.member@peakresponse.net>');
@@ -176,7 +176,7 @@ describe('/api/demographics/personnel', () => {
             { fullName: 'Invitee Two', email: 'invitee.two@peakresponse.net' },
           ],
         })
-        .expect(HttpStatus.ACCEPTED);
+        .expect(StatusCodes.ACCEPTED);
 
       /// start polling for completion
       for (;;) {
@@ -186,7 +186,7 @@ describe('/api/demographics/personnel', () => {
           // eslint-disable-next-line no-await-in-loop
           await helpers.sleep(250);
         } else {
-          assert.deepStrictEqual(response.status, HttpStatus.OK);
+          assert.deepStrictEqual(response.status, StatusCodes.OK);
           break;
         }
       }
@@ -219,7 +219,7 @@ describe('/api/demographics/personnel', () => {
             { fullName: '', email: 'invitee.two@peakresponse.net' },
           ],
         })
-        .expect(HttpStatus.ACCEPTED);
+        .expect(StatusCodes.ACCEPTED);
 
       /// start polling for completion
       for (;;) {
@@ -229,7 +229,7 @@ describe('/api/demographics/personnel', () => {
           // eslint-disable-next-line no-await-in-loop
           await helpers.sleep(250);
         } else {
-          assert.deepStrictEqual(response.status, HttpStatus.OK);
+          assert.deepStrictEqual(response.status, StatusCodes.OK);
           break;
         }
       }
@@ -256,7 +256,7 @@ describe('/api/demographics/personnel', () => {
     it('returns the email and invitation timestamp for the specified code', async () => {
       const response = await session(app)
         .get('/api/demographics/personnel/invite/eb9f6468-df4e-45d2-801f-c8e45d2fedea')
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body, {
         email: 'invited.member@peakresponse.net',
         invitationAt: '2020-04-06T21:22:10.158Z',
@@ -264,7 +264,7 @@ describe('/api/demographics/personnel', () => {
     });
 
     it('returns not found for an invalid code', async () => {
-      await session(app).get('/api/demographics/personnel/invite/asdfasdfasdf').expect(HttpStatus.NOT_FOUND);
+      await session(app).get('/api/demographics/personnel/invite/asdfasdfasdf').expect(StatusCodes.NOT_FOUND);
     });
   });
 
@@ -282,7 +282,7 @@ describe('/api/demographics/personnel', () => {
           password: 'Abcd1234!',
           position: 'Invited',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       const employment = await models.Employment.scope('finalOrNew').findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
       assert.deepStrictEqual(employment.userId, response.body.id);
       assert(!employment.isPending);
@@ -307,7 +307,7 @@ describe('/api/demographics/personnel', () => {
           password: 'Abcd1234!',
           position: 'Invited to Different Email',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       const employment = await models.Employment.scope('finalOrNew').findByPk('50c06caf-9706-4305-bc3a-5462a7d20b6f');
       assert.deepStrictEqual(employment.userId, response.body.id);
       assert.deepStrictEqual(employment.firstName, 'Different');
@@ -334,7 +334,7 @@ describe('/api/demographics/personnel', () => {
           password: 'Abcd1234!',
           position: 'Invited to Different Email',
         })
-        .expect(HttpStatus.NOT_FOUND);
+        .expect(StatusCodes.NOT_FOUND);
     });
 
     it('creates a new user and associates with agency employment pending for unmatched email', async () => {
@@ -350,7 +350,7 @@ describe('/api/demographics/personnel', () => {
           password: 'Abcd1234!',
           position: 'Uninvited',
         })
-        .expect(HttpStatus.ACCEPTED);
+        .expect(StatusCodes.ACCEPTED);
       const employment = await models.Employment.scope('finalOrNew').findOne({
         where: {
           createdByAgencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',

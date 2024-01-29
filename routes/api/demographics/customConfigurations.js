@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../../models');
 const helpers = require('../../helpers');
@@ -22,7 +22,7 @@ router.post(
     if (payload) {
       res.json(payload);
     } else {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
     }
   }),
 );

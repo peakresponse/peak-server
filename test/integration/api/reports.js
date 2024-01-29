@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -58,7 +58,7 @@ describe('/api/reports', () => {
         .post('/login')
         .set('Host', `bayshoreambulance.${process.env.BASE_HOST}`)
         .send({ email: 'bayshore@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
     });
 
     describe('POST /', () => {
@@ -105,7 +105,7 @@ describe('/api/reports', () => {
           .post(`/api/reports`)
           .set('Host', `bayshoreambulance.${process.env.BASE_HOST}`)
           .send(data)
-          .expect(HttpStatus.CREATED);
+          .expect(StatusCodes.CREATED);
         assert.deepStrictEqual(response.body.Incident?.[0]?.reportsCount, 1);
 
         let report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
@@ -162,7 +162,7 @@ describe('/api/reports', () => {
           .post(`/api/reports`)
           .set('Host', `bayshoreambulance.${process.env.BASE_HOST}`)
           .send(data)
-          .expect(HttpStatus.CREATED);
+          .expect(StatusCodes.CREATED);
 
         report = await models.Report.findByPk('bf0009a4-e3b4-419d-a303-3d698c088769');
         assert(report);
@@ -218,7 +218,7 @@ describe('/api/reports', () => {
           .post(`/api/reports`)
           .set('Host', `bayshoreambulance.${process.env.BASE_HOST}`)
           .send(data)
-          .expect(HttpStatus.CREATED);
+          .expect(StatusCodes.CREATED);
 
         // give time for export trigger to finish
         await helpers.sleep(1000);
@@ -244,7 +244,7 @@ describe('/api/reports', () => {
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
     });
 
     describe('GET /', () => {
@@ -252,7 +252,7 @@ describe('/api/reports', () => {
         const response = await testSession
           .get(`/api/reports?incidentId=6621202f-ca09-4ad9-be8f-b56346d1de65`)
           .set('Host', `bmacc.${process.env.BASE_HOST}`)
-          .expect(HttpStatus.OK);
+          .expect(StatusCodes.OK);
         const data = response.body;
         assert(data.Report);
         assert.deepStrictEqual(data.Report.length, 2);
@@ -316,7 +316,7 @@ describe('/api/reports', () => {
             },
           },
         };
-        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
 
         // give time for export trigger to finish
         await helpers.sleep(1000);
@@ -373,7 +373,7 @@ describe('/api/reports', () => {
             },
           },
         };
-        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
         // give time for export trigger to finish
         await helpers.sleep(1000);
 
@@ -446,7 +446,7 @@ describe('/api/reports', () => {
             },
           },
         };
-        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
         // give time for export trigger to finish
         await helpers.sleep(1000);
 
@@ -537,7 +537,7 @@ describe('/api/reports', () => {
             },
           },
         };
-        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.CREATED);
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
         // give time for export trigger to finish
         await helpers.sleep(1000);
 
@@ -596,7 +596,7 @@ describe('/api/reports', () => {
             ],
           },
         };
-        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.OK);
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.OK);
         // give time for export trigger to fire
         await helpers.sleep(1000);
         const exportLog = await models.ExportLog.findOne({
@@ -684,7 +684,7 @@ describe('/api/reports', () => {
         const response = await testSession
           .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed`)
           .set('Host', `bmacc.${process.env.BASE_HOST}`)
-          .expect(HttpStatus.OK);
+          .expect(StatusCodes.OK);
         const payload = response.body;
         assert.deepStrictEqual(
           payload,
@@ -719,7 +719,7 @@ describe('/api/reports', () => {
         const response = await testSession
           .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed/preview`)
           .set('Host', `bmacc.${process.env.BASE_HOST}`);
-        assert.deepStrictEqual(response.statusCode, HttpStatus.MOVED_TEMPORARILY);
+        assert.deepStrictEqual(response.statusCode, StatusCodes.MOVED_TEMPORARILY);
         const record = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
         const current = await record.getCurrent({ attributes: { include: ['emsDataSetFile'] } });
         assert.deepStrictEqual(response.headers.location, `/api/assets/reports/${current.id}/ems-data-set-file/${current.emsDataSetFile}`);

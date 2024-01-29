@@ -1,0 +1,20 @@
+<nav class="sidebar">
+  <ul class="sidebar__nav">
+    <h4 class="sidebar__heading">User Guides</h4>
+    <li *ngFor="let record of guides">
+      <a [routerLink]="record.slug" routerLinkActive="sidebar__item--active" class="sidebar__item">{{ record.navName ?? record.name }}</a>
+    </li>
+  </ul>
+</nav>
+<main>
+  <router-outlet></router-outlet>
+</main>
+<div *ngIf="((notification.messages$ | async)?.length ?? 0) > 0" class="notifications">
+  <ngb-toast
+    class="notifications__toast"
+    *ngFor="let message of notification.messages$ | async"
+    [delay]="message.delay"
+    (hidden)="notification.pop(message.id)">
+    {{ message.text }}
+  </ngb-toast>
+</div>

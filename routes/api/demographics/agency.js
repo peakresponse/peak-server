@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
@@ -23,7 +23,7 @@ router.put(
     const version = await req.agency.getOrCreateDraftVersion(req.user);
     await req.agency.updateDraft({ versionId: version.id, data, updatedById: req.user.id });
     const draft = await req.agency.getDraft();
-    res.status(HttpStatus.OK).json(await draft.toNemsisJSON());
+    res.status(StatusCodes.OK).json(await draft.toNemsisJSON());
   }),
 );
 
@@ -37,7 +37,7 @@ router.delete(
         await draft.destroy({ transaction });
       }
     });
-    res.status(HttpStatus.NO_CONTENT).end();
+    res.status(StatusCodes.NO_CONTENT).end();
   }),
 );
 

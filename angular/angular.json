@@ -513,6 +513,94 @@
           }
         }
       }
+    },
+    "guides": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/guides",
+      "sourceRoot": "projects/guides/src",
+      "prefix": "guides",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "customWebpackConfig": {
+              "path": "projects/guides/webpack.config.js"
+            },
+            "outputPath": "dist/guides",
+            "index": "projects/guides/src/index.html",
+            "main": "projects/guides/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/guides/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": ["projects/guides/src/favicon.ico", "projects/guides/src/assets"],
+            "styles": ["projects/guides/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "guides:build:production"
+            },
+            "development": {
+              "browserTarget": "guides:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "guides:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/guides/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": ["projects/guides/src/favicon.ico", "projects/guides/src/assets"],
+            "styles": ["projects/guides/src/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
     }
   },
   "cli": {

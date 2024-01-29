@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
 
 const models = require('../../models');
@@ -28,7 +28,7 @@ router.get(
       options.include = ['export'];
       options.order = [['export', 'name', 'ASC']];
     } else {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(StatusCodes.BAD_REQUEST).end();
       return;
     }
     const records = await models.ExportTrigger.findAll(options);
@@ -42,12 +42,12 @@ router.post(
   helpers.async(async (req, res) => {
     const { exportId } = req.body ?? {};
     if (!exportId) {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(StatusCodes.BAD_REQUEST).end();
       return;
     }
     const exp = await models.Export.findByPk(exportId);
     if (!exp) {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(StatusCodes.BAD_REQUEST).end();
       return;
     }
     const record = models.ExportTrigger.build(_.pick(req.body, ['exportId', 'type', 'debounceTime', 'isEnabled']));
@@ -63,13 +63,13 @@ router.post(
     } else if (req.agency) {
       record.agencyId = req.agency.id;
     } else {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(StatusCodes.BAD_REQUEST).end();
       return;
     }
     record.createdById = req.user.id;
     record.updatedById = req.user.id;
     await record.save();
-    res.status(HttpStatus.CREATED).json(record.toJSON());
+    res.status(StatusCodes.CREATED).json(record.toJSON());
   }),
 );
 
@@ -94,7 +94,7 @@ router.patch(
     if (record) {
       res.json(record.toJSON());
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -110,10 +110,10 @@ router.get(
       if (req.user.isAdmin || record.agencyId === req.agency.id) {
         res.json(record.toJSON());
       } else {
-        res.status(HttpStatus.FORBIDDEN).end();
+        res.status(StatusCodes.FORBIDDEN).end();
       }
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -148,10 +148,10 @@ router.patch(
         const data = record.toJSON();
         res.json(data);
       } else {
-        res.status(HttpStatus.FORBIDDEN).end();
+        res.status(StatusCodes.FORBIDDEN).end();
       }
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -173,12 +173,12 @@ router.delete(
     });
     if (record) {
       if (isAllowed) {
-        res.status(HttpStatus.OK).end();
+        res.status(StatusCodes.OK).end();
       } else {
-        req.status(HttpStatus.FORBIDDEN).end();
+        req.status(StatusCodes.FORBIDDEN).end();
       }
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

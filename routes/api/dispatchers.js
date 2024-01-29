@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
 const { Op } = require('sequelize');
 
@@ -50,7 +50,7 @@ router.post(
     data.createdById = req.user.id;
     data.updatedById = req.user.id;
     const dispatcher = await models.Dispatcher.create(data);
-    res.status(HttpStatus.CREATED).json(dispatcher.toJSON());
+    res.status(StatusCodes.CREATED).json(dispatcher.toJSON());
   }),
 );
 
@@ -64,7 +64,7 @@ router.get(
     if (dispatcher) {
       res.json(dispatcher.toJSON());
     } else {
-      res.send(HttpStatus.NOT_FOUND).end();
+      res.send(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -80,7 +80,7 @@ router.patch(
       await dispatcher.update(_.pick(req.body, ['callSign']));
       res.json(dispatcher.toJSON());
     } else {
-      res.send(HttpStatus.NOT_FOUND).end();
+      res.send(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

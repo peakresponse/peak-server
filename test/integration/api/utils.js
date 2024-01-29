@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 const { MockAgent, setGlobalDispatcher } = require('undici');
 
@@ -27,7 +27,7 @@ describe('/api/utils', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('GET /geocode', () => {
@@ -59,7 +59,7 @@ describe('/api/utils', () => {
         .get('/api/utils/geocode?lat=37.7782251&lng=-122.4424955')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .set('Accept', 'application/json')
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.address1, '1884 Golden Gate Ave');
       assert.deepStrictEqual(response.body.cityId, '2411786');
       assert.deepStrictEqual(response.body.countyId, '06075');

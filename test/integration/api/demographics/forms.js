@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../../helpers');
@@ -33,7 +33,10 @@ describe('/api/demographics/forms', () => {
 
   describe('GET /', () => {
     it('returns a list of Forms for the current agency', async () => {
-      const response = await testSession.get('/api/demographics/forms').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      const response = await testSession
+        .get('/api/demographics/forms')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .expect(StatusCodes.OK);
       const forms = response.body;
       assert.deepStrictEqual(forms.length, 2);
       assert.deepStrictEqual(forms[0].title, 'Patient / Patient Representative');
@@ -78,7 +81,7 @@ describe('/api/demographics/forms', () => {
         .post('/api/demographics/forms')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send(data)
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert(response.body.id);
 
       const form = await models.Form.findByPk(response.body.id);
@@ -104,7 +107,7 @@ describe('/api/demographics/forms', () => {
         reasons: [],
         signatures: [],
       };
-      await testSession.post(`/api/demographics/forms`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(HttpStatus.OK);
+      await testSession.post(`/api/demographics/forms`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.OK);
 
       const canonical = await models.Form.findByPk('98f2c8bd-8019-4ec4-918d-3ce54f9427b2');
       assert(canonical);
@@ -131,7 +134,7 @@ describe('/api/demographics/forms', () => {
       await testSession
         .delete(`/api/demographics/forms/98f2c8bd-8019-4ec4-918d-3ce54f9427b2`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const canonical = await models.Form.findByPk('98f2c8bd-8019-4ec4-918d-3ce54f9427b2');
       assert(canonical);
       assert(canonical.archivedAt);

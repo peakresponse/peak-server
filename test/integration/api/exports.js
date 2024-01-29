@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -25,12 +25,12 @@ describe('/api/exports', () => {
       'exports',
     ]);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns all visible Exports', async () => {
-      const response = await testSession.get('/api/exports').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/exports').expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.length, 1);
@@ -38,7 +38,7 @@ describe('/api/exports', () => {
     });
 
     it('returns all Exports', async () => {
-      const response = await testSession.get('/api/exports?showAll=true').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/exports?showAll=true').expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
       assert.deepStrictEqual(data.length, 3);
@@ -59,7 +59,7 @@ describe('/api/exports', () => {
           isApprovalReqd: false,
           isOverridable: true,
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert(response.body.id);
       const record = await models.Export.findByPk(response.body.id);
       assert.deepStrictEqual(record.name, 'Test Export');
@@ -83,7 +83,7 @@ describe('/api/exports', () => {
           name: 'Export Fixture 3 (now visible)',
           isVisible: true,
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.id, 'd897bfb5-c286-400e-9fa8-582cfef7791c');
       assert.deepStrictEqual(response.body.name, 'Export Fixture 3 (now visible)');
       assert.deepStrictEqual(response.body.isVisible, true);
@@ -96,7 +96,7 @@ describe('/api/exports', () => {
 
   describe('DELETE /:id', () => {
     it('deletes an existing Export record', async () => {
-      await testSession.delete('/api/exports/d897bfb5-c286-400e-9fa8-582cfef7791c').expect(HttpStatus.OK);
+      await testSession.delete('/api/exports/d897bfb5-c286-400e-9fa8-582cfef7791c').expect(StatusCodes.OK);
       const record = await models.Export.findByPk('d897bfb5-c286-400e-9fa8-582cfef7791c');
       assert.deepStrictEqual(record, null);
     });

@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const models = require('../models');
 const oauth = require('../lib/oauth');
@@ -15,7 +15,7 @@ router.post('/token', async (req, res) => {
     await oauth.server.token(request, response);
     res.json(response.body);
   } catch (error) {
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
 
@@ -37,7 +37,7 @@ router.post('/authorize', interceptors.requireLogin, async (req, res) => {
     res.setHeader('Location', response.headers.location);
     res.status(response.status).end();
   } catch (error) {
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
 

@@ -1,0 +1,20 @@
+<shared-form *ngIf="id" type="guides" [id]="id" [hideButtons]="true">
+  <ng-template let-record="record" let-error="error">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+      <span class="d-flex">
+        <h1 class="h2">{{ record.name }}</h1>
+      </span>
+    </div>
+    <ng-container *ngFor="let section of record.sections">
+      <h3 class="mb-3">{{ section.name }}</h3>
+      <div class="d-flex flex-wrap">
+        <div class="guide-item me-5 mb-5" *ngFor="let item of section.items; index as i">
+          <div class="guide-item__img shadow mb-3">
+            <img class="img-fluid" [src]="item.fileUrl" />
+          </div>
+          <div class="guide-item__body p-3" [innerHTML]="'<h3>' + (i + 1) + '.</h3> ' + item.body"></div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</shared-form>

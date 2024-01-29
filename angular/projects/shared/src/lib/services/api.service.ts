@@ -440,6 +440,60 @@ export class ApiService {
     },
   };
 
+  guides = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/guides', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/guides`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/guides/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/guides/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/guides/${id}`);
+    },
+  };
+
+  guideItems = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/guides/items', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/guides/items`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/guides/items/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/guides/items/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/guides/items/${id}`);
+    },
+  };
+
+  guideSections = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/guides/sections', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/guides/sections`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/guides/sections/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/guides/sections/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/guides/sections/${id}`);
+    },
+  };
+
   home = {
     contact: (data: any): Observable<any> => {
       return this.post('/contact-us', data);

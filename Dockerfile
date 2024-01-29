@@ -37,7 +37,8 @@ RUN npm install --legacy-peer-deps && \
     npm run build -- auth && \
     npm run build -- onboarding && \
     npm run build -- admin && \
-    npm run build -- app
+    npm run build -- app && \
+    npm run build -- guides
 
 # Build Server and Java dependencies
 WORKDIR $APP_HOME

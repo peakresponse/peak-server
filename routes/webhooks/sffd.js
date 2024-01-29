@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { DateTime } = require('luxon');
 const { v4: uuidv4 } = require('uuid');
 
@@ -15,11 +15,11 @@ const UNIT_KM_REGEX = /^KM\d+$/;
 router.post('/cad', async (req, res) => {
   const data = req.body;
   if (!Array.isArray(data)) {
-    res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
     return;
   }
   if (!req.user) {
-    res.status(HttpStatus.UNAUTHORIZED).end();
+    res.status(StatusCodes.UNAUTHORIZED).end();
     return;
   }
   const psap = await models.Psap.findByPk('588', { rejectOnEmpty: true });
@@ -30,7 +30,7 @@ router.post('/cad', async (req, res) => {
     },
   });
   if (!dispatcher) {
-    res.status(HttpStatus.FORBIDDEN).end();
+    res.status(StatusCodes.FORBIDDEN).end();
     return;
   }
   const newIncidentIds = [];
@@ -147,7 +147,7 @@ router.post('/cad', async (req, res) => {
       }
     }
   });
-  res.status(HttpStatus.OK).end();
+  res.status(StatusCodes.OK).end();
   await Promise.all(newIncidentIds.map((id) => dispatchIncidentUpdate(id)));
 });
 

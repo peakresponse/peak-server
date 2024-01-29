@@ -1,0 +1,44 @@
+[
+  {
+    "model": "GuideItem",
+    "data": {
+      "id": "79ca593d-044d-486c-8561-c7532f5447fb",
+      "sectionId": "a0f93c54-0886-4a6f-8339-3b3a72859bc8",
+      "body": "This is step 1",
+      "position": 1,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "GuideItem",
+    "data": {
+      "id": "c9a85bd3-5b6d-46d9-afaf-4cbe96cf6964",
+      "sectionId": "a0f93c54-0886-4a6f-8339-3b3a72859bc8",
+      "body": "This is step 2",
+      "position": 2,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "GuideItem",
+    "data": {
+      "id": "ab6ddd80-3e32-44a4-97ec-c33e16747bae",
+      "sectionId": "a0f93c54-0886-4a6f-8339-3b3a72859bc8",
+      "body": "This is step 3",
+      "position": 3,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  }
+]

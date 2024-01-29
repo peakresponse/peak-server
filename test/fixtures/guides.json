@@ -1,0 +1,66 @@
+[
+  {
+    "model": "Guide",
+    "data": {
+      "id": "739bf09f-5670-45c9-9149-9d15710f03e7",
+      "name": "Getting Started",
+      "navName": null,
+      "slug": "getting-started",
+      "body": null,
+      "position": 1,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "Guide",
+    "data": {
+      "id": "14b0bd28-8d22-49bc-bd38-f630e432cea1",
+      "name": "Hidden Draft",
+      "navName": null,
+      "slug": "hidden-draft",
+      "body": null,
+      "position": 2,
+      "isVisible": false,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "Guide",
+    "data": {
+      "id": "53e4a6a0-b2ec-4a4f-9848-7d436be131bb",
+      "name": "Run Reporting",
+      "navName": null,
+      "slug": "run-reporting",
+      "body": null,
+      "position": 3,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "Guide",
+    "data": {
+      "id": "7b8bd9ba-955c-43fe-9923-e490865c8271",
+      "name": "Mass Casualty Incidents",
+      "navName": "MCIs",
+      "slug": "mass-casualty-incidents",
+      "body": null,
+      "position": 4,
+      "isVisible": true,
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  }
+]

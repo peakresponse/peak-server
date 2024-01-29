@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../../helpers');
@@ -36,7 +36,7 @@ describe('/api/demographics/contacts', () => {
       const response = await testSession
         .get('/api/demographics/contacts')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const records = response.body;
       assert.strictEqual(records?.length, 2);
     });
@@ -68,7 +68,7 @@ describe('/api/demographics/contacts', () => {
         .post('/api/demographics/contacts')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ data })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
 
       function assertRecord(record) {
         assert(record.id);
@@ -112,7 +112,7 @@ describe('/api/demographics/contacts', () => {
         .put(`/api/demographics/contacts/f77a0e3b-3f09-4891-bd89-924e6d36481d`)
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ data })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       assert.deepStrictEqual(response.body.data, data);
 

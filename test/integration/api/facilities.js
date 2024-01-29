@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -11,14 +11,14 @@ describe('/api/facilities', () => {
   beforeEach(async () => {
     await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'facilities']);
     testSession = session(app);
-    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+    await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns a paginated list of Facility records', async () => {
       const response = await testSession
         .get('/api/facilities/')
-        .expect(HttpStatus.OK)
+        .expect(StatusCodes.OK)
         .expect('X-Total-Count', '127')
         .expect(
           'Link',
@@ -31,7 +31,7 @@ describe('/api/facilities', () => {
       const response = await testSession
         .get('/api/facilities/')
         .query({ type: '1701005' })
-        .expect(HttpStatus.OK)
+        .expect(StatusCodes.OK)
         .expect('X-Total-Count', '16');
       assert.deepStrictEqual(response.body.length, 16);
     });
@@ -40,7 +40,7 @@ describe('/api/facilities', () => {
       const response = await testSession
         .get('/api/facilities/')
         .query({ lat: '37.7866029', lng: '-122.4560444' })
-        .expect(HttpStatus.OK)
+        .expect(StatusCodes.OK)
         .expect('X-Total-Count', '127')
         .expect(
           'Link',
@@ -55,7 +55,7 @@ describe('/api/facilities', () => {
         .get('/api/facilities/')
         .query({ lat: '37.7866029', lng: '-122.4560444' })
         .query({ search: 'cpmc' })
-        .expect(HttpStatus.OK)
+        .expect(StatusCodes.OK)
         .expect('X-Total-Count', '8')
         .expect('Link', '');
       assert.deepStrictEqual(response.body.length, 8);
@@ -74,7 +74,7 @@ describe('/api/facilities', () => {
         .send({
           '06': ['20386', '62636'],
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const facilities = response.body;
       facilities.sort((a, b) => a.name.localeCompare(b.name));
       assert.deepStrictEqual(facilities.length, 2);

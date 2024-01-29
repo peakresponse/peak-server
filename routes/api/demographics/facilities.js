@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../../models');
 const helpers = require('../../helpers');
@@ -25,7 +25,7 @@ router.post(
       createdById: req.user.id,
       updatedById: req.user.id,
     });
-    res.status(HttpStatus.CREATED).json(await record.toNemsisJSON());
+    res.status(StatusCodes.CREATED).json(await record.toNemsisJSON());
   }),
 );
 

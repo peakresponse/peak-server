@@ -1,5 +1,5 @@
 const express = require('express');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const cache = require('../../../lib/cache');
 const models = require('../../../models');
@@ -25,7 +25,7 @@ router.get(
       const { email, invitationAt } = record;
       res.json({ email, invitationAt });
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -37,13 +37,13 @@ router.post(
     const { rows } = req.body;
     if (Array.isArray(rows)) {
       const status = {
-        code: HttpStatus.ACCEPTED,
+        code: StatusCodes.ACCEPTED,
         total: rows.length,
         sent: 0,
         failed: [],
       };
       cache.set(`personnel-invite-${req.user.id}`, status, 6 * 3600);
-      res.status(HttpStatus.ACCEPTED).end();
+      res.status(StatusCodes.ACCEPTED).end();
       for (const row of rows) {
         try {
           // eslint-disable-next-line no-await-in-loop
@@ -60,11 +60,11 @@ router.post(
         }
         cache.set(`personnel-invite-${req.user.id}`, status, 6 * 3600);
       }
-      status.code = HttpStatus.OK;
+      status.code = StatusCodes.OK;
       cache.set(`personnel-invite-${req.user.id}`, status, 6 * 3600);
       return;
     }
-    res.status(HttpStatus.UNPROCESSABLE_ENTITY).end();
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
   }),
 );
 
@@ -76,7 +76,7 @@ router.get(
     if (status) {
       res.status(status.code).json(status);
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );
@@ -102,7 +102,7 @@ router.post(
             transaction,
           });
         } catch {
-          res.status(HttpStatus.NOT_FOUND).end();
+          res.status(StatusCodes.NOT_FOUND).end();
           return;
         }
       } else {
@@ -122,7 +122,7 @@ router.post(
         await employment.save({ transaction });
         /// finally, send welcome email
         await user.sendWelcomeEmail(req.agency, { transaction });
-        status = HttpStatus.CREATED;
+        status = StatusCodes.CREATED;
       } else {
         /// create a pending employment
         if (!employment) {
@@ -137,7 +137,7 @@ router.post(
         await employment.save({ transaction });
         /// finally, send welcome email (will be a pending request email)
         await user.sendWelcomeEmail(req.agency, { transaction });
-        status = HttpStatus.ACCEPTED;
+        status = StatusCodes.ACCEPTED;
       }
     });
     res.status(status).json(user.toJSON());
@@ -164,9 +164,9 @@ router.post(
       }
     });
     if (record) {
-      res.status(HttpStatus.NO_CONTENT).end();
+      res.status(StatusCodes.NO_CONTENT).end();
     } else {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

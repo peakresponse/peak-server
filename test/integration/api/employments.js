@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -27,12 +27,12 @@ describe('/api/employments', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns personnel Employment records', async () => {
-      const response = await testSession.get('/api/employments').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      const response = await testSession.get('/api/employments').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body?.length, 6);
     });
 
@@ -41,7 +41,7 @@ describe('/api/employments', () => {
         .get('/api/employments')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .query({ isPending: 1 })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body?.length, 1);
       assert(response.body[0].isPending);
     });
@@ -51,7 +51,7 @@ describe('/api/employments', () => {
         .get('/api/employments')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .query({ isPending: 0 })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body?.length, 4);
     });
   });
@@ -65,7 +65,7 @@ describe('/api/employments', () => {
       await testSession
         .post('/api/employments/0544b426-2969-4f98-a458-e090cd3487e2/approve')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       await record.reload();
       assert(!record.isPending);
       assert(record.approvedAt);
@@ -82,7 +82,7 @@ describe('/api/employments', () => {
       await testSession
         .post('/api/employments/0544b426-2969-4f98-a458-e090cd3487e2/refuse')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       await record.reload();
       assert(!record.isPending);
       assert(record.refusedAt);

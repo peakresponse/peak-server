@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -48,12 +48,12 @@ describe('/api/scenes', () => {
       .post('/login')
       .set('Host', `bmacc.${process.env.BASE_HOST}`)
       .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-      .expect(HttpStatus.OK);
+      .expect(StatusCodes.OK);
   });
 
   describe('GET /', () => {
     it('returns closed scenes', async () => {
-      const response = await testSession.get('/api/scenes').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      const response = await testSession.get('/api/scenes').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body?.length, 1);
     });
   });
@@ -78,7 +78,7 @@ describe('/api/scenes', () => {
             arrivedAt: '2020-04-06T21:22:10.102Z',
           },
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       const incident = await models.Incident.findByPk('2e73956f-e009-4e3b-b94d-085acc3f47b2');
 
@@ -114,7 +114,7 @@ describe('/api/scenes', () => {
             mgsResponderId: 'a80254a6-f373-40ac-bc07-17da6a61b2cb',
           },
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
 
       const scene = await models.Scene.findByPk('75c66bf2-b11a-46fa-9b5c-bffdfb8c58d3');
       assert(scene);
@@ -144,7 +144,7 @@ describe('/api/scenes', () => {
             arrivedAt: '2020-04-06T21:22:10.102Z',
           },
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
       assert.deepStrictEqual(scene.respondersCount, 3);
@@ -165,7 +165,7 @@ describe('/api/scenes', () => {
             arrivedAt: '2020-04-06T21:24:10.102Z',
           },
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       await responder.reload();
       assert.deepStrictEqual(JSON.stringify(responder?.arrivedAt), '"2020-04-06T21:22:10.102Z"');
@@ -185,7 +185,7 @@ describe('/api/scenes', () => {
             departedAt: '2020-04-06T22:32:10.102Z',
           },
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
       const responder = await models.Responder.findByPk('1550b568-9a2a-41b5-9c0f-8284f07d1aec');
       assert.deepStrictEqual(JSON.stringify(responder?.departedAt), '"2020-04-06T22:32:10.102Z"');

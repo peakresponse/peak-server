@@ -1,5 +1,5 @@
 const createError = require('http-errors');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const passport = require('passport');
 const passportLocal = require('passport-local');
 
@@ -111,9 +111,9 @@ async function loadAgency(req, res, next) {
     });
     if (!req.agency) {
       if (req.accepts('html')) {
-        next(createError(HttpStatus.NOT_FOUND));
+        next(createError(StatusCodes.NOT_FOUND));
       } else {
-        res.status(HttpStatus.NOT_FOUND).end();
+        res.status(StatusCodes.NOT_FOUND).end();
       }
     }
   }
@@ -150,7 +150,7 @@ function sendErrorUnauthorized(req, res) {
     req.flash('error', 'You must log in to view the page you visited.');
     res.redirect(`/auth/login?redirectURI=${encodeURIComponent(req.originalUrl)}`);
   } else {
-    res.status(HttpStatus.UNAUTHORIZED).end();
+    res.status(StatusCodes.UNAUTHORIZED).end();
   }
 }
 
@@ -159,7 +159,7 @@ function sendErrorForbidden(req, res) {
     req.flash('error', 'You are not allowed to view the page you visited.');
     res.redirect(`/`);
   } else {
-    res.status(HttpStatus.FORBIDDEN).end();
+    res.status(StatusCodes.FORBIDDEN).end();
   }
 }
 

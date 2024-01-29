@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const nodemailerMock = require('nodemailer-mock');
 const session = require('supertest-session');
 
@@ -28,11 +28,11 @@ describe('/api/agencies', () => {
 
   describe('GET /', () => {
     beforeEach(async () => {
-      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
     });
 
     it('returns a paginated list of Agency records', async () => {
-      const response = await testSession.get('/api/agencies/').expect(HttpStatus.OK).expect('X-Total-Count', '13').expect('Link', '');
+      const response = await testSession.get('/api/agencies/').expect(StatusCodes.OK).expect('X-Total-Count', '13').expect('Link', '');
       assert.deepStrictEqual(response.body.length, 13);
     });
 
@@ -40,7 +40,7 @@ describe('/api/agencies', () => {
       const response = await testSession
         .get('/api/agencies/')
         .query({ search: 'fire' })
-        .expect(HttpStatus.OK)
+        .expect(StatusCodes.OK)
         .expect('X-Total-Count', '6')
         .expect('Link', '');
       assert.deepStrictEqual(response.body.length, 6);
@@ -53,19 +53,19 @@ describe('/api/agencies', () => {
 
   describe('POST /', () => {
     it('requires an administrative superuser', async () => {
-      await testSession.post('/api/agencies').set('Accept', 'application/json').send({}).expect(HttpStatus.UNAUTHORIZED);
+      await testSession.post('/api/agencies').set('Accept', 'application/json').send({}).expect(StatusCodes.UNAUTHORIZED);
 
       await testSession
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
 
-      await testSession.post('/api/agencies').set('Accept', 'application/json').send({}).expect(HttpStatus.FORBIDDEN);
+      await testSession.post('/api/agencies').set('Accept', 'application/json').send({}).expect(StatusCodes.FORBIDDEN);
     });
 
     it('creates a new canonical agency record', async () => {
-      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
       const response = await testSession
         .post('/api/agencies')
         .send({
@@ -74,7 +74,7 @@ describe('/api/agencies', () => {
           name: 'Demo Agency',
           stateId: '06',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       assert(response.body.id);
       const agency = await models.Agency.findByPk(response.body.id, { rejectOnEmpty: true });
       assert.deepStrictEqual(agency.stateUniqueId, 'DEMO-001');
@@ -97,7 +97,7 @@ describe('/api/agencies', () => {
 
   describe('PATCH /:id', () => {
     it('updates an existing Agency record', async () => {
-      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
       await testSession
         .patch('/api/agencies/9466185d-6ad7-429a-9081-4426d2398f9f')
         .send({
@@ -105,7 +105,7 @@ describe('/api/agencies', () => {
           number: 'Test Number',
           name: 'Test Name',
         })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       const agency = await models.Agency.findByPk('9466185d-6ad7-429a-9081-4426d2398f9f');
       assert.deepStrictEqual(agency.stateUniqueId, 'Test Id');
       assert.deepStrictEqual(agency.number, 'Test Number');
@@ -124,45 +124,48 @@ describe('/api/agencies', () => {
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
     });
 
     it('returns the demographic Agency record for the current subdomain', async () => {
-      const response = await testSession.get('/api/agencies/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+      const response = await testSession.get('/api/agencies/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.subdomain, 'bmacc');
     });
 
     it('returns not found when called on the naked domain', async () => {
-      await testSession.get('/api/agencies/me').expect(HttpStatus.NOT_FOUND);
+      await testSession.get('/api/agencies/me').expect(StatusCodes.NOT_FOUND);
     });
   });
 
   describe('GET /validate', () => {
     it('returns unprocessable entity if subdomain is not valid', async () => {
-      await testSession.get('/api/agencies/validate').query({ subdomain: 'not a valid subdomain' }).expect(HttpStatus.UNPROCESSABLE_ENTITY);
+      await testSession
+        .get('/api/agencies/validate')
+        .query({ subdomain: 'not a valid subdomain' })
+        .expect(StatusCodes.UNPROCESSABLE_ENTITY);
     });
 
     it('returns conflict if subdomain is taken', async () => {
-      await testSession.get('/api/agencies/validate').query({ subdomain: 'bmacc' }).expect(HttpStatus.CONFLICT);
+      await testSession.get('/api/agencies/validate').query({ subdomain: 'bmacc' }).expect(StatusCodes.CONFLICT);
 
       /// should be case insensitive
-      await testSession.get('/api/agencies/validate').query({ subdomain: 'BMACC' }).expect(HttpStatus.CONFLICT);
+      await testSession.get('/api/agencies/validate').query({ subdomain: 'BMACC' }).expect(StatusCodes.CONFLICT);
     });
 
     it('returns success no content if subdomain valid and available', async () => {
-      await testSession.get('/api/agencies/validate').query({ subdomain: 'validandavailable' }).expect(HttpStatus.NO_CONTENT);
+      await testSession.get('/api/agencies/validate').query({ subdomain: 'validandavailable' }).expect(StatusCodes.NO_CONTENT);
     });
   });
 
   describe('GET /:id/check', () => {
     it('returns claim details of a claimed agency record', async () => {
-      const response = await testSession.get('/api/agencies/2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d/check').expect(HttpStatus.OK);
+      const response = await testSession.get('/api/agencies/2d9824fc-5d56-43cb-b7f0-e748a1c1ef4d/check').expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body?.id, '9eeb6591-12f8-4036-8af8-6b235153d444');
       assert.deepStrictEqual(response.body?.subdomain, 'bmacc');
     });
 
     it('returns a suggested subdomain for a non-claimed agency record', async () => {
-      const response = await testSession.get('/api/agencies/e705f64b-1399-436e-a428-18c8378b3444/check').expect(HttpStatus.NOT_FOUND);
+      const response = await testSession.get('/api/agencies/e705f64b-1399-436e-a428-18c8378b3444/check').expect(StatusCodes.NOT_FOUND);
       assert.deepStrictEqual(response.body?.subdomain, 'bmaa');
     });
   });
@@ -179,7 +182,7 @@ describe('/api/agencies', () => {
           position: 'Founder',
           password: 'Abcd1234!',
         })
-        .expect(HttpStatus.CREATED);
+        .expect(StatusCodes.CREATED);
       const { id } = response.body;
       assert(id);
       assert.deepStrictEqual(response.body.subdomain, 'baymedicalameda');
@@ -236,7 +239,7 @@ describe('/api/agencies', () => {
         .get('/api/users/me')
         .set('Host', `baymedicalameda.${process.env.BASE_HOST}`)
         .set('X-Api-Level', '2')
-        .expect(HttpStatus.OK);
+        .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.User?.id, user.id);
     });
   });

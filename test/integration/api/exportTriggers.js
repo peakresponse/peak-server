@@ -1,5 +1,5 @@
 const assert = require('assert');
-const HttpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const session = require('supertest-session');
 
 const helpers = require('../../helpers');
@@ -30,19 +30,21 @@ describe('/api/exports/triggers', () => {
 
   context('as an admin', () => {
     beforeEach(async () => {
-      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
     });
 
     describe('GET /', () => {
       it('returns all ExportTriggers for the specified Export', async () => {
-        const response = await testSession.get('/api/exports/triggers?exportId=1cea9191-f9c1-413c-9fb8-37de06d372cb').expect(HttpStatus.OK);
+        const response = await testSession
+          .get('/api/exports/triggers?exportId=1cea9191-f9c1-413c-9fb8-37de06d372cb')
+          .expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body?.length, 2);
         assert.deepStrictEqual(response.body[0].agency?.name, 'Bay Medic Ambulance - Contra Costa');
         assert.deepStrictEqual(response.body[1].agency?.name, 'Bayshore Ambulance');
       });
 
       it('returns 400 Bad Request if no specified Export', async () => {
-        await testSession.get('/api/exports/triggers').expect(HttpStatus.BAD_REQUEST);
+        await testSession.get('/api/exports/triggers').expect(StatusCodes.BAD_REQUEST);
       });
     });
 
@@ -57,7 +59,7 @@ describe('/api/exports/triggers', () => {
             debounceTime: 10,
             isEnabled: false,
           })
-          .expect(HttpStatus.CREATED);
+          .expect(StatusCodes.CREATED);
 
         assert(response.body?.id);
         const record = await models.ExportTrigger.findByPk(response.body.id);
@@ -71,7 +73,7 @@ describe('/api/exports/triggers', () => {
 
     describe('GET /:id', () => {
       it('returns the specified ExportTrigger', async () => {
-        const response = await testSession.get('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234').expect(HttpStatus.OK);
+        const response = await testSession.get('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234').expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           id: '3843042f-a086-4c3f-8a2c-ed663e0fb234',
           exportId: '1cea9191-f9c1-413c-9fb8-37de06d372cb',
@@ -97,7 +99,7 @@ describe('/api/exports/triggers', () => {
       it('marks the specified ExportTrigger as approved', async () => {
         const response = await testSession
           .patch('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234/approve')
-          .expect(HttpStatus.OK);
+          .expect(StatusCodes.OK);
         assert(response.body.approvedAt);
         assert.deepStrictEqual(response.body.approvedById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
         const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
@@ -114,7 +116,7 @@ describe('/api/exports/triggers', () => {
             debounceTime: 10,
             isEnabled: false,
           })
-          .expect(HttpStatus.OK);
+          .expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           id: '3843042f-a086-4c3f-8a2c-ed663e0fb234',
           exportId: '1cea9191-f9c1-413c-9fb8-37de06d372cb',
@@ -141,7 +143,7 @@ describe('/api/exports/triggers', () => {
 
     describe('DELETE /:id', () => {
       it('deletes the specified ExportTrigger', async () => {
-        await testSession.delete('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234').expect(HttpStatus.OK);
+        await testSession.delete('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234').expect(StatusCodes.OK);
         const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
         assert.deepStrictEqual(record, null);
       });
@@ -150,12 +152,15 @@ describe('/api/exports/triggers', () => {
 
   context('as a user', () => {
     beforeEach(async () => {
-      await testSession.post('/login').send({ email: 'regular@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
+      await testSession.post('/login').send({ email: 'regular@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
     });
 
     describe('GET /', () => {
       it('returns all configured ExportTriggers for their Agency', async () => {
-        const response = await testSession.get('/api/exports/triggers').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(HttpStatus.OK);
+        const response = await testSession
+          .get('/api/exports/triggers')
+          .set('Host', `bmacc.${process.env.BASE_HOST}`)
+          .expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body?.length, 2);
         assert.deepStrictEqual(response.body[0].export?.name, 'Export Fixture 1 (not visible)');
         assert.deepStrictEqual(response.body[1].export?.name, 'Export Fixture 3 (not visible)');
@@ -173,7 +178,7 @@ describe('/api/exports/triggers', () => {
             debounceTime: 10,
             isEnabled: false,
           })
-          .expect(HttpStatus.CREATED);
+          .expect(StatusCodes.CREATED);
 
         assert(response.body?.id);
         const record = await models.ExportTrigger.findByPk(response.body.id);
@@ -190,7 +195,7 @@ describe('/api/exports/triggers', () => {
         const response = await testSession
           .get('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234')
           .set('Host', `bmacc.${process.env.BASE_HOST}`)
-          .expect(HttpStatus.OK);
+          .expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           id: '3843042f-a086-4c3f-8a2c-ed663e0fb234',
           exportId: '1cea9191-f9c1-413c-9fb8-37de06d372cb',
@@ -221,7 +226,7 @@ describe('/api/exports/triggers', () => {
             debounceTime: 10,
             isEnabled: false,
           })
-          .expect(HttpStatus.OK);
+          .expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           id: '3843042f-a086-4c3f-8a2c-ed663e0fb234',
           exportId: '1cea9191-f9c1-413c-9fb8-37de06d372cb',
@@ -251,7 +256,7 @@ describe('/api/exports/triggers', () => {
         await testSession
           .delete('/api/exports/triggers/3843042f-a086-4c3f-8a2c-ed663e0fb234')
           .set('Host', `bmacc.${process.env.BASE_HOST}`)
-          .expect(HttpStatus.OK);
+          .expect(StatusCodes.OK);
         const record = await models.ExportTrigger.findByPk('3843042f-a086-4c3f-8a2c-ed663e0fb234');
         assert.deepStrictEqual(record, null);
       });
