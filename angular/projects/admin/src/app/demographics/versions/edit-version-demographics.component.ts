@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { AgencyService, ApiService, NavigationService, NotificationService } from 'shared';
@@ -10,6 +10,7 @@ import { AgencyService, ApiService, NavigationService, NotificationService } fro
 export class EditVersionDemographicsComponent {
   id: string = '';
   isDraft = false;
+  params = new HttpParams();
 
   schematronsInstalled: any[] = [];
   get demSchematronsInstalled(): any[] {
@@ -32,7 +33,11 @@ export class EditVersionDemographicsComponent {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.api.nemsisSchematrons.index().subscribe((response: HttpResponse<any>) => {
+    const { stateId } = this.agency;
+    if (stateId) {
+      this.params = this.params.set('stateId', stateId);
+    }
+    this.api.nemsisSchematrons.index(this.params).subscribe((response: HttpResponse<any>) => {
       this.schematronsInstalled = response.body;
     });
   }

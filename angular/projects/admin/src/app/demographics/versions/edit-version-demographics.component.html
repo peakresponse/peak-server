@@ -37,7 +37,8 @@
             [target]="isDraft ? record : null"
             [error]="error"
             objectNameProperty="displayVersion"
-            objectApiPath="nemsisStateDataSets"></shared-object-field>
+            objectApiPath="nemsisStateDataSets"
+            [objectApiSearchParams]="params"></shared-object-field>
         </div>
         <div class="mb-3">
           <shared-array-field
@@ -47,7 +48,7 @@
             [target]="isDraft ? record : null"
             [error]="error">
             <ng-template #item let-schematronId="item">
-              {{ schematronById(schematronId)?.displayVersion }}
+              {{ schematronById(schematronId)?.displayVersion ?? 'Unknown' }}
             </ng-template>
             <ng-template #form let-addItem="addItem">
               <shared-select-field
@@ -56,7 +57,9 @@
                 (valueChange)="$event && addItem($event); $event && demSchematrons.onClear()"
                 [target]="{ demSchematrons: null }">
                 <option [value]="null">Add a DEM Schematron...</option>
-                <option *ngFor="let schematron of demSchematronsInstalled" [value]="schematron.id">{{ schematron.displayVersion }}</option>
+                <option *ngFor="let schematron of demSchematronsInstalled" [value]="schematron.id">
+                  {{ schematron.displayVersion ?? 'Unknown' }}
+                </option>
               </shared-select-field>
             </ng-template>
           </shared-array-field>
@@ -69,7 +72,7 @@
             [target]="isDraft ? record : null"
             [error]="error">
             <ng-template #item let-schematronId="item">
-              {{ schematronById(schematronId)?.displayVersion }}
+              {{ schematronById(schematronId)?.displayVersion ?? 'Unknown' }}
             </ng-template>
             <ng-template #form let-addItem="addItem">
               <shared-select-field
