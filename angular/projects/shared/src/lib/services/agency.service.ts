@@ -44,6 +44,10 @@ export class AgencyService {
     return null;
   }
 
+  get stateId(): string | null {
+    return this.agency?.stateId ?? null;
+  }
+
   get isValid(): boolean {
     if (this.agency) {
       return this.agency.isValid;

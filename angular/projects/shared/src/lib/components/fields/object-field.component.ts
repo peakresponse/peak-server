@@ -16,13 +16,14 @@ export class ObjectFieldComponent extends BaseFieldComponent implements OnChange
   @Input() objectIdProperty = 'id';
   @Input() objectNameProperty = 'name';
   @Input() objectApiPath: string | string[] = '';
+  @Input() objectApiSearchParams = new HttpParams();
   @Input() objectFetchHandler: (id: string) => Observable<any | null> = (id: string) =>
     get(this.api, this.objectApiPath)
       .get(id)
       .pipe(map((response: HttpResponse<any>) => response.body));
   @Input() searchHandler: (search: string) => Observable<any[]> = (search: string) =>
     get(this.api, this.objectApiPath)
-      .index(new HttpParams({ fromObject: { search } }))
+      .index(this.objectApiSearchParams.set('search', search))
       .pipe(map((response: HttpResponse<any[]>) => response.body ?? []));
   @Input() inputFormatter = (item: any): string => item[this.objectNameProperty];
 

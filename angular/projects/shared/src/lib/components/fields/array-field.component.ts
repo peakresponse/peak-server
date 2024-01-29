@@ -18,7 +18,7 @@ export class ArrayFieldComponent extends BaseFieldComponent {
 
   onClick(event: MouseEvent) {
     const target = <HTMLElement>event.target;
-    if (target.classList.contains('array-field__item')) {
+    if (target.classList.contains('form-field__item')) {
       const rect = target.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
