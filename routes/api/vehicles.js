@@ -11,8 +11,11 @@ router.get(
   '/',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    const records = await models.Vehicle.findAll({
-      where: { createdByAgencyId: req.agency.id },
+    const records = await models.Vehicle.scope('final').findAll({
+      where: {
+        createdByAgencyId: req.agency.id,
+        archivedAt: null,
+      },
       order: [
         ['type', 'ASC'],
         ['number', 'ASC'],
