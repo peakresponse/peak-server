@@ -9,6 +9,7 @@ import { AgencyService, ApiService, NavigationService } from 'shared';
 export class DashboardDemographicsComponent implements OnInit {
   record: any;
   isCreatingNewVersion = false;
+  isCommittingNewVersion = false;
 
   schematronsInstalled: any[] = [];
   schematronById(id: string): any {
@@ -38,5 +39,16 @@ export class DashboardDemographicsComponent implements OnInit {
       this.isCreatingNewVersion = false;
       this.navigation.goTo(`/demographics/versions/${response.body.id}`);
     });
+  }
+
+  onCommit() {
+    const { id } = this.record?.draftVersion ?? {};
+    if (id) {
+      this.isCommittingNewVersion = true;
+      this.api.versions.commit(id).subscribe((response: HttpResponse<any>) => {
+        this.agency.refresh();
+        this.isCommittingNewVersion = false;
+      });
+    }
   }
 }

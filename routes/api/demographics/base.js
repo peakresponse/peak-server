@@ -15,7 +15,10 @@ function addIndex(router, model, options) {
       const { docs, pages, total } = await model.scope('finalOrNew').paginate({
         page,
         include: ['draft'].concat(include),
-        where: { createdByAgencyId: req.agency.id },
+        where: {
+          createdByAgencyId: req.agency.id,
+          archivedAt: null,
+        },
         order,
       });
       helpers.setPaginationHeaders(req, res, page, pages, total);

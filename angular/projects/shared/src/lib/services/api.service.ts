@@ -725,6 +725,9 @@ export class ApiService {
     validate: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/versions/${id}/validate`, params);
     },
+    commit: (id: string): Observable<any> => {
+      return this.patch(`/api/versions/${id}/commit`);
+    },
     update: (id: string, data: any): Observable<any> => {
       return this.patch(`/api/versions/${id}`, data);
     },
