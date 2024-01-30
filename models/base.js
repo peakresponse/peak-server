@@ -72,6 +72,39 @@ class Base extends Model {
     return draft.update(values, options);
   }
 
+  async commitDraft(options) {
+    if (!options?.transaction) {
+      return this.constructor.sequelize.transaction((transaction) => this.commitDraft({ ...options, transaction }));
+    }
+    let draft;
+    let draftParent;
+    if (this.isDraft) {
+      draft = this;
+      if (this.draftParentId) {
+        draftParent = this.draftParent || (await this.getDraftParent(options));
+      }
+    } else {
+      draft = this.draft || (await this.getDraft(options));
+      draftParent = this;
+    }
+    if (draft && draftParent) {
+      // apply draft values to parent
+      const newValues = { ...draft.get() };
+      delete newValues.id;
+      delete newValues.isDraft;
+      delete newValues.draftParent;
+      delete newValues.draftParentId;
+      await draftParent.update(newValues, options);
+      // delete the draft
+      return draft.destroy(options);
+    }
+    if (draft) {
+      // simply flip isDraft to false
+      return draft.update({ isDraft: false }, options);
+    }
+    return Promise.resolve();
+  }
+
   // MARK: - record versioning helpers
   static async createOrUpdate(model, user, agency, data, createAttrs, updateAttrs, options) {
     if (!options?.transaction) {

@@ -133,6 +133,41 @@
     "model": "Vehicle",
     "ignoreSet": true,
     "data": {
+      "id": "c4e39a46-65b3-4adf-b835-e8fc591a8430",
+      "isDraft": true,
+      "draftParentId": "e8d22910-7962-48f4-8a04-f511b8bf90dd",
+      "number": "43",
+      "vin": "1XPWDBTX48D766660",
+      "callSign": "43",
+      "type": "1404001",
+      "versionId": "c680282e-8756-4b02-82f3-2437c22ecade",
+      "data": {
+        "_attributes": {
+          "UUID": "e8d22910-7962-48f4-8a04-f511b8bf90dd"
+        },
+        "dVehicle.01": {
+          "_text": "43"
+        },
+        "dVehicle.02": {
+          "_text": "1XPWDBTX48D766660"
+        },
+        "dVehicle.03": {
+          "_text": "43"
+        },
+        "dVehicle.04": {
+          "_text": "1404001"
+        }
+      },
+      "archivedAt": "2021-12-07T00:10:20.910Z",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444"
+    }
+  },
+  {
+    "model": "Vehicle",
+    "ignoreSet": true,
+    "data": {
       "id": "b94e7f8a-bbed-4630-8b14-2da7945e0ddb",
       "isDraft": true,
       "number": "92",
