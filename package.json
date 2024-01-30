@@ -1,6 +1,6 @@
 {
   "name": "peak-server",
-  "version": "2.0.0-alpha.37",
+  "version": "2.0.0-alpha.38",
   "private": true,
   "scripts": {
     "start": "nodemon -V --ignore ./angular --ignore ./data --ignore ./nemsis --ignore ./public  --ignore ./test --ignore ./tmp ./bin/www",
