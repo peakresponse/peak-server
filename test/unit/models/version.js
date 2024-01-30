@@ -138,12 +138,6 @@ describe('models', () => {
 				<dVehicle.03>92</dVehicle.03>
 				<dVehicle.04>1404001</dVehicle.04>
 			</dVehicle.VehicleGroup>
-			<dVehicle.VehicleGroup UUID="e8d22910-7962-48f4-8a04-f511b8bf90dd">
-				<dVehicle.01>43</dVehicle.01>
-				<dVehicle.02>1XPWDBTX48D766660</dVehicle.02>
-				<dVehicle.03>43</dVehicle.03>
-				<dVehicle.04>1404001</dVehicle.04>
-			</dVehicle.VehicleGroup>
 		</dVehicle>
 		<dPersonnel>
 			<dPersonnel.PersonnelGroup UUID="0544b426-2969-4f98-a458-e090cd3487e2">
@@ -203,6 +197,25 @@ describe('models', () => {
         await version.regenerate();
         await version.nemsisValidate();
         assert.deepStrictEqual(version.isValid, true);
+      });
+    });
+
+    describe('.commit()', () => {
+      it('applies all draft demographic records and sets the draft version as the new current version', async () => {
+        const version = await models.Version.findByPk('682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
+        await version.commit();
+        assert.deepStrictEqual(version.isDraft, false);
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        assert.deepStrictEqual(agency.versionId, version.id);
+
+        let vehicle = await models.Vehicle.findByPk('e8d22910-7962-48f4-8a04-f511b8bf90dd');
+        assert(vehicle.archivedAt);
+
+        vehicle = await models.Vehicle.findByPk('91986460-5a12-426d-9855-93227b47ead5');
+        assert.deepStrictEqual(vehicle.number, '55');
+
+        vehicle = await models.Vehicle.findByPk('b94e7f8a-bbed-4630-8b14-2da7945e0ddb');
+        assert.deepStrictEqual(vehicle.isDraft, false);
       });
     });
   });

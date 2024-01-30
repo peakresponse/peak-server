@@ -18,15 +18,15 @@
           <h5>State Data Set</h5>
           {{ record?.version?.stateDataSet?.displayVersion }}
         </div>
-        <div *ngIf="record?.demSchematronIds?.length" class="form-field__item">
+        <div *ngIf="record?.version.demSchematronIds?.length" class="form-field__item">
           <h5>DEM Schematrons</h5>
-          <div *ngFor="let schematronId of record.demSchematronIds">
+          <div *ngFor="let schematronId of record.version.demSchematronIds">
             {{ schematronById(schematronId)?.displayVersion }}
           </div>
         </div>
-        <div *ngIf="record?.emsSchematronIds?.length" class="form-field__item">
+        <div *ngIf="record?.version.emsSchematronIds?.length" class="form-field__item">
           <h5>EMS Schematrons</h5>
-          <div *ngFor="let schematronId of record.emsSchematronIds">
+          <div *ngFor="let schematronId of record.version.emsSchematronIds">
             {{ schematronById(schematronId)?.displayVersion }}
           </div>
         </div>
@@ -71,10 +71,21 @@
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn--primary me-3" [routerLink]="['/demographics/versions', record.draftVersion.id, 'preview']">
-          Preview
-        </button>
-        <button type="button" class="btn btn--primary">Validate</button>
+        <fieldset [disabled]="isCommittingNewVersion" class="d-flex">
+          <button
+            type="button"
+            class="btn btn--secondary me-3 flex-grow-1"
+            [routerLink]="['/demographics/versions', record.draftVersion.id, 'preview']">
+            Preview
+          </button>
+          <button
+            type="button"
+            class="btn btn--secondary me-3 flex-grow-1"
+            [routerLink]="['/demographics/versions', record.draftVersion.id, 'validate']">
+            Validate
+          </button>
+          <button (click)="onCommit()" type="button" class="btn btn--primary flex-grow-1">Commit</button>
+        </fieldset>
       </div>
     </div>
   </div>

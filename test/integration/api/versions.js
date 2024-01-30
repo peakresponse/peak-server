@@ -56,6 +56,19 @@ describe('/api/versions', () => {
     });
   });
 
+  describe('PATCH /:id/commit', () => {
+    it('commits the specified draft Version for its Agency', async () => {
+      await testSession
+        .patch('/api/versions/682d5860-c11e-4a40-bfcc-b2dadec9e7d4/commit')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .expect(StatusCodes.OK);
+      const version = await models.Version.findByPk('682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
+      assert.deepStrictEqual(version.isDraft, false);
+      const agency = await version.getAgency();
+      assert.deepStrictEqual(agency.versionId, version.id);
+    });
+  });
+
   describe('GET /:id', () => {
     it('returns the specified Version for the Agency', async () => {
       const response = await testSession

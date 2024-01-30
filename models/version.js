@@ -184,7 +184,7 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ demDataSet }, { transaction });
     }
 
-    async nemsisValidate() {
+    async nemsisValidate(options) {
       // get the js equivalent to the XML
       const doc = xmljs.xml2js(this.demDataSet, { compact: true });
       // run the DEM Data Set through XSD validation
@@ -246,9 +246,39 @@ module.exports = (sequelize, DataTypes) => {
           // for schematron errors, set on the model object with appropriate path so it will be displayed on edit
         }
       }
-      return this.update({ isValid: !validationErrors, validationErrors: validationErrors?.$json ?? null });
+      return this.update({ isValid: !validationErrors, validationErrors: validationErrors?.$json ?? null }, options ?? {});
+    }
+
+    async commit(options) {
+      if (!options?.transaction) {
+        return sequelize.transaction((transaction) => this.commit({ ...options, transaction }));
+      }
+      const { transaction } = options;
+      // make sure the saved data set and validation errors are current
+      await this.regenerate({ transaction });
+      await this.nemsisValidate({ transaction });
+      // iterate through all the demographics records and commit all drafts
+      const agency = await this.getAgency({ include: 'draft', transaction });
+      await agency.commitDraft({ transaction });
+      for (const modelName of ['Contact', 'Configuration', 'Location', 'Vehicle', 'Employment', 'Device', 'Facility']) {
+        const queryOptions = {
+          include: 'draft',
+          where: { createdByAgencyId: agency.id },
+          order: [['id', 'ASC']],
+          transaction,
+        };
+        // eslint-disable-next-line no-await-in-loop
+        const records = await sequelize.models[modelName].scope('finalOrNew').findAll(queryOptions);
+        // eslint-disable-next-line no-await-in-loop
+        await Promise.all(records.map((r) => r.commitDraft({ transaction })));
+      }
+      // flip the isDraft flag on this record
+      await this.update({ isDraft: false }, { transaction });
+      // set this as the current Version on the Agency record
+      return agency.update({ versionId: this.id }, { transaction });
     }
   }
+
   Version.init(
     {
       isDraft: {

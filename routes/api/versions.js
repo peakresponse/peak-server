@@ -74,6 +74,33 @@ router.get(
   }),
 );
 
+router.patch(
+  '/:id/commit',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  helpers.async(async (req, res) => {
+    let version;
+    await models.sequelize.transaction(async (transaction) => {
+      version = await models.Version.findByPk(req.params.id, { transaction });
+      if (version) {
+        if (version.agencyId === req.agency.id) {
+          if (version.isDraft) {
+            await version.commit({ transaction });
+          }
+        }
+      }
+    });
+    if (version) {
+      if (version.agencyId === req.agency.id) {
+        res.status(StatusCodes.OK).end();
+      } else {
+        res.status(StatusCodes.FORBIDDEN).end();
+      }
+    } else {
+      res.status(StatusCodes.NOT_FOUND).end();
+    }
+  }),
+);
+
 router.get(
   '/:id',
   interceptors.requireAgency(),
