@@ -11,11 +11,11 @@ const passport = require('passport');
 const fileUpload = require('express-fileupload');
 const i18n = require('i18n');
 const bodyParser = require('body-parser');
-const Rollbar = require('rollbar');
 
 const helpers = require('./routes/helpers');
 const routes = require('./routes');
 const { NemsisServer } = require('./lib/nemsis/webService');
+const rollbar = require('./lib/rollbar');
 
 const app = express();
 
@@ -101,7 +101,6 @@ app.use((err, req, res, next) => {
 });
 
 // log unhandled errors with Rollbar
-const rollbar = new Rollbar(process.env.ROLLBAR_POST_SERVER_ITEM_ACCESS_TOKEN);
 app.use(rollbar.errorHandler());
 
 module.exports = app;
