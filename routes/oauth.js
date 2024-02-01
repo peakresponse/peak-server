@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const models = require('../models');
 const oauth = require('../lib/oauth');
+const rollbar = require('../lib/rollbar');
 
 const interceptors = require('./interceptors');
 
@@ -15,6 +16,7 @@ router.post('/token', async (req, res) => {
     await oauth.server.token(request, response);
     res.json(response.body);
   } catch (error) {
+    rollbar.error(error, req);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
@@ -37,6 +39,7 @@ router.post('/authorize', interceptors.requireLogin, async (req, res) => {
     res.setHeader('Location', response.headers.location);
     res.status(response.status).end();
   } catch (error) {
+    rollbar.error(error, req);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
