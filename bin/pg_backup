@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+/* eslint-disable no-console */
+
+require('dotenv').config();
+const { execSync } = require('child_process');
+const path = require('path');
+const s3 = require('../lib/aws/s3');
+
+const [, , command, ...args] = process.argv;
+
+if (command === 'ls') {
+  async function listObjects() {
+    const response = await s3.listObjects({ Prefix: 'backup/' });
+    if (response?.Contents) {
+      for (const obj of response.Contents) {
+        console.log(obj.Key);
+      }
+    }
+  }
+  listObjects()
+    .catch((err) => console.trace(err))
+    .then(() => process.exit(0));
+} else if (command === 'rm') {
+  const [Key] = args;
+  if (Key) {
+    async function deleteObject() {
+      const response = await s3.deleteObject({ Key });
+      console.log(response);
+    }
+    deleteObject()
+      .catch((err) => console.trace(err))
+      .then(() => process.exit(0));
+  }
+} else if (command === 'get') {
+  const [Key] = args;
+  if (Key) {
+    async function getObject() {
+      const signedUrl = await s3.getSignedDownloadUrl({ Key });
+      console.log(signedUrl);
+    }
+    getObject()
+      .catch((err) => console.trace(err))
+      .then(() => process.exit(0));
+  }
+} else {
+  console.log('Dumping database...');
+  execSync(`bin/pg_dump ${process.env.DATABASE_URL}`);
+
+  async function upload() {
+    const Key = `backup/${new Date().toISOString().replace(/:/g, '')}.dump`;
+    console.log('Uploading database to bucket:', Key);
+    await s3.putObject({
+      Key,
+      filePath: path.resolve(__dirname, '../latest.dump'),
+    });
+    const signedUrl = await s3.getSignedDownloadUrl({ Key });
+    console.log('Signed download URL:', signedUrl);
+  }
+
+  upload()
+    .catch((err) => console.trace(err))
+    .then(() => process.exit(0));
+}
