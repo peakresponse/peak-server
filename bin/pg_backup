@@ -11,7 +11,7 @@ console.log('Dumping database...');
 execSync(`bin/pg_dump ${process.env.DATABASE_URL}`);
 
 async function upload() {
-  const Key = `backup/${new Date().toISOString()}.dump`;
+  const Key = `backup/${new Date().toISOString().replace(/:/g, '')}.dump`;
   console.log('Uploading database to bucket:', Key);
   await s3.putObject({
     Key,
