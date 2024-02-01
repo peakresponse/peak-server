@@ -16,6 +16,8 @@ services:
     image: postgis/postgis:11-3.0-alpine
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
   server:
     build: .
     image: peakresponse/peak-server
