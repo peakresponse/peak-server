@@ -10,6 +10,7 @@
       "sort": 12345678,
       "calledAt": "2020-04-06T21:22:10.102Z",
       "dispatchNotifiedAt": "2020-04-06T21:22:10.102Z",
+      "dispatchedAgencies": ["9eeb6591-12f8-4036-8af8-6b235153d444"],
       "createdById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
       "updatedById": "4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c",
       "createdAt": "2020-04-06T21:22:10.102Z",

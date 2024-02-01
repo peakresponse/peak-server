@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       Incident.belongsTo(models.User, { as: 'updatedBy' });
       Incident.belongsTo(models.Agency, { as: 'createdByAgency' });
       Incident.belongsTo(models.Agency, { as: 'updatedByAgency' });
+      Incident.belongsToMany(models.Agency, {
+        as: 'dispatchedAgencies',
+        through: 'incidents_agencies',
+        foreignKey: 'incidentId',
+        timestamps: false,
+      });
       Incident.hasMany(models.Dispatch.scope('canonical'), { as: 'dispatches', foreignKey: 'incidentId' });
       Incident.hasMany(models.Report.scope('canonical'), { as: 'reports', foreignKey: 'incidentId' });
     }
@@ -165,6 +171,16 @@ module.exports = (sequelize, DataTypes) => {
     async updateReportsCount(options) {
       const { transaction } = options ?? {};
       return this.update({ reportsCount: await this.countReports({ transaction }) }, { transaction });
+    }
+
+    async updateDispatchedAgencies(options) {
+      const { transaction } = options ?? {};
+      const dispatches = await this.getDispatches({
+        include: ['vehicle'],
+        transaction,
+      });
+      const agencyIds = dispatches.map((d) => d.vehicle.createdByAgencyId).filter((v, i, a) => a.indexOf(v) === i);
+      return this.setDispatchedAgencies(agencyIds, { transaction });
     }
 
     toJSON() {

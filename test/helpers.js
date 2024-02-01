@@ -89,6 +89,7 @@ async function resetDatabase() {
     DELETE FROM patients;
     DELETE FROM dispatches;
     DELETE FROM assignments;
+    DELETE FROM incidents_agencies;
     DELETE FROM incidents;
     DELETE FROM dispatchers;
     UPDATE scenes SET mgs_responder_id=NULL, triage_responder_id=NULL, treatment_responder_id=NULL, staging_responder_id=NULL, transport_responder_id=NULL;

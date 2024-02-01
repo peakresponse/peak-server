@@ -27,6 +27,25 @@ describe('models', () => {
     });
 
     describe('createOrUpdate()', () => {
+      it('updates the Incident dispatchedAgencies association', async () => {
+        const incident = await models.Incident.findByPk('6621202f-ca09-4ad9-be8f-b56346d1de65');
+        assert.deepStrictEqual(await incident.countDispatchedAgencies(), 1);
+
+        const user = await models.User.findByPk('4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c');
+        const now = DateTime.now().toISO();
+        const data = {
+          id: 'ce9151bf-090c-45c6-80ff-a0c17ba26065',
+          canonicalId: '399c6daf-66db-4845-8fbf-2930477b7e61',
+          incidentId: '6621202f-ca09-4ad9-be8f-b56346d1de65',
+          vehicleId: '771aa36a-51ee-4c76-89a4-cc59975bedb8',
+          dispatchedAt: now,
+        };
+        const [dispatch, created] = await models.Dispatch.createOrUpdate(user, null, data);
+        assert(dispatch);
+        assert(created);
+        assert.deepStrictEqual(await incident.countDispatchedAgencies(), 2);
+      });
+
       it('creates a new canonical and corresponding history Dispatch record', async () => {
         const user = await models.User.findByPk('4ca8b1a0-e981-4ef0-88d2-6c9f69f0414c');
         const now = DateTime.now().toISO();
