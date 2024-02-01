@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+/* eslint-disable no-console */
+
+require('dotenv').config();
+const { execSync } = require('child_process');
+const path = require('path');
+const s3 = require('../lib/aws/s3');
+
+console.log('Dumping database...');
+execSync(`bin/pg_dump ${process.env.DATABASE_URL}`);
+
+async function upload() {
+  const Key = `backup/${new Date().toISOString()}.dump`;
+  console.log('Uploading database to bucket:', Key);
+  await s3.putObject({
+    Key,
+    filePath: path.resolve(__dirname, '../latest.dump'),
+  });
+  const signedUrl = await s3.getSignedDownloadUrl({ Key });
+  console.log('Signed download URL:', signedUrl);
+}
+
+upload()
+  .catch((err) => console.trace(err))
+  .then(() => process.exit(0));
