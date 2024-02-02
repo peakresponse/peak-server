@@ -71,6 +71,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Dispatch.init(
     {
+      isCanonical: {
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['canonicalId']),
+        get() {
+          return !this.canonicalId;
+        },
+      },
       dispatchedAt: {
         type: DataTypes.DATE,
         field: 'dispatched_at',
@@ -104,6 +110,14 @@ module.exports = (sequelize, DataTypes) => {
     where: {
       canonicalId: null,
     },
+  });
+
+  Dispatch.afterCreate(async (record, options) => {
+    if (record.isCanonical) {
+      const { transaction } = options ?? {};
+      const incident = await record.getIncident({ transaction });
+      await incident.updateDispatchedAgencies({ transaction });
+    }
   });
 
   return Dispatch;

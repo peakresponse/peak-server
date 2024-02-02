@@ -73,5 +73,15 @@ describe('models', () => {
         assert.deepStrictEqual(incident.reportsCount, 2);
       });
     });
+
+    describe('updateDispatchedAgencies()', () => {
+      it('updates the dispatchedAgencies association', async () => {
+        const incident = await models.Incident.findByPk('6621202f-ca09-4ad9-be8f-b56346d1de65');
+        await incident.setDispatchedAgencies([]);
+        assert.deepStrictEqual(await incident.countDispatchedAgencies(), 0);
+        await incident.updateDispatchedAgencies();
+        assert.deepStrictEqual(await incident.countDispatchedAgencies(), 1);
+      });
+    });
   });
 });

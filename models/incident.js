@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       Incident.belongsTo(models.User, { as: 'updatedBy' });
       Incident.belongsTo(models.Agency, { as: 'createdByAgency' });
       Incident.belongsTo(models.Agency, { as: 'updatedByAgency' });
+      Incident.belongsToMany(models.Agency, {
+        as: 'dispatchedAgencies',
+        through: 'incidents_agencies',
+        foreignKey: 'incidentId',
+        timestamps: false,
+      });
       Incident.hasMany(models.Dispatch.scope('canonical'), { as: 'dispatches', foreignKey: 'incidentId' });
       Incident.hasMany(models.Report.scope('canonical'), { as: 'reports', foreignKey: 'incidentId' });
     }
@@ -82,21 +88,20 @@ module.exports = (sequelize, DataTypes) => {
       let conditions;
       if (type === 'Agency') {
         conditions = `
-         LEFT JOIN vehicles ON dispatches.vehicle_id=vehicles.id
-         WHERE vehicles.created_by_agency_id=:objId
-         OR incidents.created_by_agency_id=:objId
-         `;
+          JOIN incidents_agencies ON incidents.id=incidents_agencies.incident_id
+          WHERE incidents_agencies.agency_id=:objId
+        `;
       } else if (type === 'Vehicle') {
         conditions = `
-         WHERE dispatches.vehicle_id=:objId
+          JOIN dispatches ON incidents.id=dispatches.incident_id
+          WHERE dispatches.vehicle_id=:objId AND dispatches.canonical_id IS NULL
         `;
       } else {
         throw new Error();
       }
       const docs = await sequelize.query(
-        `SELECT DISTINCT(incidents.*)
+        `SELECT incidents.*
          FROM incidents ${joins}
-         LEFT JOIN dispatches ON incidents.id=dispatches.incident_id
          ${conditions} ${searchConditions}
          ORDER BY sort DESC, number DESC
          LIMIT :limit OFFSET :offset`,
@@ -113,8 +118,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       );
       const [{ count }] = await sequelize.query(
-        `SELECT COUNT(DISTINCT(incidents.id)) FROM incidents ${joins}
-         LEFT JOIN dispatches ON incidents.id=dispatches.incident_id
+        `SELECT COUNT(incidents.id) FROM incidents ${joins}
          ${conditions} ${searchConditions}`,
         {
           raw: true,
@@ -165,6 +169,21 @@ module.exports = (sequelize, DataTypes) => {
     async updateReportsCount(options) {
       const { transaction } = options ?? {};
       return this.update({ reportsCount: await this.countReports({ transaction }) }, { transaction });
+    }
+
+    async updateDispatchedAgencies(options) {
+      const { transaction } = options ?? {};
+      const dispatches = await this.getDispatches({
+        include: ['vehicle'],
+        transaction,
+      });
+      const agencyIds = dispatches.map((d) => d.vehicle.createdByAgencyId).filter((v, i, a) => a.indexOf(v) === i);
+      if (this.createdByAgencyId) {
+        if (!agencyIds.includes(this.createdByAgencyId)) {
+          agencyIds.push(this.createdByAgencyId);
+        }
+      }
+      return this.setDispatchedAgencies(agencyIds, { transaction });
     }
 
     toJSON() {
@@ -263,6 +282,13 @@ module.exports = (sequelize, DataTypes) => {
       [Op.or]: [{ '$scene.id$': sceneId }, { '$scene.canonical_id$': sceneId }],
     },
   }));
+
+  Incident.afterSave(async (record, options) => {
+    if (record.changed('createdByAgencyId')) {
+      const { transaction } = options ?? {};
+      await record.updateDispatchedAgencies({ transaction });
+    }
+  });
 
   return Incident;
 };
