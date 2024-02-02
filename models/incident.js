@@ -178,6 +178,11 @@ module.exports = (sequelize, DataTypes) => {
         transaction,
       });
       const agencyIds = dispatches.map((d) => d.vehicle.createdByAgencyId).filter((v, i, a) => a.indexOf(v) === i);
+      if (this.createdByAgencyId) {
+        if (!agencyIds.includes(this.createdByAgencyId)) {
+          agencyIds.push(this.createdByAgencyId);
+        }
+      }
       return this.setDispatchedAgencies(agencyIds, { transaction });
     }
 
@@ -277,6 +282,13 @@ module.exports = (sequelize, DataTypes) => {
       [Op.or]: [{ '$scene.id$': sceneId }, { '$scene.canonical_id$': sceneId }],
     },
   }));
+
+  Incident.afterSave(async (record, options) => {
+    if (record.changed('createdByAgencyId')) {
+      const { transaction } = options ?? {};
+      await record.updateDispatchedAgencies({ transaction });
+    }
+  });
 
   return Incident;
 };
