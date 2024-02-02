@@ -88,21 +88,20 @@ module.exports = (sequelize, DataTypes) => {
       let conditions;
       if (type === 'Agency') {
         conditions = `
-         LEFT JOIN vehicles ON dispatches.vehicle_id=vehicles.id
-         WHERE vehicles.created_by_agency_id=:objId
-         OR incidents.created_by_agency_id=:objId
-         `;
+          JOIN incidents_agencies ON incidents.id=incidents_agencies.incident_id
+          WHERE incidents_agencies.agency_id=:objId
+        `;
       } else if (type === 'Vehicle') {
         conditions = `
-         WHERE dispatches.vehicle_id=:objId
+          JOIN dispatches ON incidents.id=dispatches.incident_id
+          WHERE dispatches.vehicle_id=:objId AND dispatches.canonical_id IS NULL
         `;
       } else {
         throw new Error();
       }
       const docs = await sequelize.query(
-        `SELECT DISTINCT(incidents.*)
+        `SELECT incidents.*
          FROM incidents ${joins}
-         LEFT JOIN dispatches ON incidents.id=dispatches.incident_id
          ${conditions} ${searchConditions}
          ORDER BY sort DESC, number DESC
          LIMIT :limit OFFSET :offset`,
@@ -119,8 +118,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       );
       const [{ count }] = await sequelize.query(
-        `SELECT COUNT(DISTINCT(incidents.id)) FROM incidents ${joins}
-         LEFT JOIN dispatches ON incidents.id=dispatches.incident_id
+        `SELECT COUNT(incidents.id) FROM incidents ${joins}
          ${conditions} ${searchConditions}`,
         {
           raw: true,

@@ -1,7 +1,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.addIndex('dispatches', ['vehicle_id']);
+    await queryInterface.sequelize.query('CREATE INDEX dispatches_vehicle_id ON dispatches (vehicle_id) WHERE canonical_id IS NULL');
+    await queryInterface.addIndex('incidents', [
+      {
+        attribute: 'sort',
+        order: 'DESC',
+      },
+      {
+        attribute: 'number',
+        order: 'DESC',
+      },
+    ]);
     await queryInterface.createTable('incidents_agencies', {
       incident_id: {
         allowNull: false,
@@ -26,6 +36,7 @@ module.exports = {
         },
       },
     });
+    await queryInterface.addIndex('incidents_agencies', ['agency_id']);
     await queryInterface.sequelize.query(`
       INSERT INTO incidents_agencies
       SELECT DISTINCT incidents.id AS incident_id, vehicles.created_by_agency_id AS agency_id
@@ -45,6 +56,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('incidents_agencies');
-    await queryInterface.removeIndex('dispatches', ['vehicle_id']);
+    await queryInterface.removeIndex('incidents', ['sort', 'number']);
+    await queryInterface.removeIndex('dispatches', 'dispatches_vehicle_id');
   },
 };
