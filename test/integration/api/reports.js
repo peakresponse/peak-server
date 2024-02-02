@@ -119,6 +119,7 @@ describe('/api/reports', () => {
         assert.deepStrictEqual(incident.sceneId, data.Incident.sceneId);
         assert.deepStrictEqual(incident.psapId, null);
         assert.deepStrictEqual(incident.number, '1');
+        assert.deepStrictEqual(await incident.countDispatchedAgencies(), 1);
 
         // second payload, no incident number, server generates increment
         data = {
