@@ -73,6 +73,7 @@ export class UserService {
     if (this.user) {
       this.user.currentAssignment = assignment;
       this.userSubject.next(this.user);
+      this.assignmentSubject.next(assignment);
     }
   }
 
