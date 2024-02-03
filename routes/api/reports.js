@@ -131,27 +131,26 @@ router.post(
                 const dupeIncident = await models.Incident.findOne(options);
                 if (dupeIncident) {
                   // de-dupe with a unique suffix
-                  const { number } = dupeIncident;
-                  const m = number.match(/^(\d+)-(\d+)$/);
+                  let { number } = dupeIncident;
+                  const m = number.match(/^([^-]+)-(\d+)$/);
                   if (m) {
-                    options = {
-                      where: {
-                        number: {
-                          [models.Sequelize.Op.iLike]: `${m[1]}-%`,
-                        },
-                      },
-                      transaction,
-                    };
-                    if (incident.psapId) {
-                      options.where.psapId = incident.psapId;
-                    } else {
-                      options.where.createdByAgencyId = req.agency.id;
-                    }
-                    const count = await models.Incident.count(options);
-                    incident.number = `${m[1]}-${`${count + 1}`.padStart(3, '0')}`;
-                  } else {
-                    incident.number = `${number}-001`;
+                    [, number] = m;
                   }
+                  options = {
+                    where: {
+                      number: {
+                        [models.Sequelize.Op.iLike]: `${number}-%`,
+                      },
+                    },
+                    transaction,
+                  };
+                  if (incident.psapId) {
+                    options.where.psapId = incident.psapId;
+                  } else {
+                    options.where.createdByAgencyId = req.agency.id;
+                  }
+                  const count = await models.Incident.count(options);
+                  incident.number = `${number}-${`${count + 1}`.padStart(3, '0')}`;
                 }
               }
               await incident.save({ transaction });

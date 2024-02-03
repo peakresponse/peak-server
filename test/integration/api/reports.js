@@ -391,6 +391,92 @@ describe('/api/reports', () => {
         assert.deepStrictEqual(incident.number, '12345678-001');
       });
 
+      it('creates a new Report, resolving freeform duplicate Incident numbers', async () => {
+        const data = {
+          Scene: {
+            id: 'dc3b005e-020d-4cbc-a09c-b7358387902b',
+            canonicalId: 'eef175e1-d201-4c07-aab4-18878234802d',
+            address1: '1 Dr Carlton B Goodlett Pl',
+            cityId: '2411786',
+            countyId: '06075',
+            stateId: '06',
+            zip: '94102',
+          },
+          Incident: {
+            id: '89839619-4bbc-43fb-b2dc-9c97396c5714',
+            sceneId: 'eef175e1-d201-4c07-aab4-18878234802d',
+            number: 'Test 1',
+          },
+          Report: {
+            id: 'bb0d32dd-e391-45bf-9df7-0f7c0467fefd',
+            canonicalId: 'bb80829d-5f11-491b-bf87-8f576841d65d',
+            incidentId: '89839619-4bbc-43fb-b2dc-9c97396c5714',
+            sceneId: 'dc3b005e-020d-4cbc-a09c-b7358387902b',
+            data: {
+              'eRecord.01': {
+                _text: 'bb80829d-5f11-491b-bf87-8f576841d65d',
+              },
+              'eRecord.SoftwareApplicationGroup': {
+                'eRecord.02': {
+                  _text: 'Peak Response Inc',
+                },
+                'eRecord.03': {
+                  _text: 'Peak Response',
+                },
+                'eRecord.04': {
+                  _text: 'Integration test version 1',
+                },
+              },
+            },
+          },
+        };
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
+        // update ids so that this is effectively a new report
+        data.Scene.id = '836cc635-2e18-4056-befc-946573d58c75';
+        data.Scene.canonicalId = '42b636ed-f2ae-4583-9ddb-59e24de413ee';
+        data.Incident.id = 'e4e03cc7-ed21-43f8-87ac-b169e7d51dd0';
+        data.Incident.sceneId = data.Scene.canonicalId;
+        data.Report.id = 'b6c18564-65fd-4a88-ac8d-b6a070bf04f1';
+        data.Report.canonicalId = '275e6099-7dc6-48b2-af3c-1ba380a247b4';
+        data.Report.incidentId = data.Incident.id;
+        data.Report.sceneId = data.Scene.id;
+        data.Report.data['eRecord.01']._text = data.Report.canonicalId;
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
+        let report = await models.Report.findByPk('b6c18564-65fd-4a88-ac8d-b6a070bf04f1');
+        assert(report);
+
+        let incident = await report.getIncident();
+        assert(incident);
+        assert.deepStrictEqual(incident.number, 'Test 1-001');
+
+        // update ids again
+        data.Scene.id = '1f8ba347-fdcf-42e7-9287-c0c327d072df';
+        data.Scene.canonicalId = '04984669-91e7-40d7-8a11-7b199ae69cd1';
+        data.Incident.id = '5846b13d-561c-4361-a31a-e122a9919f67';
+        data.Incident.sceneId = data.Scene.canonicalId;
+        data.Report.id = '16e5b4ec-fb66-4bfc-989b-cd8ecb9424fb';
+        data.Report.canonicalId = '56c495d4-9abe-4132-9ddb-429ae53674a4';
+        data.Report.incidentId = data.Incident.id;
+        data.Report.sceneId = data.Scene.id;
+        data.Report.data['eRecord.01']._text = data.Report.canonicalId;
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
+        report = await models.Report.findByPk('16e5b4ec-fb66-4bfc-989b-cd8ecb9424fb');
+        assert(report);
+
+        incident = await report.getIncident();
+        assert(incident);
+        assert.deepStrictEqual(incident.number, 'Test 1-002');
+      });
+
       it('creates a new Report, including new Incident/Scene records', async () => {
         const data = {
           Scene: {
