@@ -137,7 +137,12 @@ async function dispatchReportUpdate(reportId) {
   let payload;
   await models.sequelize.transaction(async (transaction) => {
     report = await models.Report.findByPk(reportId, {
-      include: ['disposition', { model: models.Incident, as: 'incident', include: ['dispatches'] }, 'patient', 'scene'],
+      include: [
+        'disposition',
+        { model: models.Incident, as: 'incident', include: [{ model: models.Dispatch, as: 'dispatches', required: false }] },
+        'patient',
+        'scene',
+      ],
       transaction,
     });
     incident = report.incident;
@@ -149,11 +154,13 @@ async function dispatchReportUpdate(reportId) {
     }
     payload = JSON.stringify(payload);
   });
+  // send updates to all clients watching the same scene
   for (const ws of sceneServer.clients) {
     if (ws.info.sceneId === scene.id) {
       ws.send(payload);
     }
   }
+  // send updates to all clients that were dispatched to the same incident
   for (const ws of incidentsServer.clients) {
     if (incident.dispatches.find((d) => d.vehicleId === ws.info.vehicleId)) {
       ws.send(payload);

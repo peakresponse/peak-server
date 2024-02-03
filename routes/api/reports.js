@@ -71,76 +71,62 @@ router.post(
           }
           for (const record of records) {
             if (model === 'Incident') {
-              const incident = models.Incident.build({
-                ..._.pick(record, ['id', 'sceneId', 'number']),
-                psapId: req.agency.psapId,
-                createdById: req.user.id,
-                updatedById: req.user.id,
-                createdByAgencyId: req.agency.id,
-                updatedByAgencyId: req.agency.id,
+              const [incident, isNewIncident] = await models.Incident.findOrBuild({
+                where: {
+                  id: record.id,
+                },
+                defaults: {
+                  ..._.pick(record, ['id', 'sceneId', 'number']),
+                  psapId: req.agency.psapId,
+                  createdById: req.user.id,
+                  updatedById: req.user.id,
+                  createdByAgencyId: req.agency.id,
+                  updatedByAgencyId: req.agency.id,
+                },
+                transaction,
               });
-              if (!incident.number) {
-                if (incident.psapId) {
-                  // get the latest incident number, make unique
-                  const prevIncident = await models.Incident.findOne({
-                    where: {
-                      psapId: incident.psapId,
-                    },
-                    order: [['number', 'DESC']],
-                    transaction,
-                  });
-                  if (prevIncident) {
-                    const { number } = prevIncident;
-                    const m = number.match(/^(\d+)-(\d+)$/);
-                    if (m) {
-                      const prevNumber = parseInt(m[2], 10);
-                      incident.number = `${m[1]}-${`${prevNumber + 1}`.padStart(3, '0')}`;
+              if (isNewIncident) {
+                if (!incident.number) {
+                  if (incident.psapId) {
+                    // get the latest incident number, make unique
+                    const prevIncident = await models.Incident.findOne({
+                      where: {
+                        psapId: incident.psapId,
+                      },
+                      order: [['number', 'DESC']],
+                      transaction,
+                    });
+                    if (prevIncident) {
+                      const { number } = prevIncident;
+                      const m = number.match(/^(\d+)-(\d+)$/);
+                      if (m) {
+                        const prevNumber = parseInt(m[2], 10);
+                        incident.number = `${m[1]}-${`${prevNumber + 1}`.padStart(3, '0')}`;
+                      } else {
+                        incident.number = `${number}-001`;
+                      }
                     } else {
-                      incident.number = `${number}-001`;
+                      incident.number = '1';
                     }
                   } else {
-                    incident.number = '1';
+                    // get the latest incident number, increment
+                    const { docs } = await models.Incident.paginate('Agency', req.agency, { paginate: 1, transaction });
+                    if (docs.length === 1) {
+                      const [prevIncident] = docs;
+                      const prevNumber = parseInt(prevIncident.number, 10);
+                      incident.number = `${prevNumber + 1}`;
+                    } else {
+                      incident.number = '1';
+                    }
                   }
                 } else {
-                  // get the latest incident number, increment
-                  const { docs } = await models.Incident.paginate('Agency', req.agency, { paginate: 1, transaction });
-                  if (docs.length === 1) {
-                    const [prevIncident] = docs;
-                    const prevNumber = parseInt(prevIncident.number, 10);
-                    incident.number = `${prevNumber + 1}`;
-                  } else {
-                    incident.number = '1';
-                  }
-                }
-              } else {
-                // check if number is a duplicate
-                let options = {
-                  where: {
-                    id: {
-                      [models.Sequelize.Op.ne]: incident.id,
-                    },
-                    number: incident.number,
-                  },
-                  transaction,
-                };
-                if (incident.psapId) {
-                  options.where.psapId = incident.psapId;
-                } else {
-                  options.where.createdByAgencyId = req.agency.id;
-                }
-                const dupeIncident = await models.Incident.findOne(options);
-                if (dupeIncident) {
-                  // de-dupe with a unique suffix
-                  let { number } = dupeIncident;
-                  const m = number.match(/^([^-]+)-(\d+)$/);
-                  if (m) {
-                    [, number] = m;
-                  }
-                  options = {
+                  // check if number is a duplicate
+                  let options = {
                     where: {
-                      number: {
-                        [models.Sequelize.Op.iLike]: `${number}-%`,
+                      id: {
+                        [models.Sequelize.Op.ne]: incident.id,
                       },
+                      number: incident.number,
                     },
                     transaction,
                   };
@@ -149,11 +135,33 @@ router.post(
                   } else {
                     options.where.createdByAgencyId = req.agency.id;
                   }
-                  const count = await models.Incident.count(options);
-                  incident.number = `${number}-${`${count + 1}`.padStart(3, '0')}`;
+                  const dupeIncident = await models.Incident.findOne(options);
+                  if (dupeIncident) {
+                    // de-dupe with a unique suffix
+                    let { number } = dupeIncident;
+                    const m = number.match(/^([^-]+)-(\d+)$/);
+                    if (m) {
+                      [, number] = m;
+                    }
+                    options = {
+                      where: {
+                        number: {
+                          [models.Sequelize.Op.iLike]: `${number}-%`,
+                        },
+                      },
+                      transaction,
+                    };
+                    if (incident.psapId) {
+                      options.where.psapId = incident.psapId;
+                    } else {
+                      options.where.createdByAgencyId = req.agency.id;
+                    }
+                    const count = await models.Incident.count(options);
+                    incident.number = `${number}-${`${count + 1}`.padStart(3, '0')}`;
+                  }
                 }
+                await incident.save({ transaction });
               }
-              await incident.save({ transaction });
               // search for the Report(s) that match this Incident, update Response incidentNumber
               let { Report: reports = [], Response: responses = [] } = req.body;
               if (!Array.isArray(reports)) {
