@@ -42,7 +42,8 @@ export class SelectAssignmentComponent {
       data.vehicleId = this.data.vehicleId;
     }
     this.api.assignments.create(data).subscribe((response: any) => {
-      this.user.setAssignment(response.body);
+      const { Assignment, Vehicle } = response.body;
+      this.user.setAssignment(Assignment, Vehicle);
       this.navigation.goTo('/');
     });
   }
@@ -50,7 +51,8 @@ export class SelectAssignmentComponent {
   onSkip() {
     this.isLoading = true;
     this.api.assignments.create({ vehicleId: null }).subscribe((response: any) => {
-      this.user.setAssignment(response.body);
+      const { Assignment, Vehicle } = response.body;
+      this.user.setAssignment(Assignment, Vehicle);
       this.navigation.goTo('/');
     });
   }

@@ -42,8 +42,9 @@ describe('/api/assignments', () => {
           vehicleId: '91986460-5a12-426d-9855-93227b47ead5',
         })
         .expect(StatusCodes.CREATED);
-      assert.deepStrictEqual(response.body.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
-      assert.deepStrictEqual(response.body.vehicleId, '91986460-5a12-426d-9855-93227b47ead5');
+      assert.deepStrictEqual(response.body.Assignment?.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
+      assert.deepStrictEqual(response.body.Assignment?.vehicleId, '91986460-5a12-426d-9855-93227b47ead5');
+      assert.deepStrictEqual(response.body.Vehicle?.id, '91986460-5a12-426d-9855-93227b47ead5');
     });
 
     it('creates a new Vehicle with Assignment', async () => {
@@ -54,9 +55,9 @@ describe('/api/assignments', () => {
           number: '23',
         })
         .expect(StatusCodes.CREATED);
-      assert.deepStrictEqual(response.body.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
-      assert(response.body.vehicleId);
-      const vehicle = await models.Vehicle.findByPk(response.body.vehicleId, { rejectOnEmpty: true });
+      assert.deepStrictEqual(response.body.Assignment?.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
+      assert(response.body.Assignment?.vehicleId);
+      const vehicle = await models.Vehicle.findByPk(response.body.Assignment.vehicleId, { rejectOnEmpty: true });
       assert.deepStrictEqual(vehicle.number, '23');
       assert.deepStrictEqual(vehicle.callSign, '23');
     });
@@ -67,8 +68,9 @@ describe('/api/assignments', () => {
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({})
         .expect(StatusCodes.CREATED);
-      assert.deepStrictEqual(response.body.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
-      assert.deepStrictEqual(response.body.vehicleId, null);
+      assert.deepStrictEqual(response.body.Assignment?.userId, '8e6753e2-3063-48e1-af22-cea57bd06514');
+      assert.deepStrictEqual(response.body.Assignment?.vehicleId, null);
+      assert.deepStrictEqual(response.body.Vehicle, undefined);
     });
 
     it('returns an existing Assignment if unchanged', async () => {
@@ -80,7 +82,7 @@ describe('/api/assignments', () => {
           vehicleId: '4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7',
         })
         .expect(StatusCodes.CREATED);
-      assert.deepStrictEqual(response.body.id, 'e5b169aa-e0a6-441b-92d4-95c729ff1988');
+      assert.deepStrictEqual(response.body.Assignment?.id, 'e5b169aa-e0a6-441b-92d4-95c729ff1988');
     });
 
     it('ends a prior Assignment on creation', async () => {
@@ -103,8 +105,8 @@ describe('/api/assignments', () => {
 
       await user.reload();
       const currentAssignment = await user.getCurrentAssignment();
-      assert.deepStrictEqual(currentAssignment.id, response.body.id);
-      assert.deepStrictEqual(currentAssignment.vehicleId, response.body.vehicleId);
+      assert.deepStrictEqual(currentAssignment.id, response.body.Assignment?.id);
+      assert.deepStrictEqual(currentAssignment.vehicleId, response.body.Assignment?.vehicleId);
     });
   });
 });
