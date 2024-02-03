@@ -477,6 +477,66 @@ describe('/api/reports', () => {
         assert.deepStrictEqual(incident.number, 'Test 1-002');
       });
 
+      it('should be idempotent to multiple repeated calls', async () => {
+        const data = {
+          Scene: {
+            id: 'dc3b005e-020d-4cbc-a09c-b7358387902b',
+            canonicalId: 'eef175e1-d201-4c07-aab4-18878234802d',
+            address1: '1 Dr Carlton B Goodlett Pl',
+            cityId: '2411786',
+            countyId: '06075',
+            stateId: '06',
+            zip: '94102',
+          },
+          Incident: {
+            id: '89839619-4bbc-43fb-b2dc-9c97396c5714',
+            sceneId: 'eef175e1-d201-4c07-aab4-18878234802d',
+            number: 'Test 1',
+          },
+          Report: {
+            id: 'bb0d32dd-e391-45bf-9df7-0f7c0467fefd',
+            canonicalId: 'bb80829d-5f11-491b-bf87-8f576841d65d',
+            incidentId: '89839619-4bbc-43fb-b2dc-9c97396c5714',
+            sceneId: 'dc3b005e-020d-4cbc-a09c-b7358387902b',
+            data: {
+              'eRecord.01': {
+                _text: 'bb80829d-5f11-491b-bf87-8f576841d65d',
+              },
+              'eRecord.SoftwareApplicationGroup': {
+                'eRecord.02': {
+                  _text: 'Peak Response Inc',
+                },
+                'eRecord.03': {
+                  _text: 'Peak Response',
+                },
+                'eRecord.04': {
+                  _text: 'Integration test version 1',
+                },
+              },
+            },
+          },
+        };
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.OK);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+
+        const report = await models.Report.findByPk('bb0d32dd-e391-45bf-9df7-0f7c0467fefd');
+        assert(report);
+        assert.deepStrictEqual(report.data, data.Report.data);
+        assert.deepStrictEqual(report.updatedAttributes, ['id', 'canonicalId', 'incidentId', 'data', 'sceneId']);
+        assert.deepStrictEqual(report.updatedDataAttributes, ['/eRecord.01', '/eRecord.SoftwareApplicationGroup']);
+
+        const incident = await report.getIncident();
+        assert(incident);
+        assert.deepStrictEqual(incident.sceneId, data.Incident.sceneId);
+        assert.deepStrictEqual(incident.psapId, '588');
+        assert.deepStrictEqual(incident.number, 'Test 1');
+      });
+
       it('creates a new Report, including new Incident/Scene records', async () => {
         const data = {
           Scene: {

@@ -63,7 +63,7 @@ describe('wss', () => {
       testSession = session(server);
       await testSession
         .post('/login')
-        .set('Host', process.env.BASE_HOST)
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
         .expect(StatusCodes.OK);
     });
@@ -137,6 +137,22 @@ describe('wss', () => {
     });
 
     describe('/incidents', () => {
+      it('is notified when a Report is created/updated for an incident the client was dispatched to', async () => {
+        await request(server)
+          .ws(`/incidents?assignmentId=e5b169aa-e0a6-441b-92d4-95c729ff1988`)
+          .set('Cookie', testSession.cookies.toValueString())
+          .set('X-Agency-Subdomain', 'bmacc')
+          .expectJson()
+          .exec(async () => {
+            await wss.dispatchReportUpdate('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+          })
+          .expectJson((actual) => {
+            assert.deepStrictEqual(actual.Report.length, 1);
+          })
+          .close()
+          .expectClosed();
+      });
+
       it('is notified of Incidents changes', async () => {
         const incident = await models.Incident.findByPk('6621202f-ca09-4ad9-be8f-b56346d1de65', {
           include: [
@@ -226,6 +242,60 @@ describe('wss', () => {
               actual.Vehicle.sort((a, b) => a.id.localeCompare(b.id)),
               JSON.parse(JSON.stringify(incident.dispatches.map((d) => d.vehicle.toJSON()))).sort((a, b) => a.id.localeCompare(b.id)),
             );
+          })
+          .close()
+          .expectClosed();
+      });
+
+      it('does not crash on an Incident with no dispatches', async () => {
+        const data = {
+          Scene: {
+            id: 'dc3b005e-020d-4cbc-a09c-b7358387902b',
+            canonicalId: 'eef175e1-d201-4c07-aab4-18878234802d',
+            address1: '1 Dr Carlton B Goodlett Pl',
+            cityId: '2411786',
+            countyId: '06075',
+            stateId: '06',
+            zip: '94102',
+          },
+          Incident: {
+            id: '89839619-4bbc-43fb-b2dc-9c97396c5714',
+            sceneId: 'eef175e1-d201-4c07-aab4-18878234802d',
+            number: 'Test 1',
+          },
+          Report: {
+            id: 'bb0d32dd-e391-45bf-9df7-0f7c0467fefd',
+            canonicalId: 'bb80829d-5f11-491b-bf87-8f576841d65d',
+            incidentId: '89839619-4bbc-43fb-b2dc-9c97396c5714',
+            sceneId: 'dc3b005e-020d-4cbc-a09c-b7358387902b',
+            data: {
+              'eRecord.01': {
+                _text: 'bb80829d-5f11-491b-bf87-8f576841d65d',
+              },
+              'eRecord.SoftwareApplicationGroup': {
+                'eRecord.02': {
+                  _text: 'Peak Response Inc',
+                },
+                'eRecord.03': {
+                  _text: 'Peak Response',
+                },
+                'eRecord.04': {
+                  _text: 'Integration test version 1',
+                },
+              },
+            },
+          },
+        };
+        await testSession.post(`/api/reports`).set('Host', `bmacc.${process.env.BASE_HOST}`).send(data).expect(StatusCodes.CREATED);
+        // give time for export trigger to finish
+        await helpers.sleep(1000);
+        await request(server)
+          .ws(`/incidents?assignmentId=e5b169aa-e0a6-441b-92d4-95c729ff1988`)
+          .set('Cookie', testSession.cookies.toValueString())
+          .set('X-Agency-Subdomain', 'bmacc')
+          .expectJson()
+          .exec(async () => {
+            await wss.dispatchReportUpdate('bb80829d-5f11-491b-bf87-8f576841d65d');
           })
           .close()
           .expectClosed();
