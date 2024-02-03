@@ -69,11 +69,14 @@ export class UserService {
     }
   }
 
-  setAssignment(assignment: any) {
+  setAssignment(assignment: any, vehicle: any) {
+    this.assignment = assignment;
+    this.assignmentSubject.next(assignment);
+    this.vehicle = vehicle;
+    this.vehicleSubject.next(vehicle);
     if (this.user) {
       this.user.currentAssignment = assignment;
       this.userSubject.next(this.user);
-      this.assignmentSubject.next(assignment);
     }
   }
 
