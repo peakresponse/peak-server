@@ -160,7 +160,7 @@ class Base extends Model {
     } else {
       created = true;
       // this is creating an entirely new record
-      filteredData = _.pick(data, ['id', 'canonicalId', 'createdAt'].concat(createAttrs).concat(updateAttrs));
+      filteredData = _.pick(data, ['id', 'canonicalId', 'createdAt', 'updatedAt'].concat(createAttrs).concat(updateAttrs));
       updatedAttributes = _.keys(filteredData);
       // set createdBy with this user/agency
       filteredData.createdById = user.id;
@@ -252,6 +252,13 @@ class Base extends Model {
     }
     canonical.currentId = record.id;
     await canonical.save({ silent: true, transaction: options.transaction });
+    // the following is a workaround for setting updatedAt in Sequelize
+    // https://stackoverflow.com/a/52415630
+    // https://stackoverflow.com/a/66631658
+    await model.update(
+      { currentId: record.id, updatedAt: data.updatedAt ?? new Date() },
+      { where: { id: canonical.id }, silent: true, transaction: options.transaction },
+    );
     for (const attr of updateAttrs.filter((a) => a.endsWith('Ids'))) {
       const ids = data[attr];
       if (ids) {
