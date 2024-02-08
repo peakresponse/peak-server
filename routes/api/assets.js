@@ -67,8 +67,22 @@ router.put(
 
 router.get(
   '/:path([^?]+)',
-  interceptors.requireLogin,
   helpers.async(async (req, res) => {
+    // if not logged in, check if path allows unauthorized access
+    if (!req.user) {
+      const unauthorizedPaths = (process.env.ASSET_UNAUTHORIZED_PATHS || '').split(',');
+      let allowed = false;
+      for (const unauthorizedPath of unauthorizedPaths) {
+        if (unauthorizedPath && req.params.path.startsWith(`${unauthorizedPath}/`)) {
+          allowed = true;
+          break;
+        }
+      }
+      if (!allowed) {
+        res.status(StatusCodes.UNAUTHORIZED).end();
+        return;
+      }
+    }
     const assetPrefix = process.env.ASSET_PATH_PREFIX || '';
     const keyPath = path.join(assetPrefix, req.params.path);
     if (process.env.AWS_S3_BUCKET) {
