@@ -46,6 +46,7 @@ const prompt = (question) => new Promise((resolve) => rl.question(question, reso
     pkg.version = nextVersion;
     fs.writeFileSync(file, JSON.stringify(pkg, null, 2));
     execSync('npm run pp:changed');
+    execSync('npm install');
     execSync('git add .');
     execSync(`git commit -m "${nextVersion}"`);
     execSync(`git tag "${nextVersion}"`);
