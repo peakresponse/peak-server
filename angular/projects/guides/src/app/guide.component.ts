@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   templateUrl: './guide.component.html',
@@ -11,6 +11,8 @@ export class GuideComponent implements OnInit {
   constructor(public route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['slug'];
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['slug'];
+    });
   }
 }
