@@ -38,16 +38,16 @@ describe('models', () => {
     });
 
     describe('sort', () => {
-      it('is set when number is set', () => {
+      it('is set when a digits-only number is set', () => {
         const incident = models.Incident.build();
         incident.number = '12345';
         assert.deepStrictEqual(incident.sort, 12345);
 
         incident.number = '12345-001';
-        assert.deepStrictEqual(incident.sort, 12345);
+        assert.deepStrictEqual(incident.sort, null);
 
         incident.number = 'abc12d345ad';
-        assert.deepStrictEqual(incident.sort, 12345);
+        assert.deepStrictEqual(incident.sort, null);
       });
     });
 

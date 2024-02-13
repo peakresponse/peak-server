@@ -38,6 +38,10 @@ router.post(
   '/',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
+    const { psapId } = req.agency;
+    const assignment = await req.user.getCurrentAssignment({
+      include: ['vehicle'],
+    });
     const incidentIds = [];
     const reportIds = [];
     const canonicalReportIds = [];
@@ -77,7 +81,7 @@ router.post(
                 },
                 defaults: {
                   ..._.pick(record, ['id', 'sceneId', 'number']),
-                  psapId: req.agency.psapId,
+                  psapId,
                   createdById: req.user.id,
                   updatedById: req.user.id,
                   createdByAgencyId: req.agency.id,
@@ -87,34 +91,37 @@ router.post(
               });
               if (isNewIncident) {
                 if (!incident.number) {
-                  if (incident.psapId) {
-                    // get the latest incident number, make unique
-                    const prevIncident = await models.Incident.findOne({
+                  if (psapId) {
+                    // generate a unique number from Unit/Vehicle no if any, fallback to NOUNIT
+                    const prefix = assignment?.vehicle?.number ?? 'NOUNIT';
+                    // count the number of prior incidents with this prefix
+                    const count = await models.Incident.count({
                       where: {
-                        psapId: incident.psapId,
+                        psapId,
+                        number: {
+                          [models.Sequelize.Op.iLike]: `${prefix}-%`,
+                        },
                       },
-                      order: [['number', 'DESC']],
                       transaction,
                     });
-                    if (prevIncident) {
-                      const { number } = prevIncident;
-                      const m = number.match(/^(\d+)-(\d+)$/);
-                      if (m) {
-                        const prevNumber = parseInt(m[2], 10);
-                        incident.number = `${m[1]}-${`${prevNumber + 1}`.padStart(3, '0')}`;
-                      } else {
-                        incident.number = `${number}-001`;
-                      }
-                    } else {
-                      incident.number = '1';
-                    }
+                    // increment number
+                    incident.number = `${prefix}-${count + 1}`;
+                    // set sort with current highest number
+                    incident.sort = await models.Incident.max('sort', { where: { psapId }, transaction });
                   } else {
-                    // get the latest incident number, increment
-                    const { docs } = await models.Incident.paginate('Agency', req.agency, { paginate: 1, transaction });
-                    if (docs.length === 1) {
-                      const [prevIncident] = docs;
-                      const prevNumber = parseInt(prevIncident.number, 10);
-                      incident.number = `${prevNumber + 1}`;
+                    // get the latest incident, increment sort
+                    const options = {
+                      order: [['sort', 'desc']],
+                      transaction,
+                    };
+                    if (psapId) {
+                      options.where = { psapId };
+                    } else {
+                      options.where = { createdByAgencyId: req.agency.id };
+                    }
+                    const prevIncident = await models.Incident.findOne(options);
+                    if (prevIncident) {
+                      incident.number = `${prevIncident.sort + 1}`;
                     } else {
                       incident.number = '1';
                     }
@@ -158,6 +165,18 @@ router.post(
                     }
                     const count = await models.Incident.count(options);
                     incident.number = `${number}-${`${count + 1}`.padStart(3, '0')}`;
+                  }
+                  if (!incident.sort) {
+                    options = {
+                      where: {},
+                      transaction,
+                    };
+                    if (incident.psapId) {
+                      options.where.psapId = incident.psapId;
+                    } else {
+                      options.where.createdByAgencyId = req.agency.id;
+                    }
+                    incident.sort = await models.Incident.max('sort', options);
                   }
                 }
                 await incident.save({ transaction });
