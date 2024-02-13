@@ -7,6 +7,13 @@ const { EsoClient } = require('../../../../lib/exports/eso');
 describe('lib', () => {
   describe('exports', () => {
     describe('eso', () => {
+      before(function anon() {
+        // ESO staging environment is IP restricted, so disable in CI
+        if (process.env.CI) {
+          this.skip();
+        }
+      });
+
       describe('EsoClient', () => {
         describe('.authenticate', () => {
           it('authenticates with the ESO Partner API to retrieve credentials', async () => {
