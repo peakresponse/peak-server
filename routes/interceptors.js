@@ -103,7 +103,7 @@ function getAgencySubdomain(req) {
 }
 
 async function loadAgency(req, res, next) {
-  /// load demographic, if on subdomain
+  // load demographic, if on subdomain
   const subdomain = getAgencySubdomain(req);
   if (subdomain) {
     req.agency = await models.Agency.findOne({
@@ -115,6 +115,7 @@ async function loadAgency(req, res, next) {
       } else {
         res.status(StatusCodes.NOT_FOUND).end();
       }
+      return;
     }
   }
   next();
