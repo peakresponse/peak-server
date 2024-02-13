@@ -1,5 +1,7 @@
 const assert = require('assert');
 
+require('../../../helpers');
+
 const { EsoClient } = require('../../../../lib/exports/eso');
 
 describe('lib', () => {
