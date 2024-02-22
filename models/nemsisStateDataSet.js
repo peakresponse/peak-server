@@ -5,6 +5,7 @@ const sequelizePaginate = require('sequelize-paginate');
 
 const nemsisStates = require('../lib/nemsis/states');
 const { NemsisStateDataSetParser } = require('../lib/nemsis/stateDataSetParser');
+const rollbar = require('../lib/rollbar');
 
 const { Base } = require('./base');
 
@@ -187,7 +188,11 @@ module.exports = (sequelize, DataTypes) => {
           }
           record.createdById = record.createdById || userId;
           record.updatedById = userId;
-          await record.save({ transaction });
+          try {
+            await record.save({ transaction });
+          } catch (err) {
+            rollbar.error(err);
+          }
         });
         return this.isCancelled;
       });
