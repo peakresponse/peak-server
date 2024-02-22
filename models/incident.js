@@ -103,7 +103,7 @@ module.exports = (sequelize, DataTypes) => {
         `SELECT incidents.*
          FROM incidents ${joins}
          ${conditions} ${searchConditions}
-         ORDER BY sort DESC, number DESC
+         ORDER BY sort DESC, created_at DESC
          LIMIT :limit OFFSET :offset`,
         {
           replacements: {
@@ -213,19 +213,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         set(newValue) {
           this.setDataValue('number', newValue);
-          let rawValue = newValue;
-          if (rawValue) {
-            const index = rawValue.indexOf('-');
-            if (index >= 0) {
-              rawValue = rawValue.substring(0, index);
+          if (newValue?.match(/^\d+$/)) {
+            const sort = parseInt(newValue, 10);
+            if (!Number.isNaN(sort)) {
+              this.setDataValue('sort', sort);
+              return;
             }
-            rawValue = rawValue.replace(/\D/g, '');
           }
-          if (rawValue?.length) {
-            this.setDataValue('sort', parseInt(rawValue, 10));
-          } else {
-            this.setDataValue('sort', 0);
-          }
+          this.setDataValue('sort', null);
         },
       },
       sort: DataTypes.INTEGER,
