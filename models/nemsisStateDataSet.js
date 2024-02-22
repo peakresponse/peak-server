@@ -132,7 +132,11 @@ module.exports = (sequelize, DataTypes) => {
           record.nemsisVersion = dataSetNemsisVersion;
           record.createdById = record.createdById || userId;
           record.updatedById = userId;
-          await record.save({ transaction });
+          try {
+            await record.save({ transaction });
+          } catch (err) {
+            rollbar.error(err, { agency });
+          }
         });
         return this.isCancelled;
       });
@@ -191,7 +195,7 @@ module.exports = (sequelize, DataTypes) => {
           try {
             await record.save({ transaction });
           } catch (err) {
-            rollbar.error(err);
+            rollbar.error(err, { facility });
           }
         });
         return this.isCancelled;
