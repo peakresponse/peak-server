@@ -132,6 +132,17 @@ describe('lib', () => {
               assert(fs.existsSync(xsdPath));
             });
           });
+
+          describe('.emsTranslationXsltPath()', () => {
+            it('returns an absolute path to the corresponding translation xslt file', () => {
+              const xsltPath = repo.emsTranslationXsltPath('3.5.0', '3.4.0');
+              assert.deepStrictEqual(
+                xsltPath,
+                path.resolve(repoPath, '3.5.0.211008CP3/Translation/v3.5.0 to v3.4.0/EMS-v350_to_v340.xslt'),
+              );
+              assert(fs.existsSync(xsltPath));
+            });
+          });
         });
       });
     });
