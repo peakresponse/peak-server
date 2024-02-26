@@ -26,17 +26,26 @@ module.exports = (sequelize, DataTypes) => {
 
     static async createOrUpdate(user, agency, data, options) {
       const { transaction } = options ?? {};
-      // there is always only one active Responder record (departedAt IS NULL) per User and Scene
-      // so we fetch the active record by compound User/Scene instead of id to handle same
-      // account signed into multiple clients
-      const [responder, created] = await Responder.findOrCreate({
-        where: {
-          sceneId: data.sceneId,
+      let where;
+      if (data.userId) {
+        // there is always only one active Responder record (departedAt IS NULL) per user
+        // so we fetch the active record by compound keys instead of id to handle same
+        // account signed into multiple clients
+        where = {
           userId: data.userId,
+          sceneId: data.sceneId,
           departedAt: null,
-        },
+        };
+      } else {
+        // for manually entered Responder records, fall back to unique id
+        where = {
+          id: data.id,
+        };
+      }
+      const [responder, created] = await Responder.findOrCreate({
+        where,
         defaults: {
-          ..._.pick(data, ['id', 'agencyId', 'vehicleId', 'arrivedAt', 'departedAt']),
+          ..._.pick(data, ['id', 'sceneId', 'agencyId', 'vehicleId', 'agencyName', 'unitNumber', 'capability', 'arrivedAt', 'departedAt']),
           createdById: user.id,
           createdByAgencyId: agency.id,
           updatedById: user.id,
@@ -47,11 +56,16 @@ module.exports = (sequelize, DataTypes) => {
       if (created) {
         return [responder, created];
       }
-      // arrivedAt/departedAt values are immutable- once set, they cannot be changed
-      const attrs = [];
+      const attrs = ['agencyName', 'unitNumber', 'capability'];
+      // allow Agency changes if not a User account Responder
+      if (!responder.userId) {
+        attrs.push('agencyId');
+      }
+      // arrivedAt is immutable- once set, it cannot be changed
       if (!responder.arrivedAt) {
         attrs.push('arrivedAt');
       }
+      // departedAt is immutable- once set, it cannot be changed
       if (!responder.departedAt) {
         attrs.push('departedAt');
       }
@@ -71,6 +85,7 @@ module.exports = (sequelize, DataTypes) => {
         'agency_name',
         'vehicleId',
         'unit_number',
+        'capability',
         'arrivedAt',
         'departedAt',
         'createdAt',
@@ -93,6 +108,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       agencyName: DataTypes.STRING,
       unitNumber: DataTypes.STRING,
+      capability: DataTypes.STRING,
       arrivedAt: DataTypes.DATE,
       departedAt: DataTypes.DATE,
     },
