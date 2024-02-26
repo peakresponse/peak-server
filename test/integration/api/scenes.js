@@ -219,6 +219,36 @@ describe('/api/scenes', () => {
       assert.deepStrictEqual(responder.capability, '2207017');
     });
 
+    it('returns HTTP 409 Conflict on submitting a duplicate non-User Responder to an existing Scene', async () => {
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'a80254a6-f373-40ac-bc07-17da6a61b2cb',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            agencyName: 'Unlisted Agency',
+            unitNumber: '46',
+            capability: '2207017',
+          },
+        })
+        .expect(StatusCodes.OK);
+
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'f896b206-3035-4dcd-8fe9-fdc226b8d0ef',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            agencyName: 'Unlisted Agency',
+            unitNumber: '46',
+            capability: '2207015',
+          },
+        })
+        .expect(StatusCodes.CONFLICT);
+    });
+
     it('marks a Responder as having left a Scene', async () => {
       await testSession
         .post('/api/scenes')

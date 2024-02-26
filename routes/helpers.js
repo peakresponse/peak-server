@@ -5,11 +5,21 @@ const _ = require('lodash');
 function async(handler) {
   return (req, res, next) => {
     Promise.resolve(handler(req, res, next)).catch((err) => {
-      // console.error(err);
+      // console.error(err.name, err);
       if (err.name === 'SchemaValidationError' || err.name === 'SequelizeValidationError') {
         res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
           status: StatusCodes.UNPROCESSABLE_ENTITY,
           messages: err.errors.map((e) => _.pick(e, ['path', 'message', 'value'])),
+        });
+      } else if (err.name === 'SequelizeUniqueConstraintError') {
+        res.status(StatusCodes.CONFLICT).json({
+          status: StatusCodes.CONFLICT,
+          messages: err.errors.map((e) => {
+            const message = _.pick(e, ['path', 'message', 'value']);
+            message.id = e.instance?.id;
+            message.model = e.instance?.constructor.name;
+            return message;
+          }),
         });
       } else {
         next(err);
