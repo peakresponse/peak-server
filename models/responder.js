@@ -68,7 +68,9 @@ module.exports = (sequelize, DataTypes) => {
         'sceneId',
         'userId',
         'agencyId',
+        'agency_name',
         'vehicleId',
+        'unit_number',
         'arrivedAt',
         'departedAt',
         'createdAt',
@@ -89,14 +91,10 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      arrivedAt: {
-        type: DataTypes.DATE,
-        field: 'arrived_at',
-      },
-      departedAt: {
-        type: DataTypes.DATE,
-        field: 'departed_at',
-      },
+      agencyName: DataTypes.STRING,
+      unitNumber: DataTypes.STRING,
+      arrivedAt: DataTypes.DATE,
+      departedAt: DataTypes.DATE,
     },
     {
       sequelize,
