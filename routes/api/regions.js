@@ -30,7 +30,8 @@ router.get(
   helpers.async(async (req, res) => {
     const { id } = req.params;
     const record = await models.Region.findByPk(id, {
-      include: ['agencies'],
+      include: [{ model: models.RegionAgency, as: 'regionAgencies', include: 'agency' }],
+      order: [['regionAgencies', 'position', 'ASC']],
     });
     if (record) {
       res.json(record.toJSON());
@@ -63,6 +64,34 @@ router.patch(
         record.set(_.pick(req.body, ['name']));
         record.updatedById = req.user.id;
         await record.save({ transaction });
+        if (req.body.regionAgencies) {
+          const regionAgencies = await Promise.all(
+            req.body.regionAgencies.map(async (ra, index) => {
+              const [regionAgency, isCreated] = await models.RegionAgency.findOrCreate({
+                where: {
+                  regionId: record.id,
+                  agencyId: ra.agency.claimedAgency?.id ?? ra.agency.id,
+                },
+                defaults: {
+                  position: index + 1,
+                  createdById: req.user.id,
+                  updatedById: req.user.id,
+                },
+                transaction,
+              });
+              if (!isCreated) {
+                await regionAgency.update({ position: index + 1, updatedById: req.user.id });
+              }
+              return regionAgency;
+            }),
+          );
+          await record.setRegionAgencies(regionAgencies, { transaction });
+        }
+        record.regionAgencies = await models.RegionAgency.scope('ordered').findAll({
+          include: 'agency',
+          where: { regionId: record.id },
+          transaction,
+        });
       }
     });
     if (record) {

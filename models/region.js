@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { Model } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 
@@ -6,7 +7,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Region.belongsTo(models.User, { as: 'createdBy' });
       Region.belongsTo(models.User, { as: 'updatedBy' });
-      Region.belongsToMany(models.Agency, { as: 'agencies', through: models.RegionAgency.scope('ordered') });
+      Region.hasMany(models.RegionAgency, { as: 'regionAgencies' });
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      const data = _.pick(attributes, ['id', 'name', 'createdById', 'updatedById', 'createdAt', 'updatedAt']);
+      if (this.regionAgencies) {
+        data.regionAgencies = this.regionAgencies.map((ra) => ra.toJSON());
+      }
+      return data;
     }
   }
 
