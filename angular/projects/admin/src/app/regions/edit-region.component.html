@@ -1,0 +1,31 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Edit Region</h1>
+  </div>
+  <shared-form
+    *ngIf="id"
+    type="regions"
+    [id]="id"
+    [hideButtons]="!isEditing"
+    [showCancel]="true"
+    (cancel)="isEditing = false"
+    (update)="isEditing = false"
+    (delete)="onDelete()"
+    class="d-block col-xl-6">
+    <ng-template let-record="record" let-error="error">
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>Name</label>
+          <h3>{{ record.name }}</h3>
+        </div>
+        <div class="mb-3">
+          <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEditing">
+        <admin-regions-form [record]="record" [error]="error"></admin-regions-form>
+      </ng-container>
+    </ng-template>
+  </shared-form>
+</div>
