@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       Agency.hasOne(models.Agency, { as: 'draft', foreignKey: 'draftParentId' });
       Agency.belongsTo(models.Agency, { as: 'createdByAgency' });
       Agency.belongsTo(models.NemsisStateDataSet, { as: 'stateDataSet' });
+      Agency.belongsTo(models.Region, { as: 'region' });
       Agency.belongsTo(models.State, { as: 'state' });
       Agency.belongsTo(models.User, { as: 'updatedBy' });
       Agency.belongsTo(models.User, { as: 'createdBy' });

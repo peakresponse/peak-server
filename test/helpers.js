@@ -115,6 +115,8 @@ async function resetDatabase() {
     DELETE FROM agencies;
     DELETE FROM tokens;
     DELETE FROM clients;
+    DELETE FROM region_agencies;
+    DELETE FROM regions;
     DELETE FROM users;
     DELETE FROM states;
     DELETE FROM counties;

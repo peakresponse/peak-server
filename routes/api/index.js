@@ -25,6 +25,7 @@ router.use('/nemsis/schematrons', require('./nemsisSchematrons'));
 router.use('/nemsis/state-data-sets', require('./nemsisStateDataSets'));
 router.use('/nemsis', require('./nemsis'));
 router.use('/psaps', require('./psaps'));
+router.use('/regions', require('./regions'));
 router.use('/reports', require('./reports'));
 router.use('/scenes', require('./scenes'));
 router.use('/states', require('./states'));
