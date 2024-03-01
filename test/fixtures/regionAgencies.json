@@ -1,0 +1,36 @@
+[
+  {
+    "model": "RegionAgency",
+    "data": {
+      "id": "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8",
+      "regionId": "c781fe1e-a337-4cc3-9351-5aed61fa3c0d",
+      "agencyId": "9466185d-6ad7-429a-9081-4426d2398f9f",
+      "position": "1",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
+    }
+  },
+  {
+    "model": "RegionAgency",
+    "data": {
+      "id": "6395d1ce-c668-4bf0-beb7-80c55b3892a2",
+      "regionId": "c781fe1e-a337-4cc3-9351-5aed61fa3c0d",
+      "agencyId": "83aa05df-35d2-4902-b479-221ea2d2ae1e",
+      "agencyName": "Bayshore",
+      "position": "3",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
+    }
+  },
+  {
+    "model": "RegionAgency",
+    "data": {
+      "id": "2e64a095-7319-4b10-bdd2-642c1795c955",
+      "regionId": "c781fe1e-a337-4cc3-9351-5aed61fa3c0d",
+      "agencyId": "e705f64b-1399-436e-a428-18c8378b3444",
+      "position": "2",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
+    }
+  }
+]
