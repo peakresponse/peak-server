@@ -326,6 +326,7 @@ module.exports = (sequelize, DataTypes) => {
         'nemsisVersion',
         'stateDataSetId',
         'stateId',
+        'regionId',
         'isClaimed',
         'subdomain',
         'baseUrl',

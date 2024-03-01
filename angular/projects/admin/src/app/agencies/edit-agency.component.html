@@ -58,6 +58,16 @@
           [error]="error"
           objectApiPath="psaps"></shared-object-field>
       </div>
+      <div class="mb-3">
+        <shared-object-field
+          id="regionId"
+          label="Region"
+          [source]="record"
+          [target]="record"
+          [error]="error"
+          objectNameProperty="name"
+          objectApiPath="regions"></shared-object-field>
+      </div>
       <div *ngIf="record.isClaimed" class="mb-3">
         <shared-text-field id="subdomain" label="Subdomain" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
