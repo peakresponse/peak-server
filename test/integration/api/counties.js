@@ -18,6 +18,7 @@ describe('/api/counties', () => {
       'users',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'employments',

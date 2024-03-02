@@ -19,6 +19,7 @@ describe('/api/assignments', () => {
       'dispatchers',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'employments',

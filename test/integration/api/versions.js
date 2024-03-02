@@ -19,6 +19,7 @@ describe('/api/versions', () => {
       'dispatchers',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'employments',

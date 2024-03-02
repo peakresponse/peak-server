@@ -92,6 +92,38 @@ router.get(
 );
 
 router.get(
+  '/region',
+  interceptors.requireAgency(),
+  helpers.async(async (req, res) => {
+    const { regionId } = req.agency;
+    if (regionId) {
+      const regionAgencies = await models.RegionAgency.findAll({
+        where: { regionId },
+        include: { model: models.Agency, as: 'agency' },
+        order: [['position', 'ASC']],
+      });
+      const agencies = await Promise.all(
+        regionAgencies.map(async (ra) => {
+          const agency = _.pick(ra.agency, ['id', 'stateUniqueId', 'number', 'name']);
+          const claimedAgency = await models.Agency.scope('claimed').findOne({ where: { canonicalAgencyId: agency.id } });
+          if (claimedAgency) {
+            agency.id = claimedAgency.id;
+            agency.name = claimedAgency.name;
+          }
+          if (ra.agencyName) {
+            agency.name = ra.agencyName;
+          }
+          return agency;
+        }),
+      );
+      res.json(agencies);
+    } else {
+      res.json([]);
+    }
+  }),
+);
+
+router.get(
   '/validate',
   helpers.async(async (req, res) => {
     if (req.query.subdomain) {
@@ -146,7 +178,7 @@ router.patch(
       if (agency) {
         const attributes = ['nemsisVersion', 'stateDataSetId', 'stateId', 'stateUniqueId', 'number', 'name'];
         if (agency.isClaimed) {
-          attributes.push('psapId', 'subdomain', 'routedUrl');
+          attributes.push('psapId', 'subdomain', 'routedUrl', 'regionId');
         }
         await agency.update(_.pick(req.body, attributes), { transaction });
       }

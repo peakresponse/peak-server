@@ -18,6 +18,7 @@ describe('/oauth', () => {
       'psaps',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'employments',

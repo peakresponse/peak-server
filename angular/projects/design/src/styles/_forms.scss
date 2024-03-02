@@ -357,13 +357,13 @@ select:disabled {
   }
 }
 
-label + .form-field__item,
-.feedback + .form-field__item {
+label + .form-field__items,
+.feedback + .form-field__items {
   border-top: 2px solid $brand-primary-300;
   margin-top: 0.375rem;
 }
 
-.form-field__item + .form-field__content {
+.form-field__items + .form-field__content {
   border-top: 2px solid $brand-primary-300;
 }
 

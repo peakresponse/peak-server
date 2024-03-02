@@ -19,7 +19,9 @@ describe('/api/agencies', () => {
       'users',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
+      'regionAgencies',
       'versions',
       'employments',
     ]);
@@ -134,6 +136,25 @@ describe('/api/agencies', () => {
 
     it('returns not found when called on the naked domain', async () => {
       await testSession.get('/api/agencies/me').expect(StatusCodes.NOT_FOUND);
+    });
+  });
+
+  describe('GET /region', () => {
+    beforeEach(async () => {
+      await testSession
+        .post('/login')
+        .set('Host', `sffd.${process.env.BASE_HOST}`)
+        .send({ email: 'sffd.user@peakresponse.net', password: 'abcd1234' })
+        .expect(StatusCodes.OK);
+    });
+
+    it('returns the agencies for the region', async () => {
+      const response = await testSession.get('/api/agencies/region').set('Host', `sffd.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body.length, 3);
+      assert.deepStrictEqual(response.body[0].id, '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+      assert.deepStrictEqual(response.body[0].name, 'San Francisco Fire Department');
+      assert.deepStrictEqual(response.body[1].name, 'Bay Medic Ambulance - Alameda');
+      assert.deepStrictEqual(response.body[2].name, 'Bayshore');
     });
   });
 

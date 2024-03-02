@@ -1,0 +1,35 @@
+[
+  {
+    "model": "Region",
+    "data": {
+      "id": "c781fe1e-a337-4cc3-9351-5aed61fa3c0d",
+      "name": "San Francisco County EMS Agency",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "Region",
+    "data": {
+      "id": "15a02134-9ff4-4536-b57d-c9309f6b7947",
+      "name": "Contra Costa EMS Agency",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  },
+  {
+    "model": "Region",
+    "data": {
+      "id": "3c438edf-c509-4f13-b2c7-12910eda2b6c",
+      "name": "Central California EMS Agency",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-10-06T01:44:44.012Z",
+      "updatedAt": "2020-10-06T01:44:44.012Z"
+    }
+  }
+]
