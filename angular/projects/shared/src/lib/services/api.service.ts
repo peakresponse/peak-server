@@ -582,6 +582,24 @@ export class ApiService {
     },
   };
 
+  regions = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/regions', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/regions`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/regions/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/regions/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/regions/${id}`);
+    },
+  };
+
   responders = {
     index: (sceneId: string, params?: HttpParams): Observable<any> => {
       params = params || new HttpParams();

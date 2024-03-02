@@ -31,6 +31,7 @@ describe('/soap/nemsis', () => {
       'psaps',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'contacts',

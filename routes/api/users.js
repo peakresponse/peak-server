@@ -7,6 +7,7 @@ const sts = require('../../lib/aws/sts');
 const models = require('../../models');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
+const rollbar = require('../../lib/rollbar');
 
 const router = express.Router();
 
@@ -57,7 +58,11 @@ router.get(
       // add additional privilege info
       data.User.isAdmin = req.user.isAdmin;
       // temporary AWS credentials for use with Transcribe service
-      data.User.awsCredentials = await sts.getTemporaryCredentialsForMobileApp();
+      try {
+        data.User.awsCredentials = await sts.getTemporaryCredentialsForMobileApp();
+      } catch (error) {
+        rollbar.error(error, req);
+      }
       // add any active scenes the user may be a part of
       const scenes = await req.user.getActiveScenes({ include: ['city', 'incident', 'state'] });
       data.Scene = scenes.map((s) => s.toJSON());

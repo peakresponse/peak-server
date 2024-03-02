@@ -18,6 +18,7 @@ describe('/api/scenes', () => {
       'users',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'facilities',
@@ -169,6 +170,84 @@ describe('/api/scenes', () => {
 
       await responder.reload();
       assert.deepStrictEqual(JSON.stringify(responder?.arrivedAt), '"2020-04-06T21:22:10.102Z"');
+    });
+
+    it('adds a new Responder without a User account as enroute to an existing Scene', async () => {
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'a80254a6-f373-40ac-bc07-17da6a61b2cb',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            agencyId: '81b433cd-5f48-4458-87f3-0bf4e1591830',
+            unitNumber: '64',
+            capability: '2207015',
+          },
+        })
+        .expect(StatusCodes.OK);
+
+      const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
+      assert.deepStrictEqual(scene.respondersCount, 3);
+
+      const responder = await models.Responder.findByPk('a80254a6-f373-40ac-bc07-17da6a61b2cb');
+      assert.deepStrictEqual(responder.agencyId, '81b433cd-5f48-4458-87f3-0bf4e1591830');
+      assert.deepStrictEqual(responder.unitNumber, '64');
+      assert.deepStrictEqual(responder.capability, '2207015');
+    });
+
+    it('adds a new Responder without a User account or Agency as enroute to an existing Scene', async () => {
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'a80254a6-f373-40ac-bc07-17da6a61b2cb',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            agencyName: 'Unlisted Agency',
+            unitNumber: '46',
+            capability: '2207017',
+          },
+        })
+        .expect(StatusCodes.OK);
+
+      const scene = await models.Scene.findByPk('25db9094-03a5-4267-8314-bead229eff9d');
+      assert.deepStrictEqual(scene.respondersCount, 3);
+
+      const responder = await models.Responder.findByPk('a80254a6-f373-40ac-bc07-17da6a61b2cb');
+      assert.deepStrictEqual(responder.agencyName, 'Unlisted Agency');
+      assert.deepStrictEqual(responder.unitNumber, '46');
+      assert.deepStrictEqual(responder.capability, '2207017');
+    });
+
+    it('returns HTTP 409 Conflict on submitting a duplicate non-User Responder to an existing Scene', async () => {
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'a80254a6-f373-40ac-bc07-17da6a61b2cb',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            agencyName: 'Unlisted Agency',
+            unitNumber: '46',
+            capability: '2207017',
+          },
+        })
+        .expect(StatusCodes.OK);
+
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'f896b206-3035-4dcd-8fe9-fdc226b8d0ef',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            agencyName: 'Unlisted Agency',
+            unitNumber: '46',
+            capability: '2207015',
+          },
+        })
+        .expect(StatusCodes.CONFLICT);
     });
 
     it('marks a Responder as having left a Scene', async () => {

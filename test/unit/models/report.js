@@ -17,6 +17,7 @@ describe('models', () => {
         'users',
         'nemsisStateDataSets',
         'nemsisSchematrons',
+        'regions',
         'agencies',
         'versions',
         'facilities',

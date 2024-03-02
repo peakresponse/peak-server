@@ -17,6 +17,7 @@ import { GuidesModule } from './guides/guides.module';
 import { ListsModule } from './lists/lists.module';
 import { NemsisModule } from './nemsis/nemsis.module';
 import { PsapsModule } from './psaps/psaps.module';
+import { RegionsModule } from './regions/regions.module';
 import { StatesModule } from './states/states.module';
 import { UsersModule } from './users/users.module';
 
@@ -36,6 +37,7 @@ import { UsersModule } from './users/users.module';
     ListsModule,
     NemsisModule,
     PsapsModule,
+    RegionsModule,
     StatesModule,
     UsersModule,
   ],

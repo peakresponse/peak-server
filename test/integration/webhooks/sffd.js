@@ -24,6 +24,7 @@ describe('/webhooks/sffd', () => {
       'dispatchers',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'employments',

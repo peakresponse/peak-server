@@ -1,0 +1,21 @@
+<div class="mb-3">
+  <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-array-field id="regionAgencies" label="Agencies" [source]="record" [target]="record" [error]="error">
+    <ng-template #item let-regionAgency="item"> {{ regionAgency.agency?.name }} ({{ regionAgency.agency?.stateUniqueId }}) </ng-template>
+    <ng-template #form let-addItem="addItem">
+      <ng-template #rt let-r="result" let-t="term">{{ r.name }} ({{ r.stateUniqueId }})</ng-template>
+      <shared-search-field
+        #agencySearch
+        id="agency"
+        placeholder="Start typing a name..."
+        [searchHandler]="searchHandler"
+        [inputFormatter]="formatter"
+        [resultTemplate]="rt"
+        [target]="{ agency: null }"
+        (valueChange)="$event?.id && addItem({ agency: $event }); $event?.id && agencySearch.onClear()"
+        [error]="error"></shared-search-field>
+    </ng-template>
+  </shared-array-field>
+</div>

@@ -212,155 +212,8 @@ describe('models', () => {
       });
     });
 
-    describe('.sendPasswordResetEmail()', () => {
-      it('generates a password reset token, expiration date, and sends the email', async () => {
-        await helpers.loadFixtures(['users']);
-        const user = await models.User.findOne({
-          where: { email: 'regular@peakresponse.net' },
-        });
-        assert(user);
-        assert(user.passwordResetToken == null);
-        assert(user.passwordResetTokenExpiresAt == null);
-        await user.sendPasswordResetEmail();
-        await user.reload();
-        assert(user.passwordResetToken);
-        assert(user.passwordResetTokenExpiresAt);
-        const emails = nodemailerMock.mock.getSentMail();
-        assert.deepStrictEqual(emails.length, 1);
-        assert.deepStrictEqual(emails[0].subject, 'Reset your Password');
-        assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
-        /// if no agency specified, url is on the base
-        const resetUrl = `${process.env.BASE_URL}/auth/reset-password/${user.passwordResetToken}`;
-        assert(emails[0].text.includes(resetUrl));
-        assert(emails[0].html.includes(resetUrl));
-      });
-
-      it('generates a password reset on the specified agency domain', async () => {
-        await helpers.loadFixtures([
-          'states',
-          'counties',
-          'cities',
-          'psaps',
-          'users',
-          'nemsisStateDataSets',
-          'nemsisSchematrons',
-          'agencies',
-          'versions',
-          'employments',
-        ]);
-        const agency = await models.Agency.findOne({
-          where: { subdomain: 'bmacc' },
-        });
-        const user = await models.User.findOne({
-          where: { email: 'regular@peakresponse.net' },
-        });
-        await user.sendPasswordResetEmail(agency);
-        await user.reload();
-        assert(user.passwordResetToken);
-        assert(user.passwordResetTokenExpiresAt);
-        const emails = nodemailerMock.mock.getSentMail();
-        assert.deepStrictEqual(emails.length, 1);
-        assert.deepStrictEqual(emails[0].subject, 'Reset your Password');
-        assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
-        /// the reset link url should be on the agency subdomain
-        const resetUrl = `${agency.baseUrl}/auth/reset-password/${user.passwordResetToken}`;
-        assert(emails[0].text.includes(resetUrl));
-        assert(emails[0].html.includes(resetUrl));
-      });
-
-      it('should raise an exception if the user is not an employee of the specified agency', async () => {
-        await helpers.loadFixtures([
-          'states',
-          'counties',
-          'cities',
-          'psaps',
-          'users',
-          'nemsisStateDataSets',
-          'nemsisSchematrons',
-          'agencies',
-          'versions',
-          'employments',
-        ]);
-        const agency = await models.Agency.findOne({
-          where: { subdomain: 'bayshoreambulance' },
-        });
-        const user = await models.User.findOne({
-          where: { email: 'regular@peakresponse.net' },
-        });
-        await assert.rejects(user.sendPasswordResetEmail(agency));
-      });
-    });
-
-    describe('.sendWelcomeEmail()', () => {
-      it('sends a welcome email for the user in the specified agency', async () => {
-        await helpers.loadFixtures([
-          'states',
-          'counties',
-          'cities',
-          'psaps',
-          'users',
-          'nemsisStateDataSets',
-          'nemsisSchematrons',
-          'agencies',
-          'versions',
-          'employments',
-        ]);
-        const user = await models.User.findOne({
-          where: { email: 'regular@peakresponse.net' },
-        });
-        const agency = await models.Agency.findOne({
-          where: { subdomain: 'bmacc' },
-        });
-        assert(user);
-        assert(agency);
-        await user.sendWelcomeEmail(agency);
-        const emails = nodemailerMock.mock.getSentMail();
-        assert.deepStrictEqual(emails.length, 1);
-        assert.deepStrictEqual(emails[0].subject, 'Welcome to Peak Response');
-        assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
-        assert(emails[0].text.includes('Bay Medic Ambulance - Contra Costa'));
-        assert(emails[0].html.includes('Bay Medic Ambulance - Contra Costa'));
-      });
-
-      it('sends a pending approval email when employment pending', async () => {
-        await helpers.loadFixtures([
-          'states',
-          'counties',
-          'cities',
-          'psaps',
-          'users',
-          'nemsisStateDataSets',
-          'nemsisSchematrons',
-          'agencies',
-          'versions',
-          'employments',
-        ]);
-        const user = await models.User.findOne({
-          where: { email: 'pending@peakresponse.net' },
-        });
-        const agency = await models.Agency.findOne({
-          where: { subdomain: 'bmacc' },
-        });
-        assert(user);
-        assert(agency);
-        await user.sendWelcomeEmail(agency);
-        const emails = nodemailerMock.mock.getSentMail();
-        assert.deepStrictEqual(emails.length, 3);
-        assert.deepStrictEqual(emails[0].subject, 'Pending Request to Join');
-        assert.deepStrictEqual(emails[0].to, 'Pending User <pending@peakresponse.net>');
-        assert(emails[0].text.includes('Bay Medic Ambulance - Contra Costa'));
-        assert(emails[0].html.includes('Bay Medic Ambulance - Contra Costa'));
-
-        for (let i = 1; i <= 2; i += 1) {
-          assert.deepStrictEqual(emails[i].subject, 'Pending User is requesting to join Bay Medic Ambulance - Contra Costa');
-          assert(emails[i].text.includes(`${agency.baseUrl}/users`));
-          assert(emails[i].html.includes(`${agency.baseUrl}/users`));
-        }
-      });
-    });
-
-    describe('.getActiveScenes', () => {
-      it('returns all active Scenes the user is a Responder to', async () => {
+    context('with fixtures', () => {
+      beforeEach(async () => {
         await helpers.loadFixtures([
           'users',
           'cities',
@@ -369,6 +222,7 @@ describe('models', () => {
           'psaps',
           'nemsisStateDataSets',
           'nemsisSchematrons',
+          'regions',
           'agencies',
           'versions',
           'vehicles',
@@ -378,12 +232,116 @@ describe('models', () => {
           'scenes',
           'responders',
         ]);
-        const user = await models.User.findOne({
-          where: { email: 'regular@peakresponse.net' },
+      });
+
+      describe('.sendPasswordResetEmail()', () => {
+        it('generates a password reset token, expiration date, and sends the email', async () => {
+          await helpers.loadFixtures(['users']);
+          const user = await models.User.findOne({
+            where: { email: 'regular@peakresponse.net' },
+          });
+          assert(user);
+          assert(user.passwordResetToken == null);
+          assert(user.passwordResetTokenExpiresAt == null);
+          await user.sendPasswordResetEmail();
+          await user.reload();
+          assert(user.passwordResetToken);
+          assert(user.passwordResetTokenExpiresAt);
+          const emails = nodemailerMock.mock.getSentMail();
+          assert.deepStrictEqual(emails.length, 1);
+          assert.deepStrictEqual(emails[0].subject, 'Reset your Password');
+          assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
+          /// if no agency specified, url is on the base
+          const resetUrl = `${process.env.BASE_URL}/auth/reset-password/${user.passwordResetToken}`;
+          assert(emails[0].text.includes(resetUrl));
+          assert(emails[0].html.includes(resetUrl));
         });
-        const scenes = await user.getActiveScenes();
-        assert.deepStrictEqual(scenes.length, 1);
-        assert.deepStrictEqual(scenes[0].id, '25db9094-03a5-4267-8314-bead229eff9d');
+
+        it('generates a password reset on the specified agency domain', async () => {
+          const agency = await models.Agency.findOne({
+            where: { subdomain: 'bmacc' },
+          });
+          const user = await models.User.findOne({
+            where: { email: 'regular@peakresponse.net' },
+          });
+          await user.sendPasswordResetEmail(agency);
+          await user.reload();
+          assert(user.passwordResetToken);
+          assert(user.passwordResetTokenExpiresAt);
+          const emails = nodemailerMock.mock.getSentMail();
+          assert.deepStrictEqual(emails.length, 1);
+          assert.deepStrictEqual(emails[0].subject, 'Reset your Password');
+          assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
+          /// the reset link url should be on the agency subdomain
+          const resetUrl = `${agency.baseUrl}/auth/reset-password/${user.passwordResetToken}`;
+          assert(emails[0].text.includes(resetUrl));
+          assert(emails[0].html.includes(resetUrl));
+        });
+
+        it('should raise an exception if the user is not an employee of the specified agency', async () => {
+          const agency = await models.Agency.findOne({
+            where: { subdomain: 'bayshoreambulance' },
+          });
+          const user = await models.User.findOne({
+            where: { email: 'regular@peakresponse.net' },
+          });
+          await assert.rejects(user.sendPasswordResetEmail(agency));
+        });
+      });
+
+      describe('.sendWelcomeEmail()', () => {
+        it('sends a welcome email for the user in the specified agency', async () => {
+          const user = await models.User.findOne({
+            where: { email: 'regular@peakresponse.net' },
+          });
+          const agency = await models.Agency.findOne({
+            where: { subdomain: 'bmacc' },
+          });
+          assert(user);
+          assert(agency);
+          await user.sendWelcomeEmail(agency);
+          const emails = nodemailerMock.mock.getSentMail();
+          assert.deepStrictEqual(emails.length, 1);
+          assert.deepStrictEqual(emails[0].subject, 'Welcome to Peak Response');
+          assert.deepStrictEqual(emails[0].to, 'Regular User <regular@peakresponse.net>');
+          assert(emails[0].text.includes('Bay Medic Ambulance - Contra Costa'));
+          assert(emails[0].html.includes('Bay Medic Ambulance - Contra Costa'));
+        });
+
+        it('sends a pending approval email when employment pending', async () => {
+          const user = await models.User.findOne({
+            where: { email: 'pending@peakresponse.net' },
+          });
+          const agency = await models.Agency.findOne({
+            where: { subdomain: 'bmacc' },
+          });
+          assert(user);
+          assert(agency);
+          await user.sendWelcomeEmail(agency);
+          const emails = nodemailerMock.mock.getSentMail();
+          assert.deepStrictEqual(emails.length, 3);
+          assert.deepStrictEqual(emails[0].subject, 'Pending Request to Join');
+          assert.deepStrictEqual(emails[0].to, 'Pending User <pending@peakresponse.net>');
+          assert(emails[0].text.includes('Bay Medic Ambulance - Contra Costa'));
+          assert(emails[0].html.includes('Bay Medic Ambulance - Contra Costa'));
+
+          for (let i = 1; i <= 2; i += 1) {
+            assert.deepStrictEqual(emails[i].subject, 'Pending User is requesting to join Bay Medic Ambulance - Contra Costa');
+            assert(emails[i].text.includes(`${agency.baseUrl}/users`));
+            assert(emails[i].html.includes(`${agency.baseUrl}/users`));
+          }
+        });
+      });
+
+      describe('.getActiveScenes', () => {
+        it('returns all active Scenes the user is a Responder to', async () => {
+          const user = await models.User.findOne({
+            where: { email: 'regular@peakresponse.net' },
+          });
+          const scenes = await user.getActiveScenes();
+          assert.deepStrictEqual(scenes.length, 1);
+          assert.deepStrictEqual(scenes[0].id, '25db9094-03a5-4267-8314-bead229eff9d');
+        });
       });
     });
   });

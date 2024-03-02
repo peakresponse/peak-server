@@ -1,0 +1,75 @@
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('region_agencies', {
+      id: {
+        allowNull: false,
+        defaultValue: Sequelize.literal('gen_random_uuid()'),
+        primaryKey: true,
+        type: Sequelize.UUID,
+      },
+      region_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'regions',
+          },
+          key: 'id',
+        },
+      },
+      agency_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'agencies',
+          },
+          key: 'id',
+        },
+      },
+      agency_name: {
+        type: Sequelize.STRING,
+      },
+      position: {
+        type: Sequelize.INTEGER,
+      },
+      created_by_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'users',
+          },
+          key: 'id',
+        },
+      },
+      updated_by_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'users',
+          },
+          key: 'id',
+        },
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+    });
+    await queryInterface.addIndex('region_agencies', {
+      fields: ['region_id', 'agency_id'],
+      unique: true,
+    });
+  },
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('region_agencies');
+  },
+};

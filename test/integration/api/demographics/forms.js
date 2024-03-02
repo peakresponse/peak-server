@@ -18,6 +18,7 @@ describe('/api/demographics/forms', () => {
       'psaps',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'employments',
