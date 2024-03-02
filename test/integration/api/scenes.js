@@ -18,6 +18,7 @@ describe('/api/scenes', () => {
       'users',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'facilities',

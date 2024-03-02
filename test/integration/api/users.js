@@ -17,6 +17,7 @@ describe('/api/users', () => {
       'users',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'vehicles',

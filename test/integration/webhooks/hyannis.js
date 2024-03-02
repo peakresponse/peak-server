@@ -21,6 +21,7 @@ describe('/webhooks/hyannis', () => {
       'dispatchers',
       'nemsisStateDataSets',
       'nemsisSchematrons',
+      'regions',
       'agencies',
       'versions',
       'employments',
