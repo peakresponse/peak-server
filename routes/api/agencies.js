@@ -98,31 +98,12 @@ router.get(
     const { regionId } = req.agency;
     if (regionId) {
       const region = await models.Region.findByPk(regionId);
-      const regionAgencies = await models.RegionAgency.findAll({
-        where: { regionId },
-        include: { model: models.Agency, as: 'agency' },
-        order: [['position', 'ASC']],
-      });
-      const payload = {};
-      payload.Region = region.toJSON();
-      payload.Agency = [];
-      payload.RegionAgency = [];
-      await Promise.all(
-        regionAgencies.map(async (ra) => {
-          const regionAgency = ra.toJSON();
-          delete regionAgency.agency;
-          const agency = _.pick(ra.agency, ['id', 'stateUniqueId', 'number', 'name']);
-          const claimedAgency = await models.Agency.scope('claimed').findOne({ where: { canonicalAgencyId: agency.id } });
-          if (claimedAgency) {
-            agency.id = claimedAgency.id;
-            agency.name = claimedAgency.name;
-            regionAgency.agencyId = agency.id;
-          }
-          payload.Agency.push(agency);
-          payload.RegionAgency.push(regionAgency);
-        }),
-      );
-      res.json(payload);
+      if (region) {
+        const payload = await region.createPayload();
+        res.json(payload);
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+      }
     } else {
       res.json({});
     }
