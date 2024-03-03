@@ -97,28 +97,34 @@ router.get(
   helpers.async(async (req, res) => {
     const { regionId } = req.agency;
     if (regionId) {
+      const region = await models.Region.findByPk(regionId);
       const regionAgencies = await models.RegionAgency.findAll({
         where: { regionId },
         include: { model: models.Agency, as: 'agency' },
         order: [['position', 'ASC']],
       });
-      const agencies = await Promise.all(
+      const payload = {};
+      payload.Region = region.toJSON();
+      payload.Agency = [];
+      payload.RegionAgency = [];
+      await Promise.all(
         regionAgencies.map(async (ra) => {
+          const regionAgency = ra.toJSON();
+          delete regionAgency.agency;
           const agency = _.pick(ra.agency, ['id', 'stateUniqueId', 'number', 'name']);
           const claimedAgency = await models.Agency.scope('claimed').findOne({ where: { canonicalAgencyId: agency.id } });
           if (claimedAgency) {
             agency.id = claimedAgency.id;
             agency.name = claimedAgency.name;
+            regionAgency.agencyId = agency.id;
           }
-          if (ra.agencyName) {
-            agency.name = ra.agencyName;
-          }
-          return agency;
+          payload.Agency.push(agency);
+          payload.RegionAgency.push(regionAgency);
         }),
       );
-      res.json(agencies);
+      res.json(payload);
     } else {
-      res.json([]);
+      res.json({});
     }
   }),
 );
