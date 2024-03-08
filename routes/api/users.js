@@ -51,86 +51,63 @@ router.get(
   '/me',
   interceptors.requireLogin,
   helpers.async(async (req, res) => {
-    if (req.apiLevel > 1) {
-      const data = {
-        User: req.user.toJSON(),
-      };
-      // add additional privilege info
-      data.User.isAdmin = req.user.isAdmin;
-      // temporary AWS credentials for use with Transcribe service
-      try {
-        data.User.awsCredentials = await sts.getTemporaryCredentialsForMobileApp();
-      } catch (error) {
-        rollbar.error(error, req);
-      }
-      // add any active scenes the user may be a part of
-      const scenes = await req.user.getActiveScenes({ include: ['city', 'incident', 'state'] });
-      data.Scene = scenes.map((s) => s.toJSON());
-      data.Incident = scenes.map((s) => s.incident.toJSON());
-      data.City = scenes.map((s) => s.city?.toJSON()).filter(Boolean);
-      data.State = scenes.map((s) => s.state?.toJSON()).filter(Boolean);
-      // add vehicle/unit assignment, if any
-      const assignment = await req.user.getCurrentAssignment({
-        include: [
-          {
-            model: models.Vehicle,
-            as: 'vehicle',
-            include: 'createdByAgency',
-          },
-        ],
-      });
-      data.Assignment = assignment?.toJSON() ?? null;
-      data.Vehicle = assignment?.vehicle?.toJSON() ?? null;
-      data.Agency = [];
-      if (assignment?.vehicle?.createdByAgency) {
-        data.Agency.push(assignment.vehicle.createdByAgency.toJSON());
-      }
-      // add Agency/Employment info, if any
-      if (req.agency) {
-        if (!data.Agency.find((a) => a.id === req.agency.id)) {
-          data.Agency.push(req.agency.toJSON());
-        }
-        data.Employment = (
-          await models.Employment.scope('finalOrNew').findOne({
-            where: { userId: req.user.id, createdByAgencyId: req.agency.id },
-          })
-        )?.toJSON();
-      }
-      res.json(data);
-    } else {
-      const data = {
-        user: req.user.toJSON(),
-      };
-      // add additional privilege info
-      data.user.isAdmin = req.user.isAdmin;
-      // add any active scenes the user may be a part of
-      data.user.activeScenes = (await req.user.getActiveScenes()).map((s) => s.toJSON());
-      // add vehicle/unit assignment, if any
-      data.user.currentAssignment =
-        (
-          await req.user.getCurrentAssignment({
-            include: [
-              {
-                model: models.Vehicle,
-                as: 'vehicle',
-                include: 'createdByAgency',
-              },
-            ],
-          })
-        )?.toJSON() ?? null;
-      // temporary AWS credentials for use with Transcribe service
-      data.user.awsCredentials = await sts.getTemporaryCredentialsForMobileApp();
-      // add Agency/Employment info, if any
-      if (req.agency) {
-        data.agency = req.agency.toJSON();
-        data.employment = (
-          await models.Employment.scope('finalOrNew').findOne({
-            where: { userId: req.user.id, createdByAgencyId: req.agency.id },
-          })
-        ).toJSON();
-      }
-      res.json(data);
+    const data = {
+      User: req.user.toJSON(),
+    };
+    // add additional privilege info
+    data.User.isAdmin = req.user.isAdmin;
+    // temporary AWS credentials for use with Transcribe service
+    try {
+      data.User.awsCredentials = await sts.getTemporaryCredentialsForMobileApp();
+    } catch (error) {
+      rollbar.error(error, req);
     }
+    // add any active scenes the user may be a part of
+    const scenes = await req.user.getActiveScenes({ include: ['city', 'incident', 'state'] });
+    data.Scene = scenes.map((s) => s.toJSON());
+    data.Incident = scenes.map((s) => s.incident.toJSON());
+    data.City = scenes.map((s) => s.city?.toJSON()).filter(Boolean);
+    data.State = scenes.map((s) => s.state?.toJSON()).filter(Boolean);
+    // add vehicle/unit assignment, if any
+    const assignment = await req.user.getCurrentAssignment({
+      include: [
+        {
+          model: models.Vehicle,
+          as: 'vehicle',
+          include: 'createdByAgency',
+        },
+      ],
+    });
+    data.Assignment = assignment?.toJSON() ?? null;
+    data.Vehicle = assignment?.vehicle?.toJSON() ?? null;
+    data.Agency = [];
+    if (assignment?.vehicle?.createdByAgency) {
+      data.Agency.push(assignment.vehicle.createdByAgency.toJSON());
+    }
+    // add Agency/Employment info, if any
+    if (req.agency) {
+      if (!data.Agency.find((a) => a.id === req.agency.id)) {
+        data.Agency.push(req.agency.toJSON());
+      }
+      data.Employment = (
+        await models.Employment.scope('finalOrNew').findOne({
+          where: { userId: req.user.id, createdByAgencyId: req.agency.id },
+        })
+      )?.toJSON();
+      // add Region info, if any
+      const region = await req.agency.getRegion();
+      if (region) {
+        const payload = await region.createPayload();
+        payload.Agency.forEach((agency) => {
+          if (!data.Agency.find((a) => a.id === agency.id)) {
+            data.Agency.push(agency);
+          }
+        });
+        data.Region = payload.Region;
+        data.RegionAgency = payload.RegionAgency;
+      }
+    }
+    res.json(data);
   }),
 );
 

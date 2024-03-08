@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -7,6 +8,25 @@ module.exports = (sequelize, DataTypes) => {
       RegionAgency.belongsTo(models.Agency, { as: 'agency' });
       RegionAgency.belongsTo(models.User, { as: 'createdBy' });
       RegionAgency.belongsTo(models.User, { as: 'updatedBy' });
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      const data = _.pick(attributes, [
+        'id',
+        'regionId',
+        'agencyId',
+        'agencyName',
+        'position',
+        'createdById',
+        'updatedById',
+        'createdAt',
+        'updatedAt',
+      ]);
+      if (this.agency) {
+        data.agency = this.agency.toJSON();
+      }
+      return data;
     }
   }
 

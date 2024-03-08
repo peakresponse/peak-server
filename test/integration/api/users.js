@@ -19,6 +19,7 @@ describe('/api/users', () => {
       'nemsisSchematrons',
       'regions',
       'agencies',
+      'regionAgencies',
       'versions',
       'vehicles',
       'assignments',
@@ -40,7 +41,7 @@ describe('/api/users', () => {
         .expect(StatusCodes.UNAUTHORIZED);
     });
 
-    it('returns the user record of the logged in user (API level 1)', async () => {
+    it('returns the user record of the logged in user', async () => {
       await testSession
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
@@ -48,32 +49,6 @@ describe('/api/users', () => {
         .expect(StatusCodes.OK);
 
       const response = await testSession.get('/api/users/me').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
-      const data = response.body;
-      assert(data.user);
-      assert.deepStrictEqual(data.user.email, 'regular@peakresponse.net');
-      assert.deepStrictEqual(data.user.activeScenes?.length, 1);
-      assert(data.user.currentAssignment);
-      assert(data.user.currentAssignment.vehicle);
-      assert.deepStrictEqual(data.user.currentAssignment.vehicle.number, '88');
-      assert(data.agency);
-      assert.deepStrictEqual(data.agency.subdomain, 'bmacc');
-      assert(data.employment);
-      assert(data.employment.isOwner);
-      assert.deepStrictEqual(data.employment.roles, ['CONFIGURATION']);
-    });
-
-    it('returns the user record of the logged in user (API level 2+)', async () => {
-      await testSession
-        .post('/login')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
-        .expect(StatusCodes.OK);
-
-      const response = await testSession
-        .get('/api/users/me')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .set('X-Api-Level', '2')
-        .expect(StatusCodes.OK);
       const data = response.body;
       assert(data.User);
       assert.deepStrictEqual(data.User.email, 'regular@peakresponse.net');
@@ -87,6 +62,22 @@ describe('/api/users', () => {
       assert(data.Employment);
       assert(data.Employment.isOwner);
       assert.deepStrictEqual(data.Employment.roles, ['CONFIGURATION']);
+    });
+
+    it('returns the user record of the logged in user, including Region payload if any', async () => {
+      await testSession
+        .post('/login')
+        .set('Host', `sffd.${process.env.BASE_HOST}`)
+        .send({ email: 'sffd.user@peakresponse.net', password: 'abcd1234' })
+        .expect(StatusCodes.OK);
+
+      const response = await testSession.get('/api/users/me').set('Host', `sffd.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
+      const data = response.body;
+      assert.deepStrictEqual(data.User?.email, 'sffd.user@peakresponse.net');
+      assert.deepStrictEqual(data.Region?.name, 'San Francisco County EMS Agency');
+      assert.deepStrictEqual(data.Agency?.length, 3);
+      assert.deepStrictEqual(data.Agency[0].subdomain, 'sffd');
+      assert.deepStrictEqual(data.RegionAgency?.length, 3);
     });
   });
 });
