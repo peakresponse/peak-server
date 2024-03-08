@@ -99,7 +99,7 @@ router.patch(
               const [regionFacility, isCreated] = await models.RegionFacility.findOrCreate({
                 where: {
                   regionId: record.id,
-                  facility: rf.facility.id,
+                  facilityId: rf.facility.id,
                 },
                 defaults: {
                   position: index + 1,

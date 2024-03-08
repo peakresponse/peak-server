@@ -15,11 +15,19 @@ export class RegionFormComponent {
 
   constructor(private api: ApiService) {}
 
-  searchHandler = (query: string) =>
+  agencySearchHandler = (query: string) =>
     this.api.agencies.index(new HttpParams().set('search', query)).pipe(
       catchError(() => of([])),
       map((res: any) => res.body),
     );
 
-  formatter = (result: any) => `${result.name} (${result.stateUniqueId})`;
+  agencyFormatter = (result: any) => `${result.name} (${result.stateUniqueId})`;
+
+  facilitySearchHandler = (query: string) =>
+    this.api.facilities.index(new HttpParams().set('search', query)).pipe(
+      catchError(() => of([])),
+      map((res: any) => res.body),
+    );
+
+  facilityFormatter = (result: any) => `${result.name} (${result.locationCode})`;
 }
