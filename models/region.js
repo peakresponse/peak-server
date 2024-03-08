@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       Region.belongsTo(models.User, { as: 'createdBy' });
       Region.belongsTo(models.User, { as: 'updatedBy' });
       Region.hasMany(models.RegionAgency, { as: 'regionAgencies' });
+      Region.hasMany(models.RegionFacility, { as: 'regionFacilities' });
     }
 
     toJSON() {
@@ -15,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       const data = _.pick(attributes, ['id', 'name', 'createdById', 'updatedById', 'createdAt', 'updatedAt']);
       if (this.regionAgencies) {
         data.regionAgencies = this.regionAgencies.map((ra) => ra.toJSON());
+      }
+      if (this.regionFacilities) {
+        data.regionFacilities = this.regionFacilities.map((rf) => rf.toJSON());
       }
       return data;
     }
@@ -27,11 +31,20 @@ module.exports = (sequelize, DataTypes) => {
         order: [['position', 'ASC']],
         transaction,
       });
+      const regionFacilities = await sequelize.models.RegionFacility.findAll({
+        where: { regionId: this.id },
+        include: { model: sequelize.models.Facility, as: 'facility' },
+        order: [['position', 'ASC']],
+        transaction,
+      });
       const payload = {};
       payload.Region = this.toJSON();
       delete payload.Region.regionAgencies;
+      delete payload.Region.regionFacilities;
       payload.Agency = [];
+      payload.Facility = [];
       payload.RegionAgency = [];
+      payload.RegionFacility = [];
       await Promise.all(
         regionAgencies.map(async (ra) => {
           const regionAgency = ra.toJSON();
@@ -50,6 +63,13 @@ module.exports = (sequelize, DataTypes) => {
           payload.RegionAgency.push(regionAgency);
         }),
       );
+      regionFacilities.forEach((rf) => {
+        const regionFacility = rf.toJSON();
+        const { facility } = regionFacility;
+        delete regionFacility.facility;
+        payload.Facility.push(facility);
+        payload.RegionFacility.push(regionFacility);
+      });
       return payload;
     }
   }

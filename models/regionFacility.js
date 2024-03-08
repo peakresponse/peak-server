@@ -43,5 +43,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  RegionFacility.addScope('ordered', {
+    order: [['position', 'ASC']],
+  });
+
   return RegionFacility;
 };

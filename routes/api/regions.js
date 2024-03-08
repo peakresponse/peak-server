@@ -30,8 +30,14 @@ router.get(
   helpers.async(async (req, res) => {
     const { id } = req.params;
     const record = await models.Region.findByPk(id, {
-      include: [{ model: models.RegionAgency, as: 'regionAgencies', include: 'agency' }],
-      order: [['regionAgencies', 'position', 'ASC']],
+      include: [
+        { model: models.RegionAgency, as: 'regionAgencies', include: 'agency' },
+        { model: models.RegionFacility, as: 'regionFacilities', include: 'facility' },
+      ],
+      order: [
+        ['regionAgencies', 'position', 'ASC'],
+        ['regionFacilities', 'position', 'ASC'],
+      ],
     });
     if (record) {
       res.json(record.toJSON());
@@ -87,8 +93,36 @@ router.patch(
           );
           await record.setRegionAgencies(regionAgencies, { transaction });
         }
+        if (req.body.regionFacilities) {
+          const regionFacilities = await Promise.all(
+            req.body.regionFacilities.map(async (rf, index) => {
+              const [regionFacility, isCreated] = await models.RegionFacility.findOrCreate({
+                where: {
+                  regionId: record.id,
+                  facility: rf.facility.id,
+                },
+                defaults: {
+                  position: index + 1,
+                  createdById: req.user.id,
+                  updatedById: req.user.id,
+                },
+                transaction,
+              });
+              if (!isCreated) {
+                await regionFacility.update({ position: index + 1, updatedById: req.user.id });
+              }
+              return regionFacility;
+            }),
+          );
+          await record.setRegionFacilities(regionFacilities, { transaction });
+        }
         record.regionAgencies = await models.RegionAgency.scope('ordered').findAll({
           include: 'agency',
+          where: { regionId: record.id },
+          transaction,
+        });
+        record.regionFacilities = await models.RegionFacility.scope('ordered').findAll({
+          include: 'facility',
           where: { regionId: record.id },
           transaction,
         });
