@@ -21,7 +21,9 @@
 </div>
 <div class="mb-3">
   <shared-array-field id="regionFacilities" label="Facilities" [source]="record" [target]="record" [error]="error">
-    <ng-template #item let-regionFacility="item"> {{ regionFacility.facility?.name }} ({{ regionFacility.facility?.locationCode }}) </ng-template>
+    <ng-template #item let-regionFacility="item">
+      {{ regionFacility.facility?.name }} ({{ regionFacility.facility?.locationCode }})
+    </ng-template>
     <ng-template #form let-addItem="addItem">
       <ng-template #rt let-r="result" let-t="term">{{ r.name }} ({{ r.locationCode }})</ng-template>
       <shared-search-field
