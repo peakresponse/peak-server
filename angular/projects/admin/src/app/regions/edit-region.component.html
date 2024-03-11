@@ -26,6 +26,12 @@
           </h3>
         </div>
         <div class="mb-3">
+          <label>Facilities</label>
+          <h3 *ngFor="let regionFacility of record.regionFacilities">
+            {{ regionFacility.facility?.name }} ({{ regionFacility.facility?.locationCode }})
+          </h3>
+        </div>
+        <div class="mb-3">
           <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
         </div>
       </ng-container>

@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const { Base } = require('./base');
 
 module.exports = (sequelize, DataTypes) => {
@@ -25,12 +27,38 @@ module.exports = (sequelize, DataTypes) => {
       Response.belongsTo(models.User, { as: 'updatedBy' });
       Response.belongsTo(models.Agency, { as: 'createdByAgency' });
       Response.belongsTo(models.Agency, { as: 'updatedByAgency' });
+
+      Response.belongsTo(models.Agency, { as: 'agency' });
     }
 
     static createOrUpdate(user, agency, data, options) {
-      return Base.createOrUpdate(Response, user, agency, data, [], ['data'], options);
+      return Base.createOrUpdate(Response, user, agency, data, [], ['agencyId', 'data'], options);
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'canonicalId',
+        'currentId',
+        'parentId',
+        'secondParentId',
+        'agencyId',
+        'data',
+        'updatedAttributes',
+        'updatedDataAttributes',
+        'isValid',
+        'validationErrors',
+        'createdAt',
+        'createdById',
+        'createdByAgencyId',
+        'updatedAt',
+        'updatedById',
+        'updatedByAgencyId',
+      ]);
     }
   }
+
   Response.init(
     {
       data: DataTypes.JSONB,

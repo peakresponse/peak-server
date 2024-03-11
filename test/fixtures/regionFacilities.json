@@ -1,0 +1,36 @@
+[
+  {
+    "model": "RegionFacility",
+    "data": {
+      "id": "92149f26-b629-4eac-be5f-a44c426c348d",
+      "regionId": "c781fe1e-a337-4cc3-9351-5aed61fa3c0d",
+      "facilityId": "ed32bfc9-aa45-4504-9ceb-9cf788ba7606",
+      "facilityName": "SF General",
+      "position": "1",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
+    }
+  },
+  {
+    "model": "RegionFacility",
+    "data": {
+      "id": "5b16711c-7e96-4644-8e75-2dd4a4079c7f",
+      "regionId": "c781fe1e-a337-4cc3-9351-5aed61fa3c0d",
+      "facilityId": "40afc434-12db-44b4-84e8-174b364e583b",
+      "position": "3",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
+    }
+  },
+  {
+    "model": "RegionFacility",
+    "data": {
+      "id": "6d2335d1-32d1-4c59-84a0-631498c59c60",
+      "regionId": "c781fe1e-a337-4cc3-9351-5aed61fa3c0d",
+      "facilityId": "f56a4029-ee50-4f8f-b791-96ac506815f7",
+      "position": "2",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680"
+    }
+  }
+]

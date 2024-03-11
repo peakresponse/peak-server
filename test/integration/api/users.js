@@ -19,7 +19,9 @@ describe('/api/users', () => {
       'nemsisSchematrons',
       'regions',
       'agencies',
+      'facilities',
       'regionAgencies',
+      'regionFacilities',
       'versions',
       'vehicles',
       'assignments',
@@ -78,6 +80,9 @@ describe('/api/users', () => {
       assert.deepStrictEqual(data.Agency?.length, 3);
       assert.deepStrictEqual(data.Agency[0].subdomain, 'sffd');
       assert.deepStrictEqual(data.RegionAgency?.length, 3);
+      assert.deepStrictEqual(data.Facility?.length, 3);
+      assert.deepStrictEqual(data.Facility[0].name, 'Zuckerberg San Francisco General Hospital and Trauma Center');
+      assert.deepStrictEqual(data.RegionFacility?.length, 3);
     });
   });
 });

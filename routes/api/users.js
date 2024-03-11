@@ -105,6 +105,8 @@ router.get(
         });
         data.Region = payload.Region;
         data.RegionAgency = payload.RegionAgency;
+        data.Facility = payload.Facility;
+        data.RegionFacility = payload.RegionFacility;
       }
     }
     res.json(data);
