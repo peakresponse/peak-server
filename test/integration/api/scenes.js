@@ -152,24 +152,6 @@ describe('/api/scenes', () => {
 
       const responder = await models.Responder.findByPk('a80254a6-f373-40ac-bc07-17da6a61b2cb');
       assert.deepStrictEqual(JSON.stringify(responder?.arrivedAt), '"2020-04-06T21:22:10.102Z"');
-
-      // this action should be idempotent- repeating it again should not cause an error or change its values
-      await testSession
-        .post('/api/scenes')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .send({
-          Responder: {
-            id: 'd1b79498-797e-450c-b9a0-b79a38719e3e',
-            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
-            userId: '6f4a1b45-b465-4ec9-8127-292d87d7952b',
-            agencyId: '81b433cd-5f48-4458-87f3-0bf4e1591830',
-            arrivedAt: '2020-04-06T21:24:10.102Z',
-          },
-        })
-        .expect(StatusCodes.OK);
-
-      await responder.reload();
-      assert.deepStrictEqual(JSON.stringify(responder?.arrivedAt), '"2020-04-06T21:22:10.102Z"');
     });
 
     it('adds a new Responder without a User account as enroute to an existing Scene', async () => {

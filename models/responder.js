@@ -56,18 +56,14 @@ module.exports = (sequelize, DataTypes) => {
       if (created) {
         return [responder, created];
       }
-      const attrs = ['agencyName', 'unitNumber', 'capability'];
-      // allow Agency changes if not a User account Responder
-      if (!responder.userId) {
-        attrs.push('agencyId');
-      }
-      // arrivedAt is immutable- once set, it cannot be changed
-      if (!responder.arrivedAt) {
-        attrs.push('arrivedAt');
-      }
-      // departedAt is immutable- once set, it cannot be changed
+      const attrs = [];
+      // record is mutable before departure
       if (!responder.departedAt) {
-        attrs.push('departedAt');
+        attrs.push('arrivedAt', 'departedAt');
+        // allow agency/unit changes if not a User account Responder
+        if (!responder.userId) {
+          attrs.push('agencyId', 'agencyName', 'unitNumber', 'capability');
+        }
       }
       if (attrs.length > 0) {
         await responder.update(_.pick(data, attrs), { transaction });
