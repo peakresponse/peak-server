@@ -102,6 +102,7 @@ async function resetDatabase() {
     DELETE FROM custom_configurations;
     DELETE FROM devices;
     DELETE FROM employments;
+    DELETE FROM region_facilities;
     DELETE FROM facilities;
     DELETE FROM forms;
     DELETE FROM locations;

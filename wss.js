@@ -85,13 +85,13 @@ sceneServer.on('connection', async (ws, req) => {
     for (const report of payload.Report) {
       report.sceneId = scene.currentId;
     }
-    payload.Agency = responders.map((r) => r.agency.toJSON());
+    payload.Agency = responders.map((r) => r.agency?.toJSON()).filter(Boolean);
     payload.City = scene.city?.toJSON();
     payload.Incident = scene.incident.toJSON();
     payload.Responder = responders.map((r) => r.toJSON());
     payload.Scene = scene.toJSON();
     payload.State = scene.state?.toJSON();
-    payload.User = responders.map((r) => r.user.toJSON());
+    payload.User = responders.map((r) => r.user?.toJSON()).filter(Boolean);
     payload.Vehicle = responders
       .map((r) => r.vehicle)
       .filter((v) => v)
@@ -109,10 +109,10 @@ async function dispatchSceneUpdate(sceneId) {
       include: ['user', 'agency', 'vehicle'],
       transaction,
     });
-    payload.Agency = responders.map((r) => r.agency.toJSON());
+    payload.Agency = responders.map((r) => r.agency?.toJSON()).filter(Boolean);
     payload.Responder = responders.map((r) => r.toJSON());
     payload.Scene = scene.toJSON();
-    payload.User = responders.map((r) => r.user.toJSON());
+    payload.User = responders.map((r) => r.user?.toJSON()).filter(Boolean);
     payload.Vehicle = responders
       .map((r) => r.vehicle)
       .filter((v) => v)

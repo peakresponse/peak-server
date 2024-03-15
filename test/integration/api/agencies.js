@@ -150,11 +150,19 @@ describe('/api/agencies', () => {
 
     it('returns the agencies for the region', async () => {
       const response = await testSession.get('/api/agencies/region').set('Host', `sffd.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
-      assert.deepStrictEqual(response.body.length, 3);
-      assert.deepStrictEqual(response.body[0].id, '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
-      assert.deepStrictEqual(response.body[0].name, 'San Francisco Fire Department');
-      assert.deepStrictEqual(response.body[1].name, 'Bay Medic Ambulance - Alameda');
-      assert.deepStrictEqual(response.body[2].name, 'Bayshore');
+      const { body: payload } = response;
+      assert.deepStrictEqual(payload.Region.name, 'San Francisco County EMS Agency');
+      assert.deepStrictEqual(payload.Agency.length, 3);
+      assert.deepStrictEqual(payload.RegionAgency.length, 3);
+      assert.deepStrictEqual(payload.RegionAgency[0].agencyId, '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+      assert.deepStrictEqual(payload.RegionAgency[0].position, 1);
+      assert.deepStrictEqual(payload.Agency[0].id, '6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8');
+      assert.deepStrictEqual(payload.Agency[0].name, 'San Francisco Fire Department');
+      assert.deepStrictEqual(payload.RegionAgency[1].position, 2);
+      assert.deepStrictEqual(payload.Agency[1].name, 'Bay Medic Ambulance - Alameda');
+      assert.deepStrictEqual(payload.RegionAgency[2].agencyName, 'Bayshore');
+      assert.deepStrictEqual(payload.RegionAgency[2].position, 3);
+      assert.deepStrictEqual(payload.Agency[2].name, 'Bayshore Ambulance');
     });
   });
 

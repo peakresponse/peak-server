@@ -10,11 +10,31 @@
         #agencySearch
         id="agency"
         placeholder="Start typing a name..."
-        [searchHandler]="searchHandler"
-        [inputFormatter]="formatter"
+        [searchHandler]="agencySearchHandler"
+        [inputFormatter]="agencyFormatter"
         [resultTemplate]="rt"
         [target]="{ agency: null }"
         (valueChange)="$event?.id && addItem({ agency: $event }); $event?.id && agencySearch.onClear()"
+        [error]="error"></shared-search-field>
+    </ng-template>
+  </shared-array-field>
+</div>
+<div class="mb-3">
+  <shared-array-field id="regionFacilities" label="Facilities" [source]="record" [target]="record" [error]="error">
+    <ng-template #item let-regionFacility="item">
+      {{ regionFacility.facility?.name }} ({{ regionFacility.facility?.locationCode }})
+    </ng-template>
+    <ng-template #form let-addItem="addItem">
+      <ng-template #rt let-r="result" let-t="term">{{ r.name }} ({{ r.locationCode }})</ng-template>
+      <shared-search-field
+        #facilitySearch
+        id="facility"
+        placeholder="Start typing a name..."
+        [searchHandler]="facilitySearchHandler"
+        [inputFormatter]="facilityFormatter"
+        [resultTemplate]="rt"
+        [target]="{ facility: null }"
+        (valueChange)="$event?.id && addItem({ facility: $event }); $event?.id && facilitySearch.onClear()"
         [error]="error"></shared-search-field>
     </ng-template>
   </shared-array-field>
