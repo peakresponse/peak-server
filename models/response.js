@@ -89,7 +89,11 @@ module.exports = (sequelize, DataTypes) => {
 
   Response.beforeValidate(async (record, options) => {
     const { transaction } = options ?? {};
-    const agency = record.agency || (await record.getAgency({ transaction }));
+    const agency =
+      record.agency ||
+      (await record.getAgency({ transaction })) ||
+      record.createdByAgency ||
+      (await record.getCreatedByAgency({ transaction }));
     if (agency) {
       record.setNemsisValue(['eResponse.AgencyGroup', 'eResponse.01'], agency.stateUniqueId);
       record.setNemsisValue(['eResponse.AgencyGroup', 'eResponse.02'], agency.name);
