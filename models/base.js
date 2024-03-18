@@ -430,6 +430,12 @@ class Base extends Model {
     this.changed('data', true);
   }
 
+  setDefaultNemsisValue(keyPath, defaultValue) {
+    if (!this.getFirstNemsisValue(keyPath)) {
+      this.setNemsisValue(keyPath, defaultValue, true);
+    }
+  }
+
   getNemsisAttributeValue(keyPath, attribute) {
     const attrPath = [...keyPath, '_attributes', attribute];
     return _.get(this.data, attrPath);
