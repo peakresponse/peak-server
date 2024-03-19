@@ -163,5 +163,27 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.data, record.data);
       });
     });
+
+    describe('getData()', () => {
+      it('adds placeholders for missing attributes', async () => {
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const version = await agency.getVersion();
+        const record = await models.Medication.findByPk('6f43bc3d-1d4e-470a-9568-0c8b50c8281e');
+        const data = await record.getData(version);
+        assert.deepStrictEqual(data, {
+          'eMedications.01': { _text: '2020-04-06T21:22:10-00:00' },
+          'eMedications.02': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eMedications.03': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eMedications.04': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eMedications.DosageGroup': {
+            'eMedications.05': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+            'eMedications.06': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          },
+          'eMedications.07': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eMedications.08': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eMedications.10': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+        });
+      });
+    });
   });
 });

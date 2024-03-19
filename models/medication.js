@@ -88,5 +88,14 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  Medication.beforeValidate(async (record) => {
+    record.setDefaultNemsisValue(['eMedications.02'], null);
+    record.setDefaultNemsisValue(['eMedications.04'], null);
+    record.setDefaultNemsisValue(['eMedications.DosageGroup', 'eMedications.05'], null);
+    record.setDefaultNemsisValue(['eMedications.DosageGroup', 'eMedications.06'], null);
+    record.setDefaultNemsisValue(['eMedications.08'], null);
+    record.setDefaultNemsisValue(['eMedications.10'], null);
+  });
+
   return Medication;
 };
