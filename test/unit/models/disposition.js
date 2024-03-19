@@ -180,5 +180,43 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.data, record.data);
       });
     });
+
+    describe('getData()', () => {
+      it('adds placeholders for missing attributes', async () => {
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const version = await agency.getVersion();
+        const record = await models.Disposition.findByPk('4f996971-6588-4f86-ac22-85d4eba146ff');
+        const data = await record.getData(version);
+        assert.deepStrictEqual(data, {
+          _attributes: {},
+          'eDisposition.DestinationGroup': {
+            'eDisposition.05': { _text: '06' },
+            'eDisposition.06': { _text: '06075' },
+            'eDisposition.07': { _text: '94103' },
+          },
+          'eDisposition.IncidentDispositionGroup': {
+            'eDisposition.27': { _text: '4227001' },
+            'eDisposition.28': { _text: '4228001' },
+            'eDisposition.29': { _text: '4229003' },
+            'eDisposition.30': { _text: '4230005' },
+          },
+          'eDisposition.16': { _text: '4216005' },
+          'eDisposition.17': { _text: '4217003' },
+          'eDisposition.18': { _text: '4218015' },
+          'eDisposition.19': { _text: '4219005' },
+          'eDisposition.20': { _text: '4220001' },
+          'eDisposition.21': { _text: '4221003' },
+          'eDisposition.22': { _attributes: { NV: '7701001', 'xsi:nil': 'true' } },
+          'eDisposition.23': { _text: '9908007' },
+          'eDisposition.HospitalTeamActivationGroup': [
+            {
+              'eDisposition.24': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+              'eDisposition.25': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+            },
+          ],
+          'eDisposition.32': { _text: '4232001' },
+        });
+      });
+    });
   });
 });
