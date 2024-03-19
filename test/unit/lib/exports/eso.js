@@ -17,7 +17,7 @@ describe('lib', () => {
       });
 
       describe('EsoClient', () => {
-        describe('.authenticate', () => {
+        describe('.authenticate()', () => {
           it('authenticates with the ESO Partner API to retrieve credentials', async () => {
             const client = new EsoClient('https://identity.stage.esosuite.net/auth/connect/token');
             client.username = process.env.ESO_STAGING_USERNAME;
@@ -34,7 +34,7 @@ describe('lib', () => {
           });
         });
 
-        describe('.submitEmsDataSet', () => {
+        describe('.submitEmsDataSet()', () => {
           it('submits an EPCR for import through the ESO Partner API', async () => {
             const epcrPath = path.resolve(__dirname, '../../../fixtures/files/eso.import.xml');
             const payload = await fs.readFile(epcrPath, { encoding: 'utf8' });
