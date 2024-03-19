@@ -155,5 +155,24 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.data, record.data);
       });
     });
+
+    describe('getData()', () => {
+      it('adds placeholders for missing attributes', async () => {
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const version = await agency.getVersion();
+        const record = await models.Procedure.findByPk('34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0');
+        const data = await record.getData(version);
+        assert.deepStrictEqual(data, {
+          'eProcedures.01': { _text: '2020-04-06T21:22:10-00:00' },
+          'eProcedures.02': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eProcedures.03': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eProcedures.05': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eProcedures.06': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eProcedures.07': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eProcedures.08': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eProcedures.10': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+        });
+      });
+    });
   });
 });

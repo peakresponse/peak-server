@@ -56,7 +56,11 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.VIRTUAL,
         get() {
-          return crypto.decrypt(process.env.MODEL_EXPORT_AES_KEY, this.getDataValue('encryptedPassword'));
+          try {
+            return crypto.decrypt(process.env.MODEL_EXPORT_AES_KEY, this.getDataValue('encryptedPassword'));
+          } catch {
+            return null;
+          }
         },
         set(newValue) {
           let encrypted = null;

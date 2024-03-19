@@ -88,5 +88,16 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  Procedure.beforeValidate(async (record) => {
+    record.setDefaultNemsisValue(['eProcedures.01'], null);
+    record.setDefaultNemsisValue(['eProcedures.02'], null);
+    record.setDefaultNemsisValue(['eProcedures.03'], null);
+    record.setDefaultNemsisValue(['eProcedures.05'], null);
+    record.setDefaultNemsisValue(['eProcedures.06'], null);
+    record.setDefaultNemsisValue(['eProcedures.07'], null);
+    record.setDefaultNemsisValue(['eProcedures.08'], null);
+    record.setDefaultNemsisValue(['eProcedures.10'], null);
+  });
+
   return Procedure;
 };

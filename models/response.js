@@ -87,5 +87,21 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  Response.beforeValidate(async (record, options) => {
+    const { transaction } = options ?? {};
+    const agency =
+      record.agency ||
+      (await record.getAgency({ transaction })) ||
+      record.createdByAgency ||
+      (await record.getCreatedByAgency({ transaction }));
+    if (agency) {
+      record.setNemsisValue(['eResponse.AgencyGroup', 'eResponse.01'], agency.stateUniqueId);
+      record.setNemsisValue(['eResponse.AgencyGroup', 'eResponse.02'], agency.name);
+    }
+    record.setDefaultNemsisValue(['eResponse.03'], null);
+    record.setDefaultNemsisValue(['eResponse.04'], null);
+    record.setDefaultNemsisValue(['eResponse.14'], record.getFirstNemsisValue(['eResponse.13']));
+  });
+
   return Response;
 };

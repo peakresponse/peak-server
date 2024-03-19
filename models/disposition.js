@@ -87,5 +87,25 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  Disposition.beforeValidate(async (record, options) => {
+    const { transaction } = options ?? {};
+    const destinationFacility = record.destinationFacility || (await record.getDestinationFacility({ transaction }));
+    if (destinationFacility) {
+      record.setNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.01'], destinationFacility.name);
+      record.setNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.02'], destinationFacility.locationCode);
+      record.setNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.03'], destinationFacility.address);
+      record.setNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.04'], destinationFacility.cityId);
+      record.setNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.05'], destinationFacility.stateId, true);
+      record.setNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.06'], destinationFacility.countyId, true);
+      record.setNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.07'], destinationFacility.zip, true);
+    } else {
+      record.setDefaultNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.05'], null);
+      record.setDefaultNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.06'], null);
+      record.setDefaultNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.07'], null);
+    }
+    record.setDefaultNemsisValue(['eDisposition.HospitalTeamActivationGroup', 'eDisposition.24'], null);
+    record.setDefaultNemsisValue(['eDisposition.HospitalTeamActivationGroup', 'eDisposition.25'], null);
+  });
+
   return Disposition;
 };

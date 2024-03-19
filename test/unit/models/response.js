@@ -165,5 +165,45 @@ describe('models', () => {
         assert.deepStrictEqual(canonical.data, record.data);
       });
     });
+
+    describe('getData()', () => {
+      it('adds placeholders for missing attributes', async () => {
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        let data = {
+          id: '133e8e37-47ba-4290-b26e-29083734a173',
+          canonicalId: 'ded5a54b-d9ef-480f-8fa9-355c8d8ddb13',
+          agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+          data: {
+            'eResponse.03': {
+              _text: '12345',
+            },
+            'eResponse.13': {
+              _text: '88',
+            },
+          },
+        };
+
+        const [record, created] = await models.Response.createOrUpdate(user, agency, data);
+        assert(record);
+        assert(created);
+
+        const version = await agency.getVersion();
+        data = await record.getData(version);
+        assert.deepStrictEqual(data, {
+          _attributes: {},
+          'eResponse.AgencyGroup': {
+            'eResponse.01': {
+              _text: 'S07-50120',
+            },
+            'eResponse.02': { _text: 'Bay Medic Ambulance - Contra Costa' },
+          },
+          'eResponse.03': { _text: '12345' },
+          'eResponse.04': { _attributes: { NV: '7701003', 'xsi:nil': 'true' } },
+          'eResponse.13': { _text: '88' },
+          'eResponse.14': { _text: '88' },
+        });
+      });
+    });
   });
 });

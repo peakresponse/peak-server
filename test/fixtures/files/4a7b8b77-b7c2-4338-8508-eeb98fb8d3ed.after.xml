@@ -17,6 +17,7 @@
 			<eResponse>
 				<eResponse.AgencyGroup>
 					<eResponse.01>S07-50120</eResponse.01>
+					<eResponse.02>Bay Medic Ambulance - Contra Costa</eResponse.02>
 				</eResponse.AgencyGroup>
 				<eResponse.03>12345</eResponse.03>
 				<eResponse.04 NV="7701003" xsi:nil="true"/>
@@ -191,9 +192,13 @@
 			</eProcedures>
 			<eDisposition>
 				<eDisposition.DestinationGroup>
+					<eDisposition.01>CPMC-Van Ness</eDisposition.01>
+					<eDisposition.02>62636</eDisposition.02>
+					<eDisposition.03>1011 Van Ness Ave</eDisposition.03>
+					<eDisposition.04>2411786</eDisposition.04>
 					<eDisposition.05>06</eDisposition.05>
 					<eDisposition.06>06075</eDisposition.06>
-					<eDisposition.07>94103</eDisposition.07>
+					<eDisposition.07>94109</eDisposition.07>
 				</eDisposition.DestinationGroup>
 				<eDisposition.IncidentDispositionGroup>
 					<eDisposition.27>4227001</eDisposition.27>

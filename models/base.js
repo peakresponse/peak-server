@@ -260,7 +260,7 @@ class Base extends Model {
       { where: { id: canonical.id }, silent: true, transaction: options.transaction },
     );
     for (const attr of updateAttrs.filter((a) => a.endsWith('Ids'))) {
-      const ids = data[attr];
+      const ids = filteredData[attr];
       if (ids) {
         const prefix = attr.substring(0, attr.length - 3);
         // eslint-disable-next-line no-await-in-loop
@@ -428,6 +428,12 @@ class Base extends Model {
       _.unset(this.data, keyPath);
     }
     this.changed('data', true);
+  }
+
+  setDefaultNemsisValue(keyPath, defaultValue) {
+    if (!this.getFirstNemsisValue(keyPath)) {
+      this.setNemsisValue(keyPath, defaultValue, true);
+    }
   }
 
   getNemsisAttributeValue(keyPath, attribute) {

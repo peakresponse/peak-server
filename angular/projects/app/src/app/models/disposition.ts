@@ -11,6 +11,6 @@ export enum UnitDisposition {
 
 export class Disposition extends Base {
   get unitDisposition(): NemsisValue {
-    return this.getFirstNemsisValue(['eDisposition', 'IncidentDispositionGroup', 'eDisposition.27']);
+    return this.getFirstNemsisValue(['eDisposition.IncidentDispositionGroup', 'eDisposition.27']);
   }
 }
