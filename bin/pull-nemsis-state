@@ -8,7 +8,7 @@ VERSION=$3
 function checkout_version() {
   VER=$1
   if [ ! -d "nemsis/repositories/$STATE/$NEMSIS_VERSION/$VER" ]; then
-    git clone -b release-$NEMSIS_VERSION --filter=blob:none --no-checkout https://stash.utahdcc.org/stash/scm/nes/$STATE.git nemsis/repositories/$STATE/$NEMSIS_VERSION/$VER
+    git clone -b release-$NEMSIS_VERSION --filter=blob:none --no-checkout https://git.nemsis.org/scm/nes/$STATE.git nemsis/repositories/$STATE/$NEMSIS_VERSION/$VER
     cd nemsis/repositories/$STATE/$NEMSIS_VERSION/$VER
     git sparse-checkout init --cone
     git sparse-checkout set Resources Schematron
@@ -20,7 +20,7 @@ function checkout_version() {
 # check if master NEMSIS state repository history has been set up
 if [ ! -d "nemsis/repositories/$STATE/$NEMSIS_VERSION/master" ]; then
   # clone without any tree or file data, without initial checkout
-  git clone -b release-$NEMSIS_VERSION --filter=blob:none --no-checkout https://stash.utahdcc.org/stash/scm/nes/$STATE.git nemsis/repositories/$STATE/$NEMSIS_VERSION/master
+  git clone -b release-$NEMSIS_VERSION --filter=blob:none --no-checkout https://git.nemsis.org/scm/nes/$STATE.git nemsis/repositories/$STATE/$NEMSIS_VERSION/master
   cd nemsis/repositories/$STATE/$NEMSIS_VERSION/master
   git sparse-checkout init --cone
   git sparse-checkout set Resources Schematron
