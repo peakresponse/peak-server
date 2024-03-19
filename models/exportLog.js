@@ -12,7 +12,17 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      const data = _.pick(attributes, ['id', 'exportId', 'exportTriggerId', 'reportId', 'params', 'result', 'createdAt', 'updatedAt']);
+      const data = _.pick(attributes, [
+        'id',
+        'exportId',
+        'exportTriggerId',
+        'reportId',
+        'params',
+        'result',
+        'isError',
+        'createdAt',
+        'updatedAt',
+      ]);
       if (this.export) {
         data.export = this.export.toJSON();
       }
