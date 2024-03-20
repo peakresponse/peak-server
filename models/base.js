@@ -431,7 +431,7 @@ class Base extends Model {
   }
 
   setDefaultNemsisValue(keyPath, defaultValue) {
-    if (!this.getFirstNemsisValue(keyPath)) {
+    if (!this.getFirstNemsisValue(keyPath) && !this.getNemsisAttributeValue(keyPath, 'NV')) {
       this.setNemsisValue(keyPath, defaultValue, true);
     }
   }
