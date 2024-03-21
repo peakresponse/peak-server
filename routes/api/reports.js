@@ -121,12 +121,14 @@ router.post(
                     }
                     const prevIncident = await models.Incident.findOne(options);
                     if (prevIncident) {
-                      incident.number = `${prevIncident.sort + 1}`;
+                      incident.number = `${prevIncident.sort + 1}`.padStart(3, '0');
                     } else {
-                      incident.number = '1';
+                      incident.number = '1'.padStart(3, '0');
                     }
                   }
                 } else {
+                  // ensure at least 3 chars long
+                  incident.number = incident.number.padStart(3, '0');
                   // check if number is a duplicate
                   let options = {
                     where: {
@@ -195,7 +197,8 @@ router.post(
                   reportsCount += 1;
                   for (const response of responses) {
                     if (response.id === report.responseId) {
-                      _.set(response.data, ['eResponse', 'eResponse.03', '_text'], incident.number);
+                      _.unset(response.data, ['eResponse.03', '_attributes']);
+                      _.set(response.data, ['eResponse.03', '_text'], incident.number);
                       payload.Response = payload.Response || [];
                       payload.Response.push(response);
                       break;
