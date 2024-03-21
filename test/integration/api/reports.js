@@ -119,7 +119,7 @@ describe('/api/reports', () => {
         assert(incident);
         assert.deepStrictEqual(incident.sceneId, data.Incident.sceneId);
         assert.deepStrictEqual(incident.psapId, null);
-        assert.deepStrictEqual(incident.number, '1');
+        assert.deepStrictEqual(incident.number, '001');
         assert.deepStrictEqual(await incident.countDispatchedAgencies(), 1);
 
         // second payload, no incident number, server generates increment
@@ -176,7 +176,8 @@ describe('/api/reports', () => {
         assert(incident);
         assert.deepStrictEqual(incident.sceneId, data.Incident.sceneId);
         assert.deepStrictEqual(incident.psapId, null);
-        assert.deepStrictEqual(incident.number, '2');
+        assert.deepStrictEqual(incident.number, '002');
+
         // third payload, duplicate incident number, server generates unique suffix
         data = {
           Scene: {
@@ -191,7 +192,7 @@ describe('/api/reports', () => {
           Incident: {
             id: '9eb208cf-09e2-4678-aa6c-baca0619a1b1',
             sceneId: 'f6a7bc9c-af1f-4727-b8e2-f4fe5762a030',
-            number: '2',
+            number: '002',
           },
           Report: {
             id: 'e092a222-3ba6-4b45-bef1-b29b01542f48',
@@ -235,7 +236,7 @@ describe('/api/reports', () => {
         assert(incident);
         assert.deepStrictEqual(incident.sceneId, data.Incident.sceneId);
         assert.deepStrictEqual(incident.psapId, null);
-        assert.deepStrictEqual(incident.number, '2-001');
+        assert.deepStrictEqual(incident.number, '002-001');
       });
     });
   });
