@@ -15,7 +15,16 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      const data = _.pick(attributes, ['id', 'name', 'createdById', 'updatedById', 'createdAt', 'updatedAt']);
+      const data = _.pick(attributes, [
+        'id',
+        'name',
+        'routedUrl',
+        'routedClientId',
+        'createdById',
+        'updatedById',
+        'createdAt',
+        'updatedAt',
+      ]);
       if (this.regionAgencies) {
         data.regionAgencies = this.regionAgencies.map((ra) => ra.toJSON());
       }

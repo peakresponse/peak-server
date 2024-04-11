@@ -2,6 +2,21 @@
   <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
 </div>
 <div class="mb-3">
+  <shared-text-field id="routedUrl" label="Routed URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="routedClientId" label="Routed Client ID" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field
+    id="routedClientSecret"
+    label="Routed Client Secret"
+    type="password"
+    [source]="record"
+    [target]="record"
+    [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
   <shared-array-field id="regionAgencies" label="Agencies" [source]="record" [target]="record" [error]="error">
     <ng-template #item let-regionAgency="item"> {{ regionAgency.agency?.name }} ({{ regionAgency.agency?.stateUniqueId }}) </ng-template>
     <ng-template #form let-addItem="addItem">
