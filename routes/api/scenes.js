@@ -4,6 +4,7 @@ const { StatusCodes } = require('http-status-codes');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
+const routed = require('../../lib/routed');
 const { dispatchSceneUpdate } = require('../../wss');
 
 const { Op } = models.Sequelize;
@@ -64,7 +65,7 @@ router.post(
       );
     });
     res.status(created ? StatusCodes.CREATED : StatusCodes.OK).json(scene.toJSON());
-    await dispatchSceneUpdate(scene.canonicalId);
+    await Promise.all([dispatchSceneUpdate(scene.canonicalId), routed.dispatchSceneUpdate(scene.canonicalId)]);
   }),
 );
 

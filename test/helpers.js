@@ -8,6 +8,7 @@ process.env.BASE_HOST = 'peakresponse.localhost';
 process.env.BASE_URL = 'http://peakresponse.localhost:3000';
 process.env.EXPRESS_SUBDOMAIN_OFFSET = '2';
 process.env.MODEL_EXPORT_AES_KEY = 'atFRHRK2gSapTqgJZxpl4ffqsOaUXUpoLbVw3D9Z6kc=';
+process.env.MODEL_REGION_AES_KEY = 'oelWGGK8epK1c0m8jbL7zX4QKgXf9MAntuFuOTWlsGo=';
 
 const fixtures = require('sequelize-fixtures');
 const fs = require('fs-extra');

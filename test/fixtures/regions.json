@@ -4,6 +4,9 @@
     "data": {
       "id": "c781fe1e-a337-4cc3-9351-5aed61fa3c0d",
       "name": "San Francisco County EMS Agency",
+      "routedUrl": "https://sf.routedapp.net",
+      "routedClientId": "testid",
+      "routedEncryptedClientSecret": "N4llJuo4mOA/p9sQi40xDQ==:Wq5uYq0ok3J8aBsqvXYlcQ==",
       "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
       "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
       "createdAt": "2020-10-06T01:44:44.012Z",

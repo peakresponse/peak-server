@@ -19,6 +19,14 @@
           <label>Name</label>
           <h3>{{ record.name }}</h3>
         </div>
+        <div *ngIf="record.routedUrl" class="mb-3">
+          <label>Routed URL</label>
+          <h3>{{ record.routedUrl }}</h3>
+        </div>
+        <div *ngIf="record.routedClientId" class="mb-3">
+          <label>Routed Client ID</label>
+          <h3>{{ record.routedClientId }}</h3>
+        </div>
         <div class="mb-3">
           <label>Agencies</label>
           <h3 *ngFor="let regionAgency of record.regionAgencies">

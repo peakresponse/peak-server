@@ -2,6 +2,8 @@ const _ = require('lodash');
 const { Model } = require('sequelize');
 const sequelizePaginate = require('sequelize-paginate');
 
+const crypto = require('../lib/crypto');
+
 module.exports = (sequelize, DataTypes) => {
   class Region extends Model {
     static associate(models) {
@@ -13,7 +15,16 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      const data = _.pick(attributes, ['id', 'name', 'createdById', 'updatedById', 'createdAt', 'updatedAt']);
+      const data = _.pick(attributes, [
+        'id',
+        'name',
+        'routedUrl',
+        'routedClientId',
+        'createdById',
+        'updatedById',
+        'createdAt',
+        'updatedAt',
+      ]);
       if (this.regionAgencies) {
         data.regionAgencies = this.regionAgencies.map((ra) => ra.toJSON());
       }
@@ -77,6 +88,27 @@ module.exports = (sequelize, DataTypes) => {
   Region.init(
     {
       name: DataTypes.STRING,
+      routedUrl: DataTypes.TEXT,
+      routedClientId: DataTypes.TEXT,
+      routedClientSecret: {
+        type: DataTypes.VIRTUAL(DataTypes.TEXT, ['routedEncryptedClientSecret']),
+        get() {
+          try {
+            return crypto.decrypt(process.env.MODEL_REGION_AES_KEY, this.getDataValue('routedEncryptedClientSecret'));
+          } catch {
+            return null;
+          }
+        },
+        set(newValue) {
+          let encrypted = null;
+          if (newValue) {
+            encrypted = crypto.encrypt(process.env.MODEL_REGION_AES_KEY, newValue);
+          }
+          this.setDataValue('routedEncryptedClientSecret', encrypted);
+        },
+      },
+      routedEncryptedClientSecret: DataTypes.TEXT,
+      routedCredentials: DataTypes.JSONB,
     },
     {
       sequelize,

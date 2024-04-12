@@ -50,6 +50,8 @@ describe('/api/regions', () => {
       assert.deepStrictEqual(data, {
         id: 'c781fe1e-a337-4cc3-9351-5aed61fa3c0d',
         name: 'San Francisco County EMS Agency',
+        routedUrl: 'https://sf.routedapp.net',
+        routedClientId: 'testid',
         regionAgencies: data.regionAgencies,
         regionFacilities: data.regionFacilities,
         createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
@@ -74,11 +76,17 @@ describe('/api/regions', () => {
         .post('/api/regions')
         .send({
           name: 'Sacramento County EMS Agency',
+          routedUrl: 'https://sac.routedapp.net',
+          routedClientId: 'testid',
+          routedClientSecret: 'testsecret',
         })
         .expect(StatusCodes.CREATED);
       assert(response.body.id);
       const record = await models.Region.findByPk(response.body.id);
       assert.deepStrictEqual(record.name, 'Sacramento County EMS Agency');
+      assert.deepStrictEqual(record.routedUrl, 'https://sac.routedapp.net');
+      assert.deepStrictEqual(record.routedClientId, 'testid');
+      assert.deepStrictEqual(record.routedClientSecret, 'testsecret');
       assert.deepStrictEqual(record.createdById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
       assert.deepStrictEqual(record.updatedById, '7f666fe4-dbdd-4c7f-ab44-d9157379a680');
     });
@@ -87,9 +95,30 @@ describe('/api/regions', () => {
   describe('PATCH /:id', () => {
     it('updates an existing Region record', async () => {
       const response = await testSession
+        .patch('/api/regions/15a02134-9ff4-4536-b57d-c9309f6b7947')
+        .send({
+          name: 'Contra Costa County EMS',
+          routedUrl: 'https://ccc.routedapp.net',
+          routedClientId: 'testid',
+          routedClientSecret: 'testsecret',
+        })
+        .expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body.id, '15a02134-9ff4-4536-b57d-c9309f6b7947');
+      assert.deepStrictEqual(response.body.name, 'Contra Costa County EMS');
+
+      const record = await models.Region.findByPk('15a02134-9ff4-4536-b57d-c9309f6b7947');
+      assert.deepStrictEqual(record.name, 'Contra Costa County EMS');
+      assert.deepStrictEqual(record.routedUrl, 'https://ccc.routedapp.net');
+      assert.deepStrictEqual(record.routedClientId, 'testid');
+      assert.deepStrictEqual(record.routedClientSecret, 'testsecret');
+    });
+
+    it('updates an existing Region record without affecting client secret', async () => {
+      const response = await testSession
         .patch('/api/regions/c781fe1e-a337-4cc3-9351-5aed61fa3c0d')
         .send({
           name: 'City and County of San Francisco EMS Agency',
+          routedClientSecret: '',
         })
         .expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body.id, 'c781fe1e-a337-4cc3-9351-5aed61fa3c0d');
@@ -97,6 +126,9 @@ describe('/api/regions', () => {
 
       const record = await models.Region.findByPk('c781fe1e-a337-4cc3-9351-5aed61fa3c0d');
       assert.deepStrictEqual(record.name, 'City and County of San Francisco EMS Agency');
+      assert.deepStrictEqual(record.routedUrl, 'https://sf.routedapp.net');
+      assert.deepStrictEqual(record.routedClientId, 'testid');
+      assert.deepStrictEqual(record.routedClientSecret, 'testsecret');
     });
   });
 
