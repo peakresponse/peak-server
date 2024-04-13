@@ -6,6 +6,7 @@ const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
 const { dispatchIncidentUpdate, dispatchReportUpdate } = require('../../wss');
+const routed = require('../../lib/routed');
 
 const router = express.Router();
 
@@ -45,6 +46,7 @@ router.post(
     const incidentIds = [];
     const reportIds = [];
     const canonicalReportIds = [];
+    const sceneIds = [];
     await models.sequelize.transaction(async (transaction) => {
       // TODO: check if logged-in user is authorized to create/update
       const payload = {};
@@ -216,6 +218,7 @@ router.post(
                 incidentIds.push(obj.incidentId);
                 reportIds.push(obj.id);
                 canonicalReportIds.push(obj.canonicalId);
+                sceneIds.push(obj.sceneId);
               }
             }
           }
@@ -225,6 +228,7 @@ router.post(
     });
     await Promise.all([
       Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id))),
+      Promise.all(_.uniq(sceneIds).map((id) => routed.dispatchSceneUpdate(id, true))),
       Promise.all(canonicalReportIds.map((id) => dispatchReportUpdate(id))),
     ]);
     const exportTriggers = await req.agency.getExportTriggers({
