@@ -9,9 +9,6 @@ incidentsServer.on('connection', async (ws, req) => {
   ws.info = { userId: req.user.id, agencyId: req.agency.id, assignmentId: req.assignment.id, vehicleId: req.assignment.vehicleId };
   // query for any active MCIs- for now, incidents from the same agency, TODO query across all appropriate counties
   const incidents = await models.Incident.findAll({
-    where: {
-      createdByAgencyId: req.agency.id,
-    },
     include: [
       {
         model: models.Scene,
@@ -19,6 +16,14 @@ incidentsServer.on('connection', async (ws, req) => {
         where: {
           isMCI: true,
           closedAt: null,
+          [models.Sequelize.Op.or]: [
+            {
+              createdByAgencyId: req.agency.id,
+            },
+            {
+              updatedByAgencyId: req.agency.id,
+            },
+          ],
         },
       },
       {
