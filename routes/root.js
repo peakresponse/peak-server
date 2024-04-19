@@ -58,7 +58,7 @@ if (process.env.MARKETING_ENABLED === 'true') {
       // don't allow spammers to use our own domain
       const domain = process.env.MARKETING_EMAIL.substring(process.env.MARKETING_EMAIL.indexOf('@'));
       if (
-        req.body.email.indexOf(domain) >= 0 ||
+        (req.body.email?.indexOf(domain) ?? 0) >= 0 ||
         blacklist.includes(req.body.firstName?.trim() ?? '') ||
         blacklist.includes(req.body.lastName?.trim() ?? '') ||
         blacklist.includes(req.body.email?.trim() ?? '')
