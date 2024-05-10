@@ -49,6 +49,30 @@ module.exports = (sequelize, DataTypes) => {
       return payload;
     }
 
+    /*
+    async importAgency(userId) {}
+
+    async importConfiguration(userId) {}
+
+    async importContact(userId) {}
+
+    async importCustomConfiguration(userId) {}
+
+    async importCustomResults(userId) {}
+
+    async importDevice(userId) {}
+
+    async importFacility(userId) {}
+
+    async importLocation(userId) {}
+
+    async importPersonnel(userId) {}
+
+    async importVehicle(userId) {}
+
+    async startImportDataSet(user, stateDataSet) {}
+*/
+
     async updateDEMCustomConfiguration(options) {
       if (!this.isDraft) {
         return Promise.resolve();
@@ -321,6 +345,24 @@ module.exports = (sequelize, DataTypes) => {
       validationErrors: {
         type: DataTypes.JSONB,
       },
+      file: {
+        type: DataTypes.STRING,
+      },
+      fileName: {
+        type: DataTypes.STRING,
+      },
+      fileUrl: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['file']),
+        get() {
+          return this.assetUrl('file');
+        },
+      },
+      status: {
+        type: DataTypes.JSONB,
+      },
+      isCancelled: {
+        type: DataTypes.BOOLEAN,
+      },
     },
     {
       sequelize,
@@ -329,5 +371,10 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     },
   );
+
+  Version.afterSave(async (record, options) => {
+    await record.handleAssetFile('file', options);
+  });
+
   return Version;
 };
