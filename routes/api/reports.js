@@ -47,6 +47,7 @@ router.post(
     const reportIds = [];
     const canonicalReportIds = [];
     const sceneIds = [];
+    const routedReportIds = [];
     await models.sequelize.transaction(async (transaction) => {
       // TODO: check if logged-in user is authorized to create/update
       const payload = {};
@@ -219,6 +220,9 @@ router.post(
                 reportIds.push(obj.id);
                 canonicalReportIds.push(obj.canonicalId);
                 sceneIds.push(obj.sceneId);
+                if (obj.ringdownId) {
+                  routedReportIds.push(obj.id);
+                }
               }
             }
           }
@@ -229,6 +233,7 @@ router.post(
     await Promise.all([
       Promise.all(_.uniq(incidentIds).map((id) => dispatchIncidentUpdate(id))),
       Promise.all(_.uniq(sceneIds).map((id) => routed.dispatchSceneUpdate(id, true))),
+      Promise.all(_.uniq(routedReportIds).map((id) => routed.dispatchReportUpdate(id))),
       Promise.all(canonicalReportIds.map((id) => dispatchReportUpdate(id))),
     ]);
     const exportTriggers = await req.agency.getExportTriggers({
