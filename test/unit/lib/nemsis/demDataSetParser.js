@@ -20,12 +20,13 @@ describe('lib', () => {
       });
 
       describe('.parseAgency()', () => {
-        it('parses the dAgency record out of the dem data set', async () => {
+        it('parses the dAgency record out of the DEM data set', async () => {
           await parser.parseAgency((dataSetNemsisVersion, agency) => {
             assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
             assert.deepStrictEqual(agency, {
               'dAgency.01': { _text: 'A078' },
               'dAgency.02': { _text: '350-A078' },
+              'dAgency.03': { _text: 'UCHealth EMS' },
               'dAgency.04': { _text: '08' },
               'dAgency.AgencyServiceGroup': [
                 {
@@ -167,14 +168,52 @@ describe('lib', () => {
                 },
               ],
               'dAgency.09': { _text: '9920001' },
+              'dAgency.10': [{ _text: '9920005' }, { _text: '9920013' }, { _text: '9920019' }],
               'dAgency.11': { _text: '9917021' },
               'dAgency.12': { _text: '1016003' },
               'dAgency.13': { _text: '9912005' },
               'dAgency.14': { _text: '1018005' },
+              'dAgency.AgencyYearGroup': [
+                {
+                  _attributes: { UUID: '994750b3-1590-457f-84ad-9ae8d6b2105a' },
+                  'dAgency.15': { _text: '2021' },
+                  'dAgency.16': { _text: '6340' },
+                  'dAgency.17': { _text: '477187' },
+                  'dAgency.18': { _text: '60173' },
+                  'dAgency.19': { _text: '56958' },
+                  'dAgency.20': { _text: '44512' },
+                  'dAgency.21': { _text: '50348' },
+                  'dAgency.22': { _text: '44921' },
+                },
+                {
+                  _attributes: { UUID: '2e537491-028a-4ef7-bef1-cf2f0e074544' },
+                  'dAgency.15': { _text: '2022' },
+                  'dAgency.16': { _text: '6340' },
+                  'dAgency.17': { _text: '478168' },
+                  'dAgency.18': { _text: '58138' },
+                  'dAgency.19': { _text: '53129' },
+                  'dAgency.20': { _text: '43791' },
+                  'dAgency.21': { _text: '59820' },
+                  'dAgency.22': { _text: '54020' },
+                },
+              ],
+              'dAgency.23': { _text: '1027009' },
+              'dAgency.24': { _text: '9923003' },
               'dAgency.25': [{ _text: '1225658784' }, { _text: '1376168575' }, { _text: '1417512559' }, { _text: '1679143457' }],
               'dAgency.26': { _attributes: { 'xsi:nil': 'true', NV: '7701001' } },
             });
           });
+        });
+      });
+
+      describe('.parseConfiguration', () => {
+        it('parses the dConfiguration records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parseConfiguration((dataSetNemsisVersion) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            count += 1;
+          });
+          assert.deepStrictEqual(count, 2);
         });
       });
     });
