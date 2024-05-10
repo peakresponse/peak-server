@@ -206,10 +206,112 @@ describe('lib', () => {
         });
       });
 
-      describe('.parseConfiguration', () => {
+      describe('.parseConfigurations', () => {
         it('parses the dConfiguration records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseConfiguration((dataSetNemsisVersion) => {
+          await parser.parseConfigurations((dataSetNemsisVersion) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            count += 1;
+          });
+          assert.deepStrictEqual(count, 2);
+        });
+      });
+
+      describe('.parseContacts', () => {
+        it('parses the dContact records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parseContacts((dataSetNemsisVersion) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            count += 1;
+          });
+          assert.deepStrictEqual(count, 2);
+        });
+      });
+
+      describe('.parseCustomConfigurations', () => {
+        it('parses the dCustomConfiguration records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parseCustomConfigurations((dataSetNemsisVersion, data) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            assert.deepStrictEqual(data, {
+              _attributes: { CustomElementID: 'dPersonnel.18' },
+              'dCustomConfiguration.01': { _attributes: { nemsisElement: 'dPersonnel.18' }, _text: "EMS Personnel's Immunization Status" },
+              'dCustomConfiguration.02': { _text: 'The type of immunization status.' },
+              'dCustomConfiguration.03': { _text: '9902009' },
+              'dCustomConfiguration.04': { _text: '9923001' },
+              'dCustomConfiguration.05': { _text: '9903007' },
+              'dCustomConfiguration.06': { _attributes: { nemsisCode: '9910027', customValueDescription: 'COVID-19' }, _text: '9910055' },
+            });
+            count += 1;
+          });
+          assert.deepStrictEqual(count, 1);
+        });
+      });
+
+      describe('.parseCustomResults', () => {
+        it('parses the dCustomResult records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parseCustomResults((dataSetNemsisVersion) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            count += 1;
+          });
+          assert.deepStrictEqual(count, 3);
+        });
+      });
+
+      describe('.parseDevices', () => {
+        it('parses the dDevice records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parseDevices((dataSetNemsisVersion) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            count += 1;
+          });
+          assert.deepStrictEqual(count, 2);
+        });
+      });
+
+      describe('.parseFacilities', () => {
+        it('parses the dFacility records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parseFacilities((dataSetNemsisVersion, data, other) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            count += 1;
+            if (count === 5) {
+              assert.deepStrictEqual(other['dFacility.01']?._text, '1701019');
+            } else {
+              assert.deepStrictEqual(other['dFacility.01']?._text, '1701005');
+            }
+          });
+          assert.deepStrictEqual(count, 5);
+        });
+      });
+
+      describe('.parseLocations', () => {
+        it('parses the dDevice records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parseLocations((dataSetNemsisVersion) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            count += 1;
+          });
+          assert.deepStrictEqual(count, 2);
+        });
+      });
+
+      describe('.parsePersonnel', () => {
+        it('parses the dDevice records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parsePersonnel((dataSetNemsisVersion) => {
+            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+            count += 1;
+          });
+          assert.deepStrictEqual(count, 4);
+        });
+      });
+
+      describe('.parseVehicles', () => {
+        it('parses the dDevice records out of the DEM data set', async () => {
+          let count = 0;
+          await parser.parseVehicles((dataSetNemsisVersion) => {
             assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
           });
