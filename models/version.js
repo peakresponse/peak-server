@@ -2,15 +2,16 @@ const inflection = require('inflection');
 const { JSONPath } = require('jsonpath-plus');
 const _ = require('lodash');
 const { DateTime } = require('luxon');
-const { Model } = require('sequelize');
 const xmlFormatter = require('xml-formatter');
 const xmljs = require('xml-js');
 
 const nemsisXsd = require('../lib/nemsis/xsd');
 const nemsisSchematron = require('../lib/nemsis/schematron');
 
+const { Base } = require('./base');
+
 module.exports = (sequelize, DataTypes) => {
-  class Version extends Model {
+  class Version extends Base {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
