@@ -21,8 +21,8 @@ describe('lib', () => {
 
       describe('.parseAgency()', () => {
         it('parses the dAgency record out of the DEM data set', async () => {
-          await parser.parseAgency((dataSetNemsisVersion, agency) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseAgency((agency, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             assert.deepStrictEqual(agency, {
               'dAgency.01': { _text: 'A078' },
               'dAgency.02': { _text: '350-A078' },
@@ -209,8 +209,8 @@ describe('lib', () => {
       describe('.parseConfigurations', () => {
         it('parses the dConfiguration records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseConfigurations((dataSetNemsisVersion) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseConfigurations((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
           });
           assert.deepStrictEqual(count, 2);
@@ -220,8 +220,8 @@ describe('lib', () => {
       describe('.parseContacts', () => {
         it('parses the dContact records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseContacts((dataSetNemsisVersion) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseContacts((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
           });
           assert.deepStrictEqual(count, 2);
@@ -231,8 +231,8 @@ describe('lib', () => {
       describe('.parseCustomConfigurations', () => {
         it('parses the dCustomConfiguration records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseCustomConfigurations((dataSetNemsisVersion, data) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseCustomConfigurations((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             assert.deepStrictEqual(data, {
               _attributes: { CustomElementID: 'dPersonnel.18' },
               'dCustomConfiguration.01': { _attributes: { nemsisElement: 'dPersonnel.18' }, _text: "EMS Personnel's Immunization Status" },
@@ -251,8 +251,8 @@ describe('lib', () => {
       describe('.parseCustomResults', () => {
         it('parses the dCustomResult records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseCustomResults((dataSetNemsisVersion) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseCustomResults((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
           });
           assert.deepStrictEqual(count, 3);
@@ -262,8 +262,8 @@ describe('lib', () => {
       describe('.parseDevices', () => {
         it('parses the dDevice records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseDevices((dataSetNemsisVersion) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseDevices((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
           });
           assert.deepStrictEqual(count, 2);
@@ -273,8 +273,8 @@ describe('lib', () => {
       describe('.parseFacilities', () => {
         it('parses the dFacility records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseFacilities((dataSetNemsisVersion, data, other) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseFacilities((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
             if (count === 5) {
               assert.deepStrictEqual(other['dFacility.01']?._text, '1701019');
@@ -289,8 +289,8 @@ describe('lib', () => {
       describe('.parseLocations', () => {
         it('parses the dDevice records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseLocations((dataSetNemsisVersion) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseLocations((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
           });
           assert.deepStrictEqual(count, 2);
@@ -300,8 +300,8 @@ describe('lib', () => {
       describe('.parsePersonnel', () => {
         it('parses the dDevice records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parsePersonnel((dataSetNemsisVersion) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parsePersonnel((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
           });
           assert.deepStrictEqual(count, 4);
@@ -311,8 +311,8 @@ describe('lib', () => {
       describe('.parseVehicles', () => {
         it('parses the dDevice records out of the DEM data set', async () => {
           let count = 0;
-          await parser.parseVehicles((dataSetNemsisVersion) => {
-            assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.230317CP4');
+          await parser.parseVehicles((data, other) => {
+            assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
           });
           assert.deepStrictEqual(count, 2);
