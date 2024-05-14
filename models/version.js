@@ -66,47 +66,53 @@ module.exports = (sequelize, DataTypes) => {
       );
     }
 
-    async startImportDataSet(user) {
+    async startImportDataSet(user, options) {
       if (!this.isDraft) {
         return;
       }
-      await this.update({ isCancelled: false });
-      await this.setStatus(StatusCodes.ACCEPTED, 'Importing...');
+      await this.update({ isCancelled: false }, { transaction: options?.transaction });
+      await this.setStatus(StatusCodes.ACCEPTED, 'Importing...', { transaction: options?.transaction });
+      // perform in the background...
       const versionId = this.id;
       const createdByAgencyId = this.agencyId;
       const updatedById = user.id;
       // download attached file into tmp file, then set up parser
-      const tmpFilePath = await this.downloadAssetFile('file');
-      const parser = new NemsisDemDataSetParser(tmpFilePath);
-      // perform in the background...
+      let tmpFilePath;
+      let parser;
       const customResults = [];
       const customConfigurations = [];
-      parser
-        .parseCustomConfigurations((data) =>
-          sequelize.transaction(async (transaction) => {
-            const [record, created] = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOrCreate({
-              where: {
-                createdByAgencyId,
-                customElementId: data._attributes?.CustomElementID,
-              },
-              defaults: {
-                versionId,
-                isDraft: true,
-                createdById: updatedById,
-                updatedById,
-                data,
-              },
-              include: ['draft'],
-              transaction,
-            });
-            if (!created) {
-              const draft = await record.updateDraft({ versionId, data, updatedById }, { transaction });
-              customConfigurations.push(draft);
-              return draft;
-            }
-            customConfigurations.push(record);
-            return record;
-          }),
+      this.downloadAssetFile('file')
+        .then((filePath) => {
+          tmpFilePath = filePath;
+          parser = new NemsisDemDataSetParser(tmpFilePath);
+        })
+        .then(() =>
+          parser.parseCustomConfigurations((data) =>
+            sequelize.transaction(async (transaction) => {
+              const [record, created] = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOrCreate({
+                where: {
+                  createdByAgencyId,
+                  customElementId: data._attributes?.CustomElementID,
+                },
+                defaults: {
+                  versionId,
+                  isDraft: true,
+                  createdById: updatedById,
+                  updatedById,
+                  data,
+                },
+                include: ['draft'],
+                transaction,
+              });
+              if (!created) {
+                const draft = await record.updateDraft({ versionId, data, updatedById }, { transaction });
+                customConfigurations.push(draft);
+                return draft;
+              }
+              customConfigurations.push(record);
+              return record;
+            }),
+          ),
         )
         .then(() =>
           parser.parseCustomResults((data) => {
