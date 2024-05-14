@@ -245,7 +245,7 @@ export class XsdElementBaseComponent {
     const correlationId = this.correlationId;
     if (correlationId) {
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
-      const rg = this.data.CustomResults?.[`${dataSet}.ResultsGroup`]?.find(
+      const rg = this.data.CustomResults?.find(
         (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId,
       );
       if (rg) {
@@ -289,18 +289,16 @@ export class XsdElementBaseComponent {
     const correlationId = this.correlationId;
     if (correlationId) {
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
-      const index = this.record.data.CustomResults?.[`${dataSet}.ResultsGroup`]?.findIndex(
+      const index = this.record.data.CustomResults?.findIndex(
         (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId,
       );
       if (index >= 0) {
-        this.record.data.CustomResults[`${dataSet}.ResultsGroup`].splice(index, 1);
-        if (this.record.data.CustomResults[`${dataSet}.ResultsGroup`].length === 0) {
+        this.record.data.CustomResults.splice(index, 1);
+        if (this.record.data.CustomResults.length === 0) {
           delete this.record.data.CustomResults;
           this.correlationId = undefined;
         } else {
-          if (
-            !this.record.data.CustomResults?.[`${dataSet}.ResultsGroup`]?.find((rg: any) => rg[`${dataSet}.03`]?._text === correlationId)
-          ) {
+          if (!this.record.data.CustomResults?.find((rg: any) => rg[`${dataSet}.03`]?._text === correlationId)) {
             this.correlationId = undefined;
           }
         }
@@ -358,9 +356,8 @@ export class XsdElementBaseComponent {
       this.correlationId = correlationId;
     }
     const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
-    this.record.data.CustomResults ||= {};
-    this.record.data.CustomResults[`${dataSet}.ResultsGroup`] ||= [];
-    this.record.data.CustomResults[`${dataSet}.ResultsGroup`].push({
+    this.record.data.CustomResults ||= [];
+    this.record.data.CustomResults.push({
       [`${dataSet}.01`]: { _text: customValue },
       [`${dataSet}.02`]: { _text: this.name },
       [`${dataSet}.03`]: { _text: correlationId },

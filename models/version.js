@@ -341,15 +341,13 @@ module.exports = (sequelize, DataTypes) => {
               if (r.draft) {
                 if (r.draft.data.CustomResults) {
                   dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
-                    r.draft.data.CustomResults['dCustomResults.ResultsGroup'],
+                    r.draft.data.CustomResults,
                   );
                 }
                 return r.draft.archivedAt ? null : r.draft.getData(this);
               }
               if (r.data.CustomResults) {
-                dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(
-                  r.data.CustomResults['dCustomResults.ResultsGroup'],
-                );
+                dCustomResults['dCustomResults.ResultsGroup'] = dCustomResults['dCustomResults.ResultsGroup'].concat(r.data.CustomResults);
               }
               return r.getData(this);
             })
