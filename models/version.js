@@ -80,31 +80,38 @@ module.exports = (sequelize, DataTypes) => {
       const parser = new NemsisDemDataSetParser(tmpFilePath);
       // perform in the background...
       const customResults = [];
+      const customConfigurations = [];
       parser
-        .parseCustomResults((data) => {
-          customResults.push(data);
-        })
+        .parseCustomConfigurations((data) =>
+          sequelize.transaction(async (transaction) => {
+            const [record, created] = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOrCreate({
+              where: {
+                createdByAgencyId,
+                customElementId: data._attributes?.CustomElementID,
+              },
+              defaults: {
+                versionId,
+                isDraft: true,
+                createdById: updatedById,
+                updatedById,
+                data,
+              },
+              include: ['draft'],
+              transaction,
+            });
+            if (!created) {
+              const draft = await record.updateDraft({ versionId, data, updatedById }, { transaction });
+              customConfigurations.push(draft);
+              return draft;
+            }
+            customConfigurations.push(record);
+            return record;
+          }),
+        )
         .then(() =>
-          parser.parseCustomConfigurations((data) =>
-            sequelize.transaction(async (transaction) => {
-              const [record, created] = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOrCreate({
-                where: {
-                  createdByAgencyId,
-                  customElementId: data._attributes?.CustomElementID,
-                },
-                defaults: {
-                  versionId,
-                  isDraft: true,
-                  createdById: updatedById,
-                  updatedById,
-                  data,
-                },
-                include: ['draft'],
-                transaction,
-              });
-              return created ? Promise.resolve(record) : record.updateDraft({ versionId, data, updatedById }, { transaction });
-            }),
-          ),
+          parser.parseCustomResults((data) => {
+            customResults.push(data);
+          }),
         )
         .then(() =>
           parser.parseAgency(async (data) => {
