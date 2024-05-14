@@ -322,7 +322,7 @@ export class XsdElementBaseComponent {
       if (basePath === '$') {
         return this.record.data._attributes?.CorrelationID;
       } else {
-        // TODO: find closest parent multi-group element
+        // TODO: find closest parent repeating element
       }
     }
     return undefined;
@@ -345,7 +345,7 @@ export class XsdElementBaseComponent {
           delete this.record.data._attributes?.CorrelationID;
         }
       } else {
-        // TODO: find closest parent multi-group element
+        // TODO: find closest parent repeating element
       }
     }
   }

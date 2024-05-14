@@ -299,11 +299,18 @@ describe('lib', () => {
 
       describe('.parsePersonnel', () => {
         it('parses the dDevice records out of the DEM data set', async () => {
+          const customResults = [];
+          await parser.parseCustomResults((data) => {
+            customResults.push({ nemsisElement: data['dCustomResults.02']._text, correlationId: data['dCustomResults.03']._text, data });
+          });
           let count = 0;
           await parser.parsePersonnel((data, other) => {
             assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.230317CP4');
             count += 1;
-          });
+            if (count > 1) {
+              assert.ok(data.CustomResults);
+            }
+          }, customResults);
           assert.deepStrictEqual(count, 4);
         });
       });

@@ -270,6 +270,11 @@ describe('models', () => {
 
         const personnel = await models.Employment.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
         assert.deepStrictEqual(personnel.length, 4);
+        for (const p of personnel) {
+          if (p.email !== 'braunsa@example.com') {
+            assert.ok(p.data.CustomResults);
+          }
+        }
 
         const vehicles = await models.Vehicle.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
         assert.deepStrictEqual(vehicles.length, 2);

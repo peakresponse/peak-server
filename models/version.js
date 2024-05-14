@@ -110,59 +110,79 @@ module.exports = (sequelize, DataTypes) => {
         )
         .then(() =>
           parser.parseCustomResults((data) => {
-            customResults.push(data);
+            // check if this is mapped to an existing NEMSIS element
+            const customElementId = data['dCustomResults.02']._text;
+            const correlationId = data['dCustomResults.03']?._text;
+            let nemsisElement;
+            for (const customConfiguration of customConfigurations) {
+              if (customConfiguration.customElementId === customElementId) {
+                ({ nemsisElement } = customConfiguration);
+                break;
+              }
+            }
+            if (nemsisElement) {
+              customResults.push({ nemsisElement, correlationId, data });
+            } else {
+              // TODO: store in db
+            }
           }),
         )
         .then(() =>
           parser.parseAgency(async (data) => {
             const agency = await this.getAgency();
             return agency.updateDraft({ versionId, data, updatedById });
-          }),
+          }, customResults),
         )
         .then(() =>
-          parser.parseConfigurations((data) =>
-            sequelize.transaction(async (transaction) => {
-              const [record, created] = await sequelize.models.Configuration.scope('finalOrNew').findOrCreate({
-                where: {
-                  createdByAgencyId,
-                  stateId: data['dConfiguration.01']._text,
-                },
-                defaults: {
-                  versionId,
-                  isDraft: true,
-                  createdById: updatedById,
-                  updatedById,
-                  data,
-                },
-                include: ['draft'],
-                transaction,
-              });
-              return created ? Promise.resolve(record) : record.updateDraft({ versionId, data, updatedById }, { transaction });
-            }),
+          parser.parseConfigurations(
+            (data) =>
+              sequelize.transaction(async (transaction) => {
+                const [record, created] = await sequelize.models.Configuration.scope('finalOrNew').findOrCreate({
+                  where: {
+                    createdByAgencyId,
+                    stateId: data['dConfiguration.01']._text,
+                  },
+                  defaults: {
+                    versionId,
+                    isDraft: true,
+                    createdById: updatedById,
+                    updatedById,
+                    data,
+                  },
+                  include: ['draft'],
+                  transaction,
+                });
+                return created ? Promise.resolve(record) : record.updateDraft({ versionId, data, updatedById }, { transaction });
+              }),
+            customResults,
           ),
         )
         .then(() =>
-          parser.parseContacts((data) =>
-            sequelize.models.Contact.create({
-              versionId,
-              isDraft: true,
-              createdByAgencyId,
-              createdById: updatedById,
-              updatedById,
-              data,
-            }),
+          parser.parseContacts(
+            (data) =>
+              sequelize.models.Contact.create({
+                versionId,
+                isDraft: true,
+                createdByAgencyId,
+                createdById: updatedById,
+                updatedById,
+                data,
+              }),
+            customResults,
           ),
         )
         .then(() =>
-          parser.parseDevices((data) =>
-            sequelize.models.Device.create({
-              versionId,
-              isDraft: true,
-              createdByAgencyId,
-              createdById: updatedById,
-              updatedById,
-              data,
-            }),
+          parser.parseDevices(
+            (data) =>
+              sequelize.models.Device.create({
+                versionId,
+                isDraft: true,
+                createdByAgencyId,
+                createdById: updatedById,
+                updatedById,
+                data,
+              }),
+            customResults,
           ),
         )
         .then(() =>
@@ -181,42 +201,48 @@ module.exports = (sequelize, DataTypes) => {
               updatedById,
               data: newData,
             });
-          }),
+          }, customResults),
         )
         .then(() =>
-          parser.parseLocations((data) =>
-            sequelize.models.Location.create({
-              versionId,
-              isDraft: true,
-              createdByAgencyId,
-              createdById: updatedById,
-              updatedById,
-              data,
-            }),
+          parser.parseLocations(
+            (data) =>
+              sequelize.models.Location.create({
+                versionId,
+                isDraft: true,
+                createdByAgencyId,
+                createdById: updatedById,
+                updatedById,
+                data,
+              }),
+            customResults,
           ),
         )
         .then(() =>
-          parser.parsePersonnel((data) =>
-            sequelize.models.Employment.create({
-              versionId,
-              isDraft: true,
-              createdByAgencyId,
-              createdById: updatedById,
-              updatedById,
-              data,
-            }),
+          parser.parsePersonnel(
+            (data) =>
+              sequelize.models.Employment.create({
+                versionId,
+                isDraft: true,
+                createdByAgencyId,
+                createdById: updatedById,
+                updatedById,
+                data,
+              }),
+            customResults,
           ),
         )
         .then(() =>
-          parser.parseVehicles((data) =>
-            sequelize.models.Vehicle.create({
-              versionId,
-              isDraft: true,
-              createdByAgencyId,
-              createdById: updatedById,
-              updatedById,
-              data,
-            }),
+          parser.parseVehicles(
+            (data) =>
+              sequelize.models.Vehicle.create({
+                versionId,
+                isDraft: true,
+                createdByAgencyId,
+                createdById: updatedById,
+                updatedById,
+                data,
+              }),
+            customResults,
           ),
         )
         .then(async () => {
