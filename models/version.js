@@ -1,3 +1,5 @@
+const fs = require('fs/promises');
+const { StatusCodes } = require('http-status-codes');
 const inflection = require('inflection');
 const { JSONPath } = require('jsonpath-plus');
 const _ = require('lodash');
@@ -7,6 +9,7 @@ const xmljs = require('xml-js');
 
 const nemsisXsd = require('../lib/nemsis/xsd');
 const nemsisSchematron = require('../lib/nemsis/schematron');
+const { NemsisDemDataSetParser } = require('../lib/nemsis/demDataSetParser');
 
 const { Base } = require('./base');
 
@@ -70,16 +73,183 @@ module.exports = (sequelize, DataTypes) => {
     async importPersonnel(userId) {}
 
     async importVehicle(userId) {}
-
-    async startImportDataSet(user, stateDataSet) {}
 */
+
+    async setStatus(code, message, options) {
+      return this.update(
+        {
+          status: {
+            ...this.status,
+            code,
+            message,
+          },
+        },
+        { transaction: options?.transaction },
+      );
+    }
+
+    async startImportDataSet(user) {
+      if (!this.isDraft) {
+        return;
+      }
+      await this.update({ isCancelled: false });
+      await this.setStatus(StatusCodes.ACCEPTED, 'Importing...');
+      const versionId = this.id;
+      const createdByAgencyId = this.agencyId;
+      const updatedById = user.id;
+      // download attached file into tmp file, then set up parser
+      const tmpFilePath = await this.downloadAssetFile('file');
+      const parser = new NemsisDemDataSetParser(tmpFilePath);
+      // perform in the background...
+      parser
+        .parseAgency(async (data) => {
+          const agency = await this.getAgency();
+          return agency.updateDraft({ versionId, data, updatedById });
+        })
+        .then(() =>
+          parser.parseConfigurations((data) =>
+            sequelize.transaction(async (transaction) => {
+              const [record, created] = await sequelize.models.Configuration.scope('finalOrNew').findOrCreate({
+                where: {
+                  createdByAgencyId,
+                  stateId: data['dConfiguration.01']._text,
+                },
+                defaults: {
+                  versionId,
+                  isDraft: true,
+                  createdById: updatedById,
+                  updatedById,
+                  data,
+                },
+                include: ['draft'],
+                transaction,
+              });
+              return created ? Promise.resolve(record) : record.updateDraft({ versionId, data, updatedById }, { transaction });
+            }),
+          ),
+        )
+        .then(() =>
+          parser.parseContacts((data) =>
+            sequelize.models.Contact.create({
+              versionId,
+              isDraft: true,
+              createdByAgencyId,
+              createdById: updatedById,
+              updatedById,
+              data,
+            }),
+          ),
+        )
+        .then(() =>
+          parser.parseCustomConfigurations((data) =>
+            sequelize.transaction(async (transaction) => {
+              const [record, created] = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOrCreate({
+                where: {
+                  createdByAgencyId,
+                  customElementId: data._attributes?.CustomElementID,
+                },
+                defaults: {
+                  versionId,
+                  isDraft: true,
+                  createdById: updatedById,
+                  updatedById,
+                  data,
+                },
+                include: ['draft'],
+                transaction,
+              });
+              return created ? Promise.resolve(record) : record.updateDraft({ versionId, data, updatedById }, { transaction });
+            }),
+          ),
+        )
+        .then(() =>
+          parser.parseDevices((data) =>
+            sequelize.models.Device.create({
+              versionId,
+              isDraft: true,
+              createdByAgencyId,
+              createdById: updatedById,
+              updatedById,
+              data,
+            }),
+          ),
+        )
+        .then(() =>
+          parser.parseFacilities((data, other) => {
+            const newData = {
+              'dFacility.FacilityGroup': data,
+            };
+            if (other['dFacility.01']) {
+              newData['dFacility.01'] = other['dFacility.01'];
+            }
+            return sequelize.models.Facility.create({
+              versionId,
+              isDraft: true,
+              createdByAgencyId,
+              createdById: updatedById,
+              updatedById,
+              data: newData,
+            });
+          }),
+        )
+        .then(() =>
+          parser.parseLocations((data) =>
+            sequelize.models.Location.create({
+              versionId,
+              isDraft: true,
+              createdByAgencyId,
+              createdById: updatedById,
+              updatedById,
+              data,
+            }),
+          ),
+        )
+        .then(() =>
+          parser.parsePersonnel((data) =>
+            sequelize.models.Employment.create({
+              versionId,
+              isDraft: true,
+              createdByAgencyId,
+              createdById: updatedById,
+              updatedById,
+              data,
+            }),
+          ),
+        )
+        .then(() =>
+          parser.parseVehicles((data) =>
+            sequelize.models.Vehicle.create({
+              versionId,
+              isDraft: true,
+              createdByAgencyId,
+              createdById: updatedById,
+              updatedById,
+              data,
+            }),
+          ),
+        )
+        // .then(() =>
+        //   parser.parseCustomResults((data) => {
+        //     // no op
+        //   }),
+        // )
+        .then(async () => {
+          await this.setStatus(StatusCodes.OK);
+        })
+        .catch(async (err) => {
+          await this.setStatus(StatusCodes.INTERNAL_SRVER_ERROR, err.message);
+        })
+        .finally(async () => {
+          await fs.unlink(tmpFilePath);
+        });
+    }
 
     async updateDEMCustomConfiguration(options) {
       if (!this.isDraft) {
         return Promise.resolve();
       }
       if (!options?.transaction) {
-        return sequelize.transaction((transaction) => this.regenerate({ ...options, transaction }));
+        return sequelize.transaction((transaction) => this.updateDEMCustomConfiguration({ ...options, transaction }));
       }
       const { transaction } = options;
       // get all final/draft (but not archived)/new DEMDataSet Custom Configurations

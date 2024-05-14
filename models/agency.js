@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'contacts',
         foreignKey: 'createdByAgencyId',
       });
+      Agency.hasMany(models.Configuration.scope('finalOrNew'), { as: 'configurations', foreignKey: 'createdByAgencyId' });
       Agency.hasMany(models.Employment.scope('finalOrNew'), { as: 'employments', foreignKey: 'createdByAgencyId' });
       Agency.hasMany(models.Form.scope('canonical'), {
         as: 'forms',

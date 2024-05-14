@@ -29,6 +29,15 @@
   {
     "model": "State",
     "data": {
+      "id": "08",
+      "name": "Colorado",
+      "createdAt": "2020-04-06T21:21:25.531Z",
+      "updatedAt": "2020-04-06T21:22:29.410Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
       "id": "09",
       "name": "Connecticut",
       "createdAt": "2020-04-06T21:21:25.531Z",
@@ -148,6 +157,15 @@
     "data": {
       "id": "53",
       "name": "Washington",
+      "createdAt": "2020-04-06T21:25:03.495Z",
+      "updatedAt": "2020-04-06T21:25:11.116Z"
+    }
+  },
+  {
+    "model": "State",
+    "data": {
+      "id": "56",
+      "name": "Wyoming",
       "createdAt": "2020-04-06T21:25:03.495Z",
       "updatedAt": "2020-04-06T21:25:11.116Z"
     }
