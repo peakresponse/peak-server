@@ -256,6 +256,8 @@ describe('models', () => {
         const customConfigurations = await models.CustomConfiguration.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
         assert.deepStrictEqual(customConfigurations.length, 1);
         assert.deepStrictEqual(customConfigurations[0].customElementId, 'dPersonnel.18');
+        assert.deepStrictEqual(customConfigurations[0].nemsisElement, 'dPersonnel.18');
+        assert.deepStrictEqual(customConfigurations[0].dataSet, 'DEMDataSet');
 
         const devices = await models.Device.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
         assert.deepStrictEqual(devices.length, 2);

@@ -53,28 +53,6 @@ module.exports = (sequelize, DataTypes) => {
       return payload;
     }
 
-    /*
-    async importAgency(userId) {}
-
-    async importConfiguration(userId) {}
-
-    async importContact(userId) {}
-
-    async importCustomConfiguration(userId) {}
-
-    async importCustomResults(userId) {}
-
-    async importDevice(userId) {}
-
-    async importFacility(userId) {}
-
-    async importLocation(userId) {}
-
-    async importPersonnel(userId) {}
-
-    async importVehicle(userId) {}
-*/
-
     async setStatus(code, message, options) {
       return this.update(
         {
@@ -101,11 +79,39 @@ module.exports = (sequelize, DataTypes) => {
       const tmpFilePath = await this.downloadAssetFile('file');
       const parser = new NemsisDemDataSetParser(tmpFilePath);
       // perform in the background...
+      const customResults = [];
       parser
-        .parseAgency(async (data) => {
-          const agency = await this.getAgency();
-          return agency.updateDraft({ versionId, data, updatedById });
+        .parseCustomResults((data) => {
+          customResults.push(data);
         })
+        .then(() =>
+          parser.parseCustomConfigurations((data) =>
+            sequelize.transaction(async (transaction) => {
+              const [record, created] = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOrCreate({
+                where: {
+                  createdByAgencyId,
+                  customElementId: data._attributes?.CustomElementID,
+                },
+                defaults: {
+                  versionId,
+                  isDraft: true,
+                  createdById: updatedById,
+                  updatedById,
+                  data,
+                },
+                include: ['draft'],
+                transaction,
+              });
+              return created ? Promise.resolve(record) : record.updateDraft({ versionId, data, updatedById }, { transaction });
+            }),
+          ),
+        )
+        .then(() =>
+          parser.parseAgency(async (data) => {
+            const agency = await this.getAgency();
+            return agency.updateDraft({ versionId, data, updatedById });
+          }),
+        )
         .then(() =>
           parser.parseConfigurations((data) =>
             sequelize.transaction(async (transaction) => {
@@ -137,28 +143,6 @@ module.exports = (sequelize, DataTypes) => {
               createdById: updatedById,
               updatedById,
               data,
-            }),
-          ),
-        )
-        .then(() =>
-          parser.parseCustomConfigurations((data) =>
-            sequelize.transaction(async (transaction) => {
-              const [record, created] = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOrCreate({
-                where: {
-                  createdByAgencyId,
-                  customElementId: data._attributes?.CustomElementID,
-                },
-                defaults: {
-                  versionId,
-                  isDraft: true,
-                  createdById: updatedById,
-                  updatedById,
-                  data,
-                },
-                include: ['draft'],
-                transaction,
-              });
-              return created ? Promise.resolve(record) : record.updateDraft({ versionId, data, updatedById }, { transaction });
             }),
           ),
         )
@@ -228,11 +212,6 @@ module.exports = (sequelize, DataTypes) => {
             }),
           ),
         )
-        // .then(() =>
-        //   parser.parseCustomResults((data) => {
-        //     // no op
-        //   }),
-        // )
         .then(async () => {
           await this.setStatus(StatusCodes.OK);
         })

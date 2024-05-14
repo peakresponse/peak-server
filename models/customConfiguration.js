@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       isDraft: DataTypes.BOOLEAN,
       customElementId: DataTypes.STRING,
+      nemsisElement: DataTypes.STRING,
       dataSet: DataTypes.STRING,
       data: DataTypes.JSONB,
       isValid: DataTypes.BOOLEAN,
@@ -48,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
 
   CustomConfiguration.beforeValidate(async (record, options) => {
     record.syncFieldAndNemsisAttributeValue('customElementId', [], 'CustomElementID', options);
+    record.syncFieldAndNemsisAttributeValue('nemsisElement', ['dCustomConfiguration.01'], 'nemsisElement', options);
     // set dataSet based on data keys
     const key = Object.keys(record.data).filter((k) => !k.startsWith('_'))[0];
     if (key.startsWith('dCustomConfiguration.')) {
