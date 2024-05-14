@@ -110,7 +110,7 @@ module.exports = (sequelize, DataTypes) => {
         total += 1;
       });
       let count = 0;
-      await this.parseAgencies(async (dataSetNemsisVersion, stateId, agency) => {
+      await this.parseAgencies(async (agency, other) => {
         await sequelize.transaction(async (transaction) => {
           await this.reload({ transaction });
           if (this.isCancelled) {
@@ -122,14 +122,14 @@ module.exports = (sequelize, DataTypes) => {
             where: {
               stateUniqueId: agency['sAgency.01']._text,
               number: agency['sAgency.02']._text,
-              stateId,
+              stateId: other['sState.01']._text,
             },
             transaction,
           });
           record.name = agency['sAgency.03']._text;
           record.data = agency;
           record.stateDataSetId = this.id;
-          record.nemsisVersion = dataSetNemsisVersion;
+          record.nemsisVersion = other.dataSetNemsisVersion;
           record.createdById = record.createdById || userId;
           record.updatedById = userId;
           try {
@@ -149,7 +149,7 @@ module.exports = (sequelize, DataTypes) => {
         total += 1;
       });
       let count = 0;
-      await this.parseFacilities(async (dataSetNemsisVersion, stateId, facilityType, facility) => {
+      await this.parseFacilities(async (facility, other) => {
         await sequelize.transaction(async (transaction) => {
           await this.reload({ transaction });
           if (this.isCancelled) {
@@ -161,7 +161,7 @@ module.exports = (sequelize, DataTypes) => {
           if (facility['sFacility.03']?._text) {
             [record] = await sequelize.models.Facility.findOrBuild({
               where: {
-                stateId: facility['sFacility.09']?._text || stateId,
+                stateId: facility['sFacility.09']?._text || other['sState.01']._text,
                 locationCode: facility['sFacility.03']?._text || null,
               },
               transaction,
@@ -169,7 +169,7 @@ module.exports = (sequelize, DataTypes) => {
           } else {
             [record] = await sequelize.models.Facility.findOrBuild({
               where: {
-                stateId: facility['sFacility.09']?._text || stateId,
+                stateId: facility['sFacility.09']?._text || other['sState.01']._text,
                 name: {
                   [Op.iLike]: facility['sFacility.02']?._text || null,
                 },
@@ -183,8 +183,8 @@ module.exports = (sequelize, DataTypes) => {
           record.data = {
             'sFacility.FacilityGroup': facility,
           };
-          if (facilityType) {
-            record.data['sFacility.01'] = { _text: facilityType };
+          if (other['sFacility.01']) {
+            record.data['sFacility.01'] = { _text: other['sFacility.01']._text };
           }
           if (!facility['sFacility.13'] && process.env.NODE_ENV !== 'test') {
             /// don't perform in test, so we don't exceed request quotas

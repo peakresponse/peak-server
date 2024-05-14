@@ -29,7 +29,7 @@ describe('/api/states', () => {
       const response = await testSession.get('/api/states/').expect(StatusCodes.OK);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 17);
+      assert.deepStrictEqual(data.length, 19);
       assert.deepStrictEqual(data[0].name, 'Alabama');
     });
   });
@@ -65,6 +65,7 @@ describe('/api/states', () => {
         assert.deepStrictEqual(response.body, {
           initialized: true,
           dataSetVersions: [
+            '2024-05-01-6d155952e4cbd7d613268a5b3de7cdf6f9c1850a',
             '2024-04-16-697215090a0b320ccdad0ffe2ca041269c00c7ae',
             '2024-02-28-40c310be1b32e651225dc332a4cb0a4507184e27',
             '2024-02-16-904b96b37d2d8e63470fbfb9c37320d6edf08d75',
@@ -106,6 +107,7 @@ describe('/api/states', () => {
         assert.deepStrictEqual(response.body, {
           initialized: true,
           dataSetVersions: [
+            '2024-05-01-6d155952e4cbd7d613268a5b3de7cdf6f9c1850a',
             '2024-04-16-697215090a0b320ccdad0ffe2ca041269c00c7ae',
             '2024-02-28-40c310be1b32e651225dc332a4cb0a4507184e27',
             '2024-02-16-904b96b37d2d8e63470fbfb9c37320d6edf08d75',

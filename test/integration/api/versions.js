@@ -57,6 +57,73 @@ describe('/api/versions', () => {
     });
   });
 
+  describe('PATCH /:id/import', () => {
+    it('starts the import of a DEM data set into this version', async () => {
+      const file = await helpers.uploadFile('2024-DEM-1_v350.xml');
+      await testSession
+        .patch('/api/versions/682d5860-c11e-4a40-bfcc-b2dadec9e7d4/import')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          file,
+          fileName: '2024-DEM-1_v350.xml',
+        })
+        .expect(StatusCodes.ACCEPTED);
+      // start polling for completion
+      for (;;) {
+        // eslint-disable-next-line no-await-in-loop
+        const response = await testSession
+          .get('/api/versions/682d5860-c11e-4a40-bfcc-b2dadec9e7d4/import')
+          .set('Host', `bmacc.${process.env.BASE_HOST}`);
+        if (response.status === StatusCodes.ACCEPTED) {
+          // eslint-disable-next-line no-await-in-loop
+          await helpers.sleep(50);
+        } else {
+          assert.deepStrictEqual(response.status, StatusCodes.OK);
+          break;
+        }
+      }
+      const version = await models.Version.findByPk('682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
+      const agency = await version.getAgency();
+      const draft = await agency.getDraft();
+      assert.deepStrictEqual(draft.name, 'UCHealth EMS');
+      assert.deepStrictEqual(draft.number, '350-A078');
+      assert.deepStrictEqual(draft.stateId, '08');
+      assert.deepStrictEqual(draft.stateUniqueId, 'A078');
+
+      const configurations = await models.Configuration.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
+      assert.deepStrictEqual(configurations.length, 2);
+
+      const contacts = await models.Contact.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
+      assert.deepStrictEqual(contacts.length, 2);
+
+      const customConfigurations = await models.CustomConfiguration.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
+      assert.deepStrictEqual(customConfigurations.length, 1);
+      assert.deepStrictEqual(customConfigurations[0].customElementId, 'dPersonnel.18');
+      assert.deepStrictEqual(customConfigurations[0].nemsisElement, 'dPersonnel.18');
+      assert.deepStrictEqual(customConfigurations[0].dataSet, 'DEMDataSet');
+
+      const devices = await models.Device.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
+      assert.deepStrictEqual(devices.length, 2);
+
+      const facilities = await models.Facility.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
+      assert.deepStrictEqual(facilities.length, 5);
+
+      const locations = await models.Location.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
+      assert.deepStrictEqual(locations.length, 2);
+
+      const personnel = await models.Employment.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
+      assert.deepStrictEqual(personnel.length, 4);
+      for (const p of personnel) {
+        if (p.email !== 'braunsa@example.com') {
+          assert.ok(p.data.CustomResults);
+        }
+      }
+
+      const vehicles = await models.Vehicle.scope('draft').findAll({ where: { createdByAgencyId: agency.id } });
+      assert.deepStrictEqual(vehicles.length, 2);
+    });
+  });
+
   describe('PATCH /:id/commit', () => {
     it('commits the specified draft Version for its Agency', async () => {
       await testSession

@@ -17,7 +17,7 @@ describe('wss', () => {
   let testSession;
 
   beforeEach((done) => {
-    server.listen(0, 'localhost', done);
+    server.listen(0, '127.0.0.1', done);
   });
 
   afterEach((done) => {

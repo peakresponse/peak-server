@@ -44,9 +44,9 @@ describe('lib', () => {
             it('parses sAgency records out of the specified state data set version', async () => {
               const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
               let count = 0;
-              await stateDataSetParser.parseAgencies((dataSetNemsisVersion, stateId) => {
-                assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.191130CP1');
-                assert.deepStrictEqual(stateId, '50');
+              await stateDataSetParser.parseAgencies((data, other) => {
+                assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.191130CP1');
+                assert.deepStrictEqual(other['sState.01']?._text, '50');
                 count += 1;
               });
               assert.deepStrictEqual(count, 163);
@@ -56,8 +56,8 @@ describe('lib', () => {
           describe('.parseConfiguration()', () => {
             it('parses the sConfiguration of the specified state data set version', async () => {
               const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
-              await stateDataSetParser.parseConfiguration((nemsisVersion, data) => {
-                assert.deepStrictEqual(nemsisVersion, '3.5.0.191130CP1');
+              await stateDataSetParser.parseConfiguration((data, other) => {
+                assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.191130CP1');
                 assert.deepStrictEqual(data['sConfiguration.01']?.length, 9);
                 assert.deepStrictEqual(data['sConfiguration.ProcedureGroup']?.length, 7);
                 assert.deepStrictEqual(data['sConfiguration.MedicationGroup']?.length, 7);
@@ -75,8 +75,8 @@ describe('lib', () => {
             it('parses sdCustomConfiguration records out of the specified state data set version', async () => {
               const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
               let count = 0;
-              await stateDataSetParser.parseDEMCustomConfiguration((nemsisVersion, data) => {
-                assert.deepStrictEqual(nemsisVersion, '3.5.0.191130CP1');
+              await stateDataSetParser.parseDEMCustomConfiguration((data, other) => {
+                assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.191130CP1');
                 if (count === 0) {
                   assert.deepStrictEqual(data, {
                     _attributes: { CustomElementID: 'dAgency.11' },
@@ -116,9 +116,9 @@ describe('lib', () => {
             it('parses sFacility records out of the specified state data set version', async () => {
               const stateDataSetParser = repo.getDataSetParser('2023-04-11-9574129ba2069ced561b85b18ad04d9f18855576');
               let count = 0;
-              await stateDataSetParser.parseFacilities((dataSetNemsisVersion, stateId) => {
-                assert.deepStrictEqual(dataSetNemsisVersion, '3.5.0.191130CP1');
-                assert.deepStrictEqual(stateId, '50');
+              await stateDataSetParser.parseFacilities((data, other) => {
+                assert.deepStrictEqual(other.dataSetNemsisVersion, '3.5.0.191130CP1');
+                assert.deepStrictEqual(other['sState.01']?._text, '50');
                 count += 1;
               });
               assert.deepStrictEqual(count, 390);

@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'contacts',
         foreignKey: 'createdByAgencyId',
       });
+      Agency.hasMany(models.Configuration.scope('finalOrNew'), { as: 'configurations', foreignKey: 'createdByAgencyId' });
       Agency.hasMany(models.Employment.scope('finalOrNew'), { as: 'employments', foreignKey: 'createdByAgencyId' });
       Agency.hasMany(models.Form.scope('canonical'), {
         as: 'forms',
@@ -204,7 +205,7 @@ module.exports = (sequelize, DataTypes) => {
       const version = await this.getOrCreateDraftVersion(user, { transaction });
       const stateDataSet = await version.getStateDataSet({ transaction });
       let record;
-      await stateDataSet.parseConfiguration(async (dataSetNemsisVersion, configuration) => {
+      await stateDataSet.parseConfiguration(async (configuration) => {
         record = await sequelize.models.Configuration.scope('finalOrNew').findOne({
           where: {
             createdByAgencyId: this.id,
@@ -261,7 +262,7 @@ module.exports = (sequelize, DataTypes) => {
       const version = await this.getOrCreateDraftVersion(user, { transaction });
       const stateDataSet = await version.getStateDataSet({ transaction });
       const records = [];
-      await stateDataSet.parseDEMCustomConfiguration(async (dataSetNemsisVersion, customConfiguration) => {
+      await stateDataSet.parseDEMCustomConfiguration(async (customConfiguration) => {
         let record = await sequelize.models.CustomConfiguration.scope('finalOrNew').findOne({
           where: {
             customElementId: customConfiguration?._attributes?.CustomElementID,

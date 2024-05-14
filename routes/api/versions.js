@@ -33,6 +33,45 @@ router.post(
 );
 
 router.get(
+  '/:id/import',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  helpers.async(async (req, res) => {
+    const version = await models.Version.findByPk(req.params.id);
+    res.status(version.status?.code ?? StatusCodes.INTERNAL_SERVER_ERROR).json(version.status);
+  }),
+);
+
+router.patch(
+  '/:id/import',
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  helpers.async(async (req, res) => {
+    let version;
+    await models.sequelize.transaction(async (transaction) => {
+      version = await models.Version.findByPk(req.params.id, { transaction });
+      if (version) {
+        if (version.agencyId === req.agency.id) {
+          if (version.isDraft) {
+            await version.update(_.pick(req.body, ['file', 'fileName']), {
+              transaction,
+            });
+          }
+        }
+      }
+    });
+    if (version) {
+      if (version.agencyId === req.agency.id) {
+        await version.startImportDataSet(req.user);
+        res.status(version.status.code ?? StatusCodes.INTERNAL_SERVER_ERROR).end();
+      } else {
+        res.status(StatusCodes.FORBIDDEN).end();
+      }
+    } else {
+      res.status(StatusCodes.NOT_FOUND).end();
+    }
+  }),
+);
+
+router.get(
   '/:id/preview',
   interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
@@ -126,13 +165,21 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       version = await models.Version.findByPk(req.params.id, { transaction });
       if (version) {
-        await version.update(_.pick(req.body, ['nemsisVersion', 'stateDataSetId', 'demSchematronIds', 'emsSchematronIds']), {
-          transaction,
-        });
+        if (version.agencyId === req.agency.id) {
+          if (version.isDraft) {
+            await version.update(_.pick(req.body, ['nemsisVersion', 'stateDataSetId', 'demSchematronIds', 'emsSchematronIds']), {
+              transaction,
+            });
+          }
+        }
       }
     });
     if (version) {
-      res.json(version.toJSON());
+      if (version.agencyId === req.agency.id) {
+        res.status(StatusCodes.OK).end();
+      } else {
+        res.status(StatusCodes.FORBIDDEN).end();
+      }
     } else {
       res.status(StatusCodes.NOT_FOUND);
     }
