@@ -8,8 +8,7 @@ import { AgencyService, ApiService, NavigationService } from 'shared';
 })
 export class DashboardDemographicsComponent implements OnInit {
   record: any;
-  isCreatingNewVersion = false;
-  isCommittingNewVersion = false;
+  isLoading = false;
 
   schematronsInstalled: any[] = [];
   schematronById(id: string): any {
@@ -33,10 +32,10 @@ export class DashboardDemographicsComponent implements OnInit {
   }
 
   onNewVersion() {
-    this.isCreatingNewVersion = true;
+    this.isLoading = true;
     this.api.versions.create().subscribe((response: HttpResponse<any>) => {
       this.agency.refresh();
-      this.isCreatingNewVersion = false;
+      this.isLoading = false;
       this.navigation.goTo(`/demographics/versions/${response.body.id}`);
     });
   }
@@ -44,11 +43,47 @@ export class DashboardDemographicsComponent implements OnInit {
   onCommit() {
     const { id } = this.record?.draftVersion ?? {};
     if (id) {
-      this.isCommittingNewVersion = true;
+      this.isLoading = true;
       this.api.versions.commit(id).subscribe((response: HttpResponse<any>) => {
         this.agency.refresh();
-        this.isCommittingNewVersion = false;
+        this.isLoading = false;
       });
+    }
+  }
+
+  onDemDataSetDrop() {
+    const { id } = this.record?.draftVersion ?? {};
+    if (id) {
+      this.isLoading = true;
+    }
+  }
+
+  onDemDataSetUploaded(upload: any) {
+    const { id } = this.record?.draftVersion ?? {};
+    if (id) {
+      const { href: file, name: fileName } = upload;
+      this.api.versions.import(id, file, fileName).subscribe((response: HttpResponse<any>) => {
+        if (response.status === 202) {
+          this.pollDemDataSetImport();
+        } else {
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  pollDemDataSetImport() {
+    const { id } = this.record?.draftVersion ?? {};
+    if (id) {
+      setTimeout(() => {
+        this.api.versions.importStatus(id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 202) {
+            this.pollDemDataSetImport();
+          } else {
+            this.isLoading = false;
+          }
+        });
+      }, 100);
     }
   }
 }

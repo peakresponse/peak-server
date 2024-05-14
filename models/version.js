@@ -255,10 +255,12 @@ module.exports = (sequelize, DataTypes) => {
           await this.setStatus(StatusCodes.OK);
         })
         .catch(async (err) => {
-          await this.setStatus(StatusCodes.INTERNAL_SRVER_ERROR, err.message);
+          await this.setStatus(StatusCodes.INTERNAL_SERVER_ERROR, err.message);
         })
         .finally(async () => {
-          await fs.unlink(tmpFilePath);
+          if (tmpFilePath) {
+            await fs.unlink(tmpFilePath);
+          }
         });
     }
 

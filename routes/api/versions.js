@@ -54,14 +54,14 @@ router.patch(
             await version.update(_.pick(req.body, ['file', 'fileName']), {
               transaction,
             });
-            await version.startImportDataSet(req.user, { transaction });
           }
         }
       }
     });
     if (version) {
       if (version.agencyId === req.agency.id) {
-        res.status(version.status.code).end();
+        await version.startImportDataSet(req.user);
+        res.status(version.status.code ?? StatusCodes.INTERNAL_SERVER_ERROR).end();
       } else {
         res.status(StatusCodes.FORBIDDEN).end();
       }

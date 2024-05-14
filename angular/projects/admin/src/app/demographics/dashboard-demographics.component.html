@@ -31,12 +31,7 @@
           </div>
         </div>
       </div>
-      <button
-        *ngIf="!record?.draftVersion"
-        [disabled]="isCreatingNewVersion"
-        (click)="onNewVersion()"
-        type="button"
-        class="btn btn--primary">
+      <button *ngIf="!record?.draftVersion" [disabled]="isLoading" (click)="onNewVersion()" type="button" class="btn btn--primary">
         New Version
       </button>
     </div>
@@ -71,21 +66,28 @@
             </div>
           </div>
         </div>
-        <fieldset [disabled]="isCommittingNewVersion" class="d-flex">
-          <button
-            type="button"
-            class="btn btn--secondary me-3 flex-grow-1"
-            [routerLink]="['/demographics/versions', record.draftVersion.id, 'preview']">
-            Preview
-          </button>
-          <button
-            type="button"
-            class="btn btn--secondary me-3 flex-grow-1"
-            [routerLink]="['/demographics/versions', record.draftVersion.id, 'validate']">
-            Validate
-          </button>
-          <button (click)="onCommit()" type="button" class="btn btn--primary flex-grow-1">Commit</button>
-        </fieldset>
+        <shared-dropzone
+          (onDrop)="onDemDataSetDrop()"
+          (onUploaded)="onDemDataSetUploaded($event)"
+          [multiple]="false"
+          [disabled]="isLoading">
+          <fieldset [disabled]="isLoading" class="d-flex">
+            <button
+              type="button"
+              class="btn btn--secondary me-3 flex-grow-1"
+              [routerLink]="['/demographics/versions', record.draftVersion.id, 'preview']">
+              Preview
+            </button>
+            <button
+              type="button"
+              class="btn btn--secondary me-3 flex-grow-1"
+              [routerLink]="['/demographics/versions', record.draftVersion.id, 'validate']">
+              Validate
+            </button>
+            <button [disabled]="isLoading" type="button" class="btn btn--secondary flex-grow-1">Import</button>
+          </fieldset>
+        </shared-dropzone>
+        <!-- <button (click)="onCommit()" type="button" class="btn btn--primary flex-grow-1">Commit</button> -->
       </div>
     </div>
   </div>

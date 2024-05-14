@@ -737,6 +737,12 @@ export class ApiService {
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/versions/${id}`, params);
     },
+    import: (id: string, file: string, fileName: string): Observable<any> => {
+      return this.patch(`/api/versions/${id}/import`, { file, fileName });
+    },
+    importStatus: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/versions/${id}/import`, params);
+    },
     preview: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/versions/${id}/preview`, params, { responseType: 'text' });
     },
