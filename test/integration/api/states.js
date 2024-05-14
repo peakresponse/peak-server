@@ -29,7 +29,7 @@ describe('/api/states', () => {
       const response = await testSession.get('/api/states/').expect(StatusCodes.OK);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 17);
+      assert.deepStrictEqual(data.length, 19);
       assert.deepStrictEqual(data[0].name, 'Alabama');
     });
   });
