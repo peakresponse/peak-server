@@ -29,10 +29,11 @@
           *ngFor="let element of recordSchema?.childElements"
           [xsd]="recordSchema"
           [record]="record"
+          [stack]="recordSchema?.isGrouped ? [{ element: recordSchema?.rootChildElements?.[0], path: '$' }] : []"
+          basePath="$"
           [element]="element"
           [data]="record.data"
-          [error]="error"
-          [basePath]="recordSchema?.basePath"></shared-xsd-form-group>
+          [error]="error"></shared-xsd-form-group>
       </ng-container>
       <ng-template *ngIf="template" [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ recordSchema, record, error }"></ng-template>
       <div class="d-flex justify-content-between mb-3">

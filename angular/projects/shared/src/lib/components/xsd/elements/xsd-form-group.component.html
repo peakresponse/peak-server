@@ -11,6 +11,7 @@
         <shared-xsd-element-multi
           [xsd]="xsd"
           [record]="record"
+          [stack]="stack.concat([{ element, path: path + '[' + i + ']' }])"
           [basePath]="path + '[' + i + ']'"
           [element]="nestedElement"
           [data]="selectedValue"
@@ -45,6 +46,7 @@
           <shared-xsd-form-group
             [xsd]="xsd"
             [record]="record"
+            [stack]="stack.concat([{ element, path: basePath }])"
             [basePath]="groupModalPath"
             [element]="nestedElement"
             [data]="groupModalValue"
@@ -54,7 +56,14 @@
     </shared-modal>
   </ng-container>
   <ng-container *ngIf="!isGroup">
-    <shared-xsd-element-multi [xsd]="xsd" [record]="record" [basePath]="basePath" [element]="element" [data]="data" [error]="error">
+    <shared-xsd-element-multi
+      [xsd]="xsd"
+      [record]="record"
+      [stack]="stack"
+      [basePath]="basePath"
+      [element]="element"
+      [data]="data"
+      [error]="error">
     </shared-xsd-element-multi>
   </ng-container>
 </div>

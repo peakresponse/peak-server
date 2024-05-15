@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 import * as inflection from 'inflection';
+import { JSONPath } from 'jsonpath-plus';
+
 import { cloneDeep, filter, find, isEmpty } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
@@ -21,6 +23,7 @@ export class XsdElementBaseComponent {
   @Input() selectedValue: any;
   @Input() displayOnly = false;
   @Input() basePath?: string;
+  @Input() stack: any[] = [];
   private _type: any;
 
   constructor(protected api: ApiService) {}
@@ -144,6 +147,26 @@ export class XsdElementBaseComponent {
     return this.element?._attributes?.minOccurs !== '0';
   }
 
+  get closestMultiElementData(): any {
+    if (this.isMulti) {
+      return this.selectedValue ? this.selectedValue : this.data[this.name];
+    } else {
+      // search up stack
+      for (let idx = this.stack.length - 1; idx >= 0; idx -= 1) {
+        const { element, path } = this.stack[idx];
+        if (element._attributes?.maxOccurs === 'unbounded') {
+          console.log('found match', path, this.stack, this.record.data);
+          let result = JSONPath({ path, json: this.record.data, wrap: false });
+          if (!result && path.endsWith('[0]')) {
+            result = JSONPath({ path: path.substring(0, path.length - 3), json: this.record.data, wrap: false });
+          }
+          return result;
+        }
+      }
+    }
+    return undefined;
+  }
+
   get isMulti(): boolean {
     return this.element?._attributes?.maxOccurs === 'unbounded';
   }
@@ -241,17 +264,29 @@ export class XsdElementBaseComponent {
       // }
       return value;
     }
-    // element value
-    const correlationId = this.correlationId;
-    if (correlationId) {
+    // custom element value, check if there's a matching configuration
+    const config = this.xsd?.getCustomConfiguration(this.element);
+    if (config) {
+      // if so, then check for a matching result
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
-      const rg = this.data.CustomResults?.find(
-        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId,
-      );
-      if (rg) {
-        return rg[`${dataSet}.01`]?._text;
+      for (const customResult of this.record.data.CustomResults ?? []) {
+        if (customResult[`${dataSet}.02`]?._text === this.name) {
+          // check if there's a CorrelationID to match
+          const correlationId = customResult[`${dataSet}.03`]?._text;
+          if (correlationId) {
+            const closest = this.closestMultiElementData;
+            console.log('closest', closest);
+            if (closest?._attributes?.CorrelationID === correlationId) {
+              return customResult[`${dataSet}.01`]?._text;
+            }
+          } else {
+            // no correlation id, so this is a match
+            return customResult[`${dataSet}.01`]?._text;
+          }
+        }
       }
     }
+    // element value
     if (this.selectedValue) {
       return this.selectedValue._text;
     }
