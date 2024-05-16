@@ -166,10 +166,10 @@ describe('/api/versions', () => {
   describe('DELETE /:id', () => {
     it('deletes the specified Version', async () => {
       await testSession
-        .delete('/api/versions/682d5860-c11e-4a40-bfcc-b2dadec9e7d4')
+        .delete('/api/versions/9a53c10e-6ade-4c1e-a1b3-464ce4a69719')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .expect(StatusCodes.OK);
-      const record = await models.Version.findByPk('682d5860-c11e-4a40-bfcc-b2dadec9e7d4');
+      const record = await models.Version.findByPk('9a53c10e-6ade-4c1e-a1b3-464ce4a69719');
       assert.deepStrictEqual(record, null);
     });
   });

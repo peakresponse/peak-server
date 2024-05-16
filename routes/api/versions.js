@@ -194,6 +194,25 @@ router.delete(
     await models.sequelize.transaction(async (transaction) => {
       version = await models.Version.findByPk(req.params.id, { transaction });
       if (version?.isDraft) {
+        await Promise.all(
+          [
+            models.Agency,
+            models.Configuration,
+            models.Contact,
+            models.CustomConfiguration,
+            models.Device,
+            models.Employment,
+            models.Facility,
+            models.Location,
+            models.Report,
+            models.Vehicle,
+          ].map((model) =>
+            model.destroy({
+              where: { versionId: version.id },
+              transaction,
+            }),
+          ),
+        );
         await version.destroy({ transaction });
       }
     });
