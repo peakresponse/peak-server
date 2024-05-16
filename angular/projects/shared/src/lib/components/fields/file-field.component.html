@@ -2,7 +2,6 @@
   class="form-field"
   [class.form-field--disabled]="isDisabled"
   [class.form-field--editing]="isEditing"
-  [class.form-field--focused]="isFocused"
   [class.form-field--invalid]="isInvalid"
   [class.form-field--nonempty]="isNonEmpty"
   [class.form-field--unconfirmed]="isUnconfirmed"
@@ -18,7 +17,6 @@
   [ngTemplateOutletContext]="{
     isEditing: isEditing,
     isFocusable: isFocusable,
-    isFocused: isFocused,
     source: source,
     target: target
   }"></ng-template>
