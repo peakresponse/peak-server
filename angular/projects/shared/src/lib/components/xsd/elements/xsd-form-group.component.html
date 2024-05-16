@@ -11,6 +11,7 @@
         <shared-xsd-element-multi
           [xsd]="xsd"
           [record]="record"
+          [stack]="stack.concat([{ element, path: path + '[' + i + ']' }])"
           [basePath]="path + '[' + i + ']'"
           [element]="nestedElement"
           [data]="selectedValue"
@@ -18,7 +19,7 @@
           [error]="error"></shared-xsd-element-multi>
       </div>
       <div class="form-field__subitem">
-        <button (click)="showGroupModal(modal, selectedValue, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
+        <button (click)="showGroupModal(modal, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
         <button *ngIf="i > 0 || !isRequired" (click)="remValue(selectedValue)" type="button" class="btn btn--sm btn--secondary--danger">
           Delete
         </button>
@@ -44,7 +45,8 @@
         <div *ngFor="let nestedElement of groupElements">
           <shared-xsd-form-group
             [xsd]="xsd"
-            [record]="record"
+            [record]="groupModalRecord"
+            [stack]="stack.concat([{ element, path: groupModalPath }])"
             [basePath]="groupModalPath"
             [element]="nestedElement"
             [data]="groupModalValue"
@@ -54,7 +56,14 @@
     </shared-modal>
   </ng-container>
   <ng-container *ngIf="!isGroup">
-    <shared-xsd-element-multi [xsd]="xsd" [record]="record" [basePath]="basePath" [element]="element" [data]="data" [error]="error">
+    <shared-xsd-element-multi
+      [xsd]="xsd"
+      [record]="record"
+      [stack]="stack"
+      [basePath]="basePath"
+      [element]="element"
+      [data]="data"
+      [error]="error">
     </shared-xsd-element-multi>
   </ng-container>
 </div>

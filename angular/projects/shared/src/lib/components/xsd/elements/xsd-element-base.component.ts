@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 import * as inflection from 'inflection';
+import { JSONPath } from 'jsonpath-plus';
+
 import { cloneDeep, filter, find, isEmpty } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
@@ -21,6 +23,7 @@ export class XsdElementBaseComponent {
   @Input() selectedValue: any;
   @Input() displayOnly = false;
   @Input() basePath?: string;
+  @Input() stack: any[] = [];
   private _type: any;
 
   constructor(protected api: ApiService) {}
@@ -144,6 +147,25 @@ export class XsdElementBaseComponent {
     return this.element?._attributes?.minOccurs !== '0';
   }
 
+  get closestMultiElementData(): any {
+    if (this.isMulti) {
+      return this.selectedValue ? this.selectedValue : this.data[this.name];
+    } else {
+      // search up stack
+      for (let idx = this.stack.length - 1; idx >= 0; idx -= 1) {
+        const { element, path } = this.stack[idx];
+        if (element._attributes?.maxOccurs === 'unbounded') {
+          let result = JSONPath({ path, json: this.record.data, wrap: false });
+          if (!result && path.endsWith('[0]')) {
+            result = JSONPath({ path: path.substring(0, path.length - 3), json: this.record.data, wrap: false });
+          }
+          return result;
+        }
+      }
+    }
+    return undefined;
+  }
+
   get isMulti(): boolean {
     return this.element?._attributes?.maxOccurs === 'unbounded';
   }
@@ -241,17 +263,28 @@ export class XsdElementBaseComponent {
       // }
       return value;
     }
-    // element value
-    const correlationId = this.correlationId;
-    if (correlationId) {
+    // custom element value, check if there's a matching configuration
+    const config = this.xsd?.getCustomConfiguration(this.element);
+    if (config) {
+      // if so, then check for a matching result
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
-      const rg = this.data.CustomResults?.find(
-        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId,
-      );
-      if (rg) {
-        return rg[`${dataSet}.01`]?._text;
+      for (const customResult of this.record.data.CustomResults ?? []) {
+        if (customResult[`${dataSet}.02`]?._text === this.name) {
+          // check if there's a CorrelationID to match
+          const correlationId = customResult[`${dataSet}.03`]?._text;
+          if (correlationId) {
+            const closest = this.closestMultiElementData;
+            if (closest?._attributes?.CorrelationID === correlationId) {
+              return customResult[`${dataSet}.01`]?._text;
+            }
+          } else {
+            // no correlation id, so this is a match
+            return customResult[`${dataSet}.01`]?._text;
+          }
+        }
       }
     }
+    // element value
     if (this.selectedValue) {
       return this.selectedValue._text;
     }
@@ -286,21 +319,40 @@ export class XsdElementBaseComponent {
       return;
     }
     // element value
-    const correlationId = this.correlationId;
-    if (correlationId) {
+    // clear custom result, if any
+    const config = this.xsd?.getCustomConfiguration(this.element);
+    if (config) {
+      // if so, then check for a matching result
       const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
-      const index = this.record.data.CustomResults?.findIndex(
-        (rg: any) => rg[`${dataSet}.02`]?._text === this.name && rg[`${dataSet}.03`]?._text === correlationId,
-      );
-      if (index >= 0) {
-        this.record.data.CustomResults.splice(index, 1);
+      const customResults = this.record.data.CustomResults ?? [];
+      let idx, closest;
+      let correlationId: string | undefined;
+      for (idx = customResults.length - 1; idx >= 0; idx -= 1) {
+        const customResult = customResults[idx];
+        if (customResult[`${dataSet}.02`]?._text === this.name) {
+          // check if there's a CorrelationID to match
+          correlationId = customResult[`${dataSet}.03`]?._text;
+          if (correlationId) {
+            closest = this.closestMultiElementData;
+            if (closest?._attributes?.CorrelationID === correlationId) {
+              break;
+            }
+          } else {
+            // no correlation id, so this is a match
+            break;
+          }
+        }
+      }
+      // if found, remove this customResult
+      if (idx >= 0) {
+        this.record.data.CustomResults.splice(idx, 1);
         if (this.record.data.CustomResults.length === 0) {
           delete this.record.data.CustomResults;
-          this.correlationId = undefined;
-        } else {
-          if (!this.record.data.CustomResults?.find((rg: any) => rg[`${dataSet}.03`]?._text === correlationId)) {
-            this.correlationId = undefined;
+          if (correlationId) {
+            delete closest._attributes.CorrelationID;
           }
+        } else if (correlationId && !this.record.data.CustomResults?.find((rg: any) => rg[`${dataSet}.03`]?._text === correlationId)) {
+          delete closest._attributes.CorrelationID;
         }
       }
     }
@@ -312,56 +364,27 @@ export class XsdElementBaseComponent {
     }
   }
 
-  get correlationId(): string | undefined {
-    if (this.isMulti) {
-      return this.getAttr('CorrelationID');
-    } else {
-      let basePath = this.basePath || '$';
-      if (basePath === '$') {
-        return this.record.data._attributes?.CorrelationID;
-      } else {
-        // TODO: find closest parent repeating element
-      }
-    }
-    return undefined;
-  }
-
-  set correlationId(id: string | undefined) {
-    if (this.isMulti) {
-      if (id) {
-        this.setAttr('CorrelationID', id);
-      } else {
-        this.delAttr('CorrelationID');
-      }
-    } else {
-      let basePath = this.basePath || '$';
-      if (basePath === '$') {
-        if (id) {
-          this.record.data._attributes ||= {};
-          this.record.data._attributes.CorrelationID = id;
-        } else {
-          delete this.record.data._attributes?.CorrelationID;
-        }
-      } else {
-        // TODO: find closest parent repeating element
-      }
-    }
-  }
-
   setCustomValue(value: string, customValue: string) {
+    // set fallback value, this will clear any prior custom result value
     this.value = value;
-    let correlationId = this.correlationId;
-    if (!correlationId) {
-      correlationId = uuid();
-      this.correlationId = correlationId;
-    }
+    // set new custom result value
     const dataSet = this.xsd?.dataSet === 'DEM' ? 'dCustomResults' : 'eCustomResults';
-    this.record.data.CustomResults ||= [];
-    this.record.data.CustomResults.push({
+    const customResult = {
       [`${dataSet}.01`]: { _text: customValue },
       [`${dataSet}.02`]: { _text: this.name },
-      [`${dataSet}.03`]: { _text: correlationId },
-    });
+    };
+    const closest = this.closestMultiElementData;
+    if (closest) {
+      let correlationId = closest?._attributes?.CorrelationID;
+      if (!correlationId) {
+        correlationId = uuid();
+        closest._attributes ||= {};
+        closest._attributes.CorrelationID = correlationId;
+      }
+      customResult[`${dataSet}.03`] = { _text: correlationId };
+    }
+    this.record.data.CustomResults = this.record.data.CustomResults || [];
+    this.record.data.CustomResults.push(customResult);
   }
 
   delValue() {

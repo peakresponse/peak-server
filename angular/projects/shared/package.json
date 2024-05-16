@@ -2,24 +2,26 @@
   "name": "shared",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^12.2.0",
-    "@angular/core": "^12.2.0",
-    "@angular/forms": "^12.2.0",
-    "@ng-bootstrap/ng-bootstrap": "^11.0.0-beta.2",
-    "activestorage": "^5.2.6",
-    "inflection": "^1.13.1",
+    "@angular/common": "^16.2.12",
+    "@angular/core": "^16.2.12",
+    "@angular/forms": "^16.2.12",
+    "@ng-bootstrap/ng-bootstrap": "^15.1.2",
+    "activestorage": "^5.2.8-1",
+    "inflection": "^3.0.0",
+    "jsonpath-plus": "^9.0.0",
     "ngx-dropzone": "^3.1.0",
     "ngx-sortablejs": "^11.1.0",
-    "sortablejs": "^1.15.0",
-    "uuid": "^8.3.2"
+    "sortablejs": "^1.15.1",
+    "uuid": "^9.0.1"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@types/activestorage": "^5.2.4",
-    "@types/inflection": "^1.13.0",
-    "@types/sortablejs": "^1.15.0",
-    "@types/uuid": "^8.3.1"
+    "@types/activestorage": "^5.2.7",
+    "@types/inflection": "^1.13.2",
+    "@types/jsonpath-plus": "^5.0.5",
+    "@types/sortablejs": "^1.15.7",
+    "@types/uuid": "^9.0.7"
   }
 }

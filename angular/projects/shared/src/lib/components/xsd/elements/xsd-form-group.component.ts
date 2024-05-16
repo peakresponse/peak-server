@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { JSONPath } from 'jsonpath-plus';
 import { assign, cloneDeep } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
@@ -14,14 +15,20 @@ import { ModalComponent } from '../../modal.component';
 })
 export class XsdFormGroupComponent extends XsdElementBaseComponent {
   isGroupModalEditing = false;
+  groupModalIndex?: number;
+  groupModalRecord: any;
   groupModalPath?: string;
-  groupModalValue: any = null;
+  groupModalValue: any;
 
-  showGroupModal(modal: ModalComponent, selectedValue?: any, index?: number) {
-    this.selectedValue = selectedValue;
-    if (selectedValue) {
+  showGroupModal(modal: ModalComponent, index?: number) {
+    this.groupModalIndex = index;
+    this.groupModalRecord = cloneDeep(this.record);
+    if (Number.isInteger(index)) {
       this.groupModalPath = `${this.path}[${index}]`;
-      this.groupModalValue = cloneDeep(selectedValue);
+      this.groupModalValue = JSONPath({ path: this.groupModalPath, json: this.groupModalRecord.data, wrap: false });
+      if (!this.groupModalValue && index === 0) {
+        this.groupModalValue = JSONPath({ path: this.path, json: this.groupModalRecord.data, wrap: false });
+      }
       this.isGroupModalEditing = true;
     } else {
       this.groupModalPath = `${this.path}[${this.values?.length ?? 0}]`;
@@ -37,9 +44,8 @@ export class XsdFormGroupComponent extends XsdElementBaseComponent {
   }
 
   onGroupModalConfirm(modal: ModalComponent) {
-    if (this.selectedValue) {
-      assign(this.selectedValue, this.groupModalValue);
-    } else {
+    this.record.data = this.groupModalRecord.data;
+    if (Number.isNaN(this.groupModalIndex)) {
       this.addValue(this.groupModalValue);
     }
     modal.close();
