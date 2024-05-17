@@ -45,8 +45,8 @@ export class XsdFormGroupComponent extends XsdElementBaseComponent {
 
   onGroupModalConfirm(modal: ModalComponent) {
     this.record.data = this.groupModalRecord.data;
-    if (Number.isNaN(this.groupModalIndex)) {
-      this.addValue(this.groupModalValue);
+    if (this.groupModalIndex === undefined) {
+      setTimeout(() => this.addValue(this.groupModalValue), 0);
     }
     modal.close();
   }
