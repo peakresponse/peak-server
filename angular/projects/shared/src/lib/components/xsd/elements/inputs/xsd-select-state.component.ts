@@ -62,12 +62,4 @@ export class XsdSelectStateComponent extends XsdElementBaseComponent {
     this.model = state;
     this.value = state?.id;
   }
-
-  onBlur($event: any) {
-    console.log('onBlur', $event, this.value);
-    if (!this.value) {
-      this.model = undefined;
-      console.log('clearing model?');
-    }
-  }
 }
