@@ -24,9 +24,9 @@
         </option>
       </select>
     </div>
-    <div *ngIf="isNillable && !isDisplayOnly" class="input-group-append">
+    <div *ngIf="isNillable && !isDisplayOnly && !index" class="input-group-append">
       <div class="form-check">
-        <input [(ngModel)]="isNil" [id]="formName + '-nil'" tabindex="-1" type="checkbox" class="form-check-input" />
+        <input [(ngModel)]="isNil" [id]="formName + '-nil'" type="checkbox" class="form-check-input" />
         <label [for]="formName + '-nil'" class="form-check-label">Nil?</label>
       </div>
     </div>

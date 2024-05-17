@@ -504,6 +504,10 @@ export class XsdElementBaseComponent {
       this.delValue();
       this.setAttr('xsi:nil', 'true');
       this.NV = this.nilValues[0]?.['xs:restriction']?.['xs:enumeration']?._attributes?.value;
+      // if this is a repeating element, remove the other values
+      if (Array.isArray(this.data[this.name]) && this.data[this.name].length > 1) {
+        this.data[this.name].splice(1, this.data[this.name].length - 1);
+      }
     } else {
       this.delAttr('xsi:nil');
       this.delAttr('NV');

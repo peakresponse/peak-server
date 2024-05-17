@@ -22,7 +22,7 @@
     </div>
   </div>
   <div *ngIf="!isDisplayOnly" class="form-field__content">
-    <button (click)="onAdd()" class="btn btn--sm btn--secondary" type="button">Add</button>
+    <button [disabled]="!canAdd" (click)="onAdd()" class="btn btn--sm btn--secondary" type="button">Add</button>
   </div>
 </ng-container>
 <ng-container *ngIf="!isMulti">

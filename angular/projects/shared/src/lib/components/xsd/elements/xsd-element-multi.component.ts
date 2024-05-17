@@ -15,6 +15,17 @@ export class XsdElementMultiComponent extends XsdElementBaseComponent {
     super(api);
   }
 
+  get canAdd() {
+    if (Array.isArray(this.data[this.name])) {
+      if (this.data[this.name].length > 0) {
+        return this.data[this.name][0]._attributes?.['xsi:nil'] !== 'true';
+      }
+    } else {
+      return this.data[this.name]?._attributes?.['xsi:nil'] !== 'true';
+    }
+    return true;
+  }
+
   onAdd() {
     this.addValue({});
     setTimeout(() => {
