@@ -2,16 +2,20 @@
   <ng-container *ngIf="enumeratedValue as val; else noVal">{{ val }}</ng-container>
   <ng-template #noVal>&nbsp;</ng-template>
 </ng-container>
-<div *ngIf="!isDisplayOnly" class="select-wrapper">
-  <select
-    [id]="formName"
-    [name]="formName"
-    [ngModel]="value"
-    (ngModelChange)="onChange($event)"
-    class="select-wrapper__select"
-    [class.is-invalid]="isInvalid">
-    <option *ngFor="let item of type['xs:restriction']['xs:enumeration']" [ngValue]="item._attributes.value">
-      {{ item['xs:annotation']['xs:documentation']._text }}
-    </option>
-  </select>
-</div>
+<input
+  type="text"
+  class="form-control"
+  *ngIf="!isDisplayOnly"
+  #instance="ngbTypeahead"
+  [id]="formName"
+  [name]="formName"
+  [ngModel]="selectValue"
+  (ngModelChange)="onChange($event)"
+  [ngbTypeahead]="search"
+  [inputFormatter]="formatter"
+  [resultFormatter]="formatter"
+  [editable]="false"
+  [selectOnExact]="true"
+  [class.is-invalid]="isInvalid"
+  (focus)="focus$.next($any($event).target.value)"
+  (click)="click$.next($any($event).target.value)" />

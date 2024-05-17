@@ -112,6 +112,10 @@ export class XsdElementBaseComponent {
     return !!this.type?.['xs:restriction']?.['xs:enumeration'];
   }
 
+  get enumeration(): any[] {
+    return this.type?.['xs:restriction']?.['xs:enumeration'] ?? [];
+  }
+
   get primitiveType(): string {
     return this.type?.['xs:restriction']?._attributes?.base;
   }

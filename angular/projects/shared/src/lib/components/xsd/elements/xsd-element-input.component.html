@@ -45,6 +45,7 @@
     [displayOnly]="displayOnly">
   </shared-xsd-input>
   <shared-xsd-select
+    class="d-flex"
     *ngSwitchCase="COMPONENT_TYPES.select"
     [xsd]="xsd"
     [record]="record"
@@ -59,6 +60,7 @@
     [displayOnly]="displayOnly">
   </shared-xsd-select>
   <shared-xsd-select-state
+    class="d-flex"
     *ngSwitchCase="COMPONENT_TYPES.selectState"
     [xsd]="xsd"
     [record]="record"
