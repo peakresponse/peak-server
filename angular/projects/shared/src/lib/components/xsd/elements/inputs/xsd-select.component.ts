@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, OperatorFunction, Subject, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 
 import { XsdElementBaseComponent } from '../xsd-element-base.component';
 
@@ -7,35 +10,46 @@ import { XsdElementBaseComponent } from '../xsd-element-base.component';
   templateUrl: './xsd-select.component.html',
 })
 export class XsdSelectComponent extends XsdElementBaseComponent {
-  get minLength(): number | null {
-    if (this.type?.['xs:restriction']?.['xs:minLength']?._attributes?.value) {
-      return parseInt(this.type['xs:restriction']['xs:minLength']._attributes.value);
-    }
-    return null;
-  }
+  @ViewChild('instance', { static: true }) instance?: NgbTypeahead;
+  model: any;
 
-  get maxLength(): number | null {
-    if (this.type?.['xs:restriction']?.['xs:maxLength']?._attributes?.value) {
-      return parseInt(this.type['xs:restriction']['xs:maxLength']._attributes.value);
-    }
-    return null;
-  }
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+  search: OperatorFunction<string, readonly any[]> = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance?.isPopupOpen()));
+    const inputFocus$ = this.focus$;
 
-  get pattern(): string | null {
-    if (this.type?.['xs:restriction']?.['xs:pattern']?._attributes?.value) {
-      return this.type['xs:restriction']['xs:pattern']._attributes.value;
-    }
-    return null;
-  }
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((term: string) =>
+        (term === ''
+          ? this.enumeration
+          : this.enumeration.filter((v) => v['xs:annotation']['xs:documentation']._text.toLowerCase().indexOf(term.toLowerCase()) > -1)
+        ).slice(0, 10),
+      ),
+    );
+  };
 
-  onChange(newValue: string) {
-    for (let item of this.type?.['xs:restriction']?.['xs:enumeration']) {
-      const { value, nemsisCode } = item._attributes ?? {};
-      if (value === newValue && nemsisCode) {
-        this.setCustomValue(nemsisCode, value);
-        return;
+  formatter = (x: any) => x['xs:annotation']['xs:documentation']._text;
+
+  get selectValue(): any {
+    for (const item of this.enumeration) {
+      if (item._attributes.value === this.value) {
+        return item;
       }
     }
-    this.value = newValue;
+    return this.model;
+  }
+
+  onChange(newValue: any) {
+    this.model = newValue;
+    const { value, nemsisCode } = newValue?._attributes ?? {};
+    if (nemsisCode) {
+      this.setCustomValue(nemsisCode, value);
+      return;
+    }
+    this.value = value;
   }
 }

@@ -1,9 +1,21 @@
 <ng-container *ngIf="isDisplayOnly">
-  <ng-container *ngIf="enumeratedValue as val; else noVal">{{ val }}</ng-container>
+  <ng-container *ngIf="state as val; else noVal">{{ val.name }}</ng-container>
   <ng-template #noVal>&nbsp;</ng-template>
 </ng-container>
-<div *ngIf="!isDisplayOnly" class="select-wrapper">
-  <select [id]="formName" [name]="formName" [(ngModel)]="value" class="select-wrapper__select" [class.is-invalid]="isInvalid">
-    <option *ngFor="let state of STATES" [value]="state.id">{{ state.name }}</option>
-  </select>
-</div>
+<input
+  type="text"
+  class="form-control"
+  *ngIf="!isDisplayOnly"
+  #instance="ngbTypeahead"
+  [id]="formName"
+  [name]="formName"
+  [ngModel]="state"
+  (ngModelChange)="onChangeState($event)"
+  [ngbTypeahead]="search"
+  [inputFormatter]="formatter"
+  [resultFormatter]="formatter"
+  [editable]="false"
+  [selectOnExact]="true"
+  [class.is-invalid]="isInvalid"
+  (focus)="focus$.next($any($event).target.value)"
+  (click)="click$.next($any($event).target.value)" />

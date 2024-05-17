@@ -3,30 +3,38 @@
 </ng-container>
 <ng-container *ngIf="!isNil || !isDisplayOnly">
   <ng-template #nillableContent>
-    <ng-container *ngIf="!isNil">
-      <shared-xsd-element-input
-        class="form-floating"
-        [xsd]="xsd"
-        [record]="record"
-        [stack]="stack"
-        [basePath]="basePath"
-        [element]="element"
-        [data]="data"
-        [error]="error"
-        [index]="index"
-        [selectedValue]="selectedValue"
-        [displayOnly]="isDisplayOnly"></shared-xsd-element-input>
-    </ng-container>
-    <div *ngIf="isNil" class="select-wrapper">
-      <select [(ngModel)]="NV" [id]="formName + '-NV'" [name]="formName + '-NV'" class="select-wrapper__select">
-        <option *ngFor="let nv of nilValues" [value]="nv['xs:restriction']['xs:enumeration']._attributes.value">
-          {{ nv['xs:restriction']['xs:enumeration']['xs:annotation']['xs:documentation']._text }}
-        </option>
-      </select>
-    </div>
+    <shared-xsd-element-input
+      *ngIf="!isNil"
+      class="form-floating"
+      [xsd]="xsd"
+      [record]="record"
+      [stack]="stack"
+      [basePath]="basePath"
+      [element]="element"
+      [data]="data"
+      [error]="error"
+      [index]="index"
+      [selectedValue]="selectedValue"
+      [displayOnly]="isDisplayOnly"></shared-xsd-element-input>
+    <input
+      *ngIf="isNil"
+      #instance="ngbTypeahead"
+      type="text"
+      class="form-control"
+      [id]="formName + '-NV'"
+      [name]="formName + '-NV'"
+      [ngModel]="nilValue"
+      (ngModelChange)="onChange($event)"
+      [ngbTypeahead]="search"
+      [inputFormatter]="formatter"
+      [resultFormatter]="formatter"
+      [editable]="false"
+      [selectOnExact]="true"
+      (focus)="focus$.next($any($event).target.value)"
+      (click)="click$.next($any($event).target.value)" />
     <div *ngIf="isNillable && !isDisplayOnly && !index" class="input-group-append">
       <div class="form-check">
-        <input [(ngModel)]="isNil" [id]="formName + '-nil'" type="checkbox" class="form-check-input" />
+        <input (change)="onToggle($event)" [(ngModel)]="isNil" [id]="formName + '-nil'" type="checkbox" class="form-check-input" />
         <label [for]="formName + '-nil'" class="form-check-label">Nil?</label>
       </div>
     </div>
