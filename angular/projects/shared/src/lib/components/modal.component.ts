@@ -31,6 +31,7 @@ export class ModalComponent {
     this.modalRef = this.modal.open(this.content, extend({ ariaLabelledBy: 'modal-basic-title' }, options));
     this.modalRef.shown.pipe(first()).subscribe(() => {
       document.querySelector('.modal')?.scrollTo(0, 0);
+      (document.querySelector('.modal input, .modal select') as HTMLElement)?.focus();
     });
   }
 
