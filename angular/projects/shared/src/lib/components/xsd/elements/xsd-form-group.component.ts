@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { JSONPath } from 'jsonpath-plus';
-import { assign, cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
 import { XsdElementBaseComponent } from './xsd-element-base.component';
