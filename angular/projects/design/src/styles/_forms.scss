@@ -160,7 +160,7 @@ select:disabled {
   background-image: none;
 }
 
-.form-field--focused {
+.form-field:focus-within {
   border-color: $brand-primary-500;
   box-shadow: 0 0 0 4px $brand-primary-200;
 
@@ -171,7 +171,7 @@ select:disabled {
 
 .form-field--invalid {
   border-color: $brand-secondary-500;
-  &.form-field--focused {
+  &:focus-within {
     box-shadow: 0 0 0 4px $brand-secondary-400;
   }
 

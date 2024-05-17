@@ -2,7 +2,6 @@
   class="form-field"
   [class.form-field--disabled]="isDisabled"
   [class.form-field--editing]="isEditing"
-  [class.form-field--focused]="isFocused"
   [class.form-field--invalid]="isInvalid"
   [class.form-field--noclear]="rows > 1"
   [class.form-field--nonempty]="isNonEmpty"
@@ -20,8 +19,6 @@
     [disabled]="isDisabled"
     [readonly]="isReadOnly"
     [tabindex]="isFocusable && isEditing ? 0 : -1"
-    (focus)="onFocus($event)"
-    (blur)="onBlur($event)"
     [shared-debounced]="debounceTime"
     (debouncedValueChange)="this.debouncedValueChange.emit($event)"
     [(ngModel)]="value" />
@@ -35,8 +32,6 @@
     [disabled]="isDisabled"
     [readonly]="!isFocusable || !isEditing"
     [tabindex]="isFocusable && isEditing ? 0 : -1"
-    (focus)="onFocus($event)"
-    (blur)="onBlur($event)"
     [shared-debounced]="debounceTime"
     (debouncedValueChange)="this.debouncedValueChange.emit($event)"
     [(ngModel)]="value"></textarea>
@@ -47,7 +42,6 @@
   [ngTemplateOutletContext]="{
     isEditing: isEditing,
     isFocusable: isFocusable,
-    isFocused: isFocused,
     source: source,
     target: target
   }"></ng-template>

@@ -20,8 +20,6 @@ export class BaseFieldComponent {
   @Input() isClearable: boolean = true;
   @Output() valueChange = new EventEmitter<any>();
 
-  isFocused = false;
-
   get isEditing(): boolean {
     return this.target != null;
   }
@@ -126,15 +124,5 @@ export class BaseFieldComponent {
       y2: parseInt(style.top) + parseInt(style.height),
     };
     return targetRect;
-  }
-
-  onFocus(event: any) {
-    if (this.isEditing) {
-      this.isFocused = true;
-    }
-  }
-
-  onBlur(event: any) {
-    this.isFocused = false;
   }
 }
