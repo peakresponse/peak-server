@@ -52,7 +52,11 @@
     </fieldset>
   </form>
   <div *ngIf="record" class="col-md-6 mb-3 position-relative">
-    <div class="position-fixed">{{ record.data | json }}</div>
+    <div class="position-fixed">
+      <p>isDraft: {{ record.isDraft ? 'true' : 'false' }}</p>
+      <p>CustomConfiguration: {{ (record.isDraft ? draftCustomConfiguration : customConfiguration) | json }}</p>
+      <p>{{ record.data | json }}</p>
+    </div>
   </div>
 </div>
 <div *ngIf="isLoading">
