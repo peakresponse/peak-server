@@ -6,6 +6,7 @@ import { AgencyService } from 'shared';
 })
 export class CustomConfigurationsRecordDemographicsComponent {
   defaultValues = {
+    isDraft: true,
     data: {},
   };
 

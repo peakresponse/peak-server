@@ -101,6 +101,9 @@ export class XsdElementBaseComponent {
                 },
               });
             }
+            enumeration.sort((a: any, b: any) => {
+              return a['xs:annotation']['xs:documentation']._text.localeCompare(b['xs:annotation']['xs:documentation']._text);
+            });
           }
         }
       }

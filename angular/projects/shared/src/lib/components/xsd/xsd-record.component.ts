@@ -42,7 +42,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
   }
 
   get recordSchema(): XsdSchema | undefined {
-    return this.record.isDraft ? this.draftSchemaData : this.schemaData;
+    return this.draftSchemaData ?? this.schemaData;
   }
 
   ngOnInit(): void {

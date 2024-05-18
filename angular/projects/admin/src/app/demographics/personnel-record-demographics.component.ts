@@ -6,6 +6,7 @@ import { AgencyService } from 'shared';
 })
 export class PersonnelRecordDemographicsComponent {
   defaultValues = {
+    isDraft: true,
     data: {},
   };
   constructor(public agency: AgencyService) {}
