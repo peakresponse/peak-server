@@ -1,5 +1,5 @@
 const express = require('express');
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
 const { StatusCodes } = require('http-status-codes');
 const { DateTime } = require('luxon');
@@ -14,15 +14,15 @@ const router = express.Router();
 
 let designWebpackStats;
 
-function getDesignWebpackStats() {
+async function getDesignWebpackStats() {
   if (!designWebpackStats || process.env.NODE_ENV !== 'production') {
-    designWebpackStats = JSON.parse(fs.readFileSync(path.join(__dirname, '../angular/projects/design/webpack-stats.json')));
+    designWebpackStats = JSON.parse(await fs.readFile(path.join(__dirname, '../angular/projects/design/webpack-stats.json')));
   }
   return designWebpackStats;
 }
 
-router.use((req, res, next) => {
-  res.locals.designWebpackStats = getDesignWebpackStats();
+router.use(async (req, res, next) => {
+  res.locals.designWebpackStats = await getDesignWebpackStats();
   next();
 });
 
@@ -32,6 +32,27 @@ router.get('/mass-casualty', (req, res) => {
 
 router.get('/privacy', (req, res) => {
   res.render('privacy');
+});
+
+router.get('/reports(/*)?', async (req, res) => {
+  let { path: report } = req;
+  report = report.substring(1);
+  let file = path.resolve(__dirname, '../views/', `${report}.ejs`);
+  try {
+    await fs.access(file, fs.constants.R_OK);
+    res.render(report);
+    return;
+  } catch {
+    file = path.resolve(__dirname, '../views/', report, 'index.ejs');
+    try {
+      await fs.access(file, fs.constants.R_OK);
+      res.render(path.join(report, 'index'));
+      return;
+    } catch {
+      // no-op
+    }
+  }
+  res.status(StatusCodes.NOT_FOUND).end();
 });
 
 router.get('/run-reporting', (req, res) => {

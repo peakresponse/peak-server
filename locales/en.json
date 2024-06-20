@@ -77,6 +77,9 @@
   "privacy": {
     "title": "Privacy Policy"
   },
+  "reports": {
+    "title": "Reports - %s"
+  },
   "run-reporting": {
     "title": "Run Reporting"
   },
