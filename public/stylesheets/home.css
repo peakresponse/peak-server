@@ -485,45 +485,12 @@ section .row {
   text-align: right;
 }
 
-img[src$='home1.jpg'] {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 695px;
-  height: auto;
-}
-
 img[src$='home6.png'] {
   display: block;
   margin: 0 auto;
   width: 100%;
   max-width: 750px;
   height: auto;
-}
-
-img[src$='feature1.png'] {
-  width: 105px;
-  height: 93px;
-}
-
-img[src$='feature2.png'] {
-  width: 81px;
-  height: 95px;
-}
-
-img[src$='feature3.png'] {
-  width: 109px;
-  height: 109px;
-}
-
-img[src$='feature4.png'] {
-  width: 88px;
-  height: 92px;
-}
-
-img[src$='feature5.png'] {
-  width: 96px;
-  height: 96px;
 }
 
 img[src*='bio-'] {
@@ -539,4 +506,35 @@ img[src*='bio-'] {
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+/* Reports */
+
+.reports__figure {
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.reports__image {
+  margin-bottom: 1rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.reports__iphone {
+  width: 300px;
+  height: auto;
+  margin-bottom: 1rem;
+  box-shadow: 0px 6px 10px rgba(118, 140, 151, 0.15);
+}
+
+@media (min-width: 768px) {
+  .reports__iphone + .reports__iphone {
+    margin-left: 2rem;
+  }
+}
+
+.reports__caption {
+  font-weight: bold;
 }
