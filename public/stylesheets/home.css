@@ -538,3 +538,11 @@ img[src*='bio-'] {
 .reports__caption {
   font-weight: bold;
 }
+
+.reports__table td:first-child {
+  text-align: left;
+}
+
+.reports__table td:last-child::after {
+  display: none !important;
+}
