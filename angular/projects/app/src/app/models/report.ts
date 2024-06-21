@@ -1,3 +1,7 @@
+import { DateTime } from 'luxon';
+
+import { TriagePriority } from 'shared';
+
 import { Base } from './base';
 
 export class Report extends Base {
@@ -10,5 +14,19 @@ export class Report extends Base {
       }
     }
     return null;
+  }
+
+  get description(): string {
+    const report = this.proxy;
+    return [report.patient?.fullName, report.patient?.ageString, report.patient?.genderString].filter((v) => !!v).join(', ');
+  }
+
+  get filterPriorityString(): string {
+    return TriagePriority.toString(this.data.filterPriority);
+  }
+
+  get updatedAtRelative(): string | null {
+    const report = this.proxy;
+    return DateTime.fromISO(report.updatedAt).toRelative();
   }
 }

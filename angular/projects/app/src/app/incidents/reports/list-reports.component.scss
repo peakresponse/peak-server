@@ -54,3 +54,11 @@
     width: 2.5rem;
   }
 }
+
+.reports__chips {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 20px;
+  right: 3.5rem;
+}

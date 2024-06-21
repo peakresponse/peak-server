@@ -70,8 +70,19 @@ $brand-secondaries: (
   '800': $brand-secondary-800,
 );
 
-$triage-minimal-medium: #52d395;
+$triage-immediate-dark: #a62727;
+$triage-immediate-light: #fee6e0;
+$triage-immediate-medium: #db3838;
+$triage-delayed-light: #fffedb;
+$triage-delayed-medium: #fecc2f;
 $triage-minimal-light: #c5f9d3;
+$triage-minimal-medium: #52d395;
+$triage-expectant-light: #efedec;
+$triage-expectant-medium: #a9a4a3;
+$triage-deceased-light: #e4dddd;
+$triage-deceased-medium: #382525;
+$triage-transported-light: #f1e0ff;
+$triage-transported-medium: #a363d9;
 
 $body-color: $base-800;
 

@@ -5,14 +5,30 @@
 <main [class.d-none]="route.firstChild">
   <div class="reports">
     <div *ngFor="let report of reports" [routerLink]="['/incidents', incidentId, 'reports', report.id]" class="reports__report">
-      <h3>Unit #: {{ report.response.unitNumber }}</h3>
-      <dl>
-        <dt>Age:</dt>
-        <dd>{{ report.patient.ageString }}</dd>
-        <hr />
-        <dt>Gender:</dt>
-        <dd>{{ report.patient.genderString }}</dd>
-      </dl>
+      <ng-container *ngIf="!!report.scene?.isMCI">
+        <h3>#{{ report.pin }}</h3>
+        <div class="reports__chips">
+          <shared-triage-priority-chip class="mb-1" [priority]="report.filterPriority"></shared-triage-priority-chip>
+          <shared-triage-priority-chip
+            *ngIf="report.filterPriority === 5"
+            [priority]="report.patient?.priority"></shared-triage-priority-chip>
+        </div>
+        <dl>
+          <dd>{{ report.description }}</dd>
+          <hr />
+          <dd class="fs-5">{{ report.updatedAtRelative }}</dd>
+        </dl>
+      </ng-container>
+      <ng-container *ngIf="!report.scene?.isMCI">
+        <h3>Unit #: {{ report.response.unitNumber }}</h3>
+        <dl>
+          <dt>Age:</dt>
+          <dd>{{ report.patient.ageString }}</dd>
+          <hr />
+          <dt>Gender:</dt>
+          <dd>{{ report.patient.genderString }}</dd>
+        </dl>
+      </ng-container>
     </div>
     <div *ngIf="reports?.length === 0">
       <h3>No reports yet.</h3>

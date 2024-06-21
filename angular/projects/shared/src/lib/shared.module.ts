@@ -1,3 +1,5 @@
+import '@angular/localize/init';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +15,7 @@ import { ListComponent } from './components/list.component';
 import { LoaderComponent } from './components/loader.component';
 import { ModalComponent } from './components/modal.component';
 import { PictureComponent } from './components/picture.component';
+import { TriagePriorityChipComponent } from './components/triage-priority-chip.component';
 import { UploaderComponent } from './components/uploader.component';
 import { WizardComponent } from './components/wizard.component';
 
@@ -71,6 +74,7 @@ import { VersionPipe } from './pipes/version.pipe';
     LoaderComponent,
     ModalComponent,
     PictureComponent,
+    TriagePriorityChipComponent,
     UploaderComponent,
     WizardComponent,
     // components/branding
@@ -129,6 +133,7 @@ import { VersionPipe } from './pipes/version.pipe';
     LoaderComponent,
     ModalComponent,
     PictureComponent,
+    TriagePriorityChipComponent,
     UploaderComponent,
     WizardComponent,
     // components/branding

@@ -202,3 +202,31 @@ $chip-disabled-opacity: $btn-disabled-opacity;
 .chip--sm {
   @include button-size($chip-padding-y-sm, $chip-padding-x-sm, $chip-font-size-sm, $chip-border-radius-sm);
 }
+
+.chip--immediate {
+  @include button-variant($triage-immediate-medium, $triage-immediate-medium, white);
+}
+
+.chip--delayed {
+  @include button-variant($triage-delayed-medium, $triage-delayed-medium, white);
+}
+
+.chip--minimal {
+  @include button-variant($triage-minimal-medium, $triage-minimal-medium, white);
+}
+
+.chip--expectant {
+  @include button-variant($triage-expectant-medium, $triage-expectant-medium, $base-800);
+}
+
+.chip--deceased {
+  @include button-variant($triage-deceased-medium, $triage-deceased-medium, white);
+}
+
+.chip--transported {
+  @include button-variant($triage-transported-medium, $triage-transported-medium, white);
+}
+
+.chip--unknown {
+  @include button-variant($base-500, $base-500, white);
+}

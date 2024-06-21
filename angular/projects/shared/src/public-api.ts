@@ -16,6 +16,7 @@ export * from './lib/components/list.component';
 export * from './lib/components/loader.component';
 export * from './lib/components/modal.component';
 export * from './lib/components/picture.component';
+export * from './lib/components/triage-priority-chip.component';
 export * from './lib/components/uploader.component';
 export * from './lib/components/wizard.component';
 

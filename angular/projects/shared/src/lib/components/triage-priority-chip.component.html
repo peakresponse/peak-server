@@ -1,0 +1,11 @@
+<button
+  class="chip w-100"
+  [class.chip--immediate]="priority === 0"
+  [class.chip--delayed]="priority === 1"
+  [class.chip--minimal]="priority === 2"
+  [class.chip--expectant]="priority === 3"
+  [class.chip--deceased]="priority === 4"
+  [class.chip--transported]="priority === 5"
+  [class.chip--unknown]="priority === 6">
+  {{ priorityString }}
+</button>

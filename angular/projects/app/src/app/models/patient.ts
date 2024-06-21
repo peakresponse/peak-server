@@ -1,3 +1,5 @@
+import { TriagePriority } from 'shared';
+
 import { Base } from './base';
 
 export enum PatientAgeUnits {
@@ -42,6 +44,10 @@ export class Patient extends Base {
     }
   }
 
+  get fullName(): string {
+    return `${this.data.firstName ?? ''} ${this.data.lastName ?? ''}`.trim();
+  }
+
   get genderString(): string {
     switch (this.data.gender) {
       case PatientGender.female:
@@ -59,5 +65,13 @@ export class Patient extends Base {
       default:
         return '';
     }
+  }
+
+  get filterPriorityString(): string {
+    return TriagePriority.toString(this.data.filterPriority);
+  }
+
+  get priorityString(): string {
+    return TriagePriority.toString(this.data.priority);
   }
 }
