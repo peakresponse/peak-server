@@ -34,13 +34,15 @@ export class ListReportsComponent implements OnDestroy {
               data[key][obj.id] = obj;
             }
           }
-          this.reports = response.body['Report'].map((r: any) => new Report(r, data, models)).sort((a: any, b: any) => {
-            let result = Math.sign((a.filterPriority ?? 0) - (b.filterPriority ?? 0));
-            if (result === 0) {
-              result = DateTime.fromISO(a.updatedAt).toMillis() - DateTime.fromISO(b.updatedAt).toMillis();
-            }
-            return result;
-          });
+          this.reports = response.body['Report']
+            .map((r: any) => new Report(r, data, models))
+            .sort((a: any, b: any) => {
+              let result = Math.sign((a.filterPriority ?? 0) - (b.filterPriority ?? 0));
+              if (result === 0) {
+                result = DateTime.fromISO(a.updatedAt).toMillis() - DateTime.fromISO(b.updatedAt).toMillis();
+              }
+              return result;
+            });
         });
       }
     });
