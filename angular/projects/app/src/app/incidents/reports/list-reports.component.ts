@@ -17,6 +17,7 @@ export class ListReportsComponent implements OnDestroy {
   subscription?: Subscription;
   incidentId?: string | null;
   reports?: any[];
+  view = 'cards';
 
   constructor(
     private api: ApiService,

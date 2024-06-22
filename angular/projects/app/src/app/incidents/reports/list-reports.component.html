@@ -1,9 +1,45 @@
 <router-outlet></router-outlet>
 <shared-command-header [class.d-none]="route.firstChild">
   <a class="command-header__plain" (click)="onDone()">Done</a>
+  <ul class="nav">
+    <li class="nav__item">
+      <a class="nav__link" [class.nav__link--active]="view === 'cards'" (click)="view = 'cards'" tabindex="0">Cards</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" [class.nav__link--active]="view === 'table'" (click)="view = 'table'" tabindex="0">Table</a>
+    </li>
+  </ul>
+  <a class="command-header__plain" download="reports.csv" [href]="'/api/reports?incidentId=' + incidentId + '&format=csv'">Export</a>
 </shared-command-header>
 <main [class.d-none]="route.firstChild">
-  <div class="reports">
+  <div *ngIf="view === 'table'" class="table-responsive">
+    <table class="table">
+      <tr *ngFor="let report of reports" [routerLink]="['/incidents', incidentId, 'reports', report.id]">
+        <td>#{{ report.pin }}</td>
+        <td>
+          {{ report.description }}
+        </td>
+        <td>
+          {{ report.updatedAtRelative }}
+        </td>
+        <td>
+          {{ report.narrative?.text }}
+        </td>
+        <td>
+          <div *ngFor="let file of report.files; let i = index">
+            <audio *ngIf="file.fileUrl" [src]="file.fileUrl" controls></audio>
+          </div>
+        </td>
+        <td>
+          <shared-triage-priority-chip class="mb-1" [priority]="report.filterPriority"></shared-triage-priority-chip>
+          <shared-triage-priority-chip
+            *ngIf="report.filterPriority === 5"
+            [priority]="report.patient?.priority"></shared-triage-priority-chip>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="view === 'cards'" class="reports">
     <div *ngFor="let report of reports" [routerLink]="['/incidents', incidentId, 'reports', report.id]" class="reports__report">
       <ng-container *ngIf="!!report.scene?.isMCI">
         <h3>#{{ report.pin }}</h3>

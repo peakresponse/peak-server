@@ -278,6 +278,16 @@ describe('/api/reports', () => {
         assert.deepStrictEqual(data.Time.length, 2);
         assert.deepStrictEqual(data.Vital.length, 2);
       });
+
+      it('returns Reports for an Incident in a CSV summary file', async () => {
+        const response = await testSession
+          .get(`/api/reports?incidentId=6621202f-ca09-4ad9-be8f-b56346d1de65&format=csv`)
+          .set('Host', `bmacc.${process.env.BASE_HOST}`)
+          .expect(StatusCodes.OK);
+        assert.deepStrictEqual(response.headers['content-type'], 'text/csv; charset=utf-8');
+        // const data = response.text;
+        // console.log(data);
+      });
     });
 
     describe('POST /', () => {

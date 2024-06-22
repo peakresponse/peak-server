@@ -12,6 +12,25 @@ const PatientPriority = {
 };
 Object.freeze(PatientPriority);
 
+const PatientPriorities = ['Immediate', 'Delayed', 'Minor', 'Expectant', 'Dead', 'Transported', 'Unknown'];
+
+const PatientAgeUnits = {
+  2516001: 'd',
+  2516003: 'hr',
+  2516005: 'min',
+  2516007: 'mo',
+  2516009: 'yr',
+};
+
+const PatientGender = {
+  9906001: 'Female',
+  9906003: 'Male',
+  9906007: 'Trans Male',
+  9906009: 'Trans Female',
+  9906011: 'Other',
+  9906005: 'Unknown',
+};
+
 module.exports = (sequelize, DataTypes) => {
   class Patient extends Base {
     static get xsdPath() {
@@ -114,12 +133,24 @@ module.exports = (sequelize, DataTypes) => {
       gender: {
         type: DataTypes.STRING,
       },
+      genderString: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['gender']),
+        get() {
+          return PatientGender[this.gender] ?? '';
+        },
+      },
       age: {
         type: DataTypes.INTEGER,
       },
       ageUnits: {
         type: DataTypes.STRING,
         field: 'age_units',
+      },
+      ageString: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['age', 'ageUnits']),
+        get() {
+          return `${this.age ?? ''}${PatientAgeUnits[this.ageUnits] ?? ''}`;
+        },
       },
       dob: {
         type: DataTypes.DATEONLY,
@@ -156,6 +187,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       text: DataTypes.TEXT,
       priority: DataTypes.INTEGER,
+      priorityString: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['priority']),
+        get() {
+          return PatientPriorities[this.priority ?? 6];
+        },
+      },
       filterPriority: {
         type: DataTypes.VIRTUAL(DataTypes.INTEGER),
         get() {

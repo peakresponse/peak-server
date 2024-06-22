@@ -19,7 +19,7 @@ router.get(
       order: [['createdAt', 'desc']],
       where: {},
     };
-    const { incidentId } = req.query;
+    const { format, incidentId } = req.query;
     if (!incidentId) {
       res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
       return;
@@ -27,9 +27,29 @@ router.get(
     options.where.incidentId = incidentId;
     await models.sequelize.transaction(async (transaction) => {
       options.transaction = transaction;
-      const reports = await models.Report.scope('canonical').findAll(options);
-      const payload = await models.Report.createPayload(reports, { transaction });
-      res.json(payload);
+      if (format === 'csv') {
+        options.include.push('response', 'narrative', 'files');
+        const reports = await models.Report.scope('canonical').findAll(options);
+        res.set('Content-Type', 'text/csv');
+        let csv = '"Tag #",Priority,Destination,Agency,"Unit #",Age,Gender,Narrative,Recordings\n';
+        for (const report of reports) {
+          let row = report.pin ?? '';
+          row = `${row},${report.patient.priorityString}`;
+          row = `${row},${report.disposition.getFirstNemsisValue(['eDisposition.DestinationGroup', 'eDisposition.01']) ?? ''}`;
+          row = `${row},${report.filterPriority === 5 ? report.response.getFirstNemsisValue(['eResponse.AgencyGroup', 'eResponse.02']) ?? '' : ''}`;
+          row = `${row},${report.filterPriority === 5 ? report.response.getFirstNemsisValue(['eResponse.13']) ?? '' : ''}`;
+          row = `${row},${report.patient.ageString}`;
+          row = `${row},${report.patient.genderString}`;
+          row = `${row},"${report.narrative.getFirstNemsisValue(['eNarrative.01'])?.replace('"', '\\"') ?? ''}"`;
+          row = `${row},"${report.files.map((f) => f.fileUrl).join('\n')}"`;
+          csv = `${csv}${row}\n`;
+        }
+        res.send(csv);
+      } else {
+        const reports = await models.Report.scope('canonical').findAll(options);
+        const payload = await models.Report.createPayload(reports, { transaction });
+        res.json(payload);
+      }
     });
   }),
 );
