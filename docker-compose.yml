@@ -7,7 +7,8 @@ services:
   minio:
     image: minio/minio:RELEASE.2024-01-29T03-56-32Z
     ports:
-      - '9001:9001'
+      - 9000:9000
+      - 9001:9001
     command: 'server /data --console-address ":9001"'
     volumes:
       - ./data/minio:/data
@@ -22,8 +23,8 @@ services:
     image: peakresponse/peak-server
     command: bash -l -c "bin/init; nf start -j Procfile.dev"
     volumes:
-      - ~/.ssh:/root/.ssh
       - ~/.gitconfig:/root/.gitconfig
+      - ~/.ssh:/root/.ssh
       - .:/opt/node/app
       - /opt/node/app/node_modules
       - /opt/node/app/angular/node_modules
@@ -51,7 +52,5 @@ services:
       - ./.env
     ports:
       - 3000:3000
-      - 8080:8080
-      - 9000:9000
     depends_on:
       - server
