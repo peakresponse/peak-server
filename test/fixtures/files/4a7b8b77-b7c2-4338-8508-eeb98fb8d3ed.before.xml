@@ -223,6 +223,10 @@
 			<eOutcome>
 				<eOutcome.01 NV="7701003" xsi:nil="true"/>
 				<eOutcome.02 NV="7701003" xsi:nil="true"/>
+				<eOutcome.ExternalDataGroup>
+					<eOutcome.03>4303001</eOutcome.03>
+					<eOutcome.04>123456</eOutcome.04>
+				</eOutcome.ExternalDataGroup>
 				<eOutcome.EmergencyDepartmentProceduresGroup>
 					<eOutcome.09 NV="7701003" xsi:nil="true"/>
 					<eOutcome.19 NV="7701003" xsi:nil="true"/>

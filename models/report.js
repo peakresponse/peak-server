@@ -374,7 +374,7 @@ module.exports = (sequelize, DataTypes) => {
               '["eOutcome.13"]',
               '["eOutcome.16"]',
               '["eOutcome.18"]',
-            ].forEach((e) =>
+            ].forEach((e) => {
               _.set(
                 PatientCareReport.eOutcome,
                 e,
@@ -385,8 +385,18 @@ module.exports = (sequelize, DataTypes) => {
                   },
                 },
                 Object,
-              ),
-            );
+              );
+              if (e === '["eOutcome.02"]' && !!this.pin) {
+                PatientCareReport.eOutcome['eOutcome.ExternalDataGroup'] = {
+                  'eOutcome.03': {
+                    _text: '4303001',
+                  },
+                  'eOutcome.04': {
+                    _text: this.pin,
+                  },
+                };
+              }
+            });
             break;
           default: {
             // eslint-disable-next-line no-await-in-loop
