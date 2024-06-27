@@ -1,0 +1,15 @@
+version: 2
+authtoken:
+tunnels:
+  minio:
+    proto: http
+    addr: 9000
+    domain: minio.peak.ngrok.app
+  root:
+    proto: http
+    addr: 3000
+    domain: peak.ngrok.app
+  wildcard:
+    proto: http
+    addr: 3000
+    domain: '*.peak.ngrok.app'
