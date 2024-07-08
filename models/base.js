@@ -494,14 +494,19 @@ class Base extends Model {
   }
 
   syncFieldAndNemsisBooleanValue(key, keyPath, options, required = false) {
-    const nemsisValue = this.getFirstNemsisValue(keyPath);
+    let nemsisValue = this.getFirstNemsisValue(keyPath);
+    if (typeof nemsisValue === 'string') {
+      nemsisValue = nemsisValue === '9923003';
+    } else {
+      nemsisValue = null;
+    }
     let dataValue = this.getDataValue(key);
     if (typeof dataValue === 'boolean') {
       dataValue = dataValue ? '9923003' : '9923001';
     } else {
       dataValue = null;
     }
-    this.syncFieldAndNemsisValueInternal(key, nemsisValue ? nemsisValue === '9923003' : null, dataValue, keyPath, options, required);
+    this.syncFieldAndNemsisValueInternal(key, nemsisValue, dataValue, keyPath, options, required);
   }
 
   syncFieldAndNemsisValue(key, keyPath, options, required = false) {
@@ -523,7 +528,9 @@ class Base extends Model {
         options.fields.push('data');
       }
     } else {
-      this.setDataValue(key, value);
+      if (!required || value !== null) {
+        this.setDataValue(key, value);
+      }
       if (this.changed(key)) {
         options.fields = options.fields || [];
         if (options.fields.indexOf(key) < 0) {

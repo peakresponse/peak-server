@@ -227,7 +227,6 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Scene.beforeValidate(async (record, options) => {
-    // TODO: handle MCI records
     record.syncFieldAndNemsisBooleanValue('isMCI', ['eScene.07'], options, true);
     record.syncFieldAndNemsisValue('address1', ['eScene.15'], options);
     record.syncFieldAndNemsisValue('address2', ['eScene.16'], options);
