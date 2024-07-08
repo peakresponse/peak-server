@@ -374,7 +374,7 @@ module.exports = (sequelize, DataTypes) => {
               '["eOutcome.13"]',
               '["eOutcome.16"]',
               '["eOutcome.18"]',
-            ].forEach((e) =>
+            ].forEach((e) => {
               _.set(
                 PatientCareReport.eOutcome,
                 e,
@@ -385,12 +385,22 @@ module.exports = (sequelize, DataTypes) => {
                   },
                 },
                 Object,
-              ),
-            );
+              );
+              if (e === '["eOutcome.02"]' && !!this.pin) {
+                PatientCareReport.eOutcome['eOutcome.ExternalDataGroup'] = {
+                  'eOutcome.03': {
+                    _text: '4303001',
+                  },
+                  'eOutcome.04': {
+                    _text: this.pin,
+                  },
+                };
+              }
+            });
             break;
           default: {
             // eslint-disable-next-line no-await-in-loop
-            const r = this[modelName.toLowerCase()] ?? (await this[`get${modelName}`]?.(options));
+            let r = this[modelName.toLowerCase()] ?? (await this[`get${modelName}`]?.(options));
             if (!this[modelName.toLowerCase()]) {
               this[modelName.toLowerCase()] = r;
             }
@@ -401,6 +411,16 @@ module.exports = (sequelize, DataTypes) => {
                 // eslint-disable-next-line no-await-in-loop
                 element[modelClass.groupTag] = await Promise.all(r.map((record) => record.getData(version)));
               } else {
+                if (modelName === 'Scene' && r.isMCI) {
+                  // ensure we're working with the latest scene data
+                  // eslint-disable-next-line no-await-in-loop
+                  r = await r.getCanonical(options);
+                  // inject additional separate MCI related fields
+                  const priority = this.patient.priority ?? null;
+                  if (priority !== null) {
+                    r.setNemsisValue(['eScene.08'], sequelize.models.Patient.NemsisPatientPriorities[priority], true);
+                  }
+                }
                 // eslint-disable-next-line no-await-in-loop
                 element = await r.getData(version);
               }

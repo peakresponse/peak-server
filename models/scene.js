@@ -227,7 +227,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Scene.beforeValidate(async (record, options) => {
-    // TODO: handle MCI records
+    record.syncFieldAndNemsisBooleanValue('isMCI', ['eScene.07'], options, true);
     record.syncFieldAndNemsisValue('address1', ['eScene.15'], options);
     record.syncFieldAndNemsisValue('address2', ['eScene.16'], options);
     record.syncFieldAndNemsisValue('cityId', ['eScene.17'], options);
@@ -235,7 +235,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('zip', ['eScene.19'], options, true);
     record.syncFieldAndNemsisValue('countyId', ['eScene.21'], options, true);
     // placeholders for required eScene fields
-    [['eScene.01'], ['eScene.06'], ['eScene.07'], ['eScene.08'], ['eScene.09']].forEach((e) => {
+    [['eScene.01'], ['eScene.06'], ['eScene.08'], ['eScene.09']].forEach((e) => {
       if (!_.get(record.data, [e])) {
         _.set(record.data, [e], {
           _attributes: {

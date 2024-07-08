@@ -493,16 +493,44 @@ class Base extends Model {
     }
   }
 
+  syncFieldAndNemsisBooleanValue(key, keyPath, options, required = false) {
+    let nemsisValue = this.getFirstNemsisValue(keyPath);
+    if (typeof nemsisValue === 'string') {
+      nemsisValue = nemsisValue === '9923003';
+    } else {
+      nemsisValue = null;
+    }
+    let dataValue = this.getDataValue(key);
+    if (typeof dataValue === 'boolean') {
+      dataValue = dataValue ? '9923003' : '9923001';
+    } else {
+      dataValue = null;
+    }
+    this.syncFieldAndNemsisValueInternal(key, nemsisValue, dataValue, keyPath, options, required);
+  }
+
   syncFieldAndNemsisValue(key, keyPath, options, required = false) {
+    this.syncFieldAndNemsisValueInternal(
+      key,
+      this.getFirstNemsisValue(keyPath) ?? null,
+      this.getDataValue(key),
+      keyPath,
+      options,
+      required,
+    );
+  }
+
+  syncFieldAndNemsisValueInternal(key, value, nemsisValue, keyPath, options, required = false) {
     if (this.changed(key)) {
-      this.setNemsisValue(keyPath, this.getDataValue(key), required);
+      this.setNemsisValue(keyPath, nemsisValue, required);
       options.fields = options.fields || [];
       if (options.fields.indexOf('data') < 0) {
         options.fields.push('data');
       }
     } else {
-      const value = this.getFirstNemsisValue(keyPath) ?? null;
-      this.setDataValue(key, value);
+      if (!required || value !== null) {
+        this.setDataValue(key, value);
+      }
       if (this.changed(key)) {
         options.fields = options.fields || [];
         if (options.fields.indexOf(key) < 0) {

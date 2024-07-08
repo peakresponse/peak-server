@@ -72,8 +72,8 @@
 			<eScene>
 				<eScene.01 NV="7701003" xsi:nil="true"/>
 				<eScene.06 NV="7701003" xsi:nil="true"/>
-				<eScene.07 NV="7701003" xsi:nil="true"/>
-				<eScene.08 NV="7701003" xsi:nil="true"/>
+				<eScene.07>9923003</eScene.07>
+				<eScene.08>2708001</eScene.08>
 				<eScene.09 NV="7701003" xsi:nil="true"/>
 				<eScene.17>2411786</eScene.17>
 				<eScene.18>06</eScene.18>
@@ -223,6 +223,10 @@
 			<eOutcome>
 				<eOutcome.01 NV="7701003" xsi:nil="true"/>
 				<eOutcome.02 NV="7701003" xsi:nil="true"/>
+				<eOutcome.ExternalDataGroup>
+					<eOutcome.03>4303001</eOutcome.03>
+					<eOutcome.04>123456</eOutcome.04>
+				</eOutcome.ExternalDataGroup>
 				<eOutcome.EmergencyDepartmentProceduresGroup>
 					<eOutcome.09 NV="7701003" xsi:nil="true"/>
 					<eOutcome.19 NV="7701003" xsi:nil="true"/>
