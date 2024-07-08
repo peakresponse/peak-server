@@ -12,6 +12,9 @@ const PatientPriority = {
 };
 Object.freeze(PatientPriority);
 
+const NemsisPatientPriorities = ['2708001', '2708003', '2708005', '2708007', '2708009'];
+Object.freeze(NemsisPatientPriorities);
+
 module.exports = (sequelize, DataTypes) => {
   class Patient extends Base {
     static get xsdPath() {
@@ -24,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
 
     static get Priority() {
       return PatientPriority;
+    }
+
+    static get NemsisPatientPriorities() {
+      return NemsisPatientPriorities;
     }
 
     static associate(models) {

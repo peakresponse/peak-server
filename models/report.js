@@ -411,6 +411,13 @@ module.exports = (sequelize, DataTypes) => {
                 // eslint-disable-next-line no-await-in-loop
                 element[modelClass.groupTag] = await Promise.all(r.map((record) => record.getData(version)));
               } else {
+                if (modelName === 'Scene' && r.isMCI) {
+                  // inject additional separate MCI related fields
+                  const priority = this.patient.priority ?? null;
+                  if (priority !== null) {
+                    r.setNemsisValue(['eScene.08'], sequelize.models.Patient.NemsisPatientPriorities[priority], true);
+                  }
+                }
                 // eslint-disable-next-line no-await-in-loop
                 element = await r.getData(version);
               }
