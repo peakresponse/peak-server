@@ -400,7 +400,7 @@ module.exports = (sequelize, DataTypes) => {
             break;
           default: {
             // eslint-disable-next-line no-await-in-loop
-            const r = this[modelName.toLowerCase()] ?? (await this[`get${modelName}`]?.(options));
+            let r = this[modelName.toLowerCase()] ?? (await this[`get${modelName}`]?.(options));
             if (!this[modelName.toLowerCase()]) {
               this[modelName.toLowerCase()] = r;
             }
@@ -412,6 +412,9 @@ module.exports = (sequelize, DataTypes) => {
                 element[modelClass.groupTag] = await Promise.all(r.map((record) => record.getData(version)));
               } else {
                 if (modelName === 'Scene' && r.isMCI) {
+                  // ensure we're working with the latest scene data
+                  // eslint-disable-next-line no-await-in-loop
+                  r = await r.getCanonical();
                   // inject additional separate MCI related fields
                   const priority = this.patient.priority ?? null;
                   if (priority !== null) {
