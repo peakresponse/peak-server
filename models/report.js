@@ -414,7 +414,7 @@ module.exports = (sequelize, DataTypes) => {
                 if (modelName === 'Scene' && r.isMCI) {
                   // ensure we're working with the latest scene data
                   // eslint-disable-next-line no-await-in-loop
-                  r = await r.getCanonical();
+                  r = await r.getCanonical(options);
                   // inject additional separate MCI related fields
                   const priority = this.patient.priority ?? null;
                   if (priority !== null) {
