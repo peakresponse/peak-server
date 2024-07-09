@@ -36,7 +36,7 @@ describe('/api/counties', () => {
       const response = await testSession.get('/api/counties').set('Host', `bayshoreambulance.${process.env.BASE_HOST}`).expect(200);
       const data = response.body;
       assert(data.length);
-      assert.deepStrictEqual(data.length, 4);
+      assert.deepStrictEqual(data.length, 5);
       assert.deepStrictEqual(data[0].name, 'Barnstable County');
     });
 
