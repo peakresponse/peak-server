@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
@@ -10,8 +11,10 @@ import { BaseFieldComponent } from './base-field.component';
   styles: [':host{display:block;}'],
 })
 export class SearchFieldComponent extends BaseFieldComponent {
+  @ViewChild('inputEl') instance?: NgbTypeahead;
   @Input() searchHandler: (query: string) => Observable<any[]> = (query: string) => of([]);
   @Input() inputFormatter: (item: any) => string = (item: any) => item;
+  @Input() resultFormatter?: (item: any) => string;
   @Input() resultTemplate?: TemplateRef<any>;
   @Input() isSelectOnly: boolean = false;
   @Input() debounceTime?: number;
@@ -37,5 +40,9 @@ export class SearchFieldComponent extends BaseFieldComponent {
   onClear() {
     super.onClear();
     this.debouncedValueChange.emit('');
+  }
+
+  rewriteValue() {
+    this.instance?.writeValue(this.value);
   }
 }

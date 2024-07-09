@@ -32,7 +32,10 @@ export * from './lib/components/fields/file-field.component';
 export * from './lib/components/fields/object-field.component';
 export * from './lib/components/fields/recording-field.component';
 export * from './lib/components/fields/search-field.component';
+export * from './lib/components/fields/search-city-field.component';
+export * from './lib/components/fields/search-county-field.component';
 export * from './lib/components/fields/select-field.component';
+export * from './lib/components/fields/select-state-field.component';
 export * from './lib/components/fields/text-field.component';
 
 export * from './lib/components/xsd/xsd-base.component';

@@ -9,7 +9,25 @@
   <label *ngIf="label" [for]="derivedId">{{ label }}</label>
   <ng-template #rt let-r="result" let-t="term">{{ r }}</ng-template>
   <input
-    #inputEl
+    *ngIf="resultFormatter"
+    #inputEl="ngbTypeahead"
+    autocomplete="off"
+    type="text"
+    [id]="derivedId"
+    [name]="derivedName"
+    [placeholder]="placeholder ?? ''"
+    [disabled]="isDisabled"
+    [readonly]="!isFocusable || !isEditing"
+    [tabindex]="isFocusable && isEditing ? 0 : -1"
+    [ngbTypeahead]="search"
+    [inputFormatter]="inputFormatter"
+    [resultFormatter]="resultFormatter"
+    [editable]="!isSelectOnly"
+    [(ngModel)]="value" />
+  <input
+    *ngIf="!resultFormatter"
+    #inputEl="ngbTypeahead"
+    autocomplete="off"
     type="text"
     [id]="derivedId"
     [name]="derivedName"

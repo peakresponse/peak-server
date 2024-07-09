@@ -432,8 +432,14 @@ export class ApiService {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/facilities', params);
     },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/facilities`, data);
+    },
     get: (id: string, params?: HttpParams): Observable<any> => {
       return this.get(`/api/facilities/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/facilities/${id}`, data);
     },
     geocode: (id: string): Observable<any> => {
       return this.post(`/api/facilities/${id}/geocode`, null);
