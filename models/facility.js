@@ -147,28 +147,22 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('primaryNationalProviderId', [`${type}.FacilityGroup`, `${type}.05`], options);
     record.syncFieldAndNemsisValue('unit', [`${type}.FacilityGroup`, `${type}.06`], options);
     record.syncFieldAndNemsisValue('address', [`${type}.FacilityGroup`, `${type}.07`], options);
+    record.syncFieldAndNemsisValue('cityId', [`${type}.FacilityGroup`, `${type}.08`], options);
     record.setDataValue(
       'cityName',
       await sequelize.models.City.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]), options),
     );
-    if (record.cityName) {
-      record.setDataValue('cityId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]));
-    }
+    record.syncFieldAndNemsisValue('stateId', [`${type}.FacilityGroup`, `${type}.09`], options);
     record.setDataValue(
       'stateName',
       await sequelize.models.State.getNameForCode(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]), options),
     );
-    if (record.stateName) {
-      record.setDataValue('stateId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]));
-    }
     record.syncFieldAndNemsisValue('zip', [`${type}.FacilityGroup`, `${type}.10`], options);
+    record.syncFieldAndNemsisValue('countyId', [`${type}.FacilityGroup`, `${type}.11`], options);
     record.setDataValue(
       'countyName',
       await sequelize.models.County.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]), options),
     );
-    if (record.countyName) {
-      record.setDataValue('countyId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]));
-    }
     record.syncFieldAndNemsisValue('country', [`${type}.FacilityGroup`, `${type}.12`], options);
     record.setDataValue('geog', Base.geometryFor(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.13`])));
     record.syncFieldAndNemsisValue('primaryPhone', [`${type}.FacilityGroup`, `${type}.15`], options);

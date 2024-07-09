@@ -1,5 +1,6 @@
 const express = require('express');
 const { StatusCodes } = require('http-status-codes');
+const _ = require('lodash');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -38,6 +39,33 @@ router.get(
     }
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((d) => d.toJSON()));
+  }),
+);
+
+router.post(
+  '/',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const record = await models.Facility.create({
+      ..._.pick(req.body, [
+        'type',
+        'name',
+        'locationCode',
+        'primaryDesignation',
+        'primaryNationalProviderId',
+        'unit',
+        'address',
+        'cityId',
+        'countyId',
+        'stateId',
+        'zip',
+        'country',
+        'primaryPhone',
+      ]),
+      updatedById: req.user.id,
+      createdById: req.user.id,
+    });
+    res.status(StatusCodes.CREATED).json(record.toJSON());
   }),
 );
 

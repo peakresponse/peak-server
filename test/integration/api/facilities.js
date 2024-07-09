@@ -4,6 +4,7 @@ const session = require('supertest-session');
 
 const helpers = require('../../helpers');
 const app = require('../../../app');
+const models = require('../../../models');
 
 describe('/api/facilities', () => {
   let testSession;
@@ -63,6 +64,48 @@ describe('/api/facilities', () => {
       for (const facility of response.body) {
         assert(facility.name.match(/cpmc/i));
       }
+    });
+  });
+
+  describe('POST /', () => {
+    it('allows an Admin to create a new canonical Facility record', async () => {
+      const response = await testSession
+        .post('/api/facilities')
+        .set('Accept', 'application/json')
+        .send({
+          name: 'Medical Center Hospital',
+          address: '100 Medical Center Drive',
+          cityId: '1384879',
+          stateId: '48',
+          countyId: '48453',
+          zip: '78731',
+        })
+        .expect(StatusCodes.CREATED);
+      const { id } = response.body;
+      assert.ok(id);
+      const record = await models.Facility.findByPk(id);
+      assert.deepStrictEqual(record.data, {
+        'sFacility.FacilityGroup': {
+          'sFacility.02': {
+            _text: 'Medical Center Hospital',
+          },
+          'sFacility.07': {
+            _text: '100 Medical Center Drive',
+          },
+          'sFacility.08': {
+            _text: '1384879',
+          },
+          'sFacility.09': {
+            _text: '48',
+          },
+          'sFacility.10': {
+            _text: '78731',
+          },
+          'sFacility.11': {
+            _text: '48453',
+          },
+        },
+      });
     });
   });
 
