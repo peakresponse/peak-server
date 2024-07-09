@@ -103,6 +103,42 @@ router.get(
   }),
 );
 
+router.patch(
+  '/:id',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    let record;
+    await models.sequelize.transaction(async (transaction) => {
+      record = await models.Facility.scope('canonical').findByPk(req.params.id, { transaction });
+      if (record) {
+        await record.update(
+          _.pick(req.body, [
+            'type',
+            'name',
+            'locationCode',
+            'primaryDesignation',
+            'primaryNationalProviderId',
+            'unit',
+            'address',
+            'cityId',
+            'countyId',
+            'stateId',
+            'zip',
+            'country',
+            'primaryPhone',
+          ]),
+          { transaction },
+        );
+      }
+    });
+    if (record) {
+      res.json(record.toJSON());
+    } else {
+      res.send(StatusCodes.NOT_FOUND).end();
+    }
+  }),
+);
+
 router.post(
   '/:id/geocode',
   interceptors.requireAdmin,

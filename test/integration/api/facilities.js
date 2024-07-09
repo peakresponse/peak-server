@@ -125,4 +125,49 @@ describe('/api/facilities', () => {
       assert.deepStrictEqual(facilities[1].name, 'Zuckerberg San Francisco General Hospital and Trauma Center');
     });
   });
+
+  describe('PATCH /:id', () => {
+    it('allows an Admin to update a canonical Facility record', async () => {
+      await testSession
+        .patch('/api/facilities/23a7e241-4486-40fb-babb-aaa4c060c659')
+        .set('Accept', 'application/json')
+        .send({
+          name: 'Adante Hotel',
+        })
+        .expect(StatusCodes.OK);
+      const record = await models.Facility.findByPk('23a7e241-4486-40fb-babb-aaa4c060c659');
+      assert.deepStrictEqual(record.name, 'Adante Hotel');
+      assert.deepStrictEqual(record.data, {
+        'sFacility.FacilityGroup': {
+          'sFacility.02': {
+            _text: 'Adante Hotel',
+          },
+          'sFacility.03': {
+            _text: '64962',
+          },
+          'sFacility.07': {
+            _text: '610 Geary St',
+          },
+          'sFacility.08': {
+            _text: '2411786',
+          },
+          'sFacility.09': {
+            _text: '06',
+          },
+          'sFacility.10': {
+            _text: '94102',
+          },
+          'sFacility.11': {
+            _text: '06075',
+          },
+          'sFacility.12': {
+            _text: 'US',
+          },
+          'sFacility.13': {
+            _text: '37.786949,-122.4136599',
+          },
+        },
+      });
+    });
+  });
 });
