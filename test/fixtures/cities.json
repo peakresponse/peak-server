@@ -90,5 +90,28 @@
       "createdAt": "2020-04-07T19:59:21.446Z",
       "updatedAt": "2020-04-07T19:59:21.446Z"
     }
+  },
+  {
+    "model": "City",
+    "data": {
+      "id": "1384879",
+      "featureName": "Austin",
+      "featureClass": "Populated Place",
+      "censusCode": "05000",
+      "censusClassCode": "P1",
+      "gsaCode": "0330",
+      "opmCode": "480330209",
+      "stateNumeric": "48",
+      "stateAlpha": "TX",
+      "countySequence": "3",
+      "countyNumeric": "209",
+      "countyName": "Hays",
+      "primaryLatitude": "30.267153",
+      "primaryLongitude": "-97.7430608",
+      "dateCreated": "11/30/1979",
+      "dateEdited": "04/13/2012",
+      "createdAt": "2020-04-07T19:59:21.446Z",
+      "updatedAt": "2020-04-07T19:59:21.446Z"
+    }
   }
 ]

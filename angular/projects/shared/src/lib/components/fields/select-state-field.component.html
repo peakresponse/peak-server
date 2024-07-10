@@ -1,0 +1,4 @@
+<shared-select-field [id]="id" [name]="name" [label]="label" [source]="source" [target]="target">
+  <option [ngValue]="null">Please choose your state</option>
+  <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
+</shared-select-field>

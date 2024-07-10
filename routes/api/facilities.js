@@ -1,5 +1,6 @@
 const express = require('express');
 const { StatusCodes } = require('http-status-codes');
+const _ = require('lodash');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -42,6 +43,33 @@ router.get(
 );
 
 router.post(
+  '/',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const record = await models.Facility.create({
+      ..._.pick(req.body, [
+        'type',
+        'name',
+        'locationCode',
+        'primaryDesignation',
+        'primaryNationalProviderId',
+        'unit',
+        'address',
+        'cityId',
+        'countyId',
+        'stateId',
+        'zip',
+        'country',
+        'primaryPhone',
+      ]),
+      updatedById: req.user.id,
+      createdById: req.user.id,
+    });
+    res.status(StatusCodes.CREATED).json(record.toJSON());
+  }),
+);
+
+router.post(
   '/fetch',
   interceptors.requireLogin,
   helpers.async(async (req, res) => {
@@ -71,6 +99,42 @@ router.get(
       res.json(record.toJSON());
     } else {
       res.status(StatusCodes.NOT_FOUND).end();
+    }
+  }),
+);
+
+router.patch(
+  '/:id',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    let record;
+    await models.sequelize.transaction(async (transaction) => {
+      record = await models.Facility.scope('canonical').findByPk(req.params.id, { transaction });
+      if (record) {
+        await record.update(
+          _.pick(req.body, [
+            'type',
+            'name',
+            'locationCode',
+            'primaryDesignation',
+            'primaryNationalProviderId',
+            'unit',
+            'address',
+            'cityId',
+            'countyId',
+            'stateId',
+            'zip',
+            'country',
+            'primaryPhone',
+          ]),
+          { transaction },
+        );
+      }
+    });
+    if (record) {
+      res.json(record.toJSON());
+    } else {
+      res.send(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

@@ -29,7 +29,10 @@ import { FileFieldComponent } from './components/fields/file-field.component';
 import { ObjectFieldComponent } from './components/fields/object-field.component';
 import { RecordingFieldComponent } from './components/fields/recording-field.component';
 import { SearchFieldComponent } from './components/fields/search-field.component';
+import { SearchCityFieldComponent } from './components/fields/search-city-field.component';
+import { SearchCountyFieldComponent } from './components/fields/search-county-field.component';
 import { SelectFieldComponent } from './components/fields/select-field.component';
+import { SelectStateFieldComponent } from './components/fields/select-state-field.component';
 import { TextFieldComponent } from './components/fields/text-field.component';
 
 import { XsdBaseComponent } from './components/xsd/xsd-base.component';
@@ -87,7 +90,10 @@ import { VersionPipe } from './pipes/version.pipe';
     ObjectFieldComponent,
     RecordingFieldComponent,
     SearchFieldComponent,
+    SearchCityFieldComponent,
+    SearchCountyFieldComponent,
     SelectFieldComponent,
+    SelectStateFieldComponent,
     TextFieldComponent,
     // components/headers
     CommandFooterComponent,
@@ -145,7 +151,10 @@ import { VersionPipe } from './pipes/version.pipe';
     ObjectFieldComponent,
     RecordingFieldComponent,
     SearchFieldComponent,
+    SearchCityFieldComponent,
+    SearchCountyFieldComponent,
     SelectFieldComponent,
+    SelectStateFieldComponent,
     TextFieldComponent,
     // components/xsd
     XsdBaseComponent,

@@ -2,11 +2,9 @@
   <h1 class="h2">Edit Facility</h1>
 </div>
 <div class="row">
-  <shared-form #form *ngIf="id" type="facilities" [id]="id" class="col-md-3">
+  <shared-form #form *ngIf="id" type="facilities" [id]="id" class="col-xl-6">
     <ng-template let-record="record" let-error="error">
-      <div class="mb-3">
-        <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
-      </div>
+      <admin-facilities-form [record]="record" [error]="error"></admin-facilities-form>
       <div class="mb-3">
         <shared-text-field id="lat" label="Latitude" [source]="record"></shared-text-field>
       </div>

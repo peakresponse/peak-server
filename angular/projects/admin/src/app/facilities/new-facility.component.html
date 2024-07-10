@@ -2,9 +2,11 @@
   <h1 class="h2">New Facility</h1>
 </div>
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-xl-6">
     <shared-form (create)="onCreate($event)" type="facilities">
-      <ng-template let-record="record" let-error="error"> </ng-template>
+      <ng-template let-record="record" let-error="error">
+        <admin-facilities-form record="record" error="error"></admin-facilities-form>
+      </ng-template>
     </shared-form>
   </div>
 </div>
