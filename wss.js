@@ -7,7 +7,15 @@ const incidentsServer = new WebSocket.Server({ noServer: true });
 incidentsServer.on('connection', async (ws, req) => {
   // eslint-disable-next-line no-param-reassign
   ws.info = { userId: req.user.id, agencyId: req.agency.id, assignmentId: req.assignment.id, vehicleId: req.assignment.vehicleId };
-  // query for any active MCIs- for now, incidents from the same agency, TODO query across all appropriate counties
+  // query for any active MCIs- for now, incidents from the same region
+  let agencyIds = [];
+  if (req.agency.regionId) {
+    const region = await req.agency.getRegion();
+    const agencies = await region.getAgencies({ include: [{ model: models.Agency, as: 'claimedAgency', required: false }] });
+    agencyIds = agencies.map((a) => a.claimedAgency?.id ?? a.id);
+  } else {
+    agencyIds.push(req.agency.id);
+  }
   const incidents = await models.Incident.findAll({
     include: [
       {
@@ -18,10 +26,10 @@ incidentsServer.on('connection', async (ws, req) => {
           closedAt: null,
           [models.Sequelize.Op.or]: [
             {
-              createdByAgencyId: req.agency.id,
+              createdByAgencyId: agencyIds,
             },
             {
-              updatedByAgencyId: req.agency.id,
+              updatedByAgencyId: agencyIds,
             },
           ],
         },
@@ -52,11 +60,21 @@ async function dispatchIncidentUpdate(incidentId) {
   if (!incident) {
     return;
   }
+  let agencyIds = [];
+  if (incident.scene.isMCI) {
+    const agency = (await incident.scene.getCreatedByAgency()) ?? (await incident.scene.getUpdatedByAgency());
+    if (agency.regionId) {
+      const region = await agency.getRegion();
+      const agencies = await region.getAgencies({ include: [{ model: models.Agency, as: 'claimedAgency', required: false }] });
+      agencyIds = agencies.map((a) => a.claimedAgency?.id ?? a.id);
+    } else {
+      agencyIds.push(agency.id);
+    }
+  }
   const payload = await models.Incident.createPayload([incident]);
   const data = JSON.stringify(payload);
   for (const ws of incidentsServer.clients) {
-    if (incident.scene.isMCI && incident.scene.updatedByAgencyId === ws.info.agencyId) {
-      // TODO: send to all agencies within jurisdiction if an MCI
+    if (incident.scene.isMCI && agencyIds.includes(ws.info.agencyId)) {
       ws.send(data);
     } else if (incident.dispatches.find((d) => d.vehicleId === ws.info.vehicleId)) {
       // otherwise send to the dispatched vehicles
