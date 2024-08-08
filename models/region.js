@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       Region.belongsTo(models.User, { as: 'updatedBy' });
       Region.hasMany(models.RegionAgency, { as: 'regionAgencies' });
       Region.hasMany(models.RegionFacility, { as: 'regionFacilities' });
+      Region.belongsToMany(models.Agency, { as: 'agencies', through: models.RegionAgency });
     }
 
     toJSON() {
