@@ -214,7 +214,7 @@ module.exports = (sequelize, DataTypes) => {
         set(newValue) {
           this.setDataValue('number', newValue);
           if (newValue?.match(/^\d+$/)) {
-            const sort = parseInt(newValue, 10);
+            const sort = BigInt(newValue);
             if (!Number.isNaN(sort)) {
               this.setDataValue('sort', sort);
               return;

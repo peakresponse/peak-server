@@ -335,7 +335,7 @@ describe('/api/reports', () => {
         assert.deepStrictEqual(incident.sceneId, data.Incident.sceneId);
         assert.deepStrictEqual(incident.psapId, '588');
         assert.deepStrictEqual(incident.number, 'NOUNIT-1');
-        assert.deepStrictEqual(incident.sort, 12345679);
+        assert.deepStrictEqual(incident.sort, '12345679');
       });
 
       it('creates a new Report, resolving duplicate Incident numbers', async () => {

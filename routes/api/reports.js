@@ -123,7 +123,7 @@ router.post(
                     }
                     const prevIncident = await models.Incident.findOne(options);
                     if (prevIncident) {
-                      incident.number = `${prevIncident.sort + 1}`.padStart(3, '0');
+                      incident.number = `${BigInt(prevIncident.sort) + BigInt(1)}`.padStart(3, '0');
                     } else {
                       incident.number = '1'.padStart(3, '0');
                     }
