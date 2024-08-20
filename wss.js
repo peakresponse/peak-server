@@ -13,7 +13,8 @@ incidentsServer.on('connection', async (ws, req) => {
     const region = await req.agency.getRegion();
     const agencies = await region.getAgencies({ include: [{ model: models.Agency, as: 'claimedAgency', required: false }] });
     agencyIds = agencies.map((a) => a.claimedAgency?.id ?? a.id);
-  } else {
+  }
+  if (!agencyIds.includes(req.agency.id)) {
     agencyIds.push(req.agency.id);
   }
   const incidents = await models.Incident.findAll({
@@ -67,7 +68,8 @@ async function dispatchIncidentUpdate(incidentId) {
       const region = await agency.getRegion();
       const agencies = await region.getAgencies({ include: [{ model: models.Agency, as: 'claimedAgency', required: false }] });
       agencyIds = agencies.map((a) => a.claimedAgency?.id ?? a.id);
-    } else {
+    }
+    if (!agencyIds.includes(agency.id)) {
       agencyIds.push(agency.id);
     }
   }
