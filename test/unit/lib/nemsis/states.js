@@ -82,6 +82,7 @@ describe('lib', () => {
           describe('.emsSchematronVersions()', () => {
             it('returns a list of state ems schematron versions', () => {
               assert.deepStrictEqual(repo.emsSchematronVersions, [
+                '2024-08-19-9d29f8c4fdf60e2e18664b47abf3b994cf9677d6',
                 '2023-10-05-245fde0534a936a27cacd8d2becf64b98b6f0f6e',
                 '2023-02-17-291f15c28180cb073f23ed1e098ed4818ad92083',
                 '2021-09-02-602c70e4a2bf1958983ff73b60ef0a90378f2499',
