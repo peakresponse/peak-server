@@ -80,9 +80,17 @@ describe('/api/users', () => {
       assert.deepStrictEqual(data.Agency?.length, 3);
       assert.deepStrictEqual(data.Agency[0].subdomain, 'sffd');
       assert.deepStrictEqual(data.RegionAgency?.length, 3);
+      assert.deepStrictEqual(
+        data.RegionAgency.map((ra) => ra.id),
+        ['f1879d24-77d0-4ca7-b4c9-61539ba51d64', '2e64a095-7319-4b10-bdd2-642c1795c955', '6395d1ce-c668-4bf0-beb7-80c55b3892a2'],
+      );
       assert.deepStrictEqual(data.Facility?.length, 3);
       assert.deepStrictEqual(data.Facility[0].name, 'Zuckerberg San Francisco General Hospital and Trauma Center');
       assert.deepStrictEqual(data.RegionFacility?.length, 3);
+      assert.deepStrictEqual(
+        data.RegionFacility.map((rf) => rf.id),
+        ['92149f26-b629-4eac-be5f-a44c426c348d', '6d2335d1-32d1-4c59-84a0-631498c59c60', '5b16711c-7e96-4644-8e75-2dd4a4079c7f'],
+      );
     });
   });
 });

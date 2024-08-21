@@ -32,6 +32,12 @@ module.exports = (sequelize, DataTypes) => {
 
   RegionAgency.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       agencyName: DataTypes.STRING,
       position: DataTypes.INTEGER,
     },

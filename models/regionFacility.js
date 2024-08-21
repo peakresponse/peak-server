@@ -32,6 +32,12 @@ module.exports = (sequelize, DataTypes) => {
 
   RegionFacility.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       facilityName: DataTypes.STRING,
       position: DataTypes.INTEGER,
     },
