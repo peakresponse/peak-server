@@ -96,7 +96,7 @@ async function generateDemoData() {
       );
       const incident = await models.Incident.create(
         {
-          number: `${(latestDemo?.sort ?? 100000) + Math.floor(100 * Math.random())}`,
+          number: `${(BigInt(latestDemo?.sort) ?? BigInt(100000)) + BigInt(Math.floor(100 * Math.random()))}`,
           psapId: psap.id,
           sceneId: scene.canonicalId,
           createdById: user.id,
