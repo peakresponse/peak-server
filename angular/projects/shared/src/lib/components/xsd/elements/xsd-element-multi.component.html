@@ -7,6 +7,7 @@
     [class.form-field__item]="!isDisplayOnly"
     [class.form-field__item--invalid]="isInvalidValue(i)">
     <shared-xsd-element-nillable
+      (pasteMulti)="onPasteMulti($event)"
       [xsd]="xsd"
       [record]="record"
       [stack]="stack"

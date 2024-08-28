@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { XsdElementBaseComponent } from '../xsd-element-base.component';
 
@@ -7,6 +7,8 @@ import { XsdElementBaseComponent } from '../xsd-element-base.component';
   templateUrl: './xsd-input.component.html',
 })
 export class XsdInputComponent extends XsdElementBaseComponent {
+  @Output() pasteMulti = new EventEmitter<string[]>();
+
   get inputType(): string {
     switch (this.primitiveType) {
       case 'xs:date':
@@ -78,6 +80,20 @@ export class XsdInputComponent extends XsdElementBaseComponent {
   onInput(event: any) {
     if (this.value === '') {
       this.delValue();
+    }
+  }
+
+  onPaste(event: any) {
+    const text = event.clipboardData.getData('text').trim();
+    if (text.includes('\n')) {
+      event.preventDefault();
+      const lines = text.split('\n');
+      if (this.value === null || this.value === undefined || this.value === '') {
+        this.value = lines[0];
+        this.pasteMulti.emit(lines.slice(1));
+      } else {
+        this.pasteMulti.emit(lines);
+      }
     }
   }
 }

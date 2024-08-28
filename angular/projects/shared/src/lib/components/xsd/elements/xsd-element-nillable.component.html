@@ -6,6 +6,7 @@
     <shared-xsd-element-input
       *ngIf="!isNil"
       class="form-floating"
+      (pasteMulti)="onPasteMulti($event)"
       [xsd]="xsd"
       [record]="record"
       [stack]="stack"
