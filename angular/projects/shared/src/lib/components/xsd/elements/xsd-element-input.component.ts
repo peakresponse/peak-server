@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { XsdElementBaseComponent } from './xsd-element-base.component';
 
@@ -7,6 +7,8 @@ import { XsdElementBaseComponent } from './xsd-element-base.component';
   templateUrl: './xsd-element-input.component.html',
 })
 export class XsdElementComponentInput extends XsdElementBaseComponent {
+  @Output() pasteMulti = new EventEmitter<string[]>();
+
   COMPONENT_TYPES = {
     city: 'city',
     county: 'county',
@@ -39,5 +41,9 @@ export class XsdElementComponentInput extends XsdElementBaseComponent {
       default:
         return this.COMPONENT_TYPES.unrecognized;
     }
+  }
+
+  onPasteMulti(lines: string[]) {
+    this.pasteMulti.emit(lines);
   }
 }

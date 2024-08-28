@@ -35,4 +35,12 @@ export class XsdElementMultiComponent extends XsdElementBaseComponent {
       (item?.querySelector('input, select') as HTMLElement)?.focus();
     }, 100);
   }
+
+  onPasteMulti(lines: string[]) {
+    for (const line of lines) {
+      this.addValue({
+        _text: line,
+      });
+    }
+  }
 }

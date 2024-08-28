@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, OperatorFunction, Subject, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { XsdElementBaseComponent } from './xsd-element-base.component';
   styleUrls: ['./xsd-element-nillable.component.scss'],
 })
 export class XsdElementNillableComponent extends XsdElementBaseComponent {
+  @Output() pasteMulti = new EventEmitter<string[]>();
   @ViewChild('instance', { static: true }) instance?: NgbTypeahead;
   model: any;
 
@@ -52,6 +53,10 @@ export class XsdElementNillableComponent extends XsdElementBaseComponent {
   onChange(newValue: any) {
     this.model = newValue;
     this.NV = newValue?.['xs:restriction']['xs:enumeration']._attributes.value;
+  }
+
+  onPasteMulti(lines: string[]) {
+    this.pasteMulti.emit(lines);
   }
 
   onToggle($event: any) {

@@ -32,6 +32,7 @@
   <shared-xsd-input
     class="d-flex"
     *ngSwitchCase="COMPONENT_TYPES.input"
+    (pasteMulti)="onPasteMulti($event)"
     [xsd]="xsd"
     [record]="record"
     [stack]="stack"
