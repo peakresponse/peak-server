@@ -365,7 +365,7 @@ export class XsdElementBaseComponent {
     }
     if (this.selectedValue) {
       this.selectedValue._text = value;
-    } else {
+    } else if (!this.isGroup) {
       this.data[this.name] = this.data[this.name] || {};
       this.data[this.name]._text = value;
     }
