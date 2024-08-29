@@ -51,7 +51,7 @@ export class XsdSchema {
     if (this.isGrouped) {
       return `$['${this.groupElementName}']`;
     }
-    return undefined;
+    return '$';
   }
 
   get isGrouped(): boolean {

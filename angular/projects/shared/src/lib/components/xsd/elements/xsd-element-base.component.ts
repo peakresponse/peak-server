@@ -187,8 +187,14 @@ export class XsdElementBaseComponent {
 
   isInvalidValue(index: number): boolean {
     if (this.error?.messages) {
-      const predicate: any = { path: `${this.path}[${index}]` };
-      return find(this.error.messages, predicate) !== undefined;
+      let predicate: any = { path: `${this.path}[${index}]` };
+      let found = find(this.error.messages, predicate) !== undefined;
+      if (!found && index === 0) {
+        console.log('?', this.name, this.error.messages, this.basePath, this.path);
+        predicate = { path: this.path };
+        found = find(this.error.messages, predicate) !== undefined;
+      }
+      return found;
     }
     return false;
   }
@@ -203,8 +209,13 @@ export class XsdElementBaseComponent {
 
   errorMessagesForValue(index: number): string[] {
     if (this.error?.messages) {
-      const predicate: any = { path: `${this.path}[${index}]` };
-      return filter(this.error.messages, predicate).map((error: any) => error.message);
+      let predicate: any = { path: `${this.path}[${index}]` };
+      let messages = filter(this.error.messages, predicate).map((error: any) => error.message);
+      if (messages.length === 0) {
+        predicate = { path: this.path };
+        messages = filter(this.error.messages, predicate).map((error: any) => error.message);
+      }
+      return messages;
     }
     return [];
   }

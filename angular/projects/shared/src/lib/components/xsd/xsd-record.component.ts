@@ -24,6 +24,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
   isUnarchived = false;
 
   clone: any;
+  errors: any = {};
 
   get isArchivable(): boolean {
     return true;
@@ -43,6 +44,10 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
 
   get recordSchema(): XsdSchema | undefined {
     return this.draftSchemaData ?? this.schemaData;
+  }
+
+  get recordError(): any {
+    return this.isEditingDraft ? this.errors.draft : this.errors.record;
   }
 
   ngOnInit(): void {
@@ -67,10 +72,20 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
           this.isLoading = !this.schemaData && !this.data;
           this.isEditingDraft = this.data.draft !== undefined;
           if (!this.data.isValid) {
-            this.error = {
+            this.errors.record = {
               status: 422,
               messages: this.data.validationErrors.errors,
             };
+          } else {
+            this.errors.record = null;
+          }
+          if (this.data.draft && !this.data.draft.isValid) {
+            this.errors.draft = {
+              status: 422,
+              messages: this.data.draft.validationErrors.errors,
+            };
+          } else {
+            this.errors.draft = null;
           }
         });
       }
@@ -92,12 +107,20 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
     this.isSavedErrorFree = false;
     this.isDraftDeleted = false;
     this.isUnarchived = false;
-    this.error = null;
+    if (this.isNewRecord || this.data.isDraft) {
+      this.errors.record = null;
+    } else {
+      this.errors.draft = null;
+    }
     request
       .pipe(
         catchError((response: HttpErrorResponse) => {
           this.isLoading = false;
-          this.error = response.error;
+          if (this.isNewRecord || this.data.isDraft) {
+            this.errors.record = response.error;
+          } else {
+            this.errors.draft = response.error;
+          }
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
         }),
@@ -124,10 +147,17 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }
           } else {
-            this.error = {
-              status: 422,
-              messages: data.validationErrors.errors,
-            };
+            if (this.isNewRecord || this.data.isDraft) {
+              this.errors.record = {
+                status: 422,
+                messages: data.validationErrors.errors,
+              };
+            } else {
+              this.errors.draft = {
+                status: 422,
+                messages: data.validationErrors.errors,
+              };
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         }
@@ -139,7 +169,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
     this.isSavedErrorFree = false;
     this.isDraftDeleted = false;
     this.isUnarchived = false;
-    this.error = null;
+    this.errors.draft = null;
     const data = cloneDeep(this.data);
     data.archivedAt = new Date();
     get(this.api, this.keyPath)
@@ -147,7 +177,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
       .pipe(
         catchError((response: HttpErrorResponse) => {
           this.isLoading = false;
-          this.error = response.error;
+          this.errors.draft = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
         }),
@@ -166,13 +196,13 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
     this.isSavedErrorFree = false;
     this.isDraftDeleted = false;
     this.isUnarchived = false;
-    this.error = null;
+    this.errors.draft = null;
     get(this.api, this.keyPath)
       .delete(this.data.isDraft ? this.data.id : this.data.draft.id)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           this.isLoading = false;
-          this.error = response.error;
+          this.errors.draft = response.error;
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return EMPTY;
         }),
