@@ -211,7 +211,7 @@ export class XsdElementBaseComponent {
     if (this.error?.messages) {
       let predicate: any = { path: `${this.path}[${index}]` };
       let messages = filter(this.error.messages, predicate).map((error: any) => error.message);
-      if (messages.length === 0) {
+      if (messages.length === 0 && index === 0) {
         predicate = { path: this.path };
         messages = filter(this.error.messages, predicate).map((error: any) => error.message);
       }
