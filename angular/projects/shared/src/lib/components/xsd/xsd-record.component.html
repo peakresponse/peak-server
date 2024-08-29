@@ -14,8 +14,8 @@
     <div *ngIf="isUnarchived" class="alert alert-success">Record restored!</div>
     <div *ngIf="isDraftDeleted" class="alert alert-success">Draft deleted!</div>
     <div *ngIf="isSavedErrorFree" class="alert alert-success">Draft saved!</div>
-    <div *ngIf="error" class="alert alert-danger">
-      <shared-error [error]="error"></shared-error>
+    <div *ngIf="recordError" class="alert alert-danger">
+      <shared-error [error]="recordError"></shared-error>
     </div>
     <ng-container *ngIf="isEditingDraft && record.archivedAt">
       <div class="alert alert-danger">This record has been marked for achival.</div>
@@ -30,12 +30,15 @@
           [xsd]="recordSchema"
           [record]="record"
           [stack]="recordSchema?.isGrouped ? [{ element: recordSchema?.rootChildElements?.[0], path: '$' }] : []"
-          basePath="$"
+          [basePath]="recordSchema?.basePath"
           [element]="element"
           [data]="record.data"
-          [error]="error"></shared-xsd-form-group>
+          [error]="recordError"></shared-xsd-form-group>
       </ng-container>
-      <ng-template *ngIf="template" [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ recordSchema, record, error }"></ng-template>
+      <ng-template
+        *ngIf="template"
+        [ngTemplateOutlet]="template"
+        [ngTemplateOutletContext]="{ recordSchema, record, error: recordError }"></ng-template>
       <div class="d-flex justify-content-between mb-3">
         <button *ngIf="isNewRecord || isEditingDraft || !record.draft" type="submit" class="btn btn--primary">Save Draft</button>
         <button *ngIf="isEditingDraft || record.isDraft" (click)="onDeleteDraft()" type="button" class="btn btn--danger">
