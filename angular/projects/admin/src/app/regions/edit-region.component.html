@@ -30,13 +30,15 @@
         <div class="mb-3">
           <label>Agencies</label>
           <h3 *ngFor="let regionAgency of record.regionAgencies">
-            {{ regionAgency.agency?.name }} ({{ regionAgency.agency?.stateUniqueId }})
+            {{ regionAgency.agencyName ? regionAgency.agencyName : regionAgency.agency?.name }} ({{ regionAgency.agency?.stateUniqueId }})
           </h3>
         </div>
         <div class="mb-3">
           <label>Facilities</label>
           <h3 *ngFor="let regionFacility of record.regionFacilities">
-            {{ regionFacility.facility?.name }} ({{ regionFacility.facility?.locationCode }})
+            {{ regionFacility.facilityName ? regionFacility.facilityName : regionFacility.facility?.name }} ({{
+              regionFacility.facility?.locationCode
+            }})
           </h3>
         </div>
         <div class="mb-3">

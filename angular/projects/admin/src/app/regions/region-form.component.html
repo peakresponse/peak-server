@@ -18,7 +18,12 @@
 </div>
 <div class="mb-3">
   <shared-array-field id="regionAgencies" label="Agencies" [source]="record" [target]="record" [error]="error">
-    <ng-template #item let-regionAgency="item"> {{ regionAgency.agency?.name }} ({{ regionAgency.agency?.stateUniqueId }}) </ng-template>
+    <ng-template #item let-regionAgency="item">
+      <div class="form-field__subitem">{{ regionAgency.agency?.name }} ({{ regionAgency.agency?.stateUniqueId }})</div>
+      <div class="form-field__subitem">
+        <input type="text" placeholder="Display name (optional)" [(ngModel)]="regionAgency.agencyName" />
+      </div>
+    </ng-template>
     <ng-template #form let-addItem="addItem">
       <ng-template #rt let-r="result" let-t="term">{{ r.name }} ({{ r.stateUniqueId }})</ng-template>
       <shared-search-field
@@ -37,7 +42,10 @@
 <div class="mb-3">
   <shared-array-field id="regionFacilities" label="Facilities" [source]="record" [target]="record" [error]="error">
     <ng-template #item let-regionFacility="item">
-      {{ regionFacility.facility?.name }} ({{ regionFacility.facility?.locationCode }})
+      <div class="form-field__subitem">{{ regionFacility.facility?.name }} ({{ regionFacility.facility?.locationCode }})</div>
+      <div class="form-field__subitem">
+        <input type="text" placeholder="Display name (optional)" [(ngModel)]="regionFacility.facilityName" />
+      </div>
     </ng-template>
     <ng-template #form let-addItem="addItem">
       <ng-template #rt let-r="result" let-t="term">{{ r.name }} ({{ r.locationCode }})</ng-template>
