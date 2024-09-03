@@ -83,13 +83,14 @@ router.patch(
                 },
                 defaults: {
                   position: index + 1,
+                  agencyName: ra.agencyName,
                   createdById: req.user.id,
                   updatedById: req.user.id,
                 },
                 transaction,
               });
               if (!isCreated) {
-                await regionAgency.update({ position: index + 1, updatedById: req.user.id });
+                await regionAgency.update({ position: index + 1, agencyName: ra.agencyName, updatedById: req.user.id });
               }
               return regionAgency;
             }),
@@ -106,13 +107,14 @@ router.patch(
                 },
                 defaults: {
                   position: index + 1,
+                  facilityName: rf.facilityName,
                   createdById: req.user.id,
                   updatedById: req.user.id,
                 },
                 transaction,
               });
               if (!isCreated) {
-                await regionFacility.update({ position: index + 1, updatedById: req.user.id });
+                await regionFacility.update({ position: index + 1, facilityName: rf.facilityName, updatedById: req.user.id });
               }
               return regionFacility;
             }),
