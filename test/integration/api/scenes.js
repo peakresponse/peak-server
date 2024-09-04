@@ -164,6 +164,7 @@ describe('/api/scenes', () => {
             sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
             agencyId: '81b433cd-5f48-4458-87f3-0bf4e1591830',
             unitNumber: '64',
+            callSign: 'AMB 1',
             capability: '2207015',
           },
         })
@@ -175,6 +176,7 @@ describe('/api/scenes', () => {
       const responder = await models.Responder.findByPk('a80254a6-f373-40ac-bc07-17da6a61b2cb');
       assert.deepStrictEqual(responder.agencyId, '81b433cd-5f48-4458-87f3-0bf4e1591830');
       assert.deepStrictEqual(responder.unitNumber, '64');
+      assert.deepStrictEqual(responder.callSign, 'AMB 1');
       assert.deepStrictEqual(responder.capability, '2207015');
     });
 
@@ -188,6 +190,7 @@ describe('/api/scenes', () => {
             sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
             agencyName: 'Unlisted Agency',
             unitNumber: '46',
+            callSign: 'AMB 2',
             capability: '2207017',
           },
         })
@@ -199,6 +202,7 @@ describe('/api/scenes', () => {
       const responder = await models.Responder.findByPk('a80254a6-f373-40ac-bc07-17da6a61b2cb');
       assert.deepStrictEqual(responder.agencyName, 'Unlisted Agency');
       assert.deepStrictEqual(responder.unitNumber, '46');
+      assert.deepStrictEqual(responder.callSign, 'AMB 2');
       assert.deepStrictEqual(responder.capability, '2207017');
     });
 
@@ -212,6 +216,7 @@ describe('/api/scenes', () => {
             sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
             agencyName: 'Unlisted Agency',
             unitNumber: '46',
+            callSign: 'AMB 2',
             capability: '2207017',
           },
         })
@@ -226,6 +231,35 @@ describe('/api/scenes', () => {
             sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
             agencyName: 'Unlisted Agency',
             unitNumber: '46',
+            callSign: 'AMB 2',
+            capability: '2207015',
+          },
+        })
+        .expect(StatusCodes.CONFLICT);
+
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'f896b206-3035-4dcd-8fe9-fdc226b8d0ef',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            agencyName: 'Unlisted Agency',
+            unitNumber: '46',
+            capability: '2207015',
+          },
+        })
+        .expect(StatusCodes.CONFLICT);
+
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: 'f896b206-3035-4dcd-8fe9-fdc226b8d0ef',
+            sceneId: '25db9094-03a5-4267-8314-bead229eff9d',
+            agencyName: 'Unlisted Agency',
+            callSign: 'AMB 2',
             capability: '2207015',
           },
         })

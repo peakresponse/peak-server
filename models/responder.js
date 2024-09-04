@@ -45,7 +45,18 @@ module.exports = (sequelize, DataTypes) => {
       const [responder, created] = await Responder.findOrCreate({
         where,
         defaults: {
-          ..._.pick(data, ['id', 'sceneId', 'agencyId', 'vehicleId', 'agencyName', 'unitNumber', 'capability', 'arrivedAt', 'departedAt']),
+          ..._.pick(data, [
+            'id',
+            'sceneId',
+            'agencyId',
+            'vehicleId',
+            'agencyName',
+            'unitNumber',
+            'callSign',
+            'capability',
+            'arrivedAt',
+            'departedAt',
+          ]),
           createdById: user.id,
           createdByAgencyId: agency.id,
           updatedById: user.id,
@@ -62,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
         attrs.push('arrivedAt', 'departedAt');
         // allow agency/unit changes if not a User account Responder
         if (!responder.userId) {
-          attrs.push('agencyId', 'agencyName', 'unitNumber', 'capability');
+          attrs.push('agencyId', 'agencyName', 'unitNumber', 'callSign', 'capability');
         }
       }
       if (attrs.length > 0) {
@@ -81,6 +92,7 @@ module.exports = (sequelize, DataTypes) => {
         'agencyName',
         'vehicleId',
         'unitNumber',
+        'callSign',
         'capability',
         'arrivedAt',
         'departedAt',
@@ -104,6 +116,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       agencyName: DataTypes.STRING,
       unitNumber: DataTypes.STRING,
+      callSign: DataTypes.STRING,
       capability: DataTypes.STRING,
       arrivedAt: DataTypes.DATE,
       departedAt: DataTypes.DATE,
