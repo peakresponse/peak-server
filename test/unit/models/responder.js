@@ -38,6 +38,7 @@ describe('models', () => {
           vehicleId: '4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7',
           agencyName: null,
           unitNumber: null,
+          callSign: null,
           capability: null,
           arrivedAt: '2020-04-06T21:22:10.102Z',
           departedAt: null,
