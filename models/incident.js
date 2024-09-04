@@ -168,7 +168,7 @@ module.exports = (sequelize, DataTypes) => {
 
     async updateReportsCount(options) {
       const { transaction } = options ?? {};
-      return this.update({ reportsCount: await this.countReports({ transaction }) }, { transaction });
+      return this.update({ reportsCount: await this.countReports({ where: { deletedAt: null }, transaction }) }, { transaction });
     }
 
     async updateDispatchedAgencies(options) {

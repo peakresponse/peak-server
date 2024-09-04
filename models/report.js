@@ -576,6 +576,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Report.afterSave(async (record, options) => {
     if (record.isCanonical) {
+      if (record.changed('deletedAt')) {
+        const incident = await record.getIncident(options);
+        await incident?.updateReportsCount(options);
+      }
       return;
     }
     await record.handleAssetFile('emsDataSetFile', options);

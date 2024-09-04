@@ -29,6 +29,8 @@ describe('models', () => {
         'times',
         'situations',
         'dispositions',
+        'files',
+        'forms',
         'histories',
         'narratives',
         'medications',
@@ -72,6 +74,20 @@ describe('models', () => {
         await incident.update({ reportsCount: 0 });
         await incident.updateReportsCount();
         assert.deepStrictEqual(incident.reportsCount, 2);
+      });
+
+      it('excludes deleted Reports', async () => {
+        const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
+        const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        // soft-delete the Report by setting deletedAt
+        await models.Report.createOrUpdate(user, agency, {
+          id: '447d3625-744c-4622-b20f-3305c4093811',
+          parentId: 'c19bb731-5e9e-4feb-9192-720782ecf9a8',
+          deletedAt: new Date().toISOString(),
+        });
+        // confirm change in reportsCount
+        const incident = await models.Incident.findByPk('6621202f-ca09-4ad9-be8f-b56346d1de65');
+        assert.deepStrictEqual(incident.reportsCount, 1);
       });
     });
 
