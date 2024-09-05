@@ -9,6 +9,7 @@ const PatientPriority = {
   EXPECTANT: 3,
   DECEASED: 4,
   TRANSPORTED: 5,
+  DELETED: 6,
 };
 Object.freeze(PatientPriority);
 

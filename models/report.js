@@ -74,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
           'signatureIds',
           'ringdownId',
           'predictions',
+          'deletedAt',
         ],
         options,
       );
@@ -478,6 +479,7 @@ module.exports = (sequelize, DataTypes) => {
         'predictions',
         'data',
         'isValid',
+        'deletedAt',
         'createdAt',
         'createdById',
         'createdByAgencyId',
@@ -492,7 +494,13 @@ module.exports = (sequelize, DataTypes) => {
       filterPriority: {
         type: DataTypes.VIRTUAL(DataTypes.INTEGER),
         get() {
-          return this.disposition?.destinationFacilityId ? sequelize.models.Patient.Priority.TRANSPORTED : this.patient?.priority;
+          if (this.isDeleted) {
+            return sequelize.models.Patient.Priority.DELETED;
+          }
+          if (this.disposition?.destinationFacilityId) {
+            return sequelize.models.Patient.Priority.TRANSPORTED;
+          }
+          return this.patient?.priority;
         },
       },
       isCanonical: {
@@ -514,6 +522,13 @@ module.exports = (sequelize, DataTypes) => {
       signatureIds: DataTypes.JSONB,
       ringdownId: DataTypes.STRING,
       predictions: DataTypes.JSONB,
+      deletedAt: DataTypes.DATE,
+      isDeleted: {
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['deletedAt']),
+        get() {
+          return !!this.deletedAt;
+        },
+      },
       emsDataSet: DataTypes.TEXT,
       emsDataSetFile: DataTypes.STRING,
       emsDataSetFileUrl: {
@@ -561,6 +576,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Report.afterSave(async (record, options) => {
     if (record.isCanonical) {
+      if (record.changed('deletedAt')) {
+        const incident = await record.getIncident(options);
+        await incident?.updateReportsCount(options);
+      }
       return;
     }
     await record.handleAssetFile('emsDataSetFile', options);
