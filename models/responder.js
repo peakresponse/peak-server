@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
           ..._.pick(data, [
             'id',
             'sceneId',
+            'role',
             'agencyId',
             'vehicleId',
             'agencyName',
@@ -70,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
       const attrs = [];
       // record is mutable before departure
       if (!responder.departedAt) {
-        attrs.push('arrivedAt', 'departedAt');
+        attrs.push('role', 'arrivedAt', 'departedAt');
         // allow agency/unit changes if not a User account Responder
         if (!responder.userId) {
           attrs.push('agencyId', 'agencyName', 'unitNumber', 'callSign', 'capability');
@@ -88,6 +89,7 @@ module.exports = (sequelize, DataTypes) => {
         'id',
         'sceneId',
         'userId',
+        'role',
         'agencyId',
         'agencyName',
         'vehicleId',
@@ -114,6 +116,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
+      role: DataTypes.STRING,
       agencyName: DataTypes.STRING,
       unitNumber: DataTypes.STRING,
       callSign: DataTypes.STRING,
