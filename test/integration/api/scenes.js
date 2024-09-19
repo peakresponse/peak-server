@@ -266,6 +266,36 @@ describe('/api/scenes', () => {
         .expect(StatusCodes.CONFLICT);
     });
 
+    it('changes a Responder role', async () => {
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: '1550b568-9a2a-41b5-9c0f-8284f07d1aec',
+            role: 'TREATMENT',
+          },
+        })
+        .expect(StatusCodes.OK);
+
+      const responder = await models.Responder.findByPk('1550b568-9a2a-41b5-9c0f-8284f07d1aec');
+      assert.deepStrictEqual(responder.role, 'TREATMENT');
+
+      await testSession
+        .post('/api/scenes')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          Responder: {
+            id: '1550b568-9a2a-41b5-9c0f-8284f07d1aec',
+            role: null,
+          },
+        })
+        .expect(StatusCodes.OK);
+
+      await responder.reload();
+      assert.deepStrictEqual(responder.role, null);
+    });
+
     it('marks a Responder as having left a Scene', async () => {
       await testSession
         .post('/api/scenes')

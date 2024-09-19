@@ -34,6 +34,7 @@ describe('models', () => {
           id: '2cad101c-11c4-4552-84b3-b47881a5cb02',
           sceneId: '7b8ddcc3-63e6-4e6e-a47e-d553289912d1',
           userId: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+          role: null,
           agencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
           vehicleId: '4d71fd4a-ef2b-4a0c-aa11-214b5f54f8f7',
           agencyName: null,
