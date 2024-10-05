@@ -253,6 +253,7 @@ module.exports = (sequelize, DataTypes) => {
       archivedAt: {
         type: DataTypes.DATE,
       },
+      isImporting: DataTypes.VIRTUAL(DataTypes.BOOLEAN),
     },
     {
       sequelize,
@@ -261,6 +262,9 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       validate: {
         async extra() {
+          if (this.isImporting) {
+            return;
+          }
           const errors = [];
           if (this.userId) {
             // perform some extra validations since EVERYTHING is optional in NEMSIS
@@ -333,7 +337,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('statusOn', ['dPersonnel.32'], options);
     record.syncFieldAndNemsisValue('hiredOn', ['dPersonnel.33'], options);
     record.syncFieldAndNemsisValue('primaryJobRole', ['dPersonnel.34'], options);
-    if (!record.userId && !record.invitationCode) {
+    if (!record.isImporting && !record.userId && !record.invitationCode) {
       record.setDataValue('invitationCode', uuidv4());
       record.setDataValue('invitationAt', new Date());
     }
