@@ -84,10 +84,10 @@
               [routerLink]="['/demographics/versions', record.draftVersion.id, 'validate']">
               Validate
             </button>
-            <button [disabled]="isLoading" type="button" class="btn btn--secondary flex-grow-1">Import</button>
+            <button [disabled]="isLoading" type="button" class="btn btn--secondary me-3 flex-grow-1">Import</button>
+            <button (click)="onCommit()" type="button" class="btn btn--primary flex-grow-1">Commit</button>
           </fieldset>
         </shared-dropzone>
-        <!-- <button (click)="onCommit()" type="button" class="btn btn--primary flex-grow-1">Commit</button> -->
       </div>
     </div>
   </div>
