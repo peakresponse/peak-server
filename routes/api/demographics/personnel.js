@@ -158,9 +158,9 @@ router.post(
         include: ['user'],
         transaction,
       });
-      if (record && record.invitationCode) {
+      if (record) {
+        await record.generateInvitationCode({ transaction });
         await record.sendInvitationEmail({ transaction });
-        await record.update({ invitationAt: new Date() }, { hooks: false, validate: false, transaction });
       }
     });
     if (record) {

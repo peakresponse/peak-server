@@ -76,6 +76,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
+    async generateInvitationCode(options) {
+      return this.update(
+        { invitationCode: uuidv4(), invitationAt: new Date() },
+        { hooks: false, validate: false, transaction: options?.transaction },
+      );
+    }
+
     async sendInvitationEmail(options) {
       const agency = await this.getCreatedByAgency(options);
       const user = await this.getCreatedBy(options);

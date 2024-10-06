@@ -27,6 +27,9 @@
           <button (click)="onResend($event, record)" class="btn btn--sm btn--primary">Resend</button>&nbsp; Invited on
           {{ record.invitationAt | date }}
         </ng-container>
+        <ng-container *ngIf="!record.invitationAt">
+          <button (click)="onResend($event, record)" class="btn btn--sm btn--primary">Invite</button>
+        </ng-container>
       </ng-container>
     </td>
   </ng-template>
