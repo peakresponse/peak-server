@@ -179,6 +179,7 @@ base.addAllRoutes(router, models.Employment, {
       ['middle_name', 'ASC NULLS FIRST'],
       ['email', 'ASC'],
     ],
+    searchFields: ['last_name', 'first_name', 'middle_name', 'email'],
     serializer(docs) {
       return docs.map((d) => d.toJSON());
     },
