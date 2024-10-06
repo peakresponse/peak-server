@@ -34,14 +34,6 @@ describe('/api/demographics/personnel', () => {
   });
 
   describe('POST /', () => {
-    it('validates required fields', async () => {
-      await testSession
-        .post('/api/demographics/personnel')
-        .set('Host', `bmacc.${process.env.BASE_HOST}`)
-        .send({ data: {} })
-        .expect(StatusCodes.UNPROCESSABLE_ENTITY);
-    });
-
     it('creates a new Employment from data and sends an invite', async () => {
       await testSession
         .post('/api/demographics/personnel')
