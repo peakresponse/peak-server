@@ -57,6 +57,7 @@
   <div *ngIf="record" class="col-md-6 mb-3 position-relative">
     <div class="position-fixed">
       <p>{{ record.data | json }}</p>
+      <p>{{ recordError | json }}</p>
     </div>
   </div>
 </div>

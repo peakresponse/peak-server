@@ -281,18 +281,28 @@ module.exports = (sequelize, DataTypes) => {
             errors.push(new ValidationErrorItem('This field is required.', 'Validation error', 'dPersonnel.10', this.email));
           } else {
             // perform the uniqueness check here so we attach to the NEMSIS field
-            if (this.agencyId) {
+            if (this.createdByAgencyId) {
               const employment = await Employment.findOne({
-                where: { agencyId: this.agencyId, email: this.email },
+                where: {
+                  [Op.and]: [{ id: { [Op.not]: this.id } }, { id: { [Op.not]: this.draftParentId } }],
+                  createdByAgencyId: this.createdByAgencyId,
+                  email: this.email,
+                },
                 transaction: this._validationTransaction,
               });
-              if (employment && employment.id !== this.id) {
+              if (employment) {
                 errors.push(new ValidationErrorItem('This email has already been used.', 'Validation error', 'dPersonnel.10', this.email));
               }
             }
             if (this.userId) {
-              const user = await sequelize.models.User.findOne({ where: { email: this.email }, transaction: this._validationTransaction });
-              if (user && user.id !== this.userId) {
+              const user = await sequelize.models.User.findOne({
+                where: {
+                  id: { [Op.not]: this.userId },
+                  email: this.email,
+                },
+                transaction: this._validationTransaction,
+              });
+              if (user) {
                 errors.push(new ValidationErrorItem('This email has already been used.', 'Validation error', 'dPersonnel.10', this.email));
               }
             }
