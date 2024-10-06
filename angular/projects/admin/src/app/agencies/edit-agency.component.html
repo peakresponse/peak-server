@@ -13,7 +13,13 @@
   <shared-form *ngIf="id" type="agencies" [id]="id" (load)="onLoad($event)">
     <ng-template let-record="record" let-error="error">
       <div *ngIf="states.length > 0" class="mb-3">
-        <shared-select-field id="stateId" label="State" [source]="record" [target]="record" [error]="error">
+        <shared-select-field
+          id="stateId"
+          label="State"
+          [source]="record"
+          [target]="record"
+          [error]="error"
+          (valueChange)="onStateChange($event)">
           <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
         </shared-select-field>
       </div>
@@ -33,7 +39,8 @@
           [target]="record"
           [error]="error"
           objectNameProperty="displayVersion"
-          objectApiPath="nemsisStateDataSets"></shared-object-field>
+          objectApiPath="nemsisStateDataSets"
+          [objectApiSearchParams]="stateSearchParams"></shared-object-field>
       </div>
       <div class="mb-3">
         <shared-text-field

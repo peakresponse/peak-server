@@ -14,6 +14,7 @@ export class EditAgencyComponent {
   states: any = [];
   canonicalAgencyId: string = '';
   claimedAgencyId: string = '';
+  stateSearchParams = new HttpParams();
 
   constructor(
     private api: ApiService,
@@ -29,5 +30,16 @@ export class EditAgencyComponent {
   onLoad(agency: any) {
     this.canonicalAgencyId = agency.canonicalAgencyId;
     this.claimedAgencyId = agency.claimedAgency?.id;
+    this.stateSearchParams = new HttpParams();
+    if (agency.stateId) {
+      this.stateSearchParams = this.stateSearchParams.set('stateId', agency.stateId);
+    }
+  }
+
+  onStateChange(stateId: string | undefined) {
+    this.stateSearchParams = new HttpParams();
+    if (stateId) {
+      this.stateSearchParams = this.stateSearchParams.set('stateId', stateId);
+    }
   }
 }
