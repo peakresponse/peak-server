@@ -276,10 +276,7 @@ module.exports = (sequelize, DataTypes) => {
               errors.push(new ValidationErrorItem('This field is required.', 'Validation error', 'dPersonnel.02', this.firstName));
             }
           }
-          // always require at least email (so that invitation can be sent as needed)
-          if (!this.email) {
-            errors.push(new ValidationErrorItem('This field is required.', 'Validation error', 'dPersonnel.10', this.email));
-          } else {
+          if (this.email) {
             // perform the uniqueness check here so we attach to the NEMSIS field
             if (this.createdByAgencyId) {
               const employment = await Employment.findOne({
