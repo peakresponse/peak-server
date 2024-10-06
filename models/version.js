@@ -10,6 +10,7 @@ const xmljs = require('xml-js');
 const nemsisXsd = require('../lib/nemsis/xsd');
 const nemsisSchematron = require('../lib/nemsis/schematron');
 const { NemsisDemDataSetParser } = require('../lib/nemsis/demDataSetParser');
+const rollbar = require('../lib/rollbar');
 
 const { Base } = require('./base');
 
@@ -163,34 +164,8 @@ module.exports = (sequelize, DataTypes) => {
             customResults,
           ),
         )
-        .then(() =>
-          parser.parseContacts(
-            (data) =>
-              sequelize.models.Contact.create({
-                versionId,
-                isDraft: true,
-                createdByAgencyId,
-                createdById: updatedById,
-                updatedById,
-                data,
-              }),
-            customResults,
-          ),
-        )
-        .then(() =>
-          parser.parseDevices(
-            (data) =>
-              sequelize.models.Device.create({
-                versionId,
-                isDraft: true,
-                createdByAgencyId,
-                createdById: updatedById,
-                updatedById,
-                data,
-              }),
-            customResults,
-          ),
-        )
+        .then(() => parser.parseContacts((data) => sequelize.models.Contact.createOrUpdateDraft(this, user, data), customResults))
+        .then(() => parser.parseDevices((data) => sequelize.models.Device.createOrUpdateDraft(this, user, data), customResults))
         .then(() =>
           parser.parseFacilities((data, other) => {
             const newData = {
@@ -199,62 +174,20 @@ module.exports = (sequelize, DataTypes) => {
             if (other['dFacility.01']) {
               newData['dFacility.01'] = other['dFacility.01'];
             }
-            return sequelize.models.Facility.create({
-              versionId,
-              isDraft: true,
-              createdByAgencyId,
-              createdById: updatedById,
-              updatedById,
-              data: newData,
-            });
+            return sequelize.models.Facility.createOrUpdateDraft(this, user, newData, data?._attributes?.UUID);
           }, customResults),
         )
+        .then(() => parser.parseLocations((data) => sequelize.models.Location.createOrUpdateDraft(this, user, data), customResults))
         .then(() =>
-          parser.parseLocations(
-            (data) =>
-              sequelize.models.Location.create({
-                versionId,
-                isDraft: true,
-                createdByAgencyId,
-                createdById: updatedById,
-                updatedById,
-                data,
-              }),
-            customResults,
-          ),
+          parser.parsePersonnel((data) => sequelize.models.Employment.createOrUpdateDraft(this, user, data, null, true), customResults),
         )
-        .then(() =>
-          parser.parsePersonnel(
-            (data) =>
-              sequelize.models.Employment.create({
-                versionId,
-                isDraft: true,
-                createdByAgencyId,
-                createdById: updatedById,
-                updatedById,
-                data,
-              }),
-            customResults,
-          ),
-        )
-        .then(() =>
-          parser.parseVehicles(
-            (data) =>
-              sequelize.models.Vehicle.create({
-                versionId,
-                isDraft: true,
-                createdByAgencyId,
-                createdById: updatedById,
-                updatedById,
-                data,
-              }),
-            customResults,
-          ),
-        )
+        .then(() => parser.parseVehicles((data) => sequelize.models.Vehicle.createOrUpdateDraft(this, user, data), customResults))
         .then(async () => {
           await this.setStatus(StatusCodes.OK);
         })
         .catch(async (err) => {
+          // console.log(err);
+          rollbar.error(err, { versionId });
           await this.setStatus(StatusCodes.INTERNAL_SERVER_ERROR, err.message);
         })
         .finally(async () => {

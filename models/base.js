@@ -38,6 +38,25 @@ class Base extends Model {
     });
   }
 
+  static async createOrUpdateDraft(version, user, data, id, isImporting) {
+    const values = {
+      versionId: version.id,
+      updatedById: user.id,
+      data,
+    };
+    if (isImporting) {
+      values.isImporting = true;
+    }
+    const record = await this.findByPk(id ?? data?._attributes?.UUID);
+    if (record) {
+      return record.updateDraft(values);
+    }
+    values.isDraft = true;
+    values.createdByAgencyId = version.agencyId;
+    values.createdById = user.id;
+    return this.create(values);
+  }
+
   async toNemsisJSON(options) {
     const payload = _.pick(this, ['id', 'isDraft', 'data', 'isValid', 'validationErrors', 'createdAt', 'updatedAt', 'archivedAt']);
     if (!this.isDraft) {

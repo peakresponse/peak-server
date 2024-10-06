@@ -111,6 +111,7 @@ export class XsdListComponent extends XsdBaseComponent implements OnDestroy {
 
   onSearch(query: string): void {
     this.query = query;
+    this.paginationLink = null;
     this.refresh();
   }
 

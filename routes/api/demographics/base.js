@@ -5,14 +5,14 @@ const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
 
 function addIndex(router, model, options) {
-  const { include = [], order = [] } = options?.index ?? {};
+  const { include = [], order = [], searchFields = [] } = options?.index ?? {};
 
   router.get(
     '/',
     interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
     helpers.async(async (req, res) => {
-      const page = req.query.page || 1;
-      const { docs, pages, total } = await model.scope('finalOrNew').paginate({
+      const { page = '1', search } = req.query;
+      const params = {
         page,
         include: ['draft'].concat(include),
         where: {
@@ -20,7 +20,17 @@ function addIndex(router, model, options) {
           archivedAt: null,
         },
         order,
-      });
+      };
+      if (search && searchFields.length > 0) {
+        const query = {};
+        for (const searchField of searchFields) {
+          query[searchField] = {
+            [models.Sequelize.Op.iLike]: `%${search}%`,
+          };
+        }
+        params.where[models.Sequelize.Op.or] = query;
+      }
+      const { docs, pages, total } = await model.scope('finalOrNew').paginate(params);
       helpers.setPaginationHeaders(req, res, page, pages, total);
       let payload;
       if (options?.index?.serializer) {

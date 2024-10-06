@@ -76,6 +76,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
+    async generateInvitationCode(options) {
+      return this.update(
+        { invitationCode: uuidv4(), invitationAt: new Date() },
+        { hooks: false, validate: false, transaction: options?.transaction },
+      );
+    }
+
     async sendInvitationEmail(options) {
       const agency = await this.getCreatedByAgency(options);
       const user = await this.getCreatedBy(options);
@@ -253,6 +260,7 @@ module.exports = (sequelize, DataTypes) => {
       archivedAt: {
         type: DataTypes.DATE,
       },
+      isImporting: DataTypes.VIRTUAL(DataTypes.BOOLEAN),
     },
     {
       sequelize,
@@ -261,6 +269,9 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       validate: {
         async extra() {
+          if (this.isImporting) {
+            return;
+          }
           const errors = [];
           if (this.userId) {
             // perform some extra validations since EVERYTHING is optional in NEMSIS
@@ -272,23 +283,30 @@ module.exports = (sequelize, DataTypes) => {
               errors.push(new ValidationErrorItem('This field is required.', 'Validation error', 'dPersonnel.02', this.firstName));
             }
           }
-          // always require at least email (so that invitation can be sent as needed)
-          if (!this.email) {
-            errors.push(new ValidationErrorItem('This field is required.', 'Validation error', 'dPersonnel.10', this.email));
-          } else {
+          if (this.email) {
             // perform the uniqueness check here so we attach to the NEMSIS field
-            if (this.agencyId) {
+            if (this.createdByAgencyId) {
               const employment = await Employment.findOne({
-                where: { agencyId: this.agencyId, email: this.email },
+                where: {
+                  [Op.and]: [{ id: { [Op.not]: this.id } }, { id: { [Op.not]: this.draftParentId } }],
+                  createdByAgencyId: this.createdByAgencyId,
+                  email: this.email,
+                },
                 transaction: this._validationTransaction,
               });
-              if (employment && employment.id !== this.id) {
+              if (employment) {
                 errors.push(new ValidationErrorItem('This email has already been used.', 'Validation error', 'dPersonnel.10', this.email));
               }
             }
             if (this.userId) {
-              const user = await sequelize.models.User.findOne({ where: { email: this.email }, transaction: this._validationTransaction });
-              if (user && user.id !== this.userId) {
+              const user = await sequelize.models.User.findOne({
+                where: {
+                  id: { [Op.not]: this.userId },
+                  email: this.email,
+                },
+                transaction: this._validationTransaction,
+              });
+              if (user) {
                 errors.push(new ValidationErrorItem('This email has already been used.', 'Validation error', 'dPersonnel.10', this.email));
               }
             }
@@ -333,7 +351,7 @@ module.exports = (sequelize, DataTypes) => {
     record.syncFieldAndNemsisValue('statusOn', ['dPersonnel.32'], options);
     record.syncFieldAndNemsisValue('hiredOn', ['dPersonnel.33'], options);
     record.syncFieldAndNemsisValue('primaryJobRole', ['dPersonnel.34'], options);
-    if (!record.userId && !record.invitationCode) {
+    if (!record.isImporting && !record.userId && !record.invitationCode) {
       record.setDataValue('invitationCode', uuidv4());
       record.setDataValue('invitationAt', new Date());
     }

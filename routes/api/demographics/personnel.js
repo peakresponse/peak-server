@@ -158,9 +158,9 @@ router.post(
         include: ['user'],
         transaction,
       });
-      if (record && record.invitationCode) {
+      if (record) {
+        await record.generateInvitationCode({ transaction });
         await record.sendInvitationEmail({ transaction });
-        await record.update({ invitationAt: new Date() }, { hooks: false, validate: false, transaction });
       }
     });
     if (record) {
@@ -179,6 +179,7 @@ base.addAllRoutes(router, models.Employment, {
       ['middle_name', 'ASC NULLS FIRST'],
       ['email', 'ASC'],
     ],
+    searchFields: ['last_name', 'first_name', 'middle_name', 'email'],
     serializer(docs) {
       return docs.map((d) => d.toJSON());
     },

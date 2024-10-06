@@ -336,6 +336,9 @@ export class ApiService {
         }
         return this.post(`/api/demographics/personnel/accept`, data, options);
       },
+      delete: (id: string): Observable<any> => {
+        return this.delete(`/api/demographics/personnel/${id}`);
+      },
     },
     vehicles: {
       index: (params?: HttpParams): Observable<any> => {
