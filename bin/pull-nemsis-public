@@ -12,7 +12,7 @@ TAG=$1
 if [ -n "$TAG" ]; then
   if [ ! -d "nemsis/repositories/nemsis_public/$TAG" ]; then
     # clone without any tree or file data, without initial checkout
-    git clone --depth=1 --branch=3.5.0.230317CP4 --sparse --no-checkout https://git.nemsis.org/scm/nep/nemsis_public.git nemsis/repositories/nemsis_public/$TAG
+    git clone --depth=1 --branch=$TAG --sparse --no-checkout https://git.nemsis.org/scm/nep/nemsis_public.git nemsis/repositories/nemsis_public/$TAG
     cd nemsis/repositories/nemsis_public/$TAG
     git sparse-checkout set XSDs/NEMSIS_XSDs WSDL Schematron/rules Translation
     git checkout
