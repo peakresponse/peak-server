@@ -36,6 +36,7 @@ base.addAllRoutes(router, models.Facility, {
       ['name', 'ASC'],
       ['location_code', 'ASC'],
     ],
+    searchFields: ['name'],
   },
 });
 
