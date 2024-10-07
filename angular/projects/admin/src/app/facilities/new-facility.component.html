@@ -5,28 +5,6 @@
   <div class="col-xl-6">
     <shared-form (create)="onCreate($event)" type="facilities">
       <ng-template let-record="record" let-error="error">
-        <div class="mb-3">
-          <shared-select-field id="type" label="Type" [source]="record" [target]="record" [error]="error">
-            <option value="1701001">Assisted Living Facility</option>
-            <option value="1701003">Clinic</option>
-            <option value="1701017">Dialysis Center</option>
-            <option value="1701019">Diagnostic Services</option>
-            <option value="1701033">Drug and/or Alcohol Rehabilitation Facility</option>
-            <option value="1701021">Freestanding Emergency Department</option>
-            <option value="1701005">Hospital</option>
-            <option value="1701015">Mental Health Facility</option>
-            <option value="1701023">Morgue/Mortuary</option>
-            <option value="1701007">Nursing Home</option>
-            <option value="1701013">Physical Rehabilitation Facility</option>
-            <option value="1701025">Police/Jail</option>
-            <option value="1701035">Skilled Nursing Facility</option>
-            <option value="1701011">Urgent Care</option>
-            <option value="1701027">Other EMS Responder (air)</option>
-            <option value="1701029">Other EMS Responder (ground)</option>
-            <option value="1701031">Other Recurring Care Center</option>
-            <option value="1701009">Other</option>
-          </shared-select-field>
-        </div>
         <admin-facilities-form [record]="record" [error]="error"></admin-facilities-form>
       </ng-template>
     </shared-form>
