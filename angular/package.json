@@ -25,7 +25,7 @@
     "activestorage": "^5.2.8-1",
     "bootstrap": "~5.2.3",
     "inflection": "^3.0.0",
-    "jsonpath-plus": "^9.0.0",
+    "jsonpath-plus": "^10.3.0",
     "lodash-es": "^4.17.21",
     "luxon": "^3.4.4",
     "ngx-dropzone": "^3.1.0",
