@@ -96,10 +96,10 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.750.0",
-    "@aws-sdk/client-sts": "^3.750.0",
+    "@aws-sdk/client-s3": "3.750.0",
+    "@aws-sdk/client-sts": "3.750.0",
     "@aws-sdk/cloudfront-signer": "^3.734.0",
-    "@aws-sdk/s3-request-presigner": "^3.750.0",
+    "@aws-sdk/s3-request-presigner": "3.750.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@googlemaps/google-maps-services-js": "^3.4.0",
     "@node-oauth/oauth2-server": "^5.2.0",
@@ -167,7 +167,7 @@
     "eslint-plugin-prettier": "^5.1.1",
     "foreman": "^3.0.1",
     "mocha": "^11.1.0",
-    "nock": "^14.0.1",
+    "nock": "^13.5.6",
     "nodemailer-mock": "^2.0.8",
     "nodemon": "^3.1.9",
     "prettier": "^3.1.1",

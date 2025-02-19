@@ -1,0 +1,1032 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eHistory" id="eHistory.MedicalHistory">
+		<xs:sequence>
+			<xs:element name="eHistory.01" nillable="true" id="eHistory.BarrierstoPatientCare" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.01</number>
+							<name>Barriers to Patient Care</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indication of whether or not there were any patient specific barriers to serving the patient at the scene.</definition>
+							<v2Number>E12_01</v2Number>
+							<usage>Required</usage>
+							<comment/>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="BarriersToPatientCare">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.PractitionerGroup" id="eHistory.PractitionerGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold info about practitioner</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eHistory.02" type="PersonLastName" id="eHistory.LastNameofPatientsPractitioner" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.02</number>
+										<name>Last Name of Patient's Practitioner</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The last name of the patient's practitioner.</definition>
+										<v2Number>E12_06</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eHistory.03" type="PersonFirstName" id="eHistory.FirstNameofPatientsPractitioner" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.03</number>
+										<name>First Name of Patient's Practitioner</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The first name of the patient's practitioner.</definition>
+										<v2Number>E12_04</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eHistory.04" type="PersonMiddleName" id="eHistory.MiddleNameInitialofPatientsPractitioner" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.04</number>
+										<name>Middle Name/Initial of Patient's Practitioner</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The middle name or initial of the patient's practitioner.</definition>
+										<v2Number>E12_05</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.05" nillable="true" id="eHistory.AdvanceDirectives" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.05</number>
+							<name>Advance Directives</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The presence of a valid DNR form, living will, or document directing end of life or healthcare treatment decisions.</definition>
+							<v2Number>E12_07</v2Number>
+							<usage>Recommended</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Advanced Directive and Do Not Resuscitate are both included in this data element.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="AdvanceDirectives">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.06" nillable="true" id="eHistory.MedicationAllergies" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.06</number>
+							<name>Medication Allergies</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The patient's medication allergies.</definition>
+							<v2Number>E12_08</v2Number>
+							<usage>Recommended</usage>
+							<comment>The list of medication allergies is based on RxNorm (RXCUI) Codes. In addition, a specific list of ICD-10 CM codes can be used for medication groups. 
+
+&lt;br/>&lt;br/>Reference the NEMSIS Suggested Lists at: &lt;a href="https://nemsis.org/technical-resources/version-3/version-3-resource-repository/">https://nemsis.org/technical-resources/version-3/version-3-resource-repository/&lt;/a> 
+
+&lt;br/>&lt;br/>Code list is represented in two separate UMLS datasets:
+&lt;br/>1) ICD-10 Codes. 
+&lt;br/>2) RxNorm
+
+&lt;br/>&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov">http://uts.nlm.nih.gov&lt;/a>
+&lt;br/>Product - UMLS Metathesaurus
+&lt;br/>Website - &lt;a href="http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html">http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html&lt;/a> 
+&lt;br/>Product - RxNorm Full Monthly Release
+</comment>
+							<PNNil>Yes</PNNil>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="MedicationAllergies">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.NoKnownDrugAllergy PN.Refused PN.UnableToComplete PN.Unresponsive"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CodeType" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="CodeType.ICD10 CodeType.RxNorm" />
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.07" id="eHistory.EnvironmentalFoodAllergies" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.07</number>
+							<name>Environmental/Food Allergies</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The patient's known allergies to food or environmental agents.</definition>
+							<v2Number>E12_09</v2Number>
+							<usage>Optional</usage>
+							<comment>
+Data Element Comment Section:
+&lt;br/>Code list is represented in SNOMEDCT. Reference the NEMSIS Suggested Lists at: &lt;a href="https://nemsis.org/technical-resources/version-3/version-3-resource-repository/">https://nemsis.org/technical-resources/version-3/version-3-resource-repository/&lt;/a>
+&lt;br/>&lt;br/>SNOMEDCT 
+&lt;br/>Website: &lt;a href="http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html">http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html&lt;/a> 
+&lt;br/>Product: Product - UMLS Metathesaurus
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="snomed">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.08" nillable="true" id="eHistory.MedicalSurgicalHistory" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.08</number>
+							<name>Medical/Surgical History</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The patient's pre-existing medical and surgery history of the patient.</definition>
+							<v2Number>E12_10</v2Number>
+							<usage>Recommended</usage>
+							<comment>
+The Medical/Surgical History pattern has been extended to include ICD-10-CM: Diagnosis Codes and ICD-10-PCS: Procedural Health Intervention Codes. 
+&lt;br/>
+&lt;br/>ICD-10-CM: Diagnosis Codes. 
+&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov" target="_blank">http://uts.nlm.nih.gov&lt;/a> 
+&lt;br/>Product - UMLS Metathesaurus 
+&lt;br/>Please reference the NEMSIS Suggested Lists at: &lt;a href="https://nemsis.org/technical-resources/version-3/version-3-resource-repository/" target="_blank">https://nemsis.org/technical-resources/version-3/version-3-resource-repository/&lt;/a> 
+&lt;br/>
+&lt;br/>ICD-10-PCS has a seven character alphanumeric code structure. Each character contains up to 34 possible values. Each value represents a specific option for the general character definition (e.g., stomach is one of the values for the body part character). 
+
+&lt;br/>The ten digits 0-9 and the 24 letters A-H,J-N and P-Z may be used in each character. The letters O and I are not used in order to avoid confusion with the digits 0 and 1. There are no decimals in ICD-10-PCS.
+&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov " target="_blank">http://uts.nlm.nih.gov&lt;/a> 
+&lt;br/>Product - UMLS Metathesaurus 
+							</comment>
+							<PNNil>Yes</PNNil>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="icd10MedSurge">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.NoneReported PN.Refused PN.UnableToComplete PN.Unresponsive"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.09" id="eHistory.MedicalHistoryObtainedFrom" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.09</number>
+							<name>Medical History Obtained From</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Type of person medical history obtained from.</definition>
+							<v2Number>E12_11</v2Number>
+							<usage>Optional</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="MedicalHistoryObtainedFrom">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.ImmunizationsGroup" id="eHistory.ImmunizationsGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold Immunization type and date</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eHistory.10" id="eHistory.ImmunizationHistory" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.10</number>
+										<name>The Patient's Type of Immunization</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The immunization type of the patient.</definition>
+										<v2Number>E12_12</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ImmunizationType">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.NotImmunized"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eHistory.11" type="Year" id="eHistory.ImmunizationYear" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.11</number>
+										<name>Immunization Year</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The year associated with each immunization type.</definition>
+										<v2Number>E12_13</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.CurrentMedsGroup" id="eHistory.CurrentMedsGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold info about patient's medication</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eHistory.12" nillable="true" id="eHistory.CurrentMedications" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.12</number>
+										<name>Current Medications</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The medications the patient currently takes.</definition>
+										<v2Number>E12_14</v2Number>
+										<usage>Recommended</usage>
+										<comment>
+List of medications based on RxNorm (RXCUI) code. 
+&lt;br/>&lt;br/>Reference the NEMSIS Suggested Lists at: &lt;a href="https://nemsis.org/technical-resources/version-3/version-3-resource-repository/">https://nemsis.org/technical-resources/version-3/version-3-resource-repository/&lt;/a> 
+&lt;br/>&lt;br/>RxNorm 
+&lt;br/>Website - &lt;a href="http://uts.nlm.nih.gov">http://uts.nlm.nih.gov&lt;/a> 
+&lt;br/>&lt;br/>Product - UMLS Metathesaurus 
+&lt;br/>Website - &lt;a href="http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html">http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html&lt;/a>
+&lt;br/>Product - RxNorm Full Monthly Release
+										</comment>
+										<PNNil>Yes</PNNil>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="Medication">
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.NoneReported PN.Refused PN.Unresponsive PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eHistory.13" type="CurrentMedicationDose" id="eHistory.CurrentMedicationDose" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.13</number>
+										<name>Current Medication Dose</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The numeric dose or amount of the patient's current medication.</definition>
+										<v2Number>E12_15</v2Number>
+										<usage>Optional</usage>
+										<comment>Associated with eHistory.12 (Current Medications)</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eHistory.14" type="CurrentMedicationDosageUnit" id="eHistory.CurrentMedicationDosageUnit" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.14</number>
+										<name>Current Medication Dosage Unit</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The dosage unit of the patient's current medication.</definition>
+										<v2Number>E12_16</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eHistory.15" type="CurrentMedicationAdministrationRoute" id="eHistory.CurrentMedicationAdministrationRoute" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.15</number>
+										<name>Current Medication Administration Route</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The administration route (po, SQ, etc.) of the patient's current medication.</definition>
+										<v2Number>E12_17</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eHistory.20" type="CurrentMedicationFrequency" id="eHistory.CurrentMedicationFrequency" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eHistory.20</number>
+										<name>Current Medication Frequency</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The frequency of administration of the patient's current medication.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.16" type="YesNoValues" id="eHistory.PresenceofEmergencyInformationForm" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.16</number>
+							<name>Presence of Emergency Information Form</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Indication of the presence of the Emergency Information Form associated with patient's with special healthcare needs.</definition>
+							<v2Number>E12_18</v2Number>
+							<usage>Optional</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eHistory.17" nillable="true" id="eHistory.AlcoholDrugUseIndicators" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.17</number>
+							<name>Alcohol/Drug Use Indicators</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indicators for the potential use of alcohol or drugs by the patient related to the patient's current illness or injury.</definition>
+							<v2Number>E12_19</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<PNNil>Yes</PNNil>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="AlcoholDrugUseIndicators">
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.NoneReported PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.18" nillable="true" id="eHistory.Pregnancy" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.18</number>
+							<name>Pregnancy</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Indication of the possibility by the patient's history of current pregnancy.</definition>
+							<v2Number>E12_20</v2Number>
+							<usage>Optional</usage>
+							<PNNil>Yes</PNNil>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="Pregnancy">
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eHistory.19" type="DateTimeType" id="eHistory.LastOralIntake" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eHistory.19</number>
+							<name>Last Oral Intake</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Date and Time of last oral intake.</definition>
+							<usage>Optional</usage>
+							<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+							<v3Changes>Added to better document last oral intake.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AdvanceDirectives">
+		<xs:annotation>
+			<xs:documentation>The presence of a valid for of living will of document directing end of life or healthcare treatment decisions</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3105001">
+				<xs:annotation>
+					<xs:documentation>Family/Guardian request DNR (but no documentation)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3105003">
+				<xs:annotation>
+					<xs:documentation>Living Will</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3105005">
+				<xs:annotation>
+					<xs:documentation>None</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3105007">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3105009">
+				<xs:annotation>
+					<xs:documentation>Other Healthcare Advanced Directive Form</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3105011">
+				<xs:annotation>
+					<xs:documentation>State EMS DNR or Medical Order Form</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AlcoholDrugUseIndicators">
+		<xs:annotation>
+			<xs:documentation>Indicators for the potential use of Alcohol or Drugs by the patient.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3117001">
+				<xs:annotation>
+					<xs:documentation>Alcohol Containers/Paraphernalia at Scene</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3117003">
+				<xs:annotation>
+					<xs:documentation>Drug Paraphernalia at Scene</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3117005">
+				<xs:annotation>
+					<xs:documentation>Patient Admits to Alcohol Use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3117007">
+				<xs:annotation>
+					<xs:documentation>Patient Admits to Drug Use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3117009">
+				<xs:annotation>
+					<xs:documentation>Positive Level known from Law Enforcement or Hospital Record</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3117013">
+				<xs:annotation>
+					<xs:documentation>Physical Exam Indicates Suspected Alcohol or Drug Use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BarriersToPatientCare">
+		<xs:annotation>
+			<xs:documentation>Indication of whether or not there were any patient specific barriers to serving the patient at the scene</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3101001">
+				<xs:annotation>
+					<xs:documentation>Cultural, Custom, Religious</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101003">
+				<xs:annotation>
+					<xs:documentation>Developmentally Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101005">
+				<xs:annotation>
+					<xs:documentation>Hearing Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101007">
+				<xs:annotation>
+					<xs:documentation>Language</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101009">
+				<xs:annotation>
+					<xs:documentation>None Noted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101011">
+				<xs:annotation>
+					<xs:documentation>Obesity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101013">
+				<xs:annotation>
+					<xs:documentation>Physical Barrier (Unable to Access Patient)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101015">
+				<xs:annotation>
+					<xs:documentation>Physically Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101017">
+				<xs:annotation>
+					<xs:documentation>Physically Restrained</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101019">
+				<xs:annotation>
+					<xs:documentation>Psychologically Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101021">
+				<xs:annotation>
+					<xs:documentation>Sight Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101023">
+				<xs:annotation>
+					<xs:documentation>Speech Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101025">
+				<xs:annotation>
+					<xs:documentation>Unattended or Unsupervised (including minors)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101027">
+				<xs:annotation>
+					<xs:documentation>Unconscious</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101029">
+				<xs:annotation>
+					<xs:documentation>Uncooperative</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101031">
+				<xs:annotation>
+					<xs:documentation>State of Emotional Distress</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101033">
+				<xs:annotation>
+					<xs:documentation>Alcohol Use, Suspected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101035">
+				<xs:annotation>
+					<xs:documentation>Drug Use, Suspected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrentMedicationDosageUnit">
+		<xs:annotation>
+			<xs:documentation>The dosage unit of the patient's current medication</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3114001">
+				<xs:annotation>
+					<xs:documentation>Centimeters (cm)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114003">
+				<xs:annotation>
+					<xs:documentation>Grams (gms)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114005">
+				<xs:annotation>
+					<xs:documentation>Drops (gtts)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114007">
+				<xs:annotation>
+					<xs:documentation>Inches (in)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114009">
+				<xs:annotation>
+					<xs:documentation>International Units (IU)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114011">
+				<xs:annotation>
+					<xs:documentation>Keep Vein Open (kvo)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114013">
+				<xs:annotation>
+					<xs:documentation>Liters Per Minute (l/min [fluid])</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114015">
+				<xs:annotation>
+					<xs:documentation>Liters (l)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114017">
+				<xs:annotation>
+					<xs:documentation>Liters Per Minute (LPM [gas])</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114019">
+				<xs:annotation>
+					<xs:documentation>Micrograms (mcg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114021">
+				<xs:annotation>
+					<xs:documentation>Micrograms per Kilogram per Minute (mcg/kg/min)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114023">
+				<xs:annotation>
+					<xs:documentation>Micrograms per Minute (mcg/min)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114025">
+				<xs:annotation>
+					<xs:documentation>Milliequivalents (mEq)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114027">
+				<xs:annotation>
+					<xs:documentation>Metered Dose (MDI)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114029">
+				<xs:annotation>
+					<xs:documentation>Milligrams (mg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114031">
+				<xs:annotation>
+					<xs:documentation>Milligrams per Kilogram (mg/kg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114033">
+				<xs:annotation>
+					<xs:documentation>Milligrams per Kilogram Per Minute (mg/kg/min)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114035">
+				<xs:annotation>
+					<xs:documentation>Milligrams per Minute (mg/min)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114037">
+				<xs:annotation>
+					<xs:documentation>Milliliters (ml)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114039">
+				<xs:annotation>
+					<xs:documentation>Milliliters per Hour (ml/hr)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114041">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114043">
+				<xs:annotation>
+					<xs:documentation>Puffs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114045">
+				<xs:annotation>
+					<xs:documentation>Units per Hour (units/hr)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114047">
+				<xs:annotation>
+					<xs:documentation>Micrograms per Kilogram (mcg/kg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114049">
+				<xs:annotation>
+					<xs:documentation>Units</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114051">
+				<xs:annotation>
+					<xs:documentation>Units per Kilogram per Hour (units/kg/hr)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3114053">
+				<xs:annotation>
+					<xs:documentation>Units per Kilogram (units/kg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrentMedicationDose">
+		<xs:annotation>
+			<xs:documentation>The numeric dose or amount of the patient's current medication</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="9"/>
+			<xs:fractionDigits value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrentMedicationFrequency">
+		<xs:annotation>
+			<xs:documentation>The frequency of the patient's current medication</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3120001">
+				<xs:annotation>
+					<xs:documentation>qi (every hour)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120003">
+				<xs:annotation>
+					<xs:documentation>q2h (every 2 hours)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120005">
+				<xs:annotation>
+					<xs:documentation>q3h (every 3 hours)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120007">
+				<xs:annotation>
+					<xs:documentation>q4h (every 4 hours)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120009">
+				<xs:annotation>
+					<xs:documentation>qid (four times a day)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120011">
+				<xs:annotation>
+					<xs:documentation>tad (three times a day)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120013">
+				<xs:annotation>
+					<xs:documentation>ac (before meals)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120015">
+				<xs:annotation>
+					<xs:documentation>pc (after meals)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120017">
+				<xs:annotation>
+					<xs:documentation>bid (twice a day)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120019">
+				<xs:annotation>
+					<xs:documentation>qd (every day)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120021">
+				<xs:annotation>
+					<xs:documentation>qd-am (every day in the morning)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120023">
+				<xs:annotation>
+					<xs:documentation>qd-pm (every day in the evening)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120025">
+				<xs:annotation>
+					<xs:documentation>has (at bedtime)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120027">
+				<xs:annotation>
+					<xs:documentation>sod (every other day)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3120029">
+				<xs:annotation>
+					<xs:documentation>prn (as needed)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MedicationAllergies">
+		<xs:annotation>
+			<xs:documentation>MedicationAllergies</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(Z88\.[0-9])|([a-zA-Z0-9]{2,7})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MedicalHistoryObtainedFrom">
+		<xs:annotation>
+			<xs:documentation>Type of person medical history obtained from</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3109001">
+				<xs:annotation>
+					<xs:documentation>Bystander/Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3109003">
+				<xs:annotation>
+					<xs:documentation>Family</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3109005">
+				<xs:annotation>
+					<xs:documentation>Health Care Personnel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3109007">
+				<xs:annotation>
+					<xs:documentation>Patient</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Pregnancy">
+		<xs:annotation>
+			<xs:documentation>Indication of the possibility by the patient's history of a current pregnancy.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3118001">
+				<xs:annotation>
+					<xs:documentation>No</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3118003">
+				<xs:annotation>
+					<xs:documentation>Possible, Unconfirmed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3118005">
+				<xs:annotation>
+					<xs:documentation>Yes, Confirmed 12 to 20 Weeks</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3118007">
+				<xs:annotation>
+					<xs:documentation>Yes, Confirmed Greater Than 20 Weeks</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3118009">
+				<xs:annotation>
+					<xs:documentation>Yes, Confirmed Less Than 12 Weeks</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3118011">
+				<xs:annotation>
+					<xs:documentation>Yes, Weeks Unknown</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
