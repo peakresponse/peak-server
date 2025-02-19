@@ -1,0 +1,1636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="dPersonnel" id="dPersonnel.GeneralPersonnelInformation">
+		<xs:sequence>
+			<xs:element name="dPersonnel.PersonnelGroup" id="dPersonnel.PersonnelGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group tag to hold info about the personnel</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dPersonnel.NameGroup" id="dPersonnel.NameGroup" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Group tag to hold info about the personnel's name</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dPersonnel.01" nillable="true" id="dPersonnel.EMSPersonnelsLastName" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.01</number>
+													<name>EMS Personnel's Last Name</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The last name of the personnel.</definition>
+													<v2Number>D08_01</v2Number>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="PersonLastName">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dPersonnel.02" nillable="true" id="dPersonnel.EMSPersonnelsFirstName" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.02</number>
+													<name>EMS Personnel's First Name</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The first name of the personnel.</definition>
+													<v2Number>D08_03</v2Number>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="PersonFirstName">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dPersonnel.03" nillable="true" id="dPersonnel.EMSPersonnelsMiddleNameInitial" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.03</number>
+													<name>EMS Personnel's Middle Name/Initial</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The middle name or initial of the personnel.</definition>
+													<v2Number>D08_02</v2Number>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="PersonMiddleName">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.AddressGroup" id="dPersonnel.AddressGroup" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Group tag to hold info about the personnel's mailing address</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dPersonnel.04" id="dPersonnel.EMSPersonnelsMailingAddress" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.04</number>
+													<name>EMS Personnel's Mailing Address</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The Street or PO Box of the personnel's mailing address.</definition>
+													<v2Number>D08_04</v2Number>
+													<usage>Optional</usage>
+													<comment>For individuals living outside the USA the full address can be entered in the address line.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="StreetAddress">
+													<xs:attribute name="StreetAddress2" type="StreetAddress" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dPersonnel.05" type="CityGnisCode" id="dPersonnel.EMSPersonnelsCityofResidence" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.05</number>
+													<name>EMS Personnel's City of Residence</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The city of the personnel's mailing address.</definition>
+													<v2Number>D08_05</v2Number>
+													<usage>Optional</usage>
+													<comment>
+City codes are based on GNIS Feature Class. The primary Feature Class to use is "Civil" with "Populated Place" and "Military" code as additional options. 
+&lt;br/>&lt;br/>Definitions for each GNIS City Feature Class can be found on the GNIS Codes website. 
+&lt;br/>&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm" target="_blank">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a></comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dPersonnel.06" type="ANSIStateCode" id="dPersonnel.EMSPersonnelsState" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.06</number>
+													<name>EMS Personnel's State</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The state of the personnel's mailing address.</definition>
+													<v2Number>D08_06</v2Number>
+													<usage>Optional</usage>
+													<comment>Based on ANSI Code.&lt;br/>&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm" target="_blank">http://geonames.usgs.gov/domestic/download_data.htm &lt;/a></comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dPersonnel.07" type="ZIP" id="dPersonnel.EMSPersonnelsZIPCode" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.07</number>
+													<name>EMS Personnel's ZIP Code</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The ZIP code of the personnel's mailing address.</definition>
+													<v2Number>D08_07</v2Number>
+													<usage>Optional</usage>
+													<comment>Zip Codes Product Website: &lt;a href="https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/" target="_blank">https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/&lt;/a>
+&lt;br/>Product: USA - 5-digit ZIP Code Database, Commercial Edition
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dPersonnel.08" type="ANSICountryCodesCAMXUS" id="dPersonnel.EMSPersonnelsCountry" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.08</number>
+													<name>EMS Personnel's Country</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The country of the personnel mailing address.</definition>
+													<usage>Optional</usage>
+													<comment>Based on ANSI Code.&lt;br/>&lt;br/>ANSI Country Codes (ISO 3166) Website: &lt;a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists.htm" target="_blank">http://www.iso.org/iso/country_codes/iso_3166_code_lists.htm&lt;/a></comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.09" id="dPersonnel.EMSPersonnelsPhoneNumber" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.09</number>
+										<name>EMS Personnel's Phone Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The phone number for the personnel.</definition>
+										<v2Number>D08_08</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PhoneNumber">
+										<xs:attribute name="PhoneNumberType" type="PhoneNumberType" use="optional"/>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.10" id="dPersonnel.EMSPersonnelsEmailAddress" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.10</number>
+										<name>EMS Personnel's Email Address</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The primary email address of the personnel.</definition>
+										<v2Number>D08_10</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EmailAddress">
+										<xs:attribute name="EmailAddressType" type="EmailAddressType" use="optional"/>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.11" nillable="true" id="dPersonnel.EMSPersonnelsDateofBirth" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.11</number>
+										<name>EMS Personnel's Date of Birth</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The personnel's date of birth.</definition>
+										<v2Number>D08_11</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DateType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.12" nillable="true" id="dPersonnel.EMSPersonnelsGender" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.12</number>
+										<name>EMS Personnel's Gender</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The personnel's gender.</definition>
+										<v2Number>D08_12</v2Number>
+										<usage>Recommended</usage>
+										<comment>Code list referenced from: &lt;a href="https://www.healthit.gov/isa/sex-birth-sexual-orientation-and-gender-identity" target="_blank">https://www.healthit.gov/isa/sex-birth-sexual-orientation-and-gender-identity&lt;/a></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="Gender">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.13" nillable="true" id="dPersonnel.EMSPersonnelsRace" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.13</number>
+										<name>EMS Personnel's Race</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The personnel's race as defined by the OMB (US Office of Management and Budget).</definition>
+										<v2Number>D08_13</v2Number>
+										<usage>Recommended</usage>
+										<comment>OMB requirements are provided at: &lt;a href="https://grants.nih.gov/grants/guide/notice-files/NOT-OD-15-089.html" target="_blank">https://grants.nih.gov/grants/guide/notice-files/NOT-OD-15-089.html&lt;/a>. A single multiple choice question methodology is being implemented to improve the completion of ethnicity information. Ethnicity (Version 2.1.1:  D08_14) has been merged with this data element and retired.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DemographicRace">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.14" type="ANSICountryCode" id="dPersonnel.EMSPersonnelsCitizenship" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.14</number>
+										<name>EMS Personnel's Citizenship</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The documentation of the personnel's citizenship.</definition>
+										<usage>Optional</usage>
+										<comment>Website: &lt;a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists.htm" target="_blank">http://www.iso.org/iso/country_codes/iso_3166_code_lists.htm&lt;/a></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.15" type="PersonnelHighestEducationalDegree" id="dPersonnel.EMSPersonnelsHighestEducationalDegree" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.15</number>
+										<name>EMS Personnel's Highest Educational Degree</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The highest educational degree completed by the personnel.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Census 2000 Educational Attainment Question.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.16" id="dPersonnel.EMSPersonnelsDegreeSubjectFieldofStudy" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.16</number>
+										<name>EMS Personnel's Degree Subject/Field of Study</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The area of the personnel's post high-school (post-secondary) degree.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PersonnelDegreeFieldofStudy">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.17" id="dPersonnel.EMSPersonnelsMotorVehicleLicenseType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.17</number>
+										<name>EMS Personnel's Motor Vehicle License Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The type of motor vehicle license (i.e. Class A, B, Pilot, etc.) of the EMS personnel.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PersonnelVehicleLicenseType">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.ImmunizationsGroup" id="dPersonnel.PersonnelImmunizationsGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold Immunization type and date</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dPersonnel.18" type="ImmunizationType" id="dPersonnel.EMSPersonnelsImmunizationStatus" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.18</number>
+													<name>EMS Personnel's Immunization Status</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The type of immunization status.</definition>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dPersonnel.19" type="Year" id="dPersonnel.EMSPersonnelsImmunizationYear" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.19</number>
+													<name>EMS Personnel's Immunization Year</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The year associated with each immunization type.</definition>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+								<xs:attribute name="UUID" type="UUID" use="required" />
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.20" id="dPersonnel.EMSPersonnelsForeignLanguageAbility" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.20</number>
+										<name>EMS Personnel's Foreign Language Ability</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The languages spoken (other than English) by the personnel with at least an elementary level of proficiency.</definition>
+										<usage>Optional</usage>
+										<v3Changes>Added to better describe the EMS workforce.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PersonnelForeignLanguageAbility">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.21" type="PersonnelAgencyIDNumber" id="dPersonnel.EMSPersonnelsAgencyIDNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.21</number>
+										<name>EMS Personnel's Agency ID Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The local agency ID number for the personnel.</definition>
+										<v2Number>D07_01</v2Number>
+										<usage>Optional</usage>
+										<comment>This is a local ID and not the ID associated with the state credential. This may be the same as the state credential ID depending on the state and local implementation. This should be a unique number and not reused.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.LicensureGroup" id="dPersonnel.LicensureGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group to hold the licensure information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dPersonnel.22" nillable="true" id="dPersonnel.EMSPersonnelsStateofLicensure" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.22</number>
+													<name>EMS Personnel's State of Licensure</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The state of the certification/licensure ID number assigned to the personnel member.</definition>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="ANSIStateCode">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dPersonnel.23" nillable="true" id="dPersonnel.EMSPersonnelsStateLicensureIDNumber" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.23</number>
+													<name>EMS Personnel's State's Licensure ID Number</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The state's licensure/certification ID number for the personnel.</definition>
+													<v2Number>D07_02</v2Number>
+													<usage>Recommended</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="StateLicensureID">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dPersonnel.24" nillable="true" id="dPersonnel.EMSPersonnelsStateEMSCertificationLicensureLevel" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.24</number>
+													<name>EMS Personnel's State EMS Certification Licensure Level</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The personnel's state EMS certification level.</definition>
+													<v2Number>D08_15</v2Number>
+													<usage>Recommended</usage>
+													<comment>The category Emergency Medical Technician - Intermediate includes EMS professionals with an "85" or "99" certification level.&lt;br/>&lt;br/>Some listed health care providers may not have an EMS certification/licensure number, however their level should be indicated from the list above and the state licensure number should be indicated in dPersonnel.23 - EMS Personnel's State's Licensure ID Number.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="MemberLevel">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dPersonnel.25" type="DateType" id="dPersonnel.EMSPersonnelsStateEMSCurrentCertificationDate" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.25</number>
+													<name>EMS Personnel's State EMS Current Certification Date</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The date of the personnel's current EMS certification/licensure.</definition>
+													<v2Number>D08_17</v2Number>
+													<usage>Optional</usage>
+													<comment>Clarified as the current certification/licensure.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dPersonnel.26" type="DateType" id="dPersonnel.EMSPersonnelsInitialStateLicensureIssueDate" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.26</number>
+													<name>EMS Personnel's Initial State's Licensure Issue Date</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The date on which the EMS personnel's state's EMS certification/licensure was originally issued. This is the date of the first certification/licensure for the EMS level.</definition>
+													<v2Number>D08_18</v2Number>
+													<usage>Optional</usage>
+													<comment>Clarified as the FIRST (original) certification/licensure date.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dPersonnel.27" type="DateType" id="dPersonnel.EMSPersonnelsCurrentStateLicensureExpirationDate" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.27</number>
+													<name>EMS Personnel's Current State's Licensure Expiration Date</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The date on which the EMS personnel's (highest) state EMS certification/licensure expires.</definition>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+								<xs:attribute name="UUID" type="UUID" use="required" />
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.28" type="NationalRegistryNumber" id="dPersonnel.NationalRegistryNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.28</number>
+										<name>EMS Personnel's National Registry Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The National Registry number associated with the level of certification/licensure obtained through NREMT.</definition>
+										<usage>Optional</usage>
+										<performanceMeasures/>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.29" type="NationalRegistryCertificationLevel" id="dPersonnel.NationalRegistryCertificationLevel" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.29</number>
+										<name>EMS Personnel's National Registry Certification Level</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The level of the current National Registry of Emergency Medical Technicians (NREMT) certification.</definition>
+										<usage>Optional</usage>
+										<performanceMeasures/>
+										<comment>The category EMT-Intermediate includes EMS professionals with an "85" or "99" certification level.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.30" type="DateType" id="dPersonnel.PersonnelsCurrentNationalCertificationExpirationDate" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.30</number>
+										<name>EMS Personnel's Current National Registry Expiration Date</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date on which the EMS Personnel's National Registry of EMTs certification/licensure expires.</definition>
+										<usage>Optional</usage>
+										<performanceMeasures/>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.31" nillable="true" id="dPersonnel.EMSPersonnelsEmploymentStatus" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.31</number>
+										<name>EMS Personnel's Employment Status</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The personnel's primary employment status for this agency.</definition>
+										<v2Number>D07_03</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EmploymentStatus">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.32" nillable="true" id="dPersonnel.EMSPersonnelsEmploymentStatusDate" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.32</number>
+										<name>EMS Personnel's Employment Status Date</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The personnel's employment status date.</definition>
+										<v2Number>D07_04</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DateType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.33" type="DateType" id="dPersonnel.EMSPersonnelsHireDate" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.33</number>
+										<name>EMS Personnel's Hire Date</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date the employee was hired by the EMS agency for this current job.</definition>
+										<usage>Optional</usage>
+										<comment>This is intended to collect information based on the current employment/job.  If the EMS personnel has a come and go status, this should reflect the most recent employment/job.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.34" nillable="true" id="dPersonnel.EMSPersonnelsPrimaryEMSJobRole" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.34</number>
+										<name>EMS Personnel's Primary EMS Job Role</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The individuals primary/main EMS role at the EMS agency. This is the function which is performed the majority of the time for the EMS personnel.</definition>
+										<usage>Recommended</usage>
+										<comment>This is a single choice data element which should reflect the EMS Personnel's primary/main job role for which he/she functions. It is understood that most EMS personnel perform more than one role as a part of their position. Other roles should be documented in dPersonnel.35 (EMS Personnel's Other Job Responsibilities).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="JobResponsibilities">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.35" nillable="true" id="dPersonnel.EMSPersonnelsOtherJobResponsibilities" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.35</number>
+										<name>EMS Personnel's Other Job Responsibilities</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The EMS personnel's other job responsibilities at the agency beyond their primary role documented in dPersonnel.34 (EMS Personnel's Primary EMS Job Role).</definition>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="JobResponsibilities">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dPersonnel.36" type="TotalService" id="dPersonnel.EMSPersonnelsTotalLengthofServiceinYears" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.36</number>
+										<name>EMS Personnel's Total Length of Service in Years</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The personnel's total length of EMS service at any level (years).</definition>
+										<v2Number>D08_19</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.37" type="DateType" id="dPersonnel.EMSPersonnelsDateLengthofServiceDocumented" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dPersonnel.37</number>
+										<name>EMS Personnel's Date Length of Service Documented</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date which the length of EMS service was documented.</definition>
+										<v2Number>D08_20</v2Number>
+										<usage>Optional</usage>
+										<comment>Associated with dPersonnel.37 (EMS Personnel's Total Length of Service in Years).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dPersonnel.CertificationLevelGroup" id="dPersonnel.CertificationLevelGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group to hold the certification information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dPersonnel.38" type="MemberLevel" id="dPersonnel.EMSPersonnelsPracticeLevel" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.38</number>
+													<name>EMS Personnel's Practice Level</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The EMS certification level at which the individual is providing patient care services for the EMS agency.</definition>
+													<v2Number>D07_05</v2Number>
+													<usage>Optional</usage>
+													<comment>The category EMT-Intermediate includes EMS professionals with an "85" or "99" certification level.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dPersonnel.39" type="DateType" id="dPersonnel.DateofPersonnelsCertificationorLicensureforAgency" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dPersonnel.39</number>
+													<name>Date of Personnel's Certification or Licensure for Agency</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The date that the Certification/Licensure was achieved for the local EMS agency.</definition>
+													<v2Number>D07_06</v2Number>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+								<xs:attribute name="UUID" type="UUID" use="required" />
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+					<xs:attribute name="UUID" type="UUID" use="required"></xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DemographicRace">
+		<xs:annotation>
+			<xs:documentation>The patient's race as defined by the OMB (US Office of Management and Budget)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1513001">
+				<xs:annotation>
+					<xs:documentation>American Indian or Alaska Native</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1513003">
+				<xs:annotation>
+					<xs:documentation>Asian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1513005">
+				<xs:annotation>
+					<xs:documentation>Black or African American</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1513007">
+				<xs:annotation>
+					<xs:documentation>Hispanic or Latino</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1513009">
+				<xs:annotation>
+					<xs:documentation>Native Hawaiian or Other Pacific Islander</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1513011">
+				<xs:annotation>
+					<xs:documentation>White</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmploymentStatus">
+		<xs:annotation>
+			<xs:documentation>Personnel's Employment Status for this Agency.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1531001">
+				<xs:annotation>
+					<xs:documentation>Full Time Paid Employee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1531003">
+				<xs:annotation>
+					<xs:documentation>Part Time Paid Employee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1531005">
+				<xs:annotation>
+					<xs:documentation>Volunteer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1531007">
+				<xs:annotation>
+					<xs:documentation>Neither an Employee Nor a Volunteer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobResponsibilities">
+		<xs:annotation>
+			<xs:documentation>The individuals primary/main EMS role at the EMS Agency. This is the function which is performed the majority of the time for the EMS professional.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1534001">
+				<xs:annotation>
+					<xs:documentation>Administrator/Manager</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534003">
+				<xs:annotation>
+					<xs:documentation>Driver/Pilot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534005">
+				<xs:annotation>
+					<xs:documentation>Educator/Preceptor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534007">
+				<xs:annotation>
+					<xs:documentation>Fire Suppression</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534009">
+				<xs:annotation>
+					<xs:documentation>First-Line Supervisor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534011">
+				<xs:annotation>
+					<xs:documentation>Law Enforcement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534013">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534015">
+				<xs:annotation>
+					<xs:documentation>Patient Care Provider</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1534017">
+				<xs:annotation>
+					<xs:documentation>Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NationalRegistryNumber">
+		<xs:annotation>
+			<xs:documentation>Level of the current National Registry of Emergency Medical Technicians (NREMT) certification.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z][A-Z0-9][0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NationalRegistryCertificationLevel">
+		<xs:annotation>
+			<xs:documentation>The national registration number associated with the level of certification/licensure obtained through NREMT</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1529001">
+				<xs:annotation>
+					<xs:documentation>Advanced Emergency Medical Technician (AEMT)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1529002">
+				<xs:annotation>
+					<xs:documentation>Emergency Medical Technician - Intermediate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1529003">
+				<xs:annotation>
+					<xs:documentation>Emergency Medical Responder (EMR)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1529005">
+				<xs:annotation>
+					<xs:documentation>Emergency Medical Technician (EMT)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1529007">
+				<xs:annotation>
+					<xs:documentation>Paramedic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonnelAgencyIDNumber">
+		<xs:annotation>
+			<xs:documentation>Local agency name number for personnel.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonnelDegreeFieldofStudy">
+		<xs:annotation>
+			<xs:documentation>The EMS Personnel's ethnicity as defined by the OMB (US Office of Management and Budget).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1516001">
+				<xs:annotation>
+					<xs:documentation>Agriculture and Natural Resources</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516003">
+				<xs:annotation>
+					<xs:documentation>Architecture and Related Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516005">
+				<xs:annotation>
+					<xs:documentation>Area, Ethnic, Cultural, and Gender Studies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516007">
+				<xs:annotation>
+					<xs:documentation>Biological and Biomedical Sciences</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516009">
+				<xs:annotation>
+					<xs:documentation>Business</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516011">
+				<xs:annotation>
+					<xs:documentation>Communication, Journalism, and Related Programs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516013">
+				<xs:annotation>
+					<xs:documentation>Communications Technologies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516015">
+				<xs:annotation>
+					<xs:documentation>Computer and Information Sciences</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516017">
+				<xs:annotation>
+					<xs:documentation>Education</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516019">
+				<xs:annotation>
+					<xs:documentation>Emergency Medical Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516021">
+				<xs:annotation>
+					<xs:documentation>Engineering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516023">
+				<xs:annotation>
+					<xs:documentation>Engineering Technologies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516025">
+				<xs:annotation>
+					<xs:documentation>English Language and Literature/Letters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516027">
+				<xs:annotation>
+					<xs:documentation>Family and Consumer Sciences/Human Sciences</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516029">
+				<xs:annotation>
+					<xs:documentation>Fire Science</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516031">
+				<xs:annotation>
+					<xs:documentation>Foreign Languages, Literatures, and Linguistics</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516033">
+				<xs:annotation>
+					<xs:documentation>Health Professions and Related Clinical Sciences, Not Including Emergency Medical Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516035">
+				<xs:annotation>
+					<xs:documentation>Legal Professions and Studies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516037">
+				<xs:annotation>
+					<xs:documentation>Liberal Arts and Sciences, General Studies, and Humanities</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516039">
+				<xs:annotation>
+					<xs:documentation>Library Science</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516041">
+				<xs:annotation>
+					<xs:documentation>Mathematics and Statistics</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516043">
+				<xs:annotation>
+					<xs:documentation>Military Technologies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516045">
+				<xs:annotation>
+					<xs:documentation>Multi/Interdisciplinary Studies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516047">
+				<xs:annotation>
+					<xs:documentation>Not Classified by Field of Study</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516049">
+				<xs:annotation>
+					<xs:documentation>None</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516051">
+				<xs:annotation>
+					<xs:documentation>Parks, Recreation, Leisure and Fitness Studies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516053">
+				<xs:annotation>
+					<xs:documentation>Philosophy and Religious Studies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516055">
+				<xs:annotation>
+					<xs:documentation>Physical Sciences and Science Technologies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516057">
+				<xs:annotation>
+					<xs:documentation>Precision Production</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516059">
+				<xs:annotation>
+					<xs:documentation>Psychology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516061">
+				<xs:annotation>
+					<xs:documentation>Public Administration and Social Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516063">
+				<xs:annotation>
+					<xs:documentation>Security and Protective Services, Not Including Fire Science</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516065">
+				<xs:annotation>
+					<xs:documentation>Social Sciences and History</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516067">
+				<xs:annotation>
+					<xs:documentation>Theology and Religious Vocations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516069">
+				<xs:annotation>
+					<xs:documentation>Transportation and Materials Moving</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1516071">
+				<xs:annotation>
+					<xs:documentation>Visual and Performing Arts</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonnelForeignLanguageAbility">
+		<xs:annotation>
+			<xs:documentation>The EMS Personnel's ethnicity as defined by the OMB (US Office of Management and Budget)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="amh">
+				<xs:annotation>
+					<xs:documentation>Amharic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ara">
+				<xs:annotation>
+					<xs:documentation>Arabic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="arm">
+				<xs:annotation>
+					<xs:documentation>Armenian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ben">
+				<xs:annotation>
+					<xs:documentation>Bengali</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="crp">
+				<xs:annotation>
+					<xs:documentation>Cajun (Creole and Pidgins)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="chi">
+				<xs:annotation>
+					<xs:documentation>Chinese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="hrv">
+				<xs:annotation>
+					<xs:documentation>Croatian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="cze">
+				<xs:annotation>
+					<xs:documentation>Czech</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="dan">
+				<xs:annotation>
+					<xs:documentation>Danish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="dut">
+				<xs:annotation>
+					<xs:documentation>Dutch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="fin">
+				<xs:annotation>
+					<xs:documentation>Finnish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="tai">
+				<xs:annotation>
+					<xs:documentation>Formosan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="fre">
+				<xs:annotation>
+					<xs:documentation>French</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="cpf">
+				<xs:annotation>
+					<xs:documentation>French Creole</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ger">
+				<xs:annotation>
+					<xs:documentation>German</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="gre">
+				<xs:annotation>
+					<xs:documentation>Greek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="guj">
+				<xs:annotation>
+					<xs:documentation>Gujarati</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="heb">
+				<xs:annotation>
+					<xs:documentation>Hebrew</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="hin">
+				<xs:annotation>
+					<xs:documentation>Hindi (Urdu)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="hun">
+				<xs:annotation>
+					<xs:documentation>Hungarian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ilo">
+				<xs:annotation>
+					<xs:documentation>Ilocano</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="itl">
+				<xs:annotation>
+					<xs:documentation>Italian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="jpn">
+				<xs:annotation>
+					<xs:documentation>Japanese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="kor">
+				<xs:annotation>
+					<xs:documentation>Korean</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="kro">
+				<xs:annotation>
+					<xs:documentation>Kru</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="lit">
+				<xs:annotation>
+					<xs:documentation>Lithuanian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="mal">
+				<xs:annotation>
+					<xs:documentation>Malayalam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="hmn">
+				<xs:annotation>
+					<xs:documentation>Miao (Hmong)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="mkh">
+				<xs:annotation>
+					<xs:documentation>Mon-Khmer (Cambodian)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="nav">
+				<xs:annotation>
+					<xs:documentation>Navaho</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="nno">
+				<xs:annotation>
+					<xs:documentation>Norwegian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pan">
+				<xs:annotation>
+					<xs:documentation>Panjabi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="gem">
+				<xs:annotation>
+					<xs:documentation>Pennsylvania Dutch (Germanic Other)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="per">
+				<xs:annotation>
+					<xs:documentation>Persian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pol">
+				<xs:annotation>
+					<xs:documentation>Polish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="por">
+				<xs:annotation>
+					<xs:documentation>Portuguese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="rum">
+				<xs:annotation>
+					<xs:documentation>Romanian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="rus">
+				<xs:annotation>
+					<xs:documentation>Russian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="smo">
+				<xs:annotation>
+					<xs:documentation>Samoan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="srp">
+				<xs:annotation>
+					<xs:documentation>Serbo-Croatian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="slo">
+				<xs:annotation>
+					<xs:documentation>Slovak</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="spa">
+				<xs:annotation>
+					<xs:documentation>Spanish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="swe">
+				<xs:annotation>
+					<xs:documentation>Swedish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="syr">
+				<xs:annotation>
+					<xs:documentation>Syriac</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="tgl">
+				<xs:annotation>
+					<xs:documentation>Tagalog</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="tha">
+				<xs:annotation>
+					<xs:documentation>Thai (Laotian)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="tur">
+				<xs:annotation>
+					<xs:documentation>Turkish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ukr">
+				<xs:annotation>
+					<xs:documentation>Ukrainian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="vie">
+				<xs:annotation>
+					<xs:documentation>Vietnamese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="yid">
+				<xs:annotation>
+					<xs:documentation>Yiddish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonnelHighestEducationalDegree">
+		<xs:annotation>
+			<xs:documentation>The EMS Personnel's ethnicity as defined by the OMB (US Office of Management and Budget).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1515001">
+				<xs:annotation>
+					<xs:documentation>No Schooling Completed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515003">
+				<xs:annotation>
+					<xs:documentation>Nursery School to 4th Grade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515005">
+				<xs:annotation>
+					<xs:documentation>5th Grade or 6th Grade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515007">
+				<xs:annotation>
+					<xs:documentation>7th Grade or 8th Grade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515009">
+				<xs:annotation>
+					<xs:documentation>9th Grade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515011">
+				<xs:annotation>
+					<xs:documentation>10th Grade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515013">
+				<xs:annotation>
+					<xs:documentation>11th Grade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515015">
+				<xs:annotation>
+					<xs:documentation>12th Grade, No Diploma</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515017">
+				<xs:annotation>
+					<xs:documentation>High School Graduate-Diploma or the Equivalent (GED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515019">
+				<xs:annotation>
+					<xs:documentation>Some College Credit, but Less than 1 Year</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515021">
+				<xs:annotation>
+					<xs:documentation>1 or More Years of College, No Degree</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515023">
+				<xs:annotation>
+					<xs:documentation>Associate Degree</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515025">
+				<xs:annotation>
+					<xs:documentation>Bachelor's Degree</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515027">
+				<xs:annotation>
+					<xs:documentation>Master's Degree</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515029">
+				<xs:annotation>
+					<xs:documentation>Professional Degree (i.e. MD, DDS, DVM, LLB, JD)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1515031">
+				<xs:annotation>
+					<xs:documentation>Doctorate Degree (i.e. PhD, EdD)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonnelVehicleLicenseType">
+		<xs:annotation>
+			<xs:documentation>The EMS Personnel's ethnicity as defined by the OMB (US Office of Management and Budget).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1517001">
+				<xs:annotation>
+					<xs:documentation>All-Terrain Vehicle (ATV)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517003">
+				<xs:annotation>
+					<xs:documentation>Commercial Class A</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517005">
+				<xs:annotation>
+					<xs:documentation>Commercial Class B</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517007">
+				<xs:annotation>
+					<xs:documentation>Commercial Class C</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517009">
+				<xs:annotation>
+					<xs:documentation>Motorcycle-Class M</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517011">
+				<xs:annotation>
+					<xs:documentation>None</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517013">
+				<xs:annotation>
+					<xs:documentation>Operator Class D (Normal)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517015">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517017">
+				<xs:annotation>
+					<xs:documentation>Pilot-Rotor Wing Air</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517019">
+				<xs:annotation>
+					<xs:documentation>Pilot-Fixed Wing Air</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517021">
+				<xs:annotation>
+					<xs:documentation>Snowmobile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1517023">
+				<xs:annotation>
+					<xs:documentation>Taxi and Livery Class E</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StateLicensureID">
+		<xs:annotation>
+			<xs:documentation>The state certification/licensure name number assigned to the crew member.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TotalService">
+		<xs:annotation>
+			<xs:documentation>The personnel's total length of EMS service at any level.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

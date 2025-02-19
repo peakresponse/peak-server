@@ -10,7 +10,7 @@ describe('lib', () => {
   describe('nemsis', () => {
     describe('translation', () => {
       let destPath;
-      let cleanup;
+      // let cleanup;
       before(async function anon() {
         // temporarily skip all due to NEMSIS repo issues
         return this.skip();
@@ -21,7 +21,7 @@ describe('lib', () => {
       });
 
       after(() => {
-        cleanup();
+        // cleanup();
       });
 
       describe('translateEmsDataSet', () => {

@@ -135,6 +135,8 @@ function sleep(ms) {
 beforeEach(async () => {
   await resetDatabase();
   nodemailerMock.mock.reset();
+  fs.mkdirpSync(path.resolve(__dirname, '../nemsis/repositories/nemsis_public'));
+  fs.copySync(path.resolve(__dirname, 'fixtures/nemsis/nemsis_public'), path.resolve(__dirname, '../nemsis/repositories/nemsis_public'));
 });
 
 after(async () => {
