@@ -55,7 +55,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "mini-css-extract-plugin": "2.9.2",
+    "mini-css-extract-plugin": "2.9.0",
     "ng-packagr": "^18.2.1",
     "typescript": "~5.4.5",
     "webfonts-loader": "^8.1.0",
