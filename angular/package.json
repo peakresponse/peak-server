@@ -33,7 +33,7 @@
     "sortablejs": "^1.15.1",
     "tslib": "^2.6.2",
     "uuid": "^9.0.1",
-    "zone.js": "~0.13.3"
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^16.0.1",
@@ -57,7 +57,7 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "mini-css-extract-plugin": "2.7.6",
     "ng-packagr": "^16.2.3",
-    "typescript": "~5.1.6",
+    "typescript": "~5.7.3",
     "webfonts-loader": "^8.0.1",
     "webpack-bundle-tracker": "^3.0.0"
   }
