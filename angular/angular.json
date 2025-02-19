@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "design:build"
+            "buildTarget": "design:build"
           }
         },
         "test": {
@@ -208,7 +208,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "auth:build"
+            "buildTarget": "auth:build"
           }
         },
         "test": {
@@ -304,7 +304,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "onboarding:build"
+            "buildTarget": "onboarding:build"
           }
         },
         "test": {
@@ -400,7 +400,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "admin:build"
+            "buildTarget": "admin:build"
           }
         },
         "test": {
@@ -496,7 +496,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app:build"
+            "buildTarget": "app:build"
           }
         },
         "test": {
@@ -586,7 +586,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "guides:build"
+            "buildTarget": "guides:build"
           }
         },
         "test": {

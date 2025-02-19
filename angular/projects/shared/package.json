@@ -2,9 +2,9 @@
   "name": "shared",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^16.2.12",
-    "@angular/core": "^16.2.12",
-    "@angular/forms": "^16.2.12",
+    "@angular/common": "^17.3.12",
+    "@angular/core": "^17.3.12",
+    "@angular/forms": "^17.3.12",
     "@ng-bootstrap/ng-bootstrap": "^15.1.2",
     "activestorage": "^5.2.8-1",
     "inflection": "^3.0.0",
