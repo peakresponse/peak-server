@@ -3,6 +3,7 @@ import { AgencyService } from 'shared';
 
 @Component({
   templateUrl: './locations-record-demographics.component.html',
+  standalone: false,
 })
 export class LocationsRecordDemographicsComponent {
   defaultValues = {

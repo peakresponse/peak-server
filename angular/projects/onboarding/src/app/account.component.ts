@@ -12,6 +12,7 @@ import { AppService } from './app.service';
 @Component({
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
+  standalone: false,
 })
 export class AccountComponent {
   @ViewChild('firstNameEl') firstNameEl?: TextFieldComponent;

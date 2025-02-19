@@ -6,6 +6,7 @@ import { NavigationService, NotificationService, SchemaService } from 'shared';
 
 @Component({
   templateUrl: './new-form-demographics.component.html',
+  standalone: false,
 })
 export class NewFormDemographicsComponent implements OnInit {
   signatureReasons: any = {};

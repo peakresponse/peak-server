@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './reset.component.html',
+  standalone: false,
 })
 export class ResetComponent {
   data = {

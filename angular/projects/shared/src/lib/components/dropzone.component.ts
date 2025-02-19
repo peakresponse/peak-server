@@ -7,6 +7,7 @@ import { Uploader } from './uploader.component';
   selector: 'shared-dropzone',
   styleUrls: ['./dropzone.component.scss'],
   templateUrl: './dropzone.component.html',
+  standalone: false,
 })
 export class DropzoneComponent {
   @Input() multiple = true;

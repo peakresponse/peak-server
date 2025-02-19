@@ -3,6 +3,7 @@ import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from
 @Directive({
   selector: '[shared-autoload]',
   exportAs: 'sharedAutoload',
+  standalone: false,
 })
 export class AutoloadDirective {
   @Input('shared-autoload') paginationLink: string = '';

@@ -8,6 +8,7 @@ import { ApiService } from 'shared';
 @Component({
   selector: 'admin-regions-form',
   templateUrl: './region-form.component.html',
+  standalone: false,
 })
 export class RegionFormComponent {
   @Input() record: any = null;

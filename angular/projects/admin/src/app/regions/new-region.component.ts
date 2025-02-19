@@ -3,6 +3,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './new-region.component.html',
+  standalone: false,
 })
 export class NewRegionComponent {
   constructor(private navigation: NavigationService) {}

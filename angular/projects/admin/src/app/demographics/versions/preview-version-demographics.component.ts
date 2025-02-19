@@ -5,6 +5,7 @@ import { ApiService } from 'shared';
 
 @Component({
   templateUrl: './preview-version-demographics.component.html',
+  standalone: false,
 })
 export class PreviewVersionDemographicsComponent implements OnInit {
   id: string = '';

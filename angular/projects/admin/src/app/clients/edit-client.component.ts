@@ -5,6 +5,7 @@ import { ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './edit-client.component.html',
+  standalone: false,
 })
 export class EditClientComponent {
   id: string = '';

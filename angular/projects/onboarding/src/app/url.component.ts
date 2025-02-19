@@ -9,6 +9,7 @@ import { ApiService, NavigationService, TextFieldComponent } from 'shared';
 @Component({
   templateUrl: './url.component.html',
   styleUrls: ['./url.component.scss'],
+  standalone: false,
 })
 export class UrlComponent {
   @ViewChild('subdomainEl') subdomainEl?: TextFieldComponent;

@@ -7,6 +7,7 @@ import * as inflection from 'inflection';
  */
 @Pipe({
   name: 'inflection',
+  standalone: false,
 })
 export class InflectionPipe implements PipeTransform {
   transform(value: string, type: string): string {

@@ -11,6 +11,7 @@ import { XsdSchema } from '../xsd-schema';
 
 @Component({
   template: '',
+  standalone: false,
 })
 export class XsdElementBaseComponent {
   @Input() xsd?: XsdSchema;

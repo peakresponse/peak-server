@@ -11,6 +11,7 @@ let STATES: any[];
 @Component({
   selector: 'shared-xsd-select-state',
   templateUrl: './xsd-select-state.component.html',
+  standalone: false,
 })
 export class XsdSelectStateComponent extends XsdElementBaseComponent {
   @ViewChild('instance', { static: true }) instance?: NgbTypeahead;

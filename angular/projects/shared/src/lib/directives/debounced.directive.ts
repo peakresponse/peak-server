@@ -5,6 +5,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Directive({
   selector: '[ngModel][shared-debounced]',
+  standalone: false,
 })
 export class DebouncedDirective implements OnInit, OnDestroy {
   @Input('shared-debounced') debounceTime?: number;

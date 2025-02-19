@@ -6,6 +6,7 @@ import { ApiService } from '../../../services/api.service';
 @Component({
   selector: 'shared-xsd-element-multi',
   templateUrl: './xsd-element-multi.component.html',
+  standalone: false,
 })
 export class XsdElementMultiComponent extends XsdElementBaseComponent {
   constructor(

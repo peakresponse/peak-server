@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list-clients.component.html',
+  standalone: false,
 })
 export class ListClientsComponent {
   search = '';

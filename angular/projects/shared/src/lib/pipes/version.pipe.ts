@@ -5,6 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  */
 @Pipe({
   name: 'version',
+  standalone: false,
 })
 export class VersionPipe implements PipeTransform {
   transform(value: string): string {

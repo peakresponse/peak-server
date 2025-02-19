@@ -3,6 +3,7 @@ import { ApiService, NavigationService, UserService } from 'shared';
 
 @Component({
   templateUrl: './select-assignment.component.html',
+  standalone: false,
 })
 export class SelectAssignmentComponent {
   data: any = {

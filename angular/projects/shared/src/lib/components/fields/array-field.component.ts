@@ -8,6 +8,7 @@ import { BaseFieldComponent } from './base-field.component';
   selector: 'shared-array-field',
   templateUrl: './array-field.component.html',
   styles: [':host{display:block;}'],
+  standalone: false,
 })
 export class ArrayFieldComponent extends BaseFieldComponent {
   @Input() showClearButton = true;

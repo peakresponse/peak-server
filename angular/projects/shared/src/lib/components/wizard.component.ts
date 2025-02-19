@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
   selector: 'shared-wizard',
   templateUrl: './wizard.component.html',
   encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class WizardComponent {
   @Input() isLoading = false;

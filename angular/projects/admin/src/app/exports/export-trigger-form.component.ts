@@ -6,6 +6,7 @@ import { ApiService } from 'shared';
 @Component({
   selector: 'admin-exports-trigger-form',
   templateUrl: './export-trigger-form.component.html',
+  standalone: false,
 })
 export class ExportTriggerFormComponent {
   @Input() record: any = null;

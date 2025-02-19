@@ -5,6 +5,7 @@ import { FormComponent, ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './edit-facility.component.html',
+  standalone: false,
 })
 export class EditFacilityComponent {
   id: string = '';

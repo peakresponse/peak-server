@@ -5,6 +5,7 @@ import { AgencyService, ApiService, XsdListComponent } from 'shared';
 
 @Component({
   templateUrl: './custom-configurations-list-demographics.component.html',
+  standalone: false,
 })
 export class CustomConfigurationsListDemographicsComponent {
   @ViewChild('list') list?: XsdListComponent;

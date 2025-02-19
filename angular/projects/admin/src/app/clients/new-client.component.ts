@@ -5,6 +5,7 @@ import { ApiService, ModalComponent, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './new-client.component.html',
+  standalone: false,
 })
 export class NewClientComponent {
   @ViewChild('showSecret') showSecret?: ModalComponent;

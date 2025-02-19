@@ -6,6 +6,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './edit-user.component.html',
+  standalone: false,
 })
 export class EditUserComponent {
   id: string = '';

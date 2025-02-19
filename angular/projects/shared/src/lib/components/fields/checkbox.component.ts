@@ -5,6 +5,7 @@ import { BaseFieldComponent } from './base-field.component';
 @Component({
   selector: 'shared-checkbox',
   templateUrl: './checkbox.component.html',
+  standalone: false,
 })
 export class CheckboxComponent extends BaseFieldComponent {
   @Input() inline = false;

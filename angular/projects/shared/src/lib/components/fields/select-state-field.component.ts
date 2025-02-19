@@ -7,6 +7,7 @@ import { BaseFieldComponent } from './base-field.component';
 @Component({
   selector: 'shared-select-state-field',
   templateUrl: './select-state-field.component.html',
+  standalone: false,
 })
 export class SelectStateFieldComponent extends BaseFieldComponent {
   states: any[] = [];

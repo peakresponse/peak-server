@@ -8,6 +8,7 @@ import { ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './edit-agency.component.html',
+  standalone: false,
 })
 export class EditAgencyComponent {
   id: string = '';

@@ -8,6 +8,7 @@ import { ApiService, ModalComponent, NotificationService } from 'shared';
 @Component({
   selector: 'admin-personnel-bulk-invite',
   templateUrl: './personnel-bulk-invite-demographics.component.html',
+  standalone: false,
 })
 export class PersonnelBulkInviteDemographicsComponent {
   @Output() invited = new EventEmitter<any>();

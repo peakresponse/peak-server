@@ -66,6 +66,7 @@ const states = [
 
 @Component({
   templateUrl: './inputs.component.html',
+  standalone: false,
 })
 export class InputsComponent {
   source: any = {

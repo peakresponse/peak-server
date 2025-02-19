@@ -3,6 +3,7 @@ import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } fro
 @Component({
   selector: 'shared-command-header',
   templateUrl: './command-header.component.html',
+  standalone: false,
 })
 export class CommandHeaderComponent {
   @Input() user?: any;

@@ -6,6 +6,7 @@ import { BaseFieldComponent } from './base-field.component';
   selector: 'shared-text-field',
   templateUrl: './text-field.component.html',
   styles: [':host{display:block;}'],
+  standalone: false,
 })
 export class TextFieldComponent extends BaseFieldComponent {
   @Input() type = 'text';

@@ -2,6 +2,7 @@ import { Component, ContentChild, ElementRef, EventEmitter, Input, Output, Templ
 
 @Component({
   template: '',
+  standalone: false,
 })
 export class BaseFieldComponent {
   @ViewChild('inputEl') inputEl?: ElementRef;

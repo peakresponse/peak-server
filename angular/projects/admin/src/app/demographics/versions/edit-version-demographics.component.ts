@@ -6,6 +6,7 @@ import { AgencyService, ApiService, NavigationService, NotificationService } fro
 
 @Component({
   templateUrl: './edit-version-demographics.component.html',
+  standalone: false,
 })
 export class EditVersionDemographicsComponent {
   id: string = '';

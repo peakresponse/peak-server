@@ -5,6 +5,7 @@ import { AgencyService, ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './configurations-list-demographics.component.html',
+  standalone: false,
 })
 export class ConfigurationsListDemographicsComponent {
   sectionColumns = [{ name: 'State ID', attr: ['dConfiguration.01'], class: 'col-3' }];

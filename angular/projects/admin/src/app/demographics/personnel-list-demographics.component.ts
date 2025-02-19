@@ -8,6 +8,7 @@ import { AgencyService, ApiService, ModalComponent, NotificationService, XsdList
 
 @Component({
   templateUrl: './personnel-list-demographics.component.html',
+  standalone: false,
 })
 export class PersonnelListDemographicsComponent {
   @ViewChild('list') list?: XsdListComponent;

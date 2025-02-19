@@ -9,6 +9,7 @@ import { XsdElementBaseComponent } from './xsd-element-base.component';
   selector: 'shared-xsd-element-nillable',
   templateUrl: './xsd-element-nillable.component.html',
   styleUrls: ['./xsd-element-nillable.component.scss'],
+  standalone: false,
 })
 export class XsdElementNillableComponent extends XsdElementBaseComponent {
   @Output() pasteMulti = new EventEmitter<string[]>();

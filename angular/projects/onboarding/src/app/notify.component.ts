@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 
 @Component({
   templateUrl: './notify.component.html',
+  standalone: false,
 })
 export class NotifyComponent {
   @ViewChild('firstEl') firstEl?: TextFieldComponent;

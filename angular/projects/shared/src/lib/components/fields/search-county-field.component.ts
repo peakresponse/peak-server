@@ -10,6 +10,7 @@ import { SearchFieldComponent } from './search-field.component';
 @Component({
   selector: 'shared-search-county-field',
   templateUrl: './search-county-field.component.html',
+  standalone: false,
 })
 export class SearchCountyFieldComponent extends BaseFieldComponent {
   @ViewChild('instance') instance?: SearchFieldComponent;

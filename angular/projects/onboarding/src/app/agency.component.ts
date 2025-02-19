@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 
 @Component({
   templateUrl: './agency.component.html',
+  standalone: false,
 })
 export class AgencyComponent {
   @ViewChild('agencyEl') agencyEl?: SearchFieldComponent;

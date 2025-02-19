@@ -5,6 +5,7 @@ import { SchemaService } from 'shared';
 @Component({
   selector: 'admin-demographics-form',
   templateUrl: './form-demographics.component.html',
+  standalone: false,
 })
 export class FormDemographicsComponent implements OnInit {
   @Input() record: any = {};

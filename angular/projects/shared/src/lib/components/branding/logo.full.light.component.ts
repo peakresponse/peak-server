@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'shared-logo-full-light',
   templateUrl: './logo.full.light.component.svg',
+  standalone: false,
 })
 export class LogoFullLight {
   @Input() width: number | string = '100%';
