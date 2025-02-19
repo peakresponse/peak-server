@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,27 +21,20 @@ import { RegionsModule } from './regions/regions.module';
 import { StatesModule } from './states/states.module';
 import { UsersModule } from './users/users.module';
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    NgbModule,
-    AppRoutingModule,
-    AgenciesModule,
-    ClientsModule,
-    DemographicsModule,
-    ExportsModule,
-    FacilitiesModule,
-    GuidesModule,
-    ListsModule,
-    NemsisModule,
-    PsapsModule,
-    RegionsModule,
-    StatesModule,
-    UsersModule,
-  ],
-  providers: [AgencyService, NavigationService, NotificationService, SchemaService, UserService],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        NgbModule,
+        AppRoutingModule,
+        AgenciesModule,
+        ClientsModule,
+        DemographicsModule,
+        ExportsModule,
+        FacilitiesModule,
+        GuidesModule,
+        ListsModule,
+        NemsisModule,
+        PsapsModule,
+        RegionsModule,
+        StatesModule,
+        UsersModule], providers: [AgencyService, NavigationService, NotificationService, SchemaService, UserService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}
