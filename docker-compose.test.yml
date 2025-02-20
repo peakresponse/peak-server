@@ -15,6 +15,9 @@ services:
       - minio
     entrypoint: >
       /bin/sh -c "
+      while !</dev/tcp/minio/9000; do
+        sleep 1
+      done;
       mc alias set myminio http://minio:9000 minioadmin minioadmin;
       mc mb --ignore-existing myminio/app;
       exit 0;
