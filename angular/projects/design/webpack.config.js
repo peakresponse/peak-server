@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
-      experimentalUseImportModule: false,      
+      experimentalUseImportModule: false,
     }),
     new BundleTracker({
       path: __dirname,

@@ -18,16 +18,20 @@ import { AccountComponent } from './account.component';
 import { InviteComponent } from './invite.component';
 import { DoneComponent } from './done.component';
 
-@NgModule({ declarations: [
-        AppComponent,
-        WelcomeComponent,
-        StateComponent,
-        NotifyComponent,
-        AgencyComponent,
-        UrlComponent,
-        AccountComponent,
-        InviteComponent,
-        DoneComponent,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, NgbModule, SharedModule, AppRoutingModule], providers: [ApiService, AppService, NavigationService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    WelcomeComponent,
+    StateComponent,
+    NotifyComponent,
+    AgencyComponent,
+    UrlComponent,
+    AccountComponent,
+    InviteComponent,
+    DoneComponent,
+  ],
+  bootstrap: [AppComponent],
+  imports: [BrowserModule, FormsModule, NgbModule, SharedModule, AppRoutingModule],
+  providers: [ApiService, AppService, NavigationService, provideHttpClient(withInterceptorsFromDi())],
+})
 export class AppModule {}

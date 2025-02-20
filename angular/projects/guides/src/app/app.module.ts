@@ -9,6 +9,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GuideComponent } from './guide.component';
 
-@NgModule({ declarations: [AppComponent, GuideComponent],
-    bootstrap: [AppComponent], imports: [BrowserModule, AppRoutingModule, NgbModule, SharedModule], providers: [ApiService, AgencyService, NavigationService, NotificationService, SchemaService, UserService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [AppComponent, GuideComponent],
+  bootstrap: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, SharedModule],
+  providers: [
+    ApiService,
+    AgencyService,
+    NavigationService,
+    NotificationService,
+    SchemaService,
+    UserService,
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
+})
 export class AppModule {}

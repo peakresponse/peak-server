@@ -15,15 +15,19 @@ import { TypographyComponent } from './typography.component';
 
 import { SharedModule, ApiService, UserService } from 'shared';
 
-@NgModule({ declarations: [
-        AppComponent,
-        BrandingComponent,
-        ButtonsComponent,
-        HeadersComponent,
-        IconsComponent,
-        InputsComponent,
-        NavsComponent,
-        TypographyComponent,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, AppRoutingModule, SharedModule], providers: [ApiService, UserService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    BrandingComponent,
+    ButtonsComponent,
+    HeadersComponent,
+    IconsComponent,
+    InputsComponent,
+    NavsComponent,
+    TypographyComponent,
+  ],
+  bootstrap: [AppComponent],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, SharedModule],
+  providers: [ApiService, UserService, provideHttpClient(withInterceptorsFromDi())],
+})
 export class AppModule {}

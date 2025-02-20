@@ -10,6 +10,10 @@ import { AppComponent } from './app.component';
 import { AssignmentsModule } from './assignments/assignments.module';
 import { IncidentsModule } from './incidents/incidents.module';
 
-@NgModule({ declarations: [AppComponent],
-    bootstrap: [AppComponent], imports: [BrowserModule, AppRoutingModule, AssignmentsModule, IncidentsModule], providers: [ApiService, NavigationService, UserService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, AssignmentsModule, IncidentsModule],
+  providers: [ApiService, NavigationService, UserService, provideHttpClient(withInterceptorsFromDi())],
+})
 export class AppModule {}

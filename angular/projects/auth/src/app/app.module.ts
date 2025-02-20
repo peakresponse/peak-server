@@ -11,6 +11,10 @@ import { ForgotComponent } from './forgot.component';
 import { LoginComponent } from './login.component';
 import { ResetComponent } from './reset.component';
 
-@NgModule({ declarations: [AppComponent, ForgotComponent, LoginComponent, ResetComponent],
-    bootstrap: [AppComponent], imports: [BrowserModule, AppRoutingModule, SharedModule], providers: [ApiService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [AppComponent, ForgotComponent, LoginComponent, ResetComponent],
+  bootstrap: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, SharedModule],
+  providers: [ApiService, provideHttpClient(withInterceptorsFromDi())],
+})
 export class AppModule {}

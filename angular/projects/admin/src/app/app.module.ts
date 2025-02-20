@@ -21,20 +21,33 @@ import { RegionsModule } from './regions/regions.module';
 import { StatesModule } from './states/states.module';
 import { UsersModule } from './users/users.module';
 
-@NgModule({ declarations: [AppComponent],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        NgbModule,
-        AppRoutingModule,
-        AgenciesModule,
-        ClientsModule,
-        DemographicsModule,
-        ExportsModule,
-        FacilitiesModule,
-        GuidesModule,
-        ListsModule,
-        NemsisModule,
-        PsapsModule,
-        RegionsModule,
-        StatesModule,
-        UsersModule], providers: [AgencyService, NavigationService, NotificationService, SchemaService, UserService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    NgbModule,
+    AppRoutingModule,
+    AgenciesModule,
+    ClientsModule,
+    DemographicsModule,
+    ExportsModule,
+    FacilitiesModule,
+    GuidesModule,
+    ListsModule,
+    NemsisModule,
+    PsapsModule,
+    RegionsModule,
+    StatesModule,
+    UsersModule,
+  ],
+  providers: [
+    AgencyService,
+    NavigationService,
+    NotificationService,
+    SchemaService,
+    UserService,
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
+})
 export class AppModule {}
