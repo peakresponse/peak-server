@@ -8,20 +8,20 @@
     "@ng-bootstrap/ng-bootstrap": "^18.0.0",
     "@talentia/ngx-sortablejs": "^11.1.4",
     "activestorage": "^5.2.8-1",
-    "inflection": "^3.0.0",
+    "inflection": "^3.0.2",
     "jsonpath-plus": "^10.3.0",
     "ngx-dropzone": "^3.1.0",
-    "sortablejs": "^1.15.1",
-    "uuid": "^9.0.1"
+    "sortablejs": "^1.15.6",
+    "uuid": "^11.1.0"
   },
   "dependencies": {
-    "tslib": "^2.6.2"
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@types/activestorage": "^5.2.7",
     "@types/inflection": "^1.13.2",
     "@types/jsonpath-plus": "^5.0.5",
     "@types/sortablejs": "^1.15.7",
-    "@types/uuid": "^9.0.7"
+    "@types/uuid": "^10.0.0"
   }
 }
