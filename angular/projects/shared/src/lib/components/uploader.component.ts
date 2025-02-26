@@ -40,6 +40,7 @@ export class Uploader {
 @Component({
   selector: 'shared-uploader',
   templateUrl: './uploader.component.html',
+  standalone: false,
 })
 export class UploaderComponent {
   @Input() id: string = '';

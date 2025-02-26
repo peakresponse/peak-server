@@ -7,6 +7,7 @@ import { AgencyService, ApiService, NotificationService, UserService } from 'sha
   selector: 'guides-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   guides: any;

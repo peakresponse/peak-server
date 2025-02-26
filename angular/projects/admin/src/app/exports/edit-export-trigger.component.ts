@@ -6,6 +6,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './edit-export-trigger.component.html',
+  standalone: false,
 })
 export class EditExportTriggerComponent implements OnInit {
   id: string = '';

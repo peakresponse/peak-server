@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list-users.component.html',
+  standalone: false,
 })
 export class ListUsersComponent {
   constructor(public route: ActivatedRoute) {}

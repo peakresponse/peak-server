@@ -11,6 +11,7 @@ import { AppService } from './app.service';
 
 @Component({
   templateUrl: './invite.component.html',
+  standalone: false,
 })
 export class InviteComponent {
   @ViewChild('firstEl') firstEl?: TextFieldComponent;

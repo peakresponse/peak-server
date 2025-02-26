@@ -1,0 +1,1297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eOther" id="eOther.Miscellaneous">
+		<xs:sequence>
+			<xs:element name="eOther.01" type="YesNoValues" id="eOther.ReviewRequested" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOther.01</number>
+							<name>Review Requested</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Indication of whether the PCR needs review by anyone.</definition>
+							<v2Number>E23_01</v2Number>
+							<usage>Optional</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eOther.02" id="eOther.PotentialSystemofCareSpecialtyRegistryPatient" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOther.02</number>
+							<name>Potential System of Care/Specialty/Registry Patient</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>An indication if the patient may meet the entry criteria for an injury or illness specific registry.</definition>
+							<v2Number>E23_02</v2Number>
+							<usage>Optional</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="PotentialRegistryCandidate">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOther.EMSCrewMemberGroup" id="eOther.EMSCrewMemberGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold info about the EMS Crew Member</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eOther.03" id="eOther.PersonalProtectiveEquipmentUsed" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.03</number>
+										<name>Personal Protective Equipment Used</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The personal protective equipment which was used by EMS personnel during this EMS patient contact.</definition>
+										<v2Number>E23_03</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PersonalProtectiveEquipmentUsed">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eOther.04" type="CrewMemberID" id="eOther.EMSProfessionalCrewMemberID" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.04</number>
+										<name>EMS Professional (Crew Member) ID</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The ID number of the EMS Crew Member associated with eOther.03, eOther.05, eOther.06.</definition>
+										<usage>Optional</usage>
+										<comment>Added to allow documentation of PPE and work related health and safety down to the individual level within each EMS crew.</comment>
+										<v3Changes>Added to better document EMS workplace health and safety issues.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.05" nillable="true" id="eOther.SuspectedEMSWorkRelatedExposureInjuryorDeath" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.05</number>
+										<name>Suspected EMS Work Related Exposure, Injury, or Death</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>Indication of an EMS work related exposure, injury, or death associated with this EMS event.</definition>
+										<v2Number>E23_05</v2Number>
+										<usage>Recommended</usage>
+										<comment>Associated with eOther.04 (EMS Professional (Crew Member) ID)</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="YesNoValues">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eOther.06" nillable="true" id="eOther.TypeOfWorkRelatedInjuryDeathOrSuspectedExposure" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.06</number>
+										<name>The Type of Work-Related Injury, Death or Suspected Exposure</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The type of EMS crew member work-related injury, death, or suspected exposure related to the EMS response.</definition>
+										<v2Number>E23_06</v2Number>
+										<usage>Recommended</usage>
+										<comment>Associated witheOther.04 (EMS Professional (Crew Member) ID).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="TypeOfInjuryDeathOrSuspectedExposure">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOther.07" id="eOther.NaturalSuspectedIntentionalorUnintentionalDisaster" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOther.07</number>
+							<name>Natural, Suspected, Intentional, or Unintentional Disaster</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Event caused by natural forces or Suspected and Intentional/Unintentional Disasters (terrorism).</definition>
+							<v2Number>E23_04</v2Number>
+							<usage>Optional</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Based on FEMA website</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="SuspectedIntentionalOrUnintentionalDisaster">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOther.08" nillable="true" id="eOther.CrewMemberCompletingthisReport" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eOther.08</number>
+							<name>Crew Member Completing this Report</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The statewide assigned ID number of the EMS crew member which completed this patient care report.</definition>
+							<v2Number>E23_10</v2Number>
+							<usage>Recommended</usage>
+							<comment>If the EMS Professional has a specific ID associated with two states, the ID used would typically be based on the EMS Agencies state license.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CrewMemberID">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOther.FileGroup" id="eOther.FileGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold document types, file information and other information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eOther.09" id="eOther.ExternalElectronicDocumentType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.09</number>
+										<name>External Electronic Document Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>Document type which has been electronically stored with PCR.</definition>
+										<usage>Optional</usage>
+										<comment>Added to allow an improved implementation of electronic healthcare records.</comment>
+										<v3Changes>Added to allow an improved implementation of electronic healthcare records.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ExternalElectronicDocuments"/>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eOther.10" type="GraphicType" id="eOther.FileAttachmentType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.10</number>
+										<name>File Attachment Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The description of the file attachment stored in File Attachment Image (eOther.11).</definition>
+										<usage>Optional</usage>
+										<comment>The description is defined as the extension of the file type.  
+																	Examples of file name extensions include "doc", "jpeg", "tiff", etc.  For a list of additional extensions reference the following website(s):
+&lt;br/>
+&lt;table>&lt;tr>&lt;td width="10px">&lt;/td>&lt;td>
+&lt;table>
+&lt;tr>&lt;td>3D Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/3d_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Raster Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/raster_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Vector Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/vector_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>Video formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/video&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Audio formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/audio&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>Comparison of formats:&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Image: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Comparison_of_image_file_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Audio: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Audio_file_format&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Container: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Comparison_of_container_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>A general list of image formats: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Image_file_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Mime Types: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Internet_media_type&lt;/span>&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table>												
+										</comment>
+										<v3Changes>Added to allow an improved implementation of electronic healthcare records.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.11" id="eOther.FileAttachmentImage" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.11</number>
+										<name>File Attachment Image</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The file that is attached electronically to the patient care report.</definition>
+										<usage>Optional</usage>
+										<comment>Associated with eOther.09 (External Electronic Documents) and eOther.10 (File Attachment Type).</comment>
+										<v3Changes>Added to allow an improved implementation of electronic healthcare records.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="FileImage"/>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eOther.22" type="FileName" id="eOther.FileAttachmentName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.22</number>
+										<name>File Attachment Name</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The name of the attached file.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eOther.SignatureGroup" id="eOther.SignatureGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold signature details</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eOther.12" type="SignatureType" id="eOther.TypeofPersonSigning" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.12</number>
+										<name>Type of Person Signing</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The individual's signature associated with eOther.15 (Signature Status).</definition>
+										<usage>Optional</usage>
+										<v3Changes>Added to better document disposition and billing information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.13" id="eOther.SignatureReason" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.13</number>
+										<name>Signature Reason</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The reason for the individuals signature.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="SignatureReason">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eOther.14" type="RelationshipSignature" id="eOther.TypeOfPatientRepresentative" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.14</number>
+										<name>Type Of Patient Representative</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>If Patient Representative is chosen as the owner of the signature, this documents the relationship of the individual signing to the patient.</definition>
+										<usage>Optional</usage>
+										<comment>Required for Billing.</comment>
+										<v3Changes>Added to improve documentation on disposition and billing.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.15" type="SignatureStatus" id="eOther.SignatureStatus" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.15</number>
+										<name>Signature Status</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>Indication that the signature for the Type of Person Signing and Signature Reason has been collected or attempted to be collected.</definition>
+										<usage>Optional</usage>
+										<v3Changes>Added to better document disposition and billing.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.16" type="FileName" id="eOther.SignatureFileName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.16</number>
+										<name>Signature File Name</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The name of the graphic file for the signature.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.17" type="GraphicType" id="eOther.SignatureFileType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.17</number>
+										<name>Signature File Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The description of the file attachment stored in Signature Graphic (eOther.18).</definition>
+										<usage>Optional</usage>
+										<comment>The description is defined as the extension of the file type.  
+																	Examples of file name extensions include "doc", "jpeg", "tiff", etc.  For a list of additional extensions reference the following website(s):
+&lt;br/>
+&lt;table>&lt;tr>&lt;td width="10px">&lt;/td>&lt;td>
+&lt;table>
+&lt;tr>&lt;td>3D Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/3d_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Raster Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/raster_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Vector Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/vector_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>Video formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/video&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Audio formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/audio&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>Comparison of formats:&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Image: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Comparison_of_image_file_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Audio: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Audio_file_format&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Container: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Comparison_of_container_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>A general list of image formats: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Image_file_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Mime Types: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Internet_media_type&lt;/span>&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table>												
+										</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.18" type="Graphic" id="eOther.SignatureGraphic" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.18</number>
+										<name>Signature Graphic</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The graphic file for the signature.</definition>
+										<usage>Optional</usage>
+										<v3Changes>Added to better document disposition and billing.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.19" type="DateTimeType" id="eOther.DateTimeofSignature" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.19</number>
+										<name>Date/Time of Signature</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date and time the signature was captured.</definition>
+										<usage>Optional</usage>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+										<v3Changes>Added to better document disposition and billing.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.20" type="PersonLastName" id="eOther.SignatureLastName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.20</number>
+										<name>Signature Last Name</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The last name of the individual who signed the associated signature.</definition>
+										<usage>Optional</usage>
+										<v3Changes>Added to better document disposition and billing.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eOther.21" type="PersonFirstName" id="eOther.SignatureFirstName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eOther.21</number>
+										<name>Signature First Name</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The first name of the individual associated with the signature.</definition>
+										<usage>Optional</usage>
+										<v3Changes>Added to better document disposition and billing.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ExternalElectronicDocuments">
+		<xs:annotation>
+			<xs:documentation>Document types which have been electronically stored with PCR.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4509001">
+				<xs:annotation>
+					<xs:documentation>Other Audio Recording</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509003">
+				<xs:annotation>
+					<xs:documentation>Billing Information</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509005">
+				<xs:annotation>
+					<xs:documentation>Diagnostic Image (CT, X-ray, US, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509006">
+				<xs:annotation>
+					<xs:documentation>DNR</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509008">
+				<xs:annotation>
+					<xs:documentation>Living Will</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509009">
+				<xs:annotation>
+					<xs:documentation>ECG/Lab Results</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509011">
+				<xs:annotation>
+					<xs:documentation>Guardianship/Power of Attorney</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509013">
+				<xs:annotation>
+					<xs:documentation>Other Healthcare Record</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509015">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509017">
+				<xs:annotation>
+					<xs:documentation>Patient Identification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509019">
+				<xs:annotation>
+					<xs:documentation>Patient Refusal Sheet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509021">
+				<xs:annotation>
+					<xs:documentation>Other Picture/Graphic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509025">
+				<xs:annotation>
+					<xs:documentation>Other Video/Movie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4509027">
+				<xs:annotation>
+					<xs:documentation>ePCR</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FileImage">
+		<xs:annotation>
+			<xs:documentation>The file (pdf, jpeg, etc.) that is attached electronically to the patient care report.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:base64Binary"/>
+	</xs:simpleType>
+	<xs:simpleType name="FileName">
+		<xs:annotation>
+			<xs:documentation>The name of the attached file.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonalProtectiveEquipmentUsed">
+		<xs:annotation>
+			<xs:documentation>The personal protective equipment which was used by EMS personnel during this EMS patient contact.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4503001">
+				<xs:annotation>
+					<xs:documentation>Eye Protection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503003">
+				<xs:annotation>
+					<xs:documentation>Gloves</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503005">
+				<xs:annotation>
+					<xs:documentation>Helmet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503007">
+				<xs:annotation>
+					<xs:documentation>Level A Suit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503009">
+				<xs:annotation>
+					<xs:documentation>Level B Suit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503011">
+				<xs:annotation>
+					<xs:documentation>Level C Suit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503013">
+				<xs:annotation>
+					<xs:documentation>Level D Suit (Turn out gear)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503015">
+				<xs:annotation>
+					<xs:documentation>Mask-N95</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503017">
+				<xs:annotation>
+					<xs:documentation>Mask-Surgical (Non-Fitted)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503019">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503021">
+				<xs:annotation>
+					<xs:documentation>PAPR</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4503023">
+				<xs:annotation>
+					<xs:documentation>Reflective Vest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PotentialRegistryCandidate">
+		<xs:annotation>
+			<xs:documentation>An indication if the patient may meet the entry criteria for an injury or illness specific registry</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4502001">
+				<xs:annotation>
+					<xs:documentation>Airway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502003">
+				<xs:annotation>
+					<xs:documentation>Burn</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502005">
+				<xs:annotation>
+					<xs:documentation>Cardiac/MI</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502007">
+				<xs:annotation>
+					<xs:documentation>CVA/Stroke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502009">
+				<xs:annotation>
+					<xs:documentation>Drowning</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502011">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502013">
+				<xs:annotation>
+					<xs:documentation>Spinal Cord Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502015">
+				<xs:annotation>
+					<xs:documentation>STEMI/Acute Cardiac</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502017">
+				<xs:annotation>
+					<xs:documentation>Trauma</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4502019">
+				<xs:annotation>
+					<xs:documentation>Traumatic Brain Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RelationshipSignature">
+		<xs:annotation>
+			<xs:documentation>If Patient Representative is chosen as the owner of the signature, this documents the relationship of the individual signing to the patient.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4514001">
+				<xs:annotation>
+					<xs:documentation>Aunt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514003">
+				<xs:annotation>
+					<xs:documentation>Brother</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514005">
+				<xs:annotation>
+					<xs:documentation>Daughter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514007">
+				<xs:annotation>
+					<xs:documentation>Discharge Planner</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514009">
+				<xs:annotation>
+					<xs:documentation>Domestic Partner</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514011">
+				<xs:annotation>
+					<xs:documentation>Father</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514013">
+				<xs:annotation>
+					<xs:documentation>Friend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514015">
+				<xs:annotation>
+					<xs:documentation>Grandfather</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514017">
+				<xs:annotation>
+					<xs:documentation>Grandmother</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514019">
+				<xs:annotation>
+					<xs:documentation>Guardian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514021">
+				<xs:annotation>
+					<xs:documentation>Husband</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514023">
+				<xs:annotation>
+					<xs:documentation>Law Enforcement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514025">
+				<xs:annotation>
+					<xs:documentation>MD/DO</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514027">
+				<xs:annotation>
+					<xs:documentation>Mother</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514029">
+				<xs:annotation>
+					<xs:documentation>Nurse (RN)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514031">
+				<xs:annotation>
+					<xs:documentation>Nurse Practitioner (NP)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514033">
+				<xs:annotation>
+					<xs:documentation>Other Care Provider (Home health, hospice, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514035">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514037">
+				<xs:annotation>
+					<xs:documentation>Physician's Assistant (PA)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514039">
+				<xs:annotation>
+					<xs:documentation>Power of Attorney</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514041">
+				<xs:annotation>
+					<xs:documentation>Other Relative</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514043">
+				<xs:annotation>
+					<xs:documentation>Self</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514045">
+				<xs:annotation>
+					<xs:documentation>Sister</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514047">
+				<xs:annotation>
+					<xs:documentation>Son</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514049">
+				<xs:annotation>
+					<xs:documentation>Uncle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4514051">
+				<xs:annotation>
+					<xs:documentation>Wife</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignatureReason">
+		<xs:annotation>
+			<xs:documentation>The signature reason</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4513001">
+				<xs:annotation>
+					<xs:documentation>HIPAA acknowledgement/Release</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513003">
+				<xs:annotation>
+					<xs:documentation>Permission to Treat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513005">
+				<xs:annotation>
+					<xs:documentation>Release for Billing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513007">
+				<xs:annotation>
+					<xs:documentation>Transfer of Patient Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513009">
+				<xs:annotation>
+					<xs:documentation>Refusal of Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513011">
+				<xs:annotation>
+					<xs:documentation>Controlled Substance, Administration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513013">
+				<xs:annotation>
+					<xs:documentation>Controlled Substance, Waste</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513015">
+				<xs:annotation>
+					<xs:documentation>Airway Verification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513017">
+				<xs:annotation>
+					<xs:documentation>Patient Belongings (Receipt)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513019">
+				<xs:annotation>
+					<xs:documentation>Permission to Transport</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513021">
+				<xs:annotation>
+					<xs:documentation>Refusal of Transport</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4513023">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignatureGraphic">
+		<xs:annotation>
+			<xs:documentation>The graphic file for the signature.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="SignatureStatus">
+		<xs:annotation>
+			<xs:documentation>Indication that a signature has been collected or attempted to be collected.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4515001">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Crew Called out to another call</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515003">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Deceased</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515005">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Due to Distress Level</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515007">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Equipment Failure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515009">
+				<xs:annotation>
+					<xs:documentation>Not Signed - In Law Enforcement Custody</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515011">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Language Barrier</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515013">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Mental Status/Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515015">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Minor/Child</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515017">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Physical Impairment of Extremities</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515019">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Refused</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515021">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Transferred Care/No Access to Obtain Signature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515023">
+				<xs:annotation>
+					<xs:documentation>Not Signed - Unconscious</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515025">
+				<xs:annotation>
+					<xs:documentation>Not Signed -Visually Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515027">
+				<xs:annotation>
+					<xs:documentation>Physical Signature/Paper Copy Obtained</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515031">
+				<xs:annotation>
+					<xs:documentation>Signed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515033">
+				<xs:annotation>
+					<xs:documentation>Signed-Not Patient</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515035">
+				<xs:annotation>
+					<xs:documentation>Not Signed-Illiterate (Unable to Read)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515037">
+				<xs:annotation>
+					<xs:documentation>Not Signed-Restrained</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4515039">
+				<xs:annotation>
+					<xs:documentation>Not Signed-Combative or Uncooperative</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignatureType">
+		<xs:annotation>
+			<xs:documentation>The individuals signature associated with the Signature Status.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4512001">
+				<xs:annotation>
+					<xs:documentation>EMS Crew Member (Other)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512003">
+				<xs:annotation>
+					<xs:documentation>EMS Primary Care Provider (for this event)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512005">
+				<xs:annotation>
+					<xs:documentation>Healthcare Provider</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512007">
+				<xs:annotation>
+					<xs:documentation>Medical Director</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512009">
+				<xs:annotation>
+					<xs:documentation>Non-Healthcare Provider</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512011">
+				<xs:annotation>
+					<xs:documentation>Online Medical Control Healthcare Practitioner</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512013">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512015">
+				<xs:annotation>
+					<xs:documentation>Patient</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512017">
+				<xs:annotation>
+					<xs:documentation>Patient Representative</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4512019">
+				<xs:annotation>
+					<xs:documentation>Witness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SuspectedIntentionalOrUnintentionalDisaster">
+		<xs:annotation>
+			<xs:documentation>Suspicion of the listed multi-casualty or domestic terrorism causes.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4507001">
+				<xs:annotation>
+					<xs:documentation>Biologic Agent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507003">
+				<xs:annotation>
+					<xs:documentation>Building Failure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507005">
+				<xs:annotation>
+					<xs:documentation>Chemical Agent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507007">
+				<xs:annotation>
+					<xs:documentation>Explosive Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507009">
+				<xs:annotation>
+					<xs:documentation>Fire</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507011">
+				<xs:annotation>
+					<xs:documentation>Hostage Event</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507013">
+				<xs:annotation>
+					<xs:documentation>Mass Gathering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507015">
+				<xs:annotation>
+					<xs:documentation>Mass Illness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507017">
+				<xs:annotation>
+					<xs:documentation>Nuclear Agent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507019">
+				<xs:annotation>
+					<xs:documentation>Radioactive Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507021">
+				<xs:annotation>
+					<xs:documentation>Secondary Destructive Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507023">
+				<xs:annotation>
+					<xs:documentation>Shooting/Sniper</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507025">
+				<xs:annotation>
+					<xs:documentation>Vehicular</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507027">
+				<xs:annotation>
+					<xs:documentation>Weather (Other)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507029">
+				<xs:annotation>
+					<xs:documentation>Earthquake</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507031">
+				<xs:annotation>
+					<xs:documentation>Flood</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507033">
+				<xs:annotation>
+					<xs:documentation>Land Slide</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507035">
+				<xs:annotation>
+					<xs:documentation>Winter Storm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507037">
+				<xs:annotation>
+					<xs:documentation>Tornado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4507039">
+				<xs:annotation>
+					<xs:documentation>Hurricane</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeOfInjuryDeathOrSuspectedExposure">
+		<xs:annotation>
+			<xs:documentation>The type of injury, death, or exposure to blood or body fluids</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4506001">
+				<xs:annotation>
+					<xs:documentation>Death-Cardiac Arrest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506003">
+				<xs:annotation>
+					<xs:documentation>Death-Injury Related</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506005">
+				<xs:annotation>
+					<xs:documentation>Death-Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506007">
+				<xs:annotation>
+					<xs:documentation>Exposure-Airborne Respiratory/Biological/Aerosolized Secretions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506009">
+				<xs:annotation>
+					<xs:documentation>Exposure-Body Fluid Contact to Broken Skin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506011">
+				<xs:annotation>
+					<xs:documentation>Exposure-Body Fluid Contact with Eye</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506013">
+				<xs:annotation>
+					<xs:documentation>Exposure-Body Fluid Contact with Intact Skin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506015">
+				<xs:annotation>
+					<xs:documentation>Exposure-Body Fluid Contact with Mucosal Surface</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506017">
+				<xs:annotation>
+					<xs:documentation>Exposure-Needle Stick with Body Fluid Injection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506019">
+				<xs:annotation>
+					<xs:documentation>Exposure-Needle Stick without Body Fluid Injection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506021">
+				<xs:annotation>
+					<xs:documentation>Exposure-Toxin/Chemical/Hazmat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506023">
+				<xs:annotation>
+					<xs:documentation>Injury-Lifting/Back/Musculoskeletal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506025">
+				<xs:annotation>
+					<xs:documentation>Injury-Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506027">
+				<xs:annotation>
+					<xs:documentation>None</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4506029">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

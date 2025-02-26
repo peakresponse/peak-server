@@ -70,10 +70,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "design:build:production"
+              "buildTarget": "design:build:production"
             },
             "development": {
-              "browserTarget": "design:build:development"
+              "buildTarget": "design:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "design:build"
+            "buildTarget": "design:build"
           }
         },
         "test": {
@@ -197,10 +197,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "auth:build:production"
+              "buildTarget": "auth:build:production"
             },
             "development": {
-              "browserTarget": "auth:build:development"
+              "buildTarget": "auth:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -208,7 +208,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "auth:build"
+            "buildTarget": "auth:build"
           }
         },
         "test": {
@@ -293,10 +293,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "onboarding:build:production"
+              "buildTarget": "onboarding:build:production"
             },
             "development": {
-              "browserTarget": "onboarding:build:development"
+              "buildTarget": "onboarding:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -304,7 +304,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "onboarding:build"
+            "buildTarget": "onboarding:build"
           }
         },
         "test": {
@@ -389,10 +389,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "admin:build:production"
+              "buildTarget": "admin:build:production"
             },
             "development": {
-              "browserTarget": "admin:build:development"
+              "buildTarget": "admin:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -400,7 +400,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "admin:build"
+            "buildTarget": "admin:build"
           }
         },
         "test": {
@@ -485,10 +485,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "app:build:production"
+              "buildTarget": "app:build:production"
             },
             "development": {
-              "browserTarget": "app:build:development"
+              "buildTarget": "app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -496,7 +496,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app:build"
+            "buildTarget": "app:build"
           }
         },
         "test": {
@@ -575,10 +575,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "guides:build:production"
+              "buildTarget": "guides:build:production"
             },
             "development": {
-              "browserTarget": "guides:build:development"
+              "buildTarget": "guides:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -586,7 +586,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "guides:build"
+            "buildTarget": "guides:build"
           }
         },
         "test": {

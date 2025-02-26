@@ -11,6 +11,7 @@ import { ApiService } from '../../services/api.service';
   selector: 'shared-object-field',
   templateUrl: './object-field.component.html',
   styles: [':host{display:block;}'],
+  standalone: false,
 })
 export class ObjectFieldComponent extends BaseFieldComponent implements OnChanges {
   @Input() objectIdProperty = 'id';

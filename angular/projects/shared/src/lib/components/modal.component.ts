@@ -6,6 +6,7 @@ import { extend } from 'lodash-es';
 @Component({
   selector: 'shared-modal',
   templateUrl: './modal.component.html',
+  standalone: false,
 })
 export class ModalComponent {
   @Input() confirmLabel?: string;

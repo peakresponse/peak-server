@@ -8,6 +8,7 @@ import { XsdElementBaseComponent } from '../xsd-element-base.component';
 @Component({
   selector: 'shared-xsd-element-input-county',
   templateUrl: './xsd-element-input-county.component.html',
+  standalone: false,
 })
 export class XsdElementInputCountyComponent extends XsdElementBaseComponent {
   cache: any = {};

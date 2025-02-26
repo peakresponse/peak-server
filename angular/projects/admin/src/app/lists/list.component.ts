@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list.component.html',
+  standalone: false,
 })
 export class ListComponent {
   params = new HttpParams();

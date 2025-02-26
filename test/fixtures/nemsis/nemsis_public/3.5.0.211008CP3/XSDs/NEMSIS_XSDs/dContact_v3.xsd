@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="dContact" id="dContact.AgencyContact">
+		<xs:sequence>
+			<xs:element name="dContact.ContactInfoGroup" id="dContact.ContactInfoGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group tag to hold agency contact information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dContact.01" nillable="true" id="dContact.AgencyContactType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.01</number>
+										<name>Agency Contact Type</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The contact type within the EMS agency.</definition>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="AgencyContactType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.02" nillable="true" id="dContact.AgencyContactLastName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.02</number>
+										<name>Agency Contact Last Name</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The last name of the agency's primary contact.</definition>
+										<v2Number>D02_01</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PersonLastName">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.03" nillable="true" id="dContact.AgencyContactFirstName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.03</number>
+										<name>Agency Contact First Name</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The first name of the agency's primary contact.</definition>
+										<v2Number>D02_03</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PersonFirstName">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.04" type="PersonMiddleName" id="dContact.AgencyContactMiddleNameInitial" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.04</number>
+										<name>Agency Contact Middle Name/Initial</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The middle name or initial of the agency's primary contact.</definition>
+										<v2Number>D02_02</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dContact.05" nillable="true" id="dContact.AgencyContactAddress" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.05</number>
+										<name>Agency Contact Address</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The street address of the agency contact's mailing address.</definition>
+										<v2Number>D02_04</v2Number>
+										<usage>Recommended</usage>
+										<comment>The address for the director/chief/lead administrator/CEO/ should be the main address for the EMS agency.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="StreetAddress">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="StreetAddress2" type="StreetAddress" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.06" nillable="true" id="dContact.AgencyContactCity" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.06</number>
+										<name>Agency Contact City</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The city of the EMS contact's mailing address.</definition>
+										<v2Number>D02_05</v2Number>
+										<usage>Recommended</usage>
+										<comment>The city should be the mailing address for each contact type for the EMS agency. The EMS agency primary address information (e.g., City) should be entered for the Agency Contact Type (dContact.05) “EMS Agency Director/Chief/Lead Administrator/CEO”.   
+&lt;br/>&lt;br/>City codes are based on GNIS Feature Class. The primary Feature Class to use is "Civil" with "Populated Place" and "Military" code as additional options.   
+&lt;br/>&lt;br/>Definitions for each GNIS City Feature Class can be found on the GNIS Codes website.   
+&lt;br/>&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm" target="_blank">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a>
+										</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CityGnisCode">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.07" nillable="true" id="dContact.AgencyContactState" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.07</number>
+										<name>Agency Contact State</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The state of the Agency contact's mailing address.</definition>
+										<v2Number>D02_06</v2Number>
+										<usage>Recommended</usage>
+										<comment>The address for the director/chief/lead administrator/CEO/ should be the main address for the EMS agency. Based on the state ANSI Code. For individuals living outside the USA full address to be entered in the address line.
+											&lt;br/>&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm" target="_blank">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ANSIStateCode">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.08" nillable="true" id="dContact.AgencyContactZIPCode" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.08</number>
+										<name>Agency Contact ZIP Code</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The ZIP code of the Agency's contact's mailing address.</definition>
+										<v2Number>D02_07</v2Number>
+										<usage>Recommended</usage>
+										<comment>The address for the director/chief/lead administrator/CEO/ should be the main address for the EMS agency.
+											&lt;br/>&lt;br/>Zip Codes Product Website: &lt;a href="https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/" target="_blank">https://www.zipcodedownload.com/Products/Product/Z5Commercial/Standard/Overview/&lt;/a>
+											&lt;br/>Product: USA - 5-digit ZIP Code Database, Commercial Edition.
+										</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ZIP">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.09" type="ANSICountryCodesCAMXUS" id="dContact.AgencyContactCountry" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.09</number>
+										<name>Agency Contact Country</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Country code of the Agency's contact's mailing address.</definition>
+										<usage>Optional</usage>
+										<comment>The International Organization for Standardization (ISO) ISO 3166-1-alpha-2 code element for the country. The address for the director/chief/lead administrator/CEO/ should be the main address for the EMS agency. For individuals living outside the USA full address to be entered in the address line.
+											&lt;br/>&lt;br/>ANSI Country Codes (ISO 3166): &lt;a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists.htm" target="_blank">http://www.iso.org/iso/country_codes/iso_3166_code_lists.htm&lt;/a>										
+										</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dContact.10" nillable="true" id="dContact.AgencyContactPhoneNumber" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.10</number>
+										<name>Agency Contact Phone Number</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>Agency contact phone number.</definition>
+										<v2Number>D02_08</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PhoneNumber">
+										<xs:attribute name="PhoneNumberType" type="PhoneNumberType" use="optional"/>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.11" nillable="true" id="dContact.AgencyContactEmailAddress" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.11</number>
+										<name>Agency Contact Email Address</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The primary email address of the Agency contact.</definition>
+										<v2Number>D02_10</v2Number>
+										<usage>Recommended</usage>
+										<comment>The address for the director/chief/lead administrator/CEO/ should be the main address for the EMS agency.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EmailAddress">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="EmailAddressType" type="EmailAddressType" use="optional"/>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.12" nillable="true" id="dContact.EMSAgencyContactWebAddress" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dContact.12</number>
+										<name>EMS Agency Contact Web Address</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The primary website address of the agency.</definition>
+										<v2Number>D02_11</v2Number>
+										<usage>Recommended</usage>
+										<comment>The EMS agency website address should be entered for the Agency Contact Type (dContact.05) "EMS Agency Director/Chief/Lead Administrator/CEO". The EMS agency website address or other websites are optional for other contact types (e.g., Administrative Assistant, EMS Medical Director, etc.).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="WebAddress">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dContact.EMSMedicalDirectorGroup" id="dContact.EMSMedicalDirectorGroup" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about the EMS Medical Director</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dContact.13" nillable="true" id="dContact.AgencyMedicalDirectorDegree" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dContact.13</number>
+													<name>Agency Medical Director Degree</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The medical school degree type of the EMS Medical Director.</definition>
+													<usage>Recommended</usage>
+													<comment>The Medical Director Information has been merged into Section dContact. This data element is now associated with the Medical Director and Assistant Medical Director Contacts in Section dContact.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="AgencyMedicalDirectorDegree">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dContact.14" nillable="true" id="dContact.AgencyMedicalDirectorBoardCertificationType" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dContact.14</number>
+													<name>Agency Medical Director Board Certification Type</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>Documentation of the type of board certification of the EMS Agency Medical Director.</definition>
+													<usage>Recommended</usage>
+													<comment>This is based on the American Board of Medical Specialties List of Certifications. The Medical Director Information from Section D02 of NEMSIS Version 2.2.1 has been merged into Version 3 Section dContact.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="AgencyMedicalDirectorBoardCertificationType">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dContact.15" type="MedicalDirectorCompensation" id="dContact.MedicalDirectorCompensation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dContact.15</number>
+													<name>Medical Director Compensation</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>Indication of Medical Director's Compensation.</definition>
+													<usage>Optional</usage>
+													<comment>This element applies to the Medical Director(s) for an EMS agency (EMS Medical Director and EMS Assistant Medical Director).</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dContact.16" type="YesNoValues" id="dContact.EMSMedicalDirectorFellowshipTrainedStatus" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dContact.16</number>
+													<name>EMS Medical Director Fellowship Trained Status</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>Indication if the EMS Medical Director is Fellowship trained.</definition>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+					<xs:attribute name="UUID" type="UUID" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AgencyContactType">
+		<xs:annotation>
+			<xs:documentation>The Contact Type within the EMS Agency.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1101001">
+				<xs:annotation>
+					<xs:documentation>Administrative Assistant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101003">
+				<xs:annotation>
+					<xs:documentation>EMS Agency Director/Chief/Lead Administrator/CEO</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101005">
+				<xs:annotation>
+					<xs:documentation>EMS Assistant Agency Director/Chief/Administrator/CEO</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101007">
+				<xs:annotation>
+					<xs:documentation>EMS Assistant Medical Director</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101009">
+				<xs:annotation>
+					<xs:documentation>EMS IT/Data Specialist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101011">
+				<xs:annotation>
+					<xs:documentation>EMS Medical Director</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101013">
+				<xs:annotation>
+					<xs:documentation>EMS Quality/Performance Improvement Specialist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101015">
+				<xs:annotation>
+					<xs:documentation>EMS Training/Education Specialist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101017">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AgencyMedicalDirectorBoardCertificationType">
+		<xs:annotation>
+			<xs:documentation>Documentation of the type of board certification of the EMS Agency Medical Director.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1114001">
+				<xs:annotation>
+					<xs:documentation>Allergy and Immunology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114003">
+				<xs:annotation>
+					<xs:documentation>Anesthesiology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114005">
+				<xs:annotation>
+					<xs:documentation>Colon and Rectal Surgery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114007">
+				<xs:annotation>
+					<xs:documentation>Dermatology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114009">
+				<xs:annotation>
+					<xs:documentation>Emergency Medicine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114011">
+				<xs:annotation>
+					<xs:documentation>Family Medicine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114013">
+				<xs:annotation>
+					<xs:documentation>Internal Medicine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114015">
+				<xs:annotation>
+					<xs:documentation>Neurological Surgery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114017">
+				<xs:annotation>
+					<xs:documentation>Neurology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114019">
+				<xs:annotation>
+					<xs:documentation>None (Not Board Certified)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114021">
+				<xs:annotation>
+					<xs:documentation>Obstetrics and Gynecology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114023">
+				<xs:annotation>
+					<xs:documentation>Ophthalmology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114025">
+				<xs:annotation>
+					<xs:documentation>Orthopedic Surgery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114027">
+				<xs:annotation>
+					<xs:documentation>Otolaryngology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114029">
+				<xs:annotation>
+					<xs:documentation>Pediatrics</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114031">
+				<xs:annotation>
+					<xs:documentation>Physical Medicine and Rehabilitation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114033">
+				<xs:annotation>
+					<xs:documentation>Plastic Surgery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114035">
+				<xs:annotation>
+					<xs:documentation>Psychiatry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114037">
+				<xs:annotation>
+					<xs:documentation>Surgery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114039">
+				<xs:annotation>
+					<xs:documentation>Thoracic Surgery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114041">
+				<xs:annotation>
+					<xs:documentation>Urology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1114043">
+				<xs:annotation>
+					<xs:documentation>Vascular Surgery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AgencyMedicalDirectorDegree">
+		<xs:annotation>
+			<xs:documentation>The medical school degree type of the EMS Medical Director</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1113001">
+				<xs:annotation>
+					<xs:documentation>Doctor of Medicine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1113003">
+				<xs:annotation>
+					<xs:documentation>Doctor of Osteopathy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MedicalDirectorCompensation">
+		<xs:annotation>
+			<xs:documentation>Indication of Medical Director's Compensation.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1115001">
+				<xs:annotation>
+					<xs:documentation>Compensated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1115003">
+				<xs:annotation>
+					<xs:documentation>Non-Compensated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WebAddress">
+		<xs:annotation>
+			<xs:documentation>An URL for a website</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

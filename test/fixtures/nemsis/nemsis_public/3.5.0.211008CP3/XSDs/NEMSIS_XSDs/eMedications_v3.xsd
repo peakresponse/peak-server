@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eMedications">
+		<xs:sequence>
+			<xs:element name="eMedications.MedicationGroup" id="eMedications.MedicationGroup" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold eMedication information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eMedications.01" nillable="true" id="eMedications.DateTimeMedicationAdministered">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.01</number>
+										<name>Date/Time Medication Administered</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The date/time medication administered to the patient.</definition>
+										<v2Number>E18_01</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DateTimeType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.02" nillable="true" id="eMedications.MedicationAdministeredPriortothisUnitsEMSCare">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.02</number>
+										<name>Medication Administered Prior to this Unit's EMS Care</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>Indicates that the medication administration which is documented was administered prior to this EMS units care.</definition>
+										<v2Number>E18_02</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>This is the NEMSIS Version 3 method to document prior aid.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="YesNoValues">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.03" nillable="true" id="eMedications.MedicationAdministered">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.03</number>
+										<name>Medication Administered</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The medication administered to the patient.</definition>
+										<v2Number>E18_03</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>
+List of medications based on RxNorm (RXCUI) code and SNOMED-CT codes for blood products. 
+&lt;br/>&lt;br/>Reference the NEMSIS Suggested Lists at: &lt;a href="https://nemsis.org/technical-resources/version-3/version-3-resources/">https://nemsis.org/technical-resources/version-3/version-3-resources/&lt;/a>
+&lt;br/>&lt;br/>RxNorm 
+&lt;br/>Website - &lt;a href="http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html">http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html&lt;/a>
+&lt;br/>Product - RxNorm Full Monthly Release
+&lt;br/>&lt;br/>SNOMED-CT 
+&lt;br/>Website: &lt;a href="http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html">http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html&lt;/a>
+&lt;br/>Product: Product - UMLS Metathesaurus.
+
+&lt;br/>&lt;br/>Allowable SNOMED-CT codes are:
+&lt;br/>116762002 Administration of blood product
+&lt;br/>116795008 Transfusion of cryoprecipitate
+&lt;br/>116861002 Transfusion of fresh frozen plasma
+&lt;br/>116865006 Administration of albumin
+&lt;br/>180208003 Intravenous blood transfusion of platelets
+&lt;br/>33389009 Transfusion of whole blood
+&lt;br/>71493000 Transfusion of packed red blood cells
+</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="Medication">
+										<xs:attribute name="CodeType" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="CodeType.RxNorm CodeType.SNOMED" />
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ContraindicationNoted PN.DeniedByOrder PN.MedicationAllergy PN.MedicationAlreadyTaken PN.Refused PN.UnableToComplete PN.OrderCriteriaNotMet"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.04" id="eMedications.MedicationAdministeredRoute" nillable="true">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.04</number>
+										<name>Medication Administered Route</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The route medication was administered to the patient.</definition>
+										<v2Number>E18_04</v2Number>
+										<usage>Required</usage>
+										<comment>This medication route list represents a sub-group of values from the Data Elements for Emergency Department Systems (DEEDS), pertaining to prehospital care. &lt;br/> &lt;br/>
+											DEEDS Version 1.0 was utilized for this list:  &lt;a href="http://www.sciencedirect.com/science/article/pii/S0196064498703178">http://www.sciencedirect.com/science/article/pii/S0196064498703178&lt;/a>.  The list can be found on page 152 of 274 of the PDF document in Section 5, 5.13 Current Therapeutic Medication Route.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CurrentMedicationAdministrationRoute">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.UnableToComplete"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.DosageGroup" id="eMedications.DosageGroup">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about the medication dosage administered to the patient</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eMedications.05" nillable="true" id="eMedications.MedicationDosage">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eMedications.05</number>
+													<name>Medication Dosage</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The dose or amount of the medication administered to the patient.</definition>
+													<v2Number>E18_05</v2Number>
+													<usage>Required</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="MedicationDosage">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eMedications.06" nillable="true" id="eMedications.MedicationDosageUnits">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eMedications.06</number>
+													<name>Medication Dosage Units</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>The unit of medication dosage administered to patient.</definition>
+													<v2Number>E18_06</v2Number>
+													<usage>Required</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="MedicationDosageUnits">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.07" nillable="true" id="eMedications.ResponsetoMedication">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.07</number>
+										<name>Response to Medication</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The patient's response to the medication.</definition>
+										<v2Number>E18_07</v2Number>
+										<usage>Required</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="Response">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.08" nillable="true" id="eMedications.MedicationComplication" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.08</number>
+										<name>Medication Complication</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>Any complication (abnormal effect on the patient) associated with the administration of the medication to the patient by EMS.</definition>
+										<v2Number>E18_08</v2Number>
+										<usage>Required</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="MedicationComplication">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.09" nillable="true" id="eMedications.MedicationCrewHealthcareProfessionalsID" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.09</number>
+										<name>Medication Crew (Healthcare Professionals) ID</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The statewide assigned ID number of the EMS crew member giving the treatment to the patient.</definition>
+										<v2Number>E18_09</v2Number>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>How should the state ID for an EMS professional be record when working on an event in 2 states.  The ID used would typically be based on the EMS agency's state license specific to each EMS professional. Used for eProcedures.09 (Procedure Crew Members ID) as well.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CrewMemberID">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.10" nillable="true" id="eMedications.EMSorHealthcareProfessionalTypeAdministeringMedication">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.10</number>
+										<name>Role/Type of Person Administering Medication</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The type (level) of EMS or Healthcare Professional Administering the Medication. For medications administered prior to EMS arrival, this may be a non-EMS healthcare professional.</definition>
+										<usage>Required</usage>
+										<comment>Added to document the type of healthcare professional administering the medication.  This could be auto-completed from the crew ID but is necessary to document medication administration prior to EMS arrival. State may maintain an enumerated list but must collapse to the National Standard.
+										&lt;br/>&lt;br/>The category EMT-Intermediate includes EMS professionals with an "85" or "99" certification level.
+										</comment>
+										<v3Changes>Added to better document the type of healthcare professional who administered the medication.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EMSCaregiverLevel">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eMedications.11" type="TxAuthorization" id="eMedications.MedicationAuthorization" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.11</number>
+										<name>Medication Authorization</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The type of treatment authorization obtained.</definition>
+										<v2Number>E18_10</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eMedications.12" type="PersonName" id="eMedications.MedicationAuthorizingPhysician" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eMedications.12</number>
+										<name>Medication Authorizing Physician</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The name of the authorizing physician ordering the medication administration if the order was provided by any manner other than protocol (standing order) in eMedications.11.</definition>
+										<v2Number>E18_11</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MedicationComplication">
+		<xs:annotation>
+			<xs:documentation>Any complication (abnormal effect on the patient) associated with the administration of the medication to the patient by EMS</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3708001">
+				<xs:annotation>
+					<xs:documentation>Altered Mental Status</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708003">
+				<xs:annotation>
+					<xs:documentation>Apnea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708005">
+				<xs:annotation>
+					<xs:documentation>Bleeding</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708007">
+				<xs:annotation>
+					<xs:documentation>Bradycardia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708009">
+				<xs:annotation>
+					<xs:documentation>Bradypnea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708011">
+				<xs:annotation>
+					<xs:documentation>Diarrhea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708013">
+				<xs:annotation>
+					<xs:documentation>Extravasation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708015">
+				<xs:annotation>
+					<xs:documentation>Hypertension</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708017">
+				<xs:annotation>
+					<xs:documentation>Hyperthermia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708019">
+				<xs:annotation>
+					<xs:documentation>Hypotension</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708021">
+				<xs:annotation>
+					<xs:documentation>Hypothermia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708023">
+				<xs:annotation>
+					<xs:documentation>Hypoxia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708025">
+				<xs:annotation>
+					<xs:documentation>Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708029">
+				<xs:annotation>
+					<xs:documentation>Nausea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708031">
+				<xs:annotation>
+					<xs:documentation>None</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708033">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708035">
+				<xs:annotation>
+					<xs:documentation>Respiratory Distress</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708037">
+				<xs:annotation>
+					<xs:documentation>Tachycardia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708039">
+				<xs:annotation>
+					<xs:documentation>Tachypnea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708041">
+				<xs:annotation>
+					<xs:documentation>Vomiting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708043">
+				<xs:annotation>
+					<xs:documentation>Itching</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3708045">
+				<xs:annotation>
+					<xs:documentation>Urticaria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MedicationDosage">
+		<xs:annotation>
+			<xs:documentation>The dose or amount of the medication administered to the patient</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="9"/>
+			<xs:fractionDigits value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MedicationDosageUnits">
+		<xs:annotation>
+			<xs:documentation>The unit of medication dosage administered to patient</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3706001">
+				<xs:annotation>
+					<xs:documentation>Grams (gms)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706003">
+				<xs:annotation>
+					<xs:documentation>Inches (in)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706005">
+				<xs:annotation>
+					<xs:documentation>International Units (IU)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706007">
+				<xs:annotation>
+					<xs:documentation>Keep Vein Open (kvo)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706009">
+				<xs:annotation>
+					<xs:documentation>Liters (l)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706013">
+				<xs:annotation>
+					<xs:documentation>Metered Dose (MDI)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706015">
+				<xs:annotation>
+					<xs:documentation>Micrograms (mcg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706017">
+				<xs:annotation>
+					<xs:documentation>Micrograms per Kilogram per Minute (mcg/kg/min)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706019">
+				<xs:annotation>
+					<xs:documentation>Milliequivalents (mEq)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706021">
+				<xs:annotation>
+					<xs:documentation>Milligrams (mg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706023">
+				<xs:annotation>
+					<xs:documentation>Milligrams per Kilogram Per Minute (mg/kg/min)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706025">
+				<xs:annotation>
+					<xs:documentation>Milliliters (ml)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706027">
+				<xs:annotation>
+					<xs:documentation>Milliliters per Hour (ml/hr)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706029">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706031">
+				<xs:annotation>
+					<xs:documentation>Centimeters (cm)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706033">
+				<xs:annotation>
+					<xs:documentation>Drops (gtts)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706035">
+				<xs:annotation>
+					<xs:documentation>Liters Per Minute (LPM [gas])</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706037">
+				<xs:annotation>
+					<xs:documentation>Micrograms per Minute (mcg/min)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706039">
+				<xs:annotation>
+					<xs:documentation>Milligrams per Kilogram (mg/kg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706041">
+				<xs:annotation>
+					<xs:documentation>Milligrams per Minute (mg/min)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706043">
+				<xs:annotation>
+					<xs:documentation>Puffs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706045">
+				<xs:annotation>
+					<xs:documentation>Units per Hour (units/hr)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706047">
+				<xs:annotation>
+					<xs:documentation>Micrograms per Kilogram (mcg/kg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706049">
+				<xs:annotation>
+					<xs:documentation>Units</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706051">
+				<xs:annotation>
+					<xs:documentation>Units per Kilogram per Hour (units/kg/hr)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706053">
+				<xs:annotation>
+					<xs:documentation>Units per Kilogram (units/kg)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3706055">
+				<xs:annotation>
+					<xs:documentation>Milligrams per Hour (mg/hr)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -11,6 +11,7 @@ import { XsdSchema } from './xsd-schema';
 @Component({
   selector: 'shared-xsd-record',
   templateUrl: './xsd-record.component.html',
+  standalone: false,
 })
 export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
   @Input() id?: string | null;

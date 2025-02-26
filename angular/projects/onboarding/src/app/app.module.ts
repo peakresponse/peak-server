@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiService, NavigationService, SharedModule } from 'shared';
@@ -30,8 +30,8 @@ import { DoneComponent } from './done.component';
     InviteComponent,
     DoneComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule, NgbModule, SharedModule, AppRoutingModule],
-  providers: [ApiService, AppService, NavigationService],
   bootstrap: [AppComponent],
+  imports: [BrowserModule, FormsModule, NgbModule, SharedModule, AppRoutingModule],
+  providers: [ApiService, AppService, NavigationService, provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}

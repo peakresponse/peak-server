@@ -3,6 +3,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './new-guide.component.html',
+  standalone: false,
 })
 export class NewGuideComponent {
   constructor(private navigation: NavigationService) {}

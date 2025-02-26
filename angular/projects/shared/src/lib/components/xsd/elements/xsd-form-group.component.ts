@@ -12,6 +12,7 @@ import { ModalComponent } from '../../modal.component';
   selector: 'shared-xsd-form-group',
   templateUrl: './xsd-form-group.component.html',
   styleUrls: ['./xsd-form-group.component.scss'],
+  standalone: false,
 })
 export class XsdFormGroupComponent extends XsdElementBaseComponent {
   isGroupModalEditing = false;

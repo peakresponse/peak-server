@@ -12,6 +12,7 @@ import { ModalComponent } from './modal.component';
 @Component({
   selector: 'shared-form',
   templateUrl: './form.component.html',
+  standalone: false,
 })
 export class FormComponent implements OnChanges {
   @Input() id: string | null = null;

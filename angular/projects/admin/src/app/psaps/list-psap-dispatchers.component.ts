@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list-psap-dispatchers.component.html',
+  standalone: false,
 })
 export class ListPsapDispatchersComponent {
   psapId: string = '';

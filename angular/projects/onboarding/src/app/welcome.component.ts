@@ -4,6 +4,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './welcome.component.html',
+  standalone: false,
 })
 export class WelcomeComponent {
   isMarketingEnabled = false;

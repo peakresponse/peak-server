@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="dVehicle" id="dVehicle.AgencyVehicleInformation">
+		<xs:sequence>
+			<xs:element name="dVehicle.VehicleGroup" id="dVehicle.VehicleGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold info about Vehicle defined information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dVehicle.01" nillable="true" id="dVehicle.UnitVehicleNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dVehicle.01</number>
+										<name>Unit/Vehicle Number</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The unique ID number for the unit which is specific for each vehicle. This ID number may be the state's vehicle's permit number.</definition>
+										<v2Number>D06_01</v2Number>
+										<usage>Recommended</usage>
+										<comment>This element can be used in EMS PCR documentation to document the vehicle. This element should be used to populate eResponse.13 (EMS Vehicle (Unit) Number).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="VehicleNumber">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dVehicle.02" type="VehicleIdentificationNumber" id="dVehicle.VehicleIdentificationNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dVehicle.02</number>
+										<name>Vehicle Identification Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The manufacturer's VIN associated with the vehicle.</definition>
+										<usage>Optional</usage>
+										<comment>Consider VIN standard ISO-3779 and ISO-3780.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dVehicle.03" type="EMSUnitCallSign" id="dVehicle.EMSUnitCallSign" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dVehicle.03</number>
+										<name>EMS Unit Call Sign</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The EMS unit number used to dispatch and communicate with the unit. This may be the same as the EMS Unit/Vehicle Number in many agencies.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dVehicle.04" nillable="true" id="dVehicle.VehicleType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dVehicle.04</number>
+										<name>Vehicle Type</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The vehicle type of the unit (ambulance, fire, truck, etc.).</definition>
+										<v2Number>D06_03</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="VehicleType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dVehicle.VehicleCertificationLevelsGroup" id="dVehicle.VehicleCertificationLevelsGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about Vehicle certification and number of personnel</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dVehicle.05" type="StateCertificationLicensureLevels" id="dVehicle.CrewStateCertificationLicensureLevels" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dVehicle.05</number>
+													<name>Crew State Certification/Licensure Levels</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The certification/licensure level of the ambulance by the state or the certification/licensure level at which the vehicle is most commonly staffed.</definition>
+													<v2Number>D06_04</v2Number>
+													<usage>Optional</usage>
+													<comment>The category Emergency Medical Technician - Intermediate includes EMS professionals with an "85" or "99" certification level.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dVehicle.06" type="NumberofPersonnel" id="dVehicle.NumberofPersonnelonNormal911AmbulanceResponse" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dVehicle.06</number>
+													<name>Number of Each EMS Personnel Level on Normal 911 Ambulance Response</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The number of each personnel level associated with the vehicle crew.</definition>
+													<v2Number>D06_05</v2Number>
+													<usage>Optional</usage>
+													<comment>Indicate the number of each of the following EMS Personnel levels on the crew. Associated with each Certification/Licensure Level in dVehicle.05 (Crew State Certification/Licensure Levels).</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dVehicle.07" type="NumberofPersonnel" id="dVehicle.NumberofEachEMSPersonnelLevelonNormal911ResponseNonTransportVehicle" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dVehicle.07</number>
+													<name>Number of Each EMS Personnel Level on Normal 911 Response (Non-Transport) Vehicle</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The number of each personnel level for your EMS Agency's Medical (Non-911) Non-Transport Ambulance.</definition>
+													<usage>Optional</usage>
+													<comment>Indicate the number of each of the following EMS Personnel levels on the crew. Associated with each Certification/Licensure Level in dVehicle.05 (Crew State Certification/Licensure Levels).</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dVehicle.08" type="NumberofPersonnel" id="dVehicle.NumberofEachEMSPersonnelLevelonNormalMedicalNon911TransportAmbulance" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dVehicle.08</number>
+													<name>Number of Each EMS Personnel Level on Normal Medical (Non-911) Transport Ambulance</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The number of each personnel level for your EMS Agency's Medical (Non-911) Transport Ambulance.</definition>
+													<usage>Optional</usage>
+													<comment>Indicate the number of each of the following EMS Personnel levels on the crew. Associated with each Certification/Licensure Level in dVehicle.05(Crew State Certification/Licensure Levels).</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+								<xs:attribute name="UUID" type="UUID" use="required" />
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dVehicle.09" type="VehicleInitialCost" id="dVehicle.VehicleInitialCost" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dVehicle.09</number>
+										<name>Vehicle Initial Cost</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>Initial costs of vehicles held by agency excluding all medical and other equipment not associated with the vehicle. This cost should be inclusive of all sources of funding including grants, donations, and any other capital.</definition>
+										<v2Number>D06_06</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dVehicle.10" nillable="true" id="dVehicle.VehicleModelYear" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dVehicle.10</number>
+										<name>Vehicle Model Year</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The year the vehicle was manufactured.</definition>
+										<v2Number>D06_07</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="Year">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dVehicle.YearGroup" id="dVehicle.YearGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about Vehicle hours and odometer mileage/kilometers per year</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dVehicle.11" type="Year" id="dVehicle.YearMilesKilometersHoursAccrued" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dVehicle.11</number>
+													<name>Year Miles/Kilometers Hours Accrued</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The year the hours and miles/kilometers were accumulated.</definition>
+													<v2Number>D06_08</v2Number>
+													<usage>Optional</usage>
+													<comment>The grouping dVehicle.YearGroup, allows multiple year information to be stored for each EMS vehicle. This includes elements dVehicle.11 - Year Miles/Kilometers Hours Accrued, dVehicle.12 - Annual Vehicle Hours, and dVehicle.13 - Annual Vehicle Miles/Kilometers.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dVehicle.12" type="VehicleHours" id="dVehicle.AnnualVehicleHours" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dVehicle.12</number>
+													<name>Annual Vehicle Hours</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The number of hours the vehicle was in service for the agency for the defined year.</definition>
+													<v2Number>D06_09</v2Number>
+													<usage>Optional</usage>
+													<comment>Associated with each year of element dVehicle.11 (Year Miles/Hours Accrued).</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dVehicle.13" id="dVehicle.AnnualVehicleMilesKilometers" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dVehicle.13</number>
+													<name>Annual Vehicle Miles/Kilometers</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The number of miles/kilometers the vehicle accumulated in service for the agency for the defined year (Odometer Reading).</definition>
+													<v2Number>D06_10</v2Number>
+													<usage>Optional</usage>
+													<comment>Associated with each year of (dVehicle.11) Year Miles/Kilometers Hours Accrued.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="AnnualOdometerReading">
+													<xs:attribute name="DistanceUnit" type="DistanceUnits" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+								<xs:attribute name="UUID" type="UUID" use="required" />
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+					<xs:attribute name="UUID" type="UUID" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AnnualOdometerReading">
+		<xs:annotation>
+			<xs:documentation>The number of miles/kilometers the vehicle accumulated in service for the agency for the defined year (Odometer Reading).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="7"/>
+			<xs:fractionDigits value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumberofPersonnel">
+		<xs:annotation>
+			<xs:documentation>The number of each personnel level associated with the vehicle crew.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleHours">
+		<xs:annotation>
+			<xs:documentation>The number of hours the vehicle was in service for the agency for the defined year.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="10000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleIdentificationNumber">
+		<xs:annotation>
+			<xs:documentation>The manufacturer's VIN associated with the vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="17"/>
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleInitialCost">
+		<xs:annotation>
+			<xs:documentation>The Original cost of a vehicle</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="10000000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleNumber">
+		<xs:annotation>
+			<xs:documentation>The Vendor or company associated with the EMD card set and algorithms</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleType">
+		<xs:annotation>
+			<xs:documentation>Vehicle type of unit (ambulance, fire, truck, etc.)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1404001">
+				<xs:annotation>
+					<xs:documentation>Ambulance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404003">
+				<xs:annotation>
+					<xs:documentation>ATV</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404005">
+				<xs:annotation>
+					<xs:documentation>Bicycle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404007">
+				<xs:annotation>
+					<xs:documentation>Fire Apparatus</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404009">
+				<xs:annotation>
+					<xs:documentation>Fixed Wing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404011">
+				<xs:annotation>
+					<xs:documentation>Motorcycle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404013">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404015">
+				<xs:annotation>
+					<xs:documentation>Personal Vehicle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404017">
+				<xs:annotation>
+					<xs:documentation>Quick Response Vehicle (Non-Transport Vehicle other than Fire Apparatus)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404019">
+				<xs:annotation>
+					<xs:documentation>Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404021">
+				<xs:annotation>
+					<xs:documentation>Rotor Craft</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404023">
+				<xs:annotation>
+					<xs:documentation>Snow Vehicle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1404025">
+				<xs:annotation>
+					<xs:documentation>Watercraft</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

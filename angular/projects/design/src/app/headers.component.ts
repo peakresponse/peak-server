@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   templateUrl: './headers.component.html',
+  standalone: false,
 })
 export class HeadersComponent {
   user: any = {

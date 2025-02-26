@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,9 +23,9 @@ import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [AppComponent],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
-    HttpClientModule,
     NgbModule,
     AppRoutingModule,
     AgenciesModule,
@@ -41,7 +41,13 @@ import { UsersModule } from './users/users.module';
     StatesModule,
     UsersModule,
   ],
-  providers: [AgencyService, NavigationService, NotificationService, SchemaService, UserService],
-  bootstrap: [AppComponent],
+  providers: [
+    AgencyService,
+    NavigationService,
+    NotificationService,
+    SchemaService,
+    UserService,
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
 })
 export class AppModule {}

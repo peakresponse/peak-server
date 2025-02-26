@@ -6,6 +6,7 @@ import { ApiService, NavigationService, SchemaService } from 'shared';
 
 @Component({
   templateUrl: './edit-state.component.html',
+  standalone: false,
 })
 export class EditStateComponent {
   id: string = '';

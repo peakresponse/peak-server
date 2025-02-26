@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 
 @Component({
   templateUrl: './list-exports.component.html',
+  standalone: false,
 })
 export class ListExportsComponent {
   params = new HttpParams({ fromObject: { showAll: true } });

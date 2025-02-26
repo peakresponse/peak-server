@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eProcedures">
+		<xs:sequence>
+			<xs:element name="eProcedures.ProcedureGroup" id="eProcedures.ProcedureGroup" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold eProcedures information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eProcedures.01" nillable="true" id="eProcedures.DateTimeProcedurePerformed">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.01</number>
+										<name>Date/Time Procedure Performed</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The date/time the procedure was performed on the patient.</definition>
+										<v2Number>E19_01</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DateTimeType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.02" nillable="true" id="eProcedures.ProcedurePerformedPriortothisUnitsEMSCare">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.02</number>
+										<name>Procedure Performed Prior to this Unit's EMS Care</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>Indicates that the procedure which was performed and documented was performed prior to this EMS units care.</definition>
+										<v2Number>E19_02</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>This is the NEMSIS Version 3 method to document prior aid.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="YesNoValues">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.03" nillable="true" id="eProcedures.Procedure">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.03</number>
+										<name>Procedure</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The procedure performed on the patient.</definition>
+										<v2Number>E19_03</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Procedures which are recorded as a Vital Sign do not have to be documented in the Procedure Section.
+											&lt;br/>Code list is represented in SNOMEDCT. Reference the NEMSIS Suggested Lists at: https://nemsis.org/technical-resources/version-3/version-3-resource-repository/	
+										&lt;br/>&lt;br/>SNOMEDCT
+										&lt;br/>Website: http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html
+										&lt;br/>Product: Product - UMLS Metathesaurus
+										</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="snomed">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ContraindicationNoted PN.DeniedByOrder PN.Refused PN.UnableToComplete PN.OrderCriteriaNotMet"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.04" type="SizeOfProcedureEquipment" id="eProcedures.SizeofProcedureEquipment" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.04</number>
+										<name>Size of Procedure Equipment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The size of the equipment used in the procedure on the patient.</definition>
+										<v2Number>E19_04</v2Number>
+										<usage>Optional</usage>
+										<comment>Need business logic to require detail of size appropriate for the procedure.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eProcedures.05" nillable="true" id="eProcedures.NumberofProcedureAttempts">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.05</number>
+										<name>Number of Procedure Attempts</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The number of attempts taken to complete a procedure or intervention regardless of success.</definition>
+										<v2Number>E19_05</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="NumberOfProcedureAttempts">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.06" nillable="true" id="eProcedures.ProcedureSuccessful">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.06</number>
+										<name>Procedure Successful</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>Indicates that this individual procedure attempt which was performed on the patient was successful.</definition>
+										<v2Number>E19_06</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="YesNoValues">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.07" nillable="true" id="eProcedures.ProcedureComplication" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.07</number>
+										<name>Procedure Complication</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>Any complication (abnormal effect on the patient) associated with the performance of the procedure on the patient.</definition>
+										<v2Number>E19_07</v2Number>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ProcedureComplication">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.08" nillable="true" id="eProcedures.ResponsetoProcedure">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.08</number>
+										<name>Response to Procedure</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The patient's response to the procedure.</definition>
+										<v2Number>E19_08</v2Number>
+										<usage>Required</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="Response">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.09" nillable="true" id="eProcedures.ProcedureCrewMembersID" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.09</number>
+										<name>Procedure Crew Members ID</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The statewide assigned ID number of the EMS crew member performing the procedure on the patient.</definition>
+										<v2Number>E19_09</v2Number>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>For an incident that occurs in multiple states, the certification ID number the EMS agency would typically use is based on the EMS agency's state license specific to each EMS professional.  If the incident needs to be reported to each state, then the EMS Agency Number for each state should be submitted as well as the certification ID numbers for each EMS professional on the unit.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="CrewMemberID">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.10" nillable="true" id="eProcedures.RoleofPersonPerformingtheProcedure">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.10</number>
+										<name>Role/Type of Person Performing the Procedure</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The type (level) of EMS or Healthcare Professional performing the procedure. For procedures performed prior to EMS arrival, this may be a non-EMS healthcare professional.</definition>
+										<usage>Required</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Added to document the type of healthcare professional administering the medication.  This could be auto-completed from the crew ID but is necessary to document medication administration prior to EMS arrival. State may maintain an enumerated list but must collapse to the National Standard.
+										&lt;br/>&lt;br/>The category EMT-Intermediate includes EMS professionals with an "85" or "99" certification level.
+										</comment>
+										<v3Changes>Added to document the type of healthcare professional performing the procedure.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EMSCaregiverLevel">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eProcedures.11" type="TxAuthorization" id="eProcedures.ProcedureAuthorization" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.11</number>
+										<name>Procedure Authorization</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The type of treatment authorization obtained.</definition>
+										<v2Number>E19_10</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eProcedures.12" type="PersonName" id="eProcedures.ProcedureAuthorizingPhysician" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.12</number>
+										<name>Procedure Authorizing Physician</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The name of the authorizing physician ordering the procedure, if the order was provided by any manner other than protocol (standing order) in eProcedures.11.</definition>
+										<v2Number>E19_11</v2Number>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eProcedures.13" nillable="true" id="eProcedures.VascularAccessLocation" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eProcedures.13</number>
+										<name>Vascular Access Location</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The location of the vascular access site attempt on the patient, if applicable.</definition>
+										<v2Number>E19_12</v2Number>
+										<usage>Recommended</usage>
+										<comment>This is now associated with the Date/Time of the procedure and therefore changed to single choice. This allows the location to be documented with each procedure and attempt. If the vascular access has been established prior to EMS, this should be documented as such.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="VascularAccessLocation">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NumberOfProcedureAttempts">
+		<xs:annotation>
+			<xs:documentation>The number of attempts taken to complete a procedure or intervention regardless of success</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProcedureComplication">
+		<xs:annotation>
+			<xs:documentation>Any complication (abnormal effect on the patient) associated with the performance of the procedure on the patient</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3907001">
+				<xs:annotation>
+					<xs:documentation>Altered Mental Status</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907003">
+				<xs:annotation>
+					<xs:documentation>Apnea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907005">
+				<xs:annotation>
+					<xs:documentation>Bleeding</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907007">
+				<xs:annotation>
+					<xs:documentation>Bradypnea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907009">
+				<xs:annotation>
+					<xs:documentation>Diarrhea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907011">
+				<xs:annotation>
+					<xs:documentation>Esophageal Intubation-immediately</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907013">
+				<xs:annotation>
+					<xs:documentation>Esophageal Intubation-other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907015">
+				<xs:annotation>
+					<xs:documentation>Extravasation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907017">
+				<xs:annotation>
+					<xs:documentation>Hypertension</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907019">
+				<xs:annotation>
+					<xs:documentation>Hyperthermia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907021">
+				<xs:annotation>
+					<xs:documentation>Hypotension</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907023">
+				<xs:annotation>
+					<xs:documentation>Hypothermia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907025">
+				<xs:annotation>
+					<xs:documentation>Hypoxia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907027">
+				<xs:annotation>
+					<xs:documentation>Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907031">
+				<xs:annotation>
+					<xs:documentation>Nausea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907033">
+				<xs:annotation>
+					<xs:documentation>None</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907035">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907039">
+				<xs:annotation>
+					<xs:documentation>Respiratory Distress</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907041">
+				<xs:annotation>
+					<xs:documentation>Tachycardia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907043">
+				<xs:annotation>
+					<xs:documentation>Tachypnea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907045">
+				<xs:annotation>
+					<xs:documentation>Vomiting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907047">
+				<xs:annotation>
+					<xs:documentation>Bradycardia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907049">
+				<xs:annotation>
+					<xs:documentation>Itching</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3907051">
+				<xs:annotation>
+					<xs:documentation>Urticaria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SizeOfProcedureEquipment">
+		<xs:annotation>
+			<xs:documentation>The size of the equipment used in the procedure on the patient</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VascularAccessLocation">
+		<xs:annotation>
+			<xs:documentation>The location of the vascular access site, if applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3913001">
+				<xs:annotation>
+					<xs:documentation>Antecubital-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913003">
+				<xs:annotation>
+					<xs:documentation>Antecubital-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913005">
+				<xs:annotation>
+					<xs:documentation>External Jugular-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913007">
+				<xs:annotation>
+					<xs:documentation>External Jugular-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913009">
+				<xs:annotation>
+					<xs:documentation>Femoral-Left IV</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913011">
+				<xs:annotation>
+					<xs:documentation>Femoral-Right IV</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913013">
+				<xs:annotation>
+					<xs:documentation>Foot-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913015">
+				<xs:annotation>
+					<xs:documentation>Foot-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913017">
+				<xs:annotation>
+					<xs:documentation>Forearm-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913019">
+				<xs:annotation>
+					<xs:documentation>Forearm-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913021">
+				<xs:annotation>
+					<xs:documentation>Hand-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913023">
+				<xs:annotation>
+					<xs:documentation>Hand-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913025">
+				<xs:annotation>
+					<xs:documentation>Internal Jugular-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913027">
+				<xs:annotation>
+					<xs:documentation>Internal Jugular-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913029">
+				<xs:annotation>
+					<xs:documentation>IO-Iliac Crest-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913031">
+				<xs:annotation>
+					<xs:documentation>IO-Iliac Crest-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913033">
+				<xs:annotation>
+					<xs:documentation>IO-Femoral-Left Distal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913035">
+				<xs:annotation>
+					<xs:documentation>IO-Femoral-Right Distal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913037">
+				<xs:annotation>
+					<xs:documentation>IO-Humeral-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913039">
+				<xs:annotation>
+					<xs:documentation>IO-Humeral-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913041">
+				<xs:annotation>
+					<xs:documentation>IO-Tibia-Left Distal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913043">
+				<xs:annotation>
+					<xs:documentation>IO-Sternum</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913045">
+				<xs:annotation>
+					<xs:documentation>IO-Tibia-Right Distal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913047">
+				<xs:annotation>
+					<xs:documentation>IO-Tibia-Left Proximal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913049">
+				<xs:annotation>
+					<xs:documentation>IO-Tibia-Right Proximal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913051">
+				<xs:annotation>
+					<xs:documentation>Lower Extremity-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913053">
+				<xs:annotation>
+					<xs:documentation>Lower Extremity-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913055">
+				<xs:annotation>
+					<xs:documentation>Other Peripheral</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913057">
+				<xs:annotation>
+					<xs:documentation>Other Central (PICC, Portacath, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913059">
+				<xs:annotation>
+					<xs:documentation>Scalp</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913061">
+				<xs:annotation>
+					<xs:documentation>Subclavian-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913063">
+				<xs:annotation>
+					<xs:documentation>Subclavian-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913065">
+				<xs:annotation>
+					<xs:documentation>Umbilical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913067">
+				<xs:annotation>
+					<xs:documentation>Venous Cutdown-Left Lower Extremity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913069">
+				<xs:annotation>
+					<xs:documentation>Venous Cutdown-Right Lower Extremity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913071">
+				<xs:annotation>
+					<xs:documentation>Upper Arm-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913073">
+				<xs:annotation>
+					<xs:documentation>Upper Arm-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913075">
+				<xs:annotation>
+					<xs:documentation>Radial-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913077">
+				<xs:annotation>
+					<xs:documentation>Radial-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913079">
+				<xs:annotation>
+					<xs:documentation>Wrist-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3913081">
+				<xs:annotation>
+					<xs:documentation>Wrist-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -13,6 +13,7 @@ import { XsdBaseComponent } from './xsd-base.component';
 @Component({
   selector: 'shared-xsd-list',
   templateUrl: './xsd-list.component.html',
+  standalone: false,
 })
 export class XsdListComponent extends XsdBaseComponent implements OnDestroy {
   @Input() schemaColumns: any[] = [];

@@ -5,6 +5,7 @@ import { ApiService } from 'shared';
 
 @Component({
   templateUrl: './validate-version-demographics.component.html',
+  standalone: false,
 })
 export class ValidateVersionDemographicsComponent implements OnInit {
   id: string = '';

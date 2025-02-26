@@ -5,6 +5,7 @@ import { ApiService } from 'shared';
 
 @Component({
   templateUrl: './list-nemsis.component.html',
+  standalone: false,
 })
 export class ListNemsisComponent implements OnInit {
   nemsis: any;

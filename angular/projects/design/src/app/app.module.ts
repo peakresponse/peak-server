@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,8 +26,8 @@ import { SharedModule, ApiService, UserService } from 'shared';
     NavsComponent,
     TypographyComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule, SharedModule],
-  providers: [ApiService, UserService],
   bootstrap: [AppComponent],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, SharedModule],
+  providers: [ApiService, UserService, provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}

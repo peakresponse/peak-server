@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'design-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: false,
 })
 export class AppComponent {
   user: any = {

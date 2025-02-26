@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list-forms-demographics.component.html',
+  standalone: false,
 })
 export class ListFormsDemographicsComponent {
   data = {

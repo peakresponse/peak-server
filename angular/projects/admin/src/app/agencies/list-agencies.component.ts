@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list-agencies.component.html',
+  standalone: false,
 })
 export class ListAgenciesComponent {
   search = '';

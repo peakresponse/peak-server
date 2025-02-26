@@ -5,6 +5,7 @@ import { ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './new-facility.component.html',
+  standalone: false,
 })
 export class NewFacilityComponent {
   constructor(

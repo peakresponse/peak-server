@@ -135,10 +135,12 @@ function sleep(ms) {
 beforeEach(async () => {
   await resetDatabase();
   nodemailerMock.mock.reset();
+  await fs.mkdirp(path.resolve(__dirname, '../nemsis/repositories/nemsis_public'));
+  await fs.copy(path.resolve(__dirname, 'fixtures/nemsis/nemsis_public'), path.resolve(__dirname, '../nemsis/repositories/nemsis_public'));
 });
 
 after(async () => {
-  /// close all db connections
+  // close all db connections
   await resetDatabase();
   await models.sequelize.close();
 });

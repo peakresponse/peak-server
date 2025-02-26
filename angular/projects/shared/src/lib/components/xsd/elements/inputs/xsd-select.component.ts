@@ -8,6 +8,7 @@ import { XsdElementBaseComponent } from '../xsd-element-base.component';
 @Component({
   selector: 'shared-xsd-select',
   templateUrl: './xsd-select.component.html',
+  standalone: false,
 })
 export class XsdSelectComponent extends XsdElementBaseComponent {
   @ViewChild('instance', { static: true }) instance?: NgbTypeahead;

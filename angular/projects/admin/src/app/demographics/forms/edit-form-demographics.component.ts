@@ -7,6 +7,7 @@ import { FormComponent, NavigationService, NotificationService } from 'shared';
 
 @Component({
   templateUrl: './edit-form-demographics.component.html',
+  standalone: false,
 })
 export class EditFormDemographicsComponent {
   id: string = '';

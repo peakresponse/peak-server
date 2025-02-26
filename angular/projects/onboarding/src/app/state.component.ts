@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 
 @Component({
   templateUrl: './state.component.html',
+  standalone: false,
 })
 export class StateComponent {
   @ViewChild('stateEl') stateEl?: SelectFieldComponent;

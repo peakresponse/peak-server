@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'shared-logo',
   templateUrl: './logo.component.html',
+  standalone: false,
 })
 export class Logo {
   @Input() type: string = 'full';

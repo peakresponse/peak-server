@@ -12,6 +12,7 @@ import models from '../models';
 @Component({
   templateUrl: './list-incidents.component.html',
   styleUrls: ['./list-incidents.component.scss'],
+  standalone: false,
 })
 export class ListIncidentsComponent {
   filter: string = 'mine';

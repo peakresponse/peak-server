@@ -5,6 +5,7 @@ import { AgencyService, NotificationService, UserService } from 'shared';
 @Component({
   selector: 'admin-root',
   templateUrl: './app.component.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor(

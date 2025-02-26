@@ -12,6 +12,7 @@ import { XsdSchema } from './xsd-schema';
 
 @Component({
   template: '',
+  standalone: false,
 })
 export class XsdBaseComponent implements OnInit {
   @Input() name?: string;

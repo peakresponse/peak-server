@@ -7,6 +7,7 @@ import { AgencyService, ApiService, XsdListComponent } from 'shared';
 
 @Component({
   templateUrl: './facilities-list-demographics.component.html',
+  standalone: false,
 })
 export class FacilitiesListDemographicsComponent implements OnInit {
   @ViewChild('list') list?: XsdListComponent;

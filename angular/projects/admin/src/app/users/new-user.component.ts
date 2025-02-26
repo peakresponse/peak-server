@@ -5,6 +5,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './new-user.component.html',
+  standalone: false,
 })
 export class NewUserComponent {
   id: string | null = null;

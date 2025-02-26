@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 
 @Component({
   templateUrl: './done.component.html',
+  standalone: false,
 })
 export class DoneComponent {
   agencyId?: string;

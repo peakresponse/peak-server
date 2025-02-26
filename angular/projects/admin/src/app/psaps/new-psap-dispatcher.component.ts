@@ -9,6 +9,7 @@ import { ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './new-psap-dispatcher.component.html',
+  standalone: false,
 })
 export class NewPsapDispatcherComponent {
   constructor(

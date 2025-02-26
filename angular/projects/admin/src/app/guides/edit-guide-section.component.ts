@@ -7,6 +7,7 @@ import { NavigationService } from 'shared';
 @Component({
   templateUrl: './edit-guide-section.component.html',
   styleUrls: ['./edit-guide-section.component.scss'],
+  standalone: false,
 })
 export class EditGuideSectionComponent implements OnInit {
   id: string = '';

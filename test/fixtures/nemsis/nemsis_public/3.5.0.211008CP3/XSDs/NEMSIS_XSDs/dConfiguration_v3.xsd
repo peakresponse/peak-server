@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="dConfiguration">
+		<xs:sequence>
+			<xs:element name="dConfiguration.ConfigurationGroup" id="dConfiguration.ConfigurationGroup" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold agency Configuration information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dConfiguration.01" type="ANSIStateCode" id="dConfiguration.StateAssociatedwiththisConfiguration">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.01</number>
+										<name>State Associated with this Configuration</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The state associated with this configuration.</definition>
+										<usage>Mandatory</usage>
+										<comment>Associated with the state (dAgency.04 - EMS Agency State). 
+											&lt;br/>&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm" target="_blank">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a>
+										&lt;br/>&lt;br/>The state EMS system does not need to import this information into their database.  Reference the Demographic Dataset Submission Guide for further details.
+										</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dConfiguration.ProcedureGroup" id="dConfiguration.AgencyProcedureGroup" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about Procedure information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dConfiguration.06" id="dConfiguration.EMSPersonnelLevelPermittedtoPerformtheProcedure">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dConfiguration.06</number>
+													<name>EMS Certification Levels Permitted to Perform Each Procedure</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>EMS certification levels which are permitted to perform the procedure listed in dConfiguration.07.</definition>
+													<v2Number>D04_05</v2Number>
+													<usage>Mandatory</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>Response</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Using each certification level within the agency, indicate the approved procedures allowed utilizing dConfiguration.07 (EMS Agency Procedures).
+													&lt;br/>&lt;br/>The category EMT-Intermediate includes EMS professionals with an "85" or "99" certification level.													
+													</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="StateCertificationLicensureLevels"/>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="dConfiguration.07" id="dConfiguration.EMSAgencyProcedures" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dConfiguration.07</number>
+													<name>EMS Agency Procedures</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>A list of all procedures that the agency has implemented and available for use by any/all EMS certification levels.</definition>
+													<v2Number>D04_04</v2Number>
+													<usage>Mandatory</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>Response</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>
+													This is associated with the EMS Agency Number (dAgency.02) since each EMS Agency Number may have different capabilities. Each procedure is associated with the EMS professional certification levels permitted to perform the procedure. 
+
+&lt;br/>&lt;br/>EMS Agencies may identify additional SNOMEDCT procedure codes based on medical direction and their own need. If an agency resides in a state with statewide approved procedures, they should be listed/implemented here. 
+
+&lt;br/>&lt;br/>Code list is represented in SNOMEDCT: Reference the NEMSIS Suggested Lists at: &lt;a href="https://nemsis.org/technical-resources/version-3/version-3-resource-repository/" target="_blank">https://nemsis.org/technical-resources/version-3/version-3-resource-repository/&lt;/a>
+
+&lt;br/>&lt;br/>SNOMEDCT 
+&lt;br/>Website: &lt;a href="http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html" target="_blank">http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html&lt;/a> 
+&lt;br/>Product: Product - UMLS Metathesaurus 
+													</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="snomed">
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+								<xs:attribute name="UUID" type="UUID" use="required" />
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dConfiguration.MedicationGroup" id="dConfiguration.AgencyMedicationGroup" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about Medication information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dConfiguration.08" type="StateCertificationLicensureLevels" id="dConfiguration.PersonnelLevelPermittedtoAdministertheMedication">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dConfiguration.08</number>
+													<name>EMS Certification Levels Permitted to Administer Each Medication</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>All EMS certification levels which are permitted to administer the medications listed in dConfiguration.09 (EMS Agency Medications).</definition>
+													<v2Number>D04_07</v2Number>
+													<usage>Mandatory</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>Response</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Using each certification level within the agency, indicate the approved medications allowed utilizing dConfiguration.09 (EMS Agency Medications).
+													&lt;br/>&lt;br/>The category EMT-Intermediate includes EMS professionals with an "85" or "99" certification level.
+													</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dConfiguration.09" id="dConfiguration.EMSAgencyMedications" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>dConfiguration.09</number>
+													<name>EMS Agency Medications</name>
+													<national>Yes</national>
+													<state>Yes</state>
+													<definition>A list of all medications the agency has implemented and have available for use.</definition>
+													<v2Number>D04_06</v2Number>
+													<usage>Mandatory</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>Pediatric</performanceMeasure>
+														<performanceMeasure>Response</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+														<performanceMeasure>Stroke</performanceMeasure>
+														<performanceMeasure>Trauma</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>This is associated with the EMS Agency Number (dAgency.02) since each EMS Agency Number may have different capabilities. 
+
+&lt;br/>&lt;br/>List of medications based on RxNorm (RXCUI) code and SNOMED-CT codes for blood products. 
+&lt;br/>&lt;br/>Reference the NEMSIS Suggested Lists at: &lt;a href="https://nemsis.org/technical-resources/version-3/version-3-resources/">https://nemsis.org/technical-resources/version-3/version-3-resources/&lt;/a>
+&lt;br/>&lt;br/>RxNorm 
+&lt;br/>Website - &lt;a href="http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html">http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html&lt;/a>
+&lt;br/>Product - RxNorm Full Monthly Release
+&lt;br/>&lt;br/>SNOMED-CT 
+&lt;br/>Website: &lt;a href="http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html">http://www.nlm.nih.gov/research/umls/Snomed/snomed_main.html&lt;/a>
+&lt;br/>Product: Product - UMLS Metathesaurus.
+
+&lt;br/>&lt;br/>Allowable SNOMED-CT codes are:
+&lt;br/>116762002 Administration of blood product
+&lt;br/>116795008 Transfusion of cryoprecipitate
+&lt;br/>116861002 Transfusion of fresh frozen plasma
+&lt;br/>116865006 Administration of albumin
+&lt;br/>180208003 Intravenous blood transfusion of platelets
+&lt;br/>33389009 Transfusion of whole blood
+&lt;br/>71493000 Transfusion of packed red blood cells
+													</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="Medication">
+													<xs:attribute name="CodeType" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="CodeType.RxNorm CodeType.SNOMED" />
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+								<xs:attribute name="UUID" type="UUID" use="required" />
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dConfiguration.10" id="dConfiguration.EMSAgencyProtocols" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.10</number>
+										<name>EMS Agency Protocols</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>A list of all of the EMS field protocols that the agency has in place and available for use.</definition>
+										<v2Number>D04_08</v2Number>
+										<usage>Mandatory</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>This is associated with the EMS Agency Number (dAgency.02) since each EMS Agency Number may have different capabilities. 
+										&lt;br/>&lt;br/>State and local entities  can add additional protocols to the list but the additional protocols must map to these uniform codes. 
+										&lt;br/>&lt;br/>The list is defined by the NASEMSO State Medical Directors.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ProtocolsUsed">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dConfiguration.11" id="dConfiguration.EMSAgencySpecialtyServiceCapability" minOccurs="0" maxOccurs="unbounded" nillable="true">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.11</number>
+										<name>EMS Agency Specialty Service Capability</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>Special training or services provided by the EMS Agency and available to the EMS service area/community.</definition>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="AgencySpecialtyServiceCapability">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dConfiguration.12" type="YesNoValues" id="dConfiguration.BillingStatus" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.12</number>
+										<name>Billing Status</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>Indication of whether the EMS agency routinely bills for any segment of the patient population.</definition>
+										<v2Number>D04_10</v2Number>
+										<usage>Optional</usage>
+										<comment>Billing status is associated with each EMS Agency for the specific EMS Agency Number (dAgency.02).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dConfiguration.13" id="dConfiguration.EmergencyMedicalDispatchEMDProvidedtoEMSAgencyServiceArea">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.13</number>
+										<name>Emergency Medical Dispatch (EMD) Provided to EMS Agency Service Area</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>Indication as to whether Emergency Medical Dispatch is provided to the EMS Agency's service area.</definition>
+										<usage>Mandatory</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Added to better document the implementation of Emergency Medical Dispatch. Associated with each EMS Agency and the specific EMS Agency Number (dAgency.02).</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EMDtoAgencyServiceArea"/>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dConfiguration.14" nillable="true" id="dConfiguration.EMDVendor" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.14</number>
+										<name>EMD Vendor</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The vendor or company associated with the EMD Card set and algorithms.</definition>
+										<v2Number>D04_17</v2Number>
+										<usage>Recommended</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EMDVendorType">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dConfiguration.15" id="dConfiguration.PatientMonitoringCapabilityies" minOccurs="0" maxOccurs="unbounded" nillable="true">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.15</number>
+										<name>Patient Monitoring Capability(ies)</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The EMS Agency's patient monitoring capability which can be provided to any/all patients presenting to EMS.</definition>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Added to identify the patient monitoring capability of the EMS Agency. Associated with each EMS Agency Number (dAgency.02) since each EMS Agency Number may have a different capability within each EMS Agency. Other patient monitoring capability may exist but NEMSIS Version 3 only includes these specific capabilities.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PatientMonitoringCapability">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dConfiguration.16" id="dConfiguration.AgencyCallSign" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.16</number>
+										<name>Crew Call Sign</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The EMS crew call sign used to dispatch and communicate with the unit.  This may be the same as the EMS Unit/Vehicle Number in many agencies.</definition>
+										<v2Number>D04_02</v2Number>
+										<usage>Mandatory</usage>
+										<performanceMeasures/>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="AgencyCallSign">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="dConfiguration.17" id="dConfiguration.DispatchCenterCADNameorID" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>dConfiguration.17</number>
+										<name>Dispatch Center (CAD) Name or ID</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The name or ID of the dispatch center (Primary or Secondary Service Answering Point - PSAP) that dispatches the EMS agency.</definition>
+										<usage>Optional</usage>
+										<performanceMeasures/>
+										<comment>This element can be used to identify the dispatch center (Primary or Secondary Service Answering Point - PSAP) that dispatches the EMS agency. If the EMS agency is able to populate the Patient Care Report (PCR) with CAD specific details (times, incident address information, crew information, EMD, etc.) the name or ID of the dispatch center should be documented. Information in dConfiguration.17 may be used to populate eDispatch.04 - Computer Aided Dispatch (CAD) Name or ID if a CAD integration exists.</comment>
+										<v3Changes>Added to the dataset to assist in identifying the CAD / dispatch center providing information to the EMS agency and ePCR when there are multiple dispatch centers sending resources to the same EMS incident.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DispatchCenterCADNameorID">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+					<xs:attribute name="UUID" type="UUID" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AgencyCallSign">
+		<xs:annotation>
+			<xs:documentation>The call sign associated with the responding crew (associated with a shift).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AgencySpecialtyServiceCapability">
+		<xs:annotation>
+			<xs:documentation>Special training or services provided by the EMS Agency and available to the EMS service area/community (i.e. USAR, Swift Water Rescue, etc.).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1211001">
+				<xs:annotation>
+					<xs:documentation>Air Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211003">
+				<xs:annotation>
+					<xs:documentation>CBRNE</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211005">
+				<xs:annotation>
+					<xs:documentation>Community Health Medicine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211007">
+				<xs:annotation>
+					<xs:documentation>Disaster Medical Assistance Team (DMAT)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211009">
+				<xs:annotation>
+					<xs:documentation>Disaster Mortuary (DMORT)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211011">
+				<xs:annotation>
+					<xs:documentation>Dive Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211013">
+				<xs:annotation>
+					<xs:documentation>Farm Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211015">
+				<xs:annotation>
+					<xs:documentation>High Angle Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211017">
+				<xs:annotation>
+					<xs:documentation>Machinery Disentanglement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211019">
+				<xs:annotation>
+					<xs:documentation>None</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211021">
+				<xs:annotation>
+					<xs:documentation>Ski / Snow Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211023">
+				<xs:annotation>
+					<xs:documentation>Tactical EMS</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211025">
+				<xs:annotation>
+					<xs:documentation>Trench / Confined Space Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211027">
+				<xs:annotation>
+					<xs:documentation>Urban Search and Rescue (USAR)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211029">
+				<xs:annotation>
+					<xs:documentation>Vehicle Extrication</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211031">
+				<xs:annotation>
+					<xs:documentation>Veterinary Medical Assistance Team (VMAT)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211033">
+				<xs:annotation>
+					<xs:documentation>Water or Ice Related Rescue (Incl Swift Water)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1211035">
+				<xs:annotation>
+					<xs:documentation>Wilderness Search and Rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DispatchCenterCADNameorID">
+		<xs:annotation>
+			<xs:documentation>The name or ID of the dispatch center providing electronic data to the PCR for the EMS agency, if applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMDtoAgencyServiceArea">
+		<xs:annotation>
+			<xs:documentation>Indication as to whether Emergency Medical Dispatch is provided to the EMS Agency's Service Area.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1213001">
+				<xs:annotation>
+					<xs:documentation>No</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1213003">
+				<xs:annotation>
+					<xs:documentation>Yes, 100% of the EMS Agency's Service Area</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1213005">
+				<xs:annotation>
+					<xs:documentation>Yes, Less than 100% of the EMS Agency's Service Area</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMDVendorType">
+		<xs:annotation>
+			<xs:documentation>The Vendor or Company associated with the EMD Card set and algorithms.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PatientMonitoringCapability">
+		<xs:annotation>
+			<xs:documentation>The EMS Agency's Patient Monitoring Capability which can be provided to any/all patients presenting to EMS</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1215001">
+				<xs:annotation>
+					<xs:documentation>Capnography-Numeric</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215003">
+				<xs:annotation>
+					<xs:documentation>Capnography-Waveform</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215005">
+				<xs:annotation>
+					<xs:documentation>ECG-12 Lead or Greater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215007">
+				<xs:annotation>
+					<xs:documentation>ECG-Less than 12 Lead (Cardiac Monitor)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215009">
+				<xs:annotation>
+					<xs:documentation>Oximetry-Carbon Monoxide</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215011">
+				<xs:annotation>
+					<xs:documentation>Oximetry-Oxygen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215013">
+				<xs:annotation>
+					<xs:documentation>Pressure Measurement-Invasive (Arterial, CVP, Swan, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215015">
+				<xs:annotation>
+					<xs:documentation>Pressure Measurement-Non-Invasive (Blood Pressure, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215017">
+				<xs:annotation>
+					<xs:documentation>Ventilator-Transport</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1215019">
+				<xs:annotation>
+					<xs:documentation>Vital Sign Monitoring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

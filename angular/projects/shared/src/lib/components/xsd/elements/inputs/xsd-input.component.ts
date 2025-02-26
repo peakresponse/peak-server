@@ -5,6 +5,7 @@ import { XsdElementBaseComponent } from '../xsd-element-base.component';
 @Component({
   selector: 'shared-xsd-input',
   templateUrl: './xsd-input.component.html',
+  standalone: false,
 })
 export class XsdInputComponent extends XsdElementBaseComponent {
   @Output() pasteMulti = new EventEmitter<string[]>();

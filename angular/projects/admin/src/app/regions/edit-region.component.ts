@@ -6,6 +6,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './edit-region.component.html',
+  standalone: false,
 })
 export class EditRegionComponent implements OnInit {
   id: string = '';

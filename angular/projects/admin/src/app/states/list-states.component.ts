@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list-states.component.html',
+  standalone: false,
 })
 export class ListStatesComponent {
   constructor(public route: ActivatedRoute) {}

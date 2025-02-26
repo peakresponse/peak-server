@@ -15,6 +15,7 @@ import { AutoloadDirective } from '../directives/autoload.directive';
 @Component({
   selector: 'shared-list',
   templateUrl: './list.component.html',
+  standalone: false,
 })
 export class ListComponent {
   @Input() transform: any = null;

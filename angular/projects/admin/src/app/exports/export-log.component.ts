@@ -6,6 +6,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './export-log.component.html',
+  standalone: false,
 })
 export class ExportLogComponent implements OnInit {
   id: string = '';

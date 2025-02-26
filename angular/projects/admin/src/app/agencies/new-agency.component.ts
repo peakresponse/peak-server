@@ -5,6 +5,7 @@ import { ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './new-agency.component.html',
+  standalone: false,
 })
 export class NewAgencyComponent {
   states: any = [];

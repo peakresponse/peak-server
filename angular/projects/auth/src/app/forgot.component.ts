@@ -8,6 +8,7 @@ import { ApiService } from 'shared';
 
 @Component({
   templateUrl: './forgot.component.html',
+  standalone: false,
 })
 export class ForgotComponent {
   data = {

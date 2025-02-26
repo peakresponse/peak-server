@@ -6,6 +6,7 @@ import { NavigationService } from 'shared';
 
 @Component({
   templateUrl: './new-guide-item.component.html',
+  standalone: false,
 })
 export class NewGuideItemComponent implements OnInit {
   guideId: string = '';

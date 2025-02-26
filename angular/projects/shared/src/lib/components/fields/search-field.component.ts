@@ -9,6 +9,7 @@ import { BaseFieldComponent } from './base-field.component';
   selector: 'shared-search-field',
   templateUrl: './search-field.component.html',
   styles: [':host{display:block;}'],
+  standalone: false,
 })
 export class SearchFieldComponent extends BaseFieldComponent {
   @ViewChild('inputEl') instance?: NgbTypeahead;

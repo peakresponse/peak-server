@@ -7,6 +7,7 @@ import { get } from 'lodash-es';
  */
 @Pipe({
   name: 'get',
+  standalone: false,
 })
 export class GetPipe implements PipeTransform {
   transform(obj: any, path: string[]): any {

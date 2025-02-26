@@ -7,6 +7,7 @@ import { ModalComponent, SchemaService } from 'shared';
 @Component({
   selector: 'admin-demographics-form-signature',
   templateUrl: './signature-form-demographics.component.html',
+  standalone: false,
 })
 export class SignatureFormDemographicsComponent implements OnInit {
   @Input() isEditing = false;

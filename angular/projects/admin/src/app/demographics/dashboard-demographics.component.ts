@@ -5,6 +5,7 @@ import { AgencyService, ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './dashboard-demographics.component.html',
+  standalone: false,
 })
 export class DashboardDemographicsComponent implements OnInit {
   record: any;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ApiService, SharedModule } from 'shared';
@@ -13,8 +13,8 @@ import { ResetComponent } from './reset.component';
 
 @NgModule({
   declarations: [AppComponent, ForgotComponent, LoginComponent, ResetComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, SharedModule],
-  providers: [ApiService],
   bootstrap: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, SharedModule],
+  providers: [ApiService, provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}

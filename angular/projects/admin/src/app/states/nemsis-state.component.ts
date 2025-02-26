@@ -5,6 +5,7 @@ import { ApiService } from 'shared';
 
 @Component({
   templateUrl: './nemsis-state.component.html',
+  standalone: false,
 })
 export class NemsisStateComponent implements OnInit {
   id: string = '';

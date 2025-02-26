@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './edit-psap.component.html',
+  standalone: false,
 })
 export class EditPsapComponent {
   id: string = '';

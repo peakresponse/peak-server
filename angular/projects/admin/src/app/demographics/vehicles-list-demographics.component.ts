@@ -5,6 +5,7 @@ import { AgencyService } from 'shared';
 
 @Component({
   templateUrl: './vehicles-list-demographics.component.html',
+  standalone: false,
 })
 export class VehiclesListDemographicsComponent {
   sectionColumns = [

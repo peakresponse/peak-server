@@ -8,6 +8,7 @@ import { XsdElementBaseComponent } from '../xsd-element-base.component';
 @Component({
   selector: 'shared-xsd-element-input-city',
   templateUrl: './xsd-element-input-city.component.html',
+  standalone: false,
 })
 export class XsdElementInputCityComponent extends XsdElementBaseComponent {
   cache: any = {};

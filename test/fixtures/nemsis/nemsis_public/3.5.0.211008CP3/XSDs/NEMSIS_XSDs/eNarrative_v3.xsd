@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eNarrative" id="Narrative">
+		<xs:sequence>
+			<xs:element name="eNarrative.01" nillable="true" id="eNarrative.PatientCareReportNarrative" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eNarrative.01</number>
+							<name>Patient Care Report Narrative</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The narrative of the patient care report (PCR).</definition>
+							<v2Number>E13_01</v2Number>
+							<usage>Recommended</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="PCRNarrative">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PCRNarrative">
+		<xs:annotation>
+			<xs:documentation>The narrative of the patient care report (PCR).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

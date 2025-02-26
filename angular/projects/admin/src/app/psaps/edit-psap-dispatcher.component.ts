@@ -5,6 +5,7 @@ import { ApiService, NavigationService } from 'shared';
 
 @Component({
   templateUrl: './edit-psap-dispatcher.component.html',
+  standalone: false,
 })
 export class EditPsapDispatcherComponent {
   id: string = '';

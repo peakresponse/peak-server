@@ -11,6 +11,7 @@ import models from '../../models';
 @Component({
   templateUrl: './list-reports.component.html',
   styleUrls: ['./list-reports.component.scss'],
+  standalone: false,
 })
 export class ListReportsComponent implements OnDestroy {
   subscription?: Subscription;

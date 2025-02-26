@@ -4,6 +4,7 @@ import { Observable, Subscriber } from 'rxjs';
 @Component({
   selector: 'shared-recording-field',
   templateUrl: './recording-field.component.html',
+  standalone: false,
 })
 export class RecordingFieldComponent implements AfterViewInit, OnDestroy {
   @Input() title?: string;

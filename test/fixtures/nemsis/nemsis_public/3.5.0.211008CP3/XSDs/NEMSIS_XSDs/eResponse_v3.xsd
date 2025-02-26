@@ -1,0 +1,1400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" xmlns:sch="http://www.ascc.net/xml/schematron" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eResponse" id="eResponse.UnitAgencyInformationType">
+		<xs:annotation>
+			<xs:documentation>Unit Agency Information section</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="eResponse.AgencyGroup" id="eResponse.AgencyGroup">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold EMS agency number and name</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eResponse.01" type="EMSAgencyNumber" id="eResponse.EMSAgencyNumber">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eResponse.01</number>
+										<name>EMS Agency Number</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The state-assigned provider number of the responding agency.</definition>
+										<v2Number>E02_01</v2Number>
+										<usage>Mandatory</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>The EMS Agency Number in eResponse.01 can auto-populate from dAgency.02 EMS Agency Number in the demographic section.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eResponse.02" nillable="true" id="eResponse.EMSAgencyName" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eResponse.02</number>
+										<name>EMS Agency Name</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The EMS agency's name.</definition>
+										<usage>Recommended</usage>
+										<comment>Added to better identify the EMS Agency associated with the EMS event.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="EMSAgencyName">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.03" nillable="true" id="eResponse.IncidentNumber">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.03</number>
+							<name>Incident Number</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The incident number assigned by the 911 Dispatch System.</definition>
+							<v2Number>E02_02</v2Number>
+							<usage>Required</usage>
+							<comment>This number can be used to associate multiple EMS responses, dispatch information, and other information to the same EMS event or patient.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMSIncidentNumber">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.04" nillable="true" id="eResponse.EMSResponseNumber">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.04</number>
+							<name>EMS Response Number</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The internal EMS response number which is unique for each EMS Vehicle's (Unit) response to an incident within an EMS Agency.</definition>
+							<v2Number>E02_03</v2Number>
+							<usage>Required</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMSResponseNumber">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.ServiceGroup" id="eResponse.ServiceGroup">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold details about EMS category of service and the stand by reason</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eResponse.05" type="EMSServiceCat" id="eResponse.TypeofServiceRequested">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eResponse.05</number>
+										<name>Type of Service Requested</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The type of service or category of service requested of the EMS Agency responding for this specific EMS event.</definition>
+										<v2Number>E02_04</v2Number>
+										<usage>Mandatory</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Pediatric</performanceMeasure>
+											<performanceMeasure>Response</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>
+											Values for "911 Response (Scene)", "Intercept", and "Mutual Aid" have been relabeled to start with "Emergency Response" to more easily identify these options. "Interfacility Transport" was relabeled to "Hospital-to-Hospital Transfer" to be more accurate; options for "Sending Hospital Staff" and "Critical or Specialty Care" were added to better track resource utilization at local and state levels and support reimbursement levels. "Medical Transport" was relabeled to "Other Medical Needs Transport" to cover any other medical transports such as transports to and from dialysis, doctor appointments, return home, or nursing homes. Values added to consolidate types of service previously captured in "Primary Role of Unit" and eDisposition.12 as found in V3.4.0. Additional values added to reflect emerging service types.
+										</comment>
+										<v3Changes>With the release of v3.5.0 values were added to meet the needs of EMS</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eResponse.06" type="EMSStandByReason" id="eResponse.StandbyPurpose" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eResponse.06</number>
+										<name>Standby Purpose</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The main reason the EMS Unit is on Standby as the Primary Type of Service for the EMS event.</definition>
+										<usage>Optional</usage>
+										<comment>Added to document the reason for "Standby" when populated in eResponse.05 (Type of Service Requested). This information will assist in administrative analysis of EMS service delivery, special event coverage, etc.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.07" type="UnitTransportEquipmentCapability" id="eResponse.UnitTransportEquipmentCapability">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.07</number>
+							<name>Unit Transport and Equipment Capability</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The transport and equipment capabilities of the EMS Unit which responded to this specific EMS event.</definition>
+							<v2Number>E02_05</v2Number>
+							<usage>Mandatory</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>
+								Element relabeled from "Primary Role of Unit" to "Unit Transport and Equipment Capability" to better reflect its new defined purpose and allow the deprecation of eResponse.15 "Level of Care of This Unit". V3.4.0 Non-Transport values deprecated as these are types of service and were moved to eResponse.05 "Type of Service Requested". Values have been added to better capture transport capability and available equipment. These values should be tied to the capabilities and role of the unit and not reflect the level of providers responding to an event.
+								&lt;br/> &lt;br/>Supervisor clarified to Administrative Only. If the Supervisor is responding to assist, that would be considered Non-Transport. Transport separated into Air and Ground.  In Version 2 there was no way to identify Air Transport.
+							</comment>
+							<v3Changes>With the release of V3.5.0 values were deprecated, added, and relabeled to meet the needs of EMS.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.08" nillable="true" id="eResponse.TypeofDispatchDelay" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.08</number>
+							<name>Type of Dispatch Delay</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The dispatch delays, if any, associated with the dispatch of the EMS unit to the EMS event.</definition>
+							<v2Number>E02_06</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>A dispatch delay is any time delay that occurs from the time of PSAP call (eTimes.01) to the time the unit is notified by dispatch (eTimes.03).</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMSDispatchDelayReason">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.09" nillable="true" id="eResponse.TypeofResponseDelay" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.09</number>
+							<name>Type of Response Delay</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The response delays, if any, of the EMS unit associated with the EMS event.</definition>
+							<v2Number>E02_07</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Rendezvous Transport Unavailable added for situations where there is a wait for an EMS Transport Unit, a Ferry, Air Medical, etc. to return to service.
+							&lt;br/>&lt;br/>A response delay is any time delay that occurs from the time the unit is notified by dispatch (eTimes.03) to the time the unit arrived on scene (eTimes.06). 
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMSUnitDelayReason">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.10" nillable="true" id="eResponse.TypeofSceneDelay" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.10</number>
+							<name>Type of Scene Delay</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The scene delays, if any, of the EMS unit associated with the EMS event.</definition>
+							<v2Number>E02_08</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>A scene delay is any time delay that occurs from the time the unit arrived on scene (eTimes.06) to the time the unit left the scene (eTimes.09).</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMSSceneUnitDelayReason">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.11" nillable="true" id="eResponse.TypeofTransportDelay" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.11</number>
+							<name>Type of Transport Delay</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The transport delays, if any, of the EMS unit associated with the EMS event.</definition>
+							<v2Number>E02_09</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment> 
+							Rendezvous Transport Unavailable added for situations where there is a wait for an EMS Transport Unit, a Ferry, Air Medical, etc.
+							&lt;br/>&lt;br/>A transport delay is any time delay that occurs from the time the unit left the scene (eTimes.09) to the time the patient arrived at the destination (eTimes.10).
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMSTransportUnitDelayReason">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.12" nillable="true" id="eResponse.TypeofTurnAroundDelay" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.12</number>
+							<name>Type of Turn-Around Delay</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The turn-around delays, if any, of EMS unit associated with the EMS event.</definition>
+							<v2Number>E02_10</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Response</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Rendezvous Transport Unavailable added for situations where there is a wait for an EMS Transport Unit, a Ferry, Air Medical, etc. to return to service. 
+&lt;br/>&lt;br/>If a patient is being transported by the unit, turn-around delay is any time delay that occurs from the time the patient arrived at the destination 		(eTimes.11) until the time the unit is back in service (eTimes.13) or unit back at the home location (eTimes.15) [whichever is the greater of the two times]. 
+&lt;br/>&lt;br/>If no patient is being transported by the unit, turn-around delay is any time delay that occurs from the time the unit arrived on scene (eTimes.06) until the unit is back in service (eTimes.13) or the unit back at the home location (eTimes.15) [whichever is the greater of the two times]. 
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMSTurnaroundUnitDelayReason">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eResponse.13" type="EMSVehicleNumber" id="eResponse.EMSVehicleUnitNumber">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.13</number>
+							<name>EMS Vehicle (Unit) Number</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The unique physical vehicle number of the responding unit.</definition>
+							<v2Number>E02_11</v2Number>
+							<usage>Mandatory</usage>
+							<comment>This is recommended to be the State Vehicle Permit Number if unique to the vehicle.  If the vehicle is not licensed by the state, this should be a unique number only associated with a specific vehicle. This element should be populated from dVehicle.01 -  Unit/Vehicle Number.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.14" type="EMSUnitCallSign" id="eResponse.EMSUnitCallSign">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.14</number>
+							<name>EMS Unit Call Sign</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The EMS unit number used to dispatch and communicate with the unit. This may be the same as the EMS Unit/Vehicle Number in many agencies.</definition>
+							<v2Number>E02_12</v2Number>
+							<usage>Mandatory</usage>
+							<comment>"This element could be populated from a list created in dVehicle.03 EMS Unit Call Sign or dConfiguration.16 (Crew Call Sign).</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.16" type="VehicleDispatchLocation" id="eResponse.VehicleDispatchLocation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.16</number>
+							<name>Vehicle Dispatch Location</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The geographic location of the EMS unit or crew at the time of dispatch.</definition>
+							<v2Number>E02_13</v2Number>
+							<usage>Optional</usage>
+							<comment>This element can be populated from dLocation.02 EMS Location Name or dFacility information.  Depending on the information the EMS Agency or State is interested in knowing the following elements can be utilized:
+							&lt;br/>1. dLocation.02 EMS Location Name
+							&lt;br/>2. dFacility.02 Facility Name
+							&lt;br/>3. dFacility.03 Facility Code</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.17" type="GPSLocation" id="eResponse.VehicleDispatchGPSLocation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.17</number>
+							<name>Vehicle Dispatch GPS Location</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The GPS coordinates associated with the EMS unit at the time of dispatch documented in decimal degrees.</definition>
+							<v2Number>E02_15</v2Number>
+							<usage>Optional</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Response</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>The pattern for GPS location is in the format "&lt;span style="font-style:italic">latitude&lt;/span>,&lt;span style="font-style:italic">longitude&lt;/span>" where:
+										  &lt;br/>- &lt;span style="font-style:italic">latitude&lt;/span> has a minimum of -90 and a maximum of 90 with up to 6 decimal places
+										  &lt;br/>- &lt;span style="font-style:italic">longitude&lt;/span> has a minimum of -180 and a maximum of 180 with up to 6 decimal places
+						 </comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.18" type="USNG" id="eResponse.VehicleDispatchUSNationalGridLocation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.18</number>
+							<name>Vehicle Dispatch Location US National Grid Coordinates</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The US National Grid Coordinates for the EMS Vehicle's Dispatch Location.</definition>
+							<usage>Optional</usage>
+							<comment>Standard found at www.fgdc.gov/usng. Used by the EMS components of US Governmental entities such as national parks and military agencies.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.19" type="EMSMileageOdometer" id="eResponse.BeginningOdometerReadingofRespondingVehicle" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.19</number>
+							<name>Beginning Odometer Reading of Responding Vehicle</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The mileage (counter or odometer reading) of the vehicle at the beginning of the call (when the wheels begin moving). If EMS vehicle/unit is via water or air travel document the number in "hours" as it relates to the documentation of Boat, Fixed Wing, or Rotor Craft in eDisposition.16 (EMS Transport Method).</definition>
+							<v2Number>E02_16</v2Number>
+							<usage>Optional</usage>
+							<comment>If a mileage counter is being used instead of an odometer, this value would be 0.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.20" type="EMSMileageOdometer" id="eResponse.OnSceneOdometerReadingofRespondingVehicle" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.20</number>
+							<name>On-Scene Odometer Reading of Responding Vehicle</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The mileage (counter or odometer reading) of the vehicle when it arrives at the scene. If EMS vehicle/unit is via water or air travel document the number in "hours" as it relates to the documentation of Boat, Fixed Wing, or Rotor Craft in eDisposition.16 (EMS Transport Method).</definition>
+							<v2Number>E02_17</v2Number>
+							<usage>Optional</usage>
+							<comment>If using a counter, this is the mileage traveled from dispatch to the scene starting from 0.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.21" type="EMSMileageOdometer" id="eResponse.PatientDestinationOdometerReadingofRespondingVehicle" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.21</number>
+							<name>Patient Destination Odometer Reading of Responding Vehicle</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The mileage (counter or odometer reading) of the vehicle when it arrives at the patient's destination. If EMS vehicle/unit is via water or air travel document the number in "hours" as it relates to the documentation of Boat, Fixed Wing, or Rotor Craft in eDisposition.16 (EMS Transport Method).</definition>
+							<v2Number>E02_18</v2Number>
+							<usage>Optional</usage>
+							<comment>If using a counter, this is the mileage traveled from dispatch to the patient's transport destination starting from 0.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.22" type="EMSMileageOdometer" id="eResponse.EndingOdometerReadingofRespondingVehicle" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.22</number>
+							<name>Ending Odometer Reading of Responding Vehicle</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>If using a counter, this is the mileage traveled beginning with dispatch through the transport of the patient to their destination and ending when back in service, starting from 0. If EMS vehicle/unit is via water or air travel document the number in "hours" as it relates to the documentation of boat, Fixed Wing, or Rotor Craft in eDisposition.16.</definition>
+							<v2Number>E02_19</v2Number>
+							<usage>Optional</usage>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.23" type="EMSResponseMode" id="eResponse.ResponseModetoScene">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.23</number>
+							<name>Response Mode to Scene</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The indication whether the response was emergent or non-emergent. An emergent response is an immediate response.</definition>
+							<v2Number>E02_20</v2Number>
+							<usage>Mandatory</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Information now split between eResponse.23 (Response Mode to Scene) and eResponse.24 (Additional Response Mode Descriptors)</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eResponse.24" nillable="true" id="eResponse.AdditionalResponseModeDescriptors" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eResponse.24</number>
+							<name>Additional Response Mode Descriptors</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The documentation of response mode techniques used for this EMS response.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Descriptors have been added to better describe the EMS Response.  This includes information on whether the EMS event was schedule or unscheduled.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMSAdditionalResponseMode">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EMSAdditionalResponseMode">
+		<xs:annotation>
+			<xs:documentation>The documentation of response mode techniques used for this EMS response..</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2224001">
+				<xs:annotation>
+					<xs:documentation>Intersection Navigation-Against Normal Light  Patterns</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224003">
+				<xs:annotation>
+					<xs:documentation>Intersection Navigation-With Automated Light Changing Technology</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224005">
+				<xs:annotation>
+					<xs:documentation>Intersection Navigation-With Normal Light Patterns</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224007">
+				<xs:annotation>
+					<xs:documentation>Scheduled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224009">
+				<xs:annotation>
+					<xs:documentation>Speed-Enhanced per Local Policy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224011">
+				<xs:annotation>
+					<xs:documentation>Speed-Normal Traffic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224013">
+				<xs:annotation>
+					<xs:documentation>Unscheduled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224015">
+				<xs:annotation>
+					<xs:documentation>Lights and Sirens</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224017">
+				<xs:annotation>
+					<xs:documentation>Lights and No Sirens</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224019">
+				<xs:annotation>
+					<xs:documentation>No Lights or Sirens</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224021">
+				<xs:annotation>
+					<xs:documentation>Initial No Lights or Sirens, Upgraded to Lights and Sirens</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2224023">
+				<xs:annotation>
+					<xs:documentation>Initial Lights and Sirens, Downgraded to No Lights or Sirens</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSDispatchDelayReason">
+		<xs:annotation>
+			<xs:documentation>The dispatch delays, if any, associated with the dispatch of the EMS unit to the patient encounter.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2208001">
+				<xs:annotation>
+					<xs:documentation>Caller (Uncooperative)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208003">
+				<xs:annotation>
+					<xs:documentation>Diversion/Failure (of previous unit)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208005">
+				<xs:annotation>
+					<xs:documentation>High Call Volume</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208007">
+				<xs:annotation>
+					<xs:documentation>Language Barrier</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208009">
+				<xs:annotation>
+					<xs:documentation>Incomplete Address Information Provided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208011">
+				<xs:annotation>
+					<xs:documentation>No EMS Vehicles (Units) Available</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208013">
+				<xs:annotation>
+					<xs:documentation>None/No Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208015">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208017">
+				<xs:annotation>
+					<xs:documentation>Technical Failure (Computer, Phone etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208019">
+				<xs:annotation>
+					<xs:documentation>Communication Specialist-Assignment Error</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208021">
+				<xs:annotation>
+					<xs:documentation>No Receiving MD, Bed, Hospital</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2208023">
+				<xs:annotation>
+					<xs:documentation>Specialty Team Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSIncidentNumber">
+		<xs:annotation>
+			<xs:documentation>The incident number assigned by the 911 Dispatch System</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSMileageOdometer">
+		<xs:annotation>
+			<xs:documentation>The mileage (counter or odometer reading) of the vehicle</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSResponseMode">
+		<xs:annotation>
+			<xs:documentation>The indication whether the response was emergent or non-emergent. An emergent response is an immediate response (typically using lights and sirens).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2223001">
+				<xs:annotation>
+					<xs:documentation>Emergent (Immediate Response)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2223003">
+				<xs:annotation>
+					<xs:documentation>Emergent Downgraded to Non-Emergent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2223005">
+				<xs:annotation>
+					<xs:documentation>Non-Emergent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2223007">
+				<xs:annotation>
+					<xs:documentation>Non-Emergent Upgraded to Emergent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSResponseNumber">
+		<xs:annotation>
+			<xs:documentation>The internal EMS response number which is unique for each EMS Vehicle's (Unit) response to an incident within an EMS Agency.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSSceneUnitDelayReason">
+		<xs:annotation>
+			<xs:documentation>The scene delays, if any, of the unit associated with the patient encounter</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2210001">
+				<xs:annotation>
+					<xs:documentation>Awaiting Air Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210003">
+				<xs:annotation>
+					<xs:documentation>Awaiting Ground Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210005">
+				<xs:annotation>
+					<xs:documentation>Crowd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210007">
+				<xs:annotation>
+					<xs:documentation>Directions/Unable to Locate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210009">
+				<xs:annotation>
+					<xs:documentation>Distance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210011">
+				<xs:annotation>
+					<xs:documentation>Extrication</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210013">
+				<xs:annotation>
+					<xs:documentation>HazMat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210015">
+				<xs:annotation>
+					<xs:documentation>Language Barrier</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210017">
+				<xs:annotation>
+					<xs:documentation>None/No Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210019">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210021">
+				<xs:annotation>
+					<xs:documentation>Patient Access</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210023">
+				<xs:annotation>
+					<xs:documentation>Safety-Crew/Staging</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210025">
+				<xs:annotation>
+					<xs:documentation>Safety-Patient</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210027">
+				<xs:annotation>
+					<xs:documentation>Staff Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210029">
+				<xs:annotation>
+					<xs:documentation>Traffic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210031">
+				<xs:annotation>
+					<xs:documentation>Triage/Multiple Patients</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210033">
+				<xs:annotation>
+					<xs:documentation>Vehicle Crash Involving this Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210035">
+				<xs:annotation>
+					<xs:documentation>Vehicle Failure of this Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210037">
+				<xs:annotation>
+					<xs:documentation>Weather</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2210039">
+				<xs:annotation>
+					<xs:documentation>Mechanical Issue-Unit, Equipment, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSServiceCat">
+		<xs:annotation>
+			<xs:documentation>The type of service or category of service requested of the EMS Agency responding for this specific EMS incident.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2205001">
+				<xs:annotation>
+					<xs:documentation>Emergency Response (Primary Response Area)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205003">
+				<xs:annotation>
+					<xs:documentation>Emergency Response (Intercept)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205009">
+				<xs:annotation>
+					<xs:documentation>Emergency Response (Mutual Aid)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205005">
+				<xs:annotation>
+					<xs:documentation>Hospital-to-Hospital Transfer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205015">
+				<xs:annotation>
+					<xs:documentation>Hospital to Non-Hospital Facility Transfer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205017">
+				<xs:annotation>
+					<xs:documentation>Non-Hospital Facility to Non-Hospital Facility Transfer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205019">
+				<xs:annotation>
+					<xs:documentation>Non-Hospital Facility to Hospital Transfer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205007">
+				<xs:annotation>
+					<xs:documentation>Other Routine Medical Transport</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+
+			<xs:enumeration value="2205011">
+				<xs:annotation>
+					<xs:documentation>Public Assistance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205013">
+				<xs:annotation>
+					<xs:documentation>Standby</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205021">
+				<xs:annotation>
+					<xs:documentation>Support Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205023">
+				<xs:annotation>
+					<xs:documentation>Non-Patient Care Rescue/Extrication</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205025">
+				<xs:annotation>
+					<xs:documentation>Crew Transport Only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205027">
+				<xs:annotation>
+					<xs:documentation>Transport of Organs or Body Parts</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205029">
+				<xs:annotation>
+					<xs:documentation>Mortuary Services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205031">
+				<xs:annotation>
+					<xs:documentation>Mobile Integrated Health Care Encounter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205033">
+				<xs:annotation>
+					<xs:documentation>Evaluation for Special Referral/Intake Programs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205035">
+				<xs:annotation>
+					<xs:documentation>Administrative Operations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSStandByReason">
+		<xs:annotation>
+			<xs:documentation>Added to document the reason for Standby and assist in administrative analysis of EMS service delivery, special event coverage, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2206001">
+				<xs:annotation>
+					<xs:documentation>Disaster Event-Drill/Exercise</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206003">
+				<xs:annotation>
+					<xs:documentation>Disaster Event-Live Staging</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206005">
+				<xs:annotation>
+					<xs:documentation>Education</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206007">
+				<xs:annotation>
+					<xs:documentation>EMS Staging-Improve Coverage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206009">
+				<xs:annotation>
+					<xs:documentation>Fire Support-Rehab</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206011">
+				<xs:annotation>
+					<xs:documentation>Fire Support-Standby</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206013">
+				<xs:annotation>
+					<xs:documentation>Mass Gathering-Concert/Entertainment Event</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206015">
+				<xs:annotation>
+					<xs:documentation>Mass Gathering-Fair/Community Event</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206017">
+				<xs:annotation>
+					<xs:documentation>Mass Gathering-Sporting Event</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206019">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206021">
+				<xs:annotation>
+					<xs:documentation>Public Safety Support</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSTransportUnitDelayReason">
+		<xs:annotation>
+			<xs:documentation>The transport delays, if any, of the unit associated with the patient encounter</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2211001">
+				<xs:annotation>
+					<xs:documentation>Crowd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211003">
+				<xs:annotation>
+					<xs:documentation>Directions/Unable to Locate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211005">
+				<xs:annotation>
+					<xs:documentation>Distance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211007">
+				<xs:annotation>
+					<xs:documentation>Diversion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211009">
+				<xs:annotation>
+					<xs:documentation>HazMat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211011">
+				<xs:annotation>
+					<xs:documentation>None/No Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211013">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211015">
+				<xs:annotation>
+					<xs:documentation>Rendezvous Transport Unavailable</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211017">
+				<xs:annotation>
+					<xs:documentation>Route Obstruction (e.g., Train)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211019">
+				<xs:annotation>
+					<xs:documentation>Safety</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211021">
+				<xs:annotation>
+					<xs:documentation>Staff Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211023">
+				<xs:annotation>
+					<xs:documentation>Traffic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211025">
+				<xs:annotation>
+					<xs:documentation>Vehicle Crash Involving this Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211027">
+				<xs:annotation>
+					<xs:documentation>Vehicle Failure of this Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211029">
+				<xs:annotation>
+					<xs:documentation>Weather</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2211031">
+				<xs:annotation>
+					<xs:documentation>Patient Condition Change (e.g., Unit Stopped)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSTurnaroundUnitDelayReason">
+		<xs:annotation>
+			<xs:documentation>The turn-around delays, if any, associated with the EMS unit associated with the patient encounter</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2212001">
+				<xs:annotation>
+					<xs:documentation>Clean-up</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212003">
+				<xs:annotation>
+					<xs:documentation>Decontamination</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212005">
+				<xs:annotation>
+					<xs:documentation>Distance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212007">
+				<xs:annotation>
+					<xs:documentation>Documentation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212009">
+				<xs:annotation>
+					<xs:documentation>ED Overcrowding / Transfer of Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212011">
+				<xs:annotation>
+					<xs:documentation>Equipment Failure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212013">
+				<xs:annotation>
+					<xs:documentation>Equipment/Supply Replenishment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212015">
+				<xs:annotation>
+					<xs:documentation>None/No Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212017">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212019">
+				<xs:annotation>
+					<xs:documentation>Rendezvous Transport Unavailable</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212021">
+				<xs:annotation>
+					<xs:documentation>Route Obstruction (e.g., Train)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212023">
+				<xs:annotation>
+					<xs:documentation>Staff Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212025">
+				<xs:annotation>
+					<xs:documentation>Traffic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212027">
+				<xs:annotation>
+					<xs:documentation>Vehicle Crash of this Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212029">
+				<xs:annotation>
+					<xs:documentation>Vehicle Failure of this Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212031">
+				<xs:annotation>
+					<xs:documentation>Weather</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2212033">
+				<xs:annotation>
+					<xs:documentation>EMS Crew Accompanies Patient for Facility Procedure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSUnitDelayReason">
+		<xs:annotation>
+			<xs:documentation>The response delays, if any, of the unit associated with the patient encounter</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2209001">
+				<xs:annotation>
+					<xs:documentation>Crowd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209003">
+				<xs:annotation>
+					<xs:documentation>Directions/Unable to Locate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209005">
+				<xs:annotation>
+					<xs:documentation>Distance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209007">
+				<xs:annotation>
+					<xs:documentation>Diversion (Different Incident)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209009">
+				<xs:annotation>
+					<xs:documentation>HazMat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209011">
+				<xs:annotation>
+					<xs:documentation>None/No Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209013">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209015">
+				<xs:annotation>
+					<xs:documentation>Rendezvous Transport Unavailable</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209017">
+				<xs:annotation>
+					<xs:documentation>Route Obstruction (e.g., Train)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209019">
+				<xs:annotation>
+					<xs:documentation>Scene Safety (Not Secure for EMS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209021">
+				<xs:annotation>
+					<xs:documentation>Staff Delay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209023">
+				<xs:annotation>
+					<xs:documentation>Traffic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209025">
+				<xs:annotation>
+					<xs:documentation>Vehicle Crash Involving this Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209027">
+				<xs:annotation>
+					<xs:documentation>Vehicle Failure of this Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209029">
+				<xs:annotation>
+					<xs:documentation>Weather</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209031">
+				<xs:annotation>
+					<xs:documentation>Mechanical Issue-Unit, Equipment, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2209033">
+				<xs:annotation>
+					<xs:documentation>Flight Planning</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMSVehicleNumber">
+		<xs:annotation>
+			<xs:documentation>The unique physical vehicle number of the responding unit.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UnitTransportEquipmentCapability">
+		<xs:annotation>
+			<xs:documentation>The Primary role of the EMS Unit which responded to this specific EMS incident.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2207011">
+				<xs:annotation>
+					<xs:documentation>Air Transport-Helicopter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207013">
+				<xs:annotation>
+					<xs:documentation>Air Transport-Fixed Wing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207015">
+				<xs:annotation>
+					<xs:documentation>Ground Transport (ALS Equipped)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207017">
+				<xs:annotation>
+					<xs:documentation>Ground Transport (BLS Equipped)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207019">
+				<xs:annotation>
+					<xs:documentation>Ground Transport (Critical Care Equipped)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207021">
+				<xs:annotation>
+					<xs:documentation>Non-Transport-Medical Treatment (ALS Equipped)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207023">
+				<xs:annotation>
+					<xs:documentation>Non-Transport-Medical Treatment (BLS Equipped)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207025">
+				<xs:annotation>
+					<xs:documentation>Wheel Chair Van/Ambulette</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207027">
+				<xs:annotation>
+					<xs:documentation>Non-Transport-No Medical Equipment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleDispatchLocation">
+		<xs:annotation>
+			<xs:documentation>The EMS Location or healthcare facility name representing the geographic location of the vehicle at the time of dispatch</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

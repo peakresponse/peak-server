@@ -5,6 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  */
 @Pipe({
   name: 'error',
+  standalone: false,
 })
 export class ErrorPipe implements PipeTransform {
   transform(errors: any[], path: string): any {
