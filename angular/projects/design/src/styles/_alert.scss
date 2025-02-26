@@ -1,10 +1,8 @@
 .alert {
   @include h4-semibold;
-  color: white;
 
   .invalid-feedback {
     @include h4-semibold;
-    color: white;
   }
 }
 

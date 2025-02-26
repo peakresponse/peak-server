@@ -25,7 +25,9 @@
     [pattern]="pattern"
     [type]="inputType"
     class="form-control"
-    [class.is-invalid]="isInvalid" />
+    [class.is-invalid]="isInvalid"
+    [mask]="mask"
+    [dropSpecialCharacters]="false" />
   <input
     *ngIf="pattern && minLength && maxLength"
     [id]="formName"
