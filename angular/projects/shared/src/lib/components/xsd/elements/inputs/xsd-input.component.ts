@@ -19,7 +19,21 @@ export class XsdInputComponent extends XsdElementBaseComponent {
       case 'xs:positiveInteger':
         return 'number';
       default:
-        return 'text';
+        switch (this.type?._attributes?.name) {
+          case 'PhoneNumber':
+            return 'tel';
+          default:
+            return 'text';
+        }
+    }
+  }
+
+  get mask(): string | null {
+    switch (this.type?._attributes?.name) {
+      case 'PhoneNumber':
+        return '000-000-0000';
+      default:
+        return null;
     }
   }
 

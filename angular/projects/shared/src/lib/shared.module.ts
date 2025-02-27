@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SortablejsModule } from '@talentia/ngx-sortablejs';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 import { DropzoneComponent } from './components/dropzone.component';
 import { ErrorComponent } from './components/error.component';
@@ -125,7 +126,16 @@ import { VersionPipe } from './pipes/version.pipe';
     InflectionPipe,
     VersionPipe,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, NgxDropzoneModule, RouterModule, SortablejsModule.forRoot({ animation: 150 })],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgbModule,
+    NgxDropzoneModule,
+    RouterModule,
+    SortablejsModule.forRoot({ animation: 150 }),
+    NgxMaskDirective,
+    NgxMaskPipe,
+  ],
   exports: [
     // components
     DropzoneComponent,
@@ -186,5 +196,6 @@ import { VersionPipe } from './pipes/version.pipe';
     InflectionPipe,
     VersionPipe,
   ],
+  providers: [provideNgxMask()],
 })
 export class SharedModule {}
