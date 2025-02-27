@@ -84,6 +84,7 @@ describe('/api/states', () => {
           ],
           demSchematronVersions: [],
           emsSchematronVersions: [
+            '2025-02-24-048cbea8fea9de6d52ec1ba3a122fe00c99c6bf2',
             '2025-01-09-787762dbebbd0582cd97c0c8fa3891664d2d3381',
             '2024-12-02-71cf31e73328309e3f0a80ee59bb10241c7bebee',
             '2023-06-02-933643233e3928ff9abc6360a34ff4ee117f025b',
@@ -128,6 +129,7 @@ describe('/api/states', () => {
           ],
           demSchematronVersions: [],
           emsSchematronVersions: [
+            '2025-02-24-048cbea8fea9de6d52ec1ba3a122fe00c99c6bf2',
             '2025-01-09-787762dbebbd0582cd97c0c8fa3891664d2d3381',
             '2024-12-02-71cf31e73328309e3f0a80ee59bb10241c7bebee',
             '2023-06-02-933643233e3928ff9abc6360a34ff4ee117f025b',
