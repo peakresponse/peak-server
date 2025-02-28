@@ -9,6 +9,7 @@ import { ApiService } from 'shared';
 })
 export class ValidateVersionDemographicsComponent implements OnInit {
   id: string = '';
+  data: any;
   validationErrors: any;
 
   constructor(
@@ -18,6 +19,7 @@ export class ValidateVersionDemographicsComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
+    this.api.versions.get(this.id).subscribe((response: HttpResponse<any>) => (this.data = response.body));
     this.api.versions.validate(this.id).subscribe((response: HttpResponse<any>) => (this.validationErrors = response.body));
   }
 }

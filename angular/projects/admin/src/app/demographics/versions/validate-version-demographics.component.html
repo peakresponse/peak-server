@@ -11,11 +11,11 @@
   </div>
 </div>
 <div>
-  <div *ngIf="validationErrors === undefined"><shared-loader></shared-loader></div>
+  <div *ngIf="validationErrors === undefined || data === undefined"><shared-loader></shared-loader></div>
   <div *ngIf="validationErrors === null">No validation errors!</div>
-  <div *ngIf="validationErrors">
+  <div *ngIf="validationErrors && data">
     <div *ngFor="let error of validationErrors.errors">
-      {{ error.value }}: {{ error.message }} <a [routerLink]="['/demographics', error.section, error.id]">Fix</a>
+      <admin-demographics-version-validation-error [version]="data" [error]="error"></admin-demographics-version-validation-error>
     </div>
   </div>
 </div>

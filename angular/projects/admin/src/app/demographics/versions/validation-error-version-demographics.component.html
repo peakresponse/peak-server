@@ -1,0 +1,18 @@
+<div>
+  isGrouped: {{ xsd?.isGrouped }}<br />
+  rootElementName: {{ xsd?.rootElementName }}<br />
+  groupElementName: {{ xsd?.groupElementName }}<br />
+  basePath: {{ xsd?.basePath }}
+</div>
+<hr />
+<div>{{ error.value }}: {{ error.message }} <a [routerLink]="['/demographics', error.section, error.id]">Fix</a></div>
+<hr />
+<div>
+  {{ error | json }}
+</div>
+<hr />
+<div>
+  {{ data | json }}
+</div>
+<hr />
+<hr />

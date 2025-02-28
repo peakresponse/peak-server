@@ -11,6 +11,7 @@ import { EditVersionDemographicsComponent } from './edit-version-demographics.co
 import { ListVersionsDemographicsComponent } from './list-versions-demographics.component';
 import { PreviewVersionDemographicsComponent } from './preview-version-demographics.component';
 import { ValidateVersionDemographicsComponent } from './validate-version-demographics.component';
+import { ValidationErrorVersionDemographicsComponent } from './validation-error-version-demographics.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ValidateVersionDemographicsComponent } from './validate-version-demogra
     ListVersionsDemographicsComponent,
     PreviewVersionDemographicsComponent,
     ValidateVersionDemographicsComponent,
+    ValidationErrorVersionDemographicsComponent,
   ],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, VersionsDemographicsRoutingModule],
   providers: [],

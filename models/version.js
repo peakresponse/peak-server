@@ -340,13 +340,17 @@ module.exports = (sequelize, DataTypes) => {
         validationErrors = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet, doc);
       }
       // run the DEM Data Set through state/additional Schematron validation
-      if (!validationErrors && this.demSchematronIds?.length) {
+      if (this.demSchematronIds?.length) {
         const schematrons = await sequelize.models.NemsisSchematron.findAll({ where: { id: this.demSchematronIds } });
         for (const schematron of schematrons) {
           // eslint-disable-next-line no-await-in-loop
-          validationErrors = await schematron.nemsisValidate(this.demDataSet, doc);
-          if (validationErrors) {
-            break;
+          const schematronErrors = await schematron.nemsisValidate(this.demDataSet, doc);
+          if (schematronErrors) {
+            if (validationErrors) {
+              validationErrors.$json.errors = validationErrors.$json.errors.concat(schematronErrors.$json.errors);
+            } else {
+              validationErrors = schematronErrors;
+            }
           }
         }
       }
