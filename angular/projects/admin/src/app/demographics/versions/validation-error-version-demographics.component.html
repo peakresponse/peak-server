@@ -10,9 +10,13 @@
 <div>
   {{ error | json }}
 </div>
-<hr />
-<div>
-  {{ data | json }}
-</div>
+<shared-xsd-form-group
+  *ngIf="xsd && record && stack && basePath && element && value"
+  [xsd]="xsd"
+  [record]="record"
+  [stack]="stack"
+  [basePath]="basePath"
+  [element]="element"
+  [data]="value"></shared-xsd-form-group>
 <hr />
 <hr />

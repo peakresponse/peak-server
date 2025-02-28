@@ -14,8 +14,8 @@
   <div *ngIf="validationErrors === undefined || data === undefined"><shared-loader></shared-loader></div>
   <div *ngIf="validationErrors === null">No validation errors!</div>
   <div *ngIf="validationErrors && data">
-    <div *ngFor="let error of validationErrors.errors">
-      <admin-demographics-version-validation-error [version]="data" [error]="error"></admin-demographics-version-validation-error>
-    </div>
+    <admin-demographics-version-validation-error
+      [version]="data"
+      [error]="validationErrors.errors[0]"></admin-demographics-version-validation-error>
   </div>
 </div>

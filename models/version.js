@@ -366,6 +366,9 @@ module.exports = (sequelize, DataTypes) => {
             if (model === 'Personnel') {
               error.section = 'personnel';
               error.model = 'Employment';
+            } else if (model === 'Agency') {
+              error.section = 'agency';
+              error.model = 'Agency';
             } else {
               error.section = inflection.pluralize(section.toLowerCase());
               error.model = model;
