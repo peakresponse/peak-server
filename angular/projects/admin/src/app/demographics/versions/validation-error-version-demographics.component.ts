@@ -23,6 +23,7 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
   @Input() error: any;
 
   record: any;
+  recordError: any;
   xsd?: XsdSchema;
 
   basePath?: string;
@@ -42,7 +43,7 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
       const { isDraft, nemsisVersion } = this.version ?? {};
       if (Boolean(isDraft) && Boolean(nemsisVersion)) {
         this.schema.getXsd(isDraft, nemsisVersion, get(MAPPING, section)).subscribe((schema: any) => {
-          this.xsd = new XsdSchema('DEM', schema, this.schema.getCommonTypes(false), this.version.demCustomConfiguration, '');
+          this.xsd = new XsdSchema('DEM', schema, this.schema.getCommonTypes(isDraft), this.version.demCustomConfiguration, '');
           if (this.record && this.xsd) {
             this.handleResponse();
           }
@@ -53,6 +54,9 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
           .get(id)
           .subscribe((response: HttpResponse<any>) => {
             this.record = response.body?.draft ?? response.body;
+            if (this.record.validationErrors) {
+              this.recordError = { messages: this.record.validationErrors.errors };
+            }
             if (this.record && this.xsd) {
               this.handleResponse();
             }
@@ -62,6 +66,9 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
           .index()
           .subscribe((response: HttpResponse<any>) => {
             this.record = response.body?.draft ?? response.body;
+            if (this.record.validationErrors) {
+              this.recordError = { messages: this.record.validationErrors.errors };
+            }
             if (this.record && this.xsd) {
               this.handleResponse();
             }
@@ -109,7 +116,9 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
         baseParts.push(part);
       }
     });
-
+    if (this.xsd?.isGrouped) {
+      baseParts.splice(1, 0, this.xsd?.groupElementName);
+    }
     this.basePath = JSONPath.toPathString(baseParts);
     this.stack = stack;
     this.element = element;

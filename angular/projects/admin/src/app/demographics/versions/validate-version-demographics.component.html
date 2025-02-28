@@ -15,7 +15,8 @@
   <div *ngIf="validationErrors === null">No validation errors!</div>
   <div *ngIf="validationErrors && data">
     <admin-demographics-version-validation-error
+      *ngFor="let error of validationErrors.errors"
       [version]="data"
-      [error]="validationErrors.errors[0]"></admin-demographics-version-validation-error>
+      [error]="error"></admin-demographics-version-validation-error>
   </div>
 </div>
