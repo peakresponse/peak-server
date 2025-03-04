@@ -191,7 +191,7 @@ export class XsdElementBaseComponent {
       let predicate: any = { path: `${this.path}[${index}]` };
       let found = find(this.error.messages, predicate) !== undefined;
       if (!found && index === 0) {
-        console.log('?', this.name, this.error.messages, this.basePath, this.path);
+        // console.log('?', this.name, this.error.messages, this.basePath, this.path);
         predicate = { path: this.path };
         found = find(this.error.messages, predicate) !== undefined;
       }

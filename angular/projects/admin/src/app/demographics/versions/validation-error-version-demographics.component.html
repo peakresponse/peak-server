@@ -1,23 +1,12 @@
-<div>
-  isGrouped: {{ xsd?.isGrouped }}<br />
-  rootElementName: {{ xsd?.rootElementName }}<br />
-  groupElementName: {{ xsd?.groupElementName }}<br />
-  basePath: {{ xsd?.basePath }}
-</div>
-<hr />
-<div>{{ error.value }}: {{ error.message }} <a [routerLink]="['/demographics', error.section, error.id]">Fix</a></div>
-<hr />
-<div>
-  {{ error | json }}
-</div>
 <shared-xsd-form-group
-  *ngIf="xsd && record && stack && basePath && element && value"
+  *ngIf="xsd && record && stack && basePath && element && data"
   [xsd]="xsd"
   [record]="record"
   [stack]="stack"
   [basePath]="basePath"
   [element]="element"
-  [data]="value"
+  [data]="data"
   [error]="recordError"></shared-xsd-form-group>
-<hr />
-<hr />
+<div class="mb-4">
+  <a class="btn btn--sm btn--secondary" [routerLink]="link">Go to Record</a>
+</div>

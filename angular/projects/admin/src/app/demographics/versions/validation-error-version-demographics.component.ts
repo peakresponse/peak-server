@@ -28,8 +28,17 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
 
   basePath?: string;
   stack?: any[];
-  element?: any;
-  value?: any;
+  element: any;
+  value: any;
+  data: any;
+
+  get link(): string[] {
+    const routerLink = ['/demographics', this.error?.section ?? ''];
+    if (this.error?.id) {
+      routerLink.push(this.error.id);
+    }
+    return routerLink;
+  }
 
   constructor(
     private api: ApiService,
@@ -99,29 +108,36 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
         parts = parts?.slice(index + 1);
       }
     }
-    // traverse remaining parts to get element and value
+    console.log('1.', parts);
+    // traverse remaining parts to get element and data
     let elements = this.xsd?.childElements ?? [];
     let element: any;
-    let value: any;
+    let data: any;
     const baseParts = ['$'];
     parts?.forEach((part, index) => {
-      if (index == (parts?.length ?? 0) - 1) {
+      if (Number.isNaN(parseInt(part ?? '', 10))) {
         for (element of elements) {
           if (element._attributes?.name === part) {
             break;
           }
         }
-        value = JSONPath({ path: JSONPath.toPathString(baseParts), json: this.record.data, wrap: false });
+      } else {
+        baseParts.pop();
+      }
+      if (index == (parts?.length ?? 0) - 1) {
+        data = JSONPath({ path: JSONPath.toPathString(baseParts), json: this.record.data, wrap: false });
       } else {
         baseParts.push(part);
+        elements = element?.['xs:complexType']?.['xs:sequence']?.['xs:element'] ?? [];
       }
     });
+    console.log('2.', baseParts, element, data);
     if (this.xsd?.isGrouped) {
       baseParts.splice(1, 0, this.xsd?.groupElementName);
     }
     this.basePath = JSONPath.toPathString(baseParts);
     this.stack = stack;
     this.element = element;
-    this.value = value;
+    this.data = data;
   }
 }

@@ -8,15 +8,13 @@
       <li class="nav__item"><a tabIndex="0" class="nav__link" routerLink="../preview">XML</a></li>
       <li class="nav__item"><a tabIndex="0" class="nav__link nav__link--active">Validation</a></li>
     </ul>
-  </div>
-</div>
-<div>
-  <div *ngIf="validationErrors === undefined || data === undefined"><shared-loader></shared-loader></div>
-  <div *ngIf="validationErrors === null">No validation errors!</div>
-  <div *ngIf="validationErrors && data">
-    <admin-demographics-version-validation-error
-      *ngFor="let error of validationErrors.errors"
-      [version]="data"
-      [error]="error"></admin-demographics-version-validation-error>
+    <div *ngIf="validationErrors === undefined || data === undefined"><shared-loader></shared-loader></div>
+    <div *ngIf="validationErrors === null">No validation errors!</div>
+    <div *ngIf="validationErrors && data">
+      <admin-demographics-version-validation-error
+        *ngFor="let error of validationErrors.errors"
+        [version]="data"
+        [error]="error"></admin-demographics-version-validation-error>
+    </div>
   </div>
 </div>
