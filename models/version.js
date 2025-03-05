@@ -336,69 +336,113 @@ module.exports = (sequelize, DataTypes) => {
       // run the DEM Data Set through XSD validation
       let validationErrors = await nemsisXsd.validateDemDataSet(this.nemsisVersion, this.demDataSet, doc);
       // run the DEM Data Set through national Schematron validation
-      if (!validationErrors) {
-        validationErrors = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet, doc);
-      }
+      let schematronErrors = await nemsisSchematron.validateDemDataSet(this.nemsisVersion, this.demDataSet, doc);
       // run the DEM Data Set through state/additional Schematron validation
       if (this.demSchematronIds?.length) {
         const schematrons = await sequelize.models.NemsisSchematron.findAll({ where: { id: this.demSchematronIds } });
         for (const schematron of schematrons) {
           // eslint-disable-next-line no-await-in-loop
-          const schematronErrors = await schematron.nemsisValidate(this.demDataSet, doc);
-          if (schematronErrors) {
-            if (validationErrors) {
-              validationErrors.$json.errors = validationErrors.$json.errors.concat(schematronErrors.$json.errors);
+          const addlSchematronErrors = await schematron.nemsisValidate(this.demDataSet, doc);
+          if (addlSchematronErrors) {
+            if (schematronErrors) {
+              schematronErrors.$json.errors = schematronErrors.$json.errors.concat(addlSchematronErrors.$json.errors);
             } else {
-              validationErrors = schematronErrors;
+              schematronErrors = addlSchematronErrors;
             }
           }
         }
       }
-      if (validationErrors) {
+      // function to extract model/section/id from error path
+      function extract(error) {
+        const { path } = error;
+        const parts = [...path.matchAll(/\$|\['?([^'\]]+)'?\]/g)];
+        let section;
+        let model;
+        let id;
+        if (parts.length > 3) {
+          // infer the model from top level element
+          section = parts[3][1].substring(1);
+          model = section;
+          if (model === 'Personnel') {
+            section = 'personnel';
+            model = 'Employment';
+          } else if (model === 'Agency') {
+            section = 'agency';
+            model = 'Agency';
+          } else {
+            section = inflection.pluralize(section.toLowerCase());
+          }
+          // extract the id (except for Agency which is a singleton)
+          if (model !== 'Agency') {
+            let subpath;
+            let nextIndex;
+            if (model === 'Facility' && parts.length > 6) {
+              subpath = `$${parts[1][0]}${parts[2][0]}${parts[3][0]}${parts[4][0]}${parts[5][0]}${parts[6][0]}`;
+              nextIndex = 7;
+            } else if (parts.length > 4) {
+              subpath = `$${parts[1][0]}${parts[2][0]}${parts[3][0]}${parts[4][0]}`;
+              nextIndex = 5;
+            }
+            if (subpath) {
+              let result = JSONPath({ wrap: false, path: subpath, json: doc });
+              if (!result?._attributes?.UUID && parts.length > nextIndex) {
+                subpath = `${subpath}${parts[nextIndex][0]}`;
+                result = JSONPath({ wrap: false, path: subpath, json: doc });
+              }
+              id = result?._attributes?.UUID;
+            }
+          }
+        }
+        return { section, model, id };
+      }
+      // function to process errors/update models
+      async function processErrors(opts) {
+        if (!opts?.transaction) {
+          return sequelize.transaction((transaction) => processErrors({ ...opts, transaction }));
+        }
+        const { transaction } = opts;
         // for each error, idenfity the model and id for the record it comes from
-        for (const error of validationErrors.$json.errors) {
-          const { path } = error;
-          const parts = [...path.matchAll(/\$|\['?([^'\]]+)'?\]/g)];
-          if (parts.length > 3) {
-            // infer the model from top level element
-            const section = parts[3][1].substring(1);
-            const model = section;
-            if (model === 'Personnel') {
-              error.section = 'personnel';
-              error.model = 'Employment';
-            } else if (model === 'Agency') {
-              error.section = 'agency';
-              error.model = 'Agency';
-            } else {
-              error.section = inflection.pluralize(section.toLowerCase());
-              error.model = model;
-            }
-            if (model !== 'Agency') {
-              let subpath;
-              let nextIndex;
-              if (model === 'Facility' && parts.length > 6) {
-                subpath = `$${parts[1][0]}${parts[2][0]}${parts[3][0]}${parts[4][0]}${parts[5][0]}${parts[6][0]}`;
-                nextIndex = 7;
-              } else if (parts.length > 4) {
-                subpath = `$${parts[1][0]}${parts[2][0]}${parts[3][0]}${parts[4][0]}`;
-                nextIndex = 5;
+        if (validationErrors) {
+          for (const error of validationErrors.$json.errors) {
+            const { section, model, id } = extract(error);
+            error.section = section;
+            error.model = model;
+            error.id = id;
+          }
+        }
+        // for schematron errors, also set on the model object with appropriate path so it will be displayed on edit
+        if (schematronErrors) {
+          for (const error of schematronErrors.$json.errors) {
+            const { section, model, id } = extract(error);
+            error.section = section;
+            error.model = model;
+            error.id = id;
+            // eslint-disable-next-line no-await-in-loop
+            const obj = await sequelize.models[model].findOne({ where: { id }, transaction });
+            if (obj) {
+              obj.validationErrors = obj.validationErrors ?? { errors: [] };
+              obj.validationErrors.errors = obj.validationErrors.errors ?? [];
+              const objError = { ...error };
+              const { rootTag, groupTag } = sequelize.models[model];
+              if (groupTag) {
+                objError.path = `$${objError.path.substring(objError.path.indexOf(`['${groupTag}']`))}`;
+              } else if (rootTag) {
+                objError.path = `$${objError.path.substring(objError.path.indexOf(`['${rootTag}']`) + rootTag.length + 4)}`;
               }
-              if (subpath) {
-                let result = JSONPath({ wrap: false, path: subpath, json: doc });
-                if (!result?._attributes?.UUID && parts.length > nextIndex) {
-                  subpath = `${subpath}${parts[nextIndex][0]}`;
-                  result = JSONPath({ wrap: false, path: subpath, json: doc });
-                }
-                const {
-                  _attributes: { UUID: id },
-                } = result ?? {};
-                error.id = id;
-              }
+              obj.validationErrors.errors.push(objError);
+              // eslint-disable-next-line no-await-in-loop
+              await obj.update({ validationErrors: obj.validationErrors }, { transaction, hooks: false });
             }
           }
-          // for schematron errors, set on the model object with appropriate path so it will be displayed on edit
+          if (validationErrors) {
+            validationErrors.$json.errors = validationErrors.$json.errors.concat(schematronErrors.$json.errors);
+          } else {
+            validationErrors = schematronErrors;
+          }
         }
+        return validationErrors;
       }
+      validationErrors = await processErrors(options);
       return this.update({ isValid: !validationErrors, validationErrors: validationErrors?.$json ?? null }, options ?? {});
     }
 
