@@ -180,8 +180,11 @@ export class XsdElementBaseComponent {
 
   get isInvalid(): boolean {
     if (this.error?.messages) {
-      const predicate: any = { path: this.path };
-      return find(this.error.messages, predicate) !== undefined;
+      for (const message of this.error.messages) {
+        if (message.path?.startsWith(this.path)) {
+          return true;
+        }
+      }
     }
     return false;
   }
