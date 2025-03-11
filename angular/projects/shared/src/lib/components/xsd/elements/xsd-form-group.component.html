@@ -46,8 +46,8 @@
           <shared-xsd-form-group
             [xsd]="xsd"
             [record]="groupModalRecord"
-            [stack]="stack.concat([{ element, path: groupModalPath }])"
-            [basePath]="groupModalPath"
+            [stack]="stack.concat([{ element, path: path + '[' + groupModalIndex + ']' }])"
+            [basePath]="path + '[' + groupModalIndex + ']'"
             [element]="nestedElement"
             [data]="groupModalValue"
             [error]="error"></shared-xsd-form-group>

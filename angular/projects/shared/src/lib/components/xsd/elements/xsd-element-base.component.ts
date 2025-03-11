@@ -161,7 +161,11 @@ export class XsdElementBaseComponent {
     } else {
       // search up stack
       for (let idx = this.stack.length - 1; idx >= 0; idx -= 1) {
-        const { element, path } = this.stack[idx];
+        const { element } = this.stack[idx];
+        let { path } = this.stack[idx];
+        if (this.xsd?.isGrouped) {
+          path = path.replace(this.xsd?.basePath ?? '$', '$');
+        }
         if (element._attributes?.maxOccurs === 'unbounded') {
           let result = JSONPath({ path, json: this.record.data, wrap: false });
           if (!result && path.endsWith('[0]')) {
