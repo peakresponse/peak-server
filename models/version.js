@@ -431,7 +431,7 @@ module.exports = (sequelize, DataTypes) => {
               }
               obj.validationErrors.errors.push(objError);
               // eslint-disable-next-line no-await-in-loop
-              await obj.update({ validationErrors: obj.validationErrors }, { transaction, hooks: false });
+              await obj.update({ isValid: false, validationErrors: obj.validationErrors }, { transaction, hooks: false });
             }
           }
           if (validationErrors) {
