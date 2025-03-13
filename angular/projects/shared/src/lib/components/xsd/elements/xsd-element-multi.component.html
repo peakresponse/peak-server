@@ -17,12 +17,13 @@
       [error]="error"
       [index]="i"
       [selectedValue]="selectedValue"
+      [readOnly]="readOnly"
       [displayOnly]="displayOnly"></shared-xsd-element-nillable>
     <div [class.feedback]="!isInvalidValue(i)" [class.invalid-feedback]="isInvalidValue(i)">
       <span *ngIf="isInvalidValue(i)">{{ errorMessagesForValue(i).join(' ') }}</span>
     </div>
   </div>
-  <div *ngIf="!isDisplayOnly" class="form-field__content">
+  <div *ngIf="!readOnly && !isDisplayOnly" class="form-field__content">
     <button [disabled]="!canAdd" (click)="onAdd()" class="btn btn--sm btn--secondary" type="button">Add</button>
   </div>
 </ng-container>
@@ -34,6 +35,7 @@
     [basePath]="basePath"
     [element]="element"
     [data]="data"
+    [readOnly]="readOnly"
     [error]="error"
     [displayOnly]="displayOnly"></shared-xsd-element-nillable>
 </ng-container>

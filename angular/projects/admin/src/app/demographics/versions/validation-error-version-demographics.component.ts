@@ -108,32 +108,18 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
         parts = parts?.slice(index + 1);
       }
     }
-    console.log('1.', parts);
-    // traverse remaining parts to get element and data
+    // find matching child element
     let elements = this.xsd?.childElements ?? [];
     let element: any;
-    let data: any;
+    for (element of elements) {
+      if (element._attributes?.name === parts?.[0]) {
+        break;
+      }
+    }
+    let data: any = this.record.data;
     const baseParts = ['$'];
-    parts?.forEach((part, index) => {
-      if (Number.isNaN(parseInt(part ?? '', 10))) {
-        for (element of elements) {
-          if (element._attributes?.name === part) {
-            break;
-          }
-        }
-      } else {
-        baseParts.pop();
-      }
-      if (index == (parts?.length ?? 0) - 1) {
-        data = JSONPath({ path: JSONPath.toPathString(baseParts), json: this.record.data, wrap: false });
-      } else {
-        baseParts.push(part);
-        elements = element?.['xs:complexType']?.['xs:sequence']?.['xs:element'] ?? [];
-      }
-    });
-    console.log('2.', baseParts, element, data);
     if (this.xsd?.isGrouped) {
-      baseParts.splice(1, 0, this.xsd?.groupElementName);
+      baseParts.push(this.xsd?.groupElementName);
     }
     this.basePath = JSONPath.toPathString(baseParts);
     this.stack = stack;

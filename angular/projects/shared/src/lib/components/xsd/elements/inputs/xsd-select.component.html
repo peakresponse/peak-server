@@ -1,5 +1,7 @@
 <ng-container *ngIf="isDisplayOnly">
-  <ng-container *ngIf="enumeratedValue as val; else noVal">{{ val }}</ng-container>
+  <ng-container *ngIf="enumeratedValue as val; else noVal"
+    ><span [class.text-readonly]="readOnly">{{ val }}</span></ng-container
+  >
   <ng-template #noVal>&nbsp;</ng-template>
 </ng-container>
 <input
@@ -14,6 +16,8 @@
   [ngbTypeahead]="search"
   [inputFormatter]="formatter"
   [resultFormatter]="formatter"
+  [disabled]="readOnly"
+  [readOnly]="readOnly"
   [editable]="false"
   [selectOnExact]="true"
   [class.is-invalid]="isInvalid"

@@ -18,14 +18,14 @@
           [displayOnly]="true"
           [error]="error"></shared-xsd-element-multi>
       </div>
-      <div class="form-field__subitem">
+      <div *ngIf="!readOnly" class="form-field__subitem">
         <button (click)="showGroupModal(modal, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
         <button *ngIf="i > 0 || !isRequired" (click)="remValue(selectedValue)" type="button" class="btn btn--sm btn--secondary--danger">
           Delete
         </button>
       </div>
     </div>
-    <div *ngIf="isMulti || values?.length === 0 || !values" class="form-field__item">
+    <div *ngIf="!readOnly && (isMulti || values?.length === 0 || !values)" class="form-field__item">
       <button (click)="showGroupModal(modal)" class="btn btn--sm btn--primary" type="button">
         New {{ displayName | inflection: 'singularize' }}
       </button>
@@ -63,6 +63,7 @@
       [basePath]="basePath"
       [element]="element"
       [data]="data"
+      [readOnly]="readOnly"
       [error]="error">
     </shared-xsd-element-multi>
   </ng-container>

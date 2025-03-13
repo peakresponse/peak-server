@@ -22,6 +22,7 @@ export class XsdElementBaseComponent {
   @Input() error: any;
   @Input() index?: number;
   @Input() selectedValue: any;
+  @Input() readOnly = false;
   @Input() displayOnly = false;
   @Input() basePath?: string;
   @Input() stack: any[] = [];
