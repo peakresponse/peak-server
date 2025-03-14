@@ -1,7 +1,8 @@
 <ng-container *ngIf="isDisplayOnly">
-  <ng-container *ngIf="value as val; else noVal"
-    ><span [class.text-readonly]="readOnly">{{ val }}</span></ng-container
-  >
+  <ng-container *ngIf="value as val; else noVal">
+    <span *ngIf="readOnly" class="text-readonly">{{ val }}</span>
+    <ng-container *ngIf="!readOnly">{{ val }}</ng-container>
+  </ng-container>
   <ng-template #noVal>&nbsp;</ng-template>
 </ng-container>
 <ng-container *ngIf="!isDisplayOnly">
