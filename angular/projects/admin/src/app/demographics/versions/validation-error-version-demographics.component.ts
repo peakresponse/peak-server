@@ -21,8 +21,7 @@ const MAPPING = {
 export class ValidationErrorVersionDemographicsComponent implements OnInit {
   @Input() version: any;
   @Input() error: any;
-
-  record: any;
+  @Input() record: any;
   recordError: any;
   xsd?: XsdSchema;
 
@@ -58,35 +57,13 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
           }
         });
       }
-      if (id) {
-        get(this.api, ['demographics', section])
-          .get(id)
-          .subscribe((response: HttpResponse<any>) => {
-            this.record = response.body?.draft ?? response.body;
-            if (this.record.validationErrors) {
-              this.recordError = { messages: this.record.validationErrors.errors };
-            }
-            if (this.record && this.xsd) {
-              this.handleResponse();
-            }
-          });
-      } else {
-        get(this.api, ['demographics', section])
-          .index()
-          .subscribe((response: HttpResponse<any>) => {
-            this.record = response.body?.draft ?? response.body;
-            if (this.record.validationErrors) {
-              this.recordError = { messages: this.record.validationErrors.errors };
-            }
-            if (this.record && this.xsd) {
-              this.handleResponse();
-            }
-          });
-      }
     }
   }
 
   handleResponse() {
+    if (this.record.validationErrors) {
+      this.recordError = { messages: this.record.validationErrors.errors };
+    }
     const { path } = this.error ?? {};
     let parts: string[] | undefined;
     if (path) {

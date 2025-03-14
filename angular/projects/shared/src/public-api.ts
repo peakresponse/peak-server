@@ -68,4 +68,6 @@ export * from './lib/pipes/get.pipe';
 export * from './lib/pipes/inflection.pipe';
 export * from './lib/pipes/version.pipe';
 
+export * from './lib/models';
+
 export * from './lib/shared.module';

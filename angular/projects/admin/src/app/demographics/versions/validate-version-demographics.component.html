@@ -10,11 +10,20 @@
     </ul>
     <div *ngIf="validationErrors === undefined || data === undefined"><shared-loader></shared-loader></div>
     <div *ngIf="validationErrors === null">No validation errors!</div>
-    <div *ngIf="validationErrors && data">
-      <admin-demographics-version-validation-error
-        *ngFor="let error of validationErrors.errors"
-        [version]="data"
-        [error]="error"></admin-demographics-version-validation-error>
-    </div>
+    <form *ngIf="validationErrors && data">
+      <div *ngFor="let section of sections">
+        <h3 class="mb-3">{{ section }}</h3>
+        <ng-container *ngFor="let id of errorsForSection(section)">
+          <div *ngIf="records[section][id]">
+            <h4>{{ records[section][id].description }}</h4>
+            <admin-demographics-version-validation-error
+              *ngFor="let error of errors[section][id]"
+              [version]="data"
+              [record]="records[section][id]"
+              [error]="error"></admin-demographics-version-validation-error>
+          </div>
+        </ng-container>
+      </div>
+    </form>
   </div>
 </div>
