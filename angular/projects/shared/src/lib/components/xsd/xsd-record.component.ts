@@ -10,6 +10,7 @@ import { XsdSchema } from './xsd-schema';
 
 @Component({
   selector: 'shared-xsd-record',
+  styleUrls: ['./xsd-record.component.scss'],
   templateUrl: './xsd-record.component.html',
   standalone: false,
 })

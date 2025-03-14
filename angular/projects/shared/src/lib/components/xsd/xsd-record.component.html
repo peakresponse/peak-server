@@ -23,7 +23,7 @@
         <button (click)="onDeleteDraft()" type="button" class="btn btn--primary">Undo Archive</button>
       </div>
     </ng-container>
-    <fieldset *ngIf="!(isEditingDraft && record.archivedAt)" [disabled]="isLoading">
+    <fieldset class="xsd-record-fieldset" *ngIf="!(isEditingDraft && record.archivedAt)" [disabled]="isLoading">
       <ng-container *ngIf="!template">
         <shared-xsd-form-group
           *ngFor="let element of recordSchema?.childElements"
@@ -39,18 +39,24 @@
         *ngIf="template"
         [ngTemplateOutlet]="template"
         [ngTemplateOutletContext]="{ recordSchema, record, error: recordError }"></ng-template>
-      <div class="d-flex justify-content-between mb-3">
-        <button *ngIf="isNewRecord || isEditingDraft || !record.draft" type="submit" class="btn btn--primary">Save Draft</button>
-        <button *ngIf="isEditingDraft || record.isDraft" (click)="onDeleteDraft()" type="button" class="btn btn--danger">
-          Delete Draft
-        </button>
-        <button
-          *ngIf="!(isNewRecord || isEditingDraft || record.isDraft) && !record.draft"
-          (click)="onArchive()"
-          type="button"
-          class="btn btn--danger">
-          Archive
-        </button>
+      <div class="xsd-record-footer fixed-bottom shadow-lg">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="d-flex justify-content-between">
+              <button *ngIf="isNewRecord || isEditingDraft || !record.draft" type="submit" class="btn btn--primary">Save Draft</button>
+              <button *ngIf="isEditingDraft || record.isDraft" (click)="onDeleteDraft()" type="button" class="btn btn--danger">
+                Delete Draft
+              </button>
+              <button
+                *ngIf="!(isNewRecord || isEditingDraft || record.isDraft) && !record.draft"
+                (click)="onArchive()"
+                type="button"
+                class="btn btn--danger">
+                Archive
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </fieldset>
   </form>
