@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedModule } from 'shared';
 
@@ -21,7 +22,7 @@ import { ValidationErrorVersionDemographicsComponent } from './validation-error-
     ValidateVersionDemographicsComponent,
     ValidationErrorVersionDemographicsComponent,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, SharedModule, VersionsDemographicsRoutingModule],
+  imports: [CommonModule, FormsModule, NgbModule, TranslateModule, SharedModule, VersionsDemographicsRoutingModule],
   providers: [],
 })
 export class VersionsDemographicsModule {}

@@ -12,7 +12,7 @@
     <div *ngIf="validationErrors === null">No validation errors!</div>
     <form *ngIf="validationErrors && data">
       <div *ngFor="let section of sections">
-        <h3 class="mb-3">{{ section }}</h3>
+        <h3 class="mb-3">{{ `section.${section}`|translate }}</h3>
         <ng-container *ngFor="let id of errorsForSection(section)">
           <div *ngIf="records[section][id]">
             <h4>{{ records[section][id].description }}</h4>
