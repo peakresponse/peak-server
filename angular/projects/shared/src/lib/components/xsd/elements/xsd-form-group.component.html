@@ -1,4 +1,4 @@
-<div class="form-field form-field--noclear mb-3" [class.form-field--invalid]="isInvalid" [class.form-field--nonempty]="value">
+<div [id]="name" class="form-field form-field--noclear mb-3" [class.form-field--invalid]="isInvalid" [class.form-field--nonempty]="value">
   <label [for]="formName">
     <span
       >{{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small></span

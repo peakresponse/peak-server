@@ -38,6 +38,7 @@ export * from './lib/components/fields/select-field.component';
 export * from './lib/components/fields/select-state-field.component';
 export * from './lib/components/fields/text-field.component';
 
+export * from './lib/components/xsd/xsd-element';
 export * from './lib/components/xsd/xsd-schema';
 export * from './lib/components/xsd/xsd-base.component';
 export * from './lib/components/xsd/xsd-list.component';
