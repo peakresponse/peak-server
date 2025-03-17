@@ -7,3 +7,14 @@
   left: 12.625rem;
   padding: 1.25rem;
 }
+
+.xsd-record-shortcuts {
+  a {
+    color: var(--bs-primary);
+    text-transform: none;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

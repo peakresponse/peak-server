@@ -63,10 +63,15 @@
   <div *ngIf="record" class="col-md-6 mb-3 position-relative">
     <div class="position-fixed">
       <h4>Jump to:</h4>
-      <ul>
-        <li *ngFor="let element of recordSchema?.childElements">{{ element.displayName }} ({{ element.name }})</li>
+      <ul class="xsd-record-shortcuts h4">
+        <li *ngFor="let element of recordSchema?.childElements">
+          <a [class.text-danger]="hasError(element.name)" (click)="jump(element.name)" tabindex="0"
+            >{{ element.displayName }} ({{ element.name }})</a
+          >
+        </li>
       </ul>
       <p>{{ record.data | json }}</p>
+      <p>Base path: {{ recordSchema?.basePath }}</p>
       <p>{{ recordError | json }}</p>
     </div>
   </div>

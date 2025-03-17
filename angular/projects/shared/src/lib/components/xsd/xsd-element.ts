@@ -98,7 +98,6 @@ export class XsdElement {
     if (!name) {
       name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
     }
-    console.log('?!', name, this.element);
     return name;
   }
 

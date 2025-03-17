@@ -1,5 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, ContentChild, Input, OnDestroy, TemplateRef } from '@angular/core';
+import { Params } from '@angular/router';
 import { EMPTY, Subscription } from 'rxjs';
 
 import { cloneDeep, get } from 'lodash-es';
@@ -54,7 +55,7 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.subscription = this.route.paramMap.subscribe((params) => {
+    this.subscription = this.route.paramMap.subscribe((params: Params) => {
       this.id = params.get('id');
       if (this.id === 'new') {
         this.id = 'new';
@@ -96,6 +97,19 @@ export class XsdRecordComponent extends XsdBaseComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+  }
+
+  hasError(name: string): boolean {
+    return this.recordError?.messages?.find((e: any) => e.path.startsWith(`${this.recordSchema?.basePath ?? ''}['${name}']`));
+  }
+
+  jump(to: string): void {
+    const el = document.querySelector(`[id="${to}"]`);
+    const top = Math.max(
+      0,
+      ((el as HTMLElement)?.offsetTop ?? 0) - (window.innerHeight - 100 - ((el as HTMLElement)?.offsetHeight ?? 0)) / 2,
+    );
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 
   onSubmit() {
