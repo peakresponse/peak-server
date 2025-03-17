@@ -9,6 +9,14 @@
 }
 
 .xsd-record-shortcuts {
+  position: fixed;
+  overflow-y: scroll;
+  height: calc(100% - 12.125rem);
+
+  ul {
+    padding-bottom: 1rem;
+  }
+
   a {
     color: var(--bs-primary);
     text-transform: none;
