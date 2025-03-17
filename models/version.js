@@ -396,7 +396,7 @@ module.exports = (sequelize, DataTypes) => {
         return { section, model, id };
       }
       // function to process errors/update models
-      async function processErrors(opts) {
+      const processErrors = async (opts) => {
         if (!opts?.transaction) {
           return sequelize.transaction((transaction) => processErrors({ ...opts, transaction }));
         }
@@ -417,8 +417,17 @@ module.exports = (sequelize, DataTypes) => {
             error.section = section;
             error.model = model;
             error.id = id;
-            // eslint-disable-next-line no-await-in-loop
-            const obj = await sequelize.models[model].findOne({ where: { id }, transaction });
+            let obj;
+            if (id) {
+              // eslint-disable-next-line no-await-in-loop
+              obj = await sequelize.models[model].findOne({ where: { id }, transaction });
+            } else if (model === 'Agency') {
+              // eslint-disable-next-line no-await-in-loop
+              obj = await this.getAgency({ include: 'draft', transaction });
+              obj = obj.draft ?? obj;
+            } else {
+              throw new Error();
+            }
             if (obj) {
               obj.validationErrors = obj.validationErrors ?? { errors: [] };
               obj.validationErrors.errors = obj.validationErrors.errors ?? [];
@@ -441,7 +450,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
         return validationErrors;
-      }
+      };
       validationErrors = await processErrors(options);
       return this.update({ isValid: !validationErrors, validationErrors: validationErrors?.$json ?? null }, options ?? {});
     }
