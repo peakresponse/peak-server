@@ -1,4 +1,4 @@
-<div class="form-field form-field--noclear mb-3" [class.form-field--invalid]="isInvalid" [class.form-field--nonempty]="value">
+<div [id]="name" class="form-field form-field--noclear mb-3" [class.form-field--invalid]="isInvalid" [class.form-field--nonempty]="value">
   <label [for]="formName">
     <span
       >{{ displayName }}<sup *ngIf="isRequired">*</sup>&nbsp;<small class="font-weight-normal text-muted">({{ name }})</small></span
@@ -16,16 +16,17 @@
           [element]="nestedElement"
           [data]="selectedValue"
           [displayOnly]="true"
+          [readOnly]="readOnly"
           [error]="error"></shared-xsd-element-multi>
       </div>
-      <div class="form-field__subitem">
+      <div *ngIf="!readOnly" class="form-field__subitem">
         <button (click)="showGroupModal(modal, i)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
         <button *ngIf="i > 0 || !isRequired" (click)="remValue(selectedValue)" type="button" class="btn btn--sm btn--secondary--danger">
           Delete
         </button>
       </div>
     </div>
-    <div *ngIf="isMulti || values?.length === 0 || !values" class="form-field__item">
+    <div *ngIf="!readOnly && (isMulti || values?.length === 0 || !values)" class="form-field__item">
       <button (click)="showGroupModal(modal)" class="btn btn--sm btn--primary" type="button">
         New {{ displayName | inflection: 'singularize' }}
       </button>
@@ -46,8 +47,8 @@
           <shared-xsd-form-group
             [xsd]="xsd"
             [record]="groupModalRecord"
-            [stack]="stack.concat([{ element, path: groupModalPath }])"
-            [basePath]="groupModalPath"
+            [stack]="stack.concat([{ element, path: path + '[' + groupModalIndex + ']' }])"
+            [basePath]="path + '[' + groupModalIndex + ']'"
             [element]="nestedElement"
             [data]="groupModalValue"
             [error]="error"></shared-xsd-form-group>
@@ -63,6 +64,7 @@
       [basePath]="basePath"
       [element]="element"
       [data]="data"
+      [readOnly]="readOnly"
       [error]="error">
     </shared-xsd-element-multi>
   </ng-container>

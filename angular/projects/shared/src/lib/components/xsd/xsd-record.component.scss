@@ -1,0 +1,28 @@
+.xsd-record-fieldset {
+  padding-bottom: 7rem;
+}
+
+.xsd-record-footer {
+  background: white;
+  left: 12.625rem;
+  padding: 1.25rem;
+}
+
+.xsd-record-shortcuts {
+  position: fixed;
+  overflow-y: scroll;
+  height: calc(100% - 12.125rem);
+
+  ul {
+    padding-bottom: 1rem;
+  }
+
+  a {
+    color: var(--bs-primary);
+    text-transform: none;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedModule } from 'shared';
 
@@ -11,6 +12,7 @@ import { EditVersionDemographicsComponent } from './edit-version-demographics.co
 import { ListVersionsDemographicsComponent } from './list-versions-demographics.component';
 import { PreviewVersionDemographicsComponent } from './preview-version-demographics.component';
 import { ValidateVersionDemographicsComponent } from './validate-version-demographics.component';
+import { ValidationErrorVersionDemographicsComponent } from './validation-error-version-demographics.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +20,9 @@ import { ValidateVersionDemographicsComponent } from './validate-version-demogra
     ListVersionsDemographicsComponent,
     PreviewVersionDemographicsComponent,
     ValidateVersionDemographicsComponent,
+    ValidationErrorVersionDemographicsComponent,
   ],
-  imports: [CommonModule, FormsModule, NgbModule, SharedModule, VersionsDemographicsRoutingModule],
+  imports: [CommonModule, FormsModule, NgbModule, TranslateModule, SharedModule, VersionsDemographicsRoutingModule],
   providers: [],
 })
 export class VersionsDemographicsModule {}

@@ -7,6 +7,7 @@ import { cloneDeep, filter, find, isEmpty } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
 import { ApiService } from '../../../services/api.service';
+import { XsdElement } from '../xsd-element';
 import { XsdSchema } from '../xsd-schema';
 
 @Component({
@@ -15,13 +16,14 @@ import { XsdSchema } from '../xsd-schema';
 })
 export class XsdElementBaseComponent {
   @Input() xsd?: XsdSchema;
+  @Input() element?: XsdElement;
   @Input() record: any;
-  @Input() element: any;
   @Input() attribute: any;
   @Input() data: any;
   @Input() error: any;
   @Input() index?: number;
   @Input() selectedValue: any;
+  @Input() readOnly = false;
   @Input() displayOnly = false;
   @Input() basePath?: string;
   @Input() stack: any[] = [];
@@ -60,10 +62,7 @@ export class XsdElementBaseComponent {
       }
     } else {
       // check for a type attribute
-      name = this.element?._attributes?.type;
-      if (!name) {
-        name = this.element?.['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?._attributes?.base;
-      }
+      name = this.element?.typeName;
     }
     if (name?.startsWith('xs:')) {
       this._type = {
@@ -125,34 +124,23 @@ export class XsdElementBaseComponent {
   }
 
   get isGroup(): boolean {
-    return this.element?.['xs:complexType']?.['xs:sequence'] !== undefined;
+    return this.element?.isGroup ?? false;
   }
 
   get isGroupUUIDRequired(): boolean {
-    let attributes = this.element?.['xs:complexType']?.['xs:attribute'];
-    if (attributes) {
-      if (!Array.isArray(attributes)) {
-        attributes = [attributes];
-      }
-      for (const attr of attributes) {
-        if (attr._attributes?.name === 'UUID' && attr._attributes?.type === 'UUID') {
-          return attr._attributes?.use === 'required';
-        }
-      }
-    }
-    return false;
+    return this.element?.isGroupUUIDRequired ?? false;
   }
 
   get groupElements(): any[] {
-    return this.element?.['xs:complexType']?.['xs:sequence']?.['xs:element'];
+    return this.element?.groupElements ?? [];
   }
 
   get groupText(): string {
-    return this.element?.['xs:annotation']?.['xs:documentation']._text;
+    return this.element?.groupText ?? '';
   }
 
   get isRequired(): boolean {
-    return this.element?._attributes?.minOccurs !== '0';
+    return this.element?.isRequired ?? false;
   }
 
   get closestMultiElementData(): any {
@@ -161,7 +149,11 @@ export class XsdElementBaseComponent {
     } else {
       // search up stack
       for (let idx = this.stack.length - 1; idx >= 0; idx -= 1) {
-        const { element, path } = this.stack[idx];
+        const { element } = this.stack[idx];
+        let { path } = this.stack[idx];
+        if (this.xsd?.isGrouped) {
+          path = path.replace(this.xsd?.basePath ?? '$', '$');
+        }
         if (element._attributes?.maxOccurs === 'unbounded') {
           let result = JSONPath({ path, json: this.record.data, wrap: false });
           if (!result && path.endsWith('[0]')) {
@@ -175,13 +167,16 @@ export class XsdElementBaseComponent {
   }
 
   get isMulti(): boolean {
-    return this.element?._attributes?.maxOccurs === 'unbounded';
+    return this.element?.isMulti ?? false;
   }
 
   get isInvalid(): boolean {
     if (this.error?.messages) {
-      const predicate: any = { path: this.path };
-      return find(this.error.messages, predicate) !== undefined;
+      for (const message of this.error.messages) {
+        if (message.path?.startsWith(this.path)) {
+          return true;
+        }
+      }
     }
     return false;
   }
@@ -222,11 +217,11 @@ export class XsdElementBaseComponent {
   }
 
   get id(): string {
-    return this.element?._attributes?.id;
+    return this.element?.id ?? '';
   }
 
   get name(): string {
-    return this.element?._attributes?.name;
+    return this.element?.name ?? '';
   }
 
   get path(): string {
@@ -243,20 +238,11 @@ export class XsdElementBaseComponent {
   }
 
   get displayName(): string {
-    let displayName = this.element?.['xs:annotation']?.['xs:documentation']?.nemsisTacDoc?.name?._text;
-    if (!displayName && this.isGroup) {
-      displayName = inflection.titleize(inflection.underscore(this.name?.split('.').pop() ?? ''));
-      /// fix all caps abbreviations from being split (i.e. EMS -> E M S)
-      displayName = displayName.replaceAll(/(?:[A-Z] ){2,}/g, (m: any) => `${m.replaceAll(' ', '')} `);
-      if (this.isMulti) {
-        displayName = inflection.pluralize(displayName);
-      }
-    }
-    return displayName;
+    return this.element?.displayName ?? '';
   }
 
   get displayText(): string {
-    return this.element?.['xs:annotation']?.['xs:documentation']?.nemsisTacDoc?.definition?._text;
+    return this.element?.displayText ?? '';
   }
 
   get formName(): string {
@@ -511,7 +497,7 @@ export class XsdElementBaseComponent {
   }
 
   get isNillable(): boolean {
-    return this.element?._attributes?.nillable === 'true';
+    return this.element?.isNillable ?? false;
   }
 
   get isNil(): boolean {
@@ -542,19 +528,13 @@ export class XsdElementBaseComponent {
   }
 
   get nilValues(): any[] {
-    if (this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute']) {
-      let attributes = this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute'];
-      if (!Array.isArray(attributes)) {
-        attributes = [attributes];
-      }
-      for (let attribute of attributes) {
-        if (attribute._attributes?.name == 'NV') {
-          if (attribute['xs:simpleType']?.['xs:union']?._attributes?.memberTypes) {
-            const types = attribute['xs:simpleType']['xs:union']._attributes.memberTypes.split(' ');
-            return types.map((t: any) => this.xsd?.getType(t));
-          }
-          break;
+    for (let attribute of this.element?.attributes ?? []) {
+      if (attribute._attributes?.name == 'NV') {
+        if (attribute['xs:simpleType']?.['xs:union']?._attributes?.memberTypes) {
+          const types = attribute['xs:simpleType']['xs:union']._attributes.memberTypes.split(' ');
+          return types.map((t: any) => this.xsd?.getType(t));
         }
+        break;
       }
     }
     return [];
@@ -572,15 +552,9 @@ export class XsdElementBaseComponent {
 
   get otherAttributes(): any[] | undefined {
     const otherAttributes: any[] = [];
-    let attributes = this.element['xs:complexType']?.['xs:simpleContent']?.['xs:extension']?.['xs:attribute'];
-    if (attributes) {
-      if (!Array.isArray(attributes)) {
-        attributes = [attributes];
-      }
-      for (const attribute of attributes) {
-        if (attribute._attributes?.name !== 'NV' && attribute._attributes?.name !== 'CorrelationID') {
-          otherAttributes.push(attribute);
-        }
+    for (const attribute of this.element?.attributes ?? []) {
+      if (attribute._attributes?.name !== 'NV' && attribute._attributes?.name !== 'CorrelationID') {
+        otherAttributes.push(attribute);
       }
     }
     return otherAttributes.length ? otherAttributes : undefined;

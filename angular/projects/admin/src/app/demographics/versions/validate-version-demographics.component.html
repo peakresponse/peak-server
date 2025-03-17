@@ -8,14 +8,22 @@
       <li class="nav__item"><a tabIndex="0" class="nav__link" routerLink="../preview">XML</a></li>
       <li class="nav__item"><a tabIndex="0" class="nav__link nav__link--active">Validation</a></li>
     </ul>
-  </div>
-</div>
-<div>
-  <div *ngIf="validationErrors === undefined"><shared-loader></shared-loader></div>
-  <div *ngIf="validationErrors === null">No validation errors!</div>
-  <div *ngIf="validationErrors">
-    <div *ngFor="let error of validationErrors.errors">
-      {{ error.value }}: {{ error.message }} <a [routerLink]="['/demographics', error.section, error.id]">Fix</a>
-    </div>
+    <div *ngIf="validationErrors === undefined || data === undefined"><shared-loader></shared-loader></div>
+    <div *ngIf="validationErrors === null">No validation errors!</div>
+    <form *ngIf="validationErrors && data">
+      <div *ngFor="let section of sections">
+        <h3 class="mb-3">{{ `section.${section}`|translate }}</h3>
+        <ng-container *ngFor="let id of errorsForSection(section)">
+          <div *ngIf="records[section][id]">
+            <h4>{{ records[section][id].description }}</h4>
+            <admin-demographics-version-validation-error
+              *ngFor="let error of errors[section][id]"
+              [version]="data"
+              [record]="records[section][id]"
+              [error]="error"></admin-demographics-version-validation-error>
+          </div>
+        </ng-container>
+      </div>
+    </form>
   </div>
 </div>

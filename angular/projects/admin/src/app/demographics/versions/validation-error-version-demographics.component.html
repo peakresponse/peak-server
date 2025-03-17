@@ -1,0 +1,13 @@
+<shared-xsd-form-group
+  *ngIf="xsd && record && stack && basePath && element && data"
+  [xsd]="xsd"
+  [record]="record"
+  [stack]="stack"
+  [basePath]="basePath"
+  [element]="element"
+  [data]="data"
+  [readOnly]="true"
+  [error]="recordError"></shared-xsd-form-group>
+<div class="mb-4">
+  <a class="btn btn--sm btn--secondary" [routerLink]="link">Go to Record</a>
+</div>

@@ -1,5 +1,8 @@
 <ng-container *ngIf="isDisplayOnly">
-  <ng-container *ngIf="value as val; else noVal">{{ val }}</ng-container>
+  <ng-container *ngIf="value as val; else noVal">
+    <span *ngIf="readOnly" class="text-readonly">{{ val }}</span>
+    <ng-container *ngIf="!readOnly">{{ val }}</ng-container>
+  </ng-container>
   <ng-template #noVal>&nbsp;</ng-template>
 </ng-container>
 <ng-container *ngIf="!isDisplayOnly">
@@ -13,6 +16,8 @@
     [minLength]="minLength"
     [maxLength]="maxLength"
     [type]="inputType"
+    [disabled]="readOnly"
+    [readOnly]="readOnly"
     class="form-control"
     [class.is-invalid]="isInvalid" />
   <input
@@ -24,6 +29,8 @@
     (paste)="onPaste($event)"
     [pattern]="pattern"
     [type]="inputType"
+    [disabled]="readOnly"
+    [readOnly]="readOnly"
     class="form-control"
     [class.is-invalid]="isInvalid"
     [mask]="mask"
@@ -39,6 +46,8 @@
     [minLength]="minLength"
     [maxLength]="maxLength"
     [type]="inputType"
+    [disabled]="readOnly"
+    [readOnly]="readOnly"
     class="form-control"
     [class.is-invalid]="isInvalid" />
   <input
@@ -51,6 +60,8 @@
     [min]="min"
     [max]="max"
     [type]="inputType"
+    [disabled]="readOnly"
+    [readOnly]="readOnly"
     class="form-control"
     [class.is-invalid]="isInvalid" />
   <input
@@ -63,6 +74,8 @@
     [step]="0.1 * fractionDigits"
     [max]="'9'.repeat(totalDigits - fractionDigits) + '.' + '9'.repeat(fractionDigits)"
     [type]="inputType"
+    [disabled]="readOnly"
+    [readOnly]="readOnly"
     class="form-control"
     [class.is-invalid]="isInvalid" />
   <input
@@ -73,6 +86,8 @@
     (input)="onInput($event)"
     (paste)="onPaste($event)"
     [type]="inputType"
+    [disabled]="readOnly"
+    [readOnly]="readOnly"
     class="form-control"
     [class.is-invalid]="isInvalid" />
 </ng-container>

@@ -38,6 +38,8 @@ export * from './lib/components/fields/select-field.component';
 export * from './lib/components/fields/select-state-field.component';
 export * from './lib/components/fields/text-field.component';
 
+export * from './lib/components/xsd/xsd-element';
+export * from './lib/components/xsd/xsd-schema';
 export * from './lib/components/xsd/xsd-base.component';
 export * from './lib/components/xsd/xsd-list.component';
 export * from './lib/components/xsd/xsd-record.component';
@@ -66,5 +68,7 @@ export * from './lib/pipes/error.pipe';
 export * from './lib/pipes/get.pipe';
 export * from './lib/pipes/inflection.pipe';
 export * from './lib/pipes/version.pipe';
+
+export * from './lib/models';
 
 export * from './lib/shared.module';
