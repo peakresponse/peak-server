@@ -64,7 +64,6 @@ module.exports = {
         defaultValue: false,
       },
       usage: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       is_nillable: {
@@ -77,6 +76,14 @@ module.exports = {
       },
       definition: {
         type: Sequelize.TEXT,
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
     });
     await queryInterface.addIndex('nemsis_elements', ['nemsis_version', 'data_set', 'name'], {
