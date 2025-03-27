@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgencyService, UserService } from 'shared';
 
 import { ListNemsisComponent } from './list-nemsis.component';
+import { NemsisComponent } from './nemsis.component';
 
 const appRoutes: Routes = [
   {
@@ -13,7 +14,12 @@ const appRoutes: Routes = [
       agency: AgencyService,
       user: UserService,
     },
-    children: [],
+    children: [
+      {
+        path: ':nemsisVersion',
+        component: NemsisComponent,
+      },
+    ],
   },
 ];
 

@@ -540,6 +540,15 @@ export class ApiService {
     },
   };
 
+  nemsisElements = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/nemsis/elements', params);
+    },
+    import: (nemsisVersion: string): Observable<any> => {
+      return this.post('/api/nemsis/elements/import', { nemsisVersion });
+    },
+  };
+
   nemsisSchematrons = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/nemsis/schematrons', params);
