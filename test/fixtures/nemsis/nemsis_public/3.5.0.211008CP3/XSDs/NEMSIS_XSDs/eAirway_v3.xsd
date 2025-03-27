@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eAirways">
+		<xs:sequence>
+			<xs:element name="eAirway.AirwayGroup" id="eAirway.AirwayGroup" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold Airway information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eAirway.01" nillable="true" id="eAirway.IndicationsforInvasiveAirway" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eAirway.01</number>
+										<name>Indications for Invasive Airway</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The clinical indication for performing invasive airway management.</definition>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+										</performanceMeasuresGroup>
+										<v3Changes>Added to better document airway management.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="AirwayIndications">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eAirway.ConfirmationGroup" id="eAirway.ConfirmationGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about the confirmation methods.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eAirway.02" nillable="true" id="eAirway.DateTimeAirwayDevicePlacementConfirmation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eAirway.02</number>
+													<name>Date/Time Airway Device Placement Confirmation</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The date and time the airway device placement was confirmed.</definition>
+													<usage>Recommended</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>SAD=Supraglottic Airway Device
+										  	&lt;br/>&lt;br/>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+													<v3Changes>Added to better document airway management.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="DateTimeType">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eAirway.03" nillable="true" id="eAirway.AirwayDeviceBeingConfirmed" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eAirway.03</number>
+													<name>Airway Device Being Confirmed</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The airway device in which placement is being confirmed.</definition>
+													<usage>Recommended</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+													</performanceMeasuresGroup>
+													<v3Changes>Added to better document airway management. SAD means Supraglottic Airway  Device.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="DeviceBeingConfirmed">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eAirway.04" nillable="true" id="eAirway.AirwayDevicePlacementConfirmedMethods" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eAirway.04</number>
+													<name>Airway Device Placement Confirmed Method</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The method used to confirm the airway device placement.</definition>
+													<usage>Recommended</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>If the invasive airway is confirmed via multiple methods each method should be documented individually by time, method, and type of individual.</comment>
+													<v3Changes>Added to better document airway management.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="DeviceConfirmedMethods">
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eAirway.05" type="TubeDepth" id="eAirway.TubeDepth" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eAirway.05</number>
+													<name>Tube Depth</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The measurement at the patient's teeth/lip of the tube depth in centimeters (cm) of the invasive airway placed.</definition>
+													<usage>Optional</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>Tube Depth added to better document the initial placement of the airway device and subsequent assessments.</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eAirway.06" nillable="true" id="eAirway.TypeofIndividualConfirmingAirwayDevicePlacement" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eAirway.06</number>
+													<name>Type of Individual Confirming Airway Device Placement</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The type of individual who confirmed the airway device placement.</definition>
+													<usage>Recommended</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+													</performanceMeasuresGroup>
+													<v3Changes>Added to better document airway management.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="IndividualDetails">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eAirway.07" nillable="true" id="eAirway.CrewMemberID" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eAirway.07</number>
+													<name>Crew Member ID</name>
+													<national>No</national>
+													<state>Yes</state>
+													<definition>The statewide assigned ID number of the EMS crew member confirming the airway placement.</definition>
+													<usage>Recommended</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+													</performanceMeasuresGroup>
+													<v3Changes>Added to better document airway management.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="CrewMemberID">
+													<xs:attribute name="NV" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+								<xs:attribute name="ProcedureGroupCorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eAirway.08" nillable="true" id="eAirway.AirwayComplicationsEncountered" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eAirway.08</number>
+										<name>Airway Complications Encountered</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The airway management complications encountered during the patient care episode.</definition>
+										<usage>Recommended</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+										</performanceMeasuresGroup>
+										<v3Changes>Added to better document airway management.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ComplicationsEncountered">
+										<xs:attribute name="NV" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eAirway.09" id="eAirway.SuspectedReasonsforFailedAirwayManagement" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eAirway.09</number>
+										<name>Suspected Reasons for Failed Airway Management</name>
+										<national>No</national>
+										<state>Yes</state>
+										<definition>The reason(s) the airway was unable to be successfully managed.</definition>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+										</performanceMeasuresGroup>
+										<v3Changes>Added to better document airway management.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ReasonsForFailure">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eAirway.10" type="DateTimeType" id="eAirway.DateTimeDecisiontoManagethePatientwithanInvasiveAirway" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eAirway.10</number>
+										<name>Date/Time Decision to Manage the Patient with an Invasive Airway</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date and time the decision was made to manage the patient's airway with an invasive airway device.</definition>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+										<v3Changes>Added to better document airway management.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eAirway.11" type="DateTimeType" id="eAirway.DateTimeInvasiveAirwayPlacementAttemptsAbandoned" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eAirway.11</number>
+										<name>Date/Time Invasive Airway Placement Attempts Abandoned</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date and time that the invasive airway attempts were abandoned for the patient.</definition>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+										<v3Changes>Added to better document airway management.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AirwayIndications">
+		<xs:annotation>
+			<xs:documentation>The clinical indication for performing invasive airway management</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4001001">
+				<xs:annotation>
+					<xs:documentation>Adequate Airway Reflexes/Effort, Potential for Compromise</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4001003">
+				<xs:annotation>
+					<xs:documentation>Airway Reflex Compromised</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4001005">
+				<xs:annotation>
+					<xs:documentation>Apnea or Agonal Respirations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4001007">
+				<xs:annotation>
+					<xs:documentation>Illness Involving Airway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4001009">
+				<xs:annotation>
+					<xs:documentation>Injury Involving Airway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4001011">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4001013">
+				<xs:annotation>
+					<xs:documentation>Ventilatory Effort Compromised</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ComplicationsEncountered">
+		<xs:annotation>
+			<xs:documentation>The airway management complications encountered during the patient care episode</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4008001">
+				<xs:annotation>
+					<xs:documentation>Adverse Event from Facilitating Drugs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008003">
+				<xs:annotation>
+					<xs:documentation>Bradycardia (&lt;50)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008005">
+				<xs:annotation>
+					<xs:documentation>Cardiac Arrest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008007">
+				<xs:annotation>
+					<xs:documentation>Esophageal Intubation-Delayed Detection (After Tube Secured)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008009">
+				<xs:annotation>
+					<xs:documentation>Esophageal Intubation-Detected in Emergency Department</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008011">
+				<xs:annotation>
+					<xs:documentation>Failed Intubation Effort</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008013">
+				<xs:annotation>
+					<xs:documentation>Injury or Trauma to Patient from Airway Management Effort</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008015">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008017">
+				<xs:annotation>
+					<xs:documentation>Oxygen Desaturation (&lt;90%)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008019">
+				<xs:annotation>
+					<xs:documentation>Patient Vomiting/Aspiration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008021">
+				<xs:annotation>
+					<xs:documentation>Tube Dislodged During Transport/Patient Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4008023">
+				<xs:annotation>
+					<xs:documentation>Tube Was Not in Correct Position when EMS Crew/Team Assumed Care of the Patient</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeviceBeingConfirmed">
+		<xs:annotation>
+			<xs:documentation>The airway device in which placement is being confirmed</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4003001">
+				<xs:annotation>
+					<xs:documentation>Cricothyrotomy Tube</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4003003">
+				<xs:annotation>
+					<xs:documentation>Endotracheal Tube</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4003005">
+				<xs:annotation>
+					<xs:documentation>Other-Invasive Airway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4003007">
+				<xs:annotation>
+					<xs:documentation>SAD-Combitube</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4003009">
+				<xs:annotation>
+					<xs:documentation>SAD-King</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4003011">
+				<xs:annotation>
+					<xs:documentation>SAD-LMA</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4003013">
+				<xs:annotation>
+					<xs:documentation>SAD-Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4003015">
+				<xs:annotation>
+					<xs:documentation>Tracheostomy Tube</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeviceConfirmedMethods">
+		<xs:annotation>
+			<xs:documentation>The method or methods used to confirm the airway device placement</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4004001">
+				<xs:annotation>
+					<xs:documentation>Auscultation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004003">
+				<xs:annotation>
+					<xs:documentation>Bulb/Syringe Aspiration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004005">
+				<xs:annotation>
+					<xs:documentation>Colorimetric ETCO2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004007">
+				<xs:annotation>
+					<xs:documentation>Condensation in Tube</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004009">
+				<xs:annotation>
+					<xs:documentation>Digital (Numeric) ETCO2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004011">
+				<xs:annotation>
+					<xs:documentation>Direct Re-Visualization of Tube in Place</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004013">
+				<xs:annotation>
+					<xs:documentation>Endotracheal Tube Whistle (BAAM, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004015">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004017">
+				<xs:annotation>
+					<xs:documentation>Visualization of Vocal Cords</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004019">
+				<xs:annotation>
+					<xs:documentation>Waveform ETCO2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4004021">
+				<xs:annotation>
+					<xs:documentation>Chest Rise</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IndividualDetails">
+		<xs:annotation>
+			<xs:documentation>The individual who performed the airway device place</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4006001">
+				<xs:annotation>
+					<xs:documentation>Another Person on the Same Crew</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4006003">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4006005">
+				<xs:annotation>
+					<xs:documentation>Person Performing Intubation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4006007">
+				<xs:annotation>
+					<xs:documentation>Receiving Air Medical/EMS Crew</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4006009">
+				<xs:annotation>
+					<xs:documentation>Receiving Hospital Team</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReasonsForFailure">
+		<xs:annotation>
+			<xs:documentation>The reason(s) the airway was unable to be successfully managed</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4009001">
+				<xs:annotation>
+					<xs:documentation>Difficult Patient Airway Anatomy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009003">
+				<xs:annotation>
+					<xs:documentation>ETI Attempted, but Arrived At Destination Facility Before Accomplished</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009005">
+				<xs:annotation>
+					<xs:documentation>Facial or Oral Trauma</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009007">
+				<xs:annotation>
+					<xs:documentation>Inability to Expose Vocal Cords</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009009">
+				<xs:annotation>
+					<xs:documentation>Inadequate Patient Relaxation/Presence of Protective Airway Reflexes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009011">
+				<xs:annotation>
+					<xs:documentation>Jaw Clenched (Trismus)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009013">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009015">
+				<xs:annotation>
+					<xs:documentation>Poor Patient Access</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009017">
+				<xs:annotation>
+					<xs:documentation>Secretions/Blood/Vomit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4009019">
+				<xs:annotation>
+					<xs:documentation>Unable to Position or Access Patient</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TubeDepth">
+		<xs:annotation>
+			<xs:documentation>The measurement at the lip of the tube depth in centimeters (cm) of the invasive airway placed.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="4"/>
+			<xs:maxInclusive value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

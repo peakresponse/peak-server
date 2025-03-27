@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eDispatch" id="eDispatch.DispatchInformation">
+		<xs:sequence>
+			<xs:element name="eDispatch.01" type="DispatchReason" id="eDispatch.DispatchReason">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eDispatch.01</number>
+							<name>Dispatch Reason</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The dispatch reason reported to the responding unit.</definition>
+							<v2Number>E03_01</v2Number>
+							<usage>Mandatory</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>
+Added Pandemic/Epidemic/Outbreak. 
+&lt;br/>Added Automated Crash Notification 
+&lt;br/>Added Healthcare Professional Admission 
+&lt;br/>Added Transfer/Interfacility/Palliative Care 
+&lt;br/>- Other entries expanded based on current national EMD Dispatch List							
+						</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eDispatch.02" nillable="true" id="eDispatch.EMDPerformed">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eDispatch.02</number>
+							<name>EMD Performed</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indication of whether Emergency Medical Dispatch was performed for this EMS event.</definition>
+							<v2Number>E03_02</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EMDPerformed">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eDispatch.03" type="EMDCardNumber" id="eDispatch.EMDCardNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eDispatch.03</number>
+							<name>EMD Card Number</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The EMD card number reported by dispatch, consisting of the card number, dispatch level, and dispatch mode.</definition>
+							<v2Number>E03_03</v2Number>
+							<usage>Optional</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eDispatch.04" type="ComputerAidedDispatchCADNameorID" id="eDispatch.ComputerAidedDispatchCADNameorID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eDispatch.04</number>
+							<name>Dispatch Center Name or ID</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The name or ID of the dispatch center providing electronic data to the PCR for the EMS agency, if applicable.</definition>
+							<usage>Optional</usage>
+							<comment>This element can be used to identify the dispatch center (Primary or Secondary Public Safety Answering Point - PSAP) that dispatches the EMS agency.  If the EMS agency is able to populate the Patient Care Report (PCR) with CAD specific details (times, incident address information, crew information, EMD, etc.) the name or ID of the dispatch center should be documented.</comment>
+							<v3Changes>Added to the dataset to assist in identifying the CAD / dispatch center providing information to the EMS agency and ePCR when there are multiple dispatch centers sending resources to the same EMS incident.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eDispatch.05" type="DispatchPriority" id="eDispatch.DispatchPriorityPatientAcuity" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eDispatch.05</number>
+							<name>Dispatch Priority (Patient Acuity)</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The actual, apparent, or potential acuity of the patient's condition as determined through information obtained during the EMD process.</definition>
+							<usage>Optional</usage>
+							<comment>
+&lt;br/>The use of acuity values vary by EMS agency. Some systems may utilize fewer than four levels and some more. The use of four levels is to capture the majority and allow for the inclusion of the NHTSA National EMS Core Content definitions for patient acuity, specifically: Critical, Emergent, and Lower Acuity. 
+&lt;br/>
+&lt;br/>&lt;span style="color:red">Provided below is an example application only. This example bears no relationship to any particular federal, state, or agency billing requirement. &lt;/span>
+&lt;br/>
+&lt;br/>For EMS Agencies and CAD / EMD systems utilizing Alpha-Echo, Omega levels for determining the priority level for dispatch of the EMS unit, the recommended mapping is: 
+&lt;br/>
+&lt;table cellpadding="2px" cellspacing="0px" border="1px">
+&lt;tr>
+&lt;td>Echo = Critical&lt;/td>&lt;td>Charlie = Emergent&lt;/td>&lt;td>Alpha = Lower Acuity&lt;/td>
+&lt;/tr>&lt;tr>
+&lt;td>Delta = Critical&lt;/td>&lt;td>Bravo = Emergent&lt;/td>&lt;td>Omega = Non-Acute&lt;/td>
+&lt;/tr>&lt;/table>
+&lt;br/>Patient Acuity definitions related to "Critical, Emergent, and Lower Acuity" can be found in the National EMS Core Content document from NHTSA EMS (DOT HS 809-898 July 2005) at 
+http://www.nhtsa.gov/people/injury/ems/emscorecontent/images/EMSCoreContent.pdf  
+&lt;br/>
+&lt;br/>For Air Medical Transports the most appropriate values choices should be limited to two: Emergent and Non-Acute.				
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eDispatch.06" type="UnitDispatchedCADRecordID" id="eDispatch.UnitDispatchedCADRecordID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eDispatch.06</number>
+							<name>Unit Dispatched CAD Record ID</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The unique ID assigned by the CAD system for the specific unit response.</definition>
+							<v2Number/>
+							<usage>Optional</usage>
+							<comment>The Unit Dispatched CAD Record ID is populated from a CAD system. This information will not be known to the EMS professional. 
+  &lt;br/>&lt;br/>
+Use Case: Some CAD systems may use the Unit Dispatched CAD Record ID as the Patient Care Report Number (eRecord.01). This may also be a GUID from a CAD system. A GUID for the CAD push to remain unique as updates are sent from CAD. This could be a stream and unique to the record or patient depending on the capabilities of the CAD system. How the Unit Dispatched CAD Record ID is created could vary as it could be a concatenation of multiple elements or a true GUID.</comment>
+							<performanceMeasuresGroup/>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="UnitDispatchedCADRecordID">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DispatchReason">
+		<xs:annotation>
+			<xs:documentation>The dispatch reason reported to the responding unit.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2301001">
+				<xs:annotation>
+					<xs:documentation>Abdominal Pain/Problems</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301003">
+				<xs:annotation>
+					<xs:documentation>Allergic Reaction/Stings</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301005">
+				<xs:annotation>
+					<xs:documentation>Animal Bite</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301007">
+				<xs:annotation>
+					<xs:documentation>Assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301009">
+				<xs:annotation>
+					<xs:documentation>Automated Crash Notification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301011">
+				<xs:annotation>
+					<xs:documentation>Back Pain (Non-Traumatic)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301013">
+				<xs:annotation>
+					<xs:documentation>Breathing Problem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301015">
+				<xs:annotation>
+					<xs:documentation>Burns/Explosion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301017">
+				<xs:annotation>
+					<xs:documentation>Carbon Monoxide/Hazmat/Inhalation/CBRN</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301019">
+				<xs:annotation>
+					<xs:documentation>Cardiac Arrest/Death</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301021">
+				<xs:annotation>
+					<xs:documentation>Chest Pain (Non-Traumatic)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301023">
+				<xs:annotation>
+					<xs:documentation>Choking</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301025">
+				<xs:annotation>
+					<xs:documentation>Convulsions/Seizure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301027">
+				<xs:annotation>
+					<xs:documentation>Diabetic Problem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301029">
+				<xs:annotation>
+					<xs:documentation>Electrocution/Lightning</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301031">
+				<xs:annotation>
+					<xs:documentation>Eye Problem/Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301033">
+				<xs:annotation>
+					<xs:documentation>Falls</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301035">
+				<xs:annotation>
+					<xs:documentation>Fire</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301037">
+				<xs:annotation>
+					<xs:documentation>Headache</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301039">
+				<xs:annotation>
+					<xs:documentation>Healthcare Professional/Admission</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301041">
+				<xs:annotation>
+					<xs:documentation>Heart Problems/AICD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301043">
+				<xs:annotation>
+					<xs:documentation>Heat/Cold Exposure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301045">
+				<xs:annotation>
+					<xs:documentation>Hemorrhage/Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301047">
+				<xs:annotation>
+					<xs:documentation>Industrial Accident/Inaccessible Incident/Other Entrapments (Non-Vehicle)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301049">
+				<xs:annotation>
+					<xs:documentation>Medical Alarm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301051">
+				<xs:annotation>
+					<xs:documentation>No Other Appropriate Choice</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301053">
+				<xs:annotation>
+					<xs:documentation>Overdose/Poisoning/Ingestion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301055">
+				<xs:annotation>
+					<xs:documentation>Pandemic/Epidemic/Outbreak</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301057">
+				<xs:annotation>
+					<xs:documentation>Pregnancy/Childbirth/Miscarriage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301059">
+				<xs:annotation>
+					<xs:documentation>Psychiatric Problem/Abnormal Behavior/Suicide Attempt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301061">
+				<xs:annotation>
+					<xs:documentation>Sick Person</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301063">
+				<xs:annotation>
+					<xs:documentation>Stab/Gunshot Wound/Penetrating Trauma</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301065">
+				<xs:annotation>
+					<xs:documentation>Standby</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301067">
+				<xs:annotation>
+					<xs:documentation>Stroke/CVA</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301069">
+				<xs:annotation>
+					<xs:documentation>Traffic/Transportation Incident</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301071">
+				<xs:annotation>
+					<xs:documentation>Transfer/Interfacility/Palliative Care</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301073">
+				<xs:annotation>
+					<xs:documentation>Traumatic Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301075">
+				<xs:annotation>
+					<xs:documentation>Well Person Check</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301077">
+				<xs:annotation>
+					<xs:documentation>Unconscious/Fainting/Near-Fainting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301079">
+				<xs:annotation>
+					<xs:documentation>Unknown Problem/Person Down</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301081">
+				<xs:annotation>
+					<xs:documentation>Drowning/Diving/SCUBA Accident</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301083">
+				<xs:annotation>
+					<xs:documentation>Airmedical Transport</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301085">
+				<xs:annotation>
+					<xs:documentation>Altered Mental Status</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301087">
+				<xs:annotation>
+					<xs:documentation>Intercept</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301089">
+				<xs:annotation>
+					<xs:documentation>Nausea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301091">
+				<xs:annotation>
+					<xs:documentation>Vomiting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ComputerAidedDispatchCADNameorID">
+		<xs:annotation>
+			<xs:documentation>The name or ID of the dispatch center providing electronic data to the PCR for the EMS agency, if applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DispatchPriority">
+		<xs:annotation>
+			<xs:documentation>The actual, apparent, or potential acuity of the patient's condition as determined through information obtained during the EMD process.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2305001">
+				<xs:annotation>
+					<xs:documentation>Critical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2305003">
+				<xs:annotation>
+					<xs:documentation>Emergent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2305005">
+				<xs:annotation>
+					<xs:documentation>Lower Acuity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2305007">
+				<xs:annotation>
+					<xs:documentation>Non-Acute [e.g., Scheduled Transfer  or Standby]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMDCardNumber">
+		<xs:annotation>
+			<xs:documentation>The EMD card number reported by dispatch, consisting of the card number, dispatch level, and dispatch mode</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMDPerformed">
+		<xs:annotation>
+			<xs:documentation>Indication of whether Emergency Medical Dispatch was performed for this EMS event.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2302001">
+				<xs:annotation>
+					<xs:documentation>No</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2302003">
+				<xs:annotation>
+					<xs:documentation>Yes, With Pre-Arrival Instructions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2302005">
+				<xs:annotation>
+					<xs:documentation>Yes, Without Pre-Arrival Instructions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2302007">
+				<xs:annotation>
+					<xs:documentation>Yes, Unknown if Pre-Arrival Instructions Given</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

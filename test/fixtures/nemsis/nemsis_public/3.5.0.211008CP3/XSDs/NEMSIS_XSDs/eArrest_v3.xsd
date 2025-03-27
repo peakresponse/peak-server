@@ -1,0 +1,1174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eArrest" id="eArrest.Arrest">
+		<xs:sequence>
+			<xs:element name="eArrest.01" nillable="true" id="eArrest.CardiacArrest">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.01</number>
+							<name>Cardiac Arrest</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indication of the presence of a cardiac arrest at any time during this EMS event.</definition>
+							<v2Number>E11_01</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>This element is a component of the Utstein Cardiac Arrest Criteria.
+								&lt;br/>&lt;br/>
+								If this EMS event is for an interfacility transfer of a patient with a recent history of a cardiac arrest with ROSC, and who does not experience another cardiac arrest during transport, then do not document Cardiac Arrest (eArrest.01) with "Yes, Prior to Any EMS Arrival (includes Transport EMS &amp; Medical First Responders)".
+								&lt;br/>&lt;br/>
+								EMS is defined as Emergency Medical Services personnel and Medical First Responder personnel who respond to a medical emergency in an official capacity as part of an organized medical response team. By this definition, physicians, nurses, or paramedics who witness a cardiac arrest and initiate CPR, but are not part of the organized medical response
+								team are characterized as bystanders and are not part of the EMS system.
+								&lt;br/>&lt;br/>
+								Medical First Responders are defined as personnel who are dispatched through the 911 system, respond in an official capacity, have the capability and/or training to provide emergency medical care, but are not the designated transporter of the patient. Thus, law enforcement officers who respond in an official capacity to a cardiac arrest, have the
+								capability and/or training to provide emergency medical care (e.g., carry AEDs in their patrol vehicles, hold EMR licensure, are CPR certified, etc.) are considered Medical First Responders for the purposes of this data element.
+								&lt;br/>&lt;br/>
+								Responders dispatched through the 911 system with no capability of providing emergency medical care are not considered Medical First Responders. For example, towing and wrecking responding to a vehicle crash, or law enforcement officers who do not provide any emergency medical care would not be considered Medical First Responders.
+								&lt;br/>&lt;br/>
+								For States and Local agencies that participate in the Cardiac Arrest Registry for Enhanced Survival (CARES), “Any EMS Arrival” includes 911 Responders (First Responder or EMS) as defined by CARES in  the CARES 2019 Data Dictionary: &lt;a href="https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf" target="_blank">https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20&#40;2019&#41;.pdf&lt;/a>.
+								&lt;br/>&lt;br/>
+								This NEMSIS data element is used to answer CARES data element #20 Arrest After Arrival of 911 Responder.
+								&lt;br/>&lt;br/>
+</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CardiacArrest">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.02" nillable="true" id="eArrest.CardiacArrestEtiology">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.02</number>
+							<name>Cardiac Arrest Etiology</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indication of the etiology or cause of the cardiac arrest (classified as cardiac, non-cardiac, etc.).</definition>
+							<v2Number>E11_02</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>This element is a component of the Utstein Cardiac Arrest Criteria.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CardiacArrestEtiology">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.03" nillable="true" id="eArrest.ResuscitationAttemptedByEMS" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.03</number>
+							<name>Resuscitation Attempted By EMS</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indication of an attempt to resuscitate the patient who is in cardiac arrest (attempted, not attempted due to DNR, etc.).</definition>
+							<v2Number>E11_03</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>This element is a component of the Utstein Cardiac Arrest Criteria.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ResuscitationAttempted">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.04" nillable="true" id="eArrest.ArrestWitnessedby" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.04</number>
+							<name>Arrest Witnessed By</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indication of who the cardiac arrest was witnessed by.</definition>
+							<v2Number>E11_04</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ArrestWitnessedBy">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.07" nillable="true" id="eArrest.AEDUsePriortoEMSArrival">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.07</number>
+							<name>AED Use Prior to EMS Arrival</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Documentation of AED use Prior to EMS Arrival.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>This element is a component of the Utstein Cardiac Arrest Criteria.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="AEDUse">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.09" nillable="true" id="eArrest.TypeofCPRProvided" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.09</number>
+							<name>Type of CPR Provided</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Documentation of the type/technique of CPR used by EMS.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Added to capture special CPR techniques.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CPRType">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.10" type="YesNoValues" id="eArrestTherapeuticHypothemiaInitiated" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.10</number>
+							<name>Therapeutic Hypothermia by EMS</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Documentation of EMS initiation of Therapeutic Hypothermia.</definition>
+							<usage>Optional</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>For states and local agencies that participate in the Cardiac Arrest Registry for Enhanced Survival (CARES), eArrest.10 is the equivalent of CARES data element #32: Was Hypothermia Care Provided in the Field as defined by CARES in the CARES 2019 Data Dictionary: &lt;a href="https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf" target="_blank">https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf&lt;/a>.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eArrest.11" nillable="true" id="eArrest.FirstMonitoredArrestRhythmofthePatient">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.11</number>
+							<name>First Monitored Arrest Rhythm of the Patient</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Documentation of what the first monitored arrest rhythm which was noted.</definition>
+							<v2Number>E11_05</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Added term "Arrest" to title to clarify this is the arrest rhythm.
+								&lt;br/>Values "Other" and "Normal Sinus Rhythm" removed since they are not Cardiac Arrest Rhythms.
+								&lt;br/>Value "Ventricular Tachycardia" has been changed to "Ventricular Tachycardia-Pulseless".</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="FirstMonitoredRhythm">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.12" nillable="true" id="eArrest.AnyReturnofSpontaneousCirculation" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.12</number>
+							<name>Any Return of Spontaneous Circulation</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Indication whether or not there was any return of spontaneous circulation.</definition>
+							<v2Number>E11_06</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>
+								This element needs to be documented when the patient has been in cardiac arrest and transported to a healthcare facility to show the change in patient condition, if any. 
+								&lt;br/>&lt;br/>Any ROSC is defined as any brief (approximately >30 seconds) restoration of spontaneous circulation that provides evidence of more than an occasional gasp, occasional fleeting palpable pulse, or arterial waveform. 
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ReturnOfSpontaneousCirculation">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.13" type="NeurologicalOutcomeAtDischarge" id="eArrest.NeurologicalOutcomeatHospitalDischarge" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.13</number>
+							<name>Neurological Outcome at Hospital Discharge</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The level of cerebral performance of the patient at the time of discharge from the Hospital.</definition>
+							<v2Number>E11_07</v2Number>
+							<usage>Optional</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>1 = Good Cerebral Performance:  Conscious, Alert, able to work and lead a normal life.&lt;br/>&lt;br/>
+							2 = Moderate Cerebral Disability:  Conscious and able to function independently (dress, travel, prepare food) may have hemiplegia,
+							seizures, or permanent memory or mental changes.&lt;br/>&lt;br/>
+							3 = Severe Cerebral Disability:  Conscious, dependent on others for daily support, functions only in an institution or at home with
+							exceptional family effort.&lt;br/>&lt;br/>
+							4 = Coma or vegetative state: any degree of coma without the presence of all brain death criteria. Unawareness, even if appears awake
+							(vegetative state) without interaction with environment; may have spontaneous eye opening and sleep/awake cycles. Cerebral
+							unresponsiveness.
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eArrest.14" nillable="true" id="eArrest.TimeofCardiacArrest">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.14</number>
+							<name>Date/Time of Cardiac Arrest</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The date/time of the cardiac arrest (if not known, please estimate).</definition>
+							<v2Number>E11_08</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>
+							Changed from estimated time prior to EMS arrival to date/time of cardiac arrest.
+							  	&lt;br/>&lt;br/>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table>
+							 </comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateTimeType">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.15" nillable="true" id="eArrest.DateTimeResuscitationDiscontinued" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.15</number>
+							<name>Date/Time Resuscitation Discontinued</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The date/time resuscitation was discontinued.</definition>
+							<v2Number>E11_09</v2Number>
+							<usage>Recommended</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateTimeType">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.16" nillable="true" id="eArrest.ReasonCPRResuscitationDiscontinued">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.16</number>
+							<name>Reason CPR/Resuscitation Discontinued</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The reason that CPR or the resuscitation efforts were discontinued.</definition>
+							<v2Number>E11_10</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Added Resuscitation to Title to allow better documentation of disposition.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ReasonCPRDiscontinued">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.17" nillable="true" id="eArrest.CardiacRhythmonArrivalatDestination" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.17</number>
+							<name>Cardiac Rhythm on Arrival at Destination</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The patient's cardiac rhythm upon delivery or transfer to the destination.</definition>
+							<v2Number>E11_11</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>This element needs to be documented when the patient has been in cardiac or respiratory arrest and transported to a healthcare facility to show the change in patient condition, if any. The cardiac rhythm list has been updated to be the same for eVitals.03 (Cardiac Rhythm Electrocardiography (ECG)). They are using the common type: CardiacRhythm. ST segment changes consistent (or not consistent) with STEMI criteria should be documented as Ischemia in the appropriate location						
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CardiacRhythm">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.18" nillable="true" id="eArrest.EndofEMSCardiacArrestEvent">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.18</number>
+							<name>End of EMS Cardiac Arrest Event</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The patient's outcome at the end of the EMS event.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Added to better identify the outcome of EMS cardiac arrest patients.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CardiacArrestOutcome">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.19" id="eArrest.DateTimeofInitialCPR" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.19</number>
+							<name>Date/Time of Initial CPR</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>The initial date and time that CPR was started by anyone.</definition>
+							<usage>Optional</usage>
+							<performanceMeasuresGroup/>
+							<comment/>
+							<v3Changes/>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="DateTimeType"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.20" id="eArrest.WhoFirstInitiatedCPR" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.20</number>
+							<name>Who First Initiated CPR</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Who first initiated CPR for this EMS event.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Bystanders are defined as persons who are not responding as part of an organized emergency response system to a cardiac arrest. Physicians, nurses, and paramedics may be described as performing bystander CPR if they are not part of the emergency response system involved in the victim's resuscitation. Friends and acquaintances are considered bystanders.
+							&lt;br/>&lt;br/>Family members are defined as the patient's relatives.
+							&lt;br/>&lt;br/>Healthcare Provider (non-911 Responder) includes physicians, nurses, paramedics, and other types of healthcare professionals who are not part of the organized emergency response system.
+							&lt;br/>&lt;br/>First Responders are defined as personnel who are dispatched through the 911 system, respond as part of an organized emergency response system, and have the capability and/or training to provide emergency medical care, but are not the designated transporters of the patient.
+							&lt;br/>&lt;br/>First Responder (EMS) is defined as EMS personnel who are part of an EMS response agency, respond as part of an organized emergency response system, but are not the designated transporter of the patient. For example, First Responder (EMS) includes EMS personnel who arrive by quick response EMS units, fire apparatus that is part of an EMS response agency, and supervisor/administrative vehicles operated by the transport EMS agency.
+							&lt;br/>&lt;br/>First Responder (Law Enforcement) is defined as public safety officers who are not part of an EMS response agency and act in an organized, official capacity to enforce the law.
+							&lt;br/>&lt;br/>First Responder (non-EMS Fire) is defined as fire department personnel who are not part of an EMS response agency and are not the designated transporter of the patient.
+							&lt;br/>&lt;br/>EMS Responder (transport) is defined as EMS personnel who are the designated transporter of the patient.
+							&lt;br/>&lt;br/>For states and local agencies that participate in the Cardiac Arrest Registry for Enhanced Survival (CARES), eArrest.20 is the equivalent of CARES data element #23
+							Who Initiated CPR as defined by CARES in the CARES 2019 Data Dictionary: &lt;a href="https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf" target="_blank">https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf&lt;/a>.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="WhoFirstInitiatedCPR">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.21" id="eArrest.WhoFirstAppliedAED" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.21</number>
+							<name>Who First Applied the AED</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Documentation of who first applied the AED for this EMS event.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Bystanders are defined as persons who are not responding as part of an organized emergency response system to a cardiac arrest. Physicians, nurses, and paramedics may be described as preforming bystander CPR if they are not part of the emergency response system involved in the victim's resuscitation. Friends and acquaintances are considered bystanders.
+								&lt;br/>&lt;br/>Family members are defined as the patient's relatives.
+								&lt;br/>&lt;br/>Healthcare Provider (non-911 Responder) includes physicians, nurses, paramedics, and other types of healthcare professionals who are not part of the organized emergency response system.
+								&lt;br/>&lt;br/>First Responders are defined as personnel who are dispatched through the 911 system, respond as part of an organized emergency response system, and have the capability and/or training to provide emergency medical care, but are not the designated transporters of the patient.
+								&lt;br/>&lt;br/>First Responder (EMS) is defined as EMS personnel who are part of an EMS response agency, respond as part of an organized emergency response system, but are not the designated transporter of the patient. For example, First Responser (EMS) includes EMS personnel who arrive by quick response EMS units, fire apparatus that is part of an EMS response agency, and supervisor/administrative vehicles operated by the transport EMS agency.
+								&lt;br/>&lt;br/>First Responder (Law Enforcement) is defined as public safety officers who are not part of an EMS response agency and act in an organized, official capacity to enforce the law.
+								&lt;br/>&lt;br/>First Responder (non-EMS Fire) is defined as fire department personnel who are not part of an EMS response agency and are not the designated transporter of the patient.
+								&lt;br/>&lt;br/>EMS Responder (transport) is defined as EMS personnel who are the designated transporter of the patient.
+								&lt;br/>&lt;br/>For states and local agencies that participate in the Cardiac Arrest Registry for Enhanced Survival (CARES), eArrest.21 is the equivalent of CARES data element #27 Who First Applied the AED as defined by CARES in the CARES 2019 Data Dictionary: &lt;a href="https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf" target="_blank">https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf&lt;/a>.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="WhoFirstAppliedAED">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eArrest.22" id="eArrest.WhoFirstDefibrillated" nillable="true">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eArrest.22</number>
+							<name>Who First Defibrillated the Patient</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Documentation of who first defibrillated the patient.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>Bystanders are defined as persons who are not responding as part of an organized emergency response system to a cardiac arrest. Physicians, nurses, and paramedics may be described as preforming bystander CPR if they are not part of the emergency response system involved in the victim's resuscitation. Friends and acquaintances are considered bystanders.
+								&lt;br/>&lt;br/>Family members are defined as the patient's relatives.
+								&lt;br/>&lt;br/>Healthcare Provider (non-911 Responder) includes physicians, nurses, paramedics, and other types of healthcare professionals who are not part of the organized emergency response system.
+								&lt;br/>&lt;br/>First Responders are defined as personnel who are dispatched through the 911 system, respond as part of an organized emergency response system, and have the capability and/or training to provide emergency medical care, but are not the designated transporters of the patient.
+								&lt;br/>&lt;br/>First Responder (EMS) is defined as EMS personnel who are part of an EMS response agency, respond as part of an organized emergency response system, but are not the designated transporter of the patient. For example, First Responser (EMS) includes EMS personnel who arrive by quick response EMS units, fire apparatus that is part of an EMS response agency, and supervisor/administrative vehicles operated by the transport EMS agency.
+								&lt;br/>&lt;br/>First Responder (Law Enforcement) is defined as public safety officers who are not part of an EMS response agency and act in an organized, official capacity to enforce the law.
+								&lt;br/>&lt;br/>First Responder (non-EMS Fire) is defined as fire department personnel who are not part of an EMS response agency and are not the designated transporter of the patient.
+								&lt;br/>&lt;br/>EMS Responder (transport) is defined as EMS personnel who are the designated transporter of the patient.
+								&lt;br/>&lt;br/>For states and local agencies that participate in the Cardiac Arrest Registry for Enhanced Survival (CARES), eArrest.22 is the equivalent of CARES data element #28 Who First Defibrillated the Patient as defined by CARES in the CARES 2019 Data Dictionary: &lt;a href="https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf" target="_blank">https://mycares.net/sitepages/uploads/2019/Data%20Dictionary%20(2019).pdf&lt;/a>.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="WhoFirstDefibrillated">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AEDUse">
+		<xs:annotation>
+			<xs:documentation>Documentation of AED use Prior to EMS Arrival</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3007001">
+				<xs:annotation>
+					<xs:documentation>No</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3007003">
+				<xs:annotation>
+					<xs:documentation>Yes, Applied without Defibrillation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3007005">
+				<xs:annotation>
+					<xs:documentation>Yes, With Defibrillation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ArrestWitnessedBy">
+		<xs:annotation>
+			<xs:documentation>Indication of who the cardiac arrest was witnessed by</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3004001">
+				<xs:annotation>
+					<xs:documentation>Not Witnessed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3004003">
+				<xs:annotation>
+					<xs:documentation>Witnessed by Family Member</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3004005">
+				<xs:annotation>
+					<xs:documentation>Witnessed by Healthcare Provider</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3004007">
+				<xs:annotation>
+					<xs:documentation>Witnessed by Bystander</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CardiacArrest">
+		<xs:annotation>
+			<xs:documentation>Indication of the presence of a cardiac arrest at any time.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3001001">
+				<xs:annotation>
+					<xs:documentation>No</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3001003">
+				<xs:annotation>
+					<xs:documentation>Yes, Prior to Any EMS Arrival (includes Transport EMS &amp; Medical First Responders)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3001005">
+				<xs:annotation>
+					<xs:documentation>Yes, After Any EMS Arrival (includes Transport EMS &amp; Medical First Responders)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CardiacArrestEtiology">
+		<xs:annotation>
+			<xs:documentation>Indication of the etiology or cause of the cardiac arrest (classified as cardiac, non-cardiac, etc.)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3002001">
+				<xs:annotation>
+					<xs:documentation>Cardiac (Presumed)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3002003">
+				<xs:annotation>
+					<xs:documentation>Drowning/Submersion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3002005">
+				<xs:annotation>
+					<xs:documentation>Drug Overdose</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3002007">
+				<xs:annotation>
+					<xs:documentation>Electrocution</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3002009">
+				<xs:annotation>
+					<xs:documentation>Exsanguination-Medical (Non-Traumatic)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3002011">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3002013">
+				<xs:annotation>
+					<xs:documentation>Respiratory/Asphyxia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3002015">
+				<xs:annotation>
+					<xs:documentation>Traumatic Cause</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CardiacArrestOutcome">
+		<xs:annotation>
+			<xs:documentation>The patient's outcome at the end of the EMS event.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3018001">
+				<xs:annotation>
+					<xs:documentation>Expired in ED</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3018003">
+				<xs:annotation>
+					<xs:documentation>Expired in the Field</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3018005">
+				<xs:annotation>
+					<xs:documentation>Ongoing Resuscitation in ED</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3018007">
+				<xs:annotation>
+					<xs:documentation>ROSC in the Field</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3018009">
+				<xs:annotation>
+					<xs:documentation>ROSC in the ED</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3018011">
+				<xs:annotation>
+					<xs:documentation>Ongoing Resuscitation by Other EMS</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CPRType">
+		<xs:annotation>
+			<xs:documentation>Documentation of the type/technique of CPR used by EMS.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3009001">
+				<xs:annotation>
+					<xs:documentation>Compressions-Manual</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009003">
+				<xs:annotation>
+					<xs:documentation>Compressions-External Band Type Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009005">
+				<xs:annotation>
+					<xs:documentation>Compressions-External Plunger Type Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009007">
+				<xs:annotation>
+					<xs:documentation>Compressions-External Thumper Type Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009009">
+				<xs:annotation>
+					<xs:documentation>Compressions-Intermittent with Ventilation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009011">
+				<xs:annotation>
+					<xs:documentation>Compressions-Other Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009021">
+				<xs:annotation>
+					<xs:documentation>Compressions-Hands Only CPR</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009013">
+				<xs:annotation>
+					<xs:documentation>Ventilation-Bag Valve Mask</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009015">
+				<xs:annotation>
+					<xs:documentation>Ventilation-Impedance Threshold Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009017">
+				<xs:annotation>
+					<xs:documentation>Ventilation-Mouth to Mouth</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009019">
+				<xs:annotation>
+					<xs:documentation>Ventilation-Pocket Mask</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009023">
+				<xs:annotation>
+					<xs:documentation>Ventilation-with OPA/NPA</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009025">
+				<xs:annotation>
+					<xs:documentation>Ventilation-Advanced Airway Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3009027">
+				<xs:annotation>
+					<xs:documentation>Ventilation-Passive Ventilation with Oxygen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FirstMonitoredRhythm">
+		<xs:annotation>
+			<xs:documentation>Documentation of what the first monitored rhythm which was noted</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3011001">
+				<xs:annotation>
+					<xs:documentation>Asystole</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3011005">
+				<xs:annotation>
+					<xs:documentation>PEA</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3011007">
+				<xs:annotation>
+					<xs:documentation>Unknown AED Non-Shockable Rhythm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3011009">
+				<xs:annotation>
+					<xs:documentation>Unknown AED Shockable Rhythm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3011011">
+				<xs:annotation>
+					<xs:documentation>Ventricular Fibrillation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3011013">
+				<xs:annotation>
+					<xs:documentation>Ventricular Tachycardia-Pulseless</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NeurologicalOutcomeAtDischarge">
+		<xs:annotation>
+			<xs:documentation>The level of cerebral performance of the patient at the time of discharge from the Hospital</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3013001">
+				<xs:annotation>
+					<xs:documentation>CPC 1 Good Cerebral Performance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3013003">
+				<xs:annotation>
+					<xs:documentation>CPC 2 Moderate Cerebral Disability</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3013005">
+				<xs:annotation>
+					<xs:documentation>CPC 3 Severe Cerebral Disability</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3013007">
+				<xs:annotation>
+					<xs:documentation>CPC 4 Coma or Vegetative State</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReasonCPRDiscontinued">
+		<xs:annotation>
+			<xs:documentation>The reason that CPR or the resuscitation efforts were discontinued.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3016001">
+				<xs:annotation>
+					<xs:documentation>DNR</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3016003">
+				<xs:annotation>
+					<xs:documentation>Medical Control Order</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3016005">
+				<xs:annotation>
+					<xs:documentation>Obvious Signs of Death</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3016007">
+				<xs:annotation>
+					<xs:documentation>Physically Unable to Perform</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3016009">
+				<xs:annotation>
+					<xs:documentation>Protocol/Policy Requirements Completed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3016011">
+				<xs:annotation>
+					<xs:documentation>Return of Spontaneous Circulation (pulse or BP noted)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResuscitationAttempted">
+		<xs:annotation>
+			<xs:documentation>Indication of an attempt to resuscitate the patient who is in cardiac arrest (attempted, not attempted due to DNR, etc.)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3003001">
+				<xs:annotation>
+					<xs:documentation>Attempted Defibrillation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3003003">
+				<xs:annotation>
+					<xs:documentation>Attempted Ventilation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3003005">
+				<xs:annotation>
+					<xs:documentation>Initiated Chest Compressions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3003007">
+				<xs:annotation>
+					<xs:documentation>Not Attempted-Considered Futile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3003009">
+				<xs:annotation>
+					<xs:documentation>Not Attempted-DNR Orders</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3003011">
+				<xs:annotation>
+					<xs:documentation>Not Attempted-Signs of Circulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReturnOfSpontaneousCirculation">
+		<xs:annotation>
+			<xs:documentation>Indication whether or not there was any return of spontaneous circulation</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3012001">
+				<xs:annotation>
+					<xs:documentation>No</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3012003">
+				<xs:annotation>
+					<xs:documentation>Yes, At Arrival at the ED</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3012005">
+				<xs:annotation>
+					<xs:documentation>Yes, Prior to Arrival at the ED</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3012007">
+				<xs:annotation>
+					<xs:documentation>Yes, Sustained for 20 consecutive minutes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WhoFirstInitiatedCPR">
+		<xs:annotation>
+			<xs:documentation>Documentation of who first initiated CPR for this EMS event.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3020001">
+				<xs:annotation>
+					<xs:documentation>Bystander</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3020003">
+				<xs:annotation>
+					<xs:documentation>Family Member</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3020005">
+				<xs:annotation>
+					<xs:documentation>Healthcare Provider (non-911 Responder)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3020007">
+				<xs:annotation>
+					<xs:documentation>First Responder (EMS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3020009">
+				<xs:annotation>
+					<xs:documentation>First Responder (Law Enforcement)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3020011">
+				<xs:annotation>
+					<xs:documentation>First Responder (non-EMS Fire)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3020013">
+				<xs:annotation>
+					<xs:documentation>EMS Responder (transport EMS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WhoFirstAppliedAED">
+		<xs:annotation>
+			<xs:documentation>Documentation of who first applied the AED.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3021001">
+				<xs:annotation>
+					<xs:documentation>Bystander</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3021003">
+				<xs:annotation>
+					<xs:documentation>Family Member</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3021005">
+				<xs:annotation>
+					<xs:documentation>Healthcare Provider (non-911 Responder)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3021007">
+				<xs:annotation>
+					<xs:documentation>First Responder (EMS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3021009">
+				<xs:annotation>
+					<xs:documentation>First Responder (Law Enforcement)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3021011">
+				<xs:annotation>
+					<xs:documentation>First Responder (non-EMS Fire)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3021013">
+				<xs:annotation>
+					<xs:documentation>EMS Responder (transport EMS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WhoFirstDefibrillated">
+		<xs:annotation>
+			<xs:documentation>Documentation of who first defibrillated the patient.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3022001">
+				<xs:annotation>
+					<xs:documentation>Bystander</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3022003">
+				<xs:annotation>
+					<xs:documentation>Family Member</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3022005">
+				<xs:annotation>
+					<xs:documentation>Healthcare Provider (non-911 Responder)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3022007">
+				<xs:annotation>
+					<xs:documentation>First Responder (EMS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3022009">
+				<xs:annotation>
+					<xs:documentation>First Responder (Law Enforcement)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3022011">
+				<xs:annotation>
+					<xs:documentation>First Responder (non-EMS Fire)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3022013">
+				<xs:annotation>
+					<xs:documentation>EMS Responder (transport EMS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
