@@ -691,19 +691,19 @@ export class ApiService {
 
   screens = {
     index: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/screens', params);
+      return this.get('/api/interfaces/screens', params);
     },
     create: (data: any): Observable<any> => {
-      return this.post(`/api/screens`, data);
+      return this.post(`/api/interfaces/screens`, data);
     },
     get: (id: string, params?: HttpParams): Observable<any> => {
-      return this.get(`/api/screens/${id}`, params);
+      return this.get(`/api/interfaces/screens/${id}`, params);
     },
     update: (id: string, data: any): Observable<any> => {
-      return this.patch(`/api/screens/${id}`, data);
+      return this.patch(`/api/interfaces/screens/${id}`, data);
     },
     delete: (id: string): Observable<any> => {
-      return this.delete(`/api/screens/${id}`);
+      return this.delete(`/api/interfaces/screens/${id}`);
     },
   };
 

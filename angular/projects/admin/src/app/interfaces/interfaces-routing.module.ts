@@ -6,8 +6,8 @@ import { AgencyService, UserService } from 'shared';
 import { ListInterfacesComponent } from './list-interfaces.component';
 import { NewInterfaceComponent } from './new-interface.component';
 import { EditInterfaceComponent } from './edit-interface.component';
-// import { NewGuideSectionComponent } from './new-guide-section.component';
-// import { EditGuideSectionComponent } from './edit-guide-section.component';
+import { NewInterfaceScreenComponent } from './screens/new-interface-screen.component';
+import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.component';
 // import { NewGuideItemComponent } from './new-guide-item.component';
 // import { EditGuideItemComponent } from './edit-guide-item.component';
 
@@ -27,26 +27,26 @@ const appRoutes: Routes = [
       {
         path: ':id',
         component: EditInterfaceComponent,
-        //   children: [
-        //     {
-        //       path: 'sections/new',
-        //       component: NewGuideSectionComponent,
-        //     },
-        //     {
-        //       path: 'sections/:id',
-        //       component: EditGuideSectionComponent,
-        //       children: [
-        //         {
-        //           path: 'items/new',
-        //           component: NewGuideItemComponent,
-        //         },
-        //         {
-        //           path: 'items/:id',
-        //           component: EditGuideItemComponent,
-        //         },
-        //       ],
-        //     },
-        //   ],
+        children: [
+          {
+            path: 'screens/new',
+            component: NewInterfaceScreenComponent,
+          },
+          {
+            path: 'screens/:id',
+            component: EditInterfaceScreenComponent,
+            //       children: [
+            //         {
+            //           path: 'items/new',
+            //           component: NewGuideItemComponent,
+            //         },
+            //         {
+            //           path: 'items/:id',
+            //           component: EditGuideItemComponent,
+            //         },
+            //       ],
+          },
+        ],
       },
     ],
   },

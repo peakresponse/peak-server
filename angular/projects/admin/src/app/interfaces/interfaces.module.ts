@@ -10,8 +10,9 @@ import { ListInterfacesComponent } from './list-interfaces.component';
 import { InterfaceFormComponent } from './interface-form.component';
 import { NewInterfaceComponent } from './new-interface.component';
 import { EditInterfaceComponent } from './edit-interface.component';
-// import { GuideSectionFormComponent } from './guide-section-form.component';
-// import { NewGuideSectionComponent } from './new-guide-section.component';
+import { InterfaceScreenFormComponent } from './screens/interface-screen-form.component';
+import { NewInterfaceScreenComponent } from './screens/new-interface-screen.component';
+import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.component';
 // import { EditGuideSectionComponent } from './edit-guide-section.component';
 // import { GuideItemFormComponent } from './guide-item-form.component';
 // import { NewGuideItemComponent } from './new-guide-item.component';
@@ -23,6 +24,9 @@ import { EditInterfaceComponent } from './edit-interface.component';
     InterfaceFormComponent,
     NewInterfaceComponent,
     EditInterfaceComponent,
+    InterfaceScreenFormComponent,
+    NewInterfaceScreenComponent,
+    EditInterfaceScreenComponent,
     // GuideSectionFormComponent,
     // NewGuideSectionComponent,
     // EditGuideSectionComponent,
