@@ -15,6 +15,7 @@ import { DemographicsModule } from './demographics/demographics.module';
 import { ExportsModule } from './exports/exports.module';
 import { FacilitiesModule } from './facilities/facilities.module';
 import { GuidesModule } from './guides/guides.module';
+import { InterfacesModule } from './interfaces/interfaces.module';
 import { ListsModule } from './lists/lists.module';
 import { NemsisModule } from './nemsis/nemsis.module';
 import { PsapsModule } from './psaps/psaps.module';
@@ -38,6 +39,7 @@ import { UsersModule } from './users/users.module';
     ExportsModule,
     FacilitiesModule,
     GuidesModule,
+    InterfacesModule,
     ListsModule,
     NemsisModule,
     PsapsModule,

@@ -1,0 +1,29 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <span class="d-flex">
+      <h1 class="h2">Interfaces</h1>
+      <a routerLink="/interfaces/new" class="btn btn--sm btn--secondary ms-3">New Interface</a>
+    </span>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr class="list">
+          <th>Name</th>
+          <th>NEMSIS Version</th>
+          <th>Data Set</th>
+        </tr>
+      </thead>
+      <shared-list type="interfaces" [params]="params">
+        <ng-template let-records="records" let-record="record">
+          <tr [routerLink]="['/interfaces', record.id]">
+            <td>{{ record.name }}</td>
+            <td>{{ record.nemsisVersion }}</td>
+            <td>{{ record.dataSet }}</td>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+</div>

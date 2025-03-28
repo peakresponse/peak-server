@@ -515,6 +515,24 @@ export class ApiService {
     },
   };
 
+  interfaces = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/interfaces', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/interfaces`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/interfaces/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/interfaces/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/interfaces/${id}`);
+    },
+  };
+
   lists = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/lists', params);

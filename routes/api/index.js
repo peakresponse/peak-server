@@ -20,6 +20,7 @@ router.use('/guides/items', require('./guideItems'));
 router.use('/guides/sections', require('./guideSections'));
 router.use('/guides', require('./guides'));
 router.use('/incidents', require('./incidents'));
+router.use('/interfaces', require('./interfaces'));
 router.use('/lists', require('./lists'));
 router.use('/nemsis/elements', require('./nemsisElements'));
 router.use('/nemsis/schematrons', require('./nemsisSchematrons'));
