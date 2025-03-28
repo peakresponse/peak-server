@@ -7,9 +7,9 @@ import { SharedModule } from 'shared';
 
 import { InterfacesRoutingModule } from './interfaces-routing.module';
 import { ListInterfacesComponent } from './list-interfaces.component';
-// import { GuideFormComponent } from './guide-form.component';
-// import { NewGuideComponent } from './new-guide.component';
-// import { EditGuideComponent } from './edit-guide.component';
+import { InterfaceFormComponent } from './interface-form.component';
+import { NewInterfaceComponent } from './new-interface.component';
+import { EditInterfaceComponent } from './edit-interface.component';
 // import { GuideSectionFormComponent } from './guide-section-form.component';
 // import { NewGuideSectionComponent } from './new-guide-section.component';
 // import { EditGuideSectionComponent } from './edit-guide-section.component';
@@ -20,9 +20,9 @@ import { ListInterfacesComponent } from './list-interfaces.component';
 @NgModule({
   declarations: [
     ListInterfacesComponent,
-    // GuideFormComponent,
-    // NewGuideComponent,
-    // EditGuideComponent,
+    InterfaceFormComponent,
+    NewInterfaceComponent,
+    EditInterfaceComponent,
     // GuideSectionFormComponent,
     // NewGuideSectionComponent,
     // EditGuideSectionComponent,

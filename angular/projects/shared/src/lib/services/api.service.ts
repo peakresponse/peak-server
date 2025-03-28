@@ -689,6 +689,24 @@ export class ApiService {
     },
   };
 
+  screens = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/screens', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/screens`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/screens/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/screens/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/screens/${id}`);
+    },
+  };
+
   states = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/states', params);

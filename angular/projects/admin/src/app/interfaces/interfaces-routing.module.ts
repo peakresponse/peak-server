@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgencyService, UserService } from 'shared';
 
 import { ListInterfacesComponent } from './list-interfaces.component';
-// import { NewGuideComponent } from './new-guide.component';
-// import { EditGuideComponent } from './edit-guide.component';
+import { NewInterfaceComponent } from './new-interface.component';
+import { EditInterfaceComponent } from './edit-interface.component';
 // import { NewGuideSectionComponent } from './new-guide-section.component';
 // import { EditGuideSectionComponent } from './edit-guide-section.component';
 // import { NewGuideItemComponent } from './new-guide-item.component';
@@ -20,34 +20,34 @@ const appRoutes: Routes = [
       user: UserService,
     },
     children: [
-      // {
-      //   path: 'new',
-      //   component: NewGuideComponent,
-      // },
-      // {
-      //   path: ':id',
-      //   component: EditGuideComponent,
-      //   children: [
-      //     {
-      //       path: 'sections/new',
-      //       component: NewGuideSectionComponent,
-      //     },
-      //     {
-      //       path: 'sections/:id',
-      //       component: EditGuideSectionComponent,
-      //       children: [
-      //         {
-      //           path: 'items/new',
-      //           component: NewGuideItemComponent,
-      //         },
-      //         {
-      //           path: 'items/:id',
-      //           component: EditGuideItemComponent,
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // },
+      {
+        path: 'new',
+        component: NewInterfaceComponent,
+      },
+      {
+        path: ':id',
+        component: EditInterfaceComponent,
+        //   children: [
+        //     {
+        //       path: 'sections/new',
+        //       component: NewGuideSectionComponent,
+        //     },
+        //     {
+        //       path: 'sections/:id',
+        //       component: EditGuideSectionComponent,
+        //       children: [
+        //         {
+        //           path: 'items/new',
+        //           component: NewGuideItemComponent,
+        //         },
+        //         {
+        //           path: 'items/:id',
+        //           component: EditGuideItemComponent,
+        //         },
+        //       ],
+        //     },
+        //   ],
+      },
     ],
   },
 ];
