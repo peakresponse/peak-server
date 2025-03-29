@@ -8,8 +8,7 @@ import { NewInterfaceComponent } from './new-interface.component';
 import { EditInterfaceComponent } from './edit-interface.component';
 import { NewInterfaceScreenComponent } from './screens/new-interface-screen.component';
 import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.component';
-// import { NewGuideItemComponent } from './new-guide-item.component';
-// import { EditGuideItemComponent } from './edit-guide-item.component';
+import { NewInterfaceSectionComponent } from './sections/new-interface-section.component';
 
 const appRoutes: Routes = [
   {
@@ -35,16 +34,16 @@ const appRoutes: Routes = [
           {
             path: 'screens/:id',
             component: EditInterfaceScreenComponent,
-            //       children: [
-            //         {
-            //           path: 'items/new',
-            //           component: NewGuideItemComponent,
-            //         },
-            //         {
-            //           path: 'items/:id',
-            //           component: EditGuideItemComponent,
-            //         },
-            //       ],
+            children: [
+              {
+                path: 'sections/new',
+                component: NewInterfaceSectionComponent,
+              },
+              //         {
+              //           path: 'items/:id',
+              //           component: EditGuideItemComponent,
+              //         },
+            ],
           },
         ],
       },

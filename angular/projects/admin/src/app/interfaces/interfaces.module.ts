@@ -13,10 +13,8 @@ import { EditInterfaceComponent } from './edit-interface.component';
 import { InterfaceScreenFormComponent } from './screens/interface-screen-form.component';
 import { NewInterfaceScreenComponent } from './screens/new-interface-screen.component';
 import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.component';
-// import { EditGuideSectionComponent } from './edit-guide-section.component';
-// import { GuideItemFormComponent } from './guide-item-form.component';
-// import { NewGuideItemComponent } from './new-guide-item.component';
-// import { EditGuideItemComponent } from './edit-guide-item.component';
+import { InterfaceSectionFormComponent } from './sections/interface-section-form.component';
+import { NewInterfaceSectionComponent } from './sections/new-interface-section.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +25,8 @@ import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.co
     InterfaceScreenFormComponent,
     NewInterfaceScreenComponent,
     EditInterfaceScreenComponent,
+    InterfaceSectionFormComponent,
+    NewInterfaceSectionComponent,
     // GuideSectionFormComponent,
     // NewGuideSectionComponent,
     // EditGuideSectionComponent,
