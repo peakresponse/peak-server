@@ -21,6 +21,7 @@ router.use('/guides/sections', require('./guideSections'));
 router.use('/guides', require('./guides'));
 router.use('/incidents', require('./incidents'));
 router.use('/interfaces/screens', require('./screens'));
+router.use('/interfaces/sections/elements', require('./sectionElements'));
 router.use('/interfaces/sections', require('./sections'));
 router.use('/interfaces', require('./interfaces'));
 router.use('/lists', require('./lists'));

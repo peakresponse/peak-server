@@ -13,19 +13,16 @@ router.get(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const { screenId } = req.query;
-    if (!screenId) {
+    const { sectionId } = req.query;
+    if (!sectionId) {
       res.status(StatusCodes.BAD_REQUEST).end();
       return;
     }
     const options = {
-      where: { screenId },
-      order: [
-        ['position', 'ASC'],
-        ['name', 'ASC'],
-      ],
+      where: { sectionId },
+      order: [['position', 'ASC']],
     };
-    const records = await models.Section.findAll(options);
+    const records = await models.SectionElement.findAll(options);
     res.json(records.map((r) => r.toJSON()));
   }),
 );
@@ -35,7 +32,7 @@ router.get(
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const { id } = req.params;
-    const record = await models.Section.findByPk(id);
+    const record = await models.SectionElement.findByPk(id);
     if (record) {
       res.json(record.toJSON());
     } else {
@@ -48,7 +45,9 @@ router.post(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const record = models.Section.build(_.pick(req.body, ['screenId', 'name', 'position']));
+    const record = models.SectionElement.build(
+      _.pick(req.body, ['sectionId', 'nemsisElementId', 'screenId', 'position', 'column', 'customId']),
+    );
     record.createdById = req.user.id;
     record.updatedById = req.user.id;
     await record.save();
@@ -62,9 +61,9 @@ router.patch(
   helpers.async(async (req, res) => {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Section.findByPk(req.params.id, { transaction });
+      record = await models.SectionElement.findByPk(req.params.id, { transaction });
       if (record) {
-        record.set(_.pick(req.body, ['name', 'position']));
+        record.set(_.pick(req.body, ['nemsisElementId', 'screenId', 'position', 'column', 'customId']));
         record.updatedById = req.user.id;
         await record.save({ transaction });
       }
@@ -83,7 +82,7 @@ router.delete(
   helpers.async(async (req, res) => {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Section.findByPk(req.params.id, { transaction });
+      record = await models.SectionElement.findByPk(req.params.id, { transaction });
       if (record) {
         await record.destroy({ transaction });
       }

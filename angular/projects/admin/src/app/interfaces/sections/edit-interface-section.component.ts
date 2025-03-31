@@ -24,7 +24,7 @@ export class EditInterfaceSectionComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.screenId = this.route.snapshot.parent?.params['id'];
     this.interfaceId = this.route.snapshot.parent?.parent?.params['id'];
-    this.params = new HttpParams({ fromObject: { screenId: this.id } });
+    this.params = new HttpParams({ fromObject: { sectionId: this.id } });
   }
 
   onDelete() {
