@@ -1,11 +1,11 @@
 <router-outlet></router-outlet>
 <div [class.d-none]="route.firstChild">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <h1 class="h2">Edit Screen</h1>
+    <h1 class="h2">Edit Section</h1>
   </div>
   <shared-form
     *ngIf="id"
-    type="screens"
+    type="sections"
     [id]="id"
     [hideButtons]="!isEditing"
     [showCancel]="true"
@@ -30,9 +30,9 @@
             <thead>
               <tr class="list">
                 <th>
-                  Sections
+                  Elements
                   <a
-                    [routerLink]="['/interfaces', interfaceId, 'screens', record.id, 'sections', 'new']"
+                    [routerLink]="['/interfaces', interfaceId, 'screens', screenId, 'sections', id, 'elements/new']"
                     class="btn btn--sm btn--primary ms-3"
                     >Add</a
                   >
@@ -40,9 +40,12 @@
                 <th>Position</th>
               </tr>
             </thead>
-            <shared-list type="sections" [params]="params" [basePath]="'/interfaces/' + interfaceId + '/screens/' + record.id">
+            <shared-list
+              type="sectionElements"
+              [params]="params"
+              [basePath]="'/interfaces/' + interfaceId + '/screens/' + screenId + '/sections/' + id">
               <ng-template let-records="records" let-r="record">
-                <tr [routerLink]="['/interfaces', interfaceId, 'screens', record.id, 'sections', r.id]">
+                <tr>
                   <td>{{ r.name }}</td>
                   <td>{{ r.position }}</td>
                 </tr>

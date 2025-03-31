@@ -15,6 +15,7 @@ import { NewInterfaceScreenComponent } from './screens/new-interface-screen.comp
 import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.component';
 import { InterfaceSectionFormComponent } from './sections/interface-section-form.component';
 import { NewInterfaceSectionComponent } from './sections/new-interface-section.component';
+import { EditInterfaceSectionComponent } from './sections/edit-interface-section.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NewInterfaceSectionComponent } from './sections/new-interface-section.c
     EditInterfaceScreenComponent,
     InterfaceSectionFormComponent,
     NewInterfaceSectionComponent,
+    EditInterfaceSectionComponent,
     // GuideSectionFormComponent,
     // NewGuideSectionComponent,
     // EditGuideSectionComponent,

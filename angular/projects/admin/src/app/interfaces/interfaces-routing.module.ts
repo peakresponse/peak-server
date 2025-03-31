@@ -9,6 +9,7 @@ import { EditInterfaceComponent } from './edit-interface.component';
 import { NewInterfaceScreenComponent } from './screens/new-interface-screen.component';
 import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.component';
 import { NewInterfaceSectionComponent } from './sections/new-interface-section.component';
+import { EditInterfaceSectionComponent } from './sections/edit-interface-section.component';
 
 const appRoutes: Routes = [
   {
@@ -39,10 +40,10 @@ const appRoutes: Routes = [
                 path: 'sections/new',
                 component: NewInterfaceSectionComponent,
               },
-              //         {
-              //           path: 'items/:id',
-              //           component: EditGuideItemComponent,
-              //         },
+              {
+                path: 'sections/:id',
+                component: EditInterfaceSectionComponent,
+              },
             ],
           },
         ],

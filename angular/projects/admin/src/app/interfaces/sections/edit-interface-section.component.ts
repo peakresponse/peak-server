@@ -5,11 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from 'shared';
 
 @Component({
-  templateUrl: './edit-interface-screen.component.html',
+  templateUrl: './edit-interface-section.component.html',
   standalone: false,
 })
-export class EditInterfaceScreenComponent implements OnInit {
+export class EditInterfaceSectionComponent implements OnInit {
   id: string = '';
+  screenId: string = '';
   interfaceId: string = '';
   isEditing = false;
   params?: HttpParams;
@@ -21,11 +22,12 @@ export class EditInterfaceScreenComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.interfaceId = this.route.snapshot.parent?.params['id'];
+    this.screenId = this.route.snapshot.parent?.params['id'];
+    this.interfaceId = this.route.snapshot.parent?.parent?.params['id'];
     this.params = new HttpParams({ fromObject: { screenId: this.id } });
   }
 
   onDelete() {
-    this.navigation.backTo(`/interfaces/${this.interfaceId}`);
+    this.navigation.backTo(`/interfaces/${this.interfaceId}/screens/${this.screenId}`);
   }
 }
