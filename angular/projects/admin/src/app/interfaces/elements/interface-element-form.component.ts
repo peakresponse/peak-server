@@ -16,9 +16,12 @@ export class InterfaceElementFormComponent implements OnInit {
   nemsisElementSearchParams = new HttpParams();
   nemsisElementFormatter = (result: any) => `${result.displayName} (${result.name})`;
 
+  screenSearchParams = new HttpParams();
+
   constructor(private api: ApiService) {}
 
   ngOnInit() {
+    this.screenSearchParams = this.screenSearchParams.set('interfaceId', this.interfaceId ?? '');
     this.api.interfaces.get(this.interfaceId ?? '').subscribe((res: HttpResponse<any>) => {
       const { nemsisVersion } = res.body;
       this.nemsisElementSearchParams = this.nemsisElementSearchParams.set('nemsisVersion', nemsisVersion);

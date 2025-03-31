@@ -11,6 +11,17 @@
     [inputFormatter]="nemsisElementFormatter"></shared-object-field>
 </div>
 <div class="mb-3">
+  <shared-object-field
+    id="screenId"
+    label="Screen"
+    [source]="record"
+    [target]="record"
+    [error]="error"
+    objectNameProperty="name"
+    objectApiPath="screens"
+    [objectApiSearchParams]="screenSearchParams"></shared-object-field>
+</div>
+<div class="mb-3">
   <shared-text-field type="number" id="position" label="Position" [source]="record" [target]="record" [error]="error"></shared-text-field>
 </div>
 <div class="mb-3">
