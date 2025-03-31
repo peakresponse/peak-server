@@ -36,6 +36,20 @@ router.get(
   }),
 );
 
+router.get(
+  '/:id',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const { id } = req.params;
+    const record = await models.NemsisElement.findByPk(id);
+    if (record) {
+      res.json(record.toJSON());
+    } else {
+      res.status(StatusCodes.NOT_FOUND).end();
+    }
+  }),
+);
+
 router.post(
   '/import',
   interceptors.requireAdmin,

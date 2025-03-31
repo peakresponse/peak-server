@@ -562,6 +562,9 @@ export class ApiService {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/nemsis/elements', params);
     },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/nemsis/elements/${id}`, params);
+    },
     import: (nemsisVersion: string): Observable<any> => {
       return this.post('/api/nemsis/elements/import', { nemsisVersion });
     },

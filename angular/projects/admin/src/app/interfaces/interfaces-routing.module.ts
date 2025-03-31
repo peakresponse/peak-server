@@ -11,6 +11,7 @@ import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.co
 import { NewInterfaceSectionComponent } from './sections/new-interface-section.component';
 import { EditInterfaceSectionComponent } from './sections/edit-interface-section.component';
 import { NewInterfaceElementComponent } from './elements/new-interface-element.component';
+import { EditInterfaceElementComponent } from './elements/edit-interface-element.component';
 
 const appRoutes: Routes = [
   {
@@ -48,6 +49,10 @@ const appRoutes: Routes = [
                   {
                     path: 'elements/new',
                     component: NewInterfaceElementComponent,
+                  },
+                  {
+                    path: 'elements/:id',
+                    component: EditInterfaceElementComponent,
                   },
                 ],
               },

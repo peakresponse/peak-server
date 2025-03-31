@@ -18,6 +18,7 @@ import { NewInterfaceSectionComponent } from './sections/new-interface-section.c
 import { EditInterfaceSectionComponent } from './sections/edit-interface-section.component';
 import { InterfaceElementFormComponent } from './elements/interface-element-form.component';
 import { NewInterfaceElementComponent } from './elements/new-interface-element.component';
+import { EditInterfaceElementComponent } from './elements/edit-interface-element.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { NewInterfaceElementComponent } from './elements/new-interface-element.c
     EditInterfaceSectionComponent,
     InterfaceElementFormComponent,
     NewInterfaceElementComponent,
+    EditInterfaceElementComponent,
   ],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, InterfacesRoutingModule],
   providers: [],
