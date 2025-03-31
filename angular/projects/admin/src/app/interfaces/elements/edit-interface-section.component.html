@@ -32,7 +32,7 @@
                 <th>
                   Elements
                   <a
-                    [routerLink]="['/interfaces', interfaceId, 'screens', screenId, 'sections', id, 'elements', 'new']"
+                    [routerLink]="['/interfaces', interfaceId, 'screens', screenId, 'sections', id, 'elements/new']"
                     class="btn btn--sm btn--primary ms-3"
                     >Add</a
                   >
@@ -45,8 +45,8 @@
               [params]="params"
               [basePath]="'/interfaces/' + interfaceId + '/screens/' + screenId + '/sections/' + id">
               <ng-template let-records="records" let-r="record">
-                <tr [routerLink]="['/interfaces', interfaceId, 'screens', screenId, 'sections', id, 'elements', record.id]">
-                  <td>{{ name(r) }}</td>
+                <tr>
+                  <td>{{ r.name }}</td>
                   <td>{{ r.position }}</td>
                 </tr>
               </ng-template>

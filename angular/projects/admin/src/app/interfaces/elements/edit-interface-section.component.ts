@@ -30,13 +30,4 @@ export class EditInterfaceSectionComponent implements OnInit {
   onDelete() {
     this.navigation.backTo(`/interfaces/${this.interfaceId}/screens/${this.screenId}`);
   }
-
-  name(record: any): string {
-    if (record.nemsisElement) {
-      return `${record.nemsisElement.displayName} (${record.nemsisElement.name})`;
-    } else if (record.screen) {
-      return record.screen.name;
-    }
-    return record.customId;
-  }
 }

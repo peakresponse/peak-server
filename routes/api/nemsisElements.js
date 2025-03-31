@@ -1,5 +1,6 @@
 const express = require('express');
 const { StatusCodes } = require('http-status-codes');
+const { Op } = require('sequelize');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -11,7 +12,7 @@ router.get(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const { nemsisVersion, page = '1' } = req.query;
+    const { nemsisVersion, page = '1', search } = req.query;
     const options = {
       page,
       order: [['lft', 'ASC']],
@@ -19,6 +20,16 @@ router.get(
         nemsisVersion,
       },
     };
+    if (search) {
+      options.where[Op.or] = {
+        name: {
+          [Op.iLike]: `%${search}%`,
+        },
+        displayName: {
+          [Op.iLike]: `%${search}%`,
+        },
+      };
+    }
     const { docs, pages, total } = await models.NemsisElement.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((r) => r.toJSON()));

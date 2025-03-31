@@ -19,6 +19,7 @@ router.get(
       return;
     }
     const options = {
+      include: ['nemsisElement', 'screen'],
       where: { sectionId },
       order: [['position', 'ASC']],
     };

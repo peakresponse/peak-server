@@ -16,6 +16,8 @@ import { EditInterfaceScreenComponent } from './screens/edit-interface-screen.co
 import { InterfaceSectionFormComponent } from './sections/interface-section-form.component';
 import { NewInterfaceSectionComponent } from './sections/new-interface-section.component';
 import { EditInterfaceSectionComponent } from './sections/edit-interface-section.component';
+import { InterfaceElementFormComponent } from './elements/interface-element-form.component';
+import { NewInterfaceElementComponent } from './elements/new-interface-element.component';
 
 @NgModule({
   declarations: [
@@ -29,12 +31,8 @@ import { EditInterfaceSectionComponent } from './sections/edit-interface-section
     InterfaceSectionFormComponent,
     NewInterfaceSectionComponent,
     EditInterfaceSectionComponent,
-    // GuideSectionFormComponent,
-    // NewGuideSectionComponent,
-    // EditGuideSectionComponent,
-    // GuideItemFormComponent,
-    // NewGuideItemComponent,
-    // EditGuideItemComponent,
+    InterfaceElementFormComponent,
+    NewInterfaceElementComponent,
   ],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, InterfacesRoutingModule],
   providers: [],
