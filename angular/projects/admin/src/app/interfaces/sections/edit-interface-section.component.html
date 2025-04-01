@@ -58,6 +58,25 @@
     </shared-form>
     <div class="col-xl-6 offset-xl-1">
       <h3>Preview</h3>
+      <shared-form type="sections" [id]="id" [hideButtons]="true">
+        <ng-template let-record="record" let-error="error">
+          <h4>{{ record.name }}</h4>
+          <shared-list
+            type="sectionElements"
+            [params]="params"
+            [basePath]="'/interfaces/' + interfaceId + '/screens/' + screenId + '/sections/' + id">
+            <ng-template let-records="records" let-r="record">
+              <nemsis-element
+                *ngIf="r.nemsisElementId"
+                [nemsisVersion]="r.nemsisElement?.nemsisVersion"
+                [dataSet]="r.nemsisElement?.dataSet"
+                [xsdName]="r.nemsisElement?.xsd"
+                [name]="r.nemsisElement?.name"
+                [record]="{}"></nemsis-element>
+            </ng-template>
+          </shared-list>
+        </ng-template>
+      </shared-form>
     </div>
   </div>
 </div>

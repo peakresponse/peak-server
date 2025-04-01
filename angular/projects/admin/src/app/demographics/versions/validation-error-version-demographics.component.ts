@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpResponse } from '@angular/common/http';
 import { JSONPath } from 'jsonpath-plus';
 import { get } from 'lodash-es';
 
-import { ApiService, SchemaService, XsdSchema } from 'shared';
+import { ApiService, SchemaService, XsdElement, XsdSchema } from 'shared';
 
 const MAPPING = {
   agency: 'dAgency_v3.xsd',
@@ -27,8 +26,7 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
 
   basePath?: string;
   stack?: any[];
-  element: any;
-  value: any;
+  element?: XsdElement;
   data: any;
 
   get link(): string[] {
@@ -48,10 +46,10 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
   ngOnInit() {
     const { section, id } = this.error ?? {};
     if (section) {
-      const { isDraft, nemsisVersion } = this.version ?? {};
-      if (Boolean(isDraft) && Boolean(nemsisVersion)) {
-        this.schema.getXsd(isDraft, nemsisVersion, get(MAPPING, section)).subscribe((schema: any) => {
-          this.xsd = new XsdSchema('DEM', schema, this.schema.getCommonTypes(isDraft), this.version.demCustomConfiguration, '');
+      const { demCustomConfiguration, nemsisVersion } = this.version ?? {};
+      if (Boolean(nemsisVersion)) {
+        this.schema.getXsd(nemsisVersion, get(MAPPING, section)).subscribe((schema: any) => {
+          this.xsd = new XsdSchema('DEM', schema, this.schema.getCommonTypes(nemsisVersion), demCustomConfiguration);
           if (this.record && this.xsd) {
             this.handleResponse();
           }
@@ -87,9 +85,9 @@ export class ValidationErrorVersionDemographicsComponent implements OnInit {
     }
     // find matching child element
     let elements = this.xsd?.childElements ?? [];
-    let element: any;
+    let element: XsdElement | undefined;
     for (element of elements) {
-      if (element._attributes?.name === parts?.[0]) {
+      if (element.name === parts?.[0]) {
         break;
       }
     }

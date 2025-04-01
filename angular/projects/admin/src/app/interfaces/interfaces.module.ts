@@ -19,6 +19,7 @@ import { EditInterfaceSectionComponent } from './sections/edit-interface-section
 import { InterfaceElementFormComponent } from './elements/interface-element-form.component';
 import { NewInterfaceElementComponent } from './elements/new-interface-element.component';
 import { EditInterfaceElementComponent } from './elements/edit-interface-element.component';
+import { NemsisElementComponent } from './sections/nemsis-element.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { EditInterfaceElementComponent } from './elements/edit-interface-element
     InterfaceElementFormComponent,
     NewInterfaceElementComponent,
     EditInterfaceElementComponent,
+    NemsisElementComponent,
   ],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, InterfacesRoutingModule],
   providers: [],

@@ -50,11 +50,11 @@ export class XsdBaseComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     if (this.nemsisVersion && this.xsd) {
-      this.schema.getXsd(false, this.nemsisVersion, this.xsd).subscribe((schema: any) => {
+      this.schema.getXsd(this.nemsisVersion, this.xsd).subscribe((schema: any) => {
         this.schemaData = new XsdSchema(
           this.dataSet ?? '',
           schema,
-          this.schema.getCommonTypes(false),
+          this.schema.getCommonTypes(this.nemsisVersion ?? ''),
           this.customConfiguration,
           this.schemaRootElementName,
         );
@@ -62,11 +62,11 @@ export class XsdBaseComponent implements OnInit {
       });
     }
     if (this.draftNemsisVersion && this.draftXsd) {
-      this.schema.getXsd(true, this.draftNemsisVersion, this.draftXsd).subscribe((schema: any) => {
+      this.schema.getXsd(this.draftNemsisVersion, this.draftXsd).subscribe((schema: any) => {
         this.draftSchemaData = new XsdSchema(
           this.dataSet ?? '',
           schema,
-          this.schema.getCommonTypes(true),
+          this.schema.getCommonTypes(this.draftNemsisVersion ?? ''),
           this.draftCustomConfiguration,
           this.draftSchemaRootElementName,
         );
