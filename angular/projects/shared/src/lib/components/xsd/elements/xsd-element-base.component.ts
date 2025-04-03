@@ -553,7 +553,7 @@ export class XsdElementBaseComponent {
   get otherAttributes(): any[] | undefined {
     const otherAttributes: any[] = [];
     for (const attribute of this.element?.attributes ?? []) {
-      if (attribute._attributes?.name !== 'NV' && attribute._attributes?.name !== 'CorrelationID') {
+      if (attribute._attributes?.name !== 'NV' && attribute._attributes?.name !== 'PN' && attribute._attributes?.name !== 'CorrelationID') {
         otherAttributes.push(attribute);
       }
     }
