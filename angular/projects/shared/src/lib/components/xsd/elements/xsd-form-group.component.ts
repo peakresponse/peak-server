@@ -22,16 +22,9 @@ export class XsdFormGroupComponent extends XsdElementBaseComponent {
 
   showGroupModal(modal: ModalComponent, index?: number) {
     this.groupModalRecord = cloneDeep(this.record);
-    if (Number.isInteger(index)) {
+    if (index !== undefined && Number.isInteger(index)) {
       this.groupModalIndex = index;
-      let path = this.path;
-      if (this.xsd?.isGrouped) {
-        path = path.replace(this.xsd?.basePath ?? '$', '$');
-      }
-      this.groupModalValue = JSONPath({ path: `${path}[${index}]`, json: this.groupModalRecord.data, wrap: false });
-      if (!this.groupModalValue && index === 0) {
-        this.groupModalValue = JSONPath({ path, json: this.groupModalRecord.data, wrap: false });
-      }
+      this.groupModalValue = this.values?.[index];
       this.isGroupModalEditing = true;
     } else {
       this.groupModalIndex = this.values?.length ?? 0;
