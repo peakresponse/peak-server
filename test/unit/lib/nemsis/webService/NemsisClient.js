@@ -62,7 +62,8 @@ describe('lib', () => {
           it('submits a complete valid payload to the SubmitData endpoint', async () => {
             const payload = readPayload('full/2023-EMS-1-Opioid-Release_v350.xml');
             const response = await client.submitEmsDataSet(payload, '3.5.0');
-            assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.SUCCESS);
+            // now returning a warning expecting new ePatient.25 sex field
+            assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.SUCCESS_WITH_SCH_WARN);
           });
         });
       });
