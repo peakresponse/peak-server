@@ -1,27 +1,25 @@
 const assert = require('assert');
 const fs = require('fs/promises');
 const path = require('path');
-// const tmp = require('tmp-promise');
+const tmp = require('tmp-promise');
 
-// const nemsisPublic = require('../../../../lib/nemsis/public');
+const nemsisPublic = require('../../../../lib/nemsis/public');
 const nemsisTranslation = require('../../../../lib/nemsis/translation');
 
 describe('lib', () => {
   describe('nemsis', () => {
     describe('translation', () => {
       let destPath;
-      // let cleanup;
-      before(async function anon() {
-        // temporarily skip all due to NEMSIS repo issues
-        return this.skip();
-        // ({ path: destPath, cleanup } = await tmp.file());
-        // await nemsisPublic.pull();
-        // const repo = nemsisPublic.getNemsisPublicRepo('3.5.0.211008CP3');
-        // await repo.pull();
+      let cleanup;
+      before(async () => {
+        ({ path: destPath, cleanup } = await tmp.file());
+        await nemsisPublic.pull();
+        const repo = nemsisPublic.getNemsisPublicRepo('3.5.0.211008CP3');
+        await repo.pull();
       });
 
       after(() => {
-        // cleanup();
+        cleanup();
       });
 
       describe('translateEmsDataSet', () => {

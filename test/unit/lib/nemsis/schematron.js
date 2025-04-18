@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-// const nemsisPublic = require('../../../../lib/nemsis/public');
+const nemsisPublic = require('../../../../lib/nemsis/public');
 const nemsisSchematron = require('../../../../lib/nemsis/schematron');
 
 function readXml(xmlPath) {
@@ -15,12 +15,10 @@ function readXml(xmlPath) {
 describe('lib', () => {
   describe('nemsis', () => {
     describe('schematron', () => {
-      before(async function anon() {
-        // temporarily skip all due to NEMSIS repo issues
-        return this.skip();
-        // await nemsisPublic.pull();
-        // const repo = nemsisPublic.getNemsisPublicRepo('3.5.0.211008CP3');
-        // await repo.pull();
+      before(async () => {
+        await nemsisPublic.pull();
+        const repo = nemsisPublic.getNemsisPublicRepo('3.5.0.211008CP3');
+        await repo.pull();
       });
 
       describe('validateDemDataSet', () => {

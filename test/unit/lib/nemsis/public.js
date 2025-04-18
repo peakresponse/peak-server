@@ -8,10 +8,8 @@ describe('lib', () => {
   describe('nemsis', () => {
     describe('public', () => {
       let repoPath;
-      before(function anon() {
-        // temporarily skip all due to NEMSIS repo issues
-        return this.skip();
-        // repoPath = path.resolve(__dirname, '../../../../nemsis/repositories/nemsis_public');
+      before(() => {
+        repoPath = path.resolve(__dirname, '../../../../nemsis/repositories/nemsis_public');
       });
 
       context('not initialized', () => {
