@@ -7,9 +7,10 @@ import { SharedModule } from 'shared';
 
 import { NemsisRoutingModule } from './nemsis-routing.module';
 import { ListNemsisComponent } from './list-nemsis.component';
+import { NemsisComponent } from './nemsis.component';
 
 @NgModule({
-  declarations: [ListNemsisComponent],
+  declarations: [ListNemsisComponent, NemsisComponent],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, NemsisRoutingModule],
   providers: [],
 })

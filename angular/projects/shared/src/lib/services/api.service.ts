@@ -515,6 +515,24 @@ export class ApiService {
     },
   };
 
+  interfaces = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/interfaces', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/interfaces`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/interfaces/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/interfaces/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/interfaces/${id}`);
+    },
+  };
+
   lists = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/lists', params);
@@ -537,6 +555,18 @@ export class ApiService {
     },
     install: (version: string): Observable<any> => {
       return this.post('/api/nemsis/install', { version });
+    },
+  };
+
+  nemsisElements = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/nemsis/elements', params);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/nemsis/elements/${id}`, params);
+    },
+    import: (nemsisVersion: string): Observable<any> => {
+      return this.post('/api/nemsis/elements/import', { nemsisVersion });
     },
   };
 
@@ -659,6 +689,60 @@ export class ApiService {
     },
     removePin: (id: string, pinId: string): Observable<any> => {
       return this.delete(`/api/scenes/${id}/pins/${pinId}`);
+    },
+  };
+
+  screens = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/interfaces/screens', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/interfaces/screens`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/interfaces/screens/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/interfaces/screens/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/interfaces/screens/${id}`);
+    },
+  };
+
+  sections = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/interfaces/sections', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/interfaces/sections`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/interfaces/sections/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/interfaces/sections/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/interfaces/sections/${id}`);
+    },
+  };
+
+  sectionElements = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/interfaces/sections/elements', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/interfaces/sections/elements`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/interfaces/sections/elements/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/interfaces/sections/elements/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/interfaces/sections/elements/${id}`);
     },
   };
 

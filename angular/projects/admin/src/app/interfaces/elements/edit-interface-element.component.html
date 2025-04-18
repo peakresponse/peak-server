@@ -1,0 +1,19 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Edit Section</h1>
+  </div>
+  <shared-form
+    *ngIf="id"
+    type="sectionElements"
+    [id]="id"
+    [showCancel]="true"
+    (cancel)="onCancel()"
+    (update)="onUpdate()"
+    (delete)="onDelete()"
+    class="d-block col-xl-6">
+    <ng-template let-record="record" let-error="error">
+      <admin-interfaces-element-form [interfaceId]="interfaceId" [record]="record" [error]="error"></admin-interfaces-element-form>
+    </ng-template>
+  </shared-form>
+</div>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd" />
+	<xs:complexType name="eRecord" id="eRecord.RecordInformation">
+		<xs:sequence>
+			<xs:element name="eRecord.01" type="PatientCareReportNumber" id="eRecord.PatientCareReportNumber">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eRecord.01</number>
+							<name>Patient Care Report Number</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The unique number automatically assigned by the EMS agency for each Patient Care Report (PCR). This should be a unique number for the EMS agency for all of time.</definition>
+							<v2Number>E01_01</v2Number>
+							<usage>Mandatory</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Airway</performanceMeasure>
+								<performanceMeasure>Cardiac Arrest</performanceMeasure>
+								<performanceMeasure>Pediatric</performanceMeasure>
+								<performanceMeasure>Response</performanceMeasure>
+								<performanceMeasure>STEMI</performanceMeasure>
+								<performanceMeasure>Stroke</performanceMeasure>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eRecord.SoftwareApplicationGroup" id="eRecord.SoftwareApplicationGroup">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold information about the software used to generate this patient care report</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eRecord.02" type="SoftwareCreator" id="eRecord.SoftwareCreator">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eRecord.02</number>
+										<name>Software Creator</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The name of the vendor, manufacturer, and developer who designed the application that created this record.</definition>
+										<v2Number>E01_02</v2Number>
+										<usage>Mandatory</usage>
+										<comment>This is required to document the software used to generate the Patient Care Report. This is not the last software which aggregated/stored the Patient Care Report after it was sent from another software.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eRecord.03" type="SoftwareName" id="eRecord.SoftwareName">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eRecord.03</number>
+										<name>Software Name</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The name of the application used to create this record.</definition>
+										<v2Number>E01_03</v2Number>
+										<usage>Mandatory</usage>
+										<comment>This is the EMS Agency's software, not the state or other level software which electronically received the data from the local EMS Agency.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eRecord.04" type="SoftwareVersion" id="eRecord.SoftwareVersion">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eRecord.04</number>
+										<name>Software Version</name>
+										<national>Yes</national>
+										<state>Yes</state>
+										<definition>The version of the application used to create this record.</definition>
+										<v2Number>E01_04</v2Number>
+										<usage>Mandatory</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PatientCareReportNumber">
+		<xs:annotation>
+			<xs:documentation>The unique number automatically assigned by the EMS agency for each patient care report(PCR).  This is a unique number to the EMS agency for all of time.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

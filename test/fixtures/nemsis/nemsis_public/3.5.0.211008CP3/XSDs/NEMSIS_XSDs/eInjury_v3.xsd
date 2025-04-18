@@ -1,0 +1,1459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eInjury" id="eInjury.SituationTrauma">
+		<xs:sequence>
+			<xs:element name="eInjury.01" nillable="true" id="eInjury.CauseofInjury" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.01</number>
+							<name>Cause of Injury</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>The category of the reported/suspected external cause of the injury.</definition>
+							<v2Number>E10_01</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>
+								Suggested code list is represented in ICD-10-CM. Reference the NEMSIS Suggested Lists at: https://nemsis.org/technical-resources/version-3/version-3-resource-repository/															
+							&lt;br/>&lt;br/>Code list is represented in ICD-10 Codes.
+							&lt;br/>Website - http://uts.nlm.nih.gov  
+							&lt;br/>Product - UMLS Metathesaurus
+							</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="icd10CodeInjury">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eInjury.02" nillable="true" id="eInjury.MechanismofInjury" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.02</number>
+							<name>Mechanism of Injury</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The mechanism of the event which caused the injury.</definition>
+							<v2Number>E10_03</v2Number>
+							<usage>Recommended</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="MechanismOfInjury">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eInjury.03" nillable="true" id="eInjury.TraumaTriageCriteriaSteps1and2" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.03</number>
+							<name>Trauma Triage Criteria (High Risk for Serious Injury)</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Trauma triage criteria for the red boxes (Injury Patterns and Mental Status and Vital Signs) in the 2021 ACS National Guideline for the Field Triage of Injured Patients.</definition>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>2021 National Guidelines for the Field Triage of Injured Patients - Red Criteria (i.e., Injury Patterns, Mental Status &amp; Vital Signs)</comment>
+							<v3Changes>Revised to represent the 2021 National Guidelines for the Field Triage of Injured Patients - Red Criteria.  Website: &lt;a href="https://www.facs.org/quality-programs/trauma/systems/field-triage-guidelines/" target="_blank">https://www.facs.org/quality-programs/trauma/systems/field-triage-guidelines/&lt;/a></v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="TraumaTriageCriteriaSteps1and2">
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.NoneReported"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eInjury.04" nillable="true" id="eInjury.TraumaTriageCriteriaSteps3and4" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.04</number>
+							<name>Trauma Triage Criteria (Moderate Risk for Serious Injury)</name>
+							<national>Yes</national>
+							<state>Yes</state>
+							<definition>Trauma triage criteria for the yellow boxes (Mechanism of Injury and EMS Judgment) in the 2021 ACS National Guideline for the Field Triage of Injured Patients.</definition>
+							<v2Number>E10_04</v2Number>
+							<usage>Required</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>2021 National Guidelines for the Field Triage of Injured Patients - Yellow Criteria (i.e., Mechanism of Injury and EMS Judgment)</comment>
+							<v3Changes>Revised to represent the 2021 National Guidelines for the Field Triage of Injured Patients - Yellow Criteria.  Website: 
+								&lt;a href="https://www.facs.org/quality-programs/trauma/systems/field-triage-guidelines/" target="_blank">https://www.facs.org/quality-programs/trauma/systems/field-triage-guidelines&lt;/a>
+							</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="TraumaTriageCriteriaSteps3and4">
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.NoneReported"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eInjury.05" type="AreaOfVehicleImpact" id="eInjury.MainAreaoftheVehicleimpactedbythecollision" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.05</number>
+							<name>Main Area of the Vehicle Impacted by the Collision</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The area or location of initial impact on the vehicle based on 12-point clock diagram.</definition>
+							<v2Number>E10_05</v2Number>
+							<usage>Optional</usage>
+							<comment>The front of the vehicle is 12, passenger (right) side is 3, rear is 6, etc.&lt;br/>&lt;br/>Based on MMUCC via areas(s) of impact &amp; FARS coding manual clock diagram.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eInjury.06" type="SeatRowLocation" id="eInjury.LocationofPatientinVehicle" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.06</number>
+							<name>Location of Patient in Vehicle</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The seat row location of the vehicle at the time of the crash with the front seat numbered as 1.</definition>
+							<v2Number>E10_06</v2Number>
+							<usage>Optional</usage>
+							<comment>MMUCC P6 data element</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eInjury.07" nillable="true" id="eInjury.UseofOccupantSafetyEquipment" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.07</number>
+							<name>Use of Occupant Safety Equipment</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>Safety equipment in use by the patient at the time of the injury.</definition>
+							<v2Number>E10_08</v2Number>
+							<usage>Recommended</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Trauma</performanceMeasure>
+							</performanceMeasuresGroup>
+							<comment>MMUCC P7 data element used as baseline information.  Data element expanded for added definition in non-vehicular settings.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="UseOfOccupantSafetyEquipment">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eInjury.08" id="eInjury.AirbagDeployment" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.08</number>
+							<name>Airbag Deployment</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>Indication of Airbag Deployment.</definition>
+							<v2Number>E10_09</v2Number>
+							<usage>Optional</usage>
+							<comment>MMUCC P8 data element baseline was used for this element.</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="AirbagDeployment">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eInjury.09" type="HeightOfFall" id="eInjury.HeightofFallfeet" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.09</number>
+							<name>Height of Fall (feet)</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The distance in feet the patient fell, measured from the lowest point of the patient to the ground.</definition>
+							<v2Number>E10_10</v2Number>
+							<usage>Optional</usage>
+							<comment>Classify same level falls as 0 feet</comment>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eInjury.10" id="eInjury.OSHAPersonalProtectiveEquipmentUsed" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eInjury.10</number>
+							<name>OSHA Personal Protective Equipment Used</name>
+							<national>No</national>
+							<state>No</state>
+							<definition>Documentation of the use of OSHA required protective equipment used by the patient at the time of injury.</definition>
+							<usage>Optional</usage>
+							<v3Changes>Added to better document personal protection equipment used by the patient associated with an injury.</v3Changes>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EquipmentUsed">
+							<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eInjury.CollisionGroup" id="eInjury.CollisionGroup" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold the automated collision notification details</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eInjury.11" type="Company" id="eInjury.ACNSystemCompanyProvidingACNData" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.11</number>
+										<name>ACN System/Company Providing ACN Data</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The agency providing the Automated Collision Notification (ACN) Data.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Provider Name. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN) Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.12" type="IncidentID" id="eInjury.ACNIncidentID" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.12</number>
+										<name>ACN Incident ID</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Incident ID.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Incident ID. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.13" id="eInjury.ACNCallBackPhoneNumber" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.13</number>
+										<name>ACN Call Back Phone Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Call Back Phone Number (US Only).</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Call Back Number. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="PhoneNumber">
+										<xs:attribute name="PhoneNumberType" type="PhoneNumberType" use="optional"/>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eInjury.14" type="DateTimeType" id="eInjury.ACNIncidentDateTime" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.14</number>
+										<name>Date/Time of ACN Incident</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Incident Date and Time.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Incident Date and Time. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group. 
+										  	&lt;br/>&lt;br/>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+									&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+									&lt;table border="1px" cellpadding="3px" cellspacing="0">
+									  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+									&lt;/table> 
+									&lt;/td>&lt;/tr>&lt;/table>
+									&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+									&lt;table cellspacing="2">&lt;tr>&lt;td>	
+									&lt;table border="1px" cellpadding="3px" cellspacing="0">
+									  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+									  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+									&lt;/table>
+									&lt;/td>&lt;/tr>&lt;/table></comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.15" type="GPSLocation" id="eInjury.ACNIncidentLocation" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.15</number>
+										<name>ACN Incident Location</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification GPS Location.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Location (combining Latitude and Longitude). Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.										
+										  The pattern for GPS location is in the format "&lt;span style="font-style:italic">latitude&lt;/span>,&lt;span style="font-style:italic">longitude&lt;/span>" where:
+										  &lt;br/>- &lt;span style="font-style:italic">latitude&lt;/span> has a minimum of -90 and a maximum of 90 with up to 6 decimal places
+										  &lt;br/>- &lt;span style="font-style:italic">longitude&lt;/span> has a minimum of -180 and a maximum of 180 with up to 6 decimal places						  
+										</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.16" type="BodyType" id="eInjury.ACNIncidentVehicleBodyType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.16</number>
+										<name>ACN Incident Vehicle Body Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Vehicle Body Type.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Body Type. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.17" type="Manufacturer" id="eInjury.ACNIncidentVehicleManufacturer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.17</number>
+										<name>ACN Incident Vehicle Manufacturer</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Vehicle Manufacturer (e.g., General Motors, Ford, BMW, etc.).</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Manufacturer. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.18" type="Make" id="eInjury.ACNIncidentVehicleMake" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.18</number>
+										<name>ACN Incident Vehicle Make</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Vehicle Make (e.g., Cadillac, Ford, BMW, etc.).</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Make. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.19" type="Model" id="eInjury.ACNIncidentVehicleModel" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.19</number>
+										<name>ACN Incident Vehicle Model</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Vehicle Model (e.g., Escalade, Taurus, X6M, etc.).</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Model. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.20" type="Year" id="eInjury.ACNIncidentVehicleModelYear" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.20</number>
+										<name>ACN Incident Vehicle Model Year</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Vehicle Model Year (e.g., 2010).</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Year. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.21" type="YesNoValues" id="eInjury.ACNIncidentMultipleImpacts" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.21</number>
+										<name>ACN Incident Multiple Impacts</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Indication of Multiple Impacts associated with the collision.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Multiple Impacts. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.22" id="eInjury.ACNIncidentDeltaVelocity" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.22</number>
+										<name>ACN Incident Delta Velocity</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Delta Velocity (Delta V) force associated with the crash.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set:  Delta Velocity. The force of impact based on the change in velocity over the duration of the crash pulse. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DeltaVelocity">
+										<xs:attribute name="DeltaVelocityOrdinal" type="DeltaVelocityOrdinalRanking" use="optional"/>
+										<xs:attribute name="VelocityUnit" type="VelocityUnits" use="optional"/>
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eInjury.23" type="YesNoValues" id="eInjury.ACNHighProbabilityofInjury" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.23</number>
+										<name>ACN High Probability of Injury</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification of the High Probability of Injury.</definition>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Trauma</performanceMeasure>
+										</performanceMeasuresGroup>
+										<!--Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.-->
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.24" type="PDOF" id="eInjury.ACNIncidentPDOF" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.24</number>
+										<name>ACN Incident PDOF</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Principal Direction of Force (PDOF).</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set: PDOF. Principal direction of the force of the impact to nearest o'clock reading. Values are 1 through 12 (e.g., 12=Frontal collision, 3=passenger side (right) collision, etc.). Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification 
+(AACN) Joint APCO/NENA Data Standardization Working Group. </comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.25" type="ACNYesNoType" id="eInjury.ACNIncidentRollover" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eInjury.25</number>
+										<name>ACN Incident Rollover</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The Automated Collision Notification Indication that the Vehicle Rolled Over.</definition>
+										<usage>Optional</usage>
+										<comment>Based on Vehicular Emergency Data Set: Rollover. Indicates if the vehicle rolled over during the collision/event (e.g., True=Rollover, False=No Rollover). Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN) Joint APCO/NENA Data Standardization Working Group. </comment>
+										<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eInjury.SeatGroup" id="eInjury.SeatGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold the seat details</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eInjury.26" id="eInjury.ACNVehicleSeatLocation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eInjury.26</number>
+													<name>ACN Vehicle Seat Location</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The Automated Collision Notification Indication of the Occupant(s) Seat Location(s) within the vehicle.</definition>
+													<usage>Optional</usage>
+													<comment>Based on Vehicular Emergency Data Set:  Seat - Multiple entry for each seats data. Indicates seatbelt and seat sensor data for individual seat position in the vehicle. These elements come from passenger vehicle. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+													<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="SeatLocation"/>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="eInjury.27" type="ACNYesNoType" id="eInjury.SeatOccupied" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eInjury.27</number>
+													<name>Seat Occupied</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>Indication if seat is occupied based on seat sensor data.</definition>
+													<usage>Optional</usage>
+													<comment>Based on Vehicular Emergency Data Set:  Occupied - Associated with each seat. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+													<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eInjury.28" type="ACNYesNoType" id="eInjury.ACNIncidentSeatbeltUse" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eInjury.28</number>
+													<name>ACN Incident Seatbelt Use</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The Automated Collision Notification Indication of Seatbelt use by the occupant(s).</definition>
+													<usage>Optional</usage>
+													<comment>Based on Vehicular Emergency Data Set:  Belt Fastened - Associated with each Seat. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+													<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eInjury.29" type="ACNYesNoType" id="eInjury.ACNIncidentAirbagDeployed" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eInjury.29</number>
+													<name>ACN Incident Airbag Deployed</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The Automated Collision Notification Indication of Airbag Deployment.</definition>
+													<usage>Optional</usage>
+													<comment>Based on Vehicular Emergency Data Set:  Deployed - Associated with each seat. Indicates if airbag is deployed. Vehicular Emergency Data Set (VEDS) Recommendations. Version 3.0 Prepared: (February 2011) by the Advanced Automatic Crash Notification (AACN)Joint APCO/NENA Data Standardization Working Group.</comment>
+													<v3Changes>Added to better incorporate advanced automated collision notification information.</v3Changes>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ACNYesNoType">
+		<xs:annotation>
+			<xs:documentation>IndicationOfAirbagDeployment</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Y">
+				<xs:annotation>
+					<xs:documentation>Yes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>No</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AirbagDeployment">
+		<xs:annotation>
+			<xs:documentation>IndicationOfAirbagDeployment</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2908001">
+				<xs:annotation>
+					<xs:documentation>Airbag Deployed Front</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2908003">
+				<xs:annotation>
+					<xs:documentation>Airbag Deployed Side</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2908005">
+				<xs:annotation>
+					<xs:documentation>Airbag Deployed Other (knee, air belt, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2908007">
+				<xs:annotation>
+					<xs:documentation>No Airbag Deployed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2908009">
+				<xs:annotation>
+					<xs:documentation>No Airbag Present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AreaOfVehicleImpact">
+		<xs:annotation>
+			<xs:documentation>The area or location of impact on the vehicle</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BodyType">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Vehicle Body Type.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CauseOfInjury">
+		<xs:annotation>
+			<xs:documentation>The category of the reported/suspected external cause of the injury.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2901001">
+				<xs:annotation>
+					<xs:documentation>Accidental drowning and submersion (ICD-10:W65-W74)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901003">
+				<xs:annotation>
+					<xs:documentation>Accidental exposure to other and unspecified factors (ICD-10: X58-X59)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901005">
+				<xs:annotation>
+					<xs:documentation>Accidental poisoning by and exposure to noxious substances (ICD-10: X40-X49)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901007">
+				<xs:annotation>
+					<xs:documentation>Air and space transport accidents (ICD-10: V95-V97)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901009">
+				<xs:annotation>
+					<xs:documentation>Assault (ICD-10: X85-Y09)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901011">
+				<xs:annotation>
+					<xs:documentation>Bus occupant injured in transport accident (ICD-10: V70-V79)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901013">
+				<xs:annotation>
+					<xs:documentation>Car occupant injured in transport accident (ICD-10: V40-V49)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901015">
+				<xs:annotation>
+					<xs:documentation>Complications of medical and surgical care (ICD-10:Y40-Y84)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901017">
+				<xs:annotation>
+					<xs:documentation>Contact with heat and hot substances (ICD-10:X10-X19)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901019">
+				<xs:annotation>
+					<xs:documentation>Contact with venomous animals and plants (ICD-10: X20-X29)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901021">
+				<xs:annotation>
+					<xs:documentation>Event of undetermined intent (ICD-10: Y10-Y34)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901023">
+				<xs:annotation>
+					<xs:documentation>Exposure to animate mechanical forces (ICD-10:W50-W64)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901025">
+				<xs:annotation>
+					<xs:documentation>Exposure to electric current, radiation and extreme ambient air temperature and pressure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901027">
+				<xs:annotation>
+					<xs:documentation>Exposure to forces of nature (ICD-10: X30-X39)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901029">
+				<xs:annotation>
+					<xs:documentation>Exposure to inanimate mechanical forces (ICD-10: W20-W49)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901031">
+				<xs:annotation>
+					<xs:documentation>Exposure to smoke, fire and flames (ICD_10:X00-X09)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901033">
+				<xs:annotation>
+					<xs:documentation>Falls (ICD-10: W00-W19)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901035">
+				<xs:annotation>
+					<xs:documentation>Intentional self-harm (ICD-10: X60-X84)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901037">
+				<xs:annotation>
+					<xs:documentation>Legal intervention and operations of war (ICD-10:Y35-Y36)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901039">
+				<xs:annotation>
+					<xs:documentation>Motorcycle rider injured in transport accident (ICD-10: V20-V29)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901041">
+				<xs:annotation>
+					<xs:documentation>Occupant of heavy transport vehicle injured in transport accident (ICD-10: V60-V69)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901043">
+				<xs:annotation>
+					<xs:documentation>Occupant of pick-up truck or van injured in transport accident (ICD-10: V50-V59)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901045">
+				<xs:annotation>
+					<xs:documentation>Occupant of three-wheeled motor vehicle injured in transport accident (ICD-10: V30-V39)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901047">
+				<xs:annotation>
+					<xs:documentation>Other accidental threats to breathing (ICD-10:W75-W84)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901049">
+				<xs:annotation>
+					<xs:documentation>Other and unspecified transport accidents (ICD-10: V98-V99)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901051">
+				<xs:annotation>
+					<xs:documentation>Other land transport accidents (ICD-10: V80-V89)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901053">
+				<xs:annotation>
+					<xs:documentation>Overexertion, travel and privation (ICD-10: X50-X57)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901055">
+				<xs:annotation>
+					<xs:documentation>Pedal cyclist injured in transport accident (ICD-10: V10-V19)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901057">
+				<xs:annotation>
+					<xs:documentation>Pedestrian injured in transport accident (ICD-10: V01-V09)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901059">
+				<xs:annotation>
+					<xs:documentation>Sequelae (Circumstances) of external causes of morbidity and mortality (ICD-10: Y85-Y89)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2901061">
+				<xs:annotation>
+					<xs:documentation>Water transport accidents (ICD-10: V90-V94)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Company">
+		<xs:annotation>
+			<xs:documentation>The Agency providing the Automated Collision Notification Data.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeltaVelocity">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Delta Velocity (Delta V) force associated with the crash.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeltaVelocityOrdinalRanking">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Delta Velocity (Delta V) force ordinal value. 1 equals first impact, 2 equals second, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EquipmentUsed">
+		<xs:annotation>
+			<xs:documentation>Documentation of the use of OSHA required equipment associated with the injury.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2910001">
+				<xs:annotation>
+					<xs:documentation>Eye and Face Protection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2910003">
+				<xs:annotation>
+					<xs:documentation>Foot Protection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2910005">
+				<xs:annotation>
+					<xs:documentation>Head Protection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2910007">
+				<xs:annotation>
+					<xs:documentation>Hearing Protection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2910009">
+				<xs:annotation>
+					<xs:documentation>Respiratory Protection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2910011">
+				<xs:annotation>
+					<xs:documentation>Safety Belts, lifelines, and lanyards</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2910013">
+				<xs:annotation>
+					<xs:documentation>Safety Nets</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeightOfFall">
+		<xs:annotation>
+			<xs:documentation>The distance in feet the patient fell, measured from the lowest point of the patient to the ground</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="10000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IncidentID">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Incident ID.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Make">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Vehicle Make (e.g. Cadillac, Ford, BMW).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Manufacturer">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Vehicle Manufacturer (e.g. General Motors, Ford, BMW).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MechanismOfInjury">
+		<xs:annotation>
+			<xs:documentation>The mechanism of the event which caused the injury</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2902001">
+				<xs:annotation>
+					<xs:documentation>Blunt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2902003">
+				<xs:annotation>
+					<xs:documentation>Burn</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2902005">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2902007">
+				<xs:annotation>
+					<xs:documentation>Penetrating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Model">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Vehicle Model (e.g. Escalade, Taurus, X6M).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PDOF">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Principal Direction of Force (PDOF).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SeatLocation">
+		<xs:annotation>
+			<xs:documentation>The Automated Collision Notification Indication of the Occupant(s) Seat Location(s) within the vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2926001">
+				<xs:annotation>
+					<xs:documentation>Driver Front Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2926003">
+				<xs:annotation>
+					<xs:documentation>Front Row Middle Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2926005">
+				<xs:annotation>
+					<xs:documentation>Passenger Front Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2926007">
+				<xs:annotation>
+					<xs:documentation>Second Row Left Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2926009">
+				<xs:annotation>
+					<xs:documentation>Second Row Middle Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2926011">
+				<xs:annotation>
+					<xs:documentation>Second Row Right Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2926013">
+				<xs:annotation>
+					<xs:documentation>Third Row Left Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2926015">
+				<xs:annotation>
+					<xs:documentation>Third Row Middle Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2926017">
+				<xs:annotation>
+					<xs:documentation>Third Row Right Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SeatRowLocation">
+		<xs:annotation>
+			<xs:documentation>The seat row location of the vehicle at the time of the crash with the front seat numbered as 1</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2906001">
+				<xs:annotation>
+					<xs:documentation>Front Seat-Left Side (or motorcycle driver)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906003">
+				<xs:annotation>
+					<xs:documentation>Front Seat-Middle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906005">
+				<xs:annotation>
+					<xs:documentation>Front Seat-Right Side</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906007">
+				<xs:annotation>
+					<xs:documentation>Passenger in other enclosed passenger or cargo area (non-trailing unit such as a bus, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906009">
+				<xs:annotation>
+					<xs:documentation>Passenger in unenclosed passenger or cargo area (non-trailing unit such as a pickup, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906011">
+				<xs:annotation>
+					<xs:documentation>Riding on Vehicle Exterior (non-trailing unit)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906013">
+				<xs:annotation>
+					<xs:documentation>Second Seat-Left Side (or motorcycle passenger)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906015">
+				<xs:annotation>
+					<xs:documentation>Second Seat-Middle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906017">
+				<xs:annotation>
+					<xs:documentation>Second Seat-Right Side</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906019">
+				<xs:annotation>
+					<xs:documentation>Sleeper Section of Cab (truck)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906021">
+				<xs:annotation>
+					<xs:documentation>Third Row-Left Side (or motorcycle passenger)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906023">
+				<xs:annotation>
+					<xs:documentation>Third Row-Middle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906025">
+				<xs:annotation>
+					<xs:documentation>Third Row-Right Side</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906027">
+				<xs:annotation>
+					<xs:documentation>Trailing Unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2906029">
+				<xs:annotation>
+					<xs:documentation>Unknown</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TraumaTriageCriteriaSteps1and2">
+		<xs:annotation>
+			<xs:documentation>Field Triage Criteria for transport to a trauma center as defined by the Centers for Disease Control and Prevention and the American College of Surgeons-Committee on Trauma.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2903001">
+				<xs:annotation>
+					<xs:documentation>Amputation proximal to wrist or ankle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903003">
+				<xs:annotation>
+					<xs:documentation>Crushed, degloved, mangled, or pulseless extremity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903005">
+				<xs:annotation>
+					<xs:documentation>Chest wall instability, deformity, or suspected flail chest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903007">
+				<xs:annotation>
+					<xs:documentation>Glasgow Coma Score &lt;= 13 (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903009">
+				<xs:annotation>
+					<xs:documentation>Skull deformity, suspected skull fracture</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903011">
+				<xs:annotation>
+					<xs:documentation>Paralysis (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903013">
+				<xs:annotation>
+					<xs:documentation>Suspected pelvic fracture</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903015">
+				<xs:annotation>
+					<xs:documentation>Penetrating injuries to head, neck, torso, and proximal extremities</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903017">
+				<xs:annotation>
+					<xs:documentation>Respiratory Rate  &lt;10 or >29 breaths per minute (&lt;20 in infants aged &lt;1 year) or need for ventilatory support (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903019">
+				<xs:annotation>
+					<xs:documentation>Systolic Blood Pressure &lt;90 mmHg (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903021">
+				<xs:annotation>
+					<xs:documentation>Suspected fracture of two or more proximal long bones</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903023">
+				<xs:annotation>
+					<xs:documentation>Active bleeding requiring a tourniquet or wound packing with continuous pressure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903025">
+				<xs:annotation>
+					<xs:documentation>Age &gt;= 10 years: HR > SBP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903027">
+				<xs:annotation>
+					<xs:documentation>Age &gt;= 65 years: SBP &lt; 110 mmHg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903029">
+				<xs:annotation>
+					<xs:documentation>Age 0-9 years: SBP &lt; 70mm Hg + (2 x age in years)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903031">
+				<xs:annotation>
+					<xs:documentation>Age 10-64 years: SBP &lt; 90 mmHg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903033">
+				<xs:annotation>
+					<xs:documentation>Respiratory distress or need for respiratory support</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903035">
+				<xs:annotation>
+					<xs:documentation>Room-air pulse oximetry &lt; 90%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903037">
+				<xs:annotation>
+					<xs:documentation>RR &lt; 10 or > 29 breaths/min</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903039">
+				<xs:annotation>
+					<xs:documentation>Suspected spinal injury with new motor or sensory loss</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2903041">
+				<xs:annotation>
+					<xs:documentation>Unable to follow commands (motor GCS &lt; 6)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UseOfOccupantSafetyEquipment">
+		<xs:annotation>
+			<xs:documentation>Safety equipment in use by the patient at the time of the injury</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2907001">
+				<xs:annotation>
+					<xs:documentation>Child Booster Seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907003">
+				<xs:annotation>
+					<xs:documentation>Eye Protection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907005">
+				<xs:annotation>
+					<xs:documentation>Helmet Worn</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907007">
+				<xs:annotation>
+					<xs:documentation>Infant Car Seat Forward Facing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907009">
+				<xs:annotation>
+					<xs:documentation>Infant Car Seat Rear Facing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907015">
+				<xs:annotation>
+					<xs:documentation>None</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907017">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907019">
+				<xs:annotation>
+					<xs:documentation>Personal Floatation Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907021">
+				<xs:annotation>
+					<xs:documentation>Protective Clothing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907023">
+				<xs:annotation>
+					<xs:documentation>Protective Non-Clothing Gear</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907027">
+				<xs:annotation>
+					<xs:documentation>Shoulder and Lap Belt Used</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907029">
+				<xs:annotation>
+					<xs:documentation>Lap Belt Only Used</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907031">
+				<xs:annotation>
+					<xs:documentation>Shoulder Belt Only Used</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2907033">
+				<xs:annotation>
+					<xs:documentation>Unable to Determine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TraumaTriageCriteriaSteps3and4">
+		<xs:annotation>
+			<xs:documentation>The kind of risk factor predictors present at the incident</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2904001">
+				<xs:annotation>
+					<xs:documentation>Pedestrian/bicycle rider thrown, run over, or with significant impact</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904003">
+				<xs:annotation>
+					<xs:documentation>Fall Adults: > 20 ft. (one story is equal to 10 ft.) (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904005">
+				<xs:annotation>
+					<xs:documentation>Fall Children: > 10 ft. or 2-3 times the height of the child (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904007">
+				<xs:annotation>
+					<xs:documentation>Auto Crash: Death in passenger compartment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904009">
+				<xs:annotation>
+					<xs:documentation>Auto Crash: Partial or complete ejection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904011">
+				<xs:annotation>
+					<xs:documentation>Auto Crash: Significant intrusion (including roof): >12 inches occupant site; >18 inches any site; need for extrication</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904013">
+				<xs:annotation>
+					<xs:documentation>Auto Crash: Vehicle telemetry data consistent with severe injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904015">
+				<xs:annotation>
+					<xs:documentation>Motorcycle Crash > 20 MPH (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904017">
+				<xs:annotation>
+					<xs:documentation>SBP &lt; 110 for age > 65 (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904019">
+				<xs:annotation>
+					<xs:documentation>Anticoagulant use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904021">
+				<xs:annotation>
+					<xs:documentation>Pregnancy > 20 weeks</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904023">
+				<xs:annotation>
+					<xs:documentation>Other EMS judgment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904025">
+				<xs:annotation>
+					<xs:documentation>Burn, without other trauma (DEPRECATED)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904027">
+				<xs:annotation>
+					<xs:documentation>Burns in conjunction with trauma</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904029">
+				<xs:annotation>
+					<xs:documentation>Auto Crash: Child (age 0-9 years) unrestrained or in unsecured child safety seat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904031">
+				<xs:annotation>
+					<xs:documentation>Fall from height > 10 feet (all ages)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904033">
+				<xs:annotation>
+					<xs:documentation>Low-level falls in young children (age &lt;= 5 years) or older adults (age &gt;= 65 years) with significant head impact</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904035">
+				<xs:annotation>
+					<xs:documentation>Rider separated from transport vehicle with significant impact (eg, motorcycle, ATV, horse, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904037">
+				<xs:annotation>
+					<xs:documentation>Special, high-resource healthcare needs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2904039">
+				<xs:annotation>
+					<xs:documentation>Suspicion of child abuse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -12,19 +12,19 @@
   <ng-template let-recordSchema="recordSchema" let-record="record" let-error="error">
     <ng-container *ngFor="let element of recordSchema?.childElements">
       <shared-xsd-form-group
-        *ngIf="!isGroup(element)"
+        *ngIf="!element.isGroup"
         [xsd]="recordSchema"
         [record]="record"
         [element]="element"
         [data]="record.data"
         [error]="error"></shared-xsd-form-group>
-      <ng-container *ngIf="isGroup(element)">
+      <ng-container *ngIf="element.isGroup">
         <shared-xsd-form-group
-          *ngFor="let nestedElement of groupElements(element)"
+          *ngFor="let nestedElement of element.groupElements"
           [xsd]="recordSchema"
           [record]="record"
           [element]="nestedElement"
-          [data]="nestedData(record.data)"
+          [data]="record.data['dFacility.FacilityGroup']"
           [error]="error"></shared-xsd-form-group>
       </ng-container>
     </ng-container>

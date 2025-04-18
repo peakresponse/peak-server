@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eDevices">
+		<xs:sequence>
+			<xs:element name="eDevice.DeviceGroup" id="eDevice.DeviceGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold Device Information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eDevice.01" type="DeviceSerialNumber" id="eDevice.DeviceSerialNumber" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eDevice.01</number>
+										<name>Medical Device Serial Number</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The unique manufacturer's serial number associated with a medical device.</definition>
+										<usage>Optional</usage>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eDevice.02" type="DateTimeType" id="eDevice.EventDateTime" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eDevice.02</number>
+										<name>Date/Time of Event (per Medical Device)</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The time of the event recorded by the device's internal clock.</definition>
+										<v2Number>E21_01</v2Number>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eDevice.03" id="eDevice.MedicalDeviceEventName" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eDevice.03</number>
+										<name>Medical Device Event Type</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The type of event documented by the medical device.</definition>
+										<v2Number>E21_02</v2Number>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Can be displayed in the Vital Signs or Procedure Sections.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="MedicalDeviceEventType">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eDevice.WaveformGroup" id="eDevice.WaveformGroup" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold info about Wave type</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eDevice.04" type="GraphicType" id="eDevice.WaveformGraphicType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eDevice.04</number>
+													<name>Medical Device Waveform Graphic Type</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The description of the waveform file stored in Waveform Graphic (eDevice.05).</definition>
+													<v2Number>E21_03</v2Number>
+													<usage>Optional</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+													</performanceMeasuresGroup>
+													<comment>The description is defined as the extension of the file type.  
+																	Examples of file name extensions include "doc", "jpeg", "tiff", etc.  For a list of additional extensions reference the following website(s):
+&lt;br/>
+&lt;table>&lt;tr>&lt;td width="10px">&lt;/td>&lt;td>
+&lt;table>
+&lt;tr>&lt;td>3D Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/3d_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Raster Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/raster_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Vector Image formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/vector_image&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>Video formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/video&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Audio formats: &lt;span style="color:blue">http://www.fileinfo.com/filetypes/audio&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>Comparison of formats:&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Image: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Comparison_of_image_file_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Audio: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Audio_file_format&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Container: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Comparison_of_container_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>&lt;br/>&lt;/td>&lt;/tr>
+&lt;tr>&lt;td>A general list of image formats: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Image_file_formats&lt;/span>&lt;/td>&lt;/tr> 
+&lt;tr>&lt;td>Mime Types: &lt;span style="color:blue">http://en.wikipedia.org/wiki/Internet_media_type&lt;/span>&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table>												
+													</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eDevice.05" type="WaveformGraphic" id="eDevice.WaveformGraphic" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eDevice.05</number>
+													<name>Medical Device Waveform Graphic</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The graphic waveform file.</definition>
+													<v2Number>E21_04</v2Number>
+													<usage>Optional</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Airway</performanceMeasure>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+														<performanceMeasure>STEMI</performanceMeasure>
+													</performanceMeasuresGroup>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eDevice.06" type="AEDPacingOrCO2Mode" id="eDevice.AEDPacingorCO2Mode" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eDevice.06</number>
+													<name>Medical Device Mode (Manual, AED, Pacing, CO2, O2, etc)</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The mode of operation the device is operating in during the defibrillation, pacing, or rhythm analysis by the device (if appropriate for the event).</definition>
+													<v2Number>E21_05</v2Number>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eDevice.07" id="eDevice.ECGLead" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eDevice.07</number>
+										<name>Medical Device ECG Lead</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The lead or source which the medical device used to obtain the rhythm (if appropriate for the event).</definition>
+										<v2Number>E21_06</v2Number>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>Can be displayed in the Vital Signs or Procedure Sections.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="ECGLead">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eDevice.08" type="ECGInterpretation" id="eDevice.ECGInterpretation" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eDevice.08</number>
+										<name>Medical Device ECG Interpretation</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The interpretation of the rhythm by the device (if appropriate for the event).</definition>
+										<v2Number>E21_07</v2Number>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>STEMI</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>The rhythm interpretation text imported from the device.</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="eDevice.ShockGroup" id="eDevice.ShockGroup" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold shock information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eDevice.09" type="TypeOfShock" id="eDevice.TypeOfShock" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eDevice.09</number>
+													<name>Type of Shock</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The type of shock used by the device for the defibrillation (if appropriate for the event).</definition>
+													<v2Number>E21_08</v2Number>
+													<usage>Optional</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+													</performanceMeasuresGroup>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eDevice.10" type="ShockOrPacingEnergy" id="eDevice.ShockorPacingEnergy" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eDevice.10</number>
+													<name>Shock or Pacing Energy</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The energy (in joules) used for the shock or pacing (if appropriate for the event).</definition>
+													<v2Number>E21_09</v2Number>
+													<usage>Optional</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+													</performanceMeasuresGroup>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eDevice.11" type="TotalNumberOfShocks" id="eDevice.TotalNumberofShocksDelivered" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eDevice.11</number>
+													<name>Total Number of Shocks Delivered</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The number of times the patient was defibrillated, if the patient was defibrillated during the patient encounter.</definition>
+													<v2Number>E21_10</v2Number>
+													<usage>Optional</usage>
+													<performanceMeasuresGroup>
+														<performanceMeasure>Cardiac Arrest</performanceMeasure>
+													</performanceMeasuresGroup>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eDevice.12" type="PacingRate" id="eDevice.PacingRate" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eDevice.12</number>
+													<name>Pacing Rate</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The rate the device was calibrated to pace during the event, if appropriate.</definition>
+													<v2Number>E21_11</v2Number>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AEDPacingOrCO2Mode">
+		<xs:annotation>
+			<xs:documentation>The mode of operation the device is operating in during the defibrillation, pacing, or rhythm analysis by the device (if appropriate for the event)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4106001">
+				<xs:annotation>
+					<xs:documentation>Advisory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4106003">
+				<xs:annotation>
+					<xs:documentation>Automated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4106005">
+				<xs:annotation>
+					<xs:documentation>Demand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4106007">
+				<xs:annotation>
+					<xs:documentation>Manual</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4106009">
+				<xs:annotation>
+					<xs:documentation>Mid-Stream</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4106011">
+				<xs:annotation>
+					<xs:documentation>Sensing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4106013">
+				<xs:annotation>
+					<xs:documentation>Side-Stream</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ECGInterpretation">
+		<xs:annotation>
+			<xs:documentation>The interpretation of the rhythm by the device (if appropriate for the event)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ECGLead">
+		<xs:annotation>
+			<xs:documentation>The lead or source which the medical device used to obtain the rhythm (if appropriate for the event)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4107001">
+				<xs:annotation>
+					<xs:documentation>I</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107003">
+				<xs:annotation>
+					<xs:documentation>II</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107005">
+				<xs:annotation>
+					<xs:documentation>III</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107007">
+				<xs:annotation>
+					<xs:documentation>AVR</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107009">
+				<xs:annotation>
+					<xs:documentation>AVL</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107011">
+				<xs:annotation>
+					<xs:documentation>AVF</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107013">
+				<xs:annotation>
+					<xs:documentation>Paddle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107015">
+				<xs:annotation>
+					<xs:documentation>Pads</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107017">
+				<xs:annotation>
+					<xs:documentation>V1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107019">
+				<xs:annotation>
+					<xs:documentation>V2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107021">
+				<xs:annotation>
+					<xs:documentation>V3</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107023">
+				<xs:annotation>
+					<xs:documentation>V3r</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107025">
+				<xs:annotation>
+					<xs:documentation>V4</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107027">
+				<xs:annotation>
+					<xs:documentation>V4r</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107029">
+				<xs:annotation>
+					<xs:documentation>V5</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107031">
+				<xs:annotation>
+					<xs:documentation>V5r</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107033">
+				<xs:annotation>
+					<xs:documentation>V6</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107035">
+				<xs:annotation>
+					<xs:documentation>V6r</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107037">
+				<xs:annotation>
+					<xs:documentation>V7</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107039">
+				<xs:annotation>
+					<xs:documentation>V8</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4107041">
+				<xs:annotation>
+					<xs:documentation>V9</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MedicalDeviceEventType">
+		<xs:annotation>
+			<xs:documentation>The type of event documented by the medical device.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4103001">
+				<xs:annotation>
+					<xs:documentation>12-Lead ECG</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103003">
+				<xs:annotation>
+					<xs:documentation>Analysis (Button Pressed)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103005">
+				<xs:annotation>
+					<xs:documentation>CO2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103007">
+				<xs:annotation>
+					<xs:documentation>Data Transmitted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103009">
+				<xs:annotation>
+					<xs:documentation>Defibrillation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103011">
+				<xs:annotation>
+					<xs:documentation>ECG-Monitor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103013">
+				<xs:annotation>
+					<xs:documentation>Heart Rate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103015">
+				<xs:annotation>
+					<xs:documentation>Invasive Pressure 1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103017">
+				<xs:annotation>
+					<xs:documentation>Invasive Pressure 2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103019">
+				<xs:annotation>
+					<xs:documentation>No Shock Advised</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103021">
+				<xs:annotation>
+					<xs:documentation>Non-Invasive BP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103023">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103025">
+				<xs:annotation>
+					<xs:documentation>Pacing Electrical Capture</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103027">
+				<xs:annotation>
+					<xs:documentation>Pacing Started</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103029">
+				<xs:annotation>
+					<xs:documentation>Pacing Stopped</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103031">
+				<xs:annotation>
+					<xs:documentation>Patient Connected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103033">
+				<xs:annotation>
+					<xs:documentation>Power On</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103035">
+				<xs:annotation>
+					<xs:documentation>Pulse Oximetry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103037">
+				<xs:annotation>
+					<xs:documentation>Pulse Rate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103039">
+				<xs:annotation>
+					<xs:documentation>Respiratory Rate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103041">
+				<xs:annotation>
+					<xs:documentation>Shock Advised</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103043">
+				<xs:annotation>
+					<xs:documentation>Sync Off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103045">
+				<xs:annotation>
+					<xs:documentation>Sync On</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103047">
+				<xs:annotation>
+					<xs:documentation>Temperature 1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4103049">
+				<xs:annotation>
+					<xs:documentation>Temperature 2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PacingRate">
+		<xs:annotation>
+			<xs:documentation>The rate the device was calibrated to pace during the event, if appropriate.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ShockOrPacingEnergy">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="5"/>
+			<xs:fractionDigits value="1"/>
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="9000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TotalNumberOfShocks">
+		<xs:annotation>
+			<xs:documentation>The number of times the patient was defibrillated, if the patient was defibrillated during the patient encounter.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeOfShock">
+		<xs:annotation>
+			<xs:documentation>The energy form used by the device for the defibrillation (if appropriate for the event)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4109001">
+				<xs:annotation>
+					<xs:documentation>Biphasic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4109003">
+				<xs:annotation>
+					<xs:documentation>Monophasic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

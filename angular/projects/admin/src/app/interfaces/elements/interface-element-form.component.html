@@ -1,0 +1,32 @@
+<div class="mb-3">
+  <shared-object-field
+    id="nemsisElementId"
+    label="NEMSIS Element"
+    [source]="record"
+    [target]="record"
+    [error]="error"
+    objectNameProperty="name"
+    objectApiPath="nemsisElements"
+    [objectApiSearchParams]="nemsisElementSearchParams"
+    [inputFormatter]="nemsisElementFormatter"></shared-object-field>
+</div>
+<div class="mb-3">
+  <shared-object-field
+    id="screenId"
+    label="Screen"
+    [source]="record"
+    [target]="record"
+    [error]="error"
+    objectNameProperty="name"
+    objectApiPath="screens"
+    [objectApiSearchParams]="screenSearchParams"></shared-object-field>
+</div>
+<div class="mb-3">
+  <shared-text-field type="number" id="position" label="Position" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field type="number" id="column" label="Column" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="customId" label="Custom ID" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>

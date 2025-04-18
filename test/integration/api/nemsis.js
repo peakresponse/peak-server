@@ -12,8 +12,6 @@ describe('/api/nemsis', () => {
   let testSession;
 
   before(function anon() {
-    // temporarily skip all due to NEMSIS repo issues
-    this.skip();
     if (!process.env.CI) {
       this.skip();
       return;
@@ -45,8 +43,17 @@ describe('/api/nemsis', () => {
       const response = await testSession.get('/api/nemsis').expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
-      assert.deepStrictEqual(data.versions.length, 5);
-      assert.deepStrictEqual(data.versions, ['3.5.0.230317CP4', '3.5.0.211008CP3', '3.5.0.191130CP1', '3.5.0.190930', '3.5.0.190522']);
+      assert.deepStrictEqual(data.versions.length, 8);
+      assert.deepStrictEqual(data.versions, [
+        '3.5.1.250403CP1',
+        '3.5.1.250115',
+        '3.5.0.250403CP5',
+        '3.5.0.230317CP4',
+        '3.5.0.211008CP3',
+        '3.5.0.191130CP1',
+        '3.5.0.190930',
+        '3.5.0.190522',
+      ]);
       assert.deepStrictEqual(data.versionsInstalled.length, 0);
     });
   });
@@ -56,8 +63,17 @@ describe('/api/nemsis', () => {
       const response = await testSession.post('/api/nemsis/install').send({ version: '3.5.0.211008CP3' }).expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
-      assert.deepStrictEqual(data.versions.length, 5);
-      assert.deepStrictEqual(data.versions, ['3.5.0.230317CP4', '3.5.0.211008CP3', '3.5.0.191130CP1', '3.5.0.190930', '3.5.0.190522']);
+      assert.deepStrictEqual(data.versions.length, 8);
+      assert.deepStrictEqual(data.versions, [
+        '3.5.1.250403CP1',
+        '3.5.1.250115',
+        '3.5.0.250403CP5',
+        '3.5.0.230317CP4',
+        '3.5.0.211008CP3',
+        '3.5.0.191130CP1',
+        '3.5.0.190930',
+        '3.5.0.190522',
+      ]);
       assert.deepStrictEqual(data.versionsInstalled.length, 1);
       assert.deepStrictEqual(data.versionsInstalled, ['3.5.0.211008CP3']);
     });

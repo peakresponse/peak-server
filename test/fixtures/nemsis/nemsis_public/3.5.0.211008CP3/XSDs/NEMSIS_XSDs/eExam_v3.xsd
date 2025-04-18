@@ -1,0 +1,3142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nemsis.org" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:complexType name="eExam">
+		<xs:sequence>
+			<xs:element name="eExam.01" nillable="true" id="eExam.EstimatedBodyWeightinKilograms" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eExam.01</number>
+							<name>Estimated Body Weight in Kilograms</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The patient's body weight in kilograms either measured or estimated.</definition>
+							<v2Number>E16_01</v2Number>
+							<usage>Recommended</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Pediatric</performanceMeasure>
+							</performanceMeasuresGroup>
+							<PNNil>Yes</PNNil>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="EstimatedBodyWeight">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eExam.02" nillable="true" id="eExam.LengthBasedTapeMeasure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eExam.02</number>
+							<name>Length Based Tape Measure</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>The length-based color as taken from the tape.</definition>
+							<v2Number>E16_02</v2Number>
+							<usage>Recommended</usage>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Pediatric</performanceMeasure>
+							</performanceMeasuresGroup>
+							<PNNil>Yes</PNNil>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="BroselowLutenColor">
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.Refused PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eExam.AssessmentGroup" id="eExam.AssessmentGroup" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Group Tag to hold assessment information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="eExam.03" id="eExam.DateTimeofAssessment" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.03</number>
+										<name>Date/Time of Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The date/time of the assessment.</definition>
+										<v2Number>E16_03</v2Number>
+										<usage>Optional</usage>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Airway</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+										</performanceMeasuresGroup>
+										<comment>DateTime consists of finite-length characters of the form: yyyy '-' mm '-' dd 'T' hh ':' mm ':' ss ('.' s+)? (zzzzzz)
+&lt;table  cellspacing="2">&lt;tr>&lt;td>							
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">yyyy&lt;/td>&lt;td>a four-digit numeral that represents the year&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>separators between parts of the date portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the month&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">dd&lt;/td>&lt;td>a two-digit numeral that represents the day&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">T&lt;/td>&lt;td>separator that indicates time-of-day follows&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral that represents the hour&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">':'&lt;/td>&lt;td>a separator between parts of the time-of-day portion&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minute&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">ss&lt;/td>&lt;td>a two-integer-digit numeral that represents the whole seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'.' s+&lt;/td>&lt;td>(not required) represents the fractional seconds&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">zzzzzz&lt;/td>&lt;td>(required) represents the timezone (as described below)&lt;/td>&lt;/tr>
+&lt;/table> 
+&lt;/td>&lt;/tr>&lt;/table>
+&lt;br/>Timezones, required, are durations with (integer-valued) hour and minute properties in the form: ('+' | '-') hh ':' mm   
+&lt;table cellspacing="2">&lt;tr>&lt;td>	
+&lt;table border="1px" cellpadding="3px" cellspacing="0">
+  &lt;tr>&lt;td align="center">hh&lt;/td>&lt;td>a two-digit numeral (with leading zeros as required) that represents the hours&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">mm&lt;/td>&lt;td>a two-digit numeral that represents the minutes&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'+'&lt;/td>&lt;td>a nonnegative duration&lt;/td>&lt;/tr>
+  &lt;tr>&lt;td align="center">'-'&lt;/td>&lt;td>a nonpositive duration&lt;/td>&lt;/tr>
+&lt;/table>
+&lt;/td>&lt;/tr>&lt;/table></comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="DateTimeType"/>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.04" id="eExam.SkinAssessment" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.04</number>
+										<name>Skin Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The assessment findings associated with the patient's skin.</definition>
+										<v2Number>E16_04</v2Number>
+										<usage>Optional</usage>
+										<comment>Element eExam.04 - Skin Assessment represents Version 2.2.1 elements E15_01 NHTSA Injury Matrix External/Skin and E16_04 Skin Assessment. The element value choices have been combined and expanded.
+</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="SkinAssessment">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.05" id="eExam.HeadAssessment" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.05</number>
+										<name>Head Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The assessment findings associated with the patient's head.</definition>
+										<v2Number>E16_05</v2Number>
+										<usage>Optional</usage>
+										<comment>Element eExam.05 - Head Assessment represents Version 2.2.1 elements E15_02 NHTSA Injury Matrix Head and E16_05 Head/Face Assessment. The element value choices have been combined and expanded.
+</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="HeadAssessment">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.06" id="eExam.FaceAssessment" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.06</number>
+										<name>Face Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The assessment findings associated with the patient's face.</definition>
+										<usage>Optional</usage>
+										<comment>Element eExam.06 - Face Assessment represents Version 2.2.1 element E15_03 NHTSA Injury Matrix Face  The element value choices have been expanded.
+</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="FaceAssessment">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.07" id="eExam.NeckAssessment" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.07</number>
+										<name>Neck Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The assessment findings associated with the patient's neck.</definition>
+										<v2Number>E16_06</v2Number>
+										<usage>Optional</usage>
+										<comment>Element eExam.07 - Neck Assessment represents Version 2.2.1 elements E15_04 NHTSA Injury Matrix Neck and E16_06 Neck Assessment. The element value choices have been combined and expanded.
+</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="NeckAssessment">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.09" id="eExam.HeartAssessment" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.09</number>
+										<name>Heart Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The assessment findings associated with the patient's heart.</definition>
+										<v2Number>E16_08</v2Number>
+										<usage>Optional</usage>
+										<comment>Element eExam.09 - Heart Assessment represents Version 2.2.1 element E16_08 Heart Assessment. The element value choices have been expanded.
+</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="HeartAssessment">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.AbdomenGroup" id="eExam.AbdomenGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold abdomen assessment findings information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eExam.10" type="AbdominalExamFindingLocation" id="eExam.AbdominalAssessmentFindingLocation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.10</number>
+													<name>Abdominal Assessment Finding Location</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The location of the patient's abdomen assessment findings.</definition>
+													<usage>Optional</usage>
+													<comment>"Element eExam.10 - Abdominal Assessment Finding Location represents Version 2.2.1 elements E15_06 NHTSA Injury Matrix Abdomen AND E16_09 Abdomen Left Upper Assessment, E16_10 Abdomen Left Lower Assessment,E16_11 Abdomen Right Upper Assessment, and E16_12 Abdomen Right Lower Assessment. The element value choices have been combined and expanded."
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eExam.11" id="eExam.AbdomenAssessment" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.11</number>
+													<name>Abdomen Assessment</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The assessment findings associated with the patient's abdomen.</definition>
+													<v2Number>E16_09</v2Number>
+													<usage>Optional</usage>
+													<comment>"Element eExam.11 - Abdomen Assessment represents Version 2.2.1 elements E15_06 NHTSA Injury Matrix Abdomen AND E16_09 Abdomen Left Upper Assessment, E16_10 Abdomen Left Lower Assessment,E16_11 Abdomen Right Upper Assessment, and E16_12 Abdomen Right Lower Assessment. The element value choices have been combined and expanded."
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="AbdomenAssessment">
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.12" id="eExam.PelvisGenitourinaryAssessment" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.12</number>
+										<name>Pelvis/Genitourinary Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The assessment findings associated with the patient's pelvis/genitourinary.</definition>
+										<v2Number>E16_13</v2Number>
+										<usage>Optional</usage>
+										<comment>Element eExam.12 - Pelvis/Genitourinary Assessment represents Version 2.2.1 elements E15_09 NHTSA Injury Matrix Pelvis and E16_13 GU Assessment. The element value choices have been combined and expanded.
+</comment>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="GUAssessment">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.SpineGroup" id="eExam.SpineGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold spine assessment findings information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eExam.13" type="BackAndSpineAssessmentLocation" id="eExam.BackandSpineAssessmentFindingLocation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.13</number>
+													<name>Back and Spine Assessment Finding Location</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The location of the patient's back and spine assessment findings.</definition>
+													<usage>Optional</usage>
+													<comment>Element eExam.14 - Back and Spine Assessment represents Version 2.2.1 NHTSA Injury Matrix elements E15_07 Spine and E15_05 Thorax AND E16_14 Back Cervical Assessment, E16_15 Back Thoracic Assessment, and E16_16 Back Lumbar/Sacral Assessment. The element value choices have been combined and expanded.
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eExam.14" id="eExam.BackandSpineAssessment" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.14</number>
+													<name>Back and Spine Assessment</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The assessment findings associated with the patient's spine (Cervical, Thoracic, Lumbar, and Sacral) and back exam.</definition>
+													<v2Number>E16_14</v2Number>
+													<usage>Optional</usage>
+													<comment>Element eExam.14 - Back and Spine Assessment represents Version 2.2.1 NHTSA Injury Matrix elements E15_07 Spine and E15_05 Thorax AND E16_14 Back Cervical Assessment, E16_15 Back Thoracic Assessment, and E16_16 Back Lumbar/Sacral Assessment. The element value choices have been combined and expanded.
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="BackAndSpineAssessment">
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.ExtremityGroup" id="eExam.ExtremityGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold extremity assessment findings information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eExam.15" type="ExtremityAssessmentLocation" id="eExam.ExtremityAssessmentFindingLocation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.15</number>
+													<name>Extremity Assessment Finding Location</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The location of the patient's extremity assessment findings.</definition>
+													<usage>Optional</usage>
+													<comment>Element eExam.16 - Extremities Assessment represents Version 2.2.1 NHTSA Injury Matrix elements E15_08 Upper Extremities and E15_10 Lower Extremities AND E16_17 Extremities-Right Upper Assessment, E16_18 Extremities-Right Lower Assessment, E16_19 Extremities-Left Upper Assessment, and E16_20 Extremities-Left Lower Assessment. The element value choices have been combined and expanded.
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eExam.16" id="eExam.ExtremitiesAssessment" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.16</number>
+													<name>Extremities Assessment</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The assessment findings associated with the patient's extremities.</definition>
+													<v2Number>E16_17</v2Number>
+													<usage>Optional</usage>
+													<comment>Element eExam.16 - Extremities Assessment represents Version 2.2.1 NHTSA Injury Matrix elements E15_08 Upper Extremities and E15_10 Lower Extremities AND E16_17 Extremities-Right Upper Assessment, E16_18 Extremities-Right Lower Assessment, E16_19 Extremities-Left Upper Assessment, and E16_20 Extremities-Left Lower Assessment. The element value choices have been combined and expanded.
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="ExtremitiesAssessment">
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.EyeGroup" id="eExam.EyeGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold eye assessment findings information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eExam.17" type="EyesAssessmentLocation" id="eExam.EyeAssessmentFindingLocation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.17</number>
+													<name>Eye Assessment Finding Location</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The location of the patient's eye assessment findings.</definition>
+													<usage>Optional</usage>
+													<comment>Element eExam.17 - Eye Assessment Finding Location represents Version 2.2.1 elements E16_21 Eyes-Left Assessment and E16_22 Eyes-Right Assessment. The eye location value choices have been expanded.
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eExam.18" id="eExam.EyeAssessment" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.18</number>
+													<name>Eye Assessment</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The assessment findings of the patient's eye examination.</definition>
+													<v2Number>E16_21</v2Number>
+													<usage>Optional</usage>
+													<comment>Element eExam.18 - Eye Assessment represents Version 2.2.1 elements E16_21 Eyes-Left Assessment and E16_22 Eyes-Right Assessment. The eye assessment value choices have been combined and expanded.
+</comment>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="EyesAssessment">
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.LungGroup" id="eExam.LungGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold lung assessment findings information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eExam.22" type="LungAssessmentLocation" id="eExam.LungAssessmentFindingLocation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.22</number>
+													<name>Lung Assessment Finding Location</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The location of the patient's lung assessment findings.</definition>
+													<v2Number></v2Number>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eExam.23" id="eExam.LungAssessment" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.23</number>
+													<name>Lung Assessment</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The assessment findings associated with the patient's lungs.</definition>
+													<v2Number></v2Number>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="LungAssessment">
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"></xs:attribute>
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent" />
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.ChestGroup" id="eExam.ChestGroup" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Group Tag to hold chest assessment findings information</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="eExam.24" type="ChestAssessmentLocation" id="eExam.ChestAssessmentFindingLocation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.24</number>
+													<name>Chest Assessment Finding Location</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The location of the patient's chest assessment findings.</definition>
+													<v2Number></v2Number>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="eExam.25" id="eExam.ChestAssessment" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												<nemsisTacDoc>
+													<number>eExam.25</number>
+													<name>Chest Assessment</name>
+													<national>No</national>
+													<state>No</state>
+													<definition>The assessment findings associated with the patient's chest.</definition>
+													<v2Number></v2Number>
+													<usage>Optional</usage>
+												</nemsisTacDoc>
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="ChestAssessment">
+													<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"></xs:attribute>
+													<xs:attribute name="PN" use="optional">
+														<xs:simpleType>
+															<xs:union memberTypes="PN.ExamFindingNotPresent" />
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.19" id="eExam.MentalStatusAssessment" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.19</number>
+										<name>Mental Status Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The assessment findings of the patient's mental status examination.</definition>
+										<v2Number>E16_23</v2Number>
+										<usage>Optional</usage>
+										<comment>Element eExam.19 - Mental Status Assessment represents Version 2.2.1 element E16_23 Mental Status Assessment. The element value choices have been expanded.
+</comment>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+										</performanceMeasuresGroup>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="MentalStatusAssessment">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="eExam.20" id="eExam.NeurologicalAssessment" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									<nemsisTacDoc>
+										<number>eExam.20</number>
+										<name>Neurological Assessment</name>
+										<national>No</national>
+										<state>No</state>
+										<definition>The assessment findings of the patient's neurological examination.</definition>
+										<v2Number>E16_24</v2Number>
+										<usage>Optional</usage>
+										<comment>Element eExam.20 - Neurological Assessment represents Version 2.2.1 element E16_24 Neurological Assessment. The element value choices have been expanded.
+</comment>
+										<performanceMeasuresGroup>
+											<performanceMeasure>Cardiac Arrest</performanceMeasure>
+											<performanceMeasure>Stroke</performanceMeasure>
+										</performanceMeasuresGroup>
+									</nemsisTacDoc>
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="NeurologicalAssessment">
+										<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+										<xs:attribute name="PN" use="optional">
+											<xs:simpleType>
+												<xs:union memberTypes="PN.ExamFindingNotPresent"/>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="CorrelationID" type="CorrelationID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eExam.21" nillable="true" id="eExam.StrokeCVASymptomsResolved" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						<nemsisTacDoc>
+							<number>eExam.21</number>
+							<name>Stroke/CVA Symptoms Resolved</name>
+							<national>No</national>
+							<state>Yes</state>
+							<definition>Indication if the Stroke/CVA Symptoms resolved and when.</definition>
+							<v2Number/>
+							<usage>Recommended</usage>
+							<comment/>
+							<performanceMeasuresGroup>
+								<performanceMeasure>Stroke</performanceMeasure>
+							</performanceMeasuresGroup>
+							<PNNil>Yes</PNNil>
+						</nemsisTacDoc>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="StrokeCVASymptomsResolved">
+							<xs:attribute name="PN" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="PN.UnableToComplete"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="NV" use="optional">
+								<xs:simpleType>
+									<xs:union memberTypes="NV.NotApplicable NV.NotRecorded NV.NotReporting"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="StrokeCVASymptomsResolved">
+		<xs:annotation>
+			<xs:documentation>Indication if the Stroke/CVA Symptoms resolved and when.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3521001">
+				<xs:annotation>
+					<xs:documentation>No</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3521003">
+				<xs:annotation>
+					<xs:documentation>Yes-Resolved Prior to EMS Arrival</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3521005">
+				<xs:annotation>
+					<xs:documentation>Yes-Resolved in EMS Presence</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AbdomenAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment findings associated with the patient's abdomen.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3511001">
+				<xs:annotation>
+					<xs:documentation>Abrasion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511003">
+				<xs:annotation>
+					<xs:documentation>Avulsion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511005">
+				<xs:annotation>
+					<xs:documentation>Bleeding Controlled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511007">
+				<xs:annotation>
+					<xs:documentation>Bleeding Uncontrolled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511009">
+				<xs:annotation>
+					<xs:documentation>Bowel Sounds-Absent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511011">
+				<xs:annotation>
+					<xs:documentation>Bowel Sounds-Present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511013">
+				<xs:annotation>
+					<xs:documentation>Burn-Blistering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511015">
+				<xs:annotation>
+					<xs:documentation>Burn-Charring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511017">
+				<xs:annotation>
+					<xs:documentation>Burn-Redness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511019">
+				<xs:annotation>
+					<xs:documentation>Burn-White/Waxy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511021">
+				<xs:annotation>
+					<xs:documentation>Distention</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511023">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511025">
+				<xs:annotation>
+					<xs:documentation>Guarding</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511031">
+				<xs:annotation>
+					<xs:documentation>Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511033">
+				<xs:annotation>
+					<xs:documentation>Mass/Lesion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511035">
+				<xs:annotation>
+					<xs:documentation>Mass-Pulsating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511037">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511039">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511041">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511043">
+				<xs:annotation>
+					<xs:documentation>Pregnant-Palpable Uterus</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511045">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511051">
+				<xs:annotation>
+					<xs:documentation>Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511053">
+				<xs:annotation>
+					<xs:documentation>Gunshot Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511055">
+				<xs:annotation>
+					<xs:documentation>Crush Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511057">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511059">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511061">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511063">
+				<xs:annotation>
+					<xs:documentation>Rebound Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3511065">
+				<xs:annotation>
+					<xs:documentation>Rigidity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AbdominalExamFindingLocation">
+		<xs:annotation>
+			<xs:documentation>The location of the Abdominal Exam Finding.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3510001">
+				<xs:annotation>
+					<xs:documentation>Generalized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3510003">
+				<xs:annotation>
+					<xs:documentation>Left Lower Quadrant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3510005">
+				<xs:annotation>
+					<xs:documentation>Left Upper Quadrant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3510007">
+				<xs:annotation>
+					<xs:documentation>Periumbilical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3510009">
+				<xs:annotation>
+					<xs:documentation>Right Lower Quadrant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3510011">
+				<xs:annotation>
+					<xs:documentation>Right Upper Quadrant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3510013">
+				<xs:annotation>
+					<xs:documentation>Epigastric</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BackAndSpineAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment findings associated with the patient's spine (Cervical, Thoracic, Lumbar, and Sacral) and back exam.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3514001">
+				<xs:annotation>
+					<xs:documentation>Abrasion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514003">
+				<xs:annotation>
+					<xs:documentation>Avulsion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514005">
+				<xs:annotation>
+					<xs:documentation>Bleeding Controlled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514007">
+				<xs:annotation>
+					<xs:documentation>Bleeding Uncontrolled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514009">
+				<xs:annotation>
+					<xs:documentation>Burn-Blistering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514011">
+				<xs:annotation>
+					<xs:documentation>Burn-Charring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514013">
+				<xs:annotation>
+					<xs:documentation>Burn-Redness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514015">
+				<xs:annotation>
+					<xs:documentation>Burn-White/Waxy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514017">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514019">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514025">
+				<xs:annotation>
+					<xs:documentation>Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514027">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514029">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514031">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514033">
+				<xs:annotation>
+					<xs:documentation>Pain with Range of Motion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514035">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514041">
+				<xs:annotation>
+					<xs:documentation>Tenderness Costovertebral Angle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514043">
+				<xs:annotation>
+					<xs:documentation>Tenderness Midline Spinous Process</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514045">
+				<xs:annotation>
+					<xs:documentation>Tenderness Paraspinous</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514047">
+				<xs:annotation>
+					<xs:documentation>Gunshot Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514049">
+				<xs:annotation>
+					<xs:documentation>Crush Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514051">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514053">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3514055">
+				<xs:annotation>
+					<xs:documentation>Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BackAndSpineAssessmentLocation">
+		<xs:annotation>
+			<xs:documentation>The location where Back and Spine assessment finding was located.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3513001">
+				<xs:annotation>
+					<xs:documentation>Back-General</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513003">
+				<xs:annotation>
+					<xs:documentation>Cervical-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513005">
+				<xs:annotation>
+					<xs:documentation>Cervical-Midline</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513007">
+				<xs:annotation>
+					<xs:documentation>Cervical-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513009">
+				<xs:annotation>
+					<xs:documentation>Lumbar-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513011">
+				<xs:annotation>
+					<xs:documentation>Lumbar-Midline</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513013">
+				<xs:annotation>
+					<xs:documentation>Lumbar-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513015">
+				<xs:annotation>
+					<xs:documentation>Thoracic-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513017">
+				<xs:annotation>
+					<xs:documentation>Thoracic-Midline</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513019">
+				<xs:annotation>
+					<xs:documentation>Thoracic-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513021">
+				<xs:annotation>
+					<xs:documentation>Sacral-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513023">
+				<xs:annotation>
+					<xs:documentation>Sacral-Midline</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3513025">
+				<xs:annotation>
+					<xs:documentation>Sacral-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BroselowLutenColor">
+		<xs:annotation>
+			<xs:documentation>The length-based color as taken from the tape.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3502001">
+				<xs:annotation>
+					<xs:documentation>Blue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3502003">
+				<xs:annotation>
+					<xs:documentation>Green</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3502005">
+				<xs:annotation>
+					<xs:documentation>Grey</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3502007">
+				<xs:annotation>
+					<xs:documentation>Orange</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3502009">
+				<xs:annotation>
+					<xs:documentation>Pink</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3502011">
+				<xs:annotation>
+					<xs:documentation>Purple</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3502013">
+				<xs:annotation>
+					<xs:documentation>Red</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3502015">
+				<xs:annotation>
+					<xs:documentation>White</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3502017">
+				<xs:annotation>
+					<xs:documentation>Yellow</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EstimatedBodyWeight">
+		<xs:annotation>
+			<xs:documentation>The patient's body weight in kilograms either measured or estimated</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="4"/>
+			<xs:fractionDigits value="1"/>
+			<xs:minInclusive value="0.1"/>
+			<xs:maxInclusive value="999.9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EyesAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment findings of the patient's eye examination.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3518001">
+				<xs:annotation>
+					<xs:documentation>1-mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518003">
+				<xs:annotation>
+					<xs:documentation>2-mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518005">
+				<xs:annotation>
+					<xs:documentation>3-mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518007">
+				<xs:annotation>
+					<xs:documentation>4-mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518009">
+				<xs:annotation>
+					<xs:documentation>5-mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518011">
+				<xs:annotation>
+					<xs:documentation>6-mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518013">
+				<xs:annotation>
+					<xs:documentation>7-mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518015">
+				<xs:annotation>
+					<xs:documentation>8-mm or ></xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518017">
+				<xs:annotation>
+					<xs:documentation>Blind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518019">
+				<xs:annotation>
+					<xs:documentation>Cataract Present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518021">
+				<xs:annotation>
+					<xs:documentation>Clouded</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518023">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518025">
+				<xs:annotation>
+					<xs:documentation>Dysconjugate Gaze</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518027">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518029">
+				<xs:annotation>
+					<xs:documentation>Glaucoma Present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518031">
+				<xs:annotation>
+					<xs:documentation>Hyphema</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518033">
+				<xs:annotation>
+					<xs:documentation>Jaundiced Sclera</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518035">
+				<xs:annotation>
+					<xs:documentation>Missing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518037">
+				<xs:annotation>
+					<xs:documentation>Non-Reactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518039">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518041">
+				<xs:annotation>
+					<xs:documentation>Non-Reactive Prosthetic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518043">
+				<xs:annotation>
+					<xs:documentation>Nystagmus Noted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518045">
+				<xs:annotation>
+					<xs:documentation>Open Globe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518047">
+				<xs:annotation>
+					<xs:documentation>PERRL</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518049">
+				<xs:annotation>
+					<xs:documentation>Pupil-Irregular/Teardrop</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518051">
+				<xs:annotation>
+					<xs:documentation>Reactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518053">
+				<xs:annotation>
+					<xs:documentation>Sluggish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518055">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518057">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518059">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518061">
+				<xs:annotation>
+					<xs:documentation>Dilated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3518063">
+				<xs:annotation>
+					<xs:documentation>Pin Point</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EyesAssessmentLocation">
+		<xs:annotation>
+			<xs:documentation>The location of the eye exam findings (right, left, bilateral)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3517001">
+				<xs:annotation>
+					<xs:documentation>Bilateral</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3517003">
+				<xs:annotation>
+					<xs:documentation>Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3517005">
+				<xs:annotation>
+					<xs:documentation>Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExtremitiesAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's extremities.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3516001">
+				<xs:annotation>
+					<xs:documentation>Abrasion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516003">
+				<xs:annotation>
+					<xs:documentation>Amputation-Acute</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516005">
+				<xs:annotation>
+					<xs:documentation>Amputation-Previous</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516007">
+				<xs:annotation>
+					<xs:documentation>Avulsion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516009">
+				<xs:annotation>
+					<xs:documentation>Bleeding Controlled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516011">
+				<xs:annotation>
+					<xs:documentation>Bleeding Uncontrolled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516013">
+				<xs:annotation>
+					<xs:documentation>Burn-Blistering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516015">
+				<xs:annotation>
+					<xs:documentation>Burn-Charring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516017">
+				<xs:annotation>
+					<xs:documentation>Burn-Redness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516019">
+				<xs:annotation>
+					<xs:documentation>Burn-White/Waxy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516021">
+				<xs:annotation>
+					<xs:documentation>Clubbing (of fingers)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516023">
+				<xs:annotation>
+					<xs:documentation>Crush Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516025">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516027">
+				<xs:annotation>
+					<xs:documentation>Dislocation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516029">
+				<xs:annotation>
+					<xs:documentation>Edema</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516031">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516033">
+				<xs:annotation>
+					<xs:documentation>Fracture-Closed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516035">
+				<xs:annotation>
+					<xs:documentation>Fracture-Open</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516041">
+				<xs:annotation>
+					<xs:documentation>Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516043">
+				<xs:annotation>
+					<xs:documentation>Motor Function-Abnormal/Weakness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516045">
+				<xs:annotation>
+					<xs:documentation>Motor Function-Absent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516047">
+				<xs:annotation>
+					<xs:documentation>Motor Function-Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516049">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516051">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516053">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516055">
+				<xs:annotation>
+					<xs:documentation>Paralysis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516057">
+				<xs:annotation>
+					<xs:documentation>Pulse-Abnormal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516059">
+				<xs:annotation>
+					<xs:documentation>Pulse-Absent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516061">
+				<xs:annotation>
+					<xs:documentation>Pulse-Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516063">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516065">
+				<xs:annotation>
+					<xs:documentation>Sensation-Abnormal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516067">
+				<xs:annotation>
+					<xs:documentation>Sensation-Absent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516069">
+				<xs:annotation>
+					<xs:documentation>Sensation-Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516075">
+				<xs:annotation>
+					<xs:documentation>Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516077">
+				<xs:annotation>
+					<xs:documentation>Gunshot Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516079">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516081">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3516083">
+				<xs:annotation>
+					<xs:documentation>Arm Drift</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExtremityAssessmentLocation">
+		<xs:annotation>
+			<xs:documentation>The physical location of the Extremity Assessment finding</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3515001">
+				<xs:annotation>
+					<xs:documentation>Ankle-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515003">
+				<xs:annotation>
+					<xs:documentation>Ankle-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515005">
+				<xs:annotation>
+					<xs:documentation>Arm-Upper-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515007">
+				<xs:annotation>
+					<xs:documentation>Arm-Upper-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515009">
+				<xs:annotation>
+					<xs:documentation>Elbow-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515011">
+				<xs:annotation>
+					<xs:documentation>Elbow-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515013">
+				<xs:annotation>
+					<xs:documentation>Finger-2nd (Index)-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515015">
+				<xs:annotation>
+					<xs:documentation>Finger-2nd (Index)-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515017">
+				<xs:annotation>
+					<xs:documentation>Finger-3rd (Middle)-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515019">
+				<xs:annotation>
+					<xs:documentation>Finger-3rd (Middle)-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515021">
+				<xs:annotation>
+					<xs:documentation>Finger-4th (Ring)-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515023">
+				<xs:annotation>
+					<xs:documentation>Finger-4th (Ring)-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515025">
+				<xs:annotation>
+					<xs:documentation>Finger-5th (Smallest)-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515027">
+				<xs:annotation>
+					<xs:documentation>Finger-5th (Smallest)-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515029">
+				<xs:annotation>
+					<xs:documentation>Foot-Dorsal-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515031">
+				<xs:annotation>
+					<xs:documentation>Foot-Dorsal-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515033">
+				<xs:annotation>
+					<xs:documentation>Foot-Plantar-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515035">
+				<xs:annotation>
+					<xs:documentation>Foot-Plantar-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515037">
+				<xs:annotation>
+					<xs:documentation>Arm-Lower-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515039">
+				<xs:annotation>
+					<xs:documentation>Arm-Lower-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515041">
+				<xs:annotation>
+					<xs:documentation>Hand-Dorsal-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515043">
+				<xs:annotation>
+					<xs:documentation>Hand-Dorsal-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515045">
+				<xs:annotation>
+					<xs:documentation>Hand-Palm-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515047">
+				<xs:annotation>
+					<xs:documentation>Hand-Palm-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515049">
+				<xs:annotation>
+					<xs:documentation>Hip-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515051">
+				<xs:annotation>
+					<xs:documentation>Hip-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515053">
+				<xs:annotation>
+					<xs:documentation>Knee-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515055">
+				<xs:annotation>
+					<xs:documentation>Knee-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515057">
+				<xs:annotation>
+					<xs:documentation>Leg-Lower-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515059">
+				<xs:annotation>
+					<xs:documentation>Leg-Lower-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515061">
+				<xs:annotation>
+					<xs:documentation>Leg-Upper-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515063">
+				<xs:annotation>
+					<xs:documentation>Leg-Upper-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515065">
+				<xs:annotation>
+					<xs:documentation>Shoulder-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515067">
+				<xs:annotation>
+					<xs:documentation>Shoulder-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515069">
+				<xs:annotation>
+					<xs:documentation>Thumb-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515071">
+				<xs:annotation>
+					<xs:documentation>Thumb-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515073">
+				<xs:annotation>
+					<xs:documentation>Toe-1st (Big)-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515075">
+				<xs:annotation>
+					<xs:documentation>Toe-1st (Big)-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515077">
+				<xs:annotation>
+					<xs:documentation>Toe-2nd-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515079">
+				<xs:annotation>
+					<xs:documentation>Toe-2nd-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515081">
+				<xs:annotation>
+					<xs:documentation>Toe-3rd-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515083">
+				<xs:annotation>
+					<xs:documentation>Toe-3rd-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515085">
+				<xs:annotation>
+					<xs:documentation>Toe-4th-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515087">
+				<xs:annotation>
+					<xs:documentation>Toe-4th-Right	</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515089">
+				<xs:annotation>
+					<xs:documentation>Toe-5th (Smallest)-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515091">
+				<xs:annotation>
+					<xs:documentation>Toe-5th (Smallest)-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515093">
+				<xs:annotation>
+					<xs:documentation>Wrist-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515095">
+				<xs:annotation>
+					<xs:documentation>Wrist-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515097">
+				<xs:annotation>
+					<xs:documentation>Arm-Whole Arm and Hand-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515099">
+				<xs:annotation>
+					<xs:documentation>Arm-Whole Arm and Hand-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515101">
+				<xs:annotation>
+					<xs:documentation>Hand-Whole Hand-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515103">
+				<xs:annotation>
+					<xs:documentation>Hand-Whole Hand-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515105">
+				<xs:annotation>
+					<xs:documentation>Leg-Whole Leg-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515107">
+				<xs:annotation>
+					<xs:documentation>Leg-Whole Leg-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515109">
+				<xs:annotation>
+					<xs:documentation>Foot-Whole Foot-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3515111">
+				<xs:annotation>
+					<xs:documentation>Foot-Whole Foot-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FaceAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment findings associated with the patient's face.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3506001">
+				<xs:annotation>
+					<xs:documentation>Abrasion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506003">
+				<xs:annotation>
+					<xs:documentation>Asymmetric Smile or Droop</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506005">
+				<xs:annotation>
+					<xs:documentation>Avulsion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506007">
+				<xs:annotation>
+					<xs:documentation>Bleeding Controlled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506009">
+				<xs:annotation>
+					<xs:documentation>Bleeding Uncontrolled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506011">
+				<xs:annotation>
+					<xs:documentation>Burn-Blistering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506013">
+				<xs:annotation>
+					<xs:documentation>Burn-Charring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506015">
+				<xs:annotation>
+					<xs:documentation>Burn-Redness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506017">
+				<xs:annotation>
+					<xs:documentation>Burn-White/Waxy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506021">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506023">
+				<xs:annotation>
+					<xs:documentation>Drainage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506025">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506031">
+				<xs:annotation>
+					<xs:documentation>Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506033">
+				<xs:annotation>
+					<xs:documentation>Mass/Lesion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506035">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506037">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506039">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506041">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506047">
+				<xs:annotation>
+					<xs:documentation>Gunshot Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506049">
+				<xs:annotation>
+					<xs:documentation>Crush Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506051">
+				<xs:annotation>
+					<xs:documentation>Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506053">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3506055">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GUAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's GU area on examination</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3512001">
+				<xs:annotation>
+					<xs:documentation>Abrasion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512003">
+				<xs:annotation>
+					<xs:documentation>Avulsion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512005">
+				<xs:annotation>
+					<xs:documentation>Bleeding Controlled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512007">
+				<xs:annotation>
+					<xs:documentation>Bleeding Uncontrolled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512009">
+				<xs:annotation>
+					<xs:documentation>Bleeding-Rectal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512011">
+				<xs:annotation>
+					<xs:documentation>Bleeding-Urethral</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512013">
+				<xs:annotation>
+					<xs:documentation>Bleeding-Vaginal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512015">
+				<xs:annotation>
+					<xs:documentation>Burn-Blistering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512017">
+				<xs:annotation>
+					<xs:documentation>Burn-Charring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512019">
+				<xs:annotation>
+					<xs:documentation>Burn-Redness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512021">
+				<xs:annotation>
+					<xs:documentation>Burn-White/Waxy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512023">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512025">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512027">
+				<xs:annotation>
+					<xs:documentation>Genital Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512033">
+				<xs:annotation>
+					<xs:documentation>Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512035">
+				<xs:annotation>
+					<xs:documentation>Mass/Lesion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512037">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512039">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512041">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512043">
+				<xs:annotation>
+					<xs:documentation>Pelvic Fracture</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512045">
+				<xs:annotation>
+					<xs:documentation>Pelvic Instability</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512047">
+				<xs:annotation>
+					<xs:documentation>Penile Priapism/Erection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512049">
+				<xs:annotation>
+					<xs:documentation>Pregnant-Crowning</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512051">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512057">
+				<xs:annotation>
+					<xs:documentation>Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512059">
+				<xs:annotation>
+					<xs:documentation>Gunshot Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512061">
+				<xs:annotation>
+					<xs:documentation>Crush Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512063">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3512065">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeadAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment findings associated with the patient's head.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3505001">
+				<xs:annotation>
+					<xs:documentation>Abrasion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505003">
+				<xs:annotation>
+					<xs:documentation>Avulsion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505005">
+				<xs:annotation>
+					<xs:documentation>Bleeding Controlled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505007">
+				<xs:annotation>
+					<xs:documentation>Bleeding Uncontrolled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505009">
+				<xs:annotation>
+					<xs:documentation>Burn-Blistering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505011">
+				<xs:annotation>
+					<xs:documentation>Burn-Charring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505013">
+				<xs:annotation>
+					<xs:documentation>Burn-Redness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505015">
+				<xs:annotation>
+					<xs:documentation>Burn-White/Waxy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505017">
+				<xs:annotation>
+					<xs:documentation>Decapitation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505019">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505021">
+				<xs:annotation>
+					<xs:documentation>Drainage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505023">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505029">
+				<xs:annotation>
+					<xs:documentation>Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505031">
+				<xs:annotation>
+					<xs:documentation>Mass/Lesion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505033">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505035">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505037">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505039">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505045">
+				<xs:annotation>
+					<xs:documentation>Gunshot Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505047">
+				<xs:annotation>
+					<xs:documentation>Crush Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505049">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505051">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3505053">
+				<xs:annotation>
+					<xs:documentation>Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeartAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's heart on examination</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3509001">
+				<xs:annotation>
+					<xs:documentation>Clicks</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509003">
+				<xs:annotation>
+					<xs:documentation>Heart Sounds Decreased</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509005">
+				<xs:annotation>
+					<xs:documentation>Murmur-Diastolic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509007">
+				<xs:annotation>
+					<xs:documentation>Murmur-Systolic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509009">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509011">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509013">
+				<xs:annotation>
+					<xs:documentation>Rubs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509015">
+				<xs:annotation>
+					<xs:documentation>S1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509017">
+				<xs:annotation>
+					<xs:documentation>S2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509019">
+				<xs:annotation>
+					<xs:documentation>S3</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3509021">
+				<xs:annotation>
+					<xs:documentation>S4</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MentalStatusAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's mental status</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3519001">
+				<xs:annotation>
+					<xs:documentation>Combative</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519003">
+				<xs:annotation>
+					<xs:documentation>Confused</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519005">
+				<xs:annotation>
+					<xs:documentation>Hallucinations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519007">
+				<xs:annotation>
+					<xs:documentation>Normal Baseline for Patient</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519009">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519011">
+				<xs:annotation>
+					<xs:documentation>Oriented-Person</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519013">
+				<xs:annotation>
+					<xs:documentation>Oriented-Place</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519015">
+				<xs:annotation>
+					<xs:documentation>Oriented-Event</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519017">
+				<xs:annotation>
+					<xs:documentation>Oriented-Time</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519021">
+				<xs:annotation>
+					<xs:documentation>Unresponsive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519023">
+				<xs:annotation>
+					<xs:documentation>Agitation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519025">
+				<xs:annotation>
+					<xs:documentation>Somnolent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519027">
+				<xs:annotation>
+					<xs:documentation>Stupor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519029">
+				<xs:annotation>
+					<xs:documentation>Altered mental status, unspecified</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519031">
+				<xs:annotation>
+					<xs:documentation>Developmentally Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519033">
+				<xs:annotation>
+					<xs:documentation>Disorientation, unspecified</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519035">
+				<xs:annotation>
+					<xs:documentation>Pharmacologically Paralyzed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519037">
+				<xs:annotation>
+					<xs:documentation>Pharmacologically Sedated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519039">
+				<xs:annotation>
+					<xs:documentation>Psychologically Impaired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519041">
+				<xs:annotation>
+					<xs:documentation>Slowness and poor responsiveness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519043">
+				<xs:annotation>
+					<xs:documentation>State of emotional shock and stress, unspecified</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519045">
+				<xs:annotation>
+					<xs:documentation>Strange and inexplicable behavior</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519047">
+				<xs:annotation>
+					<xs:documentation>Uncooperative</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3519049">
+				<xs:annotation>
+					<xs:documentation>Unspecified coma</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NeckAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's head and neck area on examination</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3507001">
+				<xs:annotation>
+					<xs:documentation>Abrasion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507003">
+				<xs:annotation>
+					<xs:documentation>Avulsion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507005">
+				<xs:annotation>
+					<xs:documentation>Bleeding Controlled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507007">
+				<xs:annotation>
+					<xs:documentation>Bleeding Uncontrolled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507009">
+				<xs:annotation>
+					<xs:documentation>Burn-Blistering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507011">
+				<xs:annotation>
+					<xs:documentation>Burn-Charring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507013">
+				<xs:annotation>
+					<xs:documentation>Burn-Redness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507015">
+				<xs:annotation>
+					<xs:documentation>Burn-White/Waxy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507017">
+				<xs:annotation>
+					<xs:documentation>Decapitation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507019">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507025">
+				<xs:annotation>
+					<xs:documentation>JVD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507027">
+				<xs:annotation>
+					<xs:documentation>Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507029">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507031">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507033">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507035">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507037">
+				<xs:annotation>
+					<xs:documentation>Stridor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507039">
+				<xs:annotation>
+					<xs:documentation>Subcutaneous Air</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507045">
+				<xs:annotation>
+					<xs:documentation>Tracheal Deviation-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507047">
+				<xs:annotation>
+					<xs:documentation>Tracheal Deviation-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507049">
+				<xs:annotation>
+					<xs:documentation>Gunshot Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507051">
+				<xs:annotation>
+					<xs:documentation>Crush Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507053">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507055">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507057">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3507059">
+				<xs:annotation>
+					<xs:documentation>Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NeurologicalAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's neurological status on examination</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3520001">
+				<xs:annotation>
+					<xs:documentation>Aphagia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520003">
+				<xs:annotation>
+					<xs:documentation>Aphasia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520005">
+				<xs:annotation>
+					<xs:documentation>Cerebellar Function-Abnormal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520007">
+				<xs:annotation>
+					<xs:documentation>Cerebellar Function-Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520009">
+				<xs:annotation>
+					<xs:documentation>Decerebrate Posturing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520011">
+				<xs:annotation>
+					<xs:documentation>Decorticate Posturing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520013">
+				<xs:annotation>
+					<xs:documentation>Gait-Abnormal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520015">
+				<xs:annotation>
+					<xs:documentation>Gait-Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520017">
+				<xs:annotation>
+					<xs:documentation>Hemiplegia-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520019">
+				<xs:annotation>
+					<xs:documentation>Hemiplegia-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520021">
+				<xs:annotation>
+					<xs:documentation>Normal Baseline for Patient</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520023">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520026">
+				<xs:annotation>
+					<xs:documentation>Status Seizure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520055">
+				<xs:annotation>
+					<xs:documentation>Other Seizures</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520027">
+				<xs:annotation>
+					<xs:documentation>Speech Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520029">
+				<xs:annotation>
+					<xs:documentation>Speech Slurring</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520031">
+				<xs:annotation>
+					<xs:documentation>Strength-Asymmetric</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520033">
+				<xs:annotation>
+					<xs:documentation>Strength-Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520035">
+				<xs:annotation>
+					<xs:documentation>Strength-Symmetric</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520037">
+				<xs:annotation>
+					<xs:documentation>Tremors</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520039">
+				<xs:annotation>
+					<xs:documentation>Weakness-Facial Droop-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520041">
+				<xs:annotation>
+					<xs:documentation>Weakness-Facial Droop-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520043">
+				<xs:annotation>
+					<xs:documentation>Weakness-Left Sided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520045">
+				<xs:annotation>
+					<xs:documentation>Weakness-Right Sided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520051">
+				<xs:annotation>
+					<xs:documentation>Arm Drift-Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3520053">
+				<xs:annotation>
+					<xs:documentation>Arm Drift-Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SkinAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's skin on examination</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3504001">
+				<xs:annotation>
+					<xs:documentation>Clammy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504003">
+				<xs:annotation>
+					<xs:documentation>Cold</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504005">
+				<xs:annotation>
+					<xs:documentation>Cyanotic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504007">
+				<xs:annotation>
+					<xs:documentation>Diaphoretic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504009">
+				<xs:annotation>
+					<xs:documentation>Dry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504011">
+				<xs:annotation>
+					<xs:documentation>Flushed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504013">
+				<xs:annotation>
+					<xs:documentation>Hot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504015">
+				<xs:annotation>
+					<xs:documentation>Jaundiced</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504017">
+				<xs:annotation>
+					<xs:documentation>Lividity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504019">
+				<xs:annotation>
+					<xs:documentation>Mottled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504021">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504023">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504025">
+				<xs:annotation>
+					<xs:documentation>Pale</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504027">
+				<xs:annotation>
+					<xs:documentation>Poor Turgor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504029">
+				<xs:annotation>
+					<xs:documentation>Red (Erythematous)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504031">
+				<xs:annotation>
+					<xs:documentation>Tenting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504033">
+				<xs:annotation>
+					<xs:documentation>Warm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504035">
+				<xs:annotation>
+					<xs:documentation>Capillary Nail Bed Refill less than 2 seconds</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504037">
+				<xs:annotation>
+					<xs:documentation>Capillary Nail Bed Refill 2-4 seconds</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3504039">
+				<xs:annotation>
+					<xs:documentation>Capillary Nail Bed Refill more than 4 seconds</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LungAssessmentLocation">
+		<xs:annotation>
+			<xs:documentation>The location of the Lung Exam Finding.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3522001">
+				<xs:annotation>
+					<xs:documentation>Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3522003">
+				<xs:annotation>
+					<xs:documentation>Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3522005">
+				<xs:annotation>
+					<xs:documentation>Bilateral</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LungAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's lungs on examination</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3523001">
+				<xs:annotation>
+					<xs:documentation>Breath Sounds-Absent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523003">
+				<xs:annotation>
+					<xs:documentation>Breath Sounds-Decreased</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523005">
+				<xs:annotation>
+					<xs:documentation>Breath Sounds-Equal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523007">
+				<xs:annotation>
+					<xs:documentation>Breath Sounds-Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523009">
+				<xs:annotation>
+					<xs:documentation>Foreign Body</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523011">
+				<xs:annotation>
+					<xs:documentation>Increased Respiratory Effort</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523013">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523015">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523017">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523019">
+				<xs:annotation>
+					<xs:documentation>Pain with Inspiraton/Expiration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523021">
+				<xs:annotation>
+					<xs:documentation>Rales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523023">
+				<xs:annotation>
+					<xs:documentation>Rhonchi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523025">
+				<xs:annotation>
+					<xs:documentation>Rhonchi/Wheezing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523027">
+				<xs:annotation>
+					<xs:documentation>Stridor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523029">
+				<xs:annotation>
+					<xs:documentation>Wheezing-Expiratory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3523031">
+				<xs:annotation>
+					<xs:documentation>Wheezing-Inspiratory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ChestAssessmentLocation">
+		<xs:annotation>
+			<xs:documentation>The location of the Chest Exam Finding.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3524001">
+				<xs:annotation>
+					<xs:documentation>Left - Anterior</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3524003">
+				<xs:annotation>
+					<xs:documentation>Left - Posterior</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3524005">
+				<xs:annotation>
+					<xs:documentation>Right - Anterior</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3524007">
+				<xs:annotation>
+					<xs:documentation>Right - Posterior</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3524009">
+				<xs:annotation>
+					<xs:documentation>General - Anterior</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3524011">
+				<xs:annotation>
+					<xs:documentation>General - Posterior</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3524013">
+				<xs:annotation>
+					<xs:documentation>Left - Side</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3524015">
+				<xs:annotation>
+					<xs:documentation>Right - Side</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ChestAssessment">
+		<xs:annotation>
+			<xs:documentation>The assessment of the patient's chest on examination</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3525001">
+				<xs:annotation>
+					<xs:documentation>Abrasion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525003">
+				<xs:annotation>
+					<xs:documentation>Avulsion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525005">
+				<xs:annotation>
+					<xs:documentation>Accessory Muscles Used with Breathing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525007">
+				<xs:annotation>
+					<xs:documentation>Bleeding Controlled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525009">
+				<xs:annotation>
+					<xs:documentation>Bleeding Uncontrolled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525011">
+				<xs:annotation>
+					<xs:documentation>Burn-Blistering</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525013">
+				<xs:annotation>
+					<xs:documentation>Burn-Charing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525015">
+				<xs:annotation>
+					<xs:documentation>Burn-Redness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525017">
+				<xs:annotation>
+					<xs:documentation>Burn-White/Waxy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525019">
+				<xs:annotation>
+					<xs:documentation>Crush Injury</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525021">
+				<xs:annotation>
+					<xs:documentation>Deformity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525023">
+				<xs:annotation>
+					<xs:documentation>Flail Segment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525025">
+				<xs:annotation>
+					<xs:documentation>Implanted Device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525027">
+				<xs:annotation>
+					<xs:documentation>Laceration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525029">
+				<xs:annotation>
+					<xs:documentation>Normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525031">
+				<xs:annotation>
+					<xs:documentation>Not Done</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525033">
+				<xs:annotation>
+					<xs:documentation>Pain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525035">
+				<xs:annotation>
+					<xs:documentation>Pain with Inspiration/Expiration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525037">
+				<xs:annotation>
+					<xs:documentation>Puncture/Stab Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525039">
+				<xs:annotation>
+					<xs:documentation>Retraction</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525041">
+				<xs:annotation>
+					<xs:documentation>Tenderness</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525043">
+				<xs:annotation>
+					<xs:documentation>Gunshot Wound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525045">
+				<xs:annotation>
+					<xs:documentation>Swelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525047">
+				<xs:annotation>
+					<xs:documentation>Contusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3525049">
+				<xs:annotation>
+					<xs:documentation>Tenderness-General</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

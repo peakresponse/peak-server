@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.nemsis.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.nemsis.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="commonTypes_v3.xsd"/>
+	<xs:include schemaLocation="dAgency_v3.xsd"/>
+	<xs:include schemaLocation="eCustom_v3.xsd"/>
+	<xs:include schemaLocation="eRecord_v3.xsd"/>
+	<xs:include schemaLocation="eResponse_v3.xsd"/>
+	<xs:include schemaLocation="eDispatch_v3.xsd"/>
+	<xs:include schemaLocation="eCrew_v3.xsd"/>
+	<xs:include schemaLocation="eTimes_v3.xsd"/>
+	<xs:include schemaLocation="ePatient_v3.xsd"/>
+	<xs:include schemaLocation="ePayment_v3.xsd"/>
+	<xs:include schemaLocation="eScene_v3.xsd"/>
+	<xs:include schemaLocation="eSituation_v3.xsd"/>
+	<xs:include schemaLocation="eInjury_v3.xsd"/>
+	<xs:include schemaLocation="eArrest_v3.xsd"/>
+	<xs:include schemaLocation="eHistory_v3.xsd"/>
+	<xs:include schemaLocation="eNarrative_v3.xsd"/>
+	<xs:include schemaLocation="eVitals_v3.xsd"/>
+	<xs:include schemaLocation="eLabs_v3.xsd"/>
+	<xs:include schemaLocation="eExam_v3.xsd"/>
+	<xs:include schemaLocation="eProtocols_v3.xsd"/>
+	<xs:include schemaLocation="eMedications_v3.xsd"/>
+	<xs:include schemaLocation="eProcedures_v3.xsd"/>
+	<xs:include schemaLocation="eDisposition_v3.xsd"/>
+	<xs:include schemaLocation="eDevice_v3.xsd"/>
+	<xs:include schemaLocation="eOutcome_v3.xsd"/>
+	<xs:include schemaLocation="eOther_v3.xsd"/>
+	<xs:include schemaLocation="eAirway_v3.xsd"/>
+	<xs:element name="EMSDataSet">
+		<xs:annotation>
+			<xs:documentation>Root Tag For Patient Care Report Dataset</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" id="HeaderGroup" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Header for file</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DemographicGroup" id="DemographicGroup">
+								<xs:annotation>
+									<xs:documentation>Demographic information related to this agency</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="dAgency.01" type="EMSAgencyStateID" id="EMSDataset.EMSAgencyUniqueStateID">
+											<xs:annotation>
+												<xs:documentation>
+													<nemsisTacDoc>
+														<number>dAgency.01</number>
+														<name>EMS Agency Unique State ID</name>
+														<national>Yes</national>
+														<state>Yes</state>
+														<definition>The unique ID assigned to the EMS Agency which is associated with all state licensure numbers and information.</definition>
+														<usage>Mandatory</usage>
+														<performanceMeasuresGroup>
+															<performanceMeasure>Airway</performanceMeasure>
+															<performanceMeasure>Cardiac Arrest</performanceMeasure>
+															<performanceMeasure>Pediatric</performanceMeasure>
+															<performanceMeasure>Response</performanceMeasure>
+															<performanceMeasure>STEMI</performanceMeasure>
+															<performanceMeasure>Stroke</performanceMeasure>
+															<performanceMeasure>Trauma</performanceMeasure>
+														</performanceMeasuresGroup>
+														<comment>This may be the EMS Agency Name or a unique number assigned by the state EMS office. This is required to document multiple license types and numbers associated with the same EMS Agency.</comment>
+													</nemsisTacDoc>
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="dAgency.02" id="EMSDataset.EMSAgencyNumber">
+											<xs:annotation>
+												<xs:documentation>
+													<nemsisTacDoc>
+														<number>dAgency.02</number>
+														<name>EMS Agency Number</name>
+														<national>Yes</national>
+														<state>Yes</state>
+														<definition>The state-assigned provider number of the responding agency.</definition>
+														<v2Number>D01_01</v2Number>
+														<usage>Mandatory</usage>
+														<performanceMeasuresGroup>
+															<performanceMeasure>Airway</performanceMeasure>
+															<performanceMeasure>Cardiac Arrest</performanceMeasure>
+															<performanceMeasure>Pediatric</performanceMeasure>
+															<performanceMeasure>Response</performanceMeasure>
+															<performanceMeasure>STEMI</performanceMeasure>
+															<performanceMeasure>Stroke</performanceMeasure>
+															<performanceMeasure>Trauma</performanceMeasure>
+														</performanceMeasuresGroup>
+														<comment>This is the primary identifier for the entire Demographic Section.  Each of the Demographic sections must be associated with an EMS Agency Number. An EMS Agency can have more than one Agency Number within a state. This reflects the ability for an EMS Agency to have a different number for each service type or location (based on state implementation).</comment>
+													</nemsisTacDoc>
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="EMSAgencyNumber"/>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="dAgency.04" id="EMSDataset.EMSAgencyState">
+											<xs:annotation>
+												<xs:documentation>
+													<nemsisTacDoc>
+														<number>dAgency.04</number>
+														<name>EMS Agency State</name>
+														<national>Yes</national>
+														<state>Yes</state>
+														<definition>The state/territory which assigned the EMS agency number.</definition>
+														<v2Number>D01_03</v2Number>
+														<usage>Mandatory</usage>
+														<performanceMeasuresGroup>
+															<performanceMeasure>Airway</performanceMeasure>
+															<performanceMeasure>Cardiac Arrest</performanceMeasure>
+															<performanceMeasure>Pediatric</performanceMeasure>
+															<performanceMeasure>Response</performanceMeasure>
+															<performanceMeasure>STEMI</performanceMeasure>
+															<performanceMeasure>Stroke</performanceMeasure>
+															<performanceMeasure>Trauma</performanceMeasure>
+														</performanceMeasuresGroup>
+														<comment>This has been clarified to reflect that it is the state in which the EMS Agency resides and the state associated with the EMS Agency number.
+															&lt;br/>&lt;br/>GNIS Codes Website: &lt;a href="http://geonames.usgs.gov/domestic/download_data.htm">http://geonames.usgs.gov/domestic/download_data.htm&lt;/a></comment>
+													</nemsisTacDoc>
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="ANSIStateCode"/>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="eCustomConfiguration" type="eCustomConfiguration" id="eCustomConfigurationSection" minOccurs="0"/>
+							<xs:element name="PatientCareReport" id="PatientCareReportGroup" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Container Tag to hold each instance of a patient care report (PCR)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="eRecord" type="eRecord" id="eRecordSection">
+											<xs:annotation>
+												<xs:documentation>Patient Record Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eResponse" type="eResponse" id="eResponseSection">
+											<xs:annotation>
+												<xs:documentation>Unit Agency Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eDispatch" type="eDispatch" id="eDispatchSection">
+											<xs:annotation>
+												<xs:documentation>Dispatch Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eCrew" type="eCrews" id="eCrewSection" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Crew Member Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eTimes" type="eTimes" id="eTimesSection">
+											<xs:annotation>
+												<xs:documentation>Call Event Times Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ePatient" type="ePatient" id="ePatientSection">
+											<xs:annotation>
+												<xs:documentation>Patient Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ePayment" type="ePayment" id="ePaymentSection">
+											<xs:annotation>
+												<xs:documentation>Insurance/Payment Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eScene" type="eScene" id="eSceneSection">
+											<xs:annotation>
+												<xs:documentation>Incident Scene Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eSituation" type="eSituation" id="eSituationSection">
+											<xs:annotation>
+												<xs:documentation>Situation Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eInjury" type="eInjury" id="eInjurySection">
+											<xs:annotation>
+												<xs:documentation>Injury Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eArrest" type="eArrest" id="eArrestSection">
+											<xs:annotation>
+												<xs:documentation>Cardiac Arrest Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eHistory" type="eHistory" id="eHistorySection">
+											<xs:annotation>
+												<xs:documentation>Patient History Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eNarrative" type="eNarrative" id="eNarrativeSection" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Call Event Narrative</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eVitals" type="eVitals" id="eVitalsSection">
+											<xs:annotation>
+												<xs:documentation>Patient Vital Sign Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eLabs" type="eLabs" id="eLabsSection" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Lab Results Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eExam" type="eExam" id="eExamSection" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Patient Exam Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eProtocols" type="eProtocols" id="eProtocolsSection">
+											<xs:annotation>
+												<xs:documentation>Medical Protocols Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eMedications" type="eMedications" id="eMedicationsSection">
+											<xs:annotation>
+												<xs:documentation>Intervention Medications Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eProcedures" type="eProcedures" id="eProceduresSection">
+											<xs:annotation>
+												<xs:documentation>Intervention Procedures Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eAirway" type="eAirways" id="eAirwaysSection" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Airway Device Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eDevice" type="eDevices" id="eDevicesSection" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Medical Device Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eDisposition" type="eDisposition" id="eDispositionSection">
+											<xs:annotation>
+												<xs:documentation>Patient Disposition Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eOutcome" type="eOutcome" id="eOutcomeSection">
+											<xs:annotation>
+												<xs:documentation>Patient Outcome Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eCustomResults" type="eCustomResults" id="eCustomResultsSection" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Custom Data Elements Results</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="eOther" type="eOther" id="eOtherSection" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Other Miscellaneous Information</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="UUID" type="UUID" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

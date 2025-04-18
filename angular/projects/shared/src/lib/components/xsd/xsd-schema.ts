@@ -42,7 +42,7 @@ export class XsdSchema {
     return this.rootElementNameInternal ?? '';
   }
 
-  get rootChildElements(): any[] | undefined {
+  get rootChildElements(): XsdElement[] | undefined {
     if (!this._rootChildElements) {
       let complexType = this.data?.['xs:schema']?.['xs:complexType'];
       if (Array.isArray(complexType)) {
@@ -67,16 +67,14 @@ export class XsdSchema {
   }
 
   get groupElementName(): string {
-    return this.rootChildElements?.[0]?._attributes?.name;
+    return this.rootChildElements?.[0]?.name ?? '';
   }
 
-  get childElements(): any[] | undefined {
+  get childElements(): XsdElement[] | undefined {
     if (!this._childElements) {
       this._childElements = this.rootChildElements;
       if (this._childElements?.length == 1) {
-        this._childElements = (this._childElements[0] as any)?.['xs:complexType']?.['xs:sequence']?.['xs:element']?.map(
-          (e: any) => new XsdElement(e),
-        );
+        this._childElements = this._childElements[0].groupElements;
       }
     }
     return this._childElements;
@@ -86,8 +84,8 @@ export class XsdSchema {
     return this.commonTypes?.[name];
   }
 
-  getCustomConfiguration(element: any): any {
-    const elementName = element?._attributes?.name;
+  getCustomConfiguration(element: XsdElement | undefined): any {
+    const elementName = element?.name;
     if (elementName) {
       return this.customElements?.[elementName];
     }
