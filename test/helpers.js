@@ -108,6 +108,9 @@ async function resetDatabase() {
     DELETE FROM forms;
     DELETE FROM locations;
     DELETE FROM vehicles;
+    DELETE FROM events_agencies;
+    DELETE FROM events;
+    DELETE FROM venues;
     UPDATE agencies SET version_id=NULL;
     DELETE FROM versions;
     DELETE FROM region_agencies;

@@ -338,6 +338,7 @@ module.exports = (sequelize, DataTypes) => {
         'name',
         'isDraft',
         'isValid',
+        'isEventsOnly',
         'validationErrors',
         'createdAt',
         'createdById',
@@ -378,50 +379,23 @@ module.exports = (sequelize, DataTypes) => {
           return this.subdomain ? `${baseUrl.protocol}//${this.subdomain}.${baseUrl.host}` : null;
         },
       },
-      routedUrl: {
-        type: DataTypes.STRING(2048),
-        field: 'routed_url',
-      },
-      nemsisVersion: {
-        type: DataTypes.STRING,
-        field: 'nemsis_version',
-      },
+      routedUrl: DataTypes.TEXT,
+      nemsisVersion: DataTypes.STRING,
       baseNemsisVersion: {
         type: DataTypes.VIRTUAL(DataTypes.STRING, ['nemsisVersion']),
         get() {
           return this.nemsisVersion?.match(/^\d+\.\d+\.\d+/)?.[0];
         },
       },
-      stateId: {
-        type: DataTypes.STRING,
-        field: 'state_id',
-      },
-      stateUniqueId: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        field: 'state_unique_id',
-      },
-      number: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      name: {
-        type: DataTypes.STRING,
-      },
-      data: {
-        type: DataTypes.JSONB,
-      },
-      isDraft: {
-        type: DataTypes.BOOLEAN,
-        field: 'is_draft',
-      },
-      isValid: {
-        type: DataTypes.BOOLEAN,
-        field: 'is_valid',
-      },
-      validationErrors: {
-        type: DataTypes.JSONB,
-      },
+      stateId: DataTypes.TEXT,
+      stateUniqueId: DataTypes.TEXT,
+      number: DataTypes.TEXT,
+      name: DataTypes.STRING,
+      data: DataTypes.JSONB,
+      isDraft: DataTypes.BOOLEAN,
+      isValid: DataTypes.BOOLEAN,
+      isEventsOnly: DataTypes.BOOLEAN,
+      validationErrors: DataTypes.JSONB,
     },
     {
       sequelize,

@@ -51,16 +51,48 @@ module.exports = {
         },
       },
       zip_code: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
+      },
+      archived_at: {
+        type: Sequelize.DATE,
       },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
       },
+      created_by_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'users',
+          },
+          key: 'id',
+        },
+      },
+      created_by_agency_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'agencies',
+          },
+          key: 'id',
+        },
+      },
       updated_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
+      },
+      updated_by_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'users',
+          },
+          key: 'id',
+        },
       },
     });
 
@@ -96,14 +128,76 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
+      archived_at: {
+        type: Sequelize.DATE,
+      },
       created_at: {
         type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+      },
+      created_by_id: {
         allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'users',
+          },
+          key: 'id',
+        },
+      },
+      created_by_agency_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'agencies',
+          },
+          key: 'id',
+        },
       },
       updated_at: {
         type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+      },
+      updated_by_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'users',
+          },
+          key: 'id',
+        },
+      },
+    });
+
+    await queryInterface.createTable('events_agencies', {
+      event_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'events',
+          },
+          key: 'id',
+        },
         allowNull: false,
       },
+      agency_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'agencies',
+          },
+          key: 'id',
+        },
+        allowNull: false,
+      },
+    });
+    await queryInterface.addIndex('events_agencies', ['event_id', 'agency_id'], { unique: true });
+
+    await queryInterface.addColumn('agencies', 'is_events_only', {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
     });
 
     await queryInterface.addColumn('incidents', 'event_id', {
@@ -130,6 +224,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.removeColumn('facilities', 'venue_id');
     await queryInterface.removeColumn('incidents', 'event_id');
+    await queryInterface.dropTable('events_agencies');
     await queryInterface.dropTable('events');
     await queryInterface.dropTable('venues');
   },
