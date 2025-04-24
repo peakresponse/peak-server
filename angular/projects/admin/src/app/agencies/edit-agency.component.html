@@ -81,6 +81,9 @@
       <div *ngIf="record.isClaimed" class="mb-3">
         <shared-text-field id="routedUrl" label="Routed URL" [source]="record" [target]="record" [error]="error"></shared-text-field>
       </div>
+      <div *ngIf="record.isClaimed" class="mb-3">
+        <shared-checkbox id="isEventsOnly" label="Is Events Only?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+      </div>
     </ng-template>
   </shared-form>
 </div>

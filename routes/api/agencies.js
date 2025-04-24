@@ -165,7 +165,7 @@ router.patch(
       if (agency) {
         const attributes = ['nemsisVersion', 'stateDataSetId', 'stateId', 'stateUniqueId', 'number', 'name'];
         if (agency.isClaimed) {
-          attributes.push('psapId', 'subdomain', 'routedUrl', 'regionId');
+          attributes.push('psapId', 'subdomain', 'routedUrl', 'regionId', 'isEventsOnly');
         }
         await agency.update(_.pick(req.body, attributes), { transaction });
       }
