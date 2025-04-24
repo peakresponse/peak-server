@@ -1,0 +1,65 @@
+@import '../../../../design/src/styles/common';
+
+.incident {
+  display: flex;
+  margin: 0 auto;
+  max-width: map-get($container-max-widths, 'lg');
+
+  .chip {
+    position: relative;
+    top: -3px;
+  }
+}
+
+.incident__number {
+  @include h2-bold;
+  color: $brand-primary-600;
+  width: 33%;
+}
+
+.incident__address {
+  width: 34%;
+}
+
+.incident__date {
+  width: 33%;
+}
+
+.incident__time {
+  text-align: right;
+  width: 5rem;
+  line-height: 3rem;
+}
+
+.incident--mci {
+  background-color: $brand-secondary-300;
+  &:hover {
+    background-color: $brand-secondary-400;
+  }
+
+  .incident__number {
+    color: $brand-secondary-500;
+  }
+
+  .chip {
+    border-color: $brand-secondary-500;
+    background-color: $brand-secondary-500;
+  }
+}
+
+shared-command-header ::ng-deep {
+  .command-header__container {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: map-get($container-max-widths, 'lg')) {
+  .nav {
+    order: 6 !important;
+    width: 100%;
+  }
+
+  :host ::ng-deep shared-command-header ~ main {
+    margin-top: 9.125rem !important;
+  }
+}
