@@ -1,5 +1,9 @@
 @import '../../../../design/src/styles/common';
 
+.nav__link {
+  min-width: 120px;
+}
+
 .incident {
   display: flex;
   margin: 0 auto;
