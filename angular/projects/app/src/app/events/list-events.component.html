@@ -18,9 +18,6 @@
       <a class="nav__link" [class.nav__link--active]="filter == 'current'" routerLink="/events" fragment="current">Current</a>
     </li>
     <li class="nav__item">
-      <a class="nav__link" [class.nav__link--active]="filter == 'upcoming'" routerLink="/events" fragment="upcoming">Upcoming</a>
-    </li>
-    <li class="nav__item">
       <a class="nav__link" [class.nav__link--active]="filter == 'past'" routerLink="/events" fragment="past">Past</a>
     </li>
   </ul>
@@ -33,18 +30,12 @@
           <tr [routerLink]="['/events', record.id]">
             <td>
               <div class="event">
-                <div class="d-flex flex-grow-1">
-                  <div class="event__name">
-                    {{ record.name }}
-                  </div>
-                  <div class="event__venue">
-                    {{ record.venueId }}
-                  </div>
-                  <div class="event__date">
-                    {{ datePart(record.startTime) }}<br />
-                    {{ timePart(record.startTime) }}
-                  </div>
-                </div>
+                <h4>{{ record.name }}</h4>
+                <div>{{ record.venue?.name }}</div>
+                <ng-container *ngIf="parseDate(record.startTime) as datetime">
+                  <div>{{ datePart(datetime) }}</div>
+                  {{ timePart(datetime) }}
+                </ng-container>
               </div>
             </td>
           </tr>

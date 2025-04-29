@@ -29,34 +29,10 @@ export class ListEventsComponent {
     this.fragmentSubscription = this.route.fragment.subscribe((newFragment: string | null) => this.onFragmentChanged(newFragment));
   }
 
-  transform(records: any): any[] {
-    let data: any = {};
-    for (const key of Object.keys(records)) {
-      data[key] = {};
-      for (const obj of records[key]) {
-        data[key][obj.id] = obj;
-      }
-    }
-    for (const dispatch of records.Dispatch) {
-      const incident = data.Incident[dispatch.incidentId];
-      incident.dispatchIds = incident.dispatchIds ?? [];
-      incident.dispatchIds.push(dispatch.id);
-    }
-    return records.Incident.map((i: any) => new Incident(i, data, models));
-  }
-
   onFragmentChanged(fragment: string | null) {
-    if (fragment === 'current' || fragment === 'upcoming' || fragment === 'past') {
+    if (fragment === 'current' || fragment === 'past') {
       this.filter = fragment;
-      this.params = new HttpParams();
-      if (this.filter === 'current') {
-        // const vehicleId = this.user.currentAssignment?.vehicleId;
-        // if (vehicleId) {
-        //   this.params = this.params.set('vehicleId', vehicleId);
-        // } else {
-        //   this.filter = 'all';
-        // }
-      }
+      this.params = new HttpParams().set('filter', this.filter);
     }
   }
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
+const { Op } = require('sequelize');
 
 const models = require('../../models');
 
@@ -13,9 +14,10 @@ router.get(
   '/',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    const { page = '1' } = req.query;
-    const { docs, pages, total } = await models.Event.paginate({
+    const { filter = 'current', page = '1' } = req.query;
+    const options = {
       page,
+      include: ['venue'],
       where: {
         createdByAgencyId: req.agency.id,
         archivedAt: null,
@@ -25,7 +27,17 @@ router.get(
         ['endTime', 'ASC'],
         ['name', 'ASC'],
       ],
-    });
+    };
+    if (filter === 'past') {
+      options.where.endTime = {
+        [Op.lte]: new Date(),
+      };
+    } else {
+      options.where.startTime = {
+        [Op.gte]: new Date(),
+      };
+    }
+    const { docs, pages, total } = await models.Event.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
     res.json(docs.map((d) => d.toJSON()));
   }),
