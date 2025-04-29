@@ -11,7 +11,6 @@ import models from '../../models';
 
 @Component({
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss'],
   standalone: false,
 })
 export class ReportComponent implements OnDestroy {

@@ -28,33 +28,22 @@
 <main [class.d-none]="route.firstChild">
   <div class="table-responsive">
     <table class="table">
-      <shared-list type="incidents" [transform]="transform" [params]="params" [search]="search">
+      <shared-list type="events" [params]="params" [search]="search">
         <ng-template let-record="record">
-          <tr [class.incident--mci]="record.scene?.isMCI" [routerLink]="['/incidents', record.id, 'reports']">
+          <tr [routerLink]="['/events', record.id]">
             <td>
-              <div class="incident">
+              <div class="event">
                 <div class="d-flex flex-grow-1">
-                  <div class="incident__number">
-                    #{{ record.number }}
-                    <button *ngIf="record.scene?.isMCI" class="chip readonly chip--lg chip--primary">MCI</button>
+                  <div class="event__name">
+                    {{ record.name }}
                   </div>
-                  <div class="incident__address">
-                    {{ record.scene?.address1 | inflection: 'titleize' }}<br />
-                    {{ record.scene?.address2 | inflection: 'titleize' }}<br *ngIf="record.scene?.address2" />
-                    {{ cityName(record.scene?.city?.featureName) }}<span *ngIf="record.scene?.city && record.scene?.state">, </span
-                    >{{ record.scene?.state?.abbr }} {{ record.scene?.zip }}
+                  <div class="event__venue">
+                    {{ record.venueId }}
                   </div>
-                  <div *ngIf="record.dispatches && parseDate(record.dispatches[0].dispatchedAt) as datetime" class="incident__date">
-                    {{ datePart(datetime) }}<br />
-                    {{ timePart(datetime) }}
+                  <div class="event__date">
+                    {{ datePart(record.startTime) }}<br />
+                    {{ timePart(record.startTime) }}
                   </div>
-                  <div *ngIf="!record.dispatches && parseDate(record.createdAt) as datetime" class="incident__date">
-                    {{ datePart(datetime) }}<br />
-                    {{ timePart(datetime) }}
-                  </div>
-                </div>
-                <div class="incident__time">
-                  <button *ngIf="record.reportsCount > 0" class="chip readonly chip--lg chip--primary">{{ record.reportsCount }}</button>
                 </div>
               </div>
             </td>
@@ -69,6 +58,6 @@
     </table>
   </div>
   <shared-command-footer>
-    <button type="button" tabindex="0" class="btn btn--primary">+ New Event</button>
+    <a routerLink="new" tabindex="0" class="btn btn--primary">+ New Event</a>
   </shared-command-footer>
 </main>

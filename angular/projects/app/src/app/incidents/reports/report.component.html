@@ -3,7 +3,7 @@
   <a class="command-header__plain" [download]="reportId + '.xml'" [href]="'/api/reports/' + reportId + '/preview'">Export</a>
 </shared-command-header>
 <main>
-  <form *ngIf="report" class="report">
+  <form *ngIf="report" class="report form--responsive">
     <div class="row">
       <div class="col-6">
         <div class="mb-3">

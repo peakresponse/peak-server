@@ -1,0 +1,56 @@
+<div class="mb-3">
+  <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field
+    id="description"
+    label="Description"
+    [rows]="2"
+    [source]="record"
+    [target]="record"
+    [error]="error"></shared-text-field>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="mb-3">
+      <shared-text-field
+        id="startTime"
+        label="Start"
+        type="datetime-local"
+        [source]="record"
+        [target]="record"
+        [error]="error"></shared-text-field>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="mb-3">
+      <shared-text-field
+        id="endTime"
+        label="End"
+        type="datetime-local"
+        [source]="record"
+        [target]="record"
+        [error]="error"></shared-text-field>
+    </div>
+  </div>
+</div>
+<div class="mb-3">
+  <div class="form-field-group">
+    <shared-object-field
+      id="venueId"
+      label="Venue"
+      objectApiPath="venues"
+      [source]="record"
+      [target]="record"
+      [error]="error"></shared-object-field>
+    <button type="button" class="btn btn--primary" (click)="onNewVenue()">+ New Venue</button>
+  </div>
+</div>
+<shared-modal #newVenueModal>
+  <h3 class="modal-title" i18n>New Venue</h3>
+  <shared-form class="modal-body" (create)="onCreateVenue($event)" type="venues">
+    <ng-template let-venueRecord="record" let-venueError="error">
+      <app-venue-form [record]="venueRecord" [error]="venueError"></app-venue-form>
+    </ng-template>
+  </shared-form>
+</shared-modal>

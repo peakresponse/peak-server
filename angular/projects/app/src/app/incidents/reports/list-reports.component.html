@@ -1,6 +1,7 @@
 <router-outlet></router-outlet>
 <shared-command-header [class.d-none]="route.firstChild">
   <a class="command-header__plain" (click)="onDone()">Done</a>
+  <span class="command-header__plain"></span>
 </shared-command-header>
 <main [class.d-none]="route.firstChild">
   <div class="reports">

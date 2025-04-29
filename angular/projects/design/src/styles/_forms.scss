@@ -19,6 +19,13 @@ form {
   }
 }
 
+.form--responsive {
+  display: block;
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 0.25rem 2rem;
+}
+
 .select-wrapper {
   display: flex;
   height: 2.75rem;
@@ -251,7 +258,8 @@ select:disabled {
   & > .form-field,
   shared-text-field,
   shared-select-field,
-  shared-file-field {
+  shared-file-field,
+  shared-object-field {
     flex-grow: 1;
   }
   & > .form-field,
@@ -264,7 +272,8 @@ select:disabled {
   }
   shared-text-field,
   shared-select-field,
-  shared-file-field {
+  shared-file-field,
+  shared-object-field {
     &:not(:first-child) {
       .form-field {
         align-self: stretch;
@@ -284,7 +293,8 @@ select:disabled {
   }
   shared-text-field,
   shared-select-field,
-  shared-file-field {
+  shared-file-field,
+  shared-object-field {
     &:not(:last-child) {
       .form-field {
         align-self: stretch;

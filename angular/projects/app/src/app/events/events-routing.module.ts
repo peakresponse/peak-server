@@ -4,13 +4,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserGuard } from '../user.guard';
 
 import { ListEventsComponent } from './list-events.component';
+import { NewEventComponent } from './new-event.component';
 
 const routes: Routes = [
   {
     path: 'events',
     component: ListEventsComponent,
     canActivate: [UserGuard],
-    children: [],
+    children: [
+      {
+        path: 'new',
+        component: NewEventComponent,
+      },
+    ],
   },
 ];
 

@@ -1,0 +1,26 @@
+<div class="mb-3">
+  <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-select-field id="type" label="Type" [source]="record" [target]="record" [error]="error">
+    <option *ngFor="let type of types" [value]="type.Value.Value">{{ type.SuggestedLabel }}</option>
+  </shared-select-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="address1" label="Address" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="address2" label="Address 2" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-search-city-field id="cityId" label="City" [source]="record" [target]="record" [error]="error"></shared-search-city-field>
+</div>
+<div class="mb-3">
+  <shared-search-county-field id="countyId" label="County" [source]="record" [target]="record" [error]="error"></shared-search-county-field>
+</div>
+<div class="mb-3">
+  <shared-select-state-field id="stateId" label="State" [source]="record" [target]="record" [error]="error"></shared-select-state-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="zipCode" label="Zip Code" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>

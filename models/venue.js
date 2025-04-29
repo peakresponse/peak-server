@@ -19,10 +19,19 @@ module.exports = (sequelize, DataTypes) => {
   Venue.init(
     {
       type: DataTypes.TEXT,
-      name: DataTypes.TEXT,
-      address1: DataTypes.TEXT,
+      name: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      address1: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
       address2: DataTypes.TEXT,
-      zipCode: DataTypes.TEXT,
+      zipCode: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
       archivedAt: DataTypes.DATE,
     },
     {

@@ -81,6 +81,14 @@ shared-command-header ~ main {
     margin: 1rem auto 0;
     width: auto;
   }
+
+  & > *:nth-child(2) {
+    text-align: center;
+  }
+
+  & > *:last-child {
+    text-align: right;
+  }
 }
 
 .command-header__dropdown {
@@ -145,10 +153,27 @@ shared-command-header ~ main {
   margin: 0;
 }
 
+.command-header__title {
+  @include h3-semibold;
+  color: $base-500;
+  cursor: default;
+  flex: 1 0 0;
+  margin-bottom: 0;
+}
+
 .command-header__plain {
   @include h3-semibold;
   color: $base-500;
   cursor: pointer;
+  flex: 1 0 0;
+  text-decoration: none;
+}
+
+.command-header__primary {
+  @include h3-semibold;
+  color: $brand-primary-500;
+  cursor: pointer;
+  flex: 1 0 0;
   text-decoration: none;
 }
 
