@@ -1,7 +1,7 @@
 <router-outlet></router-outlet>
 <shared-command-header [class.d-none]="route.firstChild">
   <a class="command-header__plain" (click)="onCancel()">Cancel</a>
-  <h3 class="command-header__title">Edit Event</h3>
+  <h3 class="command-header__title">Event Details</h3>
   <span class="command-header__plain"></span>
 </shared-command-header>
 <main [class.d-none]="route.firstChild">
@@ -42,7 +42,7 @@
           <h3>{{ record.venue?.name }}</h3>
         </div>
         <div class="mb-3">
-          <button (click)="isEditing = true" class="btn btn--primary">Edit</button>
+          <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
         </div>
       </ng-container>
     </ng-template>

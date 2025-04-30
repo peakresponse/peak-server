@@ -106,6 +106,7 @@ describe('/api/events', () => {
         updatedAt: response.body.updatedAt,
         updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
         venueId: 'c99fba71-91bf-4a1a-80f8-89123c324687',
+        venue: response.body.venue,
       });
     });
   });
