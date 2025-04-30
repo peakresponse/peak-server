@@ -26,7 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         'endTime',
         'venue',
         'venueId',
+        'archivedAt',
+        'createdAt',
         'createdById',
+        'updatedAt',
         'updatedById',
         'createdByAgencyId',
       ]);

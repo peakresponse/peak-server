@@ -15,5 +15,22 @@
       "updatedAt": "2021-07-21T22:23:56.159Z",
       "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
     }
+  },
+  {
+    "model": "Event",
+    "data": {
+      "id": "3fff3c80-dae8-418c-99a5-a38cd3471e55",
+      "name": "Future Test Concert",
+      "description": "A future test concert event",
+      "startTime": "2033-10-01T20:00:00Z",
+      "endTime": "2033-10-01T23:00:00Z",
+      "venueId": "c99fba71-91bf-4a1a-80f8-89123c324687",
+      "agencies": ["9eeb6591-12f8-4036-8af8-6b235153d444", "6bdc8680-9fa5-4ce3-86d9-7df940a7c4d8"],
+      "createdAt": "2021-07-21T22:23:56.159Z",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedAt": "2021-07-21T22:23:56.159Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
   }
 ]
