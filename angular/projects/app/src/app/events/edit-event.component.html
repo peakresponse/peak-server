@@ -1,0 +1,50 @@
+<router-outlet></router-outlet>
+<shared-command-header [class.d-none]="route.firstChild">
+  <a class="command-header__plain" (click)="onCancel()">Cancel</a>
+  <h3 class="command-header__title">Edit Event</h3>
+  <span class="command-header__plain"></span>
+</shared-command-header>
+<main [class.d-none]="route.firstChild">
+  <shared-form
+    *ngIf="id"
+    [id]="id"
+    #form
+    class="form--responsive"
+    [preTransformRecord]="preTransformRecord"
+    [transformRecord]="transformRecord"
+    (update)="onUpdate($event)"
+    type="events"
+    [hideButtons]="!isEditing"
+    [showCancel]="true"
+    (cancel)="isEditing = false"
+    (update)="isEditing = false">
+    <ng-template let-record="record" let-error="error">
+      <app-event-form *ngIf="isEditing" (createVenue)="onCreateVenue($event)" [record]="record" [error]="error"></app-event-form>
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>Name</label>
+          <h3>{{ record.name }}</h3>
+        </div>
+        <div *ngIf="record.description" class="mb-3">
+          <label>Description</label>
+          <h3>{{ record.description }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Start</label>
+          <h3>{{ record.startTime | date: 'medium' }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>End</label>
+          <h3>{{ record.endTime | date: 'medium' }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Venue</label>
+          <h3>{{ record.venue?.name }}</h3>
+        </div>
+        <div class="mb-3">
+          <button (click)="isEditing = true" class="btn btn--primary">Edit</button>
+        </div>
+      </ng-container>
+    </ng-template>
+  </shared-form>
+</main>

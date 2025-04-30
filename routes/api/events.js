@@ -66,6 +66,7 @@ router.get(
         id: req.params.id,
         archivedAt: null,
       },
+      include: ['venue'],
     });
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).end();

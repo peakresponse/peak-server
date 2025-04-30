@@ -27,14 +27,14 @@
     <table class="table">
       <shared-list type="events" [params]="params" [search]="search">
         <ng-template let-record="record">
-          <tr [routerLink]="['/events', record.id]">
+          <tr [routerLink]="['/events', record.id, 'edit']">
             <td>
               <div class="event">
-                <h4>{{ record.name }}</h4>
-                <div>{{ record.venue?.name }}</div>
+                <h4 class="event__name">{{ record.name }}</h4>
+                <div class="event__venue">{{ record.venue?.name }}</div>
                 <ng-container *ngIf="parseDate(record.startTime) as datetime">
-                  <div>{{ datePart(datetime) }}</div>
-                  {{ timePart(datetime) }}
+                  <div class="event__date">{{ datePart(datetime) }}</div>
+                  <div class="event__time">{{ timePart(datetime) }}</div>
                 </ng-container>
               </div>
             </td>

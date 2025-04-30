@@ -8,12 +8,13 @@ import { VenueModule } from '../venues/venues.module';
 
 import { EventsRoutingModule } from './events-routing.module';
 
+import { EditEventComponent } from './edit-event.component';
 import { EventFormComponent } from './event-form.component';
 import { ListEventsComponent } from './list-events.component';
 import { NewEventComponent } from './new-event.component';
 
 @NgModule({
-  declarations: [EventFormComponent, ListEventsComponent, NewEventComponent],
+  declarations: [EditEventComponent, EventFormComponent, ListEventsComponent, NewEventComponent],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, VenueModule, EventsRoutingModule],
   providers: [],
 })

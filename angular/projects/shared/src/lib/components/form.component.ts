@@ -18,6 +18,7 @@ export class FormComponent implements OnChanges {
   @Input() id: string | null = null;
   @Input() type: string = '';
   @Input() record: any = {};
+  @Input() preTransformRecord: (record: any) => any = (record) => record;
   @Input() transformRecord: (record: any) => any = (record) => record;
   @Input() hideButtons = false;
   @Input() showCancel = false;
@@ -63,7 +64,7 @@ export class FormComponent implements OnChanges {
       )
       .subscribe((response: HttpResponse<any>) => {
         this.loading = false;
-        this.record = response.body;
+        this.record = this.preTransformRecord(response.body);
         this.originalRecord = cloneDeep(this.record);
         this.load.emit(this.record);
       });
@@ -98,7 +99,7 @@ export class FormComponent implements OnChanges {
         .subscribe((response: HttpResponse<any>) => {
           this.loading = false;
           this.updated = true;
-          this.record = response.body;
+          this.record = this.preTransformRecord(response.body);
           this.originalRecord = cloneDeep(this.record);
           this.update.emit(response.body);
         });

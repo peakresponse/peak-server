@@ -5,7 +5,7 @@
   <span class="command-header__plain"></span>
 </shared-command-header>
 <main [class.d-none]="route.firstChild">
-  <shared-form #form class="form--responsive" (create)="onCreate($event)" type="events">
+  <shared-form #form class="form--responsive" [transformRecord]="transformRecord" (create)="onCreate($event)" type="events">
     <ng-template let-record="record" let-error="error">
       <app-event-form (createVenue)="onCreateVenue($event)" [record]="record" [error]="error"></app-event-form>
     </ng-template>

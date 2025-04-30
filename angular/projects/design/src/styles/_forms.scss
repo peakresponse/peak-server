@@ -21,7 +21,7 @@ form {
 
 .form--responsive {
   display: block;
-  max-width: 750px;
+  max-width: 820px;
   margin: 0 auto;
   padding: 0.25rem 2rem;
 }
@@ -142,6 +142,10 @@ form {
 }
 
 :not(.form-field--multi):not(.form-field--noclear).form-field--editing.form-field--nonempty {
+  input {
+    padding-right: 2.25rem;
+  }
+
   &::after {
     display: block;
     position: absolute;
