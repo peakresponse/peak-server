@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
+      Facility.belongsTo(models.Venue, { as: 'venue' });
       Facility.belongsTo(models.Version, { as: 'version' });
       Facility.belongsTo(Facility, { as: 'draftParent' });
       Facility.hasOne(Facility, { as: 'draft', foreignKey: 'draftParentId' });

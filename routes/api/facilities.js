@@ -44,10 +44,27 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAdmin,
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
+    if (!req.body.venueId && !req.user.isAdmin) {
+      res.status(StatusCodes.FORBIDDEN).end();
+      return;
+    }
+    let venue;
+    if (req.body.venueId) {
+      venue = await models.Venue.findByPk(req.body.venueId);
+      if (!venue || venue.archivedAt) {
+        res.status(StatusCodes.NOT_FOUND).end();
+        return;
+      }
+      if (venue.createdByAgencyId !== req.agency?.id) {
+        res.status(StatusCodes.FORBIDDEN).end();
+        return;
+      }
+    }
     const record = await models.Facility.create({
       ..._.pick(req.body, [
+        'venueId',
         'type',
         'name',
         'locationCode',
@@ -64,6 +81,7 @@ router.post(
       ]),
       updatedById: req.user.id,
       createdById: req.user.id,
+      createdByAgencyId: req.agency?.id,
     });
     res.status(StatusCodes.CREATED).json(record.toJSON());
   }),
@@ -105,12 +123,24 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAdmin,
+  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Facility.scope('canonical').findByPk(req.params.id, { transaction });
+      const options = {
+        transaction,
+      };
+      if (!req.user.isAdmin) {
+        options.where = {
+          createdByAgencyId: req.agency?.id,
+        };
+      }
+      record = await models.Facility.findByPk(req.params.id, options);
       if (record) {
+        if (!record.venueId && !req.user.isAdmin) {
+          res.status(StatusCodes.FORBIDDEN).end();
+          return;
+        }
         await record.update(
           _.pick(req.body, [
             'type',
@@ -134,7 +164,7 @@ router.patch(
     if (record) {
       res.json(record.toJSON());
     } else {
-      res.send(StatusCodes.NOT_FOUND).end();
+      res.status(StatusCodes.NOT_FOUND).end();
     }
   }),
 );

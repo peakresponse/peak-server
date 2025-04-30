@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Venue extends Base {
     static associate(models) {
       Venue.hasMany(models.Event, { as: 'event', foreignKey: 'venueId' });
-      Venue.hasMany(models.Facility, { as: 'facility' });
+      Venue.hasMany(models.Facility, { as: 'facilities' });
       Venue.belongsTo(models.City, { as: 'city' });
       Venue.belongsTo(models.County, { as: 'county' });
       Venue.belongsTo(models.State, { as: 'state' });

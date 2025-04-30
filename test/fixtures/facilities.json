@@ -2,6 +2,19 @@
   {
     "model": "Facility",
     "data": {
+      "id": "79ac2493-ab6a-4fa7-a04a-bde4b7a9f341",
+      "name": "First Aid 1",
+      "venueId": "c99fba71-91bf-4a1a-80f8-89123c324687",
+      "createdAt": "2021-07-21T22:23:56.159Z",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "updatedAt": "2021-07-21T22:23:56.159Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
+  },
+  {
+    "model": "Facility",
+    "data": {
       "lat": "37.786949",
       "lng": "-122.4136599",
       "id": "23a7e241-4486-40fb-babb-aaa4c060c659",
