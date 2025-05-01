@@ -114,6 +114,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       geog: DataTypes.GEOGRAPHY,
       primaryPhone: DataTypes.STRING,
+      inventory: DataTypes.JSONB,
       data: DataTypes.JSONB,
       isValid: DataTypes.BOOLEAN,
       validationErrors: DataTypes.JSONB,

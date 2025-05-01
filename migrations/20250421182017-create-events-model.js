@@ -219,11 +219,17 @@ module.exports = {
         key: 'id',
       },
     });
+
+    await queryInterface.addColumn('facilities', 'inventory', {
+      type: Sequelize.JSONB,
+    });
   },
 
   async down(queryInterface, Sequelize) {
+    await queryInterface.removeColumn('facilities', 'inventory');
     await queryInterface.removeColumn('facilities', 'venue_id');
     await queryInterface.removeColumn('incidents', 'event_id');
+    await queryInterface.removeColumn('agencies', 'is_events_only');
     await queryInterface.dropTable('events_agencies');
     await queryInterface.dropTable('events');
     await queryInterface.dropTable('venues');
