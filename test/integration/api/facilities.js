@@ -80,6 +80,16 @@ describe('/api/facilities', () => {
         assert(facility.name.match(/cpmc/i));
       }
     });
+
+    it('returns a paginated list of Facility records for a Venue', async () => {
+      const response = await testSession
+        .get('/api/facilities/')
+        .query({ venueId: 'c99fba71-91bf-4a1a-80f8-89123c324687' })
+        .expect(StatusCodes.OK)
+        .expect('X-Total-Count', '1');
+      assert.deepStrictEqual(response.body.length, 1);
+      assert.deepStrictEqual(response.body[0].name, 'First Aid 1');
+    });
   });
 
   describe('POST /', () => {

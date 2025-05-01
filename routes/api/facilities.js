@@ -14,26 +14,31 @@ router.get(
   '/',
   interceptors.requireLogin,
   helpers.async(async (req, res) => {
-    const page = req.query.page || 1;
+    const { page = '1', search, type, stateId, venueId, lat, lng } = req.query;
     const options = {
       page,
       where: {},
       order: [['name', 'ASC']],
     };
-    if (req.query.search && req.query.search !== '') {
-      options.where.name = { [Op.iLike]: `%${req.query.search.trim()}%` };
+    if (search) {
+      options.where.name = { [Op.iLike]: `%${search.trim()}%` };
     }
-    if (req.query.type && req.query.type !== '') {
-      options.where.type = req.query.type.trim();
+    if (type) {
+      options.where.type = type.trim();
     }
-    if (req.query.stateId && req.query.stateId !== '') {
-      options.where.stateId = req.query.stateId.trim();
+    if (stateId) {
+      options.where.stateId = stateId.trim();
+    }
+    if (venueId) {
+      options.where.venueId = venueId.trim();
     }
     let docs;
     let pages;
     let total;
-    if (req.query.lat && req.query.lng) {
-      ({ docs, pages, total } = await models.Facility.scope('canonical').findNear(req.query.lat, req.query.lng, options));
+    if (venueId) {
+      ({ docs, pages, total } = await models.Facility.paginate(options));
+    } else if (lat && lng) {
+      ({ docs, pages, total } = await models.Facility.scope('canonical').findNear(lat.trim(), lng.trim(), options));
     } else {
       ({ docs, pages, total } = await models.Facility.scope('canonical').paginate(options));
     }
