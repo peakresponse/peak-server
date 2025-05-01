@@ -19,6 +19,7 @@ describe('/api/users', () => {
       'nemsisSchematrons',
       'regions',
       'agencies',
+      'venues',
       'facilities',
       'regionAgencies',
       'regionFacilities',

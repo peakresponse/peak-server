@@ -20,6 +20,7 @@ describe('models', () => {
         'regions',
         'agencies',
         'versions',
+        'venues',
         'facilities',
         'employments',
         'scenes',

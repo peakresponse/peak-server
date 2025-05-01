@@ -27,7 +27,7 @@
     <table class="table">
       <shared-list type="events" [params]="params" [search]="search">
         <ng-template let-record="record">
-          <tr [routerLink]="['/events', record.id, 'edit']">
+          <tr [routerLink]="['/events', record.id, 'details']">
             <td>
               <div class="event">
                 <h4 class="event__name">{{ record.name }}</h4>

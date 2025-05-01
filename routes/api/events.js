@@ -66,7 +66,7 @@ router.get(
         id: req.params.id,
         archivedAt: null,
       },
-      include: ['venue'],
+      include: [{ model: models.Venue, as: 'venue', include: ['city', 'state', 'county'] }],
     });
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).end();

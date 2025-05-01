@@ -1,8 +1,10 @@
 <router-outlet></router-outlet>
 <shared-command-header [class.d-none]="route.firstChild">
-  <a class="command-header__plain" (click)="onCancel()">Cancel</a>
+  <a *ngIf="!isEditing" class="command-header__plain" (click)="onCancel()">Done</a>
+  <a *ngIf="isEditing" class="command-header__plain" (click)="isEditing = false">Cancel</a>
   <h3 class="command-header__title">Event Details</h3>
-  <span class="command-header__plain"></span>
+  <a *ngIf="!isEditing" class="command-header__primary" (click)="isEditing = true">Edit</a>
+  <span *ngIf="isEditing" class="command-header__primary"></span>
 </shared-command-header>
 <main [class.d-none]="route.firstChild">
   <shared-form
@@ -15,8 +17,6 @@
     (update)="onUpdate($event)"
     type="events"
     [hideButtons]="!isEditing"
-    [showCancel]="true"
-    (cancel)="isEditing = false"
     (update)="isEditing = false">
     <ng-template let-record="record" let-error="error">
       <app-event-form *ngIf="isEditing" (createVenue)="onCreateVenue($event)" [record]="record" [error]="error"></app-event-form>
@@ -41,8 +41,14 @@
           <label>Venue</label>
           <h3>{{ record.venue?.name }}</h3>
         </div>
+        <h4>Venue Details</h4>
         <div class="mb-3">
-          <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+          <label>Address</label>
+          <h3>
+            {{ record.venue?.address1 }}<br />
+            <ng-container *ngIf="record.venue?.address2">{{ record.venue?.address2 }}<br /></ng-container>
+            {{ record.venue?.city.featureName }}, {{ record.venue?.state.abbr }} {{ record.venue?.zipCode }}
+          </h3>
         </div>
       </ng-container>
     </ng-template>

@@ -22,6 +22,7 @@ describe('/api/regions', () => {
       'regions',
       'agencies',
       'versions',
+      'venues',
       'facilities',
       'regionAgencies',
       'regionFacilities',

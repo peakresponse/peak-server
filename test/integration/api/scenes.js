@@ -21,6 +21,7 @@ describe('/api/scenes', () => {
       'regions',
       'agencies',
       'versions',
+      'venues',
       'facilities',
       'contacts',
       'employments',

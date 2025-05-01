@@ -23,6 +23,7 @@ describe('/api/reports', () => {
       'regions',
       'agencies',
       'versions',
+      'venues',
       'facilities',
       'contacts',
       'employments',
