@@ -16,14 +16,13 @@
       <a class="command-header__dropdown-link" href="/logout">Log out</a>
     </li>
   </ng-template>
-  <ul class="nav">
-    <li *ngIf="user.assignment$ | async" class="nav__item">
-      <a class="nav__link" [class.nav__link--active]="filter == 'mine'" routerLink="/incidents" fragment="mine">My Dispatches</a>
-    </li>
-    <li class="nav__item">
-      <a class="nav__link" [class.nav__link--active]="filter == 'all'" routerLink="/incidents" fragment="all">All incidents</a>
-    </li>
-  </ul>
+  <div class="d-flex align-items-center">
+    <a class="btn btn--secondary btn--sm ms-2 invisible">Details</a>
+    <h3 class="command-header__title">
+      {{ record?.name }}
+    </h3>
+    <a class="btn btn--secondary btn--sm ms-2" routerLink="/events/{{ id }}/details">Details</a>
+  </div>
 </shared-command-header>
 <main [class.d-none]="route.firstChild">
   <div class="table-responsive">
@@ -62,7 +61,7 @@
         </ng-template>
         <ng-template #empty>
           <tr>
-            <th>No incidents yet.</th>
+            <th class="text-center">No incidents yet.</th>
           </tr>
         </ng-template>
       </shared-list>

@@ -6,6 +6,7 @@ import { UserGuard } from '../user.guard';
 import { ListEventsComponent } from './list-events.component';
 import { NewEventComponent } from './new-event.component';
 import { EditEventComponent } from './edit-event.component';
+import { EventIncidentsComponent } from './event-incidents.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: ':id/details',
         component: EditEventComponent,
+      },
+      {
+        path: ':id',
+        component: EventIncidentsComponent,
       },
     ],
   },

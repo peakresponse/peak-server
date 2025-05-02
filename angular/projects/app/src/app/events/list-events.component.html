@@ -10,6 +10,9 @@
       <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>
     </li>
     <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/incidents">All Incidents</a>
+    </li>
+    <li class="command-header__dropdown-item">
       <a class="command-header__dropdown-link" href="/logout">Log out</a>
     </li>
   </ng-template>
@@ -27,7 +30,7 @@
     <table class="table">
       <shared-list type="events" [params]="params" [search]="search">
         <ng-template let-record="record">
-          <tr [routerLink]="['/events', record.id, 'details']">
+          <tr [routerLink]="['/events', record.id]">
             <td>
               <div class="event">
                 <h4 class="event__name">{{ record.name }}</h4>

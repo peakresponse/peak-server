@@ -91,6 +91,10 @@ module.exports = (sequelize, DataTypes) => {
           JOIN incidents_agencies ON incidents.id=incidents_agencies.incident_id
           WHERE incidents_agencies.agency_id=:objId
         `;
+      } else if (type === 'Event') {
+        conditions = `
+          WHERE incidents.event_id=:objId
+        `;
       } else if (type === 'Vehicle') {
         conditions = `
           JOIN dispatches ON incidents.id=dispatches.incident_id

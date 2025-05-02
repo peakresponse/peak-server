@@ -1,4 +1,5 @@
 <shared-loader *ngIf="!records"></shared-loader>
+<ng-template *ngIf="records?.length === 0" [ngTemplateOutlet]="emptyTemplate"></ng-template>
 <ng-template
   *ngFor="let record of records; trackBy: trackById"
   [ngTemplateOutlet]="template"

@@ -12,9 +12,10 @@ import { EditEventComponent } from './edit-event.component';
 import { EventFormComponent } from './event-form.component';
 import { ListEventsComponent } from './list-events.component';
 import { NewEventComponent } from './new-event.component';
+import { EventIncidentsComponent } from './event-incidents.component';
 
 @NgModule({
-  declarations: [EditEventComponent, EventFormComponent, ListEventsComponent, NewEventComponent],
+  declarations: [EditEventComponent, EventFormComponent, ListEventsComponent, NewEventComponent, EventIncidentsComponent],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule, VenueModule, EventsRoutingModule],
   providers: [],
 })

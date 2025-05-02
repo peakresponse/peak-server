@@ -27,7 +27,7 @@ export class EditEventComponent implements OnInit {
   }
 
   onCancel() {
-    this.navigation.backTo('/events');
+    this.navigation.backTo(`/events/${this.id}`);
   }
 
   preTransformRecord(record: any) {

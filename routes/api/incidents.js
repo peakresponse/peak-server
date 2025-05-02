@@ -13,22 +13,20 @@ router.get(
   '/',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    const page = req.query.page || 1;
+    const { page = '1', search, vehicleId, eventId } = req.query;
     const options = {
       page,
     };
-    if (req.query.search && req.query.search !== '') {
-      const search = req.query.search.trim();
-      if (search) {
-        options.search = search;
-      }
-    }
+    options.search = search?.trim();
     // manually paginate due to complex joins
     let type;
     let obj;
-    if (req.query.vehicleId && req.query.vehicleId !== '') {
+    if (vehicleId) {
       type = 'Vehicle';
-      obj = await models.Vehicle.findByPk(req.query.vehicleId, { rejectOnEmpty: true });
+      obj = await models.Vehicle.findByPk(vehicleId, { rejectOnEmpty: true });
+    } else if (eventId) {
+      type = 'Event';
+      obj = await models.Event.findByPk(eventId, { rejectOnEmpty: true });
     } else {
       type = 'Agency';
       obj = req.agency;
