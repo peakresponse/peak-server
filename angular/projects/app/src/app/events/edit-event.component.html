@@ -50,6 +50,38 @@
             {{ record.venue?.city.featureName }}, {{ record.venue?.state.abbr }} {{ record.venue?.zipCode }}
           </h3>
         </div>
+        <div *ngIf="record?.venueId" class="mb-3">
+          <label class="mb-2">Venue Medical Facilities</label>
+          <div class="form-field form-field--noclear mb-2">
+            <div class="form-field__items">
+              <div *ngFor="let facility of record.venue?.facilities" class="form-field__item" (click)="onClickFacility(facility)">
+                {{ facility.name }} <span *ngIf="facility.inventory">({{ facility.inventory.join(', ') }})</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn--sm btn--primary" (click)="newFacilityModal.show()">Add</button>
+          <shared-modal #newFacilityModal>
+            <h3 class="modal-title" i18n>New Venue Medical Facility</h3>
+            <shared-form class="modal-body" [record]="{ venueId: record.venueId }" (create)="onCreateFacility($event)" type="facilities">
+              <ng-template let-facilityRecord="record" let-facilityError="error">
+                <app-venue-facility-form [record]="facilityRecord" [error]="facilityError"></app-venue-facility-form>
+              </ng-template>
+            </shared-form>
+          </shared-modal>
+          <shared-modal #editFacilityModal>
+            <h3 class="modal-title" i18n>Edit Venue Medical Facility</h3>
+            <shared-form
+              *ngIf="editingFacilityId"
+              class="modal-body"
+              [id]="editingFacilityId"
+              (update)="onUpdateFacility($event)"
+              type="facilities">
+              <ng-template let-facilityRecord="record" let-facilityError="error">
+                <app-venue-facility-form [record]="facilityRecord" [error]="facilityError"></app-venue-facility-form>
+              </ng-template>
+            </shared-form>
+          </shared-modal>
+        </div>
       </ng-container>
     </ng-template>
   </shared-form>

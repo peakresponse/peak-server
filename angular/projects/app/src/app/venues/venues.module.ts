@@ -5,12 +5,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from 'shared';
 
+import { VenueFacilityFormComponent } from './venue-facility-form.component';
 import { VenueFormComponent } from './venue-form.component';
 
 @NgModule({
-  declarations: [VenueFormComponent],
+  declarations: [VenueFacilityFormComponent, VenueFormComponent],
   imports: [CommonModule, FormsModule, NgbModule, SharedModule],
-  exports: [VenueFormComponent],
+  exports: [VenueFacilityFormComponent, VenueFormComponent],
   providers: [],
 })
 export class VenueModule {}

@@ -53,6 +53,8 @@ export class FormComponent implements OnChanges {
 
   refresh() {
     this.loading = true;
+    this.error = false;
+    this.updated = false;
     get(this.api, this.type)
       .get(this.id)
       .pipe(

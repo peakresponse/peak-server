@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DateTime } from 'luxon';
 
-import { FormComponent, NavigationService } from 'shared';
+import { FormComponent, ModalComponent, NavigationService, TextFieldComponent } from 'shared';
 
 @Component({
   templateUrl: './edit-event.component.html',
@@ -11,6 +12,9 @@ import { FormComponent, NavigationService } from 'shared';
 export class EditEventComponent implements OnInit {
   id: string = '';
   @ViewChild('form') form?: FormComponent;
+  @ViewChild('newFacilityModal') newFacilityModal?: ModalComponent;
+  @ViewChild('editFacilityModal') editFacilityModal?: ModalComponent;
+  @ViewChild('inventoryNameField') inventoryNameField?: TextFieldComponent;
   isEditing = false;
 
   constructor(
@@ -60,5 +64,26 @@ export class EditEventComponent implements OnInit {
     if (this.form) {
       this.form.record = { ...this.form.record, venueId: record.id };
     }
+  }
+
+  params(record: any) {
+    return new HttpParams().set('venueId', record?.venueId);
+  }
+
+  editingFacilityId: string | null = null;
+
+  onClickFacility(record: any) {
+    this.editingFacilityId = record.id;
+    this.editFacilityModal?.open();
+  }
+
+  onCreateFacility(record: any) {
+    this.form?.refresh();
+    this.newFacilityModal?.close();
+  }
+
+  onUpdateFacility(record: any) {
+    this.form?.refresh();
+    this.editFacilityModal?.close();
   }
 }

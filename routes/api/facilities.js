@@ -72,6 +72,7 @@ router.post(
         'venueId',
         'type',
         'name',
+        'inventory',
         'locationCode',
         'primaryDesignation',
         'primaryNationalProviderId',
@@ -150,6 +151,7 @@ router.patch(
           _.pick(req.body, [
             'type',
             'name',
+            'inventory',
             'locationCode',
             'primaryDesignation',
             'primaryNationalProviderId',
