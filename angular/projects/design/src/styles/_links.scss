@@ -10,3 +10,7 @@ a[tabindex] {
 .clickable {
   cursor: pointer;
 }
+
+.hoverable:hover {
+  background-color: $brand-primary-100;
+}
