@@ -57,6 +57,9 @@
               <div *ngFor="let facility of record.venue?.facilities" class="form-field__item" (click)="onClickFacility(facility)">
                 {{ facility.name }} <span *ngIf="facility.inventory">({{ facility.inventory.join(', ') }})</span>
               </div>
+              <div *ngIf="!record.venue?.facilities?.length" class="form-field__item">
+                <span class="text-muted">No medical facilities</span>
+              </div>
             </div>
           </div>
           <button class="btn btn--sm btn--primary" (click)="newFacilityModal.show()">Add</button>
