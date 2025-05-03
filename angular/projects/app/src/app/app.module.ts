@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-import { ApiService, NavigationService, UserService } from 'shared';
+import { AgencyService, ApiService, NavigationService, UserService } from 'shared';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,6 @@ import { VenueModule } from './venues/venues.module';
   declarations: [AppComponent],
   bootstrap: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, AssignmentsModule, EventsModule, IncidentsModule, VenueModule],
-  providers: [ApiService, NavigationService, UserService, provideHttpClient(withInterceptorsFromDi())],
+  providers: [AgencyService, ApiService, NavigationService, UserService, provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}
