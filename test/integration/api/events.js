@@ -37,8 +37,11 @@ describe('/api/events', () => {
   describe('GET /', () => {
     it('returns a list of Events for the Agency', async () => {
       const response = await testSession.get('/api/events').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
-      const records = response.body;
-      assert.deepStrictEqual(records?.length, 1);
+      const payload = response.body;
+      assert.deepStrictEqual(payload?.Event.length, 1);
+      assert.deepStrictEqual(payload?.Venue.length, 1);
+      assert.deepStrictEqual(payload?.City.length, 1);
+      assert.deepStrictEqual(payload?.State.length, 1);
     });
   });
 

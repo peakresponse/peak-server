@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 
+import { Event } from '../models/event';
+import models from '../models';
+
 @Component({
   templateUrl: './list-events.component.html',
   styleUrls: ['./list-events.component.scss'],
@@ -32,6 +35,17 @@ export class ListEventsComponent {
       this.filter = fragment;
       this.params = new HttpParams().set('filter', this.filter);
     }
+  }
+
+  transform(records: any): any[] {
+    let data: any = {};
+    for (const key of Object.keys(records)) {
+      data[key] = {};
+      for (const obj of records[key]) {
+        data[key][obj.id] = obj;
+      }
+    }
+    return records.Event.map((e: any) => new Event(e, data, models));
   }
 
   cityName(name?: string): string {

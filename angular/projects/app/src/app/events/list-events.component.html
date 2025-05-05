@@ -28,7 +28,7 @@
 <main [class.d-none]="route.firstChild">
   <div class="table-responsive">
     <table class="table">
-      <shared-list type="events" [params]="params" [search]="search">
+      <shared-list type="events" [transform]="transform" [params]="params" [search]="search">
         <ng-template let-record="record">
           <tr [routerLink]="['/events', record.id]">
             <td>

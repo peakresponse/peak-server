@@ -17,7 +17,13 @@ router.get(
     const { filter = 'current', page = '1', search } = req.query;
     const options = {
       page,
-      include: ['venue'],
+      include: [
+        {
+          model: models.Venue,
+          as: 'venue',
+          include: ['city', 'state', 'county'],
+        },
+      ],
       where: {
         createdByAgencyId: req.agency.id,
         archivedAt: null,
@@ -44,7 +50,16 @@ router.get(
     }
     const { docs, pages, total } = await models.Event.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
-    res.json(docs.map((d) => d.toJSON()));
+    const payload = {};
+    payload.City = _.uniqBy(docs.map((i) => i.venue?.city).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
+    payload.State = _.uniqBy(docs.map((i) => i.venue?.state).filter(Boolean), (s) => s.id).map((s) => s.toJSON());
+    payload.County = _.uniqBy(docs.map((i) => i.venue?.county).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
+    payload.Venue = _.uniqBy(docs.map((i) => i.venue).filter(Boolean), (v) => v.id).map((v) => v.toJSON());
+    payload.Event = docs.map((e) => {
+      delete e.venue;
+      return e.toJSON();
+    });
+    res.json(payload);
   }),
 );
 
