@@ -9,7 +9,7 @@
     <li class="command-header__dropdown-item">
       <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>
     </li>
-    <li class="command-header__dropdown-item">
+    <li *ngIf="!agency.isEventsOnly" class="command-header__dropdown-item">
       <a class="command-header__dropdown-link" routerLink="/incidents">All Incidents</a>
     </li>
     <li class="command-header__dropdown-item">

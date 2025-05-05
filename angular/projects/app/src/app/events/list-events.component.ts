@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { UserService } from 'shared';
+import { AgencyService, UserService } from 'shared';
 
 import { DateTime } from 'luxon';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-
-import { Incident } from '../models/incident';
-import models from '../models';
 
 @Component({
   templateUrl: './list-events.component.html',
@@ -23,6 +20,7 @@ export class ListEventsComponent {
   constructor(
     public route: ActivatedRoute,
     public user: UserService,
+    public agency: AgencyService,
   ) {
     const fragment = this.route.snapshot.fragment || 'current';
     this.onFragmentChanged(fragment);

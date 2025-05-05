@@ -14,7 +14,7 @@ router.get(
   '/',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    const { filter = 'current', page = '1' } = req.query;
+    const { filter = 'current', page = '1', search } = req.query;
     const options = {
       page,
       include: ['venue'],
@@ -35,6 +35,11 @@ router.get(
     } else {
       options.where.startTime = {
         [Op.gte]: new Date(),
+      };
+    }
+    if (search) {
+      options.where.name = {
+        [Op.iLike]: `%${search.trim()}%`,
       };
     }
     const { docs, pages, total } = await models.Event.paginate(options);
