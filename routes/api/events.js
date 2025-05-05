@@ -36,10 +36,10 @@ router.get(
     };
     if (filter === 'past') {
       options.where.endTime = {
-        [Op.lte]: new Date(),
+        [Op.lt]: new Date(),
       };
     } else {
-      options.where.startTime = {
+      options.where.endTime = {
         [Op.gte]: new Date(),
       };
     }
