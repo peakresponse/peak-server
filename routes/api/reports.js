@@ -82,7 +82,7 @@ router.post(
                   id: record.id,
                 },
                 defaults: {
-                  ..._.pick(record, ['id', 'sceneId', 'number']),
+                  ..._.pick(record, ['id', 'eventId', 'sceneId', 'number']),
                   psapId,
                   createdById: req.user.id,
                   updatedById: req.user.id,
