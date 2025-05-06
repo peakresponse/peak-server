@@ -30,7 +30,7 @@ export class NemsisValueList {
 }
 
 export class Base {
-  protected data: any;
+  data: any;
   protected dependencies: any;
   protected cache: any;
   protected models: any;

@@ -38,7 +38,7 @@ export class EventIncidentsComponent implements OnInit {
       this.id = params['id'];
       this.params = this.params.set('eventId', this.id);
       this.api.events.get(this.id).subscribe((response: HttpResponse<any>) => {
-        this.record = response.body;
+        this.record = response.body.Event;
       });
     });
   }

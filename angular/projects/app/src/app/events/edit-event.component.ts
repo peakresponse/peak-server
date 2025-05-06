@@ -5,6 +5,9 @@ import { DateTime } from 'luxon';
 
 import { FormComponent, ModalComponent, NavigationService, TextFieldComponent } from 'shared';
 
+import { Event } from '../models/event';
+import models from '../models';
+
 @Component({
   templateUrl: './edit-event.component.html',
   standalone: false,
@@ -31,19 +34,27 @@ export class EditEventComponent implements OnInit {
   }
 
   preTransformRecord(record: any) {
-    if (record.startTime) {
-      record.startTime = DateTime.fromISO(record.startTime).toISO();
-      if (record.startTime.includes('.')) {
-        record.startTime = record.startTime.substring(0, record.startTime.indexOf('.'));
+    let data: any = {};
+    for (const key of Object.keys(record)) {
+      data[key] = {};
+      for (const obj of Array.isArray(record[key]) ? record[key] : [record[key]]) {
+        data[key][obj.id] = obj;
       }
     }
-    if (record.endTime) {
-      record.endTime = DateTime.fromISO(record.endTime).toISO();
-      if (record.endTime.includes('.')) {
-        record.endTime = record.endTime.substring(0, record.endTime.indexOf('.'));
+    let event = new Event(record.Event, data, models) as any;
+    if (event.startTime) {
+      event.startTime = DateTime.fromISO(event.startTime).toISO();
+      if (event.startTime.includes('.')) {
+        event.startTime = event.startTime.substring(0, event.startTime.indexOf('.'));
       }
     }
-    return record;
+    if (event.endTime) {
+      event.endTime = DateTime.fromISO(event.endTime).toISO();
+      if (event.endTime.includes('.')) {
+        event.endTime = event.endTime.substring(0, event.endTime.indexOf('.'));
+      }
+    }
+    return event;
   }
 
   transformRecord(record: any) {
@@ -53,11 +64,11 @@ export class EditEventComponent implements OnInit {
     if (record.endTime) {
       record.endTime = DateTime.fromISO(record.endTime, { zone: 'local' }).toISO();
     }
-    return record;
+    return record.data;
   }
 
   onUpdate(record: any) {
-    this.navigation.backTo('/events');
+    this.isEditing = false;
   }
 
   onCreateVenue(record: any) {

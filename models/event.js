@@ -34,6 +34,24 @@ module.exports = (sequelize, DataTypes) => {
         'createdByAgencyId',
       ]);
     }
+
+    createPayload() {
+      const payload = {};
+      let { venue } = this;
+      payload.Facility = _.uniqBy(venue?.facilities, (f) => f.id).map((f) => f.toJSON());
+      payload.City = venue?.city?.toJSON() ?? null;
+      payload.County = venue?.county?.toJSON() ?? null;
+      payload.State = venue?.state?.toJSON() ?? null;
+      venue = venue?.toJSON();
+      delete venue.facilities;
+      delete venue.city;
+      delete venue.county;
+      delete venue.state;
+      payload.Venue = venue ?? null;
+      payload.Event = this.toJSON();
+      delete payload.Event.venue;
+      return payload;
+    }
   }
 
   Event.init(

@@ -54,7 +54,12 @@ router.get(
     payload.City = _.uniqBy(docs.map((i) => i.venue?.city).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
     payload.State = _.uniqBy(docs.map((i) => i.venue?.state).filter(Boolean), (s) => s.id).map((s) => s.toJSON());
     payload.County = _.uniqBy(docs.map((i) => i.venue?.county).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
-    payload.Venue = _.uniqBy(docs.map((i) => i.venue).filter(Boolean), (v) => v.id).map((v) => v.toJSON());
+    payload.Venue = _.uniqBy(docs.map((i) => i.venue).filter(Boolean), (v) => v.id).map((v) => {
+      delete v.city;
+      delete v.state;
+      delete v.county;
+      return v.toJSON();
+    });
     payload.Event = docs.map((e) => {
       delete e.venue;
       return e.toJSON();
@@ -92,7 +97,7 @@ router.get(
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).end();
     }
-    return res.json(record.toJSON());
+    return res.json(record.createPayload());
   }),
 );
 
@@ -105,6 +110,8 @@ router.patch(
         id: req.params.id,
         archivedAt: null,
       },
+      include: [{ model: models.Venue, as: 'venue', include: ['city', 'state', 'county', 'facilities'] }],
+      order: [['venue', 'facilities', 'name', 'ASC']],
     });
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).end();
@@ -113,7 +120,7 @@ router.patch(
       ..._.pick(req.body, ['name', 'description', 'startTime', 'endTime', 'venueId']),
       updatedById: req.user.id,
     });
-    return res.json(record.toJSON());
+    return res.json(record.createPayload());
   }),
 );
 

@@ -96,9 +96,68 @@ describe('/api/events', () => {
         .get('/api/events/e47067f1-513e-48a6-8ff9-59e57b6cb5d0')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .expect(StatusCodes.OK);
-      assert.deepStrictEqual(response.body, {
+      assert.deepStrictEqual(response.body.Facility, []);
+      assert.deepStrictEqual(response.body.City, {
+        censusClassCode: 'C1',
+        censusCode: '67000',
+        countyName: 'San Francisco',
+        countyNumeric: '075',
+        countySequence: '1',
+        createdAt: '2020-04-07T19:59:21.446Z',
+        dateCreated: '03/11/2008',
+        dateEdited: '03/24/2019',
+        featureClass: 'Civil',
+        featureName: 'City of San Francisco',
+        geog: {
+          coordinates: [-122.4424955, 37.7782251],
+          crs: {
+            properties: {
+              name: 'EPSG:4326',
+            },
+            type: 'name',
+          },
+          type: 'Point',
+        },
+        gsaCode: '',
+        id: '2411786',
+        opmCode: '',
+        primaryLatitude: '37.7782251',
+        primaryLongitude: '-122.4424955',
+        stateAlpha: 'CA',
+        stateNumeric: '06',
+        updatedAt: response.body.City.updatedAt,
+      });
+      assert.deepStrictEqual(response.body.County, null);
+      assert.deepStrictEqual(response.body.State, {
+        abbr: 'CA',
+        borderStates: [],
+        createdAt: '2020-04-06T21:21:25.531Z',
+        id: '06',
+        isConfigured: false,
+        name: 'California',
+        updatedAt: response.body.State.updatedAt,
+      });
+      assert.deepStrictEqual(response.body.Venue, {
+        address1: '99 Grove St.',
+        address2: null,
         archivedAt: null,
-        createdAt: response.body.createdAt,
+        cityId: '2411786',
+        countyId: null,
+        createdAt: '2021-07-21T22:23:56.159Z',
+        createdByAgencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+        createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+        id: 'c99fba71-91bf-4a1a-80f8-89123c324687',
+        name: 'Bill Graham Civic Auditorium',
+        stateId: '06',
+        type: 'Y92.25',
+        updatedAt: response.body.Venue.updatedAt,
+        updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
+        zipCode: '94102',
+        facilityIds: [],
+      });
+      assert.deepStrictEqual(response.body.Event, {
+        archivedAt: null,
+        createdAt: '2021-07-21T22:23:56.159Z',
         createdByAgencyId: '9eeb6591-12f8-4036-8af8-6b235153d444',
         createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
         description: 'A test concert event',
@@ -106,10 +165,9 @@ describe('/api/events', () => {
         id: 'e47067f1-513e-48a6-8ff9-59e57b6cb5d0',
         name: 'Test Concert',
         startTime: '2023-10-01T20:00:00.000Z',
-        updatedAt: response.body.updatedAt,
+        updatedAt: response.body.Event.updatedAt,
         updatedById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
         venueId: 'c99fba71-91bf-4a1a-80f8-89123c324687',
-        venue: response.body.venue,
       });
     });
   });

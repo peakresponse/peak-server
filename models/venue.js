@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const sequelizePaginate = require('sequelize-paginate');
 
 const { Base } = require('./base');
@@ -13,6 +14,36 @@ module.exports = (sequelize, DataTypes) => {
       Venue.belongsTo(models.User, { as: 'updatedBy' });
       Venue.belongsTo(models.User, { as: 'createdBy' });
       Venue.belongsTo(models.Agency, { as: 'createdByAgency' });
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      if (this.facilities) {
+        attributes.facilities = this.facilities.map((f) => f.toJSON());
+        attributes.facilityIds = this.facilities.map((f) => f.id);
+      }
+      return _.pick(attributes, [
+        'id',
+        'type',
+        'name',
+        'address1',
+        'address2',
+        'city',
+        'cityId',
+        'county',
+        'countyId',
+        'state',
+        'stateId',
+        'zipCode',
+        'archivedAt',
+        'createdAt',
+        'createdById',
+        'updatedAt',
+        'updatedById',
+        'createdByAgencyId',
+        'facilities',
+        'facilityIds',
+      ]);
     }
   }
 
