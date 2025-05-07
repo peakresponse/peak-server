@@ -10,12 +10,12 @@ import { AppComponent } from './app.component';
 import { AssignmentsModule } from './assignments/assignments.module';
 import { EventsModule } from './events/events.module';
 import { IncidentsModule } from './incidents/incidents.module';
-import { VenueModule } from './venues/venues.module';
+import { VenuesModule } from './venues/venues.module';
 
 @NgModule({
   declarations: [AppComponent],
   bootstrap: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, AssignmentsModule, EventsModule, IncidentsModule, VenueModule],
+  imports: [BrowserModule, AppRoutingModule, AssignmentsModule, EventsModule, IncidentsModule, VenuesModule],
   providers: [AgencyService, ApiService, NavigationService, UserService, provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}

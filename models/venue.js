@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Venue.hasMany(models.Event, { as: 'event', foreignKey: 'venueId' });
       Venue.hasMany(models.Facility, { as: 'facilities' });
+      Venue.belongsTo(models.Region, { as: 'region' });
       Venue.belongsTo(models.City, { as: 'city' });
       Venue.belongsTo(models.County, { as: 'county' });
       Venue.belongsTo(models.State, { as: 'state' });
@@ -18,6 +19,18 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
+      if (this.city) {
+        attributes.city = this.city.toJSON();
+      }
+      if (this.county) {
+        attributes.county = this.county.toJSON();
+      }
+      if (this.state) {
+        attributes.state = this.state.toJSON();
+      }
+      if (this.region) {
+        attributes.region = this.region.toJSON();
+      }
       if (this.facilities) {
         attributes.facilities = this.facilities.map((f) => f.toJSON());
         attributes.facilityIds = this.facilities.map((f) => f.id);
@@ -35,6 +48,8 @@ module.exports = (sequelize, DataTypes) => {
         'state',
         'stateId',
         'zipCode',
+        'region',
+        'regionId',
         'archivedAt',
         'createdAt',
         'createdById',

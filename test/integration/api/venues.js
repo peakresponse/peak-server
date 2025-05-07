@@ -37,7 +37,7 @@ describe('/api/venues', () => {
     it('returns a list of Venues for the Agency', async () => {
       const response = await testSession.get('/api/venues').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
       const records = response.body;
-      assert.deepStrictEqual(records?.length, 1);
+      assert.deepStrictEqual(records?.Venue.length, 1);
     });
   });
 
@@ -107,6 +107,7 @@ describe('/api/venues', () => {
         createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
         id: 'c99fba71-91bf-4a1a-80f8-89123c324687',
         name: 'Bill Graham Civic Auditorium',
+        regionId: null,
         stateId: '06',
         type: 'Y92.25',
         updatedAt: response.body.updatedAt,

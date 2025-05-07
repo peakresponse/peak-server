@@ -54,6 +54,15 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      region_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: {
+            tableName: 'regions',
+          },
+          key: 'id',
+        },
+      },
       archived_at: {
         type: Sequelize.DATE,
       },

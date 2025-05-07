@@ -1,6 +1,7 @@
 const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
+const { Op } = require('sequelize');
 
 const models = require('../../models');
 
@@ -13,20 +14,32 @@ router.get(
   '/',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    const { page = '1' } = req.query;
-    const { docs, pages, total } = await models.Venue.paginate({
+    const { page = '1', search } = req.query;
+    const options = {
       page,
       where: {
         createdByAgencyId: req.agency.id,
         archivedAt: null,
       },
-      order: [
-        ['type', 'ASC'],
-        ['name', 'ASC'],
-      ],
-    });
+      include: ['city', 'county', 'state'],
+      order: [['name', 'ASC']],
+    };
+    if (search) {
+      options.where.name = {
+        [Op.iLike]: `%${search.trim()}%`,
+      };
+    }
+    const { docs, pages, total } = await models.Venue.paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);
-    res.json(docs.map((d) => d.toJSON()));
+    const payload = {};
+    payload.City = _.uniqBy(docs.map((v) => v.city).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
+    payload.County = _.uniqBy(docs.map((v) => v.county).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
+    payload.State = _.uniqBy(docs.map((v) => v.state).filter(Boolean), (s) => s.id).map((s) => s.toJSON());
+    payload.Venue = docs.map((v) => {
+      const { city, county, state, ...venue } = v.toJSON();
+      return venue;
+    });
+    res.json(payload);
   }),
 );
 

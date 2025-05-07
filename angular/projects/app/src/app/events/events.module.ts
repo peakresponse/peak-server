@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from 'shared';
-import { VenueModule } from '../venues/venues.module';
+import { VenuesModule } from '../venues/venues.module';
 
 import { EventsRoutingModule } from './events-routing.module';
 
@@ -16,7 +16,7 @@ import { EventIncidentsComponent } from './event-incidents.component';
 
 @NgModule({
   declarations: [EditEventComponent, EventFormComponent, ListEventsComponent, NewEventComponent, EventIncidentsComponent],
-  imports: [CommonModule, FormsModule, NgbModule, SharedModule, VenueModule, EventsRoutingModule],
+  imports: [CommonModule, FormsModule, NgbModule, SharedModule, VenuesModule, EventsRoutingModule],
   providers: [],
 })
 export class EventsModule {}

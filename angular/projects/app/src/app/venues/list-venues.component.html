@@ -10,7 +10,7 @@
       <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>
     </li>
     <li class="command-header__dropdown-item">
-      <a class="command-header__dropdown-link" routerLink="/venues">Manage Venues</a>
+      <a class="command-header__dropdown-link" routerLink="/events">Events</a>
     </li>
     <li *ngIf="!agency.isEventsOnly" class="command-header__dropdown-item">
       <a class="command-header__dropdown-link" routerLink="/incidents">All Incidents</a>
@@ -19,42 +19,33 @@
       <a class="command-header__dropdown-link" href="/logout">Log out</a>
     </li>
   </ng-template>
-  <ul class="nav">
-    <li class="nav__item">
-      <a class="nav__link" [class.nav__link--active]="filter == 'current'" routerLink="/events" fragment="current">Current</a>
-    </li>
-    <li class="nav__item">
-      <a class="nav__link" [class.nav__link--active]="filter == 'past'" routerLink="/events" fragment="past">Past</a>
-    </li>
-  </ul>
+  <div></div>
+  <h3 class="command-header__title">Manage Venues</h3>
+  <div></div>
 </shared-command-header>
 <main [class.d-none]="route.firstChild">
   <div class="table-responsive">
     <table class="table">
-      <shared-list type="events" [transform]="transform" [params]="params" [search]="search">
+      <shared-list type="venues" [transform]="transform" [search]="search">
         <ng-template let-record="record">
-          <tr [routerLink]="['/events', record.id]">
+          <tr [routerLink]="['/venues', record.id]">
             <td>
-              <div class="event">
-                <h4 class="event__name">{{ record.name }}</h4>
-                <div class="event__venue">{{ record.venue?.name }}</div>
-                <ng-container *ngIf="parseDate(record.startTime) as datetime">
-                  <div class="event__date">{{ datePart(datetime) }}</div>
-                  <div class="event__time">{{ timePart(datetime) }}</div>
-                </ng-container>
+              <div class="venue">
+                <h4 class="venue__name">{{ record.name }}</h4>
+                <div class="venue__address">{{ record.address }}</div>
               </div>
             </td>
           </tr>
         </ng-template>
         <ng-template #empty>
           <tr>
-            <th class="text-center">No events yet.</th>
+            <th class="text-center">No venues yet.</th>
           </tr>
         </ng-template>
       </shared-list>
     </table>
   </div>
   <shared-command-footer>
-    <a routerLink="new" tabindex="0" class="btn btn--primary">+ New Event</a>
+    <a routerLink="new" tabindex="0" class="btn btn--primary">+ New Venue</a>
   </shared-command-footer>
 </main>

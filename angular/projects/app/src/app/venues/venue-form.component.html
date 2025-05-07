@@ -24,3 +24,13 @@
 <div class="mb-3">
   <shared-text-field id="zipCode" label="Zip Code" [source]="record" [target]="record" [error]="error"></shared-text-field>
 </div>
+<div class="mb-3">
+  <shared-object-field
+    id="regionId"
+    label="Region"
+    [source]="record"
+    [target]="record"
+    [error]="error"
+    objectNameProperty="name"
+    objectApiPath="regions"></shared-object-field>
+</div>
