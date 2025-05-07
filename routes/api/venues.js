@@ -67,6 +67,7 @@ router.get(
         archivedAt: null,
       },
       include: ['city', 'county', 'state', 'facilities', 'region'],
+      order: [['facilities', 'name', 'ASC']],
     });
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).end();
@@ -85,6 +86,7 @@ router.patch(
         archivedAt: null,
       },
       include: ['city', 'county', 'state', 'facilities', 'region'],
+      order: [['facilities', 'name', 'ASC']],
     });
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).end();
