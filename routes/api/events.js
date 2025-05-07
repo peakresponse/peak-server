@@ -91,7 +91,7 @@ router.get(
         id: req.params.id,
         archivedAt: null,
       },
-      include: [{ model: models.Venue, as: 'venue', include: ['city', 'state', 'county', 'facilities'] }],
+      include: [{ model: models.Venue, as: 'venue', include: ['city', 'state', 'county', 'facilities', 'region'] }],
       order: [['venue', 'facilities', 'name', 'ASC']],
     });
     if (!record) {

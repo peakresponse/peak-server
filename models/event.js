@@ -38,11 +38,13 @@ module.exports = (sequelize, DataTypes) => {
     createPayload() {
       const payload = {};
       let { venue } = this;
+      payload.Region = venue?.region?.toJSON() ?? null;
       payload.Facility = _.uniqBy(venue?.facilities, (f) => f.id).map((f) => f.toJSON());
       payload.City = venue?.city?.toJSON() ?? null;
       payload.County = venue?.county?.toJSON() ?? null;
       payload.State = venue?.state?.toJSON() ?? null;
       venue = venue?.toJSON();
+      delete venue.region;
       delete venue.facilities;
       delete venue.city;
       delete venue.county;

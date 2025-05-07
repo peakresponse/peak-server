@@ -148,6 +148,7 @@ describe('/api/events', () => {
         createdById: 'ffc7a312-50ba-475f-b10f-76ce793dc62a',
         id: 'c99fba71-91bf-4a1a-80f8-89123c324687',
         name: 'Bill Graham Civic Auditorium',
+        regionId: null,
         stateId: '06',
         type: 'Y92.25',
         updatedAt: response.body.Venue.updatedAt,
