@@ -68,6 +68,7 @@ export class EditEventComponent implements OnInit {
   }
 
   onUpdate(record: any) {
+    this.form?.refresh();
     this.isEditing = false;
   }
 

@@ -5,7 +5,9 @@ import { AgencyService, UserService } from 'shared';
 
 import { UserGuard } from '../user.guard';
 
+import { EditVenueComponent } from './edit-venue.component';
 import { ListVenuesComponent } from './list-venues.component';
+import { NewVenueComponent } from './new-venue.component';
 
 const routes: Routes = [
   {
@@ -17,18 +19,14 @@ const routes: Routes = [
       user: UserService,
     },
     children: [
-      // {
-      //   path: 'new',
-      //   component: NewEventComponent,
-      // },
-      // {
-      //   path: ':id/details',
-      //   component: EditEventComponent,
-      // },
-      // {
-      //   path: ':id',
-      //   component: EventIncidentsComponent,
-      // },
+      {
+        path: 'new',
+        component: NewVenueComponent,
+      },
+      {
+        path: ':id',
+        component: EditVenueComponent,
+      },
     ],
   },
 ];

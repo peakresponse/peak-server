@@ -48,7 +48,7 @@ router.post(
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
     const record = await models.Venue.create({
-      ..._.pick(req.body, ['name', 'type', 'address1', 'address2', 'cityId', 'countyId', 'stateId', 'zipCode']),
+      ..._.pick(req.body, ['name', 'type', 'address1', 'address2', 'cityId', 'countyId', 'stateId', 'zipCode', 'regionId']),
       createdById: req.user.id,
       createdByAgencyId: req.agency.id,
       updatedById: req.user.id,
@@ -66,6 +66,7 @@ router.get(
         id: req.params.id,
         archivedAt: null,
       },
+      include: ['city', 'county', 'state', 'facilities', 'region'],
     });
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).end();
@@ -83,12 +84,13 @@ router.patch(
         id: req.params.id,
         archivedAt: null,
       },
+      include: ['city', 'county', 'state', 'facilities', 'region'],
     });
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).end();
     }
     await record.update({
-      ..._.pick(req.body, ['name', 'type', 'address1', 'address2', 'cityId', 'countyId', 'stateId', 'zipCode']),
+      ..._.pick(req.body, ['name', 'type', 'address1', 'address2', 'cityId', 'countyId', 'stateId', 'zipCode', 'regionId']),
       updatedById: req.user.id,
     });
     return res.json(record.toJSON());

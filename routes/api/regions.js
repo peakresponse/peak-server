@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAdmin,
+  interceptors.requireAgency(),
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
