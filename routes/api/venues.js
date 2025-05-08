@@ -127,15 +127,31 @@ router.delete(
   '/:id',
   interceptors.requireAgency(),
   helpers.async(async (req, res) => {
-    const record = await models.Venue.findByPk(req.params.id);
-    if (!record) {
-      return res.status(StatusCodes.NOT_FOUND).end();
+    const transaction = await models.sequelize.transaction();
+    try {
+      const record = await models.Venue.findByPk(req.params.id, { transaction });
+      if (!record) {
+        await transaction.rollback();
+        return res.status(StatusCodes.NOT_FOUND).end();
+      }
+      await record.update(
+        {
+          archivedAt: new Date(),
+          updatedById: req.user.id,
+        },
+        { transaction },
+      );
+      await transaction.commit();
+      // update Routed in background
+      routed
+        .upsertVenue(record.id)
+        .then()
+        .catch((err) => rollbar.error(err, { venueId: record.id }));
+      return res.json(record.toJSON());
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
     }
-    await record.update({
-      archivedAt: new Date(),
-      updatedById: req.user.id,
-    });
-    return res.json(record.toJSON());
   }),
 );
 
