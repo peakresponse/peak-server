@@ -26,7 +26,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAdmin,
+  interceptors.requireAgency(),
   helpers.async(async (req, res) => {
     const { id } = req.params;
     const record = await models.Region.findByPk(id, {

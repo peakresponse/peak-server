@@ -6,6 +6,8 @@ const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
 
+const { mockRouted } = require('../../mocks/routed');
+
 describe('/api/venues', () => {
   let testSession;
 
@@ -43,6 +45,7 @@ describe('/api/venues', () => {
 
   describe('POST /', () => {
     it('creates a new Venue for the Agency', async () => {
+      mockRouted();
       const response = await testSession
         .post('/api/venues')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
@@ -69,6 +72,7 @@ describe('/api/venues', () => {
 
   describe('PATCH /:id', () => {
     it('updates an existing Venue record', async () => {
+      mockRouted();
       await testSession
         .patch('/api/venues/c99fba71-91bf-4a1a-80f8-89123c324687')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
@@ -111,8 +115,17 @@ describe('/api/venues', () => {
         facilityIds: [],
         id: 'c99fba71-91bf-4a1a-80f8-89123c324687',
         name: 'Bill Graham Civic Auditorium',
-        region: null,
-        regionId: null,
+        region: {
+          createdAt: '2020-10-06T01:44:44.012Z',
+          createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+          id: 'c781fe1e-a337-4cc3-9351-5aed61fa3c0d',
+          name: 'San Francisco County EMS Agency',
+          routedClientId: 'testid',
+          routedUrl: 'https://sf.routedapp.net',
+          updatedAt: response.body.region.updatedAt,
+          updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
+        },
+        regionId: 'c781fe1e-a337-4cc3-9351-5aed61fa3c0d',
         state: response.body.state,
         stateId: '06',
         type: 'Y92.25',

@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-require('../../helpers');
+const helpers = require('../../helpers');
 
 const routed = require('../../../lib/routed');
 const { mockRouted } = require('../../mocks/routed');
@@ -11,7 +11,7 @@ describe('lib', () => {
       it('returns an access token for valid client credentials', async () => {
         mockRouted();
         const credentials = await routed.authenticate({
-          routedUrl: 'https://localhost:5000',
+          routedUrl: 'https://sf.routedapp.net',
           routedClientId: 'Asxsppp1Xr5MKo8a6Dd8',
           routedClientSecret: 'V3NHL7VVDQYuxog93sBcXOAJuQ0BY02Cp92MDqEN',
           routedCredentials: null,
@@ -29,7 +29,7 @@ describe('lib', () => {
       it('creates or updates a MCI in Routed', async () => {
         mockRouted();
         const data = await routed.upsertMCI(
-          'https://localhost:5000',
+          'https://sf.routedapp.net',
           {
             access_token: 'a7e1c1715f4f6f0204cb4284cc0cbb1c30ffd9f873d1fc87297c18603f50cfe2',
           },
@@ -40,6 +40,29 @@ describe('lib', () => {
           },
         );
         assert.deepStrictEqual(data.id, 'a205e679-6312-4fb2-a080-65958d129c78');
+      });
+    });
+
+    describe('upsertVenue', () => {
+      it('creates or updates a venue in Routed', async () => {
+        await helpers.loadFixtures([
+          'users',
+          'states',
+          'counties',
+          'cities',
+          'psaps',
+          'dispatchers',
+          'nemsisStateDataSets',
+          'nemsisSchematrons',
+          'regions',
+          'agencies',
+          'versions',
+          'employments',
+          'venues',
+        ]);
+        mockRouted();
+        const data = await routed.upsertVenue('c99fba71-91bf-4a1a-80f8-89123c324687');
+        assert.deepStrictEqual(data.id, 'c99fba71-91bf-4a1a-80f8-89123c324687');
       });
     });
   });

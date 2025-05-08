@@ -4,7 +4,7 @@ function mockRouted() {
   const agent = new MockAgent();
   agent.disableNetConnect();
 
-  const client = agent.get('https://localhost:5000');
+  const client = agent.get('https://sf.routedapp.net');
   client
     .intercept({
       path: '/oauth/token',
@@ -39,7 +39,19 @@ function mockRouted() {
       UpdatedById: '9770d622-fa21-47be-bf00-f4b3a6d4fc46',
       updatedAt: '2024-04-12T21:33:28.219Z',
     });
-
+  client
+    .intercept({
+      path: '/api/organizations/c99fba71-91bf-4a1a-80f8-89123c324687',
+      method: 'PUT',
+    })
+    .reply(201, {
+      id: 'c99fba71-91bf-4a1a-80f8-89123c324687',
+      name: 'Bill Graham Civic Auditorium',
+      type: 'VENUE',
+      state: 'CA',
+      isMfaEnabled: false,
+      isActive: true,
+    });
   setGlobalDispatcher(agent);
 }
 
