@@ -25,10 +25,10 @@ describe('lib', () => {
       });
     });
 
-    describe('submit', () => {
+    describe('upsertMCI', () => {
       it('creates or updates a MCI in Routed', async () => {
         mockRouted();
-        const data = await routed.submit(
+        const data = await routed.upsertMCI(
           'https://localhost:5000',
           {
             access_token: 'a7e1c1715f4f6f0204cb4284cc0cbb1c30ffd9f873d1fc87297c18603f50cfe2',
