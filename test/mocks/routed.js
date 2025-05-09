@@ -52,6 +52,15 @@ function mockRouted() {
       isMfaEnabled: false,
       isActive: true,
     });
+  client
+    .intercept({
+      path: '/api/hospitals/79ac2493-ab6a-4fa7-a04a-bde4b7a9f341',
+      method: 'PUT',
+    })
+    .reply(201, {
+      id: '79ac2493-ab6a-4fa7-a04a-bde4b7a9f341',
+      name: 'First Aid 1',
+    });
   setGlobalDispatcher(agent);
 }
 

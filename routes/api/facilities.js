@@ -4,6 +4,8 @@ const _ = require('lodash');
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
+const rollbar = require('../../lib/rollbar');
+const routed = require('../../lib/routed');
 const models = require('../../models');
 
 const { Op } = models.Sequelize;
@@ -89,6 +91,12 @@ router.post(
       createdById: req.user.id,
       createdByAgencyId: req.agency?.id,
     });
+    routed
+      .upsertFacility(record.id)
+      .then()
+      .catch((err) => {
+        rollbar.error(err, { facilityId: record.id });
+      });
     res.status(StatusCodes.CREATED).json(record.toJSON());
   }),
 );
@@ -169,6 +177,12 @@ router.patch(
       }
     });
     if (record) {
+      routed
+        .upsertFacility(record.id)
+        .then()
+        .catch((err) => {
+          rollbar.error(err, { facilityId: record.id });
+        });
       res.json(record.toJSON());
     } else {
       res.status(StatusCodes.NOT_FOUND).end();

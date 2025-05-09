@@ -5,6 +5,7 @@ const session = require('supertest-session');
 const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
+const { mockRouted } = require('../../mocks/routed');
 
 describe('/api/facilities', () => {
   let testSession;
@@ -94,6 +95,7 @@ describe('/api/facilities', () => {
 
   describe('POST /', () => {
     it('allows an Agency user to create a new Facility record for a Venue', async () => {
+      mockRouted();
       await testSession
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
@@ -116,6 +118,7 @@ describe('/api/facilities', () => {
     });
 
     it('allows an Admin to create a new canonical Facility record', async () => {
+      mockRouted();
       const response = await testSession
         .post('/api/facilities')
         .set('Accept', 'application/json')
@@ -175,6 +178,7 @@ describe('/api/facilities', () => {
 
   describe('PATCH /:id', () => {
     it('allows an Agency user to update a Facility record for a Venue', async () => {
+      mockRouted();
       await testSession
         .post('/login')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
@@ -195,6 +199,7 @@ describe('/api/facilities', () => {
     });
 
     it('allows an Admin to update a canonical Facility record', async () => {
+      mockRouted();
       await testSession
         .patch('/api/facilities/23a7e241-4486-40fb-babb-aaa4c060c659')
         .set('Accept', 'application/json')

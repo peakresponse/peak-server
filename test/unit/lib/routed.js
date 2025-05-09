@@ -25,6 +25,30 @@ describe('lib', () => {
       });
     });
 
+    describe('upsertFacility', () => {
+      it('creates or updates a facility in Routed', async () => {
+        await helpers.loadFixtures([
+          'users',
+          'states',
+          'counties',
+          'cities',
+          'psaps',
+          'dispatchers',
+          'nemsisStateDataSets',
+          'nemsisSchematrons',
+          'regions',
+          'agencies',
+          'versions',
+          'employments',
+          'venues',
+          'facilities',
+        ]);
+        mockRouted();
+        const data = await routed.upsertFacility('79ac2493-ab6a-4fa7-a04a-bde4b7a9f341');
+        assert.deepStrictEqual(data.id, '79ac2493-ab6a-4fa7-a04a-bde4b7a9f341');
+      });
+    });
+
     describe('upsertMCI', () => {
       it('creates or updates a MCI in Routed', async () => {
         mockRouted();
