@@ -58,6 +58,7 @@ router.post(
     // update Routed in background
     routed
       .upsertVenue(record.id)
+      .then(() => routed.assignAgencyToVenue(record.id, req.agency.id))
       .then()
       .catch((err) => rollbar.error(err, { venueId: record.id }));
     return res.status(StatusCodes.CREATED).json(record.toJSON());
@@ -113,6 +114,7 @@ router.patch(
       // update Routed in background
       routed
         .upsertVenue(record.id)
+        .then(() => routed.assignAgencyToVenue(record.id, req.agency.id))
         .then()
         .catch((err) => rollbar.error(err, { venueId: record.id }));
       return res.json(record.toJSON());
