@@ -55,14 +55,16 @@ router.get(
     payload.State = _.uniqBy(docs.map((i) => i.venue?.state).filter(Boolean), (s) => s.id).map((s) => s.toJSON());
     payload.County = _.uniqBy(docs.map((i) => i.venue?.county).filter(Boolean), (c) => c.id).map((c) => c.toJSON());
     payload.Venue = _.uniqBy(docs.map((i) => i.venue).filter(Boolean), (v) => v.id).map((v) => {
-      delete v.city;
-      delete v.state;
-      delete v.county;
-      return v.toJSON();
+      const data = v.toJSON();
+      delete data.city;
+      delete data.state;
+      delete data.county;
+      return data;
     });
     payload.Event = docs.map((e) => {
-      delete e.venue;
-      return e.toJSON();
+      const data = e.toJSON();
+      delete data.venue;
+      return data;
     });
     res.json(payload);
   }),
