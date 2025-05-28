@@ -1,23 +1,29 @@
 <%- contentFor('title') %><%= __('oauth.authorize.title') %>
+<%- contentFor('head') %>
+<style>
+html, body {
+  background-color: var(--pr-base-100)
+}
+</style>
 <%- contentFor('bodyClass') %>unauthenticated
 <%- contentFor('body') %>
 <div class="container">
-  <div class="row justify-content-center" role="main">
-    <div class="col">
-      <div class="logo my-5 pt-4">
-        <img class="img-fluid" src="/images/logo-dark.png" alt="<%= __('peakresponse.logo') %>">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-xl-4">
+      <div class="mt-5 mb-4 text-center">
+        <div class="d-block mx-auto w-75">
+          <img class="img-fluid" src="/images/logo-dark.png" alt="<%= __('peakresponse.logo') %>">
+        </div>
       </div>
-      <p><b><%= client.name %></b> is requesting access to your account. Proceed?</p>
       <form method="post" action="/oauth/authorize">
         <input type="hidden" name="client_id" value="<%= client_id %>" />
         <input type="hidden" name="response_type" value="<%= response_type %>" />
         <input type="hidden" name="redirect_uri" value="<%= redirect_uri %>" />
-        <div class="row justify-content-center">
-          <div class="col-10">
-            <div class="form-group">
-              <button class="btn btn-primary btn-block" type="submit"><%= __('oauth.authorize.submit') %></button>
-            </div>
-          </div>
+        <div class="d-flex flex-column align-items-center">
+          <p class="text-center"><b><%= client.name %></b> is requesting access to your account.</p>
+          <button class="btn btn--primary w-50 mb-3" type="submit"><%= __('oauth.authorize.submit') %></button>
+          <p class="text-center">or</p>
+          <p class="text-center"><a href="<%= cancelUri %>">Cancel</a></p>
         </div>
       </form>
     </div>
