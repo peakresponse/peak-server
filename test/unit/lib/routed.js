@@ -25,6 +25,31 @@ describe('lib', () => {
       });
     });
 
+    describe('assignAgencyToVenue', () => {
+      it('assigns an EMS Agency to a VENUE Organization in Routed for Events', async () => {
+        await helpers.loadFixtures([
+          'users',
+          'states',
+          'counties',
+          'cities',
+          'psaps',
+          'dispatchers',
+          'nemsisStateDataSets',
+          'nemsisSchematrons',
+          'regions',
+          'agencies',
+          'versions',
+          'employments',
+          'venues',
+          'facilities',
+        ]);
+        mockRouted();
+        const data = await routed.assignAgencyToVenue('c99fba71-91bf-4a1a-80f8-89123c324687', '9eeb6591-12f8-4036-8af8-6b235153d444');
+        assert.deepStrictEqual(data.FromOrganizationId, '9eeb6591-12f8-4036-8af8-6b235153d444');
+        assert.deepStrictEqual(data.ToOrganizationId, 'c99fba71-91bf-4a1a-80f8-89123c324687');
+      });
+    });
+
     describe('upsertFacility', () => {
       it('creates or updates a facility in Routed', async () => {
         await helpers.loadFixtures([

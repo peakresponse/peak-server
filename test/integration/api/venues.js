@@ -56,6 +56,7 @@ describe('/api/venues', () => {
           cityId: '2411786',
           stateId: '06',
           zipCode: '94158',
+          regionId: 'c781fe1e-a337-4cc3-9351-5aed61fa3c0d',
         })
         .expect(StatusCodes.CREATED);
 
@@ -67,6 +68,7 @@ describe('/api/venues', () => {
       assert.deepStrictEqual(record.cityId, '2411786');
       assert.deepStrictEqual(record.stateId, '06');
       assert.deepStrictEqual(record.zipCode, '94158');
+      assert.deepStrictEqual(record.regionId, 'c781fe1e-a337-4cc3-9351-5aed61fa3c0d');
     });
   });
 
@@ -138,6 +140,7 @@ describe('/api/venues', () => {
 
   describe('DELETE /:id', () => {
     it('marks as archived the specified Venue', async () => {
+      mockRouted();
       await testSession
         .delete('/api/venues/c99fba71-91bf-4a1a-80f8-89123c324687')
         .set('Host', `bmacc.${process.env.BASE_HOST}`)

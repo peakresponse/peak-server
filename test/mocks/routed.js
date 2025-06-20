@@ -14,7 +14,8 @@ function mockRouted() {
       access_token: 'a7e1c1715f4f6f0204cb4284cc0cbb1c30ffd9f873d1fc87297c18603f50cfe2',
       expires_in: 3599,
       token_type: 'Bearer',
-    });
+    })
+    .persist();
   client
     .intercept({
       path: '/api/mcis',
@@ -41,7 +42,7 @@ function mockRouted() {
     });
   client
     .intercept({
-      path: '/api/organizations/c99fba71-91bf-4a1a-80f8-89123c324687',
+      path: /api\/organizations\/.*/,
       method: 'PUT',
     })
     .reply(201, {
@@ -54,7 +55,19 @@ function mockRouted() {
     });
   client
     .intercept({
-      path: '/api/hospitals/79ac2493-ab6a-4fa7-a04a-bde4b7a9f341',
+      path: /api\/organizations\/[^/]*\/assign/,
+      method: 'POST',
+    })
+    .reply(201, {
+      id: '780d35d6-d65e-492d-aef9-c67de34f8e07',
+      FromOrganizationId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+      ToOrganizationId: 'c99fba71-91bf-4a1a-80f8-89123c324687',
+      deletedAt: null,
+      DeletedById: null,
+    });
+  client
+    .intercept({
+      path: /api\/hospitals\/.*/,
       method: 'PUT',
     })
     .reply(201, {

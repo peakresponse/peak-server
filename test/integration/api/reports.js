@@ -7,6 +7,7 @@ const app = require('../../../app');
 const models = require('../../../models');
 
 const { mockValidatorEMSRequest } = require('../../mocks/nemsis');
+const { mockRouted } = require('../../mocks/routed');
 
 describe('/api/reports', () => {
   let testSession;
@@ -50,6 +51,7 @@ describe('/api/reports', () => {
       'exports',
       'exportTriggers',
     ]);
+    mockRouted();
     mockValidatorEMSRequest();
     testSession = session(app);
   });
