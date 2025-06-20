@@ -14,6 +14,7 @@ const bodyParser = require('body-parser');
 
 const helpers = require('./routes/helpers');
 const routes = require('./routes');
+const limiter = require('./lib/limiter');
 const { NemsisServer } = require('./lib/nemsis/webService');
 const rollbar = require('./lib/rollbar');
 
@@ -55,6 +56,7 @@ app.use(app.sessionParser);
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(limiter);
 
 i18n.configure({
   locales: ['en'],
