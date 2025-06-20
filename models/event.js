@@ -1,0 +1,78 @@
+const _ = require('lodash');
+const sequelizePaginate = require('sequelize-paginate');
+
+const { Base } = require('./base');
+
+module.exports = (sequelize, DataTypes) => {
+  class Event extends Base {
+    static associate(models) {
+      Event.belongsTo(models.Venue, { as: 'venue', foreignKey: 'venueId' });
+      Event.belongsToMany(models.Agency, { as: 'agencies', through: 'events_agencies', timestamps: false });
+      Event.belongsTo(models.User, { as: 'updatedBy' });
+      Event.belongsTo(models.User, { as: 'createdBy' });
+      Event.belongsTo(models.Agency, { as: 'createdByAgency' });
+    }
+
+    toJSON() {
+      const attributes = { ...this.get() };
+      if (this.venue) {
+        attributes.venue = this.venue.toJSON();
+      }
+      return _.pick(attributes, [
+        'id',
+        'name',
+        'description',
+        'startTime',
+        'endTime',
+        'venue',
+        'venueId',
+        'archivedAt',
+        'createdAt',
+        'createdById',
+        'updatedAt',
+        'updatedById',
+        'createdByAgencyId',
+      ]);
+    }
+
+    createPayload() {
+      const payload = {};
+      let { venue } = this;
+      payload.Region = venue?.region?.toJSON() ?? null;
+      payload.Facility = _.uniqBy(venue?.facilities, (f) => f.id).map((f) => f.toJSON());
+      payload.City = venue?.city?.toJSON() ?? null;
+      payload.County = venue?.county?.toJSON() ?? null;
+      payload.State = venue?.state?.toJSON() ?? null;
+      venue = venue?.toJSON();
+      delete venue.region;
+      delete venue.facilities;
+      delete venue.city;
+      delete venue.county;
+      delete venue.state;
+      payload.Venue = venue ?? null;
+      payload.Event = this.toJSON();
+      delete payload.Event.venue;
+      return payload;
+    }
+  }
+
+  Event.init(
+    {
+      name: DataTypes.TEXT,
+      description: DataTypes.TEXT,
+      startTime: DataTypes.DATE,
+      endTime: DataTypes.DATE,
+      archivedAt: DataTypes.DATE,
+    },
+    {
+      sequelize,
+      modelName: 'Event',
+      tableName: 'events',
+      underscored: true,
+    },
+  );
+
+  sequelizePaginate.paginate(Event);
+
+  return Event;
+};

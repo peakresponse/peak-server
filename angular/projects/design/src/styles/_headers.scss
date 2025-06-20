@@ -1,7 +1,9 @@
 .command-footer {
+  background-color: white;
+  box-shadow: $shadow-40-40;
   bottom: 0;
   left: 0;
-  padding-bottom: 1.5rem;
+  padding: 1.5rem 0;
   position: fixed;
   right: 0;
 }
@@ -14,11 +16,7 @@
 .command-footer__content {
   display: flex;
   flex-direction: row-reverse;
-  margin: 0 -$grid-gutter-width / 2;
-
-  .btn {
-    margin: 0 $grid-gutter-width / 2;
-  }
+  gap: $grid-gutter-width;
 }
 
 .command-footer + .portrait-container,
@@ -28,17 +26,21 @@ shared-command-footer + .portrait-container {
 
 $min-command-footer-portrait-width: $portrait-width + 2 * (13.75rem + 2 * $grid-gutter-width);
 @media (min-width: $min-command-footer-portrait-width) {
+  .command-footer {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
   .command-footer__content {
     bottom: 0;
     flex-direction: column;
     left: 100%;
-    margin: 0 grid-gutter-width;
+    padding: 0 $grid-gutter-width;
     position: absolute;
-    width: 13.75rem;
+    width: 15.25rem;
 
     .btn {
       align-self: stretch;
-      margin: $grid-gutter-width / 2 0;
     }
   }
 }
@@ -78,6 +80,14 @@ shared-command-header ~ main {
   .nav {
     margin: 1rem auto 0;
     width: auto;
+  }
+
+  & > *:nth-child(2) {
+    text-align: center;
+  }
+
+  & > *:last-child {
+    text-align: right;
   }
 }
 
@@ -143,10 +153,28 @@ shared-command-header ~ main {
   margin: 0;
 }
 
+.command-header__title {
+  @include h3-semibold;
+  color: $base-500;
+  cursor: default;
+  flex: 1 0 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
 .command-header__plain {
   @include h3-semibold;
   color: $base-500;
   cursor: pointer;
+  flex: 1 0 0;
+  text-decoration: none;
+}
+
+.command-header__primary {
+  @include h3-semibold;
+  color: $brand-primary-500;
+  cursor: pointer;
+  flex: 1 0 0;
   text-decoration: none;
 }
 

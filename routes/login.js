@@ -1,6 +1,7 @@
 const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 
+const limiter = require('../lib/limiter');
 const models = require('../models');
 
 const interceptors = require('./interceptors');
@@ -68,6 +69,8 @@ router.post('/', (req, res, next) => {
           res.status(StatusCodes.OK).json(data);
           return;
         }
+        /// reset rate limit for this IP
+        limiter.resetKey(req.ip);
         /// handle web login response
         let redirectURI = '/';
         if (req.body.redirectURI && req.body.redirectURI !== '') {

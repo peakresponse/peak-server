@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       grants: {
         type: DataTypes.VIRTUAL,
         get() {
-          return ['authorization_code'];
+          return ['authorization_code', 'refresh_token'];
         },
       },
     },

@@ -30,7 +30,7 @@ export class NemsisValueList {
 }
 
 export class Base {
-  protected data: any;
+  data: any;
   protected dependencies: any;
   protected cache: any;
   protected models: any;
@@ -48,6 +48,9 @@ export class Base {
           return target.data[prop];
         } else if (`${propName}Id` in target.data) {
           const id = target.data[`${propName}Id`];
+          if (!id) {
+            return null;
+          }
           const type = propName[0].toUpperCase() + propName.substring(1);
           if (models[type]) {
             if (!target.cache[type]?.[id]) {

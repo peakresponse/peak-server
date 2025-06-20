@@ -1,0 +1,51 @@
+<router-outlet></router-outlet>
+<shared-command-header
+  [class.d-none]="route.firstChild"
+  [user]="user.attributes$ | async"
+  [vehicle]="user.vehicle$ | async"
+  [showSearch]="true"
+  (searchValueChange)="search = $event">
+  <ng-template>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>
+    </li>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/events">Events</a>
+    </li>
+    <li *ngIf="!agency.isEventsOnly" class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/incidents">All Incidents</a>
+    </li>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" href="/logout">Log out</a>
+    </li>
+  </ng-template>
+  <div></div>
+  <h3 class="command-header__title">Manage Venues</h3>
+  <div></div>
+</shared-command-header>
+<main [class.d-none]="route.firstChild">
+  <div class="table-responsive">
+    <table class="table">
+      <shared-list type="venues" [transform]="transform" [search]="search">
+        <ng-template let-record="record">
+          <tr [routerLink]="['/venues', record.id]">
+            <td>
+              <div class="venue">
+                <h4 class="venue__name">{{ record.name }}</h4>
+                <div class="venue__address">{{ record.address }}</div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #empty>
+          <tr>
+            <th class="text-center">No venues yet.</th>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+  <shared-command-footer>
+    <a routerLink="new" tabindex="0" class="btn btn--primary">+ New Venue</a>
+  </shared-command-footer>
+</main>

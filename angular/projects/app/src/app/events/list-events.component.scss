@@ -1,0 +1,45 @@
+@import '../../../../design/src/styles/common';
+
+.nav__link {
+  min-width: 120px;
+}
+
+.event {
+  display: flex;
+  margin: 0 auto;
+  max-width: map-get($container-max-widths, 'lg');
+}
+
+.event__name {
+  color: $brand-primary-600;
+  width: 35%;
+}
+
+.event__venue {
+  width: 35%;
+}
+
+.event__date {
+  width: 20%;
+}
+
+.event__time {
+  width: 10%;
+}
+
+shared-command-header ::ng-deep {
+  .command-header__container {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: map-get($container-max-widths, 'lg')) {
+  .nav {
+    order: 6 !important;
+    width: 100%;
+  }
+
+  :host ::ng-deep shared-command-header ~ main {
+    margin-top: 9.125rem !important;
+  }
+}

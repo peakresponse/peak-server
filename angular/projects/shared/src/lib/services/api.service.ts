@@ -386,6 +386,21 @@ export class ApiService {
     },
   };
 
+  events = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/events', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/events`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/events/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/events/${id}`, data);
+    },
+  };
+
   exports = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get('/api/exports', params);
@@ -817,6 +832,21 @@ export class ApiService {
   vehicles = {
     index: (params?: HttpParams): Observable<any> => {
       return this.get(`/api/vehicles`, params);
+    },
+  };
+
+  venues = {
+    index: (params?: HttpParams): Observable<any> => {
+      return this.get('/api/venues', params);
+    },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/venues`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/venues/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/venues/${id}`, data);
     },
   };
 

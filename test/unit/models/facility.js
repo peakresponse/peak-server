@@ -8,12 +8,25 @@ describe('models', () => {
   describe('Facility', () => {
     describe('findNear()', () => {
       beforeEach(async () => {
-        await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'facilities']);
+        await helpers.loadFixtures([
+          'cities',
+          'counties',
+          'states',
+          'users',
+          'psaps',
+          'nemsisStateDataSets',
+          'nemsisSchematrons',
+          'regions',
+          'agencies',
+          'venues',
+          'facilities',
+          'versions',
+        ]);
       });
 
       it('should return a paginated list of facilities near the specified point', async () => {
         const { docs, total } = await models.Facility.findNear('37.7866029', '-122.4560444');
-        assert.deepStrictEqual(total, 127);
+        assert.deepStrictEqual(total, 128);
         assert.deepStrictEqual(docs[0].name, 'CPMC - 3801 Sacramento Street'); /// this is the exact match to the coordinates above
       });
 

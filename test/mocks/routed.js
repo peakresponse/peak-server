@@ -4,7 +4,7 @@ function mockRouted() {
   const agent = new MockAgent();
   agent.disableNetConnect();
 
-  const client = agent.get('https://localhost:5000');
+  const client = agent.get('https://sf.routedapp.net');
   client
     .intercept({
       path: '/oauth/token',
@@ -14,7 +14,8 @@ function mockRouted() {
       access_token: 'a7e1c1715f4f6f0204cb4284cc0cbb1c30ffd9f873d1fc87297c18603f50cfe2',
       expires_in: 3599,
       token_type: 'Bearer',
-    });
+    })
+    .persist();
   client
     .intercept({
       path: '/api/mcis',
@@ -39,7 +40,40 @@ function mockRouted() {
       UpdatedById: '9770d622-fa21-47be-bf00-f4b3a6d4fc46',
       updatedAt: '2024-04-12T21:33:28.219Z',
     });
-
+  client
+    .intercept({
+      path: /api\/organizations\/.*/,
+      method: 'PUT',
+    })
+    .reply(201, {
+      id: 'c99fba71-91bf-4a1a-80f8-89123c324687',
+      name: 'Bill Graham Civic Auditorium',
+      type: 'VENUE',
+      state: 'CA',
+      isMfaEnabled: false,
+      isActive: true,
+    });
+  client
+    .intercept({
+      path: /api\/organizations\/[^/]*\/assign/,
+      method: 'POST',
+    })
+    .reply(201, {
+      id: '780d35d6-d65e-492d-aef9-c67de34f8e07',
+      FromOrganizationId: '9eeb6591-12f8-4036-8af8-6b235153d444',
+      ToOrganizationId: 'c99fba71-91bf-4a1a-80f8-89123c324687',
+      deletedAt: null,
+      DeletedById: null,
+    });
+  client
+    .intercept({
+      path: /api\/hospitals\/.*/,
+      method: 'PUT',
+    })
+    .reply(201, {
+      id: '79ac2493-ab6a-4fa7-a04a-bde4b7a9f341',
+      name: 'First Aid 1',
+    });
   setGlobalDispatcher(agent);
 }
 

@@ -37,6 +37,7 @@ describe('wss', () => {
         'regions',
         'agencies',
         'versions',
+        'venues',
         'facilities',
         'contacts',
         'employments',

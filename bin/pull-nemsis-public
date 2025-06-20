@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
+# REPO_URL="https://git.nemsis.org/scm/nep/nemsis_public.git"
+REPO_URL="https://github.com/peakresponse/nemsis_public.git"
+
 # check if master NEMSIS public repository history has been set up
 if [ ! -d "nemsis/repositories/nemsis_public/master" ]; then
   # clone without any tree or file data, without initial checkout
-  git clone --depth=1 --filter=blob:none --filter=tree:0 --no-checkout https://git.nemsis.org/scm/nep/nemsis_public.git nemsis/repositories/nemsis_public/master
+  git clone --depth=1 --filter=tree:0 --no-checkout $REPO_URL nemsis/repositories/nemsis_public/master
 fi
 
 # clone specific version if specified
@@ -12,7 +15,7 @@ TAG=$1
 if [ -n "$TAG" ]; then
   if [ ! -d "nemsis/repositories/nemsis_public/$TAG" ]; then
     # clone without any tree or file data, without initial checkout
-    git clone --depth=1 --branch=$TAG --sparse --no-checkout https://git.nemsis.org/scm/nep/nemsis_public.git nemsis/repositories/nemsis_public/$TAG
+    git clone --depth=1 --branch=$TAG --sparse --no-checkout $REPO_URL nemsis/repositories/nemsis_public/$TAG
     cd nemsis/repositories/nemsis_public/$TAG
     git sparse-checkout set XSDs/NEMSIS_XSDs WSDL Schematron/rules Translation
     git checkout

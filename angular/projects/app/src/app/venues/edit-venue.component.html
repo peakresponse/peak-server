@@ -1,0 +1,79 @@
+<router-outlet></router-outlet>
+<shared-command-header [class.d-none]="route.firstChild">
+  <a *ngIf="!isEditing" class="command-header__plain" (click)="onCancel()">Done</a>
+  <a *ngIf="isEditing" class="command-header__plain" (click)="isEditing = false">Cancel</a>
+  <h3 class="command-header__title">Venue Details</h3>
+  <a *ngIf="!isEditing" class="command-header__primary" (click)="isEditing = true">Edit</a>
+  <span *ngIf="isEditing" class="command-header__primary"></span>
+</shared-command-header>
+<main [class.d-none]="route.firstChild">
+  <shared-form
+    *ngIf="id"
+    [id]="id"
+    #form
+    class="form--responsive"
+    (update)="onUpdate($event)"
+    type="venues"
+    [hideButtons]="!isEditing"
+    (update)="isEditing = false">
+    <ng-template let-record="record" let-error="error">
+      <app-venue-form *ngIf="isEditing" [record]="record" [error]="error"></app-venue-form>
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>Name</label>
+          <h3>{{ record.name }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Address</label>
+          <h3>
+            {{ record?.address1 }}<br />
+            <ng-container *ngIf="record?.address2">{{ record?.address2 }}<br /></ng-container>
+            {{ record?.city?.featureName }}, {{ record?.state?.abbr }} {{ record?.zipCode }}
+          </h3>
+        </div>
+        <div class="mb-3">
+          <label>Region</label>
+          <h3>{{ record?.region?.name ?? 'Not specified' }}</h3>
+        </div>
+        <div *ngIf="record?.id" class="mb-3">
+          <label class="mb-2">Venue Medical Facilities</label>
+          <div class="form-field form-field--noclear mb-2">
+            <div class="form-field__items">
+              <div
+                *ngFor="let facility of record.facilities"
+                class="form-field__item clickable hoverable"
+                (click)="onClickFacility(facility)">
+                {{ facility.name }} <span *ngIf="facility.inventory">({{ facility.inventory.join(', ') }})</span>
+              </div>
+              <div *ngIf="!record.facilities?.length" class="form-field__item">
+                <span class="text-muted">No medical facilities</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn--sm btn--primary" (click)="newFacilityModal.show()">Add</button>
+          <shared-modal #newFacilityModal>
+            <h3 class="modal-title" i18n>New Venue Medical Facility</h3>
+            <shared-form class="modal-body" [record]="{ venueId: record.id }" (create)="onCreateFacility($event)" type="facilities">
+              <ng-template let-facilityRecord="record" let-facilityError="error">
+                <app-venue-facility-form [record]="facilityRecord" [error]="facilityError"></app-venue-facility-form>
+              </ng-template>
+            </shared-form>
+          </shared-modal>
+          <shared-modal #editFacilityModal>
+            <h3 class="modal-title" i18n>Edit Venue Medical Facility</h3>
+            <shared-form
+              *ngIf="editingFacilityId"
+              class="modal-body"
+              [id]="editingFacilityId"
+              (update)="onUpdateFacility($event)"
+              type="facilities">
+              <ng-template let-facilityRecord="record" let-facilityError="error">
+                <app-venue-facility-form [record]="facilityRecord" [error]="facilityError"></app-venue-facility-form>
+              </ng-template>
+            </shared-form>
+          </shared-modal>
+        </div>
+      </ng-container>
+    </ng-template>
+  </shared-form>
+</main>

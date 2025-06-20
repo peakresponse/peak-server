@@ -48,11 +48,12 @@ export class AgencyService {
     return this.agency?.stateId ?? null;
   }
 
+  get isEventsOnly(): boolean {
+    return this.agency?.isEventsOnly ?? false;
+  }
+
   get isValid(): boolean {
-    if (this.agency) {
-      return this.agency.isValid;
-    }
-    return false;
+    return this.agency?.isValid ?? false;
   }
 
   get version(): any {

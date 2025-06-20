@@ -1,0 +1,94 @@
+<router-outlet></router-outlet>
+<shared-command-header [class.d-none]="route.firstChild">
+  <a *ngIf="!isEditing" class="command-header__plain" (click)="onCancel()">Done</a>
+  <a *ngIf="isEditing" class="command-header__plain" (click)="isEditing = false">Cancel</a>
+  <h3 class="command-header__title">Event Details</h3>
+  <a *ngIf="!isEditing" class="command-header__primary" (click)="isEditing = true">Edit</a>
+  <span *ngIf="isEditing" class="command-header__primary"></span>
+</shared-command-header>
+<main [class.d-none]="route.firstChild">
+  <shared-form
+    *ngIf="id"
+    [id]="id"
+    #form
+    class="form--responsive"
+    [preTransformRecord]="preTransformRecord"
+    [transformRecord]="transformRecord"
+    (update)="onUpdate($event)"
+    type="events"
+    [hideButtons]="!isEditing"
+    (update)="isEditing = false">
+    <ng-template let-record="record" let-error="error">
+      <app-event-form *ngIf="isEditing" (createVenue)="onCreateVenue($event)" [record]="record" [error]="error"></app-event-form>
+      <ng-container *ngIf="!isEditing">
+        <div class="mb-3">
+          <label>Name</label>
+          <h3>{{ record.name }}</h3>
+        </div>
+        <div *ngIf="record.description" class="mb-3">
+          <label>Description</label>
+          <h3>{{ record.description }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Start</label>
+          <h3>{{ record.startTime | date: 'medium' }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>End</label>
+          <h3>{{ record.endTime | date: 'medium' }}</h3>
+        </div>
+        <div class="mb-3">
+          <label>Venue</label>
+          <h3>{{ record.venue?.name }}</h3>
+        </div>
+        <h4>Venue Details</h4>
+        <div class="mb-3">
+          <label>Address</label>
+          <h3>
+            {{ record.venue?.address1 }}<br />
+            <ng-container *ngIf="record.venue?.address2">{{ record.venue?.address2 }}<br /></ng-container>
+            {{ record.venue?.city.featureName }}, {{ record.venue?.state.abbr }} {{ record.venue?.zipCode }}
+          </h3>
+        </div>
+        <div *ngIf="record?.venueId" class="mb-3">
+          <label class="mb-2">Venue Medical Facilities</label>
+          <div class="form-field form-field--noclear mb-2">
+            <div class="form-field__items">
+              <div
+                *ngFor="let facility of record.venue?.facilities"
+                class="form-field__item clickable hoverable"
+                (click)="onClickFacility(facility)">
+                {{ facility.name }} <span *ngIf="facility.inventory">({{ facility.inventory.join(', ') }})</span>
+              </div>
+              <div *ngIf="!record.venue?.facilities?.length" class="form-field__item">
+                <span class="text-muted">No medical facilities</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn--sm btn--primary" (click)="newFacilityModal.show()">Add</button>
+          <shared-modal #newFacilityModal>
+            <h3 class="modal-title" i18n>New Venue Medical Facility</h3>
+            <shared-form class="modal-body" [record]="{ venueId: record.venueId }" (create)="onCreateFacility($event)" type="facilities">
+              <ng-template let-facilityRecord="record" let-facilityError="error">
+                <app-venue-facility-form [record]="facilityRecord" [error]="facilityError"></app-venue-facility-form>
+              </ng-template>
+            </shared-form>
+          </shared-modal>
+          <shared-modal #editFacilityModal>
+            <h3 class="modal-title" i18n>Edit Venue Medical Facility</h3>
+            <shared-form
+              *ngIf="editingFacilityId"
+              class="modal-body"
+              [id]="editingFacilityId"
+              (update)="onUpdateFacility($event)"
+              type="facilities">
+              <ng-template let-facilityRecord="record" let-facilityError="error">
+                <app-venue-facility-form [record]="facilityRecord" [error]="facilityError"></app-venue-facility-form>
+              </ng-template>
+            </shared-form>
+          </shared-modal>
+        </div>
+      </ng-container>
+    </ng-template>
+  </shared-form>
+</main>

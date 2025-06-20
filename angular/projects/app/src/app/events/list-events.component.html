@@ -1,0 +1,60 @@
+<router-outlet></router-outlet>
+<shared-command-header
+  [class.d-none]="route.firstChild"
+  [user]="user.attributes$ | async"
+  [vehicle]="user.vehicle$ | async"
+  [showSearch]="true"
+  (searchValueChange)="search = $event">
+  <ng-template>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/assignments">Switch Unit/Vehicle Assignment</a>
+    </li>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/venues">Manage Venues</a>
+    </li>
+    <li *ngIf="!agency.isEventsOnly" class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" routerLink="/incidents">All Incidents</a>
+    </li>
+    <li class="command-header__dropdown-item">
+      <a class="command-header__dropdown-link" href="/logout">Log out</a>
+    </li>
+  </ng-template>
+  <ul class="nav">
+    <li class="nav__item">
+      <a class="nav__link" [class.nav__link--active]="filter == 'current'" routerLink="/events" fragment="current">Current</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" [class.nav__link--active]="filter == 'past'" routerLink="/events" fragment="past">Past</a>
+    </li>
+  </ul>
+</shared-command-header>
+<main [class.d-none]="route.firstChild">
+  <div class="table-responsive">
+    <table class="table">
+      <shared-list type="events" [transform]="transform" [params]="params" [search]="search">
+        <ng-template let-record="record">
+          <tr [routerLink]="['/events', record.id]">
+            <td>
+              <div class="event">
+                <h4 class="event__name">{{ record.name }}</h4>
+                <div class="event__venue">{{ record.venue?.name }}</div>
+                <ng-container *ngIf="parseDate(record.startTime) as datetime">
+                  <div class="event__date">{{ datePart(datetime) }}</div>
+                  <div class="event__time">{{ timePart(datetime) }}</div>
+                </ng-container>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #empty>
+          <tr>
+            <th class="text-center">No events yet.</th>
+          </tr>
+        </ng-template>
+      </shared-list>
+    </table>
+  </div>
+  <shared-command-footer>
+    <a routerLink="new" tabindex="0" class="btn btn--primary">+ New Event</a>
+  </shared-command-footer>
+</main>

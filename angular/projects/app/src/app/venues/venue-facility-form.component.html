@@ -1,0 +1,19 @@
+<div class="mb-3">
+  <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-array-field id="inventory" label="Inventory" [source]="record" [target]="record" [error]="error">
+    <ng-template #item let-item="item">{{ item }}</ng-template>
+    <ng-template #form let-addItem="addItem">
+      <form (submit)="onAddInventory(addItem)">
+        <shared-text-field
+          #inventoryNameField
+          id="inventory-name"
+          placeholder="Name..."
+          [source]="newInventory"
+          [target]="newInventory"></shared-text-field>
+      </form>
+      <button type="button" class="btn btn--sm btn--primary" (click)="onAddInventory(addItem)">Add</button>
+    </ng-template>
+  </shared-array-field>
+</div>

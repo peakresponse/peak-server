@@ -21,6 +21,7 @@ describe('/api/exports/logs', () => {
       'regions',
       'agencies',
       'versions',
+      'venues',
       'facilities',
       'contacts',
       'employments',

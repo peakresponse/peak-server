@@ -5,12 +5,28 @@ const session = require('supertest-session');
 const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
+const { mockRouted } = require('../../mocks/routed');
 
 describe('/api/facilities', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'facilities']);
+    await helpers.loadFixtures([
+      'states',
+      'counties',
+      'cities',
+      'users',
+      'psaps',
+      'dispatchers',
+      'nemsisStateDataSets',
+      'nemsisSchematrons',
+      'regions',
+      'agencies',
+      'versions',
+      'employments',
+      'venues',
+      'facilities',
+    ]);
     testSession = session(app);
     await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(StatusCodes.OK);
   });
@@ -42,7 +58,7 @@ describe('/api/facilities', () => {
         .get('/api/facilities/')
         .query({ lat: '37.7866029', lng: '-122.4560444' })
         .expect(StatusCodes.OK)
-        .expect('X-Total-Count', '127')
+        .expect('X-Total-Count', '128')
         .expect(
           'Link',
           `<${process.env.BASE_URL}/api/facilities/?lat=37.7866029&lng=-122.4560444&page=2>; rel="next",<${process.env.BASE_URL}/api/facilities/?lat=37.7866029&lng=-122.4560444&page=6>; rel="last"`,
@@ -65,10 +81,44 @@ describe('/api/facilities', () => {
         assert(facility.name.match(/cpmc/i));
       }
     });
+
+    it('returns a paginated list of Facility records for a Venue', async () => {
+      const response = await testSession
+        .get('/api/facilities/')
+        .query({ venueId: 'c99fba71-91bf-4a1a-80f8-89123c324687' })
+        .expect(StatusCodes.OK)
+        .expect('X-Total-Count', '1');
+      assert.deepStrictEqual(response.body.length, 1);
+      assert.deepStrictEqual(response.body[0].name, 'First Aid 1');
+    });
   });
 
   describe('POST /', () => {
+    it('allows an Agency user to create a new Facility record for a Venue', async () => {
+      mockRouted();
+      await testSession
+        .post('/login')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
+        .expect(StatusCodes.OK);
+      const response = await testSession
+        .post('/api/facilities')
+        .set('Accept', 'application/json')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          venueId: 'c99fba71-91bf-4a1a-80f8-89123c324687',
+          name: 'First Aid 2',
+        })
+        .expect(StatusCodes.CREATED);
+
+      const record = await models.Facility.findByPk(response.body.id);
+      assert.deepStrictEqual(record.name, 'First Aid 2');
+      assert.deepStrictEqual(record.venueId, 'c99fba71-91bf-4a1a-80f8-89123c324687');
+      assert.deepStrictEqual(record.createdByAgencyId, '9eeb6591-12f8-4036-8af8-6b235153d444');
+    });
+
     it('allows an Admin to create a new canonical Facility record', async () => {
+      mockRouted();
       const response = await testSession
         .post('/api/facilities')
         .set('Accept', 'application/json')
@@ -127,7 +177,29 @@ describe('/api/facilities', () => {
   });
 
   describe('PATCH /:id', () => {
+    it('allows an Agency user to update a Facility record for a Venue', async () => {
+      mockRouted();
+      await testSession
+        .post('/login')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({ email: 'regular@peakresponse.net', password: 'abcd1234' })
+        .expect(StatusCodes.OK);
+
+      await testSession
+        .patch('/api/facilities/79ac2493-ab6a-4fa7-a04a-bde4b7a9f341')
+        .set('Accept', 'application/json')
+        .set('Host', `bmacc.${process.env.BASE_HOST}`)
+        .send({
+          name: 'FA 1',
+        })
+        .expect(StatusCodes.OK);
+
+      const record = await models.Facility.findByPk('79ac2493-ab6a-4fa7-a04a-bde4b7a9f341');
+      assert.deepStrictEqual(record.name, 'FA 1');
+    });
+
     it('allows an Admin to update a canonical Facility record', async () => {
+      mockRouted();
       await testSession
         .patch('/api/facilities/23a7e241-4486-40fb-babb-aaa4c060c659')
         .set('Accept', 'application/json')

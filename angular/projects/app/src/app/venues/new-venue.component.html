@@ -1,0 +1,13 @@
+<router-outlet></router-outlet>
+<shared-command-header [class.d-none]="route.firstChild">
+  <a class="command-header__plain" (click)="onCancel()">Cancel</a>
+  <h3 class="command-header__title">New Venue</h3>
+  <span class="command-header__plain"></span>
+</shared-command-header>
+<main [class.d-none]="route.firstChild">
+  <shared-form #form class="form--responsive" (create)="onCreate($event)" type="venues">
+    <ng-template let-record="record" let-error="error">
+      <app-venue-form [record]="record" [error]="error"></app-venue-form>
+    </ng-template>
+  </shared-form>
+</main>

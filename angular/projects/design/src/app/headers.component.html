@@ -1,7 +1,17 @@
 <h1>Headers</h1>
-<section>
-  <shared-welcome-header [user]="user"></shared-welcome-header>
-</section>
-<shared-command-footer>
-  <h4>Hello from the command footer.</h4>
-</shared-command-footer>
+<div style="background-color: gray; height: 100vh">
+  <section>
+    <shared-welcome-header [user]="user"></shared-welcome-header>
+  </section>
+  <section>
+    <shared-command-header>
+      <a class="command-header__plain">Cancel</a>
+      <h3 class="command-header__title">Name of Screen</h3>
+      <a class="command-header__primary">Save</a>
+    </shared-command-header>
+  </section>
+  <shared-command-footer>
+    <button class="btn btn--primary">Primary</button>
+    <button class="btn btn--secondary">Secondary</button>
+  </shared-command-footer>
+</div>

@@ -19,6 +19,13 @@ form {
   }
 }
 
+.form--responsive {
+  display: block;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0.25rem 2rem;
+}
+
 .select-wrapper {
   display: flex;
   height: 2.75rem;
@@ -113,6 +120,23 @@ form {
 
 .form-field__content {
   padding: 0.375rem 0.875rem;
+  display: flex;
+  flex-direction: row;
+  *:first-child {
+    flex-grow: 1;
+  }
+
+  .form-field {
+    border: 0;
+    input {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    &:focus-within {
+      border: 0;
+      box-shadow: none;
+    }
+  }
 }
 
 .form-field--nonempty {
@@ -135,6 +159,10 @@ form {
 }
 
 :not(.form-field--multi):not(.form-field--noclear).form-field--editing.form-field--nonempty {
+  input {
+    padding-right: 2.25rem;
+  }
+
   &::after {
     display: block;
     position: absolute;
@@ -251,7 +279,8 @@ select:disabled {
   & > .form-field,
   shared-text-field,
   shared-select-field,
-  shared-file-field {
+  shared-file-field,
+  shared-object-field {
     flex-grow: 1;
   }
   & > .form-field,
@@ -264,7 +293,8 @@ select:disabled {
   }
   shared-text-field,
   shared-select-field,
-  shared-file-field {
+  shared-file-field,
+  shared-object-field {
     &:not(:first-child) {
       .form-field {
         align-self: stretch;
@@ -284,7 +314,8 @@ select:disabled {
   }
   shared-text-field,
   shared-select-field,
-  shared-file-field {
+  shared-file-field,
+  shared-object-field {
     &:not(:last-child) {
       .form-field {
         align-self: stretch;
@@ -296,12 +327,26 @@ select:disabled {
   }
 }
 
+.form-field__items {
+  & > *:first-child {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+
+  & > *:last-child {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+}
+
 .form-field__item {
   @include h3-semibold;
 
+  overflow: hidden;
   position: relative;
   padding: 0.375rem 0.875rem;
   color: $base-800;
+  text-align: left;
 
   & + .form-field__item {
     border-top: 2px solid $brand-primary-300;

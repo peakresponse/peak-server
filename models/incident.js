@@ -3,13 +3,8 @@ const { Model, Op } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Incident extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Incident.belongsTo(models.Event, { as: 'event' });
       Incident.belongsTo(models.Psap, { as: 'psap' });
       Incident.belongsTo(models.Scene, { as: 'scene' });
       Incident.belongsTo(models.User, { as: 'createdBy' });
@@ -90,6 +85,10 @@ module.exports = (sequelize, DataTypes) => {
         conditions = `
           JOIN incidents_agencies ON incidents.id=incidents_agencies.incident_id
           WHERE incidents_agencies.agency_id=:objId
+        `;
+      } else if (type === 'Event') {
+        conditions = `
+          WHERE incidents.event_id=:objId
         `;
       } else if (type === 'Vehicle') {
         conditions = `
@@ -190,6 +189,7 @@ module.exports = (sequelize, DataTypes) => {
       const attributes = { ...this.get() };
       return _.pick(attributes, [
         'id',
+        'eventId',
         'psapId',
         'sceneId',
         'number',

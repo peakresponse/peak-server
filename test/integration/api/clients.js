@@ -52,7 +52,7 @@ describe('/api/clients', () => {
       assert.deepStrictEqual(data, {
         id: '9db6b601-13fc-4755-906a-c532ce319be0',
         name: 'Test Client 2',
-        grants: ['authorization_code'],
+        grants: ['authorization_code', 'refresh_token'],
         clientId: 'R7M6UhUuKq76aYtcdbr5',
         redirectUri: 'http://localhost:3000/callback',
         createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',

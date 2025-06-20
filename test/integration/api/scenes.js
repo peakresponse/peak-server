@@ -6,6 +6,8 @@ const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
 
+const { mockRouted } = require('../../mocks/routed');
+
 describe('/api/scenes', () => {
   let testSession;
 
@@ -21,6 +23,7 @@ describe('/api/scenes', () => {
       'regions',
       'agencies',
       'versions',
+      'venues',
       'facilities',
       'contacts',
       'employments',
@@ -44,6 +47,7 @@ describe('/api/scenes', () => {
       'files',
       'reports',
     ]);
+    mockRouted();
     testSession = session(app);
     await testSession
       .post('/login')
