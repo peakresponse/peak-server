@@ -92,6 +92,12 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+function extendSession(req) {
+  // extend session with modification as per
+  // https://www.npmjs.com/package/cookie-session#extending-the-session-expiration
+  req.session.nowInMinutes = Math.floor(Date.now() / 60e3);
+}
+
 function getAgencySubdomain(req) {
   if (req.subdomains.length > 0) {
     return req.subdomains[0].trim();
@@ -181,6 +187,7 @@ async function requireLogin(req, res, next, role) {
       }
     }
     if (isAllowed) {
+      extendSession(req);
       next();
     } else {
       sendErrorForbidden(req, res);
@@ -206,6 +213,7 @@ function requireAdmin(req, res, next) {
   /// only allow site admins to continue
   if (req.user) {
     if (req.user.isAdmin) {
+      extendSession(req);
       next();
     } else {
       sendErrorForbidden(req, res);
