@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ModalComponent, ObjectFieldComponent } from 'shared';
+import { ApiService, ModalComponent } from 'shared';
+
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpParams, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-event-form',
@@ -12,6 +16,11 @@ export class EventFormComponent {
   @Output() createVenue = new EventEmitter<any>();
 
   @ViewChild('newVenueModal') newVenueModal?: ModalComponent;
+
+  searchHandler: (search: string) => Observable<any[]> = (search: string) =>
+    this.api.venues.index(new HttpParams().set('search', search)).pipe(map((response: HttpResponse<any>) => response.body?.Venue ?? []));
+
+  constructor(private api: ApiService) {}
 
   onNewVenue() {
     this.newVenueModal?.show(null, { centered: true, size: 'md' });
