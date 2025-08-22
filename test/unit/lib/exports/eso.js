@@ -54,8 +54,7 @@ describe('lib', () => {
             const epcrPath = path.resolve(__dirname, '../../../fixtures/files/eso.import.2.340.xml');
             const payload = await fs.readFile(epcrPath, { encoding: 'utf8' });
             const filteredPayload = EsoClient.filterPayload(payload);
-            assert.deepStrictEqual(filteredPayload.indexOf('<eHistory.08>'), -1);
-            assert.deepStrictEqual(filteredPayload.indexOf('<eHistory>'), -1);
+            assert.deepStrictEqual(filteredPayload.indexOf('<ePatient.07>'), -1);
           });
         });
       });
