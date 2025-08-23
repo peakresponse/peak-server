@@ -53,7 +53,14 @@ describe('lib', () => {
           it('removes unsupported attributes from the exported XML', async () => {
             const epcrPath = path.resolve(__dirname, '../../../fixtures/files/eso.import.2.340.xml');
             const payload = await fs.readFile(epcrPath, { encoding: 'utf8' });
-            const filteredPayload = EsoClient.filterPayload(payload);
+            process.env.ESO_FILTER_HISTORY = '';
+            let filteredPayload = EsoClient.filterPayload(payload);
+            assert.deepStrictEqual(filteredPayload.indexOf('<ePatient.07>'), -1);
+            assert.notDeepStrictEqual(filteredPayload.indexOf('<eHistory.08>'), -1);
+            assert.notDeepStrictEqual(filteredPayload.indexOf('<eHistory>'), -1);
+            process.env.ESO_FILTER_HISTORY = '1';
+            filteredPayload = EsoClient.filterPayload(payload);
+            assert.deepStrictEqual(filteredPayload.indexOf('<ePatient.07>'), -1);
             assert.deepStrictEqual(filteredPayload.indexOf('<eHistory.08>'), -1);
             assert.deepStrictEqual(filteredPayload.indexOf('<eHistory>'), -1);
           });
