@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static createOrUpdate(user, agency, data, options) {
-      return Base.createOrUpdate(Vital, user, agency, data, [], ['data'], options);
+      return Base.createOrUpdate(Vital, user, agency, data, [], ['temperatureF', 'data'], options);
     }
 
     toJSON() {
@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         'currentId',
         'parentId',
         'secondParentId',
+        'temperatureF',
         'data',
         'updatedAttributes',
         'updatedDataAttributes',
@@ -62,23 +63,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Vital.init(
     {
+      temperatureF: DataTypes.STRING,
       data: DataTypes.JSONB,
-      updatedAttributes: {
-        type: DataTypes.JSONB,
-        field: 'updated_attributes',
-      },
-      updatedDataAttributes: {
-        type: DataTypes.JSONB,
-        field: 'updated_data_attributes',
-      },
-      isValid: {
-        type: DataTypes.BOOLEAN,
-        field: 'is_valid',
-      },
-      validationErrors: {
-        type: DataTypes.JSONB,
-        field: 'validation_errors',
-      },
+      updatedAttributes: DataTypes.JSONB,
+      updatedDataAttributes: DataTypes.JSONB,
+      isValid: DataTypes.BOOLEAN,
+      validationErrors: DataTypes.JSONB,
     },
     {
       sequelize,
