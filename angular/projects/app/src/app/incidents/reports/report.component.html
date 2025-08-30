@@ -121,6 +121,16 @@
           </div>
         </div>
         <div class="mb-3">
+          <div class="row">
+            <div class="col-6">
+              <shared-text-field id="temperatureF" label="Temp (°F)" [source]="vital"></shared-text-field>
+            </div>
+            <div class="col-6">
+              <shared-text-field id="temperatureC" label="Temp (°C)" [source]="vital"></shared-text-field>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
           <shared-text-field id="endTidalCarbonDioxide" label="EtCO2" [source]="vital"></shared-text-field>
         </div>
         <div class="mb-3">
