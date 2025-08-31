@@ -48,4 +48,8 @@ export class Vital extends Base {
   get totalGlasgowComaScore(): NemsisValue {
     return this.getFirstNemsisValue(['eVitals.GlasgowScoreGroup', 'eVitals.23']);
   }
+
+  get temperatureC(): NemsisValue {
+    return this.getFirstNemsisValue(['eVitals.TemperatureGroup', 'eVitals.24']);
+  }
 }
