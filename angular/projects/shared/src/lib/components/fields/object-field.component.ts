@@ -39,7 +39,12 @@ export class ObjectFieldComponent extends BaseFieldComponent implements OnChange
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['source']) {
       if (this.value && !this.search.object) {
-        this.objectFetchHandler(this.value).subscribe((object: any) => (this.search = { object }));
+        this.objectFetchHandler(this.value).subscribe((object: any) => {
+          this.search = { object };
+          if (!this.search.object[this.objectNameProperty]) {
+            this.search.object[this.objectNameProperty] = this.inputFormatter(object);
+          }
+        });
       }
     }
   }
@@ -52,6 +57,9 @@ export class ObjectFieldComponent extends BaseFieldComponent implements OnChange
   onSelect(item: any) {
     if (item) {
       this.value = item[this.objectIdProperty];
+      if (!this.search.object[this.objectNameProperty]) {
+        this.search.object[this.objectNameProperty] = this.inputFormatter(item);
+      }
     }
   }
 }

@@ -1,5 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ApiService, ModalComponent, NavigationService } from 'shared';
 
@@ -10,6 +13,8 @@ import { ApiService, ModalComponent, NavigationService } from 'shared';
 export class NewClientComponent {
   @ViewChild('showSecret') showSecret?: ModalComponent;
   client: any;
+
+  inputFormatter = (item: any): string => `${item.firstName ?? ''} ${item.lastName ?? ''} <${item.email ?? ''}>`.trim();
 
   constructor(
     private api: ApiService,

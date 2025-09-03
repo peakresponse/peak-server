@@ -3,12 +3,7 @@
 </div>
 <shared-form *ngIf="id" type="clients" [id]="id" (delete)="onDelete()" class="d-block col-xl-6">
   <ng-template let-record="record" let-error="error">
-    <div class="mb-3">
-      <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
-    </div>
-    <div class="mb-3">
-      <shared-text-field id="redirectUri" label="Redirect URI" [source]="record" [target]="record" [error]="error"></shared-text-field>
-    </div>
+    <admin-client-form [record]="record" [error]="error"></admin-client-form>
     <div class="mb-3">
       <shared-text-field id="clientId" label="Client ID" [source]="record" [error]="error"></shared-text-field>
     </div>
