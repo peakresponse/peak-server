@@ -18,7 +18,7 @@ describe('/api/clients', () => {
   describe('GET /', () => {
     it('returns a paginated list of Clients', async () => {
       const response = await testSession.get('/api/clients').expect(StatusCodes.OK);
-      assert.deepStrictEqual(response.body.length, 2);
+      assert.deepStrictEqual(response.body.length, 3);
     });
   });
 
