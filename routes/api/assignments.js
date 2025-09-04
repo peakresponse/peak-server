@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  interceptors.requireAgency(Roles.USER),
+  interceptors.requireAgency([Roles.PERSONNEL, Roles.USER]),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       let user;
