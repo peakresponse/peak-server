@@ -10,7 +10,7 @@
       "startedOn": "2020-10-06",
       "endedOn": null,
       "isOwner": false,
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "Hyannis",
       "lastName": "User",
       "email": "hyannis.user@peakresponse.net",
@@ -43,7 +43,7 @@
       "startedOn": "2020-10-06",
       "endedOn": null,
       "isOwner": false,
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "SFFD",
       "lastName": "User",
       "email": "sffd.user@peakresponse.net",
@@ -141,7 +141,7 @@
       "startedOn": "2020-04-06",
       "endedOn": null,
       "isOwner": true,
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "Bayshore",
       "lastName": "User",
       "email": "bayshore@peakresponse.net",
@@ -174,7 +174,7 @@
       "startedOn": "2020-04-06",
       "endedOn": null,
       "isOwner": false,
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "Third",
       "lastName": "User",
       "email": "third@peakresponse.net",
@@ -207,7 +207,7 @@
       "firstName": "Pending",
       "lastName": "User",
       "email": "pending.user@test.com",
-      "roles": [],
+      "roles": ["USER"],
       "data": {
         "_attributes": {
           "UUID": "0544b426-2969-4f98-a458-e090cd3487e2"
@@ -233,7 +233,7 @@
       "id": "ab7f0729-0506-4f80-931d-5456a29cacef",
       "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "b6bc38fd-1087-440b-b27b-3782f148bfe6",
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "Refused",
       "lastName": "User",
       "email": "refused@peakresponse.net",
@@ -304,7 +304,7 @@
       "startedOn": null,
       "endedOn": null,
       "isOwner": false,
-      "roles": [],
+      "roles": ["USER"],
       "data": {
         "_attributes": {
           "UUID": "50c06caf-9706-4305-bc3a-5462a7d20b6f"
