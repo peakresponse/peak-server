@@ -26,5 +26,20 @@
       "createdAt": "2020-04-07T19:53:42.434Z",
       "updatedAt": "2020-04-07T19:53:42.434Z"
     }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": "3712e326-76f1-4f6c-a785-32e824d837ea",
+      "name": "Test Client 3",
+      "clientId": "kr7yts6DCAopSAVvg5is",
+      "hashedClientSecret": "$2b$12$v7WVaQfm9UaukU6Fhz.1xulLBKA2pmbjgBwsTk9x8s0fRkvvyR3Di",
+      "redirectUri": null,
+      "userId": "1ffac1a7-c1ac-432d-ac42-1e742bd4c8f6",
+      "createdById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "updatedById": "7f666fe4-dbdd-4c7f-ab44-d9157379a680",
+      "createdAt": "2020-04-07T19:53:42.434Z",
+      "updatedAt": "2020-04-07T19:53:42.434Z"
+    }
   }
 ]
