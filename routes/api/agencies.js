@@ -3,6 +3,8 @@ const { StatusCodes } = require('http-status-codes');
 const _ = require('lodash');
 
 const models = require('../../models');
+
+const { Roles } = models.Employment;
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -93,7 +95,7 @@ router.get(
 
 router.get(
   '/region',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { regionId } = req.agency;
     if (regionId) {

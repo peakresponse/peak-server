@@ -5,6 +5,8 @@ const { Op } = require('sequelize');
 
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -12,7 +14,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { filter = 'current', page = '1', search } = req.query;
     const options = {
@@ -72,7 +74,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const record = await models.Event.create({
       ..._.pick(req.body, ['name', 'description', 'startTime', 'endTime', 'venueId']),
@@ -86,7 +88,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const record = await models.Event.findOne({
       where: {
@@ -105,7 +107,7 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const record = await models.Event.findOne({
       where: {
@@ -128,7 +130,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const record = await models.Event.findByPk(req.params.id);
     if (!record) {

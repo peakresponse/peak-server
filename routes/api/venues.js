@@ -7,6 +7,8 @@ const rollbar = require('../../lib/rollbar');
 const routed = require('../../lib/routed');
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -14,7 +16,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { page = '1', search } = req.query;
     const options = {
@@ -47,7 +49,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const record = await models.Venue.create({
       ..._.pick(req.body, ['name', 'type', 'address1', 'address2', 'cityId', 'countyId', 'stateId', 'zipCode', 'regionId']),
@@ -67,7 +69,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const record = await models.Venue.findOne({
       where: {
@@ -86,7 +88,7 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const transaction = await models.sequelize.transaction();
     try {
@@ -127,7 +129,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const transaction = await models.sequelize.transaction();
     try {

@@ -4,6 +4,8 @@ const _ = require('lodash');
 
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -11,7 +13,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -26,7 +28,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { id } = req.params;
     const record = await models.Region.findByPk(id, {

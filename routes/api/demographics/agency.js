@@ -5,11 +5,13 @@ const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
 const models = require('../../../models');
 
+const { Roles } = models.Employment;
+
 const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     res.json(await req.agency.toNemsisJSON());
   }),
@@ -17,7 +19,7 @@ router.get(
 
 router.put(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const { data } = req.body;
     const version = await req.agency.getOrCreateDraftVersion(req.user);
@@ -29,7 +31,7 @@ router.put(
 
 router.delete(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       const draft = await req.agency.getDraft({ transaction });

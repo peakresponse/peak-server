@@ -4,6 +4,8 @@ const { StatusCodes } = require('http-status-codes');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
+
+const { Roles } = models.Employment;
 const routed = require('../../lib/routed');
 const { dispatchSceneUpdate } = require('../../wss');
 
@@ -12,7 +14,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -31,7 +33,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     let scene;
     let created;

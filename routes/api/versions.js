@@ -4,6 +4,8 @@ const _ = require('lodash');
 
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -11,7 +13,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const versions = await models.Version.findAll({
       where: {
@@ -25,7 +27,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const version = await req.agency.getOrCreateDraftVersion(req.user);
     res.json(version.toJSON());
@@ -34,7 +36,7 @@ router.post(
 
 router.get(
   '/:id/import',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const version = await models.Version.findByPk(req.params.id);
     res.status(version.status?.code ?? StatusCodes.INTERNAL_SERVER_ERROR).json(version.status);
@@ -43,7 +45,7 @@ router.get(
 
 router.patch(
   '/:id/import',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let version;
     await models.sequelize.transaction(async (transaction) => {
@@ -73,7 +75,7 @@ router.patch(
 
 router.get(
   '/:id/preview',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const version = await models.Version.findByPk(req.params.id);
     if (version) {
@@ -94,7 +96,7 @@ router.get(
 
 router.get(
   '/:id/validate',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const version = await models.Version.findByPk(req.params.id);
     if (version) {
@@ -115,7 +117,7 @@ router.get(
 
 router.patch(
   '/:id/commit',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let version;
     await models.sequelize.transaction(async (transaction) => {
@@ -142,7 +144,7 @@ router.patch(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const version = await models.Version.findByPk(req.params.id);
     if (version) {
@@ -159,7 +161,7 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let version;
     await models.sequelize.transaction(async (transaction) => {
@@ -188,7 +190,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let version;
     await models.sequelize.transaction(async (transaction) => {

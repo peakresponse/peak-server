@@ -3,6 +3,8 @@ const { StatusCodes } = require('http-status-codes');
 
 const cache = require('../../../lib/cache');
 const models = require('../../../models');
+
+const { Roles } = models.Employment;
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
 const base = require('./base');
@@ -32,7 +34,7 @@ router.get(
 
 router.post(
   '/invite',
-  interceptors.requireAgency(models.Employment.Roles.PERSONNEL),
+  interceptors.requireAgency(Roles.PERSONNEL),
   helpers.async(async (req, res) => {
     const { rows } = req.body;
     if (Array.isArray(rows)) {
@@ -70,7 +72,7 @@ router.post(
 
 router.get(
   '/invite-status',
-  interceptors.requireAgency(models.Employment.Roles.PERSONNEL),
+  interceptors.requireAgency(Roles.PERSONNEL),
   helpers.async(async (req, res) => {
     const status = cache.get(`personnel-invite-${req.user.id}`);
     if (status) {
@@ -146,7 +148,7 @@ router.post(
 
 router.post(
   '/:id/resend-invitation',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.PERSONNEL),
   helpers.async(async (req, res) => {
     let record;
     await models.sequelize.transaction(async (transaction) => {

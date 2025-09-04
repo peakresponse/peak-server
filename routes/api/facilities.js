@@ -8,6 +8,8 @@ const rollbar = require('../../lib/rollbar');
 const routed = require('../../lib/routed');
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const { Op } = models.Sequelize;
 
 const router = express.Router();
@@ -51,7 +53,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     if (!req.body.venueId && !req.user.isAdmin) {
       res.status(StatusCodes.FORBIDDEN).end();
@@ -137,7 +139,7 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let record;
     await models.sequelize.transaction(async (transaction) => {

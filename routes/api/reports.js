@@ -5,6 +5,8 @@ const _ = require('lodash');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
+
+const { Roles } = models.Employment;
 const { dispatchIncidentUpdate, dispatchReportUpdate } = require('../../wss');
 const routed = require('../../lib/routed');
 
@@ -12,7 +14,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const options = {
       include: ['patient', 'disposition'],
@@ -37,7 +39,7 @@ router.get(
 /* eslint-disable no-await-in-loop */
 router.post(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { psapId } = req.agency;
     const assignment = await req.user.getCurrentAssignment({
@@ -245,7 +247,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       const report = await models.Report.findByPk(req.params.id, {
@@ -260,7 +262,7 @@ router.get(
 
 router.get(
   '/:id/preview',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       let report = await models.Report.findByPk(req.params.id, {

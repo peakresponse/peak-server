@@ -11,10 +11,13 @@ const { Base } = require('./base');
 const Roles = {
   BILLING: 'BILLING',
   CONFIGURATION: 'CONFIGURATION',
+  INTEGRATION: 'INTEGRATION',
   PERSONNEL: 'PERSONNEL',
   REPORTING: 'REPORTING',
+  USER: 'USER',
 };
-Roles.ALL_ROLES = [Roles.BILLING, Roles.CONFIGURATION, Roles.PERSONNEL, Roles.REPORTING];
+Roles.ADMIN_ROLES = [Roles.BILLING, Roles.CONFIGURATION, Roles.PERSONNEL, Roles.REPORTING];
+Roles.ALL_ROLES = [Roles.BILLING, Roles.CONFIGURATION, Roles.INTEGRATION, Roles.PERSONNEL, Roles.REPORTING, Roles.USER];
 Object.freeze(Roles);
 
 module.exports = (sequelize, DataTypes) => {
