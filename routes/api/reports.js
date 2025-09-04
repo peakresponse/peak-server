@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(Roles.USER),
+  interceptors.requireAgency([Roles.INTEGRATION, Roles.USER]),
   helpers.async(async (req, res) => {
     const options = {
       include: ['patient', 'disposition'],
@@ -261,8 +261,8 @@ router.get(
 );
 
 router.get(
-  '/:id/preview',
-  interceptors.requireAgency(Roles.USER),
+  '/:id/export',
+  interceptors.requireAgency([Roles.INTEGRATION, Roles.USER]),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       let report = await models.Report.findByPk(req.params.id, {

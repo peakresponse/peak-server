@@ -867,10 +867,10 @@ describe('/api/reports', () => {
       });
     });
 
-    describe('GET /:id/preview', () => {
+    describe('GET /:id/export', () => {
       it('returns the NEMSIS XML EMSDataSet export of the Report', async () => {
         const response = await testSession
-          .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed/preview`)
+          .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed/export`)
           .set('Host', `bmacc.${process.env.BASE_HOST}`);
         assert.deepStrictEqual(response.statusCode, StatusCodes.MOVED_TEMPORARILY);
         const record = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
