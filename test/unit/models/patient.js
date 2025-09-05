@@ -56,10 +56,7 @@ describe('models', () => {
             },
           },
           'ePatient.13': {
-            _attributes: {
-              'xsi:nil': 'true',
-              NV: '7701003',
-            },
+            _text: '9906003',
           },
           'ePatient.14': {
             _attributes: {
@@ -72,10 +69,7 @@ describe('models', () => {
               _text: 18,
             },
             'ePatient.16': {
-              _attributes: {
-                'xsi:nil': 'true',
-                NV: '7701003',
-              },
+              _text: '2516009',
             },
           },
           'ePatient.PatientNameGroup': {
