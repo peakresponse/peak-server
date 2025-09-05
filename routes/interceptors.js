@@ -109,11 +109,27 @@ function getAgencySubdomain(req) {
 }
 
 async function loadAgency(req, res, next) {
-  // load demographic, if on subdomain
+  // check for agency subdomain
   const subdomain = getAgencySubdomain(req);
   if (subdomain) {
-    req.agency = await models.Agency.findOne({
+    req.agency = await models.Agency.scope('claimed').findOne({
       where: { subdomain: { [Op.iLike]: subdomain }, isDraft: false },
+    });
+    if (!req.agency) {
+      if (req.accepts('html')) {
+        next(createError(StatusCodes.NOT_FOUND));
+      } else {
+        res.status(StatusCodes.NOT_FOUND).end();
+      }
+      return;
+    }
+  }
+  // check for agency state/unique id
+  if (req.header('X-Agency-State-Id') && req.header('X-Agency-State-Unique-Id')) {
+    const stateId = req.header('X-Agency-State-Id').trim();
+    const stateUniqueId = req.header('X-Agency-State-Unique-Id').trim();
+    req.agency = await models.Agency.scope('claimed').findOne({
+      where: { stateId, stateUniqueId, isDraft: false },
     });
     if (!req.agency) {
       if (req.accepts('html')) {

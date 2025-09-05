@@ -111,57 +111,27 @@ module.exports = (sequelize, DataTypes) => {
   Patient.init(
     {
       pin: DataTypes.STRING,
-      lastName: {
-        type: DataTypes.STRING,
-        field: 'last_name',
+      lastName: DataTypes.STRING,
+      firstName: DataTypes.STRING,
+      name: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['firstName', 'lastName']),
+        get() {
+          return `${this.firstName} ${this.lastName}`.trim();
+        },
       },
-      firstName: {
-        type: DataTypes.STRING,
-        field: 'first_name',
-      },
-      gender: {
-        type: DataTypes.STRING,
-      },
-      age: {
-        type: DataTypes.INTEGER,
-      },
-      ageUnits: {
-        type: DataTypes.STRING,
-        field: 'age_units',
-      },
-      dob: {
-        type: DataTypes.DATEONLY,
-      },
+      gender: DataTypes.STRING,
+      age: DataTypes.INTEGER,
+      ageUnits: DataTypes.STRING,
+      dob: DataTypes.DATEONLY,
       complaint: DataTypes.STRING,
-      triageMentalStatus: {
-        type: DataTypes.STRING,
-        field: 'triage_mental_status',
-      },
-      triagePerfusion: {
-        type: DataTypes.STRING,
-        field: 'triage_perfusion',
-      },
-      respiratoryRate: {
-        type: DataTypes.INTEGER,
-        field: 'respiratory_rate',
-      },
+      triageMentalStatus: DataTypes.STRING,
+      triagePerfusion: DataTypes.STRING,
+      respiratoryRate: DataTypes.INTEGER,
       pulse: DataTypes.INTEGER,
-      capillaryRefill: {
-        type: DataTypes.INTEGER,
-        field: 'capillary_refill',
-      },
-      bpSystolic: {
-        type: DataTypes.INTEGER,
-        field: 'bp_systolic',
-      },
-      bpDiastolic: {
-        type: DataTypes.INTEGER,
-        field: 'bp_diastolic',
-      },
-      gcsTotal: {
-        type: DataTypes.INTEGER,
-        field: 'gcs_total',
-      },
+      capillaryRefill: DataTypes.INTEGER,
+      bpSystolic: DataTypes.INTEGER,
+      bpDiastolic: DataTypes.INTEGER,
+      gcsTotal: DataTypes.INTEGER,
       text: DataTypes.TEXT,
       priority: DataTypes.INTEGER,
       filterPriority: {
@@ -192,18 +162,9 @@ module.exports = (sequelize, DataTypes) => {
           return this.assetUrl('audioFile');
         },
       },
-      portraitFile: {
-        type: DataTypes.STRING,
-        field: 'portrait_file',
-      },
-      photoFile: {
-        type: DataTypes.STRING,
-        field: 'photo_file',
-      },
-      audioFile: {
-        type: DataTypes.STRING,
-        field: 'audio_file',
-      },
+      portraitFile: DataTypes.STRING,
+      photoFile: DataTypes.STRING,
+      audioFile: DataTypes.STRING,
       isTransported: {
         type: DataTypes.BOOLEAN,
         field: 'is_transported',
@@ -228,26 +189,12 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue('isTransportedLeftIndependently', value);
         },
       },
-      predictions: {
-        type: DataTypes.JSONB,
-      },
+      predictions: DataTypes.JSONB,
       data: DataTypes.JSONB,
-      updatedAttributes: {
-        type: DataTypes.JSONB,
-        field: 'updated_attributes',
-      },
-      updatedDataAttributes: {
-        type: DataTypes.JSONB,
-        field: 'updated_data_attributes',
-      },
-      isValid: {
-        type: DataTypes.BOOLEAN,
-        field: 'is_valid',
-      },
-      validationErrors: {
-        type: DataTypes.JSONB,
-        field: 'validation_errors',
-      },
+      updatedAttributes: DataTypes.JSONB,
+      updatedDataAttributes: DataTypes.JSONB,
+      isValid: DataTypes.BOOLEAN,
+      validationErrors: DataTypes.JSONB,
     },
     {
       sequelize,

@@ -319,45 +319,24 @@ describe('models', () => {
       });
     });
 
-    describe('createPayload()', () => {
-      it('generates a JSON payload of all dependencies for a list of Reports', async () => {
+    describe('toIntegrationJSON()', () => {
+      it('returns a JSON object of the Report in integration payload format', async () => {
         const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed', {
-          include: [
-            'response',
-            { model: models.Scene, as: 'scene', include: ['city', 'state'] },
-            'time',
-            'patient',
-            'situation',
-            'history',
-            { model: models.Disposition, as: 'disposition', include: ['destinationFacility'] },
-            'narrative',
-            'medications',
-            'procedures',
-            'vitals',
-            'files',
-            { model: models.Signature, as: 'signatures', include: ['form'] },
-          ],
+          include: ['patient', 'disposition', 'response', 'incident'],
         });
-        const payload = await models.Report.createPayload([report]);
-        assert.deepStrictEqual(payload, {
-          City: [report.scene.city.toJSON()],
-          Disposition: [report.disposition.toJSON()],
-          Facility: [report.disposition.destinationFacility.toJSON()],
-          File: report.files.map((m) => m.toJSON()),
-          Form: [report.signatures[0].form.toJSON()],
-          History: [report.history.toJSON()],
-          Medication: report.medications.map((m) => m.toJSON()),
-          Narrative: [report.narrative.toJSON()],
-          Patient: [report.patient.toJSON()],
-          Procedure: report.procedures.map((m) => m.toJSON()),
-          Report: [report.toJSON()],
-          Response: [report.response.toJSON()],
-          Scene: [report.scene.toJSON()],
-          Signature: report.signatures.map((s) => s.toJSON()),
-          Situation: [report.situation.toJSON()],
-          State: [report.scene.state.toJSON()],
-          Time: [report.time.toJSON()],
-          Vital: report.vitals.map((m) => m.toJSON()),
+        const json = JSON.parse(JSON.stringify(report.toIntegrationJSON()));
+        assert.deepStrictEqual(json, {
+          id: '4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed',
+          incidentNumber: '12345678',
+          patientAge: 18,
+          patientAgeUnits: '2516009',
+          patientGender: '9906003',
+          patientName: 'David Jones',
+          pin: '123456',
+          unit: '50',
+          createdAt: '2020-04-06T21:22:10.102Z',
+          deletedAt: null,
+          updatedAt: json.updatedAt,
         });
       });
     });

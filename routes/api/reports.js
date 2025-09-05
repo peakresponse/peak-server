@@ -22,17 +22,28 @@ router.get(
       where: {},
     };
     const { incidentId } = req.query;
-    if (!incidentId) {
-      res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
-      return;
-    }
-    options.where.incidentId = incidentId;
-    await models.sequelize.transaction(async (transaction) => {
-      options.transaction = transaction;
-      const reports = await models.Report.scope('canonical').findAll(options);
-      const payload = await models.Report.createPayload(reports, { transaction });
+    const employment = await req.user.isEmployedBy(req.agency);
+    if (employment?.roles.includes(Roles.INTEGRATION)) {
+      // return a paginated list of reports for the agency
+      options.include.push('response', 'incident');
+      options.where.createdByAgencyId = req.agency.id;
+      const { page = 1 } = req.query;
+      const { docs, pages, total } = await models.Report.scope('canonical').paginate(options);
+      helpers.setPaginationHeaders(req, res, page, pages, total);
+      res.json(docs.map((d) => d.toIntegrationJSON()));
+    } else if (incidentId) {
+      // return reports for the given incident, in mobile payload format
+      options.where.incidentId = incidentId;
+      let payload;
+      await models.sequelize.transaction(async (transaction) => {
+        options.transaction = transaction;
+        const reports = await models.Report.scope('canonical').findAll(options);
+        payload = await models.Report.createPayload(reports, { transaction });
+      });
       res.json(payload);
-    });
+    } else {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
+    }
   }),
 );
 
