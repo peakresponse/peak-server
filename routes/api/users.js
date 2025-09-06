@@ -15,7 +15,7 @@ router.get(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const { page, search } = req.query;
+    const { page = '1', search } = req.query;
     const where = {};
     if (search) {
       where[Op.or] = [
@@ -25,7 +25,7 @@ router.get(
       ];
     }
     const { docs, pages, total } = await models.User.paginate({
-      page: req.query.page || 1,
+      page,
       where,
       order: [
         ['last_name', 'ASC'],

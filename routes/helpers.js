@@ -37,35 +37,35 @@ function setPaginationHeaders(req, res, pageParam, pages, total) {
   }
   const query = _.clone(req.query);
   const page = parseInt(pageParam, 10);
-  let link = '';
+  let Link = '';
   if (page < pages) {
     query.page = page + 1;
-    link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="next"`;
+    Link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="next"`;
   }
   if (page < pages - 1) {
-    if (link.length > 0) {
-      link += ',';
+    if (Link.length > 0) {
+      Link += ',';
     }
     query.page = pages;
-    link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="last"`;
+    Link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="last"`;
   }
   if (page > 2) {
-    if (link.length > 0) {
-      link += ',';
+    if (Link.length > 0) {
+      Link += ',';
     }
     query.page = 1;
-    link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="first"`;
+    Link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="first"`;
   }
   if (page > 1) {
-    if (link.length > 0) {
-      link += ',';
+    if (Link.length > 0) {
+      Link += ',';
     }
     query.page = page - 1;
-    link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="prev"`;
+    Link += `<${baseURL}${new URLSearchParams(query).toString()}>; rel="prev"`;
   }
   const headers = {
     'X-Total-Count': total,
-    Link: link,
+    Link,
   };
   res.set(headers);
 }
