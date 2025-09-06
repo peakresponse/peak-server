@@ -144,7 +144,7 @@ async function loadAgency(req, res, next) {
 }
 
 async function loadApiUser(req, res, next) {
-  if (!req.user && req.headers.authorization) {
+  if (req.headers.authorization) {
     // DEPRECATED: attempt api key authentication via bearer token
     const m = req.headers.authorization.match(/Bearer (.+)/);
     if (m) {

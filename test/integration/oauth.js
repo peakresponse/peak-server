@@ -114,7 +114,7 @@ describe('/oauth', () => {
         })
         .expect(StatusCodes.OK);
       assert(response.body.access_token);
-      assert(response.body.token_type);
+      assert.deepStrictEqual(response.body.token_type, 'Bearer');
       assert(response.body.expires_in);
 
       const token = await models.Token.findOne({
