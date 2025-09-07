@@ -13,7 +13,7 @@ const header = z.object({
     example: 'application/json',
   }),
   Authorization: z.string().meta({
-    description: 'Bearer token provided by Peak Response to the Integration partner.',
+    description: 'Bearer token issued to the Integration partner from the token endpoint.',
     example: 'Bearer 976318ba3756a68a902a5be7216481c465fa2fe6dd005b9321a460cf7fb7bcbe',
   }),
   'X-Agency-State-Id': z.string().meta({
