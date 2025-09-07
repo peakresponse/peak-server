@@ -1,40 +1,92 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
   <h1 class="h2">Edit User</h1>
 </div>
-<shared-form class="d-block col-xl-6" *ngIf="id" type="users" [id]="id">
+<shared-form
+  class="d-block col-xl-6"
+  *ngIf="id"
+  type="users"
+  [id]="id"
+  [hideButtons]="!isEditing"
+  [showCancel]="true"
+  (cancel)="isEditing = false"
+  (update)="isEditing = false">
   <ng-template let-record="record" let-error="error">
-    <div class="mb-3">
-      <shared-text-field id="firstName" label="First Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
-    </div>
-    <div class="mb-3">
-      <shared-text-field id="lastName" label="Last Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
-    </div>
-    <div class="mb-3">
-      <shared-text-field id="email" label="Email" [source]="record" [target]="record" [error]="error"></shared-text-field>
-    </div>
-    <div class="mb-3">
-      <shared-text-field id="position" label="Position" [source]="record" [target]="record" [error]="error"></shared-text-field>
-    </div>
-    <div class="mb-3">
-      <div class="form-field-group">
-        <shared-text-field id="apiKey" label="API Key" [source]="record" [error]="error"></shared-text-field>
-        <button (click)="onGenerate(record)" type="button" class="btn btn--secondary">Generate</button>
+    <ng-container *ngIf="!isEditing">
+      <div class="mb-3">
+        <label>First Name</label>
+        <h3>{{ record.firstName }}</h3>
       </div>
-    </div>
-    <div class="mb-3">
-      <shared-file-field id="iconFile" label="Picture" [source]="record" [target]="record" [error]="error"></shared-file-field>
-    </div>
-    <div class="mb-3">
-      <shared-text-field
-        type="password"
-        id="password"
-        label="Password"
-        [source]="record"
-        [target]="record"
-        [error]="error"></shared-text-field>
-    </div>
-    <div class="mb-3">
-      <shared-checkbox id="isAdmin" label="Is Site Admin?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
-    </div>
+      <div class="mb-3">
+        <label>Last Name</label>
+        <h3>{{ record.lastName }}</h3>
+      </div>
+      <div class="mb-3">
+        <label>Email</label>
+        <h3>{{ record.email }}</h3>
+      </div>
+      <div class="mb-3">
+        <label>Position</label>
+        <h3>{{ record.position }}</h3>
+      </div>
+      <div class="mb-3" *ngIf="record.apiKey">
+        <label>API Key</label>
+        <h3>{{ record.apiKey }}</h3>
+      </div>
+      <div class="mb-5">
+        <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Agency <button class="btn btn--sm btn--secondary ms-2" [routerLink]="['/users', id, 'employments', 'new']">Add</button></th>
+            <th>Roles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employment of record.employments" [routerLink]="['/users', id, 'employments', employment.id]">
+            <td>{{ employment.createdByAgency?.name }}</td>
+            <td>{{ employment.roles.join(', ') }}</td>
+          </tr>
+          <tr *ngIf="(record.employments?.length ?? 0) === 0">
+            <td colspan="2">No employments</td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+    <ng-container *ngIf="isEditing">
+      <div class="mb-3">
+        <shared-text-field id="firstName" label="First Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+      </div>
+      <div class="mb-3">
+        <shared-text-field id="lastName" label="Last Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+      </div>
+      <div class="mb-3">
+        <shared-text-field id="email" label="Email" [source]="record" [target]="record" [error]="error"></shared-text-field>
+      </div>
+      <div class="mb-3">
+        <shared-text-field id="position" label="Position" [source]="record" [target]="record" [error]="error"></shared-text-field>
+      </div>
+      <div class="mb-3">
+        <div class="form-field-group">
+          <shared-text-field id="apiKey" label="API Key" [source]="record" [error]="error"></shared-text-field>
+          <button (click)="onGenerate(record)" type="button" class="btn btn--secondary">Generate</button>
+        </div>
+      </div>
+      <div class="mb-3">
+        <shared-file-field id="iconFile" label="Picture" [source]="record" [target]="record" [error]="error"></shared-file-field>
+      </div>
+      <div class="mb-3">
+        <shared-text-field
+          type="password"
+          id="password"
+          label="Password"
+          [source]="record"
+          [target]="record"
+          [error]="error"></shared-text-field>
+      </div>
+      <div class="mb-3">
+        <shared-checkbox id="isAdmin" label="Is Site Admin?" [source]="record" [target]="record" [error]="error"></shared-checkbox>
+      </div>
+    </ng-container>
   </ng-template>
 </shared-form>

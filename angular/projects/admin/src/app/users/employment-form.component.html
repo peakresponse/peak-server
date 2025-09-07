@@ -1,0 +1,29 @@
+<div class="mb-3">
+  <shared-object-field
+    id="createdByAgencyId"
+    label="Agency"
+    objectApiPath="agencies"
+    [source]="record"
+    [target]="record.id ? null : record"
+    [error]="error"></shared-object-field>
+</div>
+<div class="mb-3">
+  <shared-array-field id="roles" label="Roles" [source]="record" [target]="record" [error]="error">
+    <ng-template #item let-item="item">{{ item }}</ng-template>
+    <ng-template #form let-addItem="addItem">
+      <shared-select-field
+        #rolesSelect
+        id="rolesSelect"
+        (valueChange)="$event && !record.roles.includes($event) && addItem($event); $event && rolesSelect.onClear()"
+        [target]="{ rolesSelect: null }">
+        <option [value]="null">Add a Role...</option>
+        <option>BILLING</option>
+        <option>CONFIGURATION</option>
+        <option>INTEGRATION</option>
+        <option>PERSONNEL</option>
+        <option>REPORTING</option>
+        <option>USER</option>
+      </shared-select-field>
+    </ng-template>
+  </shared-array-field>
+</div>

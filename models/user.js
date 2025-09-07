@@ -170,7 +170,11 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       const attributes = { ...this.get() };
-      return _.pick(attributes, ['id', 'firstName', 'middleName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl']);
+      const json = _.pick(attributes, ['id', 'firstName', 'middleName', 'lastName', 'email', 'position', 'iconFile', 'iconUrl']);
+      if (this.employments) {
+        json.employments = this.employments.map((employment) => employment.toJSON());
+      }
+      return json;
     }
 
     setFromEmployment(employment) {

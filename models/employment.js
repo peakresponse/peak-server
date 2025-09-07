@@ -142,6 +142,7 @@ module.exports = (sequelize, DataTypes) => {
         'isValid',
         'validationErrors',
         'createdAt',
+        'createdByAgencyId',
         'updatedAt',
         'archivedAt',
       ]);
@@ -150,6 +151,9 @@ module.exports = (sequelize, DataTypes) => {
       }
       if (this.user) {
         data.user = this.user.toJSON();
+      }
+      if (this.createdByAgency) {
+        data.createdByAgency = this.createdByAgency.toJSON();
       }
       return data;
     }

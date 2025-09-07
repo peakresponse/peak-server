@@ -14,34 +14,34 @@ const router = express.Router();
 router.get(
   '/',
   helpers.async(async (req, res) => {
-    const page = req.query.page || 1;
+    const { page = '1', search = '', stateId = '' } = req.query;
     const options = {
       page,
       include: [{ model: models.State, as: 'state' }],
       order: [['name', 'ASC']],
     };
-    if (req.user?.isAdmin) {
-      options.include.push({ model: models.Agency, as: 'claimedAgency', required: false });
-    }
     const conditions = [];
-    if (req.query.search && req.query.search !== '') {
+    if (search && search !== '') {
       conditions.push({
         [Op.or]: [
-          { stateUniqueId: { [Op.iLike]: `%${req.query.search.trim()}%` } },
-          { number: { [Op.iLike]: `%${req.query.search.trim()}%` } },
-          { name: { [Op.iLike]: `%${req.query.search.trim()}%` } },
+          { stateUniqueId: { [Op.iLike]: `%${search.trim()}%` } },
+          { number: { [Op.iLike]: `%${search.trim()}%` } },
+          { name: { [Op.iLike]: `%${search.trim()}%` } },
         ],
       });
     }
-    if (req.query.stateId && req.query.stateId !== '') {
+    if (stateId && stateId !== '') {
       conditions.push({
-        stateId: req.query.stateId,
+        stateId,
       });
     }
     if (conditions.length > 0) {
       options.where = {
         [Op.and]: conditions,
       };
+    }
+    if (req.user?.isAdmin) {
+      options.include.push({ model: models.Agency, as: 'claimedAgency', required: false });
     }
     const { docs, pages, total } = await models.Agency.scope('canonical').paginate(options);
     helpers.setPaginationHeaders(req, res, page, pages, total);

@@ -384,6 +384,18 @@ export class ApiService {
     refuse: (id: string): Observable<any> => {
       return this.post(`/api/employments/${id}/refuse`, {});
     },
+    create: (data: any): Observable<any> => {
+      return this.post(`/api/employments`, data);
+    },
+    get: (id: string, params?: HttpParams): Observable<any> => {
+      return this.get(`/api/employments/${id}`, params);
+    },
+    update: (id: string, data: any): Observable<any> => {
+      return this.patch(`/api/employments/${id}`, data);
+    },
+    delete: (id: string): Observable<any> => {
+      return this.delete(`/api/employments/${id}`);
+    },
   };
 
   events = {

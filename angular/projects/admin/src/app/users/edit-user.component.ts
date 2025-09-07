@@ -10,6 +10,7 @@ import { NavigationService } from 'shared';
 })
 export class EditUserComponent {
   id: string = '';
+  isEditing = false;
 
   constructor(
     private navigation: NavigationService,

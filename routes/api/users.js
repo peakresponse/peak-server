@@ -117,7 +117,9 @@ router.get(
   '/:id',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const user = await models.User.findByPk(req.params.id);
+    const user = await models.User.findByPk(req.params.id, {
+      include: [{ model: models.Employment, as: 'employments', required: false, include: ['createdByAgency'] }],
+    });
     if (user) {
       const data = user.toJSON();
       /// add additional attributes
