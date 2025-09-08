@@ -58,11 +58,11 @@
 				<ePatient.07 NV="7701003" xsi:nil="true"/>
 				<ePatient.08 NV="7701003" xsi:nil="true"/>
 				<ePatient.09 NV="7701003" xsi:nil="true"/>
-				<ePatient.13 NV="7701003" xsi:nil="true"/>
+				<ePatient.13>9906003</ePatient.13>
 				<ePatient.14 NV="7701003" xsi:nil="true"/>
 				<ePatient.AgeGroup>
 					<ePatient.15>18</ePatient.15>
-					<ePatient.16 NV="7701003" xsi:nil="true"/>
+					<ePatient.16>2516009</ePatient.16>
 				</ePatient.AgeGroup>
 			</ePatient>
 			<ePayment>

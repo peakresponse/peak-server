@@ -1,0 +1,16 @@
+<div class="mb-3">
+  <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-text-field id="redirectUri" label="Redirect URI" [source]="record" [target]="record" [error]="error"></shared-text-field>
+</div>
+<div class="mb-3">
+  <shared-object-field
+    id="userId"
+    label="Client Credentials User"
+    objectApiPath="users"
+    [inputFormatter]="inputFormatter"
+    [source]="record"
+    [target]="record"
+    [error]="error"></shared-object-field>
+</div>

@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const models = require('../models');
+
+const { Roles } = models.Employment;
 const interceptors = require('./interceptors');
 
 const router = express.Router();
@@ -77,7 +79,7 @@ router.get(
       return;
     }
     if (!req.user.isAdmin) {
-      interceptors.requireAgency(models.Employment.Roles.ALL_ROLES)(req, res, next);
+      interceptors.requireAgency(Roles.ADMIN_ROLES)(req, res, next);
     } else {
       next();
     }

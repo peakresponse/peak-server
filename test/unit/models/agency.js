@@ -39,7 +39,7 @@ describe('models', () => {
       it('returns users associated with this agency', async () => {
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
         const users = await agency.getUsers();
-        assert.deepStrictEqual(users.length, 5);
+        assert.deepStrictEqual(users.length, 6);
       });
     });
 
@@ -47,7 +47,7 @@ describe('models', () => {
       it('returns only active users associated with this agency', async () => {
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
         const users = await agency.getActiveUsers();
-        assert.deepStrictEqual(users.length, 2);
+        assert.deepStrictEqual(users.length, 3);
       });
     });
 

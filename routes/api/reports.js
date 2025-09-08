@@ -5,6 +5,8 @@ const _ = require('lodash');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
+
+const { Roles } = models.Employment;
 const { dispatchIncidentUpdate, dispatchReportUpdate } = require('../../wss');
 const routed = require('../../lib/routed');
 
@@ -12,7 +14,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency([Roles.INTEGRATION, Roles.USER]),
   helpers.async(async (req, res) => {
     const options = {
       include: ['patient', 'disposition'],
@@ -20,24 +22,35 @@ router.get(
       where: {},
     };
     const { incidentId } = req.query;
-    if (!incidentId) {
-      res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
-      return;
-    }
-    options.where.incidentId = incidentId;
-    await models.sequelize.transaction(async (transaction) => {
-      options.transaction = transaction;
-      const reports = await models.Report.scope('canonical').findAll(options);
-      const payload = await models.Report.createPayload(reports, { transaction });
+    const employment = await req.user.isEmployedBy(req.agency);
+    if (employment?.roles.includes(Roles.INTEGRATION)) {
+      // return a paginated list of reports for the agency
+      options.include.push('response', 'incident');
+      options.where.createdByAgencyId = req.agency.id;
+      const { page = 1 } = req.query;
+      const { docs, pages, total } = await models.Report.scope('canonical').paginate(options);
+      helpers.setPaginationHeaders(req, res, page, pages, total);
+      res.json(docs.map((d) => d.toIntegrationJSON()));
+    } else if (incidentId) {
+      // return reports for the given incident, in mobile payload format
+      options.where.incidentId = incidentId;
+      let payload;
+      await models.sequelize.transaction(async (transaction) => {
+        options.transaction = transaction;
+        const reports = await models.Report.scope('canonical').findAll(options);
+        payload = await models.Report.createPayload(reports, { transaction });
+      });
       res.json(payload);
-    });
+    } else {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
+    }
   }),
 );
 
 /* eslint-disable no-await-in-loop */
 router.post(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { psapId } = req.agency;
     const assignment = await req.user.getCurrentAssignment({
@@ -245,7 +258,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       const report = await models.Report.findByPk(req.params.id, {
@@ -259,8 +272,8 @@ router.get(
 );
 
 router.get(
-  '/:id/preview',
-  interceptors.requireAgency(),
+  '/:id/export',
+  interceptors.requireAgency([Roles.INTEGRATION, Roles.USER]),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       let report = await models.Report.findByPk(req.params.id, {

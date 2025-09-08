@@ -27,7 +27,13 @@ router.post('/token', async (req, res) => {
     res.json(response.body);
   } catch (error) {
     rollbar.error(error, req);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    res
+      .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .send({
+        error: error.name,
+        error_description: error.message,
+      })
+      .end();
   }
 });
 
@@ -53,7 +59,13 @@ router.post('/authorize', interceptors.requireLogin, async (req, res) => {
     res.status(response.status).end();
   } catch (error) {
     rollbar.error(error, req);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    res
+      .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .send({
+        error: error.name,
+        error_description: error.message,
+      })
+      .end();
   }
 });
 

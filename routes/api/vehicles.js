@@ -2,6 +2,8 @@ const express = require('express');
 
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -9,7 +11,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const records = await models.Vehicle.scope('final').findAll({
       where: {

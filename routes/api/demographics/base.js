@@ -1,6 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../../models');
+
+const { Roles } = models.Employment;
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
 
@@ -9,7 +11,7 @@ function addIndex(router, model, options) {
 
   router.get(
     '/',
-    interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+    interceptors.requireAgency(Roles.CONFIGURATION),
     helpers.async(async (req, res) => {
       const { page = '1', search } = req.query;
       const params = {
@@ -47,7 +49,7 @@ function addCreate(router, model, options) {
   const { afterCreate } = options?.create ?? {};
   router.post(
     '/',
-    interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+    interceptors.requireAgency(Roles.CONFIGURATION),
     helpers.async(async (req, res) => {
       let record;
       await models.sequelize.transaction(async (transaction) => {
@@ -75,7 +77,7 @@ function addCreate(router, model, options) {
 function addGet(router, model) {
   router.get(
     '/:id',
-    interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+    interceptors.requireAgency(Roles.CONFIGURATION),
     helpers.async(async (req, res) => {
       const record = await model.findOne({
         where: {
@@ -96,7 +98,7 @@ function addUpdate(router, model, options) {
   const { afterSave } = options?.update ?? {};
   router.put(
     '/:id',
-    interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+    interceptors.requireAgency(Roles.CONFIGURATION),
     helpers.async(async (req, res) => {
       let record;
       await models.sequelize.transaction(async (transaction) => {
@@ -129,7 +131,7 @@ function addDelete(router, model, options) {
   const { afterDestroy } = options?.delete ?? {};
   router.delete(
     '/:id',
-    interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+    interceptors.requireAgency(Roles.CONFIGURATION),
     helpers.async(async (req, res) => {
       await models.sequelize.transaction(async (transaction) => {
         let record = await model.findOne({

@@ -38,7 +38,7 @@ router.post(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const client = models.Client.build(_.pick(req.body, ['name', 'redirectUri']));
+    const client = models.Client.build(_.pick(req.body, ['name', 'redirectUri', 'userId']));
     const { clientSecret } = client.generateClientIdAndSecret();
     client.createdById = req.user.id;
     client.updatedById = req.user.id;
@@ -113,7 +113,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       client = await models.Client.findByPk(req.params.id, { transaction });
       if (client) {
-        const data = _.pick(req.body, ['name', 'redirectUri']);
+        const data = _.pick(req.body, ['name', 'redirectUri', 'userId']);
         data.updatedById = req.user.id;
         await client.update(data, { transaction });
       }

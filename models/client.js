@@ -6,6 +6,7 @@ const sequelizePaginate = require('sequelize-paginate');
 module.exports = (sequelize, DataTypes) => {
   class Client extends Model {
     static associate(models) {
+      Client.belongsTo(models.User, { as: 'user' });
       Client.belongsTo(models.User, { as: 'createdBy' });
       Client.belongsTo(models.User, { as: 'updatedBy' });
     }
@@ -31,31 +32,31 @@ module.exports = (sequelize, DataTypes) => {
   }
   Client.init(
     {
-      name: {
-        type: DataTypes.STRING,
-      },
-      clientId: {
-        type: DataTypes.STRING,
-        field: 'client_id',
-      },
-      hashedClientSecret: {
-        type: DataTypes.TEXT,
-        field: 'hashed_client_secret',
-      },
-      redirectUri: {
-        type: DataTypes.TEXT,
-        field: 'redirect_uri',
-      },
+      name: DataTypes.STRING,
+      clientId: DataTypes.STRING,
+      hashedClientSecret: DataTypes.TEXT,
+      redirectUri: DataTypes.TEXT,
       redirectUris: {
         type: DataTypes.VIRTUAL,
         get() {
-          return [this.redirectUri];
+          const uris = [];
+          if (this.redirectUri) {
+            uris.push(this.redirectUri);
+          }
+          return uris;
         },
       },
       grants: {
         type: DataTypes.VIRTUAL,
         get() {
-          return ['authorization_code', 'refresh_token'];
+          const grants = ['refresh_token'];
+          if (this.redirectUri) {
+            grants.push('authorization_code');
+          }
+          if (this.userId) {
+            grants.push('client_credentials');
+          }
+          return grants;
         },
       },
     },

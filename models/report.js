@@ -1,6 +1,7 @@
 const inflection = require('inflection');
 const _ = require('lodash');
 const fs = require('fs/promises');
+const sequelizePaginate = require('sequelize-paginate');
 const tmp = require('tmp-promise');
 const xmlFormatter = require('xml-formatter');
 const xmljs = require('xml-js');
@@ -451,6 +452,23 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ emsDataSet, emsDataSetFile }, { transaction });
     }
 
+    toIntegrationJSON() {
+      const attributes = { ...this.get() };
+      return _.pick(attributes, [
+        'id',
+        'incidentNumber',
+        'unit',
+        'pin',
+        'patientName',
+        'patientAge',
+        'patientAgeUnits',
+        'patientGender',
+        'deletedAt',
+        'createdAt',
+        'updatedAt',
+      ]);
+    }
+
     toJSON() {
       const attributes = { ...this.get() };
       return _.pick(attributes, [
@@ -510,6 +528,42 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       pin: DataTypes.STRING,
+      incidentNumber: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING),
+        get() {
+          return this.incident?.number;
+        },
+      },
+      unit: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING),
+        get() {
+          return this.response?.unit;
+        },
+      },
+      patientName: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING),
+        get() {
+          return this.patient?.name;
+        },
+      },
+      patientAge: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING),
+        get() {
+          return this.patient?.age;
+        },
+      },
+      patientAgeUnits: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING),
+        get() {
+          return this.patient?.ageUnits;
+        },
+      },
+      patientGender: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING),
+        get() {
+          return this.patient?.gender;
+        },
+      },
       data: DataTypes.JSONB,
       updatedAttributes: DataTypes.JSONB,
       updatedDataAttributes: DataTypes.JSONB,
@@ -584,6 +638,8 @@ module.exports = (sequelize, DataTypes) => {
     }
     await record.handleAssetFile('emsDataSetFile', options);
   });
+
+  sequelizePaginate.paginate(Report);
 
   return Report;
 };

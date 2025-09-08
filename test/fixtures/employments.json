@@ -10,7 +10,7 @@
       "startedOn": "2020-10-06",
       "endedOn": null,
       "isOwner": false,
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "Hyannis",
       "lastName": "User",
       "email": "hyannis.user@peakresponse.net",
@@ -43,7 +43,7 @@
       "startedOn": "2020-10-06",
       "endedOn": null,
       "isOwner": false,
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "SFFD",
       "lastName": "User",
       "email": "sffd.user@peakresponse.net",
@@ -76,7 +76,7 @@
       "startedOn": "2020-04-06",
       "endedOn": null,
       "isOwner": true,
-      "roles": ["CONFIGURATION"],
+      "roles": ["USER", "CONFIGURATION"],
       "firstName": "Regular",
       "lastName": "User",
       "email": "regular@peakresponse.net",
@@ -108,7 +108,7 @@
       "hiredOn": "2020-04-06",
       "startedOn": "2020-04-06",
       "endedOn": null,
-      "roles": ["PERSONNEL"],
+      "roles": ["USER", "PERSONNEL"],
       "firstName": "Personnel",
       "lastName": "Admin",
       "email": "personnel.admin@peakresponse.net",
@@ -141,7 +141,7 @@
       "startedOn": "2020-04-06",
       "endedOn": null,
       "isOwner": true,
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "Bayshore",
       "lastName": "User",
       "email": "bayshore@peakresponse.net",
@@ -174,7 +174,7 @@
       "startedOn": "2020-04-06",
       "endedOn": null,
       "isOwner": false,
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "Third",
       "lastName": "User",
       "email": "third@peakresponse.net",
@@ -207,7 +207,7 @@
       "firstName": "Pending",
       "lastName": "User",
       "email": "pending.user@test.com",
-      "roles": [],
+      "roles": ["USER"],
       "data": {
         "_attributes": {
           "UUID": "0544b426-2969-4f98-a458-e090cd3487e2"
@@ -233,7 +233,7 @@
       "id": "ab7f0729-0506-4f80-931d-5456a29cacef",
       "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "b6bc38fd-1087-440b-b27b-3782f148bfe6",
-      "roles": [],
+      "roles": ["USER"],
       "firstName": "Refused",
       "lastName": "User",
       "email": "refused@peakresponse.net",
@@ -265,7 +265,7 @@
       "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
       "userId": "99b0ce13-138a-40db-9f05-da6475b8b4eb",
       "endedOn": "2020-04-07",
-      "roles": ["PERSONNEL"],
+      "roles": ["USER", "PERSONNEL"],
       "firstName": "Ended",
       "lastName": "User",
       "email": "ended@peakresponse.net",
@@ -304,7 +304,7 @@
       "startedOn": null,
       "endedOn": null,
       "isOwner": false,
-      "roles": [],
+      "roles": ["USER"],
       "data": {
         "_attributes": {
           "UUID": "50c06caf-9706-4305-bc3a-5462a7d20b6f"
@@ -315,6 +315,39 @@
         "dPersonnel.NameGroup": {
           "dPersonnel.01": { "_text": "Member" },
           "dPersonnel.02": { "_text": "Invited" }
+        }
+      },
+      "createdAt": "2020-04-06T21:22:10.158Z",
+      "updatedAt": "2020-04-06T21:22:10.158Z",
+      "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
+      "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a"
+    }
+  },
+  {
+    "model": "Employment",
+    "ignoreSet": true,
+    "data": {
+      "id": "07506533-9b08-4eba-9e97-dd5746204b05",
+      "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",
+      "userId": "1ffac1a7-c1ac-432d-ac42-1e742bd4c8f6",
+      "hiredOn": "2020-04-06",
+      "startedOn": "2020-04-06",
+      "endedOn": null,
+      "isOwner": false,
+      "roles": ["INTEGRATION"],
+      "firstName": "Client",
+      "lastName": "Credentials",
+      "email": "client.credentials@peakresponse.net",
+      "data": {
+        "_attributes": {
+          "UUID": "07506533-9b08-4eba-9e97-dd5746204b05"
+        },
+        "dPersonnel.10": {
+          "_text": "client.credentials@peakresponse.net"
+        },
+        "dPersonnel.NameGroup": {
+          "dPersonnel.01": { "_text": "Credentials" },
+          "dPersonnel.02": { "_text": "Client" }
         }
       },
       "createdAt": "2020-04-06T21:22:10.158Z",

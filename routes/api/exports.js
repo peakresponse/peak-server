@@ -4,6 +4,8 @@ const _ = require('lodash');
 
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -11,7 +13,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const options = {
       where: {
@@ -30,7 +32,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const record = models.Export.build(
       _.pick(req.body, [
@@ -58,7 +60,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const record = await models.Export.findByPk(req.params.id);
     if (record) {
@@ -75,7 +77,7 @@ router.get(
 
 router.patch(
   '/:id',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let record;
     let isAllowed;
@@ -122,7 +124,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let record;
     let isAllowed;

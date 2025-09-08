@@ -15,7 +15,7 @@ router.get(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const { page, search } = req.query;
+    const { page = '1', search } = req.query;
     const where = {};
     if (search) {
       where[Op.or] = [
@@ -25,7 +25,7 @@ router.get(
       ];
     }
     const { docs, pages, total } = await models.User.paginate({
-      page: req.query.page || 1,
+      page,
       where,
       order: [
         ['last_name', 'ASC'],
@@ -117,7 +117,9 @@ router.get(
   '/:id',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const user = await models.User.findByPk(req.params.id);
+    const user = await models.User.findByPk(req.params.id, {
+      include: [{ model: models.Employment, as: 'employments', required: false, include: ['createdByAgency'] }],
+    });
     if (user) {
       const data = user.toJSON();
       /// add additional attributes

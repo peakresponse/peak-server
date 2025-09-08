@@ -1,0 +1,8 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">Edit Employment</h1>
+</div>
+<shared-form class="d-block col-xl-6" type="employments" [id]="id" (delete)="onDelete()" (update)="onUpdate($event)">
+  <ng-template let-record="record" let-error="error">
+    <admin-users-employment-form [record]="record" [error]="error"></admin-users-employment-form>
+  </ng-template>
+</shared-form>

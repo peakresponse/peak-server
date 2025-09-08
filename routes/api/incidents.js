@@ -1,8 +1,9 @@
 const express = require('express');
 const _ = require('lodash');
 
-// const { StatusCodes } = require('http-status-codes');
 const models = require('../../models');
+
+const { Roles } = models.Employment;
 
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
@@ -11,7 +12,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { page = '1', search, vehicleId, eventId } = req.query;
     const options = {
@@ -51,7 +52,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     // TODO: verify calling user can access this incident
     let payload;

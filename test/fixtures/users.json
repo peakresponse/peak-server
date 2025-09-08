@@ -156,5 +156,17 @@
       "isAdmin": false,
       "apiKey": "60679b8a-6786-4637-a0cc-1984c1673c91"
     }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": "1ffac1a7-c1ac-432d-ac42-1e742bd4c8f6",
+      "firstName": "Client",
+      "lastName": "Credentials",
+      "position": "Integration",
+      "email": "client.credentials@peakresponse.net",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
   }
 ]
