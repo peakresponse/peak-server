@@ -139,6 +139,14 @@
       </div>
       <div class="col-6">
         <div class="mb-3">
+          <shared-select-field id="levelOfResponsiveness" label="Level of Responsiveness (AVPU)" [source]="vital">
+            <option [value]="VitalLevelOfResponsiveness.alert">Alert</option>
+            <option [value]="VitalLevelOfResponsiveness.verbal">Verbal</option>
+            <option [value]="VitalLevelOfResponsiveness.pain">Pain</option>
+            <option [value]="VitalLevelOfResponsiveness.unresponsive">Unresponsive</option>
+          </shared-select-field>
+        </div>
+        <div class="mb-3">
           <shared-text-field id="heartRate" label="Heart Rate" [source]="vital"></shared-text-field>
         </div>
         <div class="mb-3">
