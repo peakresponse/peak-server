@@ -62,7 +62,7 @@ router.post('/', (req, res, next) => {
           return;
         }
         /// handle json xhr response
-        if (req.header('Content-Type') === 'application/json') {
+        if (req.header('Content-Type')?.startsWith('application/json')) {
           const data = {
             agencies: (req.agencies || []).map((a) => a.toJSON()),
           };
