@@ -116,6 +116,8 @@ module.exports = (sequelize, DataTypes) => {
         'isActive',
         'approxPatientsCount',
         'approxPriorityPatientsCounts',
+        'patientsCount',
+        'priorityPatientsCounts',
         'closedAt',
         'incidentCommanderId',
         'incidentCommanderAgencyId',

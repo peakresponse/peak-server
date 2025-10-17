@@ -157,7 +157,6 @@ describe('models', () => {
         let data = {
           id: '70336540-1d74-40fb-913b-2904a0ba66dc',
           parentId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
-          approxPatientsCount: 2,
           approxPriorityPatientsCounts: [2, 0, 0, 0, 0, 0],
           updatedAt: '2020-04-06T21:23:10.102Z',
         };
@@ -175,7 +174,6 @@ describe('models', () => {
         data = {
           id: '7fc6eb46-0660-46c6-8355-5ba94e1b17bf',
           parentId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
-          approxPatientsCount: 1,
           approxPriorityPatientsCounts: [0, 1, 0, 0, 0, 0],
           updatedAt: '2020-04-06T21:23:09.102Z',
         };
@@ -184,11 +182,11 @@ describe('models', () => {
         assert(!created);
         assert.deepStrictEqual(record.parentId, '70336540-1d74-40fb-913b-2904a0ba66dc');
         assert.deepStrictEqual(record.secondParentId, '7fc6eb46-0660-46c6-8355-5ba94e1b17bf');
-        assert.deepStrictEqual(record.approxPatientsCount, 2);
+        assert.deepStrictEqual(record.approxPatientsCount, 3);
         assert.deepStrictEqual(record.approxPriorityPatientsCounts, [2, 1, 0, 0, 0, 0]);
 
         canonical = await record.getCanonical();
-        assert.deepStrictEqual(canonical.approxPatientsCount, 2);
+        assert.deepStrictEqual(canonical.approxPatientsCount, 3);
         assert.deepStrictEqual(canonical.approxPriorityPatientsCounts, [2, 1, 0, 0, 0, 0]);
       });
     });
