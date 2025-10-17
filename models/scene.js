@@ -250,6 +250,19 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     });
+    if (record.changed('approxPriorityPatientsCounts')) {
+      let approxPatientsCount = 0;
+      for (let i = 0; i < 5; i++) {
+        approxPatientsCount += record.approxPriorityPatientsCounts[i];
+      }
+      record.approxPatientsCount = approxPatientsCount;
+      record.changed('approxPatientsCount', true);
+      options.fields = options.fields || [];
+      if (options.fields.indexOf('approxPatientsCount') < 0) {
+        options.fields.push('approxPatientsCount');
+      }
+      record.updatedAttributes?.splice(record.updatedAttributes.indexOf('approxPriorityPatientsCounts'), 0, 'approxPatientsCount');
+    }
   });
 
   Scene.addScope('agency', (agencyId) => ({
