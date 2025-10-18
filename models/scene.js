@@ -261,7 +261,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     if (record.changed('approxPriorityPatientsCounts')) {
       let approxPatientsCount = 0;
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 5; i += 1) {
         approxPatientsCount += record.approxPriorityPatientsCounts[i];
       }
       record.approxPatientsCount = approxPatientsCount;
