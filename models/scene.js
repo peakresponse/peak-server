@@ -129,12 +129,12 @@ module.exports = (sequelize, DataTypes) => {
       ]);
     }
 
-    updatePatientsCounts({ transaction }) {
-      // ensure we're starting from the canonical record
-      // get the incident
-      // query canonical reports for the incident, by priority
-      // then by priority and filterPriority for transported patients
-    }
+    // updatePatientsCounts({ transaction }) {
+    //   // ensure we're starting from the canonical record
+    //   // get the incident
+    //   // query canonical reports for the incident, by priority
+    //   // then by priority and filterPriority for transported patients
+    // }
   }
 
   Scene.init(
