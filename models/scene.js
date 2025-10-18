@@ -60,6 +60,7 @@ module.exports = (sequelize, DataTypes) => {
           'urgency',
           'note',
           'approxPatientsCount',
+          'patientsCount',
           'isMCI',
           'lat',
           'lng',
@@ -79,6 +80,7 @@ module.exports = (sequelize, DataTypes) => {
           'stagingResponderId',
           'transportResponderId',
           'approxPriorityPatientsCounts',
+          'priorityPatientsCounts',
           'data',
         ],
         options,
@@ -128,13 +130,6 @@ module.exports = (sequelize, DataTypes) => {
         'transportResponderId',
       ]);
     }
-
-    // updatePatientsCounts({ transaction }) {
-    //   // ensure we're starting from the canonical record
-    //   // get the incident
-    //   // query canonical reports for the incident, by priority
-    //   // then by priority and filterPriority for transported patients
-    // }
   }
 
   Scene.init(
@@ -271,6 +266,19 @@ module.exports = (sequelize, DataTypes) => {
         options.fields.push('approxPatientsCount');
       }
       record.updatedAttributes?.splice(record.updatedAttributes.indexOf('approxPriorityPatientsCounts'), 0, 'approxPatientsCount');
+    }
+    if (record.changed('priorityPatientsCounts')) {
+      let patientsCount = 0;
+      for (let i = 0; i < 5; i += 1) {
+        patientsCount += record.priorityPatientsCounts[i];
+      }
+      record.patientsCount = patientsCount;
+      record.changed('patientsCount', true);
+      options.fields = options.fields || [];
+      if (options.fields.indexOf('patientsCount') < 0) {
+        options.fields.push('patientsCount');
+      }
+      record.updatedAttributes?.splice(record.updatedAttributes.indexOf('priorityPatientsCounts'), 0, 'patientsCount');
     }
   });
 

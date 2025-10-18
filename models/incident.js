@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const { Model, Op } = require('sequelize');
+const { v4: uuid } = require('uuid');
 
 module.exports = (sequelize, DataTypes) => {
   class Incident extends Model {
@@ -163,6 +164,36 @@ module.exports = (sequelize, DataTypes) => {
         incident.setDataValue('dispatches', dispatchesMap[incident.id]);
       });
       return { docs, pages, total };
+    }
+
+    async updatePatientsCounts(user, agency, { transaction }) {
+      // get the latest canonical scene
+      const scene = await this.getScene({ transaction });
+      // query canonical reports for the incident
+      const reports = await this.getReports({ attributes: ['priority', 'filterPriority', 'deletedAt'], transaction });
+      // count by priority and filterPriority for transported patients
+      const priorityPatientsCounts = [0, 0, 0, 0, 0, 0];
+      // const transpPriorityPatientsCounts = [0, 0, 0, 0, 0, 0];
+      for (const report of reports) {
+        if (!report.isDeleted) {
+          if (report.priority !== null && report.priority !== undefined) {
+            priorityPatientsCounts[report.priority] += 1;
+          }
+          // if (report.filterPriority == sequelize.models.Patient.Priority.TRANSPORTED) {
+          //   transpPriorityPatientsCounts[report.priority] += 1;
+          // }
+        }
+      }
+      return sequelize.models.Scene.createOrUpdate(
+        user,
+        agency,
+        {
+          id: uuid(),
+          parentId: scene.currentId,
+          priorityPatientsCounts,
+        },
+        { transaction },
+      );
     }
 
     async updateReportsCount(options) {
