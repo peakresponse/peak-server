@@ -47,6 +47,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.DECEASED);
       });
 
@@ -69,6 +70,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.TRANSPORTED);
       });
 
@@ -85,6 +87,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.DELETED);
       });
     });
