@@ -171,11 +171,15 @@ async function dispatchReportUpdate(reportId) {
       transaction,
     });
     incident = report.incident;
-    scene = await report.scene.getCanonical({ transaction });
+    scene = await incident.getScene({ transaction });
     payload = await models.Report.createPayload([report], { transaction });
     // during MCI, rewrite all Reports to refer to latest Scene
     for (const rep of payload.Report) {
       rep.sceneId = scene.currentId;
+    }
+    // include latest canonical Scene
+    if (!payload.Scene.find((s) => s.id === scene.id)) {
+      payload.Scene.push(scene.toJSON());
     }
     payload = JSON.stringify(payload);
   });

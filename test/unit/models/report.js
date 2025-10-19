@@ -47,6 +47,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.DECEASED);
       });
 
@@ -69,6 +70,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.TRANSPORTED);
       });
 
@@ -85,6 +87,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.DELETED);
       });
     });
@@ -120,11 +123,17 @@ describe('models', () => {
       it('creates a new canonical and corresponding history record', async () => {
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const incident = await models.Incident.findByPk('6621202f-ca09-4ad9-be8f-b56346d1de65');
+        assert.deepStrictEqual(incident.reportsCount, 2);
+        const scene = await incident.getScene();
+        assert.deepStrictEqual(scene.patientsCount, 2);
+        assert.deepStrictEqual(scene.priorityPatientsCounts, [1, 0, 0, 0, 1, 0]);
 
         const data = {
           id: '7bd5e011-8948-4498-93e3-a212272662bb',
           canonicalId: 'aace1af0-aeaf-4020-acca-dbeb7e3295e8',
           incidentId: '6621202f-ca09-4ad9-be8f-b56346d1de65',
+          patientId: '1b76259b-d08e-45d2-ba62-983880ef2e4e',
           medicationIds: ['6f43bc3d-1d4e-470a-9568-0c8b50c8281e'],
           procedureIds: ['34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0'],
           vitalIds: ['2036119d-4545-4452-a26f-b9ec6a1a323b'],
@@ -147,6 +156,7 @@ describe('models', () => {
           createdAt: '2023-04-06T21:23:10.102Z',
           updatedAt: '2023-04-06T21:23:10.102Z',
         };
+
         const [record, created] = await models.Report.createOrUpdate(user, agency, data);
         assert(record);
         assert(created);
@@ -162,6 +172,7 @@ describe('models', () => {
           'updatedAt',
           'incidentId',
           'data',
+          'patientId',
           'medicationIds',
           'vitalIds',
           'procedureIds',
@@ -177,8 +188,12 @@ describe('models', () => {
         assert.deepStrictEqual(record.createdAt.toISOString(), '2023-04-06T21:23:10.102Z');
         assert.deepStrictEqual(record.updatedAt.toISOString(), '2023-04-06T21:23:10.102Z');
 
-        const incident = await record.getIncident();
+        await incident.reload();
         assert.deepStrictEqual(incident.reportsCount, 3);
+
+        await scene.reload();
+        assert.deepStrictEqual(scene.patientsCount, 3);
+        assert.deepStrictEqual(scene.priorityPatientsCounts, [2, 0, 0, 0, 1, 0]);
 
         let medications = await record.getMedications();
         assert(medications.length, 1);

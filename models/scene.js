@@ -60,6 +60,7 @@ module.exports = (sequelize, DataTypes) => {
           'urgency',
           'note',
           'approxPatientsCount',
+          'patientsCount',
           'isMCI',
           'lat',
           'lng',
@@ -79,6 +80,8 @@ module.exports = (sequelize, DataTypes) => {
           'stagingResponderId',
           'transportResponderId',
           'approxPriorityPatientsCounts',
+          'priorityPatientsCounts',
+          'transpPriorityPatientsCounts',
           'data',
         ],
         options,
@@ -116,6 +119,10 @@ module.exports = (sequelize, DataTypes) => {
         'isActive',
         'approxPatientsCount',
         'approxPriorityPatientsCounts',
+        'patientsCount',
+        'priorityPatientsCounts',
+        'transpPatientsCount',
+        'transpPriorityPatientsCounts',
         'closedAt',
         'incidentCommanderId',
         'incidentCommanderAgencyId',
@@ -126,68 +133,48 @@ module.exports = (sequelize, DataTypes) => {
         'transportResponderId',
       ]);
     }
+
+    updatePatientsCounts(countAttr, priorityCountsAttr, options) {
+      if (this.changed(priorityCountsAttr)) {
+        let patientsCount = 0;
+        for (let i = 0; i < 5; i += 1) {
+          patientsCount += this[priorityCountsAttr][i];
+        }
+        this[countAttr] = patientsCount;
+        this.changed(countAttr, true);
+        options.fields = options.fields || [];
+        if (options.fields.indexOf(countAttr) < 0) {
+          options.fields.push(countAttr);
+        }
+        this.updatedAttributes?.splice(this.updatedAttributes.indexOf(priorityCountsAttr), 0, countAttr);
+      }
+    }
   }
 
   Scene.init(
     {
-      name: {
-        type: DataTypes.STRING,
-      },
-      desc: {
-        type: DataTypes.TEXT,
-      },
-      urgency: {
-        type: DataTypes.TEXT,
-      },
-      note: {
-        type: DataTypes.TEXT,
-      },
-      approxPatientsCount: {
-        type: DataTypes.INTEGER,
-        field: 'approx_patients_count',
-      },
-      approxPriorityPatientsCounts: {
-        type: DataTypes.JSONB,
-        field: 'approx_priority_patients_counts',
-      },
-      patientsCount: {
-        type: DataTypes.INTEGER,
-        field: 'patients_count',
-      },
-      priorityPatientsCounts: {
-        type: DataTypes.JSONB,
-        field: 'priority_patients_counts',
-      },
-      respondersCount: {
-        type: DataTypes.INTEGER,
-        field: 'responders_count',
-      },
+      name: DataTypes.STRING,
+      desc: DataTypes.TEXT,
+      urgency: DataTypes.TEXT,
+      note: DataTypes.TEXT,
+      approxPatientsCount: DataTypes.INTEGER,
+      approxPriorityPatientsCounts: DataTypes.JSONB,
+      patientsCount: DataTypes.INTEGER,
+      priorityPatientsCounts: DataTypes.JSONB,
+      transpPatientsCount: DataTypes.INTEGER,
+      transpPriorityPatientsCounts: DataTypes.JSONB,
+      respondersCount: DataTypes.INTEGER,
       isMCI: {
         type: DataTypes.BOOLEAN,
         field: 'is_mci',
       },
-      lat: {
-        type: DataTypes.STRING,
-      },
-      lng: {
-        type: DataTypes.STRING,
-      },
-      geog: {
-        type: DataTypes.GEOGRAPHY,
-      },
-      address1: {
-        type: DataTypes.STRING,
-      },
-      address2: {
-        type: DataTypes.STRING,
-      },
-      zip: {
-        type: DataTypes.STRING,
-      },
-      closedAt: {
-        type: DataTypes.DATE,
-        field: 'closed_at',
-      },
+      lat: DataTypes.STRING,
+      lng: DataTypes.STRING,
+      geog: DataTypes.GEOGRAPHY,
+      address1: DataTypes.STRING,
+      address2: DataTypes.STRING,
+      zip: DataTypes.STRING,
+      closedAt: DataTypes.DATE,
       isActive: {
         type: new DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['closedAt']),
         get() {
@@ -195,22 +182,10 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       data: DataTypes.JSONB,
-      updatedAttributes: {
-        type: DataTypes.JSONB,
-        field: 'updated_attributes',
-      },
-      updatedDataAttributes: {
-        type: DataTypes.JSONB,
-        field: 'updated_data_attributes',
-      },
-      isValid: {
-        type: DataTypes.BOOLEAN,
-        field: 'is_valid',
-      },
-      validationErrors: {
-        type: DataTypes.JSONB,
-        field: 'validation_errors',
-      },
+      updatedAttributes: DataTypes.JSONB,
+      updatedDataAttributes: DataTypes.JSONB,
+      isValid: DataTypes.BOOLEAN,
+      validationErrors: DataTypes.JSONB,
       isCanonical: {
         type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['canonicalId']),
         get() {
@@ -250,6 +225,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     });
+    // update patients counter caches
+    record.updatePatientsCounts('approxPatientsCount', 'approxPriorityPatientsCounts', options);
+    record.updatePatientsCounts('patientsCount', 'priorityPatientsCounts', options);
+    record.updatePatientsCounts('transpPatientsCount', 'transpPriorityPatientsCounts', options);
   });
 
   Scene.addScope('agency', (agencyId) => ({

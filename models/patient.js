@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       Patient.belongsTo(models.Agency, { as: 'updatedByAgency' });
       Patient.belongsTo(models.Agency, { as: 'createdByAgency' });
 
-      Patient.belongsTo(models.Scene, { as: 'scene' });
+      Patient.belongsTo(models.Scene, { as: 'scene' }); // Deprecated
       Patient.belongsTo(models.Agency, { as: 'transportAgency' });
       Patient.belongsTo(models.Facility, { as: 'transportFacility' });
 
@@ -68,16 +68,8 @@ module.exports = (sequelize, DataTypes) => {
           'age',
           'ageUnits',
           'dob',
-          'complaint',
           'triageMentalStatus',
           'triagePerfusion',
-          'respiratoryRate',
-          'pulse',
-          'capillaryRefill',
-          'bpSystolic',
-          'bpDiastolic',
-          'gcsTotal',
-          'text',
           'priority',
           'location',
           'lat',
@@ -123,16 +115,16 @@ module.exports = (sequelize, DataTypes) => {
       age: DataTypes.INTEGER,
       ageUnits: DataTypes.STRING,
       dob: DataTypes.DATEONLY,
-      complaint: DataTypes.STRING,
+      complaint: DataTypes.STRING, // deprecated
       triageMentalStatus: DataTypes.STRING,
       triagePerfusion: DataTypes.STRING,
-      respiratoryRate: DataTypes.INTEGER,
-      pulse: DataTypes.INTEGER,
-      capillaryRefill: DataTypes.INTEGER,
-      bpSystolic: DataTypes.INTEGER,
-      bpDiastolic: DataTypes.INTEGER,
-      gcsTotal: DataTypes.INTEGER,
-      text: DataTypes.TEXT,
+      respiratoryRate: DataTypes.INTEGER, // deprecated
+      pulse: DataTypes.INTEGER, // deprecated
+      capillaryRefill: DataTypes.INTEGER, // deprecated
+      bpSystolic: DataTypes.INTEGER, // deprecated
+      bpDiastolic: DataTypes.INTEGER, // deprecated
+      gcsTotal: DataTypes.INTEGER, // deprecated
+      text: DataTypes.TEXT, // deprecated
       priority: DataTypes.INTEGER,
       filterPriority: {
         type: DataTypes.VIRTUAL(DataTypes.INTEGER),

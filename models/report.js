@@ -509,18 +509,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Report.init(
     {
-      filterPriority: {
-        type: DataTypes.VIRTUAL(DataTypes.INTEGER),
-        get() {
-          if (this.isDeleted) {
-            return sequelize.models.Patient.Priority.DELETED;
-          }
-          if (this.disposition?.destinationFacilityId) {
-            return sequelize.models.Patient.Priority.TRANSPORTED;
-          }
-          return this.patient?.priority;
-        },
-      },
       isCanonical: {
         type: DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['canonicalId']),
         get() {
@@ -528,6 +516,8 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       pin: DataTypes.STRING,
+      priority: DataTypes.INTEGER,
+      filterPriority: DataTypes.INTEGER,
       incidentNumber: {
         type: DataTypes.VIRTUAL(DataTypes.STRING),
         get() {
@@ -621,6 +611,28 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
+  Report.beforeValidate(async (record, options) => {
+    const { transaction } = options;
+    const patient = record.patient || (await record.getPatient({ transaction }));
+    const disposition = record.disposition || (await record.getDisposition({ transaction }));
+    record.priority = patient?.priority;
+    if (record.priority !== null && record.priority !== undefined) {
+      if (record.isDeleted) {
+        record.filterPriority = sequelize.models.Patient.Priority.DELETED;
+      } else if (disposition?.destinationFacilityId) {
+        record.filterPriority = sequelize.models.Patient.Priority.TRANSPORTED;
+      } else {
+        record.filterPriority = record.priority;
+      }
+      if (record.changed('priority')) {
+        options.fields?.push('priority');
+      }
+      if (record.changed('filterPriority')) {
+        options.fields?.push('filterPriority');
+      }
+    }
+  });
+
   Report.afterCreate(async (record, options) => {
     if (record.isCanonical) {
       const incident = await record.getIncident(options);
@@ -629,14 +641,22 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Report.afterSave(async (record, options) => {
+    const { transaction } = options;
     if (record.isCanonical) {
+      let incident;
+      if (record.priority !== null && record.priority !== undefined && (record.changed('priority') || record.changed('filterPriority'))) {
+        incident = incident || record.incident || (await record.getIncident({ transaction }));
+        const user = await record.getUpdatedBy({ transaction });
+        const agency = await record.getUpdatedByAgency({ transaction });
+        await incident?.updatePatientsCounts(user, agency, { transaction });
+      }
       if (record.changed('deletedAt')) {
-        const incident = await record.getIncident(options);
-        await incident?.updateReportsCount(options);
+        incident = incident || record.incident || (await record.getIncident({ transaction }));
+        await incident?.updateReportsCount({ transaction });
       }
       return;
     }
-    await record.handleAssetFile('emsDataSetFile', options);
+    await record.handleAssetFile('emsDataSetFile', { transaction });
   });
 
   sequelizePaginate.paginate(Report);
