@@ -173,15 +173,15 @@ module.exports = (sequelize, DataTypes) => {
       const reports = await this.getReports({ attributes: ['priority', 'filterPriority', 'deletedAt'], transaction });
       // count by priority and filterPriority for transported patients
       const priorityPatientsCounts = [0, 0, 0, 0, 0, 0];
-      // const transpPriorityPatientsCounts = [0, 0, 0, 0, 0, 0];
+      const transpPriorityPatientsCounts = [0, 0, 0, 0, 0, 0];
       for (const report of reports) {
         if (!report.isDeleted) {
           if (report.priority !== null && report.priority !== undefined) {
             priorityPatientsCounts[report.priority] += 1;
+            if (report.filterPriority === sequelize.models.Patient.Priority.TRANSPORTED) {
+              transpPriorityPatientsCounts[report.priority] += 1;
+            }
           }
-          // if (report.filterPriority == sequelize.models.Patient.Priority.TRANSPORTED) {
-          //   transpPriorityPatientsCounts[report.priority] += 1;
-          // }
         }
       }
       return sequelize.models.Scene.createOrUpdate(
@@ -191,6 +191,7 @@ module.exports = (sequelize, DataTypes) => {
           id: uuid(),
           parentId: scene.currentId,
           priorityPatientsCounts,
+          transpPriorityPatientsCounts,
         },
         { transaction },
       );
