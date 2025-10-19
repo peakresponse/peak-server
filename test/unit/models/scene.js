@@ -128,6 +128,8 @@ describe('models', () => {
           'isMCI',
           'mgsResponderId',
           'approxPatientsCount',
+          'patientsCount',
+          'transpPatientsCount',
           'approxPriorityPatientsCounts',
         ]);
 
