@@ -177,6 +177,10 @@ async function dispatchReportUpdate(reportId) {
     for (const rep of payload.Report) {
       rep.sceneId = scene.currentId;
     }
+    // include latest canonical Scene
+    if (!payload.Scene.find((s) => s.id === scene.id)) {
+      payload.Scene.push(scene.toJSON());
+    }
     payload = JSON.stringify(payload);
   });
   // send updates to all clients watching the same scene
