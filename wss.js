@@ -262,6 +262,9 @@ function configure(server, app) {
             req.scene = await models.Scene.findByPk(params.get('id'), {
               include: ['city', 'incident', 'state'],
             });
+          } else if (params.get('incidentId')) {
+            const incident = await models.Incident.findByPk(params.get('incidentId'));
+            req.scene = await incident?.getScene({ include: ['city', 'incident', 'state'] });
           }
           if (!req.scene) {
             socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');
