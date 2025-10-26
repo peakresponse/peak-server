@@ -17,6 +17,15 @@
     [error]="error"></shared-text-field>
 </div>
 <div class="mb-3">
+  <shared-object-field
+    id="baseHospitalFacilityId"
+    label="Base Hospital Facility"
+    [source]="record"
+    [target]="record"
+    [error]="error"
+    objectApiPath="facilities"></shared-object-field>
+</div>
+<div class="mb-3">
   <shared-array-field id="regionAgencies" label="Agencies" [source]="record" [target]="record" [error]="error">
     <ng-template #item let-regionAgency="item">
       <div class="form-field__subitem">{{ regionAgency.agency?.name }} ({{ regionAgency.agency?.stateUniqueId }})</div>

@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
         'createdAt',
         'updatedAt',
       ]);
+      if (this.baseHospitalFacility) {
+        data.baseHospitalFacility = this.baseHospitalFacility.toJSON();
+      }
       if (this.regionAgencies) {
         data.regionAgencies = this.regionAgencies.map((ra) => ra.toJSON());
       }

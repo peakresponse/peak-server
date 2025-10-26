@@ -33,6 +33,7 @@ router.get(
     const { id } = req.params;
     const record = await models.Region.findByPk(id, {
       include: [
+        { model: models.Facility, as: 'baseHospitalFacility' },
         { model: models.RegionAgency, as: 'regionAgencies', include: 'agency' },
         { model: models.RegionFacility, as: 'regionFacilities', include: 'facility' },
       ],
@@ -124,6 +125,9 @@ router.patch(
             }),
           );
           await record.setRegionFacilities(regionFacilities, { transaction });
+        }
+        if (record.baseHospitalFacilityId) {
+          record.baseHospitalFacility = await models.Facility.findByPk(record.baseHospitalFacilityId, { transaction });
         }
         record.regionAgencies = await models.RegionAgency.scope('ordered').findAll({
           include: 'agency',
