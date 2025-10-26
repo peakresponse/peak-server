@@ -113,13 +113,19 @@ router.patch(
                 defaults: {
                   position: index + 1,
                   facilityName: rf.facilityName,
+                  designations: rf.designations,
                   createdById: req.user.id,
                   updatedById: req.user.id,
                 },
                 transaction,
               });
               if (!isCreated) {
-                await regionFacility.update({ position: index + 1, facilityName: rf.facilityName, updatedById: req.user.id });
+                await regionFacility.update({
+                  position: index + 1,
+                  facilityName: rf.facilityName,
+                  designations: rf.designations,
+                  updatedById: req.user.id,
+                });
               }
               return regionFacility;
             }),
