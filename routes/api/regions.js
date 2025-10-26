@@ -53,7 +53,9 @@ router.post(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const record = models.Region.build(_.pick(req.body, ['name', 'routedUrl', 'routedClientId', 'routedClientSecret']));
+    const record = models.Region.build(
+      _.pick(req.body, ['name', 'routedUrl', 'routedClientId', 'routedClientSecret', 'baseHospitalFacilityId']),
+    );
     record.createdById = req.user.id;
     record.updatedById = req.user.id;
     await record.save();
@@ -69,7 +71,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       record = await models.Region.findByPk(req.params.id, { transaction });
       if (record) {
-        record.set(_.pick(req.body, ['name', 'routedUrl', 'routedClientId']));
+        record.set(_.pick(req.body, ['name', 'routedUrl', 'routedClientId', 'baseHospitalFacilityId']));
         if (req.body.routedClientSecret) {
           record.routedClientSecret = req.body.routedClientSecret;
         }
