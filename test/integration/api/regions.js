@@ -53,6 +53,7 @@ describe('/api/regions', () => {
         name: 'San Francisco County EMS Agency',
         routedUrl: 'https://sf.routedapp.net',
         routedClientId: 'testid',
+        baseHospitalFacilityId: null,
         regionAgencies: data.regionAgencies,
         regionFacilities: data.regionFacilities,
         createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
