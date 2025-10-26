@@ -124,6 +124,7 @@ describe('/api/venues', () => {
           name: 'San Francisco County EMS Agency',
           routedClientId: 'testid',
           routedUrl: 'https://sf.routedapp.net',
+          baseHospitalFacilityId: null,
           updatedAt: response.body.region.updatedAt,
           updatedById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',
         },
