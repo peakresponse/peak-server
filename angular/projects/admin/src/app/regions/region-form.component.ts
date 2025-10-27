@@ -3,7 +3,7 @@ import { HttpParams } from '@angular/common/http';
 
 import { catchError, of, map } from 'rxjs';
 
-import { ApiService } from 'shared';
+import { ApiService, SchemaService } from 'shared';
 
 @Component({
   selector: 'admin-regions-form',
@@ -14,19 +14,19 @@ export class RegionFormComponent {
   @Input() record: any = null;
   @Input() error: any = null;
 
-  designations = [
-    { value: '4224003', label: 'Adult Trauma' },
-    { value: '4224005', label: 'Cardiac Arrest' },
-    { value: '4224007', label: 'Obstetrics' },
-    { value: '4224009', label: 'Other' },
-    { value: '4224011', label: 'Pediatric Trauma' },
-    { value: '4224013', label: 'STEMI' },
-    { value: '4224015', label: 'Stroke' },
-    { value: '4224017', label: 'Trauma (General)' },
-    { value: '4224019', label: 'Sepsis' },
-  ];
+  designations: any[] = [];
 
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    private schema: SchemaService,
+  ) {}
+
+  ngOnInit(): void {
+    this.schema.get('/nemsis/xsd/eDisposition_v3.json').subscribe(() => {
+      const designationsMap = this.schema.getEnum('DestinationPrearrivalActivation');
+      this.designations = Object.entries(designationsMap).map(([value, label]) => ({ value, label }));
+    });
+  }
 
   labelFor(value: string): string | undefined {
     return this.designations.find((d) => d.value === value)?.label;
