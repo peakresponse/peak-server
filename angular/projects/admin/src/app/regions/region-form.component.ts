@@ -3,7 +3,7 @@ import { HttpParams } from '@angular/common/http';
 
 import { catchError, of, map } from 'rxjs';
 
-import { ApiService } from 'shared';
+import { ApiService, SchemaService } from 'shared';
 
 @Component({
   selector: 'admin-regions-form',
@@ -14,7 +14,23 @@ export class RegionFormComponent {
   @Input() record: any = null;
   @Input() error: any = null;
 
-  constructor(private api: ApiService) {}
+  designations: any[] = [];
+
+  constructor(
+    private api: ApiService,
+    private schema: SchemaService,
+  ) {}
+
+  ngOnInit(): void {
+    this.schema.get('/nemsis/xsd/eDisposition_v3.json').subscribe(() => {
+      const designationsMap = this.schema.getEnum('DestinationPrearrivalActivation');
+      this.designations = Object.entries(designationsMap).map(([value, label]) => ({ value, label }));
+    });
+  }
+
+  labelFor(value: string): string | undefined {
+    return this.designations.find((d) => d.value === value)?.label;
+  }
 
   agencySearchHandler = (query: string) =>
     this.api.agencies.index(new HttpParams().set('search', query)).pipe(

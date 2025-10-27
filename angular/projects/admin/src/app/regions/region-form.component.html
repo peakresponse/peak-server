@@ -49,11 +49,31 @@
   </shared-array-field>
 </div>
 <div class="mb-3">
-  <shared-array-field id="regionFacilities" label="Facilities" [source]="record" [target]="record" [error]="error">
-    <ng-template #item let-regionFacility="item">
+  <shared-array-field
+    id="regionFacilities"
+    label="Facilities"
+    [source]="record"
+    [target]="record"
+    [error]="error"
+    [showClearButton]="false">
+    <ng-template #item let-regionFacility="item" let-removeItem="removeItem" let-updateItem="updateItem">
       <div class="form-field__subitem">{{ regionFacility.facility?.name }} ({{ regionFacility.facility?.locationCode }})</div>
       <div class="form-field__subitem">
-        <input type="text" placeholder="Display name (optional)" [(ngModel)]="regionFacility.facilityName" />
+        <h5>Display Name (optional)</h5>
+        {{ regionFacility.facilityName }}
+      </div>
+      <div *ngFor="let designation of regionFacility.designations; let first = first" class="form-field__subitem">
+        <h5 *ngIf="first">Designations</h5>
+        {{ labelFor(designation) }}
+      </div>
+      <div class="form-field__subitem">
+        <admin-regions-facility-form
+          #editFacilityForm
+          [isEditing]="true"
+          [record]="regionFacility"
+          (onConfirm)="updateItem(regionFacility, $event)"></admin-regions-facility-form>
+        <button (click)="editFacilityForm.show(regionFacility)" type="button" class="btn btn--sm btn--secondary me-2">Edit</button>
+        <button (click)="removeItem(item)" type="button" class="btn btn--sm btn--secondary--danger">Delete</button>
       </div>
     </ng-template>
     <ng-template #form let-addItem="addItem">

@@ -1,0 +1,26 @@
+<shared-modal #modal i18n-confirmLabel confirmLabel="Submit" i18n-dismissLabel dismissLabel="Cancel" (confirm)="onConfirmInternal()">
+  <h3 class="modal-title">
+    <span i18n *ngIf="isEditing">Edit Region Facility</span>
+    <span i18n *ngIf="!isEditing">New Region Facility</span>
+  </h3>
+  <div class="modal-body text-start">
+    <div class="mb-3">
+      <shared-text-field id="facilityName" label="Display Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
+    </div>
+    <div class="mb-3">
+      <shared-array-field id="designations" label="Designations" [source]="record" [target]="record" [error]="error">
+        <ng-template #item let-item="item"> {{ labelFor(item) }} </ng-template>
+        <ng-template #form let-addItem="addItem">
+          <shared-select-field
+            #designationsSelect
+            id="designationsSelect"
+            (valueChange)="$event && addItem($event); $event && designationsSelect.onClear()"
+            [target]="{ designationsSelect: null }">
+            <option [value]="null">Add a Designation...</option>
+            <option *ngFor="let designation of designations" [value]="designation.value">{{ designation.label }}</option>
+          </shared-select-field>
+        </ng-template>
+      </shared-array-field>
+    </div>
+  </div>
+</shared-modal>
