@@ -34,10 +34,21 @@ describe('/api/agora', () => {
         .expect(StatusCodes.OK);
     });
 
-    describe('GET /token', () => {
+    describe('GET /rtm-token', () => {
       it('returns a token', async () => {
         const response = await testSession
-          .get('/api/agora/token?channelName=test')
+          .get('/api/agora/rtm-token?channelName=test')
+          .set('Host', `bmacc.${process.env.BASE_HOST}`)
+          .expect(StatusCodes.OK);
+        const data = response.body;
+        assert.ok(data.token);
+      });
+    });
+
+    describe('GET /rtc-token', () => {
+      it('returns a token', async () => {
+        const response = await testSession
+          .get('/api/agora/rtc-token?channelName=test')
           .set('Host', `bmacc.${process.env.BASE_HOST}`)
           .expect(StatusCodes.OK);
         const data = response.body;

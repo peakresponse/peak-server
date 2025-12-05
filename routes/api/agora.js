@@ -1,5 +1,5 @@
 const express = require('express');
-const { RtcRole, RtcTokenBuilder } = require('agora-token');
+const { RtcRole, RtcTokenBuilder, RtmTokenBuilder } = require('agora-token');
 
 const models = require('../../models');
 const helpers = require('../helpers');
@@ -10,17 +10,32 @@ const { Roles } = models.Employment;
 const router = express.Router();
 
 router.get(
-  '/token',
+  '/rtm-token',
   interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { channelName } = req.query;
-    const token = RtcTokenBuilder.buildTokenWithRtm(
+    const token = RtmTokenBuilder.buildToken(
       process.env.AGORA_APP_ID,
       process.env.AGORA_APP_CERTIFICATE,
       channelName,
-      req.user.id,
+      12 /* hr */ * 60 /* min/hr */ * 60 /* sec/min */,
+    );
+    res.json({ token });
+  }),
+);
+
+router.get(
+  '/rtc-token',
+  interceptors.requireAgency(Roles.USER),
+  helpers.async(async (req, res) => {
+    const { channelName } = req.query;
+    const token = RtcTokenBuilder.buildTokenWithUid(
+      process.env.AGORA_APP_ID,
+      process.env.AGORA_APP_CERTIFICATE,
+      channelName,
+      0,
       RtcRole.PUBLISHER,
-      60 /* min */ * 60 /* sec/min */,
+      12 /* hr */ * 60 /* min/hr */ * 60 /* sec/min */,
     );
     res.json({ token });
   }),
