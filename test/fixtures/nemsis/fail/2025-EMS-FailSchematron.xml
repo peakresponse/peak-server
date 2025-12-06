@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+NEMSIS V3 Test Case for Pre-testing
+ID:               2025-EMS-FailSchematron_v350
+Description:      Test case for EMSDataSet that fails national and compliance testing Schematron validation.
+Expected Result:  [ERROR]
+Expected Message: When Other Associated Symptoms has a Pertinent Negative, it should have a value and it should not have a Not Value (Not Applicable, Not Recorded, or Not Reporting).
+Expected Message: A procedure of "Informing doctor" should be recorded when Type of Service Requested is "Mobile Integrated Health Care Encounter". This is a validation message for compliance pre-testing for 2023 for NEMSIS v3.5.0.
+
+-->
+<EMSDataSet xmlns="http://www.nemsis.org"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.nemsis.org https://nemsis.org/media/nemsis_v3/3.5.0.251001CP6/XSDs/NEMSIS_XSDs/EMSDataSet_v3.xsd">
+   <Header>
+      <DemographicGroup>
+         <dAgency.01>C034</dAgency.01>
+         <dAgency.02>350-C034P2</dAgency.02>
+         <dAgency.04>09</dAgency.04>
+      </DemographicGroup>
+      <PatientCareReport UUID="5ee723e8-7a08-4d9b-96d4-65272f8a6303">
+         <eRecord>
+            <eRecord.01>2025-EMS-5-CPMIH_v350</eRecord.01>
+            <eRecord.SoftwareApplicationGroup>
+               <eRecord.02>NEMSIS Technical Assistance Center</eRecord.02>
+               <eRecord.03>Compliance Testing</eRecord.03>
+               <eRecord.04>3.5.0.251001CP6_250925</eRecord.04>
+            </eRecord.SoftwareApplicationGroup>
+         </eRecord>
+         <eResponse>
+            <eResponse.AgencyGroup>
+               <eResponse.01>350-C034P2</eResponse.01>
+               <eResponse.02>Danbury EMS Division of Danbury Fire Department</eResponse.02>
+            </eResponse.AgencyGroup>
+            <eResponse.03>350-24.46606</eResponse.03>
+            <eResponse.04>350-24.46606.1</eResponse.04>
+            <eResponse.ServiceGroup>
+               <eResponse.05>2205031</eResponse.05>
+            </eResponse.ServiceGroup>
+            <eResponse.07>2207021</eResponse.07>
+            <eResponse.08 xsi:nil="true" NV="7701001"/>
+            <eResponse.09>2209011</eResponse.09>
+            <eResponse.10>2210017</eResponse.10>
+            <eResponse.11 xsi:nil="true" NV="7701001"/>
+            <eResponse.12>2212015</eResponse.12>
+            <eResponse.13>54RG8451</eResponse.13>
+            <eResponse.14>DF CP</eResponse.14>
+            <eResponse.16>Danbury Mobile Health Operations Center</eResponse.16>
+            <eResponse.23>2223005</eResponse.23>
+            <eResponse.24 xsi:nil="true" NV="7701003"/>
+         </eResponse>
+         <eDispatch>
+            <eDispatch.01>2301051</eDispatch.01>
+            <eDispatch.02 xsi:nil="true" NV="7701001"/>
+         </eDispatch>
+         <eCrew>
+            <eCrew.CrewGroup>
+               <eCrew.01>54266</eCrew.01>
+               <eCrew.02>9925035</eCrew.02>
+               <eCrew.03>2403011</eCrew.03>
+            </eCrew.CrewGroup>
+         </eCrew>
+         <eTimes>
+            <eTimes.01 xsi:nil="true" NV="7701001"/>
+            <eTimes.03>2024-10-14T08:00:00-04:00</eTimes.03>
+            <eTimes.05>2024-10-14T09:45:00-04:00</eTimes.05>
+            <eTimes.06>2024-10-14T10:01:00-04:00</eTimes.06>
+            <eTimes.07>2024-10-14T10:01:00-04:00</eTimes.07>
+            <eTimes.08 xsi:nil="true" NV="7701001"/>
+            <eTimes.09>2024-10-14T10:18:00-04:00</eTimes.09>
+            <eTimes.11 xsi:nil="true" NV="7701001"/>
+            <eTimes.12 xsi:nil="true" NV="7701001"/>
+            <eTimes.13>2024-10-14T10:25:00-04:00</eTimes.13>
+            <eTimes.16>2024-10-14T10:25:00-04:00</eTimes.16>
+         </eTimes>
+         <ePatient>
+            <ePatient.01>DF21087</ePatient.01>
+            <ePatient.PatientNameGroup>
+               <ePatient.02>Lind</ePatient.02>
+               <ePatient.03>Viva</ePatient.03>
+               <ePatient.04>Phoebe</ePatient.04>
+            </ePatient.PatientNameGroup>
+            <ePatient.05>52 North Lake Street</ePatient.05>
+            <ePatient.06>958905</ePatient.06>
+            <ePatient.07>36119</ePatient.07>
+            <ePatient.08>36</ePatient.08>
+            <ePatient.09>10560</ePatient.09>
+            <ePatient.10>US</ePatient.10>
+            <ePatient.11>36119015000</ePatient.11>
+            <ePatient.12>805141893</ePatient.12>
+            <ePatient.13 xsi:nil="true" NV="7701003"/>
+            <ePatient.14>2514011</ePatient.14>
+            <ePatient.AgeGroup>
+               <ePatient.15>79</ePatient.15>
+               <ePatient.16>2516009</ePatient.16>
+            </ePatient.AgeGroup>
+            <ePatient.17>1945-08-29</ePatient.17>
+            <ePatient.25>9919001</ePatient.25>
+         </ePatient>
+         <ePayment>
+            <ePayment.01>2601017</ePayment.01>
+            <ePayment.08>2608001</ePayment.08>
+            <ePayment.40>2640003</ePayment.40>
+            <ePayment.50 xsi:nil="true" NV="7701001"/>
+         </ePayment>
+         <eScene>
+            <eScene.01 xsi:nil="true" NV="7701001"/>
+            <eScene.06>2707005</eScene.06>
+            <eScene.07 xsi:nil="true" NV="7701001"/>
+            <eScene.08 xsi:nil="true" NV="7701001"/>
+            <eScene.09>Y92.0</eScene.09>
+            <eScene.10 xsi:nil="true" NV="7701001"/>
+            <eScene.15>52 North Lake Street</eScene.15>
+            <eScene.17>958905</eScene.17>
+            <eScene.18>36</eScene.18>
+            <eScene.19>10560</eScene.19>
+            <eScene.21>36119</eScene.21>
+            <eScene.22>US</eScene.22>
+            <eScene.23>36119015000</eScene.23>
+         </eScene>
+         <eSituation>
+            <eSituation.01 xsi:nil="true" NV="7701001"/>
+            <eSituation.02>9922001</eSituation.02>
+            <eSituation.PatientComplaintGroup>
+               <eSituation.03>2803001</eSituation.03>
+               <eSituation.04>Type II diabetes</eSituation.04>
+               <eSituation.05>9</eSituation.05>
+               <eSituation.06>2806011</eSituation.06>
+            </eSituation.PatientComplaintGroup>
+            <eSituation.07>2807011</eSituation.07>
+            <eSituation.08>2808007</eSituation.08>
+            <eSituation.09>Z00.00</eSituation.09>
+            <!-- + -->
+            <eSituation.10 xsi:nil="true" PN="8801031"/>
+            <!-- -->
+            <eSituation.11>Z51.89</eSituation.11>
+            <eSituation.12 xsi:nil="true" NV="7701003"/>
+            <eSituation.13>2813009</eSituation.13>
+            <eSituation.18 xsi:nil="true" NV="7701003"/>
+            <eSituation.20 xsi:nil="true" NV="7701001"/>
+         </eSituation>
+         <eInjury>
+            <eInjury.01 xsi:nil="true" NV="7701001"/>
+            <eInjury.02 xsi:nil="true" NV="7701001"/>
+            <eInjury.03 xsi:nil="true" NV="7701001"/>
+            <eInjury.04 xsi:nil="true" NV="7701001"/>
+         </eInjury>
+         <eArrest>
+            <eArrest.01>3001001</eArrest.01>
+            <eArrest.02 xsi:nil="true" NV="7701001"/>
+            <eArrest.03 xsi:nil="true" NV="7701001"/>
+            <eArrest.04 xsi:nil="true" NV="7701001"/>
+            <eArrest.07 xsi:nil="true" NV="7701001"/>
+            <eArrest.09 xsi:nil="true" NV="7701001"/>
+            <eArrest.11 xsi:nil="true" NV="7701001"/>
+            <eArrest.12 xsi:nil="true" NV="7701001"/>
+            <eArrest.14 xsi:nil="true" NV="7701001"/>
+            <eArrest.16 xsi:nil="true" NV="7701001"/>
+            <eArrest.17 xsi:nil="true" NV="7701001"/>
+            <eArrest.18 xsi:nil="true" NV="7701001"/>
+            <eArrest.20 xsi:nil="true" NV="7701001"/>
+            <eArrest.21 xsi:nil="true" NV="7701001"/>
+            <eArrest.22 xsi:nil="true" NV="7701001"/>
+         </eArrest>
+         <eHistory>
+            <eHistory.01>3101009</eHistory.01>
+            <eHistory.PractitionerGroup>
+               <eHistory.02>Larkin</eHistory.02>
+               <eHistory.03>Audreanne</eHistory.03>
+               <eHistory.04>A</eHistory.04>
+            </eHistory.PractitionerGroup>
+            <eHistory.05>3105007</eHistory.05>
+            <eHistory.05>3105009</eHistory.05>
+            <eHistory.06 CodeType="9924003">28889</eHistory.06>
+            <eHistory.06 CodeType="9924001">Z88.0</eHistory.06>
+            <eHistory.06 CodeType="9924003">274783</eHistory.06>
+            <eHistory.07>232346004</eHistory.07>
+            <eHistory.07>418968001</eHistory.07>
+            <eHistory.08>E11.8</eHistory.08>
+            <eHistory.08>E03.9</eHistory.08>
+            <eHistory.08>M19.90</eHistory.08>
+            <eHistory.08>0JHT3VZ</eHistory.08>
+            <eHistory.09>3109005</eHistory.09>
+            <eHistory.CurrentMedsGroup>
+               <eHistory.12>86009</eHistory.12>
+               <eHistory.13>10</eHistory.13>
+               <eHistory.14>3114049</eHistory.14>
+               <eHistory.15>9927063</eHistory.15>
+               <eHistory.20>3120025</eHistory.20>
+            </eHistory.CurrentMedsGroup>
+            <eHistory.CurrentMedsGroup>
+               <eHistory.12>86009</eHistory.12>
+               <eHistory.13>1</eHistory.13>
+               <eHistory.14>3114049</eHistory.14>
+               <eHistory.15>9927063</eHistory.15>
+               <eHistory.20>3120013</eHistory.20>
+            </eHistory.CurrentMedsGroup>
+            <eHistory.CurrentMedsGroup>
+               <eHistory.12>8640</eHistory.12>
+               <eHistory.13>40</eHistory.13>
+               <eHistory.14>3114029</eHistory.14>
+               <eHistory.15>9927015</eHistory.15>
+               <eHistory.20>3120029</eHistory.20>
+            </eHistory.CurrentMedsGroup>
+            <eHistory.16>9923003</eHistory.16>
+            <eHistory.17 xsi:nil="true" PN="8801015"/>
+            <eHistory.19>2024-10-14T09:30:00-04:00</eHistory.19>
+         </eHistory>
+         <eNarrative>
+            <eNarrative.01>Scheduled CP/MIH visit for diabetes management. We discussed the importance of eating regularly to maintain healthy blood sugar level. Visit report submitted to Dr. Larkin.</eNarrative.01>
+         </eNarrative>
+         <eVitals>
+            <eVitals.VitalGroup>
+               <eVitals.01>2024-10-14T10:04:00-04:00</eVitals.01>
+               <eVitals.02>9923001</eVitals.02>
+               <eVitals.CardiacRhythmGroup>
+                  <eVitals.03 xsi:nil="true" NV="7701003"/>
+                  <eVitals.04 xsi:nil="true" NV="7701003"/>
+                  <eVitals.05 xsi:nil="true" NV="7701003"/>
+               </eVitals.CardiacRhythmGroup>
+               <eVitals.BloodPressureGroup>
+                  <eVitals.06>132</eVitals.06>
+                  <eVitals.07>82</eVitals.07>
+                  <eVitals.08 xsi:nil="true" NV="7701003"/>
+               </eVitals.BloodPressureGroup>
+               <eVitals.HeartRateGroup>
+                  <eVitals.10>64</eVitals.10>
+                  <eVitals.11>3311007</eVitals.11>
+               </eVitals.HeartRateGroup>
+               <eVitals.12>97</eVitals.12>
+               <eVitals.14>20</eVitals.14>
+               <eVitals.16 xsi:nil="true" NV="7701003"/>
+               <eVitals.18>92</eVitals.18>
+               <eVitals.GlasgowScoreGroup>
+                  <eVitals.19 xsi:nil="true" NV="7701003"/>
+                  <eVitals.20 xsi:nil="true" NV="7701003"/>
+                  <eVitals.21 xsi:nil="true" NV="7701003"/>
+                  <eVitals.22 xsi:nil="true" NV="7701003"/>
+                  <eVitals.23 xsi:nil="true" NV="7701003"/>
+               </eVitals.GlasgowScoreGroup>
+               <eVitals.26>3326001</eVitals.26>
+               <eVitals.PainScaleGroup>
+                  <eVitals.27>1</eVitals.27>
+                  <eVitals.28>3328003</eVitals.28>
+               </eVitals.PainScaleGroup>
+               <eVitals.StrokeScaleGroup>
+                  <eVitals.29 xsi:nil="true" NV="7701003"/>
+                  <eVitals.30 xsi:nil="true" NV="7701003"/>
+               </eVitals.StrokeScaleGroup>
+               <eVitals.31 xsi:nil="true" NV="7701003"/>
+            </eVitals.VitalGroup>
+         </eVitals>
+         <eLabs>
+            <eLabs.LabGroup>
+               <eLabs.01>2024-10-11T14:38:12-04:00</eLabs.01>
+               <eLabs.02>9923003</eLabs.02>
+               <eLabs.LabResultGroup>
+                  <eLabs.04>A1C: 6.4%</eLabs.04>
+               </eLabs.LabResultGroup>
+            </eLabs.LabGroup>
+         </eLabs>
+         <eExam>
+            <eExam.01>62.6</eExam.01>
+         </eExam>
+         <eProtocols>
+            <eProtocols.ProtocolGroup>
+               <eProtocols.01>9914175</eProtocols.01>
+               <eProtocols.02>3602003</eProtocols.02>
+            </eProtocols.ProtocolGroup>
+         </eProtocols>
+         <eMedications>
+            <eMedications.MedicationGroup>
+               <eMedications.01 xsi:nil="true" NV="7701003"/>
+               <eMedications.02 xsi:nil="true" NV="7701003"/>
+               <eMedications.03 xsi:nil="true" NV="7701003"/>
+               <eMedications.04 xsi:nil="true" NV="7701003"/>
+               <eMedications.DosageGroup>
+                  <eMedications.05 xsi:nil="true" NV="7701003"/>
+                  <eMedications.06 xsi:nil="true" NV="7701003"/>
+               </eMedications.DosageGroup>
+               <eMedications.07 xsi:nil="true" NV="7701003"/>
+               <eMedications.08 xsi:nil="true" NV="7701003"/>
+               <eMedications.10 xsi:nil="true" NV="7701003"/>
+            </eMedications.MedicationGroup>
+         </eMedications>
+         <eProcedures>
+            <eProcedures.ProcedureGroup>
+               <eProcedures.01>2024-10-14T10:04:00-04:00</eProcedures.01>
+               <eProcedures.02>9923001</eProcedures.02>
+               <eProcedures.03>61746007</eProcedures.03>
+               <eProcedures.05>1</eProcedures.05>
+               <eProcedures.06>9923003</eProcedures.06>
+               <eProcedures.07>3907033</eProcedures.07>
+               <eProcedures.08 xsi:nil="true" NV="7701001"/>
+               <eProcedures.09>54266</eProcedures.09>
+               <eProcedures.10>9905033</eProcedures.10>
+               <eProcedures.11>9918005</eProcedures.11>
+            </eProcedures.ProcedureGroup>
+            <!-- - -->
+         </eProcedures>
+         <eDisposition>
+            <eDisposition.DestinationGroup>
+               <eDisposition.01 xsi:nil="true" NV="7701001"/>
+               <eDisposition.02 xsi:nil="true" NV="7701001"/>
+               <eDisposition.05 xsi:nil="true" NV="7701001"/>
+               <eDisposition.06 xsi:nil="true" NV="7701001"/>
+               <eDisposition.07 xsi:nil="true" NV="7701001"/>
+            </eDisposition.DestinationGroup>
+            <eDisposition.11 xsi:nil="true" NV="7701001"/>
+            <eDisposition.IncidentDispositionGroup>
+               <eDisposition.27>4227001</eDisposition.27>
+               <eDisposition.28>4228005</eDisposition.28>
+               <eDisposition.29>4229011</eDisposition.29>
+               <eDisposition.30>4230013</eDisposition.30>
+               <eDisposition.31>4231005</eDisposition.31>
+            </eDisposition.IncidentDispositionGroup>
+            <eDisposition.16 xsi:nil="true" NV="7701001"/>
+            <eDisposition.17 xsi:nil="true" NV="7701001"/>
+            <eDisposition.18 xsi:nil="true" NV="7701001"/>
+            <eDisposition.19>4219011</eDisposition.19>
+            <eDisposition.20 xsi:nil="true" NV="7701001"/>
+            <eDisposition.21 xsi:nil="true" NV="7701001"/>
+            <eDisposition.22 xsi:nil="true" NV="7701001"/>
+            <eDisposition.23 xsi:nil="true" NV="7701001"/>
+            <eDisposition.HospitalTeamActivationGroup>
+               <eDisposition.24>4224001</eDisposition.24>
+               <eDisposition.25 xsi:nil="true" NV="7701001"/>
+            </eDisposition.HospitalTeamActivationGroup>
+            <eDisposition.26>4226005</eDisposition.26>
+            <eDisposition.26>4226007</eDisposition.26>
+            <eDisposition.32>4232011</eDisposition.32>
+         </eDisposition>
+         <eOutcome>
+            <eOutcome.01 xsi:nil="true" NV="7701001"/>
+            <eOutcome.02 xsi:nil="true" NV="7701001"/>
+            <eOutcome.EmergencyDepartmentProceduresGroup>
+               <eOutcome.09 xsi:nil="true" NV="7701001"/>
+               <eOutcome.19 xsi:nil="true" NV="7701001"/>
+            </eOutcome.EmergencyDepartmentProceduresGroup>
+            <eOutcome.10 xsi:nil="true" NV="7701001"/>
+            <eOutcome.11 xsi:nil="true" NV="7701001"/>
+            <eOutcome.HospitalProceduresGroup>
+               <eOutcome.12 xsi:nil="true" NV="7701001"/>
+               <eOutcome.20 xsi:nil="true" NV="7701001"/>
+            </eOutcome.HospitalProceduresGroup>
+            <eOutcome.13 xsi:nil="true" NV="7701001"/>
+            <eOutcome.16 xsi:nil="true" NV="7701001"/>
+            <eOutcome.18 xsi:nil="true" NV="7701001"/>
+         </eOutcome>
+         <eOther>
+            <eOther.08>54266</eOther.08>
+         </eOther>
+      </PatientCareReport>
+   </Header>
+</EMSDataSet>
