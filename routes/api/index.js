@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 router.use('/agencies', require('./agencies'));
+router.use('/agora', require('./agora'));
 router.use('/assets', require('./assets'));
 router.use('/assignments', require('./assignments'));
 router.use('/cities', require('./cities'));
