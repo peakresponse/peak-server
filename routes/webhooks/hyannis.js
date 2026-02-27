@@ -54,75 +54,76 @@ router.post('/cad', async (req, res) => {
         dispatchedAt = dispatchedAt.toISO();
       }
       const data = req.body;
-      if (dispatchedAt && data.incident_number && data.unit_codes) {
-        [incident] = await models.Incident.findOrBuild({
+      if (!dispatchedAt || !data.incident_number || !data.unit_codes) {
+        throw new Error('Unable to parse incident data');
+      }
+      [incident] = await models.Incident.findOrBuild({
+        where: {
+          number: data.incident_number,
+        },
+        defaults: {
+          psapId: psap.id,
+          data,
+          createdById: req.user.id,
+          updatedById: req.user.id,
+        },
+        transaction,
+      });
+      if (incident.isNewRecord) {
+        const newScene = {
+          id: uuid(),
+          canonicalId: uuid(),
+          address1: data.address?.trim(),
+          address2: data.address2?.trim(),
+          lat: data.latitude,
+          lng: data.longitude,
+        };
+        newScene.stateId = states.abbrMapping[data.state_code]?.code;
+        newScene.cityId = await models.City.getCode(data.city, newScene.stateId, { transaction });
+        const [scene] = await models.Scene.createOrUpdate(req.user, null, newScene, { transaction });
+        incident.sceneId = scene.canonicalId;
+        await incident.save({ transaction });
+      } else {
+        incident.data = data;
+        await incident.save({ transaction });
+      }
+
+      const units = data.unit_codes.split(',');
+      for (const unit of units) {
+        // eslint-disable-next-line no-await-in-loop
+        const [vehicle] = await models.Vehicle.findOrCreate({
           where: {
-            number: data.incident_number,
+            createdByAgencyId: hyannis.id,
+            number: unit,
           },
           defaults: {
-            psapId: psap.id,
-            data,
             createdById: req.user.id,
             updatedById: req.user.id,
           },
           transaction,
         });
-        if (incident.isNewRecord) {
-          const newScene = {
-            id: uuid(),
-            canonicalId: uuid(),
-            address1: data.address?.trim(),
-            address2: data.address2?.trim(),
-            lat: data.latitude,
-            lng: data.longitude,
-          };
-          newScene.stateId = states.abbrMapping[data.state_code]?.code;
-          newScene.cityId = await models.City.getCode(data.city, newScene.stateId, { transaction });
-          const [scene] = await models.Scene.createOrUpdate(req.user, null, newScene, { transaction });
-          incident.sceneId = scene.canonicalId;
-          await incident.save({ transaction });
-        } else {
-          incident.data = data;
-          await incident.save({ transaction });
-        }
-
-        const units = data.unit_codes.split(',');
-        for (const unit of units) {
+        // eslint-disable-next-line no-await-in-loop
+        const dispatch = await models.Dispatch.scope('canonical').findOne({
+          where: {
+            incidentId: incident.id,
+            vehicleId: vehicle.id,
+          },
+          transaction,
+        });
+        if (!dispatch) {
           // eslint-disable-next-line no-await-in-loop
-          const [vehicle] = await models.Vehicle.findOrCreate({
-            where: {
-              createdByAgencyId: hyannis.id,
-              number: unit,
-            },
-            defaults: {
-              createdById: req.user.id,
-              updatedById: req.user.id,
-            },
-            transaction,
-          });
-          // eslint-disable-next-line no-await-in-loop
-          const dispatch = await models.Dispatch.scope('canonical').findOne({
-            where: {
+          await models.Dispatch.createOrUpdate(
+            req.user,
+            null,
+            {
+              id: uuid(),
+              canonicalId: uuid(),
               incidentId: incident.id,
               vehicleId: vehicle.id,
+              dispatchedAt,
             },
-            transaction,
-          });
-          if (!dispatch) {
-            // eslint-disable-next-line no-await-in-loop
-            await models.Dispatch.createOrUpdate(
-              req.user,
-              null,
-              {
-                id: uuid(),
-                canonicalId: uuid(),
-                incidentId: incident.id,
-                vehicleId: vehicle.id,
-                dispatchedAt,
-              },
-              { transaction },
-            );
-          }
+            { transaction },
+          );
         }
       }
     });
