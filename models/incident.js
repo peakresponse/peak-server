@@ -229,6 +229,7 @@ module.exports = (sequelize, DataTypes) => {
         'calledAt',
         'dispatchNotifiedAt',
         'reportsCount',
+        'data',
         'createdAt',
         'createdById',
         'createdByAgencyId',
@@ -256,18 +257,10 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       sort: DataTypes.INTEGER,
-      calledAt: {
-        type: DataTypes.DATE,
-        field: 'called_at',
-      },
-      dispatchNotifiedAt: {
-        type: DataTypes.DATE,
-        field: 'dispatch_notified_at',
-      },
-      reportsCount: {
-        type: DataTypes.INTEGER,
-        field: 'reports_count',
-      },
+      calledAt: DataTypes.DATE,
+      dispatchNotifiedAt: DataTypes.DATE,
+      reportsCount: DataTypes.INTEGER,
+      data: DataTypes.JSONB,
     },
     {
       sequelize,
