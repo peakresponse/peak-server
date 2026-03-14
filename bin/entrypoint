@@ -7,4 +7,4 @@ printenv > /etc/environment
 service cron start
 
 # start the webserver
-bin/www
+./node_modules/.bin/pm2-runtime bin/www

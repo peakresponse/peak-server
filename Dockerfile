@@ -45,6 +45,6 @@ WORKDIR $APP_HOME
 RUN npm install && \
     mvn install
 
-CMD ["./node_modules/.bin/pm2-runtime", "bash -c ./bin/entrypoint"]
+CMD ["bash", "./bin/entrypoint"]
 
 EXPOSE 3000
