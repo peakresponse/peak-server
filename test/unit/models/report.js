@@ -371,10 +371,15 @@ describe('models', () => {
       it('generates NEMSIS EMS DataSet XML', async () => {
         const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
         // attach a fixture to the File referenced by this report
-        const tmpFile = await helpers.uploadFile('512x512.png');
+        const mp4File = await helpers.uploadFile('testing123.mp4');
         const file = await models.File.findByPk('8e693fb6-7f2a-4cc8-9d5f-d8eb5915bb60');
-        await file.update({ file: tmpFile });
-        assert(await helpers.assetPathExists(path.join('files', file.id, 'file', tmpFile)));
+        await file.update({ file: mp4File });
+        assert(await helpers.assetPathExists(path.join('files', file.id, 'file', mp4File)));
+        // attach a fixture to the Signature referenced by this report
+        const pngFile = await helpers.uploadFile('512x512.png');
+        const signature = await models.Signature.findByPk('62e0590e-dc22-431a-9ef3-30a822cc754b');
+        await signature.update({ file: pngFile });
+        assert(await helpers.assetPathExists(path.join('signatures', signature.id, 'file', pngFile)));
         // regenerate the report ems data set xml
         await report.regenerate();
         // since this is the canonical record, it will regenerate the "current" version
@@ -384,7 +389,8 @@ describe('models', () => {
         compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.before.xml'));
         compare = compare.toString();
         compare = compare.replace('<eRecord.04></eRecord.04>', `<eRecord.04>${pkg.version}</eRecord.04>`);
-        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${tmpFile}</eOther.22>`);
+        compare = compare.replace('<eOther.16></eOther.16>', `<eOther.16>${pngFile}</eOther.16>`);
+        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${mp4File}</eOther.22>`);
         assert.deepStrictEqual(current.emsDataSet, compare);
         // assert that the full xml attachment exists with inserted file
         assert(current.emsDataSetFile);
@@ -394,7 +400,8 @@ describe('models', () => {
         compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.after.xml'));
         compare = compare.toString();
         compare = compare.replace('<eRecord.04></eRecord.04>', `<eRecord.04>${pkg.version}</eRecord.04>`);
-        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${tmpFile}</eOther.22>`);
+        compare = compare.replace('<eOther.16></eOther.16>', `<eOther.16>${pngFile}</eOther.16>`);
+        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${mp4File}</eOther.22>`);
         assert.deepStrictEqual(test.toString(), compare);
         await helpers.cleanUploadedAssets();
         await fs.unlink(downloadedFilePath);
