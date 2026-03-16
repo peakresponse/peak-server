@@ -20,7 +20,7 @@ describe('lib', () => {
 
       describe('.base64Encode()', () => {
         it('encodes the specified file using base64', async () => {
-          const srcPath = path.resolve(__dirname, '../../fixtures/files/512x512.png');
+          const srcPath = path.resolve(__dirname, '../../fixtures/files/testing123.mp4');
           await utils.base64Encode(srcPath, tmpFile.path);
           const test = fs.readFileSync(tmpFile.path);
           const compare = fs.readFileSync(`${srcPath}.base64.txt`);
@@ -33,8 +33,10 @@ describe('lib', () => {
           // make a copy of the dest file
           fs.copyFileSync(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.before.xml'), tmpFile.path);
           // insert base64 encoded data into it
-          const srcPath = path.resolve(__dirname, '../../fixtures/files/512x512.png.base64.txt');
+          let srcPath = path.resolve(__dirname, '../../fixtures/files/testing123.mp4.base64.txt');
           await utils.insertFileIntoFile(srcPath, tmpFile.path, '(<eOther\\.11>)(8e693fb67f2a4cc89d5fd8eb5915bb60)(<\\/eOther\\.11>)');
+          srcPath = path.resolve(__dirname, '../../fixtures/files/512x512.png.base64.txt');
+          await utils.insertFileIntoFile(srcPath, tmpFile.path, '(<eOther\\.18>)(62e0590edc22431a9ef330a822cc754b)(<\\/eOther\\.18>)');
           const test = fs.readFileSync(tmpFile.path);
           const compare = fs.readFileSync(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.after.xml'));
           assert(test.equals(compare));

@@ -446,6 +446,11 @@ module.exports = (sequelize, DataTypes) => {
         // eslint-disable-next-line no-await-in-loop
         await Promise.all(records.map((record) => record.insertFileInto(tmpFile.path)));
       }
+      for (const modelName of ['Signatures']) {
+        const records = this[modelName.toLowerCase()]; // note that these _will_ already be fetched above
+        // eslint-disable-next-line no-await-in-loop
+        await Promise.all(records.map((record) => record.insertFileInto(tmpFile.path)));
+      }
       // upload as file attachment
       const emsDataSetFile = await Base.uploadAssetFile(tmpFile.path);
       await tmpFile.cleanup();

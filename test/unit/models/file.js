@@ -24,8 +24,10 @@ describe('models', () => {
         'versions',
         'employments',
         'files',
+        'forms',
+        'signatures',
       ]);
-      file = await helpers.uploadFile('512x512.png');
+      file = await helpers.uploadFile('testing123.mp4');
     });
 
     afterEach(async () => {
@@ -164,10 +166,16 @@ describe('models', () => {
       it('inserts base64 encoded data into the specified XML file', async () => {
         const record = await models.File.findByPk('8e693fb6-7f2a-4cc8-9d5f-d8eb5915bb60');
         await record.update({ file });
+
+        file = await helpers.uploadFile('512x512.png');
+        const signature = await models.Signature.findByPk('62e0590e-dc22-431a-9ef3-30a822cc754b');
+        await signature.update({ file });
+
         const tmpFile = await tmp.file();
         try {
           await fs.copyFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.before.xml'), tmpFile.path);
           await record.insertFileInto(tmpFile.path);
+          await signature.insertFileInto(tmpFile.path);
           const test = await fs.readFile(tmpFile.path);
           const compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.after.xml'));
           assert(test.equals(compare));
