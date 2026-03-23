@@ -3,6 +3,8 @@ const { StatusCodes } = require('http-status-codes');
 const { v4: uuidv4 } = require('uuid');
 
 const models = require('../../../models');
+
+const { Roles } = models.Employment;
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
 
@@ -10,7 +12,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { page = 1, filter, search } = req.query;
     const options = {
@@ -38,7 +40,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const [record, created] = await models.Form.createOrUpdate(req.user, req.agency, req.body);
     res.status(created ? StatusCodes.CREATED : StatusCodes.OK).json(record.toJSON());
@@ -47,7 +49,7 @@ router.post(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const record = await models.Form.findOne({
       where: {
@@ -65,7 +67,7 @@ router.get(
 
 router.delete(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     let record;
     await models.sequelize.transaction(async (transaction) => {

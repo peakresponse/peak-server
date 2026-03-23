@@ -5,6 +5,8 @@ const { StatusCodes } = require('http-status-codes');
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 const models = require('../../models');
+
+const { Roles } = models.Employment;
 const nemsisStates = require('../../lib/nemsis/states');
 const { NemsisStateDataSetParser } = require('../../lib/nemsis/stateDataSetParser');
 
@@ -12,7 +14,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -36,7 +38,7 @@ router.get(
 
 router.post(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const { stateId, version, file, fileName } = req.body;
     let record;
@@ -133,7 +135,7 @@ router.delete(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const stateDataSet = await models.NemsisStateDataSet.findByPk(req.params.id);
     if (stateDataSet) {

@@ -3,12 +3,7 @@
 </div>
 <shared-form class="d-block col-xl-6" (create)="onCreate($event)" type="clients">
   <ng-template let-record="record" let-error="error">
-    <div class="mb-3">
-      <shared-text-field id="name" label="Name" [source]="record" [target]="record" [error]="error"></shared-text-field>
-    </div>
-    <div class="mb-3">
-      <shared-text-field id="redirectUri" label="Redirect URI" [source]="record" [target]="record" [error]="error"></shared-text-field>
-    </div>
+    <admin-client-form [record]="record" [error]="error"></admin-client-form>
   </ng-template>
 </shared-form>
 <shared-modal #showSecret confirmLabel="OK" (confirm)="onConfirm()">

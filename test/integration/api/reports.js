@@ -50,10 +50,94 @@ describe('/api/reports', () => {
       'reports',
       'exports',
       'exportTriggers',
+      'clients',
     ]);
     mockRouted();
     mockValidatorEMSRequest();
     testSession = session(app);
+  });
+
+  context('Integration Account', () => {
+    let token;
+    beforeEach(async () => {
+      const response = await testSession
+        .post('/oauth/token')
+        .type('form')
+        .send({
+          client_id: 'kr7yts6DCAopSAVvg5is',
+          client_secret: 'abcdefghijklmnopqrstuvwxyz01234567891234',
+          grant_type: 'client_credentials',
+        })
+        .expect(StatusCodes.OK);
+      ({ access_token: token } = response.body);
+    });
+
+    describe('GET /', () => {
+      it('returns a paginated list of Reports for the agency', async () => {
+        const response = await testSession
+          .get('/api/reports')
+          .set('X-Agency-State-Id', '06')
+          .set('X-Agency-State-Unique-Id', 'S07-50120')
+          .set('Accept', 'application/json')
+          .set('Authorization', `Bearer ${token}`)
+          .expect(StatusCodes.OK);
+        assert.deepStrictEqual(response.body, [
+          {
+            id: '9242e8de-9d22-457f-96c8-00a43dfc1f3a',
+            incidentNumber: '12345678',
+            patientAge: 45,
+            patientAgeUnits: null,
+            patientGender: null,
+            patientName: 'Mathew Taylor',
+            pin: null,
+            unit: '88',
+            createdAt: '2020-04-06T21:23:10.102Z',
+            deletedAt: null,
+            updatedAt: response.body[0].updatedAt,
+          },
+          {
+            id: '4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed',
+            incidentNumber: '12345678',
+            patientAge: 18,
+            patientAgeUnits: '2516009',
+            patientGender: '9906003',
+            patientName: 'David Jones',
+            pin: '123456',
+            unit: '50',
+            createdAt: '2020-04-06T21:22:10.102Z',
+            deletedAt: null,
+            updatedAt: response.body[1].updatedAt,
+          },
+        ]);
+      });
+    });
+
+    describe('GET /:id', () => {
+      it('is not allowed for INTEGRATION role user', async () => {
+        await testSession
+          .get('/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed')
+          .set('X-Agency-State-Id', '06')
+          .set('X-Agency-State-Unique-Id', 'S07-50120')
+          .set('Accept', 'application/json')
+          .set('Authorization', `Bearer ${token}`)
+          .expect(StatusCodes.FORBIDDEN);
+      });
+    });
+
+    describe('GET /:id/export', () => {
+      it('returns the NEMSIS XML EMSDataSet export of the Report', async () => {
+        const response = await testSession
+          .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed/export`)
+          .set('X-Agency-State-Id', '06')
+          .set('X-Agency-State-Unique-Id', 'S07-50120')
+          .set('Accept', 'application/json')
+          .set('Authorization', `Bearer ${token}`)
+          .expect(StatusCodes.MOVED_TEMPORARILY);
+        const record = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
+        const current = await record.getCurrent({ attributes: { include: ['emsDataSetFile'] } });
+        assert.deepStrictEqual(response.headers.location, `/api/assets/reports/${current.id}/ems-data-set-file/${current.emsDataSetFile}`);
+      });
+    });
   });
 
   context('Agency without a PSAP', () => {
@@ -867,10 +951,10 @@ describe('/api/reports', () => {
       });
     });
 
-    describe('GET /:id/preview', () => {
+    describe('GET /:id/export', () => {
       it('returns the NEMSIS XML EMSDataSet export of the Report', async () => {
         const response = await testSession
-          .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed/preview`)
+          .get(`/api/reports/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed/export`)
           .set('Host', `bmacc.${process.env.BASE_HOST}`);
         assert.deepStrictEqual(response.statusCode, StatusCodes.MOVED_TEMPORARILY);
         const record = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');

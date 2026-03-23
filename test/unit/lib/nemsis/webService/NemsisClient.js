@@ -54,16 +54,15 @@ describe('lib', () => {
           });
 
           it('submits an invalid (sch) EmsDataSet payload to the SubmitData endpoint', async () => {
-            const payload = readPayload('fail/2023-EMS-FailSchematron_v350.xml');
+            const payload = readPayload('fail/2025-EMS-FailSchematron.xml');
             const response = await client.submitEmsDataSet(payload, '3.5.0');
             assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.FAILED_IMPORT_SCH_ERROR);
           });
 
           it('submits a complete valid payload to the SubmitData endpoint', async () => {
-            const payload = readPayload('full/2023-EMS-1-Opioid-Release_v350.xml');
+            const payload = readPayload('full/2025-EMS-1-Overdose_v350.xml');
             const response = await client.submitEmsDataSet(payload, '3.5.0');
-            // now returning a warning expecting new ePatient.25 sex field
-            assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.SUCCESS_WITH_SCH_WARN);
+            assert.deepStrictEqual(response.statusCode, NemsisServer.StatusCodes.SUCCESS);
           });
         });
       });

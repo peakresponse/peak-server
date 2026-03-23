@@ -3,6 +3,8 @@ const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -10,7 +12,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const { exportId, exportTriggerId, page = '1' } = req.query ?? {};
     const options = {
@@ -41,7 +43,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     const record = await models.ExportLog.findByPk(req.params.id, {
       include: ['export', 'exportTrigger'],

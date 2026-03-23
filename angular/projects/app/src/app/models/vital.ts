@@ -1,5 +1,12 @@
 import { Base, NemsisValue } from './base';
 
+export enum VitalLevelOfResponsiveness {
+  alert = '3326001',
+  verbal = '3326003',
+  pain = '3326005',
+  unresponsive = '3326007',
+}
+
 export class Vital extends Base {
   get vitalSignsTakenAt(): NemsisValue {
     return this.getFirstNemsisValue(['eVitals.01']);
@@ -47,5 +54,13 @@ export class Vital extends Base {
 
   get totalGlasgowComaScore(): NemsisValue {
     return this.getFirstNemsisValue(['eVitals.GlasgowScoreGroup', 'eVitals.23']);
+  }
+
+  get temperatureC(): NemsisValue {
+    return this.getFirstNemsisValue(['eVitals.TemperatureGroup', 'eVitals.24']);
+  }
+
+  get levelOfResponsiveness(): NemsisValue {
+    return this.getFirstNemsisValue(['eVitals.26']);
   }
 }

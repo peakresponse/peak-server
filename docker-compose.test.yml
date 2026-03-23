@@ -31,6 +31,8 @@ services:
     environment:
       - CI=true
       - DATABASE_URL=postgres://postgres@db/app
+      - AGORA_APP_ID
+      - AGORA_APP_CERTIFICATE
       - AWS_MOBILEAPP_ACCESS_KEY_ID
       - AWS_MOBILEAPP_SECRET_ACCESS_KEY
       - AWS_MOBILEAPP_REGION

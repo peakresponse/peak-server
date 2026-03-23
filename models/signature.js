@@ -1,4 +1,8 @@
 const _ = require('lodash');
+const fs = require('fs/promises');
+const tmp = require('tmp-promise');
+
+const utils = require('../lib/utils');
 
 const { Base } = require('./base');
 
@@ -62,6 +66,33 @@ module.exports = (sequelize, DataTypes) => {
         'updatedById',
         'updatedByAgencyId',
       ]);
+    }
+
+    getData(version) {
+      if (this.file) {
+        this.setNemsisValue(['eOther.16'], this.file);
+        this.setNemsisValue(['eOther.18'], this.id.replace(/-/g, ''));
+      }
+      return super.getData(version);
+    }
+
+    async insertFileInto(xmlFilePath) {
+      if (!this.file) {
+        return;
+      }
+      let filePath;
+      let tmpFile;
+      try {
+        filePath = await this.downloadAssetFile('file');
+        tmpFile = await tmp.file();
+        await utils.base64Encode(filePath, tmpFile.path);
+        await utils.insertFileIntoFile(tmpFile.path, xmlFilePath, `(<eOther\\.18>)(${this.id.replace(/-/g, '')})(<\\/eOther\\.18>)`);
+      } finally {
+        if (filePath) {
+          await fs.unlink(filePath);
+        }
+        await tmpFile?.cleanup();
+      }
     }
   }
   Signature.init(

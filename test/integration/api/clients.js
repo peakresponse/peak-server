@@ -18,7 +18,7 @@ describe('/api/clients', () => {
   describe('GET /', () => {
     it('returns a paginated list of Clients', async () => {
       const response = await testSession.get('/api/clients').expect(StatusCodes.OK);
-      assert.deepStrictEqual(response.body.length, 2);
+      assert.deepStrictEqual(response.body.length, 3);
     });
   });
 
@@ -52,7 +52,8 @@ describe('/api/clients', () => {
       assert.deepStrictEqual(data, {
         id: '9db6b601-13fc-4755-906a-c532ce319be0',
         name: 'Test Client 2',
-        grants: ['authorization_code', 'refresh_token'],
+        grants: ['refresh_token', 'authorization_code'],
+        userId: null,
         clientId: 'R7M6UhUuKq76aYtcdbr5',
         redirectUri: 'http://localhost:3000/callback',
         createdById: '7f666fe4-dbdd-4c7f-ab44-d9157379a680',

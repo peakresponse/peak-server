@@ -64,7 +64,7 @@ describe('/api/users', () => {
       assert.deepStrictEqual(data.Agency[0].subdomain, 'bmacc');
       assert(data.Employment);
       assert(data.Employment.isOwner);
-      assert.deepStrictEqual(data.Employment.roles, ['CONFIGURATION']);
+      assert.deepStrictEqual(data.Employment.roles, ['USER', 'CONFIGURATION']);
     });
 
     it('returns the user record of the logged in user, including Region payload if any', async () => {

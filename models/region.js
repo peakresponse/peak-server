@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Region.belongsTo(models.User, { as: 'createdBy' });
       Region.belongsTo(models.User, { as: 'updatedBy' });
+      Region.belongsTo(models.Facility, { as: 'baseHospitalFacility' });
       Region.hasMany(models.RegionAgency, { as: 'regionAgencies' });
       Region.hasMany(models.RegionFacility, { as: 'regionFacilities' });
       Region.belongsToMany(models.Agency, { as: 'agencies', through: models.RegionAgency });
@@ -21,11 +22,15 @@ module.exports = (sequelize, DataTypes) => {
         'name',
         'routedUrl',
         'routedClientId',
+        'baseHospitalFacilityId',
         'createdById',
         'updatedById',
         'createdAt',
         'updatedAt',
       ]);
+      if (this.baseHospitalFacility) {
+        data.baseHospitalFacility = this.baseHospitalFacility.toJSON();
+      }
       if (this.regionAgencies) {
         data.regionAgencies = this.regionAgencies.map((ra) => ra.toJSON());
       }

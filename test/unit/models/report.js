@@ -47,6 +47,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.DECEASED);
       });
 
@@ -69,6 +70,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.TRANSPORTED);
       });
 
@@ -85,6 +87,7 @@ describe('models', () => {
         const report = await models.Report.findByPk('9242e8de-9d22-457f-96c8-00a43dfc1f3a', {
           include: ['disposition', 'patient'],
         });
+        assert.deepStrictEqual(report.priority, models.Patient.Priority.DECEASED);
         assert.deepStrictEqual(report.filterPriority, models.Patient.Priority.DELETED);
       });
     });
@@ -120,11 +123,17 @@ describe('models', () => {
       it('creates a new canonical and corresponding history record', async () => {
         const user = await models.User.findByPk('ffc7a312-50ba-475f-b10f-76ce793dc62a');
         const agency = await models.Agency.findByPk('9eeb6591-12f8-4036-8af8-6b235153d444');
+        const incident = await models.Incident.findByPk('6621202f-ca09-4ad9-be8f-b56346d1de65');
+        assert.deepStrictEqual(incident.reportsCount, 2);
+        const scene = await incident.getScene();
+        assert.deepStrictEqual(scene.patientsCount, 2);
+        assert.deepStrictEqual(scene.priorityPatientsCounts, [1, 0, 0, 0, 1, 0]);
 
         const data = {
           id: '7bd5e011-8948-4498-93e3-a212272662bb',
           canonicalId: 'aace1af0-aeaf-4020-acca-dbeb7e3295e8',
           incidentId: '6621202f-ca09-4ad9-be8f-b56346d1de65',
+          patientId: '1b76259b-d08e-45d2-ba62-983880ef2e4e',
           medicationIds: ['6f43bc3d-1d4e-470a-9568-0c8b50c8281e'],
           procedureIds: ['34a48aed-3a58-4dad-aa6e-4cc4d4f5efc0'],
           vitalIds: ['2036119d-4545-4452-a26f-b9ec6a1a323b'],
@@ -147,6 +156,7 @@ describe('models', () => {
           createdAt: '2023-04-06T21:23:10.102Z',
           updatedAt: '2023-04-06T21:23:10.102Z',
         };
+
         const [record, created] = await models.Report.createOrUpdate(user, agency, data);
         assert(record);
         assert(created);
@@ -162,6 +172,7 @@ describe('models', () => {
           'updatedAt',
           'incidentId',
           'data',
+          'patientId',
           'medicationIds',
           'vitalIds',
           'procedureIds',
@@ -177,8 +188,12 @@ describe('models', () => {
         assert.deepStrictEqual(record.createdAt.toISOString(), '2023-04-06T21:23:10.102Z');
         assert.deepStrictEqual(record.updatedAt.toISOString(), '2023-04-06T21:23:10.102Z');
 
-        const incident = await record.getIncident();
+        await incident.reload();
         assert.deepStrictEqual(incident.reportsCount, 3);
+
+        await scene.reload();
+        assert.deepStrictEqual(scene.patientsCount, 3);
+        assert.deepStrictEqual(scene.priorityPatientsCounts, [2, 0, 0, 0, 1, 0]);
 
         let medications = await record.getMedications();
         assert(medications.length, 1);
@@ -319,45 +334,24 @@ describe('models', () => {
       });
     });
 
-    describe('createPayload()', () => {
-      it('generates a JSON payload of all dependencies for a list of Reports', async () => {
+    describe('toIntegrationJSON()', () => {
+      it('returns a JSON object of the Report in integration payload format', async () => {
         const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed', {
-          include: [
-            'response',
-            { model: models.Scene, as: 'scene', include: ['city', 'state'] },
-            'time',
-            'patient',
-            'situation',
-            'history',
-            { model: models.Disposition, as: 'disposition', include: ['destinationFacility'] },
-            'narrative',
-            'medications',
-            'procedures',
-            'vitals',
-            'files',
-            { model: models.Signature, as: 'signatures', include: ['form'] },
-          ],
+          include: ['patient', 'disposition', 'response', 'incident'],
         });
-        const payload = await models.Report.createPayload([report]);
-        assert.deepStrictEqual(payload, {
-          City: [report.scene.city.toJSON()],
-          Disposition: [report.disposition.toJSON()],
-          Facility: [report.disposition.destinationFacility.toJSON()],
-          File: report.files.map((m) => m.toJSON()),
-          Form: [report.signatures[0].form.toJSON()],
-          History: [report.history.toJSON()],
-          Medication: report.medications.map((m) => m.toJSON()),
-          Narrative: [report.narrative.toJSON()],
-          Patient: [report.patient.toJSON()],
-          Procedure: report.procedures.map((m) => m.toJSON()),
-          Report: [report.toJSON()],
-          Response: [report.response.toJSON()],
-          Scene: [report.scene.toJSON()],
-          Signature: report.signatures.map((s) => s.toJSON()),
-          Situation: [report.situation.toJSON()],
-          State: [report.scene.state.toJSON()],
-          Time: [report.time.toJSON()],
-          Vital: report.vitals.map((m) => m.toJSON()),
+        const json = JSON.parse(JSON.stringify(report.toIntegrationJSON()));
+        assert.deepStrictEqual(json, {
+          id: '4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed',
+          incidentNumber: '12345678',
+          patientAge: 18,
+          patientAgeUnits: '2516009',
+          patientGender: '9906003',
+          patientName: 'David Jones',
+          pin: '123456',
+          unit: '50',
+          createdAt: '2020-04-06T21:22:10.102Z',
+          deletedAt: null,
+          updatedAt: json.updatedAt,
         });
       });
     });
@@ -377,10 +371,15 @@ describe('models', () => {
       it('generates NEMSIS EMS DataSet XML', async () => {
         const report = await models.Report.findByPk('4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed');
         // attach a fixture to the File referenced by this report
-        const tmpFile = await helpers.uploadFile('512x512.png');
+        const mp4File = await helpers.uploadFile('testing123.mp4');
         const file = await models.File.findByPk('8e693fb6-7f2a-4cc8-9d5f-d8eb5915bb60');
-        await file.update({ file: tmpFile });
-        assert(await helpers.assetPathExists(path.join('files', file.id, 'file', tmpFile)));
+        await file.update({ file: mp4File });
+        assert(await helpers.assetPathExists(path.join('files', file.id, 'file', mp4File)));
+        // attach a fixture to the Signature referenced by this report
+        const pngFile = await helpers.uploadFile('512x512.png');
+        const signature = await models.Signature.findByPk('62e0590e-dc22-431a-9ef3-30a822cc754b');
+        await signature.update({ file: pngFile });
+        assert(await helpers.assetPathExists(path.join('signatures', signature.id, 'file', pngFile)));
         // regenerate the report ems data set xml
         await report.regenerate();
         // since this is the canonical record, it will regenerate the "current" version
@@ -390,7 +389,8 @@ describe('models', () => {
         compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.before.xml'));
         compare = compare.toString();
         compare = compare.replace('<eRecord.04></eRecord.04>', `<eRecord.04>${pkg.version}</eRecord.04>`);
-        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${tmpFile}</eOther.22>`);
+        compare = compare.replace('<eOther.16></eOther.16>', `<eOther.16>${pngFile}</eOther.16>`);
+        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${mp4File}</eOther.22>`);
         assert.deepStrictEqual(current.emsDataSet, compare);
         // assert that the full xml attachment exists with inserted file
         assert(current.emsDataSetFile);
@@ -400,7 +400,8 @@ describe('models', () => {
         compare = await fs.readFile(path.resolve(__dirname, '../../fixtures/files/4a7b8b77-b7c2-4338-8508-eeb98fb8d3ed.after.xml'));
         compare = compare.toString();
         compare = compare.replace('<eRecord.04></eRecord.04>', `<eRecord.04>${pkg.version}</eRecord.04>`);
-        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${tmpFile}</eOther.22>`);
+        compare = compare.replace('<eOther.16></eOther.16>', `<eOther.16>${pngFile}</eOther.16>`);
+        compare = compare.replace('<eOther.22></eOther.22>', `<eOther.22>${mp4File}</eOther.22>`);
         assert.deepStrictEqual(test.toString(), compare);
         await helpers.cleanUploadedAssets();
         await fs.unlink(downloadedFilePath);

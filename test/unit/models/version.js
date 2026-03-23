@@ -149,6 +149,14 @@ describe('models', () => {
 				</dPersonnel.NameGroup>
 				<dPersonnel.10>pending.user@test.com</dPersonnel.10>
 			</dPersonnel.PersonnelGroup>
+			<dPersonnel.PersonnelGroup UUID="07506533-9b08-4eba-9e97-dd5746204b05">
+				<dPersonnel.NameGroup>
+					<dPersonnel.01>Credentials</dPersonnel.01>
+					<dPersonnel.02>Client</dPersonnel.02>
+				</dPersonnel.NameGroup>
+				<dPersonnel.10>client.credentials@peakresponse.net</dPersonnel.10>
+				<dPersonnel.33>2020-04-06</dPersonnel.33>
+			</dPersonnel.PersonnelGroup>
 			<dPersonnel.PersonnelGroup UUID="50c06caf-9706-4305-bc3a-5462a7d20b6f">
 				<dPersonnel.NameGroup>
 					<dPersonnel.01>Member</dPersonnel.01>

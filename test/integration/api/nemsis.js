@@ -43,10 +43,12 @@ describe('/api/nemsis', () => {
       const response = await testSession.get('/api/nemsis').expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
-      assert.deepStrictEqual(data.versions.length, 8);
+      assert.deepStrictEqual(data.versions.length, 10);
       assert.deepStrictEqual(data.versions, [
+        '3.5.1.251001CP2',
         '3.5.1.250403CP1',
         '3.5.1.250115',
+        '3.5.0.251001CP6',
         '3.5.0.250403CP5',
         '3.5.0.230317CP4',
         '3.5.0.211008CP3',
@@ -63,10 +65,12 @@ describe('/api/nemsis', () => {
       const response = await testSession.post('/api/nemsis/install').send({ version: '3.5.0.211008CP3' }).expect(StatusCodes.OK);
       const data = response.body;
       assert(data);
-      assert.deepStrictEqual(data.versions.length, 8);
+      assert.deepStrictEqual(data.versions.length, 10);
       assert.deepStrictEqual(data.versions, [
+        '3.5.1.251001CP2',
         '3.5.1.250403CP1',
         '3.5.1.250115',
+        '3.5.0.251001CP6',
         '3.5.0.250403CP5',
         '3.5.0.230317CP4',
         '3.5.0.211008CP3',

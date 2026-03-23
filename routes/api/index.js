@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 router.use('/agencies', require('./agencies'));
+router.use('/agora', require('./agora'));
 router.use('/assets', require('./assets'));
 router.use('/assignments', require('./assignments'));
 router.use('/cities', require('./cities'));
@@ -10,6 +11,7 @@ router.use('/clients', require('./clients'));
 router.use('/counties', require('./counties'));
 router.use('/demographics', require('./demographics'));
 router.use('/dispatchers', require('./dispatchers'));
+router.use('/docs', require('./docs'));
 router.use('/employments', require('./employments'));
 router.use('/events', require('./events'));
 router.use('/exports/logs', require('./exportLogs'));

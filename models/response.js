@@ -61,6 +61,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Response.init(
     {
+      unit: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING, ['data']),
+        get() {
+          return this.getFirstNemsisValue(['eResponse.14']) || this.getFirstNemsisValue(['eResponse.13']);
+        },
+      },
       data: DataTypes.JSONB,
       updatedAttributes: {
         type: DataTypes.JSONB,

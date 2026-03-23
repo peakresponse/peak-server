@@ -39,13 +39,12 @@ module.exports = (sequelize, DataTypes) => {
       return Base.createOrUpdate(File, user, agency, data, [], ['file', 'metadata', 'data'], options);
     }
 
-    async getData(version) {
-      const data = await super.getData(version);
+    getData(version) {
       if (this.file) {
-        data['eOther.11'] = { _text: this.id.replace(/-/g, '') };
-        data['eOther.22'] = { _text: this.file };
+        this.setNemsisValue(['eOther.11'], this.id.replace(/-/g, ''));
+        this.setNemsisValue(['eOther.22'], this.file);
       }
-      return data;
+      return super.getData(version);
     }
 
     async insertFileInto(xmlFilePath) {

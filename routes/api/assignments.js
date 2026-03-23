@@ -3,6 +3,8 @@ const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -10,7 +12,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency([Roles.PERSONNEL, Roles.USER]),
   helpers.async(async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       let user;

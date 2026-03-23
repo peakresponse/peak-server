@@ -92,6 +92,12 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+function extendSession(req) {
+  // extend session with modification as per
+  // https://www.npmjs.com/package/cookie-session#extending-the-session-expiration
+  req.session.nowInMinutes = Math.floor(Date.now() / 60e3);
+}
+
 function getAgencySubdomain(req) {
   if (req.subdomains.length > 0) {
     return req.subdomains[0].trim();
@@ -103,11 +109,27 @@ function getAgencySubdomain(req) {
 }
 
 async function loadAgency(req, res, next) {
-  // load demographic, if on subdomain
+  // check for agency subdomain
   const subdomain = getAgencySubdomain(req);
   if (subdomain) {
-    req.agency = await models.Agency.findOne({
+    req.agency = await models.Agency.scope('claimed').findOne({
       where: { subdomain: { [Op.iLike]: subdomain }, isDraft: false },
+    });
+    if (!req.agency) {
+      if (req.accepts('html')) {
+        next(createError(StatusCodes.NOT_FOUND));
+      } else {
+        res.status(StatusCodes.NOT_FOUND).end();
+      }
+      return;
+    }
+  }
+  // check for agency state/unique id
+  if (req.header('X-Agency-State-Id') && req.header('X-Agency-State-Unique-Id')) {
+    const stateId = req.header('X-Agency-State-Id').trim();
+    const stateUniqueId = req.header('X-Agency-State-Unique-Id').trim();
+    req.agency = await models.Agency.scope('claimed').findOne({
+      where: { stateId, stateUniqueId, isDraft: false },
     });
     if (!req.agency) {
       if (req.accepts('html')) {
@@ -122,7 +144,7 @@ async function loadAgency(req, res, next) {
 }
 
 async function loadApiUser(req, res, next) {
-  if (!req.user && req.headers.authorization) {
+  if (req.headers.authorization) {
     // DEPRECATED: attempt api key authentication via bearer token
     const m = req.headers.authorization.match(/Bearer (.+)/);
     if (m) {
@@ -181,6 +203,7 @@ async function requireLogin(req, res, next, role) {
       }
     }
     if (isAllowed) {
+      extendSession(req);
       next();
     } else {
       sendErrorForbidden(req, res);
@@ -206,6 +229,7 @@ function requireAdmin(req, res, next) {
   /// only allow site admins to continue
   if (req.user) {
     if (req.user.isAdmin) {
+      extendSession(req);
       next();
     } else {
       sendErrorForbidden(req, res);

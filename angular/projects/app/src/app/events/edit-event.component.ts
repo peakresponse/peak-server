@@ -37,8 +37,10 @@ export class EditEventComponent implements OnInit {
     let data: any = {};
     for (const key of Object.keys(record)) {
       data[key] = {};
-      for (const obj of Array.isArray(record[key]) ? record[key] : [record[key]]) {
-        data[key][obj.id] = obj;
+      if (record[key]) {
+        for (const obj of Array.isArray(record[key]) ? record[key] : [record[key]]) {
+          data[key][obj.id] = obj;
+        }
       }
     }
     let event = new Event(record.Event, data, models) as any;

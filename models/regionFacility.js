@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         'regionId',
         'facilityId',
         'facilityName',
+        'designations',
         'position',
         'createdById',
         'updatedById',
@@ -39,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       facilityName: DataTypes.STRING,
+      designations: DataTypes.JSONB,
       position: DataTypes.INTEGER,
     },
     {

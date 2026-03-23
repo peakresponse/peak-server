@@ -96,6 +96,9 @@ describe('wss', () => {
           order: [['id', 'ASC']],
         });
         const payload = JSON.parse(JSON.stringify(await models.Report.createPayload(reports)));
+        for (const report of payload.Report) {
+          report.sceneId = scene.currentId;
+        }
         await request(server)
           .ws(`/scene?id=25db9094-03a5-4267-8314-bead229eff9d`)
           .set('Cookie', testSession.cookies.toValueString())

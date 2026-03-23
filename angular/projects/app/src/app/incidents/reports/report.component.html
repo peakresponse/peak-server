@@ -1,6 +1,6 @@
 <shared-command-header>
   <a class="command-header__plain" (click)="onDone()">Done</a>
-  <a class="command-header__plain" [download]="reportId + '.xml'" [href]="'/api/reports/' + reportId + '/preview'">Export</a>
+  <a class="command-header__plain" [download]="reportId + '.xml'" [href]="'/api/reports/' + reportId + '/export'">Export</a>
 </shared-command-header>
 <main>
   <form *ngIf="report" class="report form--responsive">
@@ -121,6 +121,16 @@
           </div>
         </div>
         <div class="mb-3">
+          <div class="row">
+            <div class="col-6">
+              <shared-text-field id="temperatureF" label="Temp (°F)" [source]="vital"></shared-text-field>
+            </div>
+            <div class="col-6">
+              <shared-text-field id="temperatureC" label="Temp (°C)" [source]="vital"></shared-text-field>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
           <shared-text-field id="endTidalCarbonDioxide" label="EtCO2" [source]="vital"></shared-text-field>
         </div>
         <div class="mb-3">
@@ -128,6 +138,14 @@
         </div>
       </div>
       <div class="col-6">
+        <div class="mb-3">
+          <shared-select-field id="levelOfResponsiveness" label="Level of Responsiveness (AVPU)" [source]="vital">
+            <option [value]="VitalLevelOfResponsiveness.alert">Alert</option>
+            <option [value]="VitalLevelOfResponsiveness.verbal">Verbal</option>
+            <option [value]="VitalLevelOfResponsiveness.pain">Pain</option>
+            <option [value]="VitalLevelOfResponsiveness.unresponsive">Unresponsive</option>
+          </shared-select-field>
+        </div>
         <div class="mb-3">
           <shared-text-field id="heartRate" label="Heart Rate" [source]="vital"></shared-text-field>
         </div>

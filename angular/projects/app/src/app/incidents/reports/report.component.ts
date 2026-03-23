@@ -7,6 +7,7 @@ import { ApiService, NavigationService } from 'shared';
 import { PatientAgeUnits, PatientGender } from '../../models/patient';
 import { UnitDisposition } from '../../models/disposition';
 import { Report } from '../../models/report';
+import { VitalLevelOfResponsiveness } from '../../models/vital';
 import models from '../../models';
 
 @Component({
@@ -17,6 +18,7 @@ export class ReportComponent implements OnDestroy {
   PatientAgeUnits = PatientAgeUnits;
   PatientGender = PatientGender;
   UnitDisposition = UnitDisposition;
+  VitalLevelOfResponsiveness = VitalLevelOfResponsiveness;
 
   subscription?: Subscription;
   incidentId?: string | null;

@@ -4,6 +4,8 @@ const _ = require('lodash');
 
 const models = require('../../models');
 
+const { Roles } = models.Employment;
+
 const helpers = require('../helpers');
 const interceptors = require('../interceptors');
 
@@ -11,7 +13,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const page = req.query.page || 1;
     const options = {
@@ -26,11 +28,12 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { id } = req.params;
     const record = await models.Region.findByPk(id, {
       include: [
+        { model: models.Facility, as: 'baseHospitalFacility' },
         { model: models.RegionAgency, as: 'regionAgencies', include: 'agency' },
         { model: models.RegionFacility, as: 'regionFacilities', include: 'facility' },
       ],
@@ -51,7 +54,9 @@ router.post(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const record = models.Region.build(_.pick(req.body, ['name', 'routedUrl', 'routedClientId', 'routedClientSecret']));
+    const record = models.Region.build(
+      _.pick(req.body, ['name', 'routedUrl', 'routedClientId', 'routedClientSecret', 'baseHospitalFacilityId']),
+    );
     record.createdById = req.user.id;
     record.updatedById = req.user.id;
     await record.save();
@@ -67,7 +72,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       record = await models.Region.findByPk(req.params.id, { transaction });
       if (record) {
-        record.set(_.pick(req.body, ['name', 'routedUrl', 'routedClientId']));
+        record.set(_.pick(req.body, ['name', 'routedUrl', 'routedClientId', 'baseHospitalFacilityId']));
         if (req.body.routedClientSecret) {
           record.routedClientSecret = req.body.routedClientSecret;
         }
@@ -108,18 +113,27 @@ router.patch(
                 defaults: {
                   position: index + 1,
                   facilityName: rf.facilityName,
+                  designations: rf.designations,
                   createdById: req.user.id,
                   updatedById: req.user.id,
                 },
                 transaction,
               });
               if (!isCreated) {
-                await regionFacility.update({ position: index + 1, facilityName: rf.facilityName, updatedById: req.user.id });
+                await regionFacility.update({
+                  position: index + 1,
+                  facilityName: rf.facilityName,
+                  designations: rf.designations,
+                  updatedById: req.user.id,
+                });
               }
               return regionFacility;
             }),
           );
           await record.setRegionFacilities(regionFacilities, { transaction });
+        }
+        if (record.baseHospitalFacilityId) {
+          record.baseHospitalFacility = await models.Facility.findByPk(record.baseHospitalFacilityId, { transaction });
         }
         record.regionAgencies = await models.RegionAgency.scope('ordered').findAll({
           include: 'agency',

@@ -2,6 +2,8 @@ const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../models');
+
+const { Roles } = models.Employment;
 const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 
@@ -9,7 +11,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const { search, page = '1' } = req.query;
     const options = {
@@ -30,7 +32,7 @@ router.get(
 
 router.get(
   '/:id',
-  interceptors.requireAgency(),
+  interceptors.requireAgency(Roles.USER),
   helpers.async(async (req, res) => {
     const record = await models.County.findByPk(req.params.id);
     if (record) {

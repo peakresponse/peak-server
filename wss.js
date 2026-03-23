@@ -171,11 +171,15 @@ async function dispatchReportUpdate(reportId) {
       transaction,
     });
     incident = report.incident;
-    scene = await report.scene.getCanonical({ transaction });
+    scene = await incident.getScene({ transaction });
     payload = await models.Report.createPayload([report], { transaction });
     // during MCI, rewrite all Reports to refer to latest Scene
     for (const rep of payload.Report) {
       rep.sceneId = scene.currentId;
+    }
+    // include latest canonical Scene
+    if (!payload.Scene.find((s) => s.id === scene.id)) {
+      payload.Scene.push(scene.toJSON());
     }
     payload = JSON.stringify(payload);
   });
@@ -258,6 +262,9 @@ function configure(server, app) {
             req.scene = await models.Scene.findByPk(params.get('id'), {
               include: ['city', 'incident', 'state'],
             });
+          } else if (params.get('incidentId')) {
+            const incident = await models.Incident.findByPk(params.get('incidentId'));
+            req.scene = await incident?.getScene({ include: ['city', 'incident', 'state'] });
           }
           if (!req.scene) {
             socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');

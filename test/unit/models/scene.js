@@ -53,6 +53,7 @@ describe('models', () => {
           id: 'fef7d4da-28e7-4423-9975-624eb2d11275',
           canonicalId: '69928e17-c8fb-47db-8597-5591b8dda33a',
           name: 'New Scene',
+          approxPriorityPatientsCounts: [1, 2, 3, 4, 5, 0],
         };
         const [record, created] = await models.Scene.createOrUpdate(user, agency, data);
         assert(record);
@@ -61,7 +62,15 @@ describe('models', () => {
         assert.deepStrictEqual(record.parentId, null);
         assert.deepStrictEqual(record.canonicalId, data.canonicalId);
         assert.deepStrictEqual(record.name, 'New Scene');
-        assert.deepStrictEqual(record.updatedAttributes, ['id', 'canonicalId', 'name']);
+        assert.deepStrictEqual(record.updatedAttributes, [
+          'id',
+          'canonicalId',
+          'name',
+          'approxPatientsCount',
+          'approxPriorityPatientsCounts',
+        ]);
+        assert.deepStrictEqual(record.approxPatientsCount, 15);
+        assert.deepStrictEqual(record.approxPriorityPatientsCounts, [1, 2, 3, 4, 5, 0]);
         assert.deepStrictEqual(record.createdById, user.id);
         assert.deepStrictEqual(record.updatedById, user.id);
         assert.deepStrictEqual(record.createdByAgencyId, agency.id);
@@ -96,6 +105,7 @@ describe('models', () => {
           parentId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
           isMCI: true,
           mgsResponderId: '79ba407e-66ce-488b-b70c-2231bf38567c',
+          approxPriorityPatientsCounts: [1, 2, 3, 4, 5, 0],
         };
         const [record, created] = await models.Scene.createOrUpdate(user, agency, data);
         assert(record);
@@ -106,17 +116,30 @@ describe('models', () => {
         assert.deepStrictEqual(record.canonicalId, parent.canonicalId);
         assert(record.isMCI);
         assert.deepStrictEqual(record.mgsResponderId, '79ba407e-66ce-488b-b70c-2231bf38567c');
+        assert.deepStrictEqual(record.approxPatientsCount, 15);
+        assert.deepStrictEqual(record.approxPriorityPatientsCounts, [1, 2, 3, 4, 5, 0]);
         assert.deepStrictEqual(record.createdById, parent.createdById);
         assert.deepStrictEqual(record.updatedById, user.id);
         assert.deepStrictEqual(record.createdByAgencyId, parent.createdByAgencyId);
         assert.deepStrictEqual(record.updatedByAgencyId, agency.id);
-        assert.deepStrictEqual(record.updatedAttributes, ['id', 'parentId', 'isMCI', 'mgsResponderId']);
+        assert.deepStrictEqual(record.updatedAttributes, [
+          'id',
+          'parentId',
+          'isMCI',
+          'mgsResponderId',
+          'approxPatientsCount',
+          'patientsCount',
+          'transpPatientsCount',
+          'approxPriorityPatientsCounts',
+        ]);
 
         const canonical = await record.getCanonical();
         assert.deepStrictEqual(canonical.parentId, null);
         assert.deepStrictEqual(canonical.canonicalId, null);
         assert(canonical.isMCI);
         assert.deepStrictEqual(canonical.mgsResponderId, '79ba407e-66ce-488b-b70c-2231bf38567c');
+        assert.deepStrictEqual(canonical.approxPatientsCount, 15);
+        assert.deepStrictEqual(canonical.approxPriorityPatientsCounts, [1, 2, 3, 4, 5, 0]);
         assert.deepStrictEqual(canonical.createdById, record.createdById);
         assert.deepStrictEqual(canonical.updatedById, record.updatedById);
         assert.deepStrictEqual(canonical.createdByAgencyId, record.createdByAgencyId);
@@ -136,7 +159,6 @@ describe('models', () => {
         let data = {
           id: '70336540-1d74-40fb-913b-2904a0ba66dc',
           parentId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
-          approxPatientsCount: 2,
           approxPriorityPatientsCounts: [2, 0, 0, 0, 0, 0],
           updatedAt: '2020-04-06T21:23:10.102Z',
         };
@@ -154,7 +176,6 @@ describe('models', () => {
         data = {
           id: '7fc6eb46-0660-46c6-8355-5ba94e1b17bf',
           parentId: 'c7e97d09-dc4b-4b4e-963c-b0ba066934c1',
-          approxPatientsCount: 1,
           approxPriorityPatientsCounts: [0, 1, 0, 0, 0, 0],
           updatedAt: '2020-04-06T21:23:09.102Z',
         };
@@ -163,11 +184,11 @@ describe('models', () => {
         assert(!created);
         assert.deepStrictEqual(record.parentId, '70336540-1d74-40fb-913b-2904a0ba66dc');
         assert.deepStrictEqual(record.secondParentId, '7fc6eb46-0660-46c6-8355-5ba94e1b17bf');
-        assert.deepStrictEqual(record.approxPatientsCount, 2);
+        assert.deepStrictEqual(record.approxPatientsCount, 3);
         assert.deepStrictEqual(record.approxPriorityPatientsCounts, [2, 1, 0, 0, 0, 0]);
 
         canonical = await record.getCanonical();
-        assert.deepStrictEqual(canonical.approxPatientsCount, 2);
+        assert.deepStrictEqual(canonical.approxPatientsCount, 3);
         assert.deepStrictEqual(canonical.approxPriorityPatientsCounts, [2, 1, 0, 0, 0, 0]);
       });
     });

@@ -59,7 +59,7 @@ export class Base {
             }
             return target.cache[type][id];
           }
-          return target.dependencies[type][id];
+          return target.dependencies[type]?.[id];
         } else if (propName.endsWith('s') && `${singularize(propName)}Ids` in target.data) {
           const ids = target.data[`${singularize(propName)}Ids`];
           const type = capitalize(singularize(propName));

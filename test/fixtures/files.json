@@ -11,6 +11,9 @@
         },
         "eOther.10": {
           "_text": "mp4"
+        },
+        "eOther.22": {
+          "_text": "filename.mp4"
         }
       },
       "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
@@ -32,10 +35,13 @@
         },
         "eOther.10": {
           "_text": "mp4"
+        },
+        "eOther.22": {
+          "_text": "filename.mp4"
         }
       },
       "updatedAttributes": ["id", "canonicalId", "data"],
-      "updatedDataAttributes": ["/eOther.09", "/eOther.10"],
+      "updatedDataAttributes": ["/eOther.09", "/eOther.10", "/eOther.22"],
       "createdById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "updatedById": "ffc7a312-50ba-475f-b10f-76ce793dc62a",
       "createdByAgencyId": "9eeb6591-12f8-4036-8af8-6b235153d444",

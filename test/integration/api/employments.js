@@ -34,7 +34,7 @@ describe('/api/employments', () => {
   describe('GET /', () => {
     it('returns personnel Employment records', async () => {
       const response = await testSession.get('/api/employments').set('Host', `bmacc.${process.env.BASE_HOST}`).expect(StatusCodes.OK);
-      assert.deepStrictEqual(response.body?.length, 6);
+      assert.deepStrictEqual(response.body?.length, 7);
     });
 
     it('returns pending personnel Employment records', async () => {
@@ -53,7 +53,7 @@ describe('/api/employments', () => {
         .set('Host', `bmacc.${process.env.BASE_HOST}`)
         .query({ isPending: 0 })
         .expect(StatusCodes.OK);
-      assert.deepStrictEqual(response.body?.length, 4);
+      assert.deepStrictEqual(response.body?.length, 5);
     });
   });
 

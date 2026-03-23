@@ -2,6 +2,8 @@ const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 
 const models = require('../../../models');
+
+const { Roles } = models.Employment;
 const helpers = require('../../helpers');
 const interceptors = require('../../interceptors');
 const base = require('./base');
@@ -10,7 +12,7 @@ const router = express.Router();
 
 router.post(
   '/import',
-  interceptors.requireAgency(models.Employment.Roles.CONFIGURATION),
+  interceptors.requireAgency(Roles.CONFIGURATION),
   helpers.async(async (req, res) => {
     let payload;
     await models.sequelize.transaction(async (transaction) => {
