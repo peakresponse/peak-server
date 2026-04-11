@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Interface.belongsTo(models.User, { as: 'createdBy' });
       Interface.belongsTo(models.User, { as: 'updatedBy' });
-      Interface.hasMany(models.InterfaceScreen, { as: 'interfaceScreens' });
       Interface.hasMany(models.Screen, { as: 'screens' });
     }
   }
