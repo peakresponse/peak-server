@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   Screen.init(
     {
       name: DataTypes.STRING,
+      position: DataTypes.INTEGER,
     },
     {
       sequelize,
