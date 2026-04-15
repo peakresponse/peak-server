@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       Section.belongsTo(models.Screen, { as: 'screen' });
       Section.belongsTo(models.User, { as: 'createdBy' });
       Section.belongsTo(models.User, { as: 'updatedBy' });
-      Section.hasMany(models.SectionElement, { as: 'elements' });
+      Section.hasMany(models.SectionElement, { as: 'elements', foreignKey: 'sectionId' });
     }
   }
   Section.init(
