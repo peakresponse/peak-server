@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         try {
           await fs.access(xslPath);
         } catch {
-          shelljs.exec(`bin/sch-to-xsl ${schPath}`);
+          shelljs.exec(`bin/sch-to-xsl "${schPath}"`);
         }
         return validateDataSet(xslPath, xml, doc);
       }

@@ -2,7 +2,7 @@
 
 # Usage: bin/sch-to-xsl path/to/input.sch
 
-xslt3-he -xsl:nemsis/iso-schematron-xslt2/iso_dsdl_include.xsl -s:$1 -o:$1.1
-xslt3-he -xsl:nemsis/iso-schematron-xslt2/iso_abstract_expand.xsl -s:$1.1 -o:$1.2
-xslt3-he -xsl:nemsis/iso-schematron-xslt2/iso_svrl_for_xslt2.xsl -s:$1.2 -o:$1.xsl allow-foreign=true generate-fired-rule=false
-rm $1.1 $1.2
+xslt3-he -xsl:nemsis/iso-schematron-xslt2/iso_dsdl_include.xsl -s:"$1" -o:"$1.1"
+xslt3-he -xsl:nemsis/iso-schematron-xslt2/iso_abstract_expand.xsl -s:"$1.1" -o:"$1.2"
+xslt3-he -xsl:nemsis/iso-schematron-xslt2/iso_svrl_for_xslt2.xsl -s:"$1.2" -o:"$1.xsl" allow-foreign=true generate-fired-rule=false
+rm "$1.1" "$1.2"

@@ -2,6 +2,6 @@
 
 # Usage: bin/xslt path/to/input.xml path/to/input.xsl path/to/output.xml
 if [ ! -f "$2.sef.json" ]; then
-  xslt3-he -xsl:$2 -export:$2.sef.json -nogo -relocate:on -ns:##html5
+  xslt3-he -xsl:"$2" -export:"$2.sef.json" -nogo -relocate:on -ns:##html5
 fi
-xslt3-he -xsl:$2.sef.json -s:$1 -o:$3
+xslt3-he -xsl:"$2.sef.json" -s:"$1" -o:"$3"
