@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- This NEMSIS 3.4.0 document was generated from a NEMSIS 3.5.0 document via an XML Stylesheet Language Transformation (XSLT). -->
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!-- This NEMSIS 3.4.0 document was generated from a NEMSIS 3.5.0 document via an XML Stylesheet Language Transformation (XSLT). --><!-- 
 
 NEMSIS V3 Test Case for Pre-testing
 ID:               2023-EMS-1-OpioidRelease_v350
@@ -8,9 +6,7 @@ Description:      Test case for opioid treat-and-release.
 Expected Result:  PASS
 
  -->
-<EMSDataSet xmlns="http://www.nemsis.org"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.nemsis.org http://www.nemsis.org/media/nemsis_v3/release-3.4.0/XSDs/NEMSIS_XSDs/EMSDataSet_v3.xsd">
+<EMSDataSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.nemsis.org" xsi:schemaLocation="http://www.nemsis.org http://www.nemsis.org/media/nemsis_v3/release-3.4.0/XSDs/NEMSIS_XSDs/EMSDataSet_v3.xsd">
    <Header>
       <DemographicGroup>
          <dAgency.01>501</dAgency.01>

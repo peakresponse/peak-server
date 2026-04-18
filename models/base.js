@@ -594,6 +594,8 @@ class Base extends Model {
     delete doc[rootTag]._attributes['xmlns:xsi'];
     // return the updated data
     let data = groupTag ? doc[rootTag][groupTag] : doc[rootTag];
+    // remove deprecated pr:isValid attribute
+    delete data._attributes?.['pr:isValid'];
     if (Array.isArray(data)) {
       [data] = data;
     }

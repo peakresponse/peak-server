@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
+const { execFileSync } = require('child_process');
 const { DateTime } = require('luxon');
 const sequelizePaginate = require('sequelize-paginate');
-const shelljs = require('shelljs');
 
 const { Base } = require('./base');
 const { getNemsisStateRepo } = require('../lib/nemsis/states');
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         try {
           await fs.access(xslPath);
         } catch {
-          shelljs.exec(`bin/sch-to-xsl ${schPath}`);
+          execFileSync('bin/sch-to-xsl', [schPath]);
         }
         return validateDataSet(xslPath, xml, doc);
       }
