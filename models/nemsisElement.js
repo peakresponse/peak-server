@@ -64,6 +64,8 @@ module.exports = (sequelize, DataTypes) => {
       nemsisVersion: DataTypes.STRING,
       dataSet: DataTypes.STRING,
       xsd: DataTypes.STRING,
+      xsdPath: DataTypes.TEXT,
+      xmlPath: DataTypes.TEXT,
       name: DataTypes.STRING,
       displayName: DataTypes.STRING,
       definition: DataTypes.TEXT,

@@ -36,6 +36,9 @@
         </div>
         <div class="mb-3">
           <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>
+          <a class="btn btn--sm btn--secondary ms-2" [download]="record.id + '.json'" [href]="'/api/interfaces/' + record.id + '/export'"
+            >Export</a
+          >
         </div>
         <div class="table-responsive">
           <table class="table">
