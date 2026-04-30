@@ -161,6 +161,7 @@
     "xlsx": "^0.18.5",
     "xml-formatter": "^3.6.4",
     "xml-js": "^1.6.11",
+    "xslt3-he": "^3.0.0-beta2",
     "zod": "^4.1.5",
     "zod-openapi": "^5.4.0"
   },
