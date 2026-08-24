@@ -47,7 +47,7 @@ router.post(
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const record = models.SectionElement.build(
-      _.pick(req.body, ['sectionId', 'nemsisElementId', 'screenId', 'position', 'column', 'customId']),
+      _.pick(req.body, ['sectionId', 'nemsisElementId', 'screenId', 'position', 'column', 'customId', 'name', 'shortName', 'unit']),
     );
     record.createdById = req.user.id;
     record.updatedById = req.user.id;
@@ -64,7 +64,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       record = await models.SectionElement.findByPk(req.params.id, { transaction });
       if (record) {
-        record.set(_.pick(req.body, ['nemsisElementId', 'screenId', 'position', 'column', 'customId']));
+        record.set(_.pick(req.body, ['nemsisElementId', 'screenId', 'position', 'column', 'customId', 'name', 'shortName', 'unit']));
         record.updatedById = req.user.id;
         await record.save({ transaction });
       }
