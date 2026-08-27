@@ -11,6 +11,8 @@
     (cancel)="onCancel()"
     (update)="onUpdate()"
     (delete)="onDelete()"
+    [preTransformRecord]="preTransformRecord"
+    [transformRecord]="transformRecord"
     class="d-block col-xl-6">
     <ng-template let-record="record" let-error="error">
       <admin-interfaces-element-form [interfaceId]="interfaceId" [record]="record" [error]="error"></admin-interfaces-element-form>

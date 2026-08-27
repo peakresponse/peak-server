@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { pick } from 'lodash-es';
 
 import { NavigationService } from 'shared';
 
@@ -24,10 +23,13 @@ export class NewInterfaceElementComponent implements OnInit {
     this.interfaceId = this.route.snapshot.parent?.parent?.parent?.params['id'];
   }
 
-  transformRecord = (record: any) => ({
-    ...pick(record, ['nemsisElementId', 'screenId', 'position', 'column', 'customId']),
-    sectionId: this.sectionId,
-  });
+  transformRecord = (record: any) => {
+    let newRecord = { ...record };
+    newRecord.visibleIf = record.visibleIf ? JSON.parse(record.visibleIf) : null;
+    newRecord.onChange = record.onChange ? JSON.parse(record.onChange) : null;
+    newRecord.sectionId = this.sectionId;
+    return newRecord;
+  };
 
   onCreate(record: any) {
     this.navigation.backTo(`/interfaces/${this.interfaceId}/screens/${this.screenId}/sections/${this.sectionId}`);
