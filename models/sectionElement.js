@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
       position: DataTypes.INTEGER,
       column: DataTypes.INTEGER,
       customId: DataTypes.STRING,
+      name: DataTypes.STRING,
+      shortName: DataTypes.STRING,
+      unit: DataTypes.STRING,
+      visibleIf: DataTypes.JSONB,
+      onChange: DataTypes.JSONB,
     },
     {
       sequelize,

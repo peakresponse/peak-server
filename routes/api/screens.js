@@ -32,7 +32,7 @@ router.get(
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
     const { id } = req.params;
-    const record = await models.Screen.findByPk(id);
+    const record = await models.Screen.findByPk(id, { include: ['nemsisElement'] });
     if (record) {
       res.json(record.toJSON());
     } else {
@@ -45,7 +45,7 @@ router.post(
   '/',
   interceptors.requireAdmin,
   helpers.async(async (req, res) => {
-    const record = models.Screen.build(_.pick(req.body, ['interfaceId', 'name']));
+    const record = models.Screen.build(_.pick(req.body, ['interfaceId', 'name', 'position', 'nemsisElementId']));
     record.createdById = req.user.id;
     record.updatedById = req.user.id;
     await record.save();
@@ -61,7 +61,7 @@ router.patch(
     await models.sequelize.transaction(async (transaction) => {
       record = await models.Screen.findByPk(req.params.id, { transaction });
       if (record) {
-        record.set(_.pick(req.body, ['name']));
+        record.set(_.pick(req.body, ['name', 'position', 'nemsisElementId']));
         record.updatedById = req.user.id;
         await record.save({ transaction });
       }

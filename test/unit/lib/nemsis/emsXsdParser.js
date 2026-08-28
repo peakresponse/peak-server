@@ -20,6 +20,8 @@ describe('lib', () => {
           assert.deepStrictEqual(result.children?.length, 25);
           assert.deepStrictEqual(result.children[0].name, 'eRecord');
           assert.deepStrictEqual(result.children[0].xsd, 'eRecord_v3.xsd');
+          assert.deepStrictEqual(result.children[0].xsdPath, "/xs:schema/xs:complexType[@id='eRecord.RecordInformation']");
+          assert.deepStrictEqual(result.children[0].xmlPath, '/PatientCareReport/eRecord');
           assert.deepStrictEqual(result.children[0].minOccurs, 1);
           assert.deepStrictEqual(result.children[0].maxOccurs, 1);
           assert.deepStrictEqual(result.children[0].definition, 'Patient Record Information');

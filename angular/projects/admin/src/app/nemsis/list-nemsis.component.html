@@ -14,7 +14,10 @@
           </ng-template>
           <ng-template #item let-version="item">
             <div class="d-flex justify-content-between">
-              {{ version }}
+              <a style="font-size: inherit" *ngIf="nemsis.versionsInstalled.includes(version)" [routerLink]="['/nemsis', version]">{{
+                version
+              }}</a>
+              <span *ngIf="!nemsis.versionsInstalled.includes(version)">{{ version }}</span>
               <span *ngIf="nemsis.versionsInstalled.includes(version)">
                 <i class="fas fa-check-circle text-success"></i>
               </span>

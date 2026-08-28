@@ -37,4 +37,18 @@ export class EditInterfaceElementComponent implements OnInit {
   onDelete() {
     this.onCancel();
   }
+
+  preTransformRecord(record: any) {
+    let newRecord = { ...record };
+    newRecord.visibleIf = record.visibleIf ? JSON.stringify(record.visibleIf) : null;
+    newRecord.onChange = record.onChange ? JSON.stringify(record.onChange) : null;
+    return newRecord;
+  }
+
+  transformRecord(record: any) {
+    let newRecord = { ...record };
+    newRecord.visibleIf = record.visibleIf ? JSON.parse(record.visibleIf) : null;
+    newRecord.onChange = record.onChange ? JSON.parse(record.onChange) : null;
+    return newRecord;
+  }
 }

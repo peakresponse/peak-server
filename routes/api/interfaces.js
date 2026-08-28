@@ -35,6 +35,49 @@ router.get(
   }),
 );
 
+router.get(
+  '/:id/export',
+  interceptors.requireAdmin,
+  helpers.async(async (req, res) => {
+    const { id } = req.params;
+    const record = await models.Interface.findByPk(id, {
+      include: [
+        {
+          model: models.Screen,
+          as: 'screens',
+          order: [['position', 'ASC']],
+          include: [
+            'nemsisElement',
+            {
+              model: models.Section,
+              as: 'sections',
+              order: [['position', 'ASC']],
+              include: [
+                {
+                  model: models.SectionElement,
+                  as: 'elements',
+                  order: [['position', 'ASC']],
+                  include: [
+                    {
+                      model: models.NemsisElement,
+                      as: 'nemsisElement',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    if (record) {
+      res.json(record.toJSON());
+    } else {
+      res.status(StatusCodes.NOT_FOUND).end();
+    }
+  }),
+);
+
 router.post(
   '/',
   interceptors.requireAdmin,
