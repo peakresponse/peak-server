@@ -47,6 +47,7 @@ router.get(
           as: 'screens',
           order: [['position', 'ASC']],
           include: [
+            'nemsisElement',
             {
               model: models.Section,
               as: 'sections',

@@ -4,13 +4,14 @@
     <h1 class="h2">Edit Screen</h1>
   </div>
   <shared-form
+    #form
     *ngIf="id"
     type="screens"
     [id]="id"
     [hideButtons]="!isEditing"
     [showCancel]="true"
     (cancel)="isEditing = false"
-    (update)="isEditing = false"
+    (update)="isEditing = false; form.refresh()"
     (delete)="onDelete()"
     class="d-block col-xl-6">
     <ng-template let-record="record" let-error="error">
@@ -22,9 +23,13 @@
           <label>Name</label>
           <h3>{{ record.name }}</h3>
         </div>
-        <div class="mb-3">
+        <div *ngIf="record.position" class="mb-3">
           <label>Position</label>
           <h3>{{ record.position }}</h3>
+        </div>
+        <div *ngIf="record.nemsisElement" class="mb-3">
+          <label>NEMSIS Element</label>
+          <h3>{{ record.nemsisElement.name }}</h3>
         </div>
         <div class="mb-3">
           <button (click)="isEditing = true" class="btn btn--sm btn--primary">Edit</button>

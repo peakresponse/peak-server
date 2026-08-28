@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       Screen.belongsTo(models.Interface, { as: 'interface' });
       Screen.belongsTo(models.User, { as: 'createdBy' });
       Screen.belongsTo(models.User, { as: 'updatedBy' });
+      Screen.belongsTo(models.NemsisElement, { as: 'nemsisElement' });
       Screen.hasMany(models.Section, { as: 'sections', foreignKey: 'screenId' });
     }
   }
